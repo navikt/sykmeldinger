@@ -2,18 +2,18 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.less';
 
+import DineSykmeldingerSide from './pages/DineSykmeldingerSide';
+import SykmeldingSide from './pages/SykmeldingSide';
+
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact={true} path="/" component={CompA} />
-        <Route path="/sykmelding/:id" component={CompB} />
+        <Route exact={true} path="/" component={DineSykmeldingerSide} />
+        <Route path="/sykmelding/:id" component={SykmeldingSide} />
       </Switch>
     </BrowserRouter>
   );
 };
-
-const CompA = () => <h1>Hello world</h1>;
-const CompB = () => <h1>Foo bar</h1>;
 
 export default App;
