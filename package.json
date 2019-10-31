@@ -12,6 +12,8 @@
     "craco-less": "^1.14.4",
     "dayjs": "^1.8.16",
     "lodash.throttle": "^4.1.1",
+    "nav-frontend-chevron": "^1.0.10",
+    "nav-frontend-chevron-style": "^0.3.5",
     "nav-frontend-core": "^4.0.10",
     "nav-frontend-js-utils": "^1.0.7",
     "nav-frontend-paneler-style": "^0.3.16",

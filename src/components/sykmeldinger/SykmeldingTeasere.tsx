@@ -51,7 +51,7 @@ const SykmeldingTeasere: React.FC<SykmeldingTeasereProps> = ({
     }, [sorterEtter]);
 
     return (
-        <>
+        <div className="teasere">
             <div className="teasere-header">
                 <Element className="teasere-header__tittel">{tittel}</Element>
                 <Vis hvis={visSorterEtter}>
@@ -68,8 +68,7 @@ const SykmeldingTeasere: React.FC<SykmeldingTeasereProps> = ({
             {sykmeldingerSortert.map((sykmelding, index) => (
                 <SykmeldingTeaser key={index} sykmelding={sykmelding} />
             ))}
-            <p>{sorterEtter}</p>
-        </>
+        </div>
     );
 };
 
