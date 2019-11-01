@@ -1,0 +1,61 @@
+.brodsmuler {
+    margin-bottom: 2em;
+    line-height: 2em;
+    display: flex;
+    align-items: center;
+
+    .brodsmuler__smuler {
+        list-style: none;
+        padding: 0;
+        display: inline-flex;
+    }
+
+    .smule {
+        white-space: nowrap;
+        padding-right: 0.5rem;
+
+        &:after {
+            content: '/';
+            margin-left: 0.5rem;
+        }
+
+        &:last-child:after {
+            content: '';
+        }
+    }
+
+    .brodsmuler__ikon {
+        display: none;
+    }
+
+    .brodsmuler__duErHer {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+}
+
+@media (min-width: 24em) {
+    .brodsmuler {
+        display: flex;
+        position: relative;
+
+        .brodsmuler__ikon {
+            width: 2em;
+            height: 2em;
+            display: inline-block;
+            margin-right: 1em;
+        }
+    }
+}
+
+@media print {
+    .brodsmuler {
+        display: none;
+    }
+}

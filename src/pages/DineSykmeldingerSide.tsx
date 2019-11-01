@@ -2,10 +2,18 @@ import React from 'react';
 
 import SykmeldingTeasere, { SykmeldingTeaserTittel } from '../components/sykmeldinger/SykmeldingTeasere';
 import SykmeldingerHeader from '../components/sykmeldinger/SykmeldingerHeader';
+import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler'
+
+const brodsmuler: Brodsmule[] = [{
+    tittel: 'Sykmeldinger',
+    sti: '/',
+    erKlikkbar: false
+}];
 
 const DineSykmeldingerSide: React.FC = () => {
     return (
         <div className="limit">
+            <Brodsmuler brodsmuler={brodsmuler} />
             <SykmeldingerHeader />
             <div className="nye-sykmeldinger-teasere">
                 <SykmeldingTeasere
