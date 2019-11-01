@@ -8,12 +8,12 @@ import Vis from '../../utils/vis';
 
 const sorterEtterDato = (sykmeldinger: any[]): any[] => {
     // array.sort(function(a,b){return a.getTime() - b.getTime()});
-    return sykmeldinger;
+    return [sykmeldinger.pop()];
 };
 
 const sorterEtterArbeidsgiver = (sykmeldinger: any[]): any[] => {
     // some function
-    return sykmeldinger;
+    return [...sykmeldinger, {}];
 };
 
 export enum SykmeldingTeaserTittel {
@@ -43,12 +43,14 @@ const SykmeldingTeasere: React.FC<SykmeldingTeasereProps> = ({
     );
 
     useEffect(() => {
-        setSykmeldingerSortert(sykmeldinger =>
-            sorterEtter === SorterEtter.ARBEIDSGIVER
-                ? sorterEtterArbeidsgiver(sykmeldinger)
-                : sorterEtterDato(sykmeldinger),
-        );
-    }, [sorterEtter]);
+        if (visSorterEtter) {
+            setSykmeldingerSortert(sykmeldinger =>
+                sorterEtter === SorterEtter.ARBEIDSGIVER
+                    ? sorterEtterArbeidsgiver(sykmeldinger)
+                    : sorterEtterDato(sykmeldinger),
+            );
+        }
+    }, [sorterEtter, visSorterEtter]);
 
     return (
         <div className="teasere">
@@ -56,10 +58,14 @@ const SykmeldingTeasere: React.FC<SykmeldingTeasereProps> = ({
                 <Element className="teasere-header__tittel">{tittel}</Element>
                 <Vis hvis={visSorterEtter}>
                     <div className="teasere-header__sorter-etter">
-                        <Select label="Sorter etter" onChange={e => setSorterEtter(e.target.value)}>
-                            <option selected={sorterEtter === SorterEtter.DATO} value={SorterEtter.DATO}>
-                                {SorterEtter.DATO}
-                            </option>
+                        <Select
+                            defaultValue={
+                                sorterEtter === SorterEtter.DATO ? SorterEtter.DATO : SorterEtter.ARBEIDSGIVER
+                            }
+                            label="Sorter etter"
+                            onChange={e => setSorterEtter(e.target.value)}
+                        >
+                            <option value={SorterEtter.DATO}>{SorterEtter.DATO}</option>
                             <option value={SorterEtter.ARBEIDSGIVER}>{SorterEtter.ARBEIDSGIVER}</option>
                         </Select>
                     </div>
