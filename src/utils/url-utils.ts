@@ -1,9 +1,13 @@
-export const getUrlTilSykmeldinger = (): string => {
+export const getUrlTilDittSykefravaer = (): string => {
     return '/';
 };
 
+export const getUrlTilSykmeldinger = (): string => {
+    return '/sykmeldinger';
+};
+
 export const getUrlTilSykmelding = (sykmeldingId: string): string => {
-    return `/sykmelding/${sykmeldingId}/`;
+    return `/sykmeldinger/${sykmeldingId}/`;
 };
 
 export const erHerokuApp = () => {

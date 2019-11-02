@@ -1,14 +1,22 @@
 import React from 'react';
+import './DittSykefravaerSide.less';
 
 import SykmeldingTeasere, { SykmeldingTeaserTittel } from '../components/sykmeldinger/SykmeldingTeasere';
 import SykmeldingerHeader from '../components/sykmeldinger/SykmeldingerHeader';
-import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler'
+import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 
-const brodsmuler: Brodsmule[] = [{
-    tittel: 'Sykmeldinger',
-    sti: '/',
-    erKlikkbar: false
-}];
+const brodsmuler: Brodsmule[] = [
+    {
+        tittel: 'Ditt sykefravaer',
+        sti: '/',
+        erKlikkbar: true,
+    },
+    {
+        tittel: 'Sykmeldinger',
+        sti: '/sykmeldinger',
+        erKlikkbar: false,
+    },
+];
 
 const DineSykmeldingerSide: React.FC = () => {
     return (
@@ -24,7 +32,7 @@ const DineSykmeldingerSide: React.FC = () => {
             </div>
             <div className="tidligere-sykmeldinger-teasere">
                 <SykmeldingTeasere
-                    sykmeldinger={[{property: "one", property2: 1}, {property: "two", property2: 2}]}
+                    sykmeldinger={[{ property: 'one', property2: 1 }, { property: 'two', property2: 2 }]}
                     visSorterEtter={true}
                     tittel={SykmeldingTeaserTittel.TIDLIGERE_SYKMELDINGER}
                 />

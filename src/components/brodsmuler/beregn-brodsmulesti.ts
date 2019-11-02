@@ -22,7 +22,7 @@ const beregnBrodsmulesti = (sti: string, id: string) => {
     const sykmeldingSmule: BrodSmule = {
         tittel: 'Sykmelding',
         sti: getUrlTilSykmelding(id),
-        erKlikkbar: false,
+        erKlikkbar: true,
     };
 
     return [dittSykefravaerSmule, sykmeldingerSmule, sykmeldingSmule];

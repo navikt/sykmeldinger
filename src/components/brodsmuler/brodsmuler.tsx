@@ -70,9 +70,6 @@ const Brodsmuler = ({ brodsmuler }: BrodsmulerProps) => {
                 <li className="smule">
                     <Lenke href="/dittnav">Ditt NAV</Lenke>
                 </li>
-                <li className="smule">
-                    <Lenke href="/sykefravaer">Ditt Sykefravær</Lenke>
-                </li>
                 {
                     getVisCollapsed() &&
                     <li className="smule">

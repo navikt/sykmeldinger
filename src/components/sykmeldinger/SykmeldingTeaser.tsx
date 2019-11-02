@@ -24,7 +24,7 @@ const SykmeldingTeaser: React.FC<SykmeldingTeaserProps> = ({ sykmelding }: Sykme
     const teaserIkon = useRef<HTMLImageElement>(document.createElement('img'));
 
     return (
-        <Link to="/sykmelding/1234" className="link">
+        <Link to="/sykmeldinger/1234" className="link">
             <div
                 ref={teaserContainer}
                 className="teaser"
