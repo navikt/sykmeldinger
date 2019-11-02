@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 import { Sidetittel } from 'nav-frontend-typografi';
 
@@ -21,6 +22,7 @@ const DittSykefravaer: React.FC = () => {
             </div>
             <div className="limit">
                 <p>hello world</p>
+                <Link to="/sykmeldinger">Dine sykmeldinger</Link>
             </div>
         </>
     );
