@@ -11,4 +11,4 @@ const useAppStore = createUseContext(() => {
     };
 });
 
-export default useAppStore
+export default useAppStore;
