@@ -4,17 +4,21 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useFetch, { isNotStarted, FetchState, hasData, isAnyNotStartedOrPending, hasAnyFailed } from '../hooks/useFetch';
 import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
+import { SykmeldingData } from '../types/sykmeldingDataTypes';
 
 const DataFetcher = (props: { children: any }) => {
-    const { setSykmelding, setNaermesteLedere } = useAppStore();
-    const sykmeldingFetcher = useFetch<Sykmelding>();
+    const { setSykmelding, setSykmeldingType, setNaermesteLedere } = useAppStore();
+    const sykmeldingFetcher = useFetch<SykmeldingData>();
 
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
-            sykmeldingFetcher.fetch('/syforest/sykmelding', undefined, (fetchState: FetchState<any>) => {
+            sykmeldingFetcher.fetch('/syforest/sykmelding', undefined, (fetchState: FetchState<SykmeldingData>) => {
                 if (hasData(fetchState)) {
-                    const sykmelding = new Sykmelding(fetchState.data);
+                    const { data } = fetchState;
+                    const sykmelding = new Sykmelding(data.sykmelding);
+                    const sykmeldingType = data.status;
                     setSykmelding(sykmelding);
+                    setSykmeldingType(sykmeldingType);
                 }
             });
         }

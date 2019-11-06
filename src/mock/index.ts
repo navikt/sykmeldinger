@@ -1,5 +1,5 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
-import { sykmeldingMock } from './data/sykmeldingMock';
+import { nySykmeldingMock } from './data/sykmeldingMock';
 import naermesteLedereMock from './data/narmesteLedereMock';
 
 const mock = FetchMock.configure({
@@ -7,5 +7,5 @@ const mock = FetchMock.configure({
     middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(1000), MiddlewareUtils.loggingMiddleware()),
 });
 
-mock.get('/syforest/sykmelding', sykmeldingMock);
+mock.get('/syforest/sykmelding', nySykmeldingMock);
 mock.get('/syforest/naermesteledere', naermesteLedereMock);
