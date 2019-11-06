@@ -1,12 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 
-export type SykmeldingType = 'NY' | 'AVVIST_AV_NAV' | 'AVBRUTT_AV_DEG';
+export type Sykmeldingtype = 'NY' | 'AVVIST_AV_NAV' | 'AVBRUTT_AV_DEG';
 
 interface SykmeldingProps {
-    sykmeldingType: SykmeldingType;
+    sykmeldingtype: Sykmeldingtype;
 }
 
-const Sykmelding: React.FC<SykmeldingProps> = ({ sykmeldingType }: SykmeldingProps) => {
+const Sykmelding: React.FC<SykmeldingProps> = ({ sykmeldingtype }: SykmeldingProps) => {
     const thirdRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     var styles1 = {

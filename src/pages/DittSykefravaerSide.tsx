@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 import { Sidetittel } from 'nav-frontend-typografi';
+import DinArbeidssituasjon from '../components/DinArbeidssituasjon';
+import NaermesteLeder from '../types/naermesteLederTypes';
+import Lenkepanel from 'nav-frontend-lenkepanel';
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -10,6 +13,8 @@ const brodsmuler: Brodsmule[] = [
         erKlikkbar: false,
     },
 ];
+
+const tempLedere = [Object.assign(new NaermesteLeder(), { navn: 'Navn Navnesen', organisasjonsnavn: 'Pontypandy Fireservice' })];
 
 const DittSykefravaer: React.FC = () => {
     return (
@@ -21,8 +26,11 @@ const DittSykefravaer: React.FC = () => {
                 </div>
             </div>
             <div className="limit">
-                <p>hello world</p>
-                <Link to="/sykmeldinger">Dine sykmeldinger</Link>
+                <DinArbeidssituasjon naermesteLedere={tempLedere} />
+                <Lenkepanel href="/sykmeldinger" tittelProps="undertittel" border>Dine Sykmeldinger</Lenkepanel>
+                <Lenkepanel href="#" tittelProps="undertittel" border>Søknader om sykepenger</Lenkepanel>
+                <Lenkepanel href="#" tittelProps="undertittel" border>Oppfølgingsplaner</Lenkepanel>
+                <Lenkepanel href="#" tittelProps="undertittel" border>Hva skjer under sykefraværet?</Lenkepanel>
             </div>
         </>
     );

@@ -26,7 +26,7 @@ const SykmeldingSide: React.FC = () => {
         <div className="limit">
             <Brodsmuler brodsmuler={brodsmuler} />
             <p>Sykmelding side</p>
-            <Sykmelding sykmeldingType={'NY'} />
+            <Sykmelding sykmeldingtype={'NY'} />
         </div>
     );
 };
