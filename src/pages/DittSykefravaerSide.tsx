@@ -5,6 +5,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import DinArbeidssituasjon from '../components/DinArbeidssituasjon';
 import NaermesteLeder from '../types/naermesteLederTypes';
 import Lenkepanel from 'nav-frontend-lenkepanel';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -14,7 +15,9 @@ const brodsmuler: Brodsmule[] = [
     },
 ];
 
-const tempLedere = [Object.assign(new NaermesteLeder(), { navn: 'Navn Navnesen', organisasjonsnavn: 'Pontypandy Fireservice' })];
+const tempLedere = [
+    Object.assign(new NaermesteLeder(), { navn: 'Navn Navnesen', organisasjonsnavn: 'Pontypandy Fireservice' }),
+];
 
 const DittSykefravaer: React.FC = () => {
     return (
@@ -27,10 +30,21 @@ const DittSykefravaer: React.FC = () => {
             </div>
             <div className="limit">
                 <DinArbeidssituasjon naermesteLedere={tempLedere} />
-                <Lenkepanel href="/sykmeldinger" tittelProps="undertittel" border>Dine Sykmeldinger</Lenkepanel>
-                <Lenkepanel href="#" tittelProps="undertittel" border>Søknader om sykepenger</Lenkepanel>
-                <Lenkepanel href="#" tittelProps="undertittel" border>Oppfølgingsplaner</Lenkepanel>
-                <Lenkepanel href="#" tittelProps="undertittel" border>Hva skjer under sykefraværet?</Lenkepanel>
+                <Lenkepanel href="/sykmeldinger" tittelProps="undertittel" border>
+                    Dine Sykmeldinger
+                </Lenkepanel>
+                <Lenkepanel href="#" tittelProps="undertittel" border>
+                    Søknader om sykepenger
+                </Lenkepanel>
+                <Lenkepanel href="#" tittelProps="undertittel" border>
+                    Oppfølgingsplaner
+                </Lenkepanel>
+                <Lenkepanel href="#" tittelProps="undertittel" border>
+                    Hva skjer under sykefraværet?
+                </Lenkepanel>
+                <Tekstomrade>
+                    NAV bruker personopplysninger til å utarbeide statistikk, utredninger og analyser. Dette gjør vi for å øke vår kunnskap om hva som fungerer, og for å kunne forbedre NAVs tjenester. Personopplysningene behandles da i en form som gjør at det ikke er mulig å knytte opplysningene direkte til enkeltpersoner.
+                </Tekstomrade>
             </div>
         </>
     );

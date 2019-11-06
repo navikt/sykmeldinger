@@ -5,7 +5,7 @@ import naermesteLedereMock from './data/narmesteLedereMock';
 const mock = FetchMock.configure({
     enableFallback: true,
     middleware: MiddlewareUtils.combine(
-        MiddlewareUtils.delayMiddleware(500),
+        MiddlewareUtils.delayMiddleware(1000),
         MiddlewareUtils.loggingMiddleware()
     )
 });
