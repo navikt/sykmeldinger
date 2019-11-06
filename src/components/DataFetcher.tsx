@@ -6,24 +6,25 @@ import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
 
 const DataFetcher = (props: { children: any }) => {
-    const { setSykmeldinger, setNaermesteLedere } = useAppStore();
-    const sykmeldingerFetcher = useFetch<Sykmelding[]>();
+    const { setSykmelding, setNaermesteLedere } = useAppStore();
+    const sykmeldingFetcher = useFetch<Sykmelding>();
 
     useEffect(() => {
-        if (isNotStarted(sykmeldingerFetcher)) {
-            sykmeldingerFetcher.fetch('/syforest/sykmeldinger', undefined, (fetchState: FetchState<any[]>) => {
+        if (isNotStarted(sykmeldingFetcher)) {
+            sykmeldingFetcher.fetch('/syforest/sykmelding', undefined, (fetchState: FetchState<any>) => {
                 if (hasData(fetchState)) {
-                    setSykmeldinger(fetchState.data.map(sykmelding => new Sykmelding(sykmelding.receivedSykmelding.sykmelding)));
+                    const sykmelding = new Sykmelding(fetchState.data);
+                    setSykmelding(sykmelding);
                 }
             });
         }
-    }, [setSykmeldinger, sykmeldingerFetcher]);
+    }, [setSykmelding, sykmeldingFetcher]);
 
-    if (isAnyNotStartedOrPending([sykmeldingerFetcher])) {
+    if (isAnyNotStartedOrPending([sykmeldingFetcher])) {
         return <Spinner />;
     }
 
-    if (hasAnyFailed([sykmeldingerFetcher])) {
+    if (hasAnyFailed([sykmeldingFetcher])) {
         return (
             <AlertStripeFeil>
                 Det oppsto feil ved henting av data. Vi jobber med å løse saken. Vennligst prøv igjen senere.
