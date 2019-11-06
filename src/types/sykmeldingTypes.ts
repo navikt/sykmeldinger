@@ -8,7 +8,9 @@ class MedisinskVurdering {
     yrkesskadeDato?: Date;
     annenFraversArsak?: AnnenFraversArsak;
     constructor(medisinskVurdering: any) {
-        this.hovedDiagnose = medisinskVurdering.hovedDiagnose ? new Diagnose(medisinskVurdering.hovedDiagnose) : undefined;
+        this.hovedDiagnose = medisinskVurdering.hovedDiagnose
+            ? new Diagnose(medisinskVurdering.hovedDiagnose)
+            : undefined;
         this.biDiagnoser = medisinskVurdering.biDiagnoser.map((biDiagnose: any) => new Diagnose(biDiagnose));
         this.svangerskap = medisinskVurdering.svangerskap;
         this.yrkesskade = medisinskVurdering.yrkesskade;
@@ -37,7 +39,9 @@ class AnnenFraversArsak {
     grunn: AnnenFraverGrunn[];
     constructor(annenFraversArsak: any) {
         this.beskrivelse = annenFraversArsak.beskrivelse ? annenFraversArsak.beskrivelse : null;
-        this.grunn = annenFraversArsak.grunn.map((grunn: any) => AnnenFraverGrunn[grunn as keyof typeof AnnenFraverGrunn]);
+        this.grunn = annenFraversArsak.grunn.map(
+            (grunn: any) => AnnenFraverGrunn[grunn as keyof typeof AnnenFraverGrunn],
+        );
     }
 }
 
@@ -110,20 +114,27 @@ class AktivitetIkkeMulig {
     }
 }
 
+export enum MedisinskArsakType {
+    TILSTAND_HINDRER_AKTIVITET = 'Helsetilstanden hindrer pasienten i å være i aktivitet',
+    AKTIVITET_FORVERRER_TILSTAND = 'Aktivitet vil forverre helsetilstanden',
+    AKTIVITET_FORHINDRER_BEDRING = 'Aktivitet vil hindre/forsinke bedring av helsetilstanden',
+    ANNET = 'Annet',
+}
+
 class MedisinskArsak {
     beskrivelse?: string;
     arsak: MedisinskArsakType[];
     constructor(medisinskArsak: any) {
         this.beskrivelse = medisinskArsak.beskrivelse ? medisinskArsak.beskrivelse : null;
-        const arsakTemp = medisinskArsak.arsak.map((arsak: any) => MedisinskArsak[arsak as keyof typeof MedisinskArsak]);
+        const arsakTemp = medisinskArsak.arsak.map(
+            (arsak: any) => MedisinskArsakType[arsak as keyof typeof MedisinskArsakType],
+        );
         this.arsak = arsakTemp;
     }
 }
 
-export enum MedisinskArsakType {
-    TILSTAND_HINDRER_AKTIVITET = 'Helsetilstanden hindrer pasienten i å være i aktivitet',
-    AKTIVITET_FORVERRER_TILSTAND = 'Aktivitet vil forverre helsetilstanden',
-    AKTIVITET_FORHINDRER_BEDRING = 'Aktivitet vil hindre/forsinke bedring av helsetilstanden',
+export enum ArbeidsrelatertArsakType {
+    MANGLENDE_TILRETTELEGGING = 'Manglende tilrettelegging på arbeidsplassen',
     ANNET = 'Annet',
 }
 
@@ -132,14 +143,11 @@ class ArbeidsrelatertArsak {
     arsak: ArbeidsrelatertArsakType[];
     constructor(arbeidsrelatertArsak: any) {
         this.beskrivelse = arbeidsrelatertArsak.beskrivelse ? arbeidsrelatertArsak.beskrivelse : null;
-        const arsakTemp = arbeidsrelatertArsak.arsak.map((arsak: any) => MedisinskArsak[arsak as keyof typeof MedisinskArsak]);
+        const arsakTemp = arbeidsrelatertArsak.arsak.map(
+            (arsak: any) => ArbeidsrelatertArsakType[arsak as keyof typeof ArbeidsrelatertArsakType],
+        );
         this.arsak = arsakTemp;
     }
-}
-
-export enum ArbeidsrelatertArsakType {
-    MANGLENDE_TILRETTELEGGING = 'Manglende tilrettelegging på arbeidsplassen',
-    ANNET = 'Annet',
 }
 
 class Gradert {
