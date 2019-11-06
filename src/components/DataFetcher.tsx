@@ -5,7 +5,7 @@ import useFetch, { isNotStarted, FetchState, hasData, isAnyNotStartedOrPending, 
 import useAppStore from '../store/useAppStore';
 
 const DataFetcher = (props: { children: any }) => {
-    const { sykmeldinger, setSykmeldinger, naermesteLedere, setNaermesteLedere } = useAppStore();
+    const { setSykmeldinger, setNaermesteLedere } = useAppStore();
     const sykmeldingerFetcher = useFetch<any[]>();
 
     useEffect(() => {

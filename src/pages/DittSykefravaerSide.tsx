@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 import { Sidetittel } from 'nav-frontend-typografi';
 import DinArbeidssituasjon from '../components/DinArbeidssituasjon';
@@ -20,6 +20,8 @@ const tempLedere = [
 ];
 
 const DittSykefravaer: React.FC = () => {
+    const history = useHistory();
+
     return (
         <>
             <div className="sidebanner">
@@ -30,7 +32,15 @@ const DittSykefravaer: React.FC = () => {
             </div>
             <div className="limit">
                 <DinArbeidssituasjon naermesteLedere={tempLedere} />
-                <Lenkepanel href="/sykmeldinger" tittelProps="undertittel" border>
+                <Lenkepanel
+                    href="#"
+                    onClick={e => {
+                        e.preventDefault();
+                        history.push('/sykmeldinger');
+                    }}
+                    tittelProps="undertittel"
+                    border
+                >
                     Dine Sykmeldinger
                 </Lenkepanel>
                 <Lenkepanel href="#" tittelProps="undertittel" border>
@@ -43,7 +53,10 @@ const DittSykefravaer: React.FC = () => {
                     Hva skjer under sykefraværet?
                 </Lenkepanel>
                 <Tekstomrade>
-                    NAV bruker personopplysninger til å utarbeide statistikk, utredninger og analyser. Dette gjør vi for å øke vår kunnskap om hva som fungerer, og for å kunne forbedre NAVs tjenester. Personopplysningene behandles da i en form som gjør at det ikke er mulig å knytte opplysningene direkte til enkeltpersoner.
+                    NAV bruker personopplysninger til å utarbeide statistikk, utredninger og analyser. Dette gjør vi for
+                    å øke vår kunnskap om hva som fungerer, og for å kunne forbedre NAVs tjenester. Personopplysningene
+                    behandles da i en form som gjør at det ikke er mulig å knytte opplysningene direkte til
+                    enkeltpersoner.
                 </Tekstomrade>
             </div>
         </>
