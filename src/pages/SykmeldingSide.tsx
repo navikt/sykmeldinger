@@ -26,15 +26,15 @@ const brodsmuler: Brodsmule[] = [
 ];
 
 const SykmeldingSide: React.FC = props => {
-    const { sykmelding, sykmeldingType } = useAppStore();
+    const { sykmelding, sykmeldingStatus } = useAppStore();
 
-    if (!sykmeldingType) {
+    if (!sykmeldingStatus) {
         // TODO: Error-melding, ingen sykmelding funnet
         return null;
     }
 
     const SykmeldingComponent = (() => {
-        switch (sykmeldingType) {
+        switch (sykmeldingStatus) {
             case Status.NY:
                 return <NySykmelding sykmeldingtype={'NY'} />;
             case Status.AVBRUTT:

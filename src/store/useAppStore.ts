@@ -6,14 +6,14 @@ import { Status } from '../types/sykmeldingDataTypes';
 
 const useAppStore = createUseContext(() => {
     const [sykmelding, setSykmelding] = useState<Sykmelding | null>(null);
-    const [sykmeldingType, setSykmeldingType] = useState<Status | null>(null);
+    const [sykmeldingStatus, setSykmeldingStatus] = useState<Status | null>(null);
     const [naermesteLedere, setNaermesteLedere] = useState<NaermesteLeder | null>(null);
 
     return {
         sykmelding,
         setSykmelding,
-        sykmeldingType,
-        setSykmeldingType,
+        sykmeldingStatus,
+        setSykmeldingStatus,
         naermesteLedere,
         setNaermesteLedere,
     };

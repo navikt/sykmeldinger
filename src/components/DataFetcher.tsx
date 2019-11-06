@@ -7,7 +7,7 @@ import { Sykmelding } from '../types/sykmeldingTypes';
 import { SykmeldingData } from '../types/sykmeldingDataTypes';
 
 const DataFetcher = (props: { children: any }) => {
-    const { setSykmelding, setSykmeldingType, setNaermesteLedere } = useAppStore();
+    const { setSykmelding, setSykmeldingStatus, setNaermesteLedere } = useAppStore();
     const sykmeldingFetcher = useFetch<SykmeldingData>();
 
     useEffect(() => {
@@ -16,9 +16,9 @@ const DataFetcher = (props: { children: any }) => {
                 if (hasData(fetchState)) {
                     const { data } = fetchState;
                     const sykmelding = new Sykmelding(data.sykmelding);
-                    const sykmeldingType = data.status;
+                    const sykmeldingStatus = data.status;
                     setSykmelding(sykmelding);
-                    setSykmeldingType(sykmeldingType);
+                    setSykmeldingStatus(sykmeldingStatus);
                 }
             });
         }
