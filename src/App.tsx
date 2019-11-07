@@ -13,6 +13,7 @@ const App: React.FC = () => {
             <DataFetcher>
                 <BrowserRouter>
                     <Switch>
+                        <Route exact path="/sykmeldinger" component={SykmeldingSide} />
                         <Route path="/sykmeldinger/:id" component={SykmeldingSide} />
                     </Switch>
                 </BrowserRouter>
