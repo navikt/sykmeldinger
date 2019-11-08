@@ -14,9 +14,7 @@ const maaneder = [
 ];
 const SKILLETEGN_PERIODE = '–';
 
-export const tilLesbarPeriodeMedArstall = (fomArg: string, tomArg: string): string => {
-    const fom = new Date(fomArg);
-    const tom = new Date(tomArg);
+export const tilLesbarPeriodeMedArstall = (fom: Date, tom: Date): string => {
     const erSammeAar = fom.getFullYear() === tom.getFullYear();
     const erSammeMaaned = fom.getMonth() === tom.getMonth();
     return erSammeAar && erSammeMaaned
@@ -49,3 +47,9 @@ export const tilLesbarDatoUtenAarstall = (datoArg: Date) => {
     }
     return null;
 };
+
+export function getDuration(from: Date, to: Date) {
+    const tom = to.getTime();
+    const fom = from.getTime();
+    return Math.round(Math.floor((to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24))) + 1;
+}

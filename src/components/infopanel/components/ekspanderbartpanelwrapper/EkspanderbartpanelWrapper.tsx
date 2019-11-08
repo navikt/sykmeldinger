@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sykmelding } from '../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import { Element } from 'nav-frontend-typografi';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 
