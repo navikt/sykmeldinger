@@ -78,7 +78,7 @@ export enum HarArbeidsgiver {
     INGEN_ARBEIDSGIVER = 'Ingen arbeidsgiver',
 }
 
-class Periode {
+export class Periode {
     fom: Date;
     tom: Date;
     aktivitetIkkeMulig?: AktivitetIkkeMulig;
