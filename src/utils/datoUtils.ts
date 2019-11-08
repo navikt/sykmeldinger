@@ -14,7 +14,7 @@ const maaneder = [
 ];
 const SKILLETEGN_PERIODE = '–';
 
-export const tilLesbarPeriodeMedArstall = (fomArg, tomArg) => {
+export const tilLesbarPeriodeMedArstall = (fomArg: string, tomArg: string): string => {
     const fom = new Date(fomArg);
     const tom = new Date(tomArg);
     const erSammeAar = fom.getFullYear() === tom.getFullYear();
@@ -26,11 +26,11 @@ export const tilLesbarPeriodeMedArstall = (fomArg, tomArg) => {
         : `${tilLesbarDatoMedArstall(fom)} ${SKILLETEGN_PERIODE} ${tilLesbarDatoMedArstall(tom)}`;
 };
 
-export const tilLesbarDatoMedArstall = datoArg => {
+export const tilLesbarDatoMedArstall = (datoArg: Date) => {
     return datoArg ? `${tilLesbarDatoUtenAarstall(new Date(datoArg))} ${new Date(datoArg).getFullYear()}` : null;
 };
 
-export const tilLesbarPeriodeUtenArstall = (fomArg, tomArg) => {
+export const tilLesbarPeriodeUtenArstall = (fomArg: string, tomArg: string): string => {
     const fom = new Date(fomArg);
     const tom = new Date(tomArg);
     const erSammeMaaned = fom.getMonth() === tom.getMonth();
@@ -39,7 +39,7 @@ export const tilLesbarPeriodeUtenArstall = (fomArg, tomArg) => {
         : `${tilLesbarDatoUtenAarstall(fom)} ${SKILLETEGN_PERIODE} ${tilLesbarDatoUtenAarstall(tom)}`;
 };
 
-export const tilLesbarDatoUtenAarstall = datoArg => {
+export const tilLesbarDatoUtenAarstall = (datoArg: Date) => {
     if (datoArg) {
         const dato = new Date(datoArg);
         const dag = dato.getDate();
