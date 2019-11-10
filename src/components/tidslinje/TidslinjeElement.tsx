@@ -2,9 +2,9 @@ import React, { ReactNode, useRef } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Element } from 'nav-frontend-typografi';
 import './TidslinjeElement.less';
-import klokke from './klokke.svg';
-import plaster from './plaster.svg';
-import sirkel from './sirkel.svg';
+import klokke from './svg/klokke.svg';
+import plaster from './svg/plaster.svg';
+import sirkel from './svg/sirkel.svg';
 
 interface TidslinjeElementProps {
     erEkspanderbar: boolean;
@@ -29,7 +29,7 @@ const TidslinjeElement: React.FC<TidslinjeElementProps> = ({
 
     const scrollTilAktueltPanel = (): void => {
         setTimeout(() => {
-            window.scrollTo({ top: panelRef.current.offsetTop - 50, behavior: 'smooth' });
+            window.scrollTo({ top: panelRef.current.offsetTop, behavior: 'smooth' });
         }, 300);
     }
 
@@ -46,7 +46,7 @@ const TidslinjeElement: React.FC<TidslinjeElementProps> = ({
             <div className="tidslinje-element tidslinje-element__stegindikator">
                 {erForsteElement && (
                     <div className="tidslinje-element__stegindikator--plaster">
-                        <img src={plaster} alt="plasterikon" width={30} />
+                        <img src={plaster} alt="plasterikon" width={25} />
                     </div>
                 )}
                 {erEkspanderbar && (
@@ -54,7 +54,7 @@ const TidslinjeElement: React.FC<TidslinjeElementProps> = ({
                         <img src={sirkel} alt="sirkelikon" width={15} />
                     </div>
                 )}
-                {!erEkspanderbar && !erForsteElement && <img src={klokke} alt="klokkeikon" width={30} />}
+                {!erEkspanderbar && !erForsteElement && <img src={klokke} alt="klokkeikon" width={25} />}
             </div>
 
             {erEkspanderbar && (
