@@ -23,7 +23,7 @@ class MedisinskVurdering {
     }
 }
 
-class Diagnose {
+export class Diagnose {
     system: string;
     kode: string;
     tekst: string;

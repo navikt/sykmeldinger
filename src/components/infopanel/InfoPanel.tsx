@@ -5,37 +5,13 @@ import EkspanderbartpanelWrapper from './components/ekspanderbartpanelwrapper/Ek
 import PanelRad from './components/PanelRad';
 import PanelSeksjon from './components/PanelSeksjon';
 import SykmeldingPerioder from './components/sykmeldingperiode/SykmeldingPerioder';
+import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
 
 import './infopanel.less';
 
 interface InfoPanelProps {
     sykmelding: Sykmelding;
 }
-
-/*
-perioder:
-    liste over perioder
-    perioder viser sortert på dato, eldste først
-    hver periode:
-        har en overskrift
-        har en dato (utregnes med fom og tom) og antall dager
-        hvis grad er definert:
-            vis grad (% sykmeldt)
-        hvis grad er udefinert:
-            vis reisetilskudd dersom definert (se SykmeldingPeriode.js)
-        viser antall behandlingesdager (ledetekst)
-        viser reisetilskudd dersom grad er udefinert (ledetekst)
-        viser avventende status (ledetekst)
-            viser (ledetekst) innspill på avventende
-            viser innspill avventede
-
-
-
-    todo:
-    - sorter på dato, eldste først
-    - hent overskrift fra ledetekst
-    - hent reisetilskuddtekst fra ledetekst
-*/
 
 const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
     console.log(sykmelding);
@@ -48,22 +24,11 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
 
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
 
-                <PanelRad>
-                    <PanelSeksjon
-                        tittel="Diagnose"
-                        verdi="asd"
-                        skjultForArbeidsgiverTekst="Diagnosen vises ikke til arbeidsgiveren"
-                    />
-                    <PanelSeksjon tittel="Diagnosekode" verdi="asd" />
-                </PanelRad>
-                <PanelRad>
-                    <PanelSeksjon
-                        tittel="Bidiagnose"
-                        verdi="asd"
-                        skjultForArbeidsgiverTekst="Diagnosen vises ikke til arbeidsgiveren"
-                    />
-                    <PanelSeksjon tittel="Diagnosekode" verdi="asd" />
-                </PanelRad>
+                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
+                {sykmelding.medisinskVurdering.biDiagnoser.map(diagnose => (
+                    <DiagnoseSeksjon diagnose={diagnose} bidiagnose />
+                ))}
+
                 <PanelRad>
                     <PanelSeksjon tittel="Beskriv fraværet" verdi="asd" />
                 </PanelRad>
