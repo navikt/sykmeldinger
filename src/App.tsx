@@ -16,9 +16,10 @@ const App: React.FC = () => {
             <DataFetcher>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact={true} path="/" component={TidslinjeSide} />
+                        <Route exact={true} path="/" component={DittSykefravaer} />
                         <Route path="/sykmeldinger/:id" component={SykmeldingSide} />
                         <Route path="/sykmeldinger" component={DineSykmeldingerSide} />
+                        <Route path="/tidslinje" component={TidslinjeSide} />
                     </Switch>
                 </BrowserRouter>
             </DataFetcher>

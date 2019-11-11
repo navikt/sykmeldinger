@@ -1,3 +1,5 @@
+@import '../basic.less';
+
 .sidetittel {
     text-align: center;
     margin-bottom: 2rem;
@@ -5,4 +7,29 @@
 
 .infoheader {
     margin-bottom: 4rem;
+}
+
+.arbeidssituasjon {
+    margin-left: 0.8rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .arbeidssituasjon__med-arbg {
+        margin-right: 2rem;
+    }
+    .arbeidssituasjon__uten-arbg-label {
+        display: flex;
+    }
+    .arbeidssituasjon__hjelpetekst {
+        padding-left: 1rem;
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .arbeidssituasjon {
+        justify-content: center;
+        flex-direction: row;
+    }
 }
