@@ -1,11 +1,13 @@
 import React from 'react';
-import { Sykmelding } from '../../types/sykmeldingTypes';
+import { Sykmelding, Arbeidsgiver } from '../../types/sykmeldingTypes';
 import { Sidetittel } from 'nav-frontend-typografi';
 import EkspanderbartpanelWrapper from './components/ekspanderbartpanelwrapper/EkspanderbartpanelWrapper';
 import PanelRad from './components/PanelRad';
 import PanelSeksjon from './components/PanelSeksjon';
-import SykmeldingPerioder from './components/sykmeldingperiode/SykmeldingPerioder';
+import SykmeldingPerioder from './components/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
+import LegeSeksjon from './components/lege/LegeSeksjon';
+import ArbeidsgiverSeksjon from './components/arbeidsgiver/ArbeidsgiverSeksjon';
 
 import './infopanel.less';
 
@@ -25,8 +27,8 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
 
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
-                {sykmelding.medisinskVurdering.biDiagnoser.map(diagnose => (
-                    <DiagnoseSeksjon diagnose={diagnose} bidiagnose />
+                {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
+                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
 
                 <PanelRad>
@@ -40,14 +42,10 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                 <PanelRad>
                     <PanelSeksjon tittel="Beskriv eventuelle hensyn som må tas på arbeidsplassen" verdi="asd" />
                 </PanelRad>
-                <PanelRad>
-                    <PanelSeksjon tittel="Arbeidsgiver som legen har skrevet inn" verdi="asd" />
-                </PanelRad>
-                <PanelRad>
-                    <PanelSeksjon tittel="Lege/sykmelder" verdi={sykmelding.navnFastlege} />
-                    <PanelSeksjon tittel="Lege/sykmelder" verdi={sykmelding.navnFastlege} />
-                    <PanelSeksjon tittel="Lege/sykmelder" verdi={sykmelding.navnFastlege} />
-                </PanelRad>
+
+                <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
+
+                <LegeSeksjon navn={sykmelding.navnFastlege} />
 
                 <EkspanderbartpanelWrapper />
             </div>

@@ -58,7 +58,7 @@ export enum AnnenFraverGrunn {
     BEHANDLING_STERILISERING = 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering',
 }
 
-class Arbeidsgiver {
+export class Arbeidsgiver {
     harArbeidsgiver: HarArbeidsgiver;
     navn?: string;
     yrkesbetegnelse?: string;
