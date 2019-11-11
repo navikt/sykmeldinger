@@ -3,7 +3,7 @@ import React from 'react';
 import { Periode } from '../../../../types/sykmeldingTypes';
 import { sorterPerioderEldsteFoerst } from '../../../../utils/sorterSykemeldingUtils';
 import PanelRad from '../PanelRad';
-import PeriodeSeksjon from '../periodeseksjon/PeriodeSeksjon';
+import PeriodeSeksjon from './PeriodeSeksjon';
 
 interface SykmeldingPerioderProps {
     perioder: Periode[];
@@ -12,13 +12,13 @@ interface SykmeldingPerioderProps {
 const SykmeldingPerioder = ({ perioder }: SykmeldingPerioderProps) => {
     const sortert = sorterPerioderEldsteFoerst(perioder);
     return (
-        <div>
+        <>
             {sortert.map((periode, index) => (
                 <PanelRad key={index.toString()}>
-                    <PeriodeSeksjon periode={periode} />
+                    <PeriodeSeksjon periode={periode} underlined={sortert.length > 1} />
                 </PanelRad>
             ))}
-        </div>
+        </>
     );
 };
 
