@@ -1,9 +1,9 @@
 import React from 'react';
-import PanelRad from '../PanelRad';
-import PanelSeksjon from '../PanelSeksjon';
+import PanelRad from './PanelRad';
+import PanelSeksjon from './PanelSeksjon';
 
-import tekster from './prognose-tekster';
-import { Prognose } from '../../../../types/sykmeldingTypes';
+import tekster from '../infopanel-tekster';
+import { Prognose } from '../../../types/sykmeldingTypes';
 
 interface PrognoseSeksjonProps {
     prognose?: Prognose;

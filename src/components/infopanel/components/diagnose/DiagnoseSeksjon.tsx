@@ -4,7 +4,7 @@ import PanelRad from '../PanelRad';
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import tekster from './diagnose-tekster';
+import tekster from '../../infopanel-tekster';
 
 interface DiagnoseSeksjonProps {
     diagnose?: Diagnose;

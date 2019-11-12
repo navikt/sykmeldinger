@@ -1,7 +1,7 @@
 import React from 'react';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import tekster from './diagnose-tekster';
+import tekster from '../../infopanel-tekster';
 
 interface DiagnoseKodeSeksjonProps {
     kode: string;

@@ -1,10 +1,10 @@
 import React from 'react';
-import PanelRad from '../PanelRad';
-import PanelSeksjon from '../PanelSeksjon';
+import PanelRad from './PanelRad';
+import PanelSeksjon from './PanelSeksjon';
 
-import tekster from './fraver-tekster';
+import tekster from '../infopanel-tekster';
 
-import { AnnenFraversArsak } from '../../../../types/sykmeldingTypes';
+import { AnnenFraversArsak } from '../../../types/sykmeldingTypes';
 
 interface FraverSeksjonProps {
     fraver?: AnnenFraversArsak;

@@ -3,7 +3,7 @@ import { Periode } from '../../../../types/sykmeldingTypes';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
 import { tilLesbarPeriodeMedArstall, getDuration } from '../../../../utils/datoUtils';
-import tekster from './periodeseksjon-tekster';
+import tekster from '../../infopanel-tekster';
 import './periodeseksjon.less';
 
 interface PeriodeSeksjonProps {
@@ -27,7 +27,7 @@ const PeriodeSeksjon = ({ periode, underlined }: PeriodeSeksjonProps) => {
             {periode.gradert && periode.gradert.grad && (
                 <div style={{ display: 'flex' }}>
                     <Normaltekst>{periode.gradert.grad}% sykmeldt</Normaltekst>
-                    {periode.gradert.reisetilskudd && (periode.gradert.grad > 0 && periode.gradert.grad < 100) && (
+                    {periode.gradert.reisetilskudd && periode.gradert.grad > 0 && periode.gradert.grad < 100 && (
                         <Normaltekst>&nbsp;{tekster['periode.reisetilskudd']}</Normaltekst>
                     )}
                 </div>

@@ -1,13 +1,13 @@
 import React from 'react';
-import { MedisinskVurdering } from '../../../../types/sykmeldingTypes';
+import { MedisinskVurdering } from '../../../types/sykmeldingTypes';
 import { Checkbox } from 'nav-frontend-skjema';
 
-import PanelRad from '../PanelRad';
-import PanelSeksjon from '../PanelSeksjon';
+import PanelRad from './PanelRad';
+import PanelSeksjon from './PanelSeksjon';
 
-import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
+import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
 
-import tekster from './skade-tekster';
+import tekster from '../infopanel-tekster';
 
 interface SkadeSeksjonProps {
     medisinskVurdering: MedisinskVurdering;

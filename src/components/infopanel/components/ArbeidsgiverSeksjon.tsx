@@ -1,9 +1,9 @@
 import React from 'react';
-import { Arbeidsgiver } from '../../../../types/sykmeldingTypes';
+import { Arbeidsgiver } from '../../../types/sykmeldingTypes';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import PanelRad from '../PanelRad';
+import PanelRad from './PanelRad';
 
-import tekster from './arbeidsgiver-tekster';
+import tekster from '../infopanel-tekster';
 
 interface ArbeidsgiverSeksjonProps {
     arbeidsgiver: Arbeidsgiver;

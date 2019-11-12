@@ -1,10 +1,10 @@
 import React from 'react';
-import { Prognose } from '../../../../types/sykmeldingTypes';
+import { Prognose } from '../../../types/sykmeldingTypes';
 import { Checkbox } from 'nav-frontend-skjema';
 
-import PanelRad from '../PanelRad';
+import PanelRad from './PanelRad';
 
-import tekster from './arbeidsufor-tekster';
+import tekster from '../infopanel-tekster';
 
 interface ArbeidsuforSeksjonProps {
     prognose?: Prognose;

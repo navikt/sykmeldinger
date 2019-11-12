@@ -1,9 +1,9 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 
-import PanelRad from '../PanelRad';
+import PanelRad from './PanelRad';
 
-import tekster from './svangerskap-tekster';
+import tekster from '../infopanel-tekster';
 
 interface SvangerskapSeksjonProps {
     svangerskap: boolean;

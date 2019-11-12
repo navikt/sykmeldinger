@@ -1,8 +1,8 @@
 import React from 'react';
-import PanelRad from '../PanelRad';
-import PanelSeksjon from '../PanelSeksjon';
+import PanelRad from './PanelRad';
+import PanelSeksjon from './PanelSeksjon';
 
-import tekster from './lege-tekster';
+import tekster from '../infopanel-tekster';
 
 interface LegeSeksjonProps {
     navn: string;

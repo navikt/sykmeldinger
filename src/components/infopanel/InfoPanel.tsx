@@ -1,20 +1,19 @@
 import React from 'react';
 import { Sykmelding, Prognose } from '../../types/sykmeldingTypes';
 import { Sidetittel } from 'nav-frontend-typografi';
-import { Checkbox } from 'nav-frontend-skjema';
 
 import EkspanderbartpanelWrapper from './components/ekspanderbartpanelwrapper/EkspanderbartpanelWrapper';
 import SykmeldingPerioder from './components/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
-import LegeSeksjon from './components/lege/LegeSeksjon';
-import ArbeidsgiverSeksjon from './components/arbeidsgiver/ArbeidsgiverSeksjon';
-import PrognoseSeksjon from './components/prognose/PrognoseSeksjon';
-import FraverSeksjon from './components/fraver/FraverSeksjon';
+import LegeSeksjon from './components/LegeSeksjon';
+import ArbeidsgiverSeksjon from './components/ArbeidsgiverSeksjon';
+import PrognoseSeksjon from './components/PrognoseSeksjon';
+import FraverSeksjon from './components/FraverSeksjon';
+import SkadeSeksjon from './components/SkadeSeksjon';
+import SvangerskapSeksjon from './components/SvangerskapSeksjon';
+import ArbeidsuforSeksjon from './components/ArbeidsuforSeksjon';
 
 import './infopanel.less';
-import SkadeSeksjon from './components/skade/SkadeSeksjon';
-import SvangerskapSeksjon from './components/svangerskap/SvangerskapSeksjon';
-import ArbeidsuforSeksjon from './components/arbeidsufor/ArbeidsuforSeksjon';
 
 interface InfoPanelProps {
     sykmelding: Sykmelding;
