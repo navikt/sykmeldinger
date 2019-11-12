@@ -8,6 +8,7 @@ import SykmeldingPerioder from './components/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
 import LegeSeksjon from './components/lege/LegeSeksjon';
 import ArbeidsgiverSeksjon from './components/arbeidsgiver/ArbeidsgiverSeksjon';
+import PrognoseSeksjon from './components/prognose/PrognoseSeksjon';
 
 import './infopanel.less';
 
@@ -39,9 +40,8 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                     <PanelSeksjon tittel="Skadedato" verdi="asd" />
                 </PanelRad>
                 <p>spm med checkbox</p>
-                <PanelRad>
-                    <PanelSeksjon tittel="Beskriv eventuelle hensyn som må tas på arbeidsplassen" verdi="asd" />
-                </PanelRad>
+
+                <PrognoseSeksjon prognose={sykmelding.prognose} />
 
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
 

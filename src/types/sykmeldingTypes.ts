@@ -159,7 +159,7 @@ class Gradert {
     }
 }
 
-class Prognose {
+export class Prognose {
     arbeidsforEtterPeriode: boolean;
     hensynArbeidsplassen?: string;
     erIArbeid?: ErIArbeid;
