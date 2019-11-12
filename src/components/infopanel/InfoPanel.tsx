@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sykmelding, Prognose } from '../../types/sykmeldingTypes';
+import { Sykmelding } from '../../types/sykmeldingTypes';
 import { Sidetittel } from 'nav-frontend-typografi';
 
-import EkspanderbartpanelWrapper from './components/ekspanderbartpanelwrapper/EkspanderbartpanelWrapper';
+import FlereOpplysninger from './components/flereopplysninger/FlereOpplysninger';
 import SykmeldingPerioder from './components/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
 import LegeSeksjon from './components/LegeSeksjon';
@@ -13,8 +13,6 @@ import SkadeSeksjon from './components/SkadeSeksjon';
 import SvangerskapSeksjon from './components/SvangerskapSeksjon';
 import ArbeidsuforSeksjon from './components/ArbeidsuforSeksjon';
 
-import tekster from './infopanel-tekster';
-
 import './infopanel.less';
 
 interface InfoPanelProps {
@@ -22,34 +20,25 @@ interface InfoPanelProps {
 }
 
 const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
+    console.log(sykmelding);
     return (
         <article className="panel">
             <header className="panel-header">ikon navn</header>
             <div className="panel-content">
                 <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
-
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
-
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
-
                 <FraverSeksjon fraver={sykmelding.medisinskVurdering.annenFraversArsak} />
-
                 <SvangerskapSeksjon svangerskap={sykmelding.medisinskVurdering.svangerskap} />
-
                 <SkadeSeksjon medisinskVurdering={sykmelding.medisinskVurdering} />
-
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
-
                 <PrognoseSeksjon prognose={sykmelding.prognose} />
-
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
-
-                <EkspanderbartpanelWrapper tittel={tekster['flere-opplysninger.tittel']} children={[<div>asd</div>]} />
+                <FlereOpplysninger sykmelding={sykmelding} />
             </div>
         </article>
     );

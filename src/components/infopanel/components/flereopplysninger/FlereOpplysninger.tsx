@@ -1,7 +1,12 @@
 import React from 'react';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 
-import './ekspanderbartpanelwrapper.less';
+import './flereopplysninger.less';
+import { Sykmelding } from '../../../../types/sykmeldingTypes';
+
+import tekster from '../../infopanel-tekster';
+
+import PanelInnhold from './components/PanelInnhold';
 
 interface PanelHeadingProps {
     tittel: string;
@@ -16,23 +21,18 @@ const PanelHeading = ({ tittel }: PanelHeadingProps) => {
     );
 };
 
-interface EkspanderbartpanelWrapperProps {
-    tittel: string;
-    children?: JSX.Element[];
+interface FlereOpplysningerProps {
+    sykmelding: Sykmelding;
 }
 
-const EkspanderbartpanelWrapper = ({ tittel, children }: EkspanderbartpanelWrapperProps) => {
-    if (!children || children.length === 0) {
-        return null;
-    }
-
+const FlereOpplysninger = ({ sykmelding }: FlereOpplysningerProps) => {
     return (
         <div className="ekspanderbart-panel">
-            <EkspanderbartpanelBase heading={<PanelHeading tittel={tittel} />} border>
-                {children}
+            <EkspanderbartpanelBase heading={<PanelHeading tittel={tekster['flere-opplysninger.tittel']} />} border>
+                <PanelInnhold sykmelding={sykmelding} />
             </EkspanderbartpanelBase>
         </div>
     );
 };
 
-export default EkspanderbartpanelWrapper;
+export default FlereOpplysninger;

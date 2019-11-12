@@ -1,11 +1,17 @@
 import React from 'react';
 
+import Margin from './Margin';
+
 interface PanelRadProps {
     children: JSX.Element | JSX.Element[];
 }
 
 const PanelRad = ({ children }: PanelRadProps) => {
-    return <div style={{ display: 'flex', marginBottom: '2rem' }}>{children}</div>;
+    return (
+        <Margin>
+            <div style={{ display: 'flex' }}>{children}</div>
+        </Margin>
+    );
 };
 
 export default PanelRad;
