@@ -6,6 +6,7 @@ import DinArbeidssituasjon from '../components/DinArbeidssituasjon';
 import NaermesteLeder from '../types/naermesteLederTypes';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import Sporsmal from '../components/sporsmal/sporsmal';
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -31,6 +32,7 @@ const DittSykefravaer: React.FC = () => {
                 </div>
             </div>
             <div className="limit">
+                <Sporsmal />
                 <DinArbeidssituasjon naermesteLedere={tempLedere} />
                 <Lenkepanel
                     href="#"

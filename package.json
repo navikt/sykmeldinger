@@ -20,14 +20,15 @@
     "nav-frontend-chevron-style": "^0.3.5",
     "nav-frontend-core": "^4.0.11",
     "nav-frontend-ikoner-assets": "^1.0.3",
-    "nav-frontend-js-utils": "^1.0.7",
+    "nav-frontend-js-utils": "^1.0.8",
     "nav-frontend-lenkepanel": "^1.0.34",
     "nav-frontend-lenkepanel-style": "^0.3.27",
     "nav-frontend-lenker": "^1.0.32",
     "nav-frontend-lenker-style": "^0.2.24",
+    "nav-frontend-paneler": "^1.0.21",
     "nav-frontend-paneler-style": "^0.3.17",
-    "nav-frontend-skjema": "^1.0.75",
-    "nav-frontend-skjema-style": "^1.0.47",
+    "nav-frontend-skjema": "^1.0.77",
+    "nav-frontend-skjema-style": "^1.0.48",
     "nav-frontend-spinner": "^1.0.20",
     "nav-frontend-spinner-style": "^0.2.5",
     "nav-frontend-tekstomrade": "^2.0.37",
@@ -36,9 +37,11 @@
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-hook-form": "^3.27.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "craco start",
@@ -64,6 +67,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.1",
+    "@types/yup": "^0.26.24",
     "yet-another-fetch-mock": "^3.3.1"
   }
 }
