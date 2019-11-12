@@ -34,7 +34,7 @@ export class Diagnose {
     }
 }
 
-class AnnenFraversArsak {
+export class AnnenFraversArsak {
     beskrivelse?: string;
     grunn: AnnenFraverGrunn[];
     constructor(annenFraversArsak: any) {

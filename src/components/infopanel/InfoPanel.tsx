@@ -9,6 +9,7 @@ import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
 import LegeSeksjon from './components/lege/LegeSeksjon';
 import ArbeidsgiverSeksjon from './components/arbeidsgiver/ArbeidsgiverSeksjon';
 import PrognoseSeksjon from './components/prognose/PrognoseSeksjon';
+import FraverSeksjon from './components/fraver/FraverSeksjon';
 
 import './infopanel.less';
 
@@ -32,9 +33,8 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
 
-                <PanelRad>
-                    <PanelSeksjon tittel="Beskriv fraværet" verdi="asd" />
-                </PanelRad>
+                <FraverSeksjon fraver={sykmelding.medisinskVurdering.annenFraversArsak} />
+
                 <p>spm med checkbox</p>
                 <PanelRad>
                     <PanelSeksjon tittel="Skadedato" verdi="asd" />
