@@ -1,9 +1,9 @@
 import React from 'react';
-import { Sykmelding, Arbeidsgiver } from '../../types/sykmeldingTypes';
+import { Sykmelding, Prognose } from '../../types/sykmeldingTypes';
 import { Sidetittel } from 'nav-frontend-typografi';
+import { Checkbox } from 'nav-frontend-skjema';
+
 import EkspanderbartpanelWrapper from './components/ekspanderbartpanelwrapper/EkspanderbartpanelWrapper';
-import PanelRad from './components/PanelRad';
-import PanelSeksjon from './components/PanelSeksjon';
 import SykmeldingPerioder from './components/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
 import LegeSeksjon from './components/lege/LegeSeksjon';
@@ -12,14 +12,15 @@ import PrognoseSeksjon from './components/prognose/PrognoseSeksjon';
 import FraverSeksjon from './components/fraver/FraverSeksjon';
 
 import './infopanel.less';
+import SkadeSeksjon from './components/skade/SkadeSeksjon';
+import SvangerskapSeksjon from './components/svangerskap/SvangerskapSeksjon';
+import ArbeidsuforSeksjon from './components/arbeidsufor/ArbeidsuforSeksjon';
 
 interface InfoPanelProps {
     sykmelding: Sykmelding;
 }
 
 const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
-    console.log(sykmelding);
-
     return (
         <article className="panel">
             <header className="panel-header">ikon navn</header>
@@ -35,11 +36,11 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
 
                 <FraverSeksjon fraver={sykmelding.medisinskVurdering.annenFraversArsak} />
 
-                <p>spm med checkbox</p>
-                <PanelRad>
-                    <PanelSeksjon tittel="Skadedato" verdi="asd" />
-                </PanelRad>
-                <p>spm med checkbox</p>
+                <SvangerskapSeksjon svangerskap={sykmelding.medisinskVurdering.svangerskap} />
+
+                <SkadeSeksjon medisinskVurdering={sykmelding.medisinskVurdering} />
+
+                <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
 
                 <PrognoseSeksjon prognose={sykmelding.prognose} />
 

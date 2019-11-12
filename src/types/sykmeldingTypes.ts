@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-class MedisinskVurdering {
+export class MedisinskVurdering {
     hovedDiagnose?: Diagnose;
     biDiagnoser: Diagnose[];
     svangerskap: boolean;
