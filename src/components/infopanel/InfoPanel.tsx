@@ -13,6 +13,8 @@ import SkadeSeksjon from './components/SkadeSeksjon';
 import SvangerskapSeksjon from './components/SvangerskapSeksjon';
 import ArbeidsuforSeksjon from './components/ArbeidsuforSeksjon';
 
+import tekster from './infopanel-tekster';
+
 import './infopanel.less';
 
 interface InfoPanelProps {
@@ -47,7 +49,7 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
 
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <EkspanderbartpanelWrapper />
+                <EkspanderbartpanelWrapper tittel={tekster['flere-opplysninger.tittel']} children={[<div>asd</div>]} />
             </div>
         </article>
     );

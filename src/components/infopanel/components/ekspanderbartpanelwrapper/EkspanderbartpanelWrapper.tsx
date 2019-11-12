@@ -1,29 +1,35 @@
 import React from 'react';
-import { Sykmelding } from '../../../../types/sykmeldingTypes';
-import { Element } from 'nav-frontend-typografi';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 
 import './ekspanderbartpanelwrapper.less';
 
-interface EkspanderbartpanelWrapperProps {
-    sykmelding: Sykmelding;
+interface PanelHeadingProps {
+    tittel: string;
 }
 
-const PanelHeading = () => {
+const PanelHeading = ({ tittel }: PanelHeadingProps) => {
     return (
         <div className="ekspanderbartpanel-heading">
             <div className="ekspanderbartpanel-ikon">ikon</div>
-            <div className="ekspanderbartpanel-tekst">Flere opplysninger fra den som har sykmeldt deg</div>
-            <Element className="ekspanderbartpanel-chevron-tekst">Åpne</Element>
+            <div className="ekspanderbartpanel-tekst">{tittel}</div>
         </div>
     );
 };
 
-const EkspanderbartpanelWrapper = () => {
+interface EkspanderbartpanelWrapperProps {
+    tittel: string;
+    children?: JSX.Element[];
+}
+
+const EkspanderbartpanelWrapper = ({ tittel, children }: EkspanderbartpanelWrapperProps) => {
+    if (!children || children.length === 0) {
+        return null;
+    }
+
     return (
         <div className="ekspanderbart-panel">
-            <EkspanderbartpanelBase heading={<PanelHeading />} border>
-                innhold
+            <EkspanderbartpanelBase heading={<PanelHeading tittel={tittel} />} border>
+                {children}
             </EkspanderbartpanelBase>
         </div>
     );

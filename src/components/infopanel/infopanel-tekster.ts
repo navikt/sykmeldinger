@@ -20,6 +20,7 @@ const InfopanelTekster: any = {
         'skade.tittel': 'Sykdommen kan skyldes en skade/yrkessykdom',
         'skade.dato.tittel': 'Skadedato',
         'svangerskap.tittel': 'Sykdommen er svangerskapsrelatert',
+        'flere-opplysninger.tittel': 'Flere opplysninger fra den som har sykmeldt deg',
     },
     en: {},
 };
