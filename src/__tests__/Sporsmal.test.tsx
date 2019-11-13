@@ -32,7 +32,6 @@ describe('Sporsmal', () => {
         act(() => {
             fireEvent.click(getByText(/SEND SYKMELDING/i));
         });
-
         await wait(() => getByText('Vennligst velg Ja eller Nei'));
         expect(getByText('Vennligst velg Ja eller Nei')).toBeInTheDocument();
     });

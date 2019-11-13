@@ -57,7 +57,7 @@ const Sporsmal: React.FC = () => {
     useEffect(() => {
         if (hasFinished(sykmeldingPoster)) {
             console.log('Sending was successful');
-            // Redirect til kvitteringside
+            // TODO: Redirect til kvitteringside
         }
     }, [sykmeldingPoster]);
 
