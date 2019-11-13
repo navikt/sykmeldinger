@@ -6,7 +6,7 @@ import DinArbeidssituasjon from '../components/DinArbeidssituasjon';
 import NaermesteLeder from '../types/naermesteLederTypes';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import Sporsmal from '../components/sporsmal/sporsmal';
+import Sporsmal from '../components/sporsmal/Sporsmal';
 
 const brodsmuler: Brodsmule[] = [
     {
