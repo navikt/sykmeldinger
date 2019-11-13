@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Checkbox } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import useForm from 'react-hook-form';
@@ -32,11 +33,13 @@ interface SykmeldingFormData {
 }
 
 const Sporsmal: React.FC = () => {
-    const { register, handleSubmit, watch, errors } = useForm({
+    const { register, handleSubmit, watch, errors, formState } = useForm({
         validationSchema: valideringsSkjema,
     }); // Form-håndtering/validering
     const sykmeldingPoster = useFetch<any>(); // Posting av form-data
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
+
+    const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     // For conditional visning av underspørsmål
     const watchOpplysningeneErRiktige = watch('opplysningeneErRiktige');
@@ -55,6 +58,10 @@ const Sporsmal: React.FC = () => {
     };
 
     useEffect(() => {
+        console.table(errors);
+    }, [errors]);
+
+    useEffect(() => {
         if (hasFinished(sykmeldingPoster)) {
             console.log('Sending was successful');
             // TODO: Redirect til kvitteringside
@@ -63,6 +70,9 @@ const Sporsmal: React.FC = () => {
 
     return (
         <>
+            {formState.isSubmitted && !formState.isValid && (
+                <AlertStripeFeil>Vennligst fyll ut alle feltene under.</AlertStripeFeil>
+            )}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <PanelBase>
                     <SkjemaGruppe
@@ -210,12 +220,16 @@ const Sporsmal: React.FC = () => {
                     </Hovedknapp>
                 </div>
             </form>
-            <div className="knapp--sentrer">
+            <div className="knapp--sentrer" ref={avbrytdialogRef}>
                 <Lenke
                     href="#"
                     onClick={e => {
                         e.preventDefault();
                         setVisAvbrytDialog(vises => !vises);
+                        setTimeout(
+                            () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
+                            300,
+                        );
                     }}
                     className="knapp--ikke-bruk-sykmeldingen"
                 >
