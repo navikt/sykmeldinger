@@ -8,7 +8,7 @@ import { Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import useForm from 'react-hook-form';
 import { valideringsSkjema } from './valideringsSkjema';
-import useFetch, { isNotStarted, FetchState, hasData, FetchStatus } from '../../hooks/useFetch';
+import useFetch, { isNotStarted, FetchState, hasData, FetchStatus, hasFinished } from '../../hooks/useFetch';
 import './Sporsmal.less';
 
 export enum Arbeidsforhold {
@@ -54,6 +54,13 @@ const Sporsmal: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        if (hasFinished(sykmeldingPoster)) {
+            console.log('Sending was successful');
+            // Redirect til kvitteringside
+        }
+    }, [sykmeldingPoster]);
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -62,6 +69,7 @@ const Sporsmal: React.FC = () => {
                         feil={
                             errors.opplysningeneErRiktige ? { feilmelding: 'Vennligst velg Ja eller Nei' } : undefined
                         }
+                        className="js-opplysningeneErRiktige"
                     >
                         <Fieldset legend="Er opplysningene i sykmeldingen riktige?">
                             <Radio label="Ja" name="opplysningeneErRiktige" value="true" radioRef={register as any} />
@@ -99,6 +107,7 @@ const Sporsmal: React.FC = () => {
                 <PanelBase>
                     <SkjemaGruppe
                         feil={errors.sykmeldtFra ? { feilmelding: 'Velg hvor du er sykmeldt fra' } : undefined}
+                        className="js-sykmeldtFra"
                     >
                         <Fieldset
                             legend={
