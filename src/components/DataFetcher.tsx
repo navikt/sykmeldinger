@@ -4,26 +4,31 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useFetch, { isNotStarted, FetchState, hasData, isAnyNotStartedOrPending, hasAnyFailed } from '../hooks/useFetch';
 import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
+import { SykmeldingData } from '../types/sykmeldingDataTypes';
 
 const DataFetcher = (props: { children: any }) => {
-    const { setSykmeldinger, setNaermesteLedere } = useAppStore();
-    const sykmeldingerFetcher = useFetch<Sykmelding[]>();
+    const { setSykmelding, setSykmeldingStatus, setNaermesteLedere } = useAppStore();
+    const sykmeldingFetcher = useFetch<SykmeldingData>();
 
     useEffect(() => {
-        if (isNotStarted(sykmeldingerFetcher)) {
-            sykmeldingerFetcher.fetch('/syforest/sykmeldinger', undefined, (fetchState: FetchState<any[]>) => {
+        if (isNotStarted(sykmeldingFetcher)) {
+            sykmeldingFetcher.fetch('/syforest/sykmelding', undefined, (fetchState: FetchState<SykmeldingData>) => {
                 if (hasData(fetchState)) {
-                    setSykmeldinger(fetchState.data.map(sykmelding => new Sykmelding(sykmelding.receivedSykmelding.sykmelding)));
+                    const { data } = fetchState;
+                    const sykmelding = new Sykmelding(data.sykmelding);
+                    const sykmeldingStatus = data.status;
+                    setSykmelding(sykmelding);
+                    setSykmeldingStatus(sykmeldingStatus);
                 }
             });
         }
-    }, [setSykmeldinger, sykmeldingerFetcher]);
+    }, [setSykmelding, sykmeldingFetcher]);
 
-    if (isAnyNotStartedOrPending([sykmeldingerFetcher])) {
+    if (isAnyNotStartedOrPending([sykmeldingFetcher])) {
         return <Spinner />;
     }
 
-    if (hasAnyFailed([sykmeldingerFetcher])) {
+    if (hasAnyFailed([sykmeldingFetcher])) {
         return (
             <AlertStripeFeil>
                 Det oppsto feil ved henting av data. Vi jobber med å løse saken. Vennligst prøv igjen senere.
