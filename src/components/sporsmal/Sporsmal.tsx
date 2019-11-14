@@ -294,7 +294,7 @@ const Sporsmal: React.FC = () => {
                         {tekster['avbrytdialog.avbryt-knapp']}
                     </Fareknapp>
                     <Lenke
-                        href="#"
+                        href="_blank"
                         onClick={e => {
                             e.preventDefault();
                             setVisAvbrytDialog(navarendeVerdi => !navarendeVerdi);
