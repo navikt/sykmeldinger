@@ -27,7 +27,7 @@ const Sporsmal = ({ sporsmalSvar: { restriksjoner, sporsmal, svar } }: SporsmalP
     return (
         <Margin>
             <Element>{sporsmal}</Element>
-            <Normaltekst>{svar}</Normaltekst>
+            <Normaltekst>- {svar}</Normaltekst>
             {restriksjoner}
         </Margin>
     );

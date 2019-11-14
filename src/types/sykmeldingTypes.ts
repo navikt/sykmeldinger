@@ -196,7 +196,7 @@ export class ErIkkeIArbeid {
     }
 }
 
-class MeldingTilNAV {
+export class MeldingTilNAV {
     bistandUmiddelbart: boolean;
     beskrivBistand?: string;
     constructor(meldingTilNAV: any) {

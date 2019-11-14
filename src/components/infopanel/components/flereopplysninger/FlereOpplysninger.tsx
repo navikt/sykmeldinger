@@ -9,6 +9,7 @@ import tekster from '../../infopanel-tekster';
 import BehandlingsDatoer from './components/BehandlingsDatoer';
 import Friskmelding from './components/Friskmelding';
 import UtdypendeOpplysninger from './components/UtdypendeOpplysninger';
+import Arbeidsevne from './components/Arbeidsevne';
 
 interface PanelHeadingProps {
     tittel: string;
@@ -42,7 +43,7 @@ const FlereOpplysninger = ({ sykmelding }: FlereOpplysningerProps) => {
                 <div>mulighet for arbeid</div> <hr />
                 <Friskmelding prognose={sykmelding.prognose} />
                 <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
-                <div>hva skal til for å bedre arbeidsevnen</div> <hr />
+                <Arbeidsevne tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} tiltakNAV={sykmelding.tiltakNAV} />
                 <div>annet</div> <hr />
             </EkspanderbartpanelBase>
         </div>

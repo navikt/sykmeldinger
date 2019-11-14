@@ -98,23 +98,13 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
         );
     };
 
-    const HensynArbeidsplassenSeksjon = () => {
-        if (!hensynArbeidsplassen) {
-            return null;
-        }
-
-        return (
+    return (
+        <PanelSeksjon tittel={tekster['friskmelding.tittel']}>
+            <Checkbox label={tekster['friskmelding.arbeidsfor.tittel']} checked={arbeidsforEtterPeriode} readOnly />
             <Margin>
                 <Element>{tekster['friskmelding.hensyn']}</Element>
                 <Normaltekst>{hensynArbeidsplassen}</Normaltekst>
             </Margin>
-        );
-    };
-
-    return (
-        <PanelSeksjon tittel={tekster['friskmelding.tittel']}>
-            <Checkbox label={tekster['friskmelding.arbeidsfor.tittel']} checked={arbeidsforEtterPeriode} readOnly />
-            <HensynArbeidsplassenSeksjon />
             <ErIArbeidSeksjon />
             <ErIkkeIArbeidSeksjon />
         </PanelSeksjon>
