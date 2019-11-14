@@ -10,6 +10,8 @@ import Lenke from 'nav-frontend-lenker';
 import useForm from 'react-hook-form';
 import { valideringsSkjema } from './valideringsSkjema';
 import useFetch, { isNotStarted, FetchState, hasData, FetchStatus, hasFinished } from '../../hooks/useFetch';
+import tekster from './sporsmal-tekster';
+import { endreLedetekst } from '../../utils/ledetekst-utils';
 import './Sporsmal.less';
 
 export enum Arbeidsforhold {
@@ -63,7 +65,7 @@ const Sporsmal: React.FC = () => {
 
     useEffect(() => {
         if (hasFinished(sykmeldingPoster)) {
-            console.log('Sending was successful');
+            console.log('Innsending fullført');
             // TODO: Redirect til kvitteringside
         }
     }, [sykmeldingPoster]);
@@ -71,41 +73,55 @@ const Sporsmal: React.FC = () => {
     return (
         <>
             {formState.isSubmitted && !formState.isValid && (
-                <AlertStripeFeil>Vennligst fyll ut alle feltene under.</AlertStripeFeil>
+                <AlertStripeFeil>{tekster['alertstripe.tekst']}</AlertStripeFeil>
             )}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <PanelBase>
                     <SkjemaGruppe
                         feil={
-                            errors.opplysningeneErRiktige ? { feilmelding: 'Vennligst velg Ja eller Nei' } : undefined
+                            errors.opplysningeneErRiktige
+                                ? { feilmelding: tekster['jaEllerNei.feilmelding'] }
+                                : undefined
                         }
                         className="js-opplysningeneErRiktige"
                     >
-                        <Fieldset legend="Er opplysningene i sykmeldingen riktige?">
-                            <Radio label="Ja" name="opplysningeneErRiktige" value="true" radioRef={register as any} />
-                            <Radio label="Nei" name="opplysningeneErRiktige" value="false" radioRef={register as any} />
+                        <Fieldset legend={tekster['jaEllerNei.tittel']}>
+                            <Radio label={tekster['ja']} name="opplysningeneErRiktige" value="true" radioRef={register as any} />
+                            <Radio label={tekster['nei']} name="opplysningeneErRiktige" value="false" radioRef={register as any} />
                         </Fieldset>
                     </SkjemaGruppe>
                     {watchOpplysningeneErRiktige === 'false' && (
                         <SkjemaGruppe
                             feil={
                                 errors.opplysninger
-                                    ? { feilmelding: 'Vennligst velg ett eller flere alternativ' }
+                                    ? { feilmelding: tekster['opplysningeneErFeil.feilmelding'] }
                                     : undefined
                             }
                             className="skjemagruppe--undersporsmal"
                         >
-                            <Fieldset legend="Hva er som ikke stemmer?">
-                                <Checkbox label="Periode" name="periode" checkboxRef={register as any} />
+                            <Fieldset legend={tekster['opplysningeneErFeil.tittel']}>
                                 <Checkbox
-                                    label="Sykmeldingsgrad"
+                                    label={tekster['opplysningeneErFeil.periode']}
+                                    name="periode"
+                                    checkboxRef={register as any}
+                                />
+                                <Checkbox
+                                    label={tekster['opplysningeneErFeil.sykmeldingsgrad']}
                                     name="sykmeldingsgrad"
                                     checkboxRef={register as any}
                                 />
-                                <Checkbox label="Arbeidsgiver" name="arbeidsgiver" checkboxRef={register as any} />
-                                <Checkbox label="Diagnose" name="diagnose" checkboxRef={register as any} />
                                 <Checkbox
-                                    label="Andre opplysninger"
+                                    label={tekster['opplysningeneErFeil.arbeidsgiver']}
+                                    name="arbeidsgiver"
+                                    checkboxRef={register as any}
+                                />
+                                <Checkbox
+                                    label={tekster['opplysningeneErFeil.diagnose']}
+                                    name="diagnose"
+                                    checkboxRef={register as any}
+                                />
+                                <Checkbox
+                                    label={tekster['opplysningeneErFeil.andreOpplysninger']}
                                     name="andreOpplysninger"
                                     checkboxRef={register as any}
                                 />
@@ -116,53 +132,49 @@ const Sporsmal: React.FC = () => {
                 <br />
                 <PanelBase>
                     <SkjemaGruppe
-                        feil={errors.sykmeldtFra ? { feilmelding: 'Velg hvor du er sykmeldt fra' } : undefined}
+                        feil={errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined}
                         className="js-sykmeldtFra"
                     >
                         <Fieldset
                             legend={
                                 <div>
-                                    Jeg er sykmeldt fra
-                                    <Hjelpetekst>
-                                        Er du sykmeldt fra flere arbeidssituasjoner må du ha én sykmelding per
-                                        arbeidssituasjon. Trenger du flere sykmeldinger, må du kontakte den som har
-                                        sykmeldt deg.
-                                    </Hjelpetekst>
+                                    {tekster['sykmeldtFra.tittel']}
+                                    <Hjelpetekst>{tekster['sykmeldtFra.hjelpetekst']}</Hjelpetekst>
                                 </div>
                             }
                         >
                             <Radio
-                                label="Liste med arbeidsgivere"
+                                label="PLACEHOLDE arbeidsgiver"
                                 name="sykmeldtFra"
                                 value={Arbeidsforhold.ARBEIDSGIVER}
                                 radioRef={register as any}
                             />
                             <Radio
-                                label="Jobb som selstendig næringsdrivende"
+                                label={tekster['sykmeldtFra.selvstending-naringsdrivende']}
                                 name="sykmeldtFra"
                                 value={Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE}
                                 radioRef={register as any}
                             />
                             <Radio
-                                label="Jobb som frilanser"
+                                label={tekster['sykmeldtFra.frilanser']}
                                 name="sykmeldtFra"
                                 value={Arbeidsforhold.FRILANSER}
                                 radioRef={register as any}
                             />
                             <Radio
-                                label="Jobb hos en annen arbeidsgiver"
+                                label={tekster['sykmeldtFra.annen-arbeidsgiver']}
                                 name="sykmeldtFra"
                                 value={Arbeidsforhold.ANNEN_ARBEIDSGIVER}
                                 radioRef={register as any}
                             />
                             <Radio
-                                label="Jeg er arbeidsledig"
+                                label={tekster['sykmeldtFra.arbeidsledig']}
                                 name="sykmeldtFra"
                                 value={Arbeidsforhold.ARBEIDSLEDIG}
                                 radioRef={register as any}
                             />
                             <Radio
-                                label="Jeg finner ingenting som passer for meg"
+                                label={tekster['sykmeldtFra.ingenting-passer']}
                                 name="sykmeldtFra"
                                 value={Arbeidsforhold.INGENTING_PASSER}
                                 radioRef={register as any}
@@ -171,23 +183,37 @@ const Sporsmal: React.FC = () => {
                     </SkjemaGruppe>
                     {watchSykmeldtFra === 'arbeidsgiver' && (
                         <SkjemaGruppe
-                            feil={errors.oppfolging ? { feilmelding: 'Velg hvor du er sykmeldt fra' } : undefined}
+                            feil={
+                                errors.oppfolging
+                                    ? {
+                                          feilmelding: endreLedetekst(
+                                              tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'],
+                                              {
+                                                  '%ARBEIDSGIVER%': 'PLACEHOLDER',
+                                              },
+                                          ),
+                                      }
+                                    : undefined
+                            }
                             className="skjemagruppe--undersporsmal"
                         >
-                            <Fieldset legend="Stemmer det at du får oppfølging av .... ?">
-                                <Radio label="Ja" name="oppfolging" value="true" radioRef={register as any} />
-                                <Radio label="Nei" name="oppfolging" value="false" radioRef={register as any} />
+                            <Fieldset
+                                legend={endreLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
+                                    '%ARBEIDSGIVER%': 'PLACEHOLDER',
+                                })}
+                            >
+                                <Radio label={tekster['ja']} name="oppfolging" value="true" radioRef={register as any} />
+                                <Radio label={tekster['nei']} name="oppfolging" value="false" radioRef={register as any} />
                             </Fieldset>
                             {watchOppfolging === 'true' && (
                                 <Tekstomrade>
-                                    Vi sender sykmeldingen til Station Officer Steele, som finner den ved å logge inn på
-                                    nav.no.
+                                    {endreLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
+                                        '%ARBEIDSGIVER%': 'PLACEHOLDER',
+                                    })}
                                 </Tekstomrade>
                             )}
                             {watchOppfolging === 'false' && (
-                                <Tekstomrade>
-                                    Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
-                                </Tekstomrade>
+                                <Tekstomrade>{tekster['sykmeldtFra.arbeidsgiver.bekreft.nei']}</Tekstomrade>
                             )}
                         </SkjemaGruppe>
                     )}
@@ -208,7 +234,7 @@ const Sporsmal: React.FC = () => {
                         </SkjemaGruppe>
                     )}
                     {watchSykmeldtFra === 'annenArbeidsgiver' && (
-                        <div>Her kommer det en komponent for å skrive ut sykmeldingen</div>
+                        <div>Her k ommer det en komponent for å skrive ut sykmeldingen</div>
                     )}
                 </PanelBase>
                 <br />
@@ -233,28 +259,28 @@ const Sporsmal: React.FC = () => {
                     }}
                     className="knapp--ikke-bruk-sykmeldingen"
                 >
-                    Jeg ønsker ikke å bruke denne sykmeldingen
+                    {tekster['knapp.onsker-ikke-bruke-sykmelding']}
                 </Lenke>
             </div>
             {visAvbrytDialog && (
                 <PanelBase className="avbrytdialog">
                     <Tekstomrade className="avbrytdialog--margin-bottom">
-                        Er du sikker på at du vil avbryte denne sykmeldingen?
+                        {tekster['avbrytdialog.er-du-sikker']}
                     </Tekstomrade>
                     <Tekstomrade className="avbrytdialog--margin-bottom">
-                        Du kan fortsatt levere den på papir.
+                        {tekster['avbrytdialog.kan-sende-papir']}
                     </Tekstomrade>
                     <Fareknapp htmlType="button" className="avbrytdialog--margin-bottom">
-                        JA, JEG ER SIKKER
+                        {tekster['avbrytdialog.avbryt-knapp']}
                     </Fareknapp>
                     <Lenke
                         href="#"
                         onClick={e => {
                             e.preventDefault();
-                            setVisAvbrytDialog(vises => !vises);
+                            setVisAvbrytDialog(navarendeVerdi => !navarendeVerdi);
                         }}
                     >
-                        Angre
+                        {tekster['avbrytdialog.angre-knapp']}
                     </Lenke>
                 </PanelBase>
             )}
