@@ -37,7 +37,7 @@ interface SykmeldingFormData {
 const Sporsmal: React.FC = () => {
     const { register, handleSubmit, watch, errors, formState } = useForm({
         validationSchema: valideringsSkjema,
-    }); // Form-håndtering/validering
+    });
     const sykmeldingPoster = useFetch<any>(); // Posting av form-data
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
 
@@ -86,8 +86,18 @@ const Sporsmal: React.FC = () => {
                         className="js-opplysningeneErRiktige"
                     >
                         <Fieldset legend={tekster['jaEllerNei.tittel']}>
-                            <Radio label={tekster['ja']} name="opplysningeneErRiktige" value="true" radioRef={register as any} />
-                            <Radio label={tekster['nei']} name="opplysningeneErRiktige" value="false" radioRef={register as any} />
+                            <Radio
+                                label={tekster['ja']}
+                                name="opplysningeneErRiktige"
+                                value="true"
+                                radioRef={register as any}
+                            />
+                            <Radio
+                                label={tekster['nei']}
+                                name="opplysningeneErRiktige"
+                                value="false"
+                                radioRef={register as any}
+                            />
                         </Fieldset>
                     </SkjemaGruppe>
                     {watchOpplysningeneErRiktige === 'false' && (
@@ -202,8 +212,18 @@ const Sporsmal: React.FC = () => {
                                     '%ARBEIDSGIVER%': 'PLACEHOLDER',
                                 })}
                             >
-                                <Radio label={tekster['ja']} name="oppfolging" value="true" radioRef={register as any} />
-                                <Radio label={tekster['nei']} name="oppfolging" value="false" radioRef={register as any} />
+                                <Radio
+                                    label={tekster['ja']}
+                                    name="oppfolging"
+                                    value="true"
+                                    radioRef={register as any}
+                                />
+                                <Radio
+                                    label={tekster['nei']}
+                                    name="oppfolging"
+                                    value="false"
+                                    radioRef={register as any}
+                                />
                             </Fieldset>
                             {watchOppfolging === 'true' && (
                                 <Tekstomrade>
@@ -242,7 +262,7 @@ const Sporsmal: React.FC = () => {
                 <br />
                 <div className="knapp--sentrer">
                     <Hovedknapp htmlType="submit" spinner={sykmeldingPoster.status === FetchStatus.PENDING}>
-                        SEND SYKMELDINGEN
+                        {tekster['knapp.submit']}
                     </Hovedknapp>
                 </div>
             </form>

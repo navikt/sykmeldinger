@@ -1,7 +1,8 @@
-import { render, fireEvent, getByLabelText, act, findByText, waitForElement, queryByAttribute, wait } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import Sporsmal from '../components/sporsmal/Sporsmal';
 import React from 'react';
+import Sporsmal from '../components/sporsmal/Sporsmal';
+import tekster from '../components/sporsmal/sporsmal-tekster';
+import { render, fireEvent, wait, getByLabelText, act } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 // TODO: finn en bedre løsning på dette
 global.MutationObserver = class {
@@ -11,35 +12,102 @@ global.MutationObserver = class {
 };
 
 describe('Sporsmal', () => {
-    it('Skal inneholde opplysningeneErRiktige og sykmledtFra radiogrupper', () => {
-        const { queryByLabelText } = render(<Sporsmal />);
-        expect(queryByLabelText('Ja')).toBeInTheDocument();
-        expect(queryByLabelText('Nei')).toBeInTheDocument();
-        expect(queryByLabelText('Liste med arbeidsgivere')).toBeInTheDocument();
-    });
-    it('Skal vise checkboxgruppe når "Nei" trykkes', () => {
-        const { queryByLabelText, getByLabelText } = render(<Sporsmal />);
-        fireEvent.click(getByLabelText(/Nei/i));
-        expect(queryByLabelText('Diagnose')).toBeInTheDocument();
-    });
-    it('Skal ikke vise checkboxgruppe når "Ja" trykkes', () => {
-        const { queryByLabelText, getByLabelText } = render(<Sporsmal />);
-        fireEvent.click(getByLabelText(/Ja/i));
-        expect(queryByLabelText('Diagnose')).not.toBeInTheDocument();
-    });
-    it('Skal vise feiltext dersom SEND SYKMELDING trykkes og ikke alle valg er gjort', async () => {
-        const { getByText } = render(<Sporsmal />);
-        act(() => {
-            fireEvent.click(getByText(/SEND SYKMELDING/i));
+    describe('Er opplysningene i sykmeldingen riktige', () => {
+        it('Skal inneholde radiogruppe med "Ja" og "Nei"', () => {
+            const { queryByLabelText } = render(<Sporsmal />);
+            expect(queryByLabelText(tekster['ja'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['nei'])).toBeInTheDocument();
         });
-        await wait(() => getByText('Vennligst velg Ja eller Nei'));
-        expect(getByText('Vennligst velg Ja eller Nei')).toBeInTheDocument();
+        it('Skal vise feilmelding dersom ingenting er valgt', async () => {
+            const { queryByText, getByText } = render(<Sporsmal />);
+            expect(queryByText(tekster['jaEllerNei.feilmelding'])).toBeNull();
+            fireEvent.click(getByText(tekster['knapp.submit']));
+            await wait(() => queryByText(tekster['jaEllerNei.feilmelding']));
+            expect(queryByText(tekster['jaEllerNei.feilmelding'])).toBeInTheDocument();
+        });
+        it('Skal ikke rendre sjekkbokserer med opplysningen som ikke stemmer dersom "Ja" er valgt', () => {
+            const { queryByLabelText, getByLabelText } = render(<Sporsmal />);
+            fireEvent.click(getByLabelText(tekster['ja']));
+            expect(queryByLabelText(tekster['opplysningeneErFeil.periode'])).toBeNull();
+            expect(queryByLabelText(tekster['opplysningeneErFeil.sykmeldingsgrad'])).toBeNull();
+            expect(queryByLabelText(tekster['opplysningeneErFeil.diagnose'])).toBeNull();
+            expect(queryByLabelText(tekster['opplysningeneErFeil.andreOpplysninger'])).toBeNull();
+        });
+        it('Skal rendre sjekkbokserer med opplysningen som ikke stemmer dersom "Nei" er valgt', () => {
+            const { queryByLabelText, getByLabelText } = render(<Sporsmal />);
+            fireEvent.click(getByLabelText(tekster['nei']));
+            expect(queryByLabelText(tekster['opplysningeneErFeil.periode'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['opplysningeneErFeil.sykmeldingsgrad'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['opplysningeneErFeil.diagnose'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['opplysningeneErFeil.andreOpplysninger'])).toBeInTheDocument();
+        });
     });
-    it('Skal vise avbrytdialog dersom det trykkes på "Jeg ønsker ikke å bruke denne sykmeldingen"', () => {
-        const { queryByText, getByText } = render(<Sporsmal />);
-        expect(queryByText('JA, JEG ER SIKKER')).toBeNull();
-        fireEvent.click(getByText(/Jeg ønsker ikke å bruke denne sykmeldingen/i));
-        expect(getByText('Er du sikker på at du vil avbryte denne sykmeldingen?')).toBeInTheDocument();
-        expect(getByText('JA, JEG ER SIKKER')).toBeInTheDocument()
+
+    describe('Jeg er sykmeldt fra', () => {
+        it('Skal rendre radiogruppe', () => {
+            const { queryByLabelText } = render(<Sporsmal />);
+            // TODO: utvid test for å sjekke om arbeidsgiver vises riktig
+            expect(queryByLabelText(tekster['sykmeldtFra.selvstending-naringsdrivende'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['sykmeldtFra.frilanser'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['sykmeldtFra.annen-arbeidsgiver'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['sykmeldtFra.arbeidsledig'])).toBeInTheDocument();
+            expect(queryByLabelText(tekster['sykmeldtFra.ingenting-passer'])).toBeInTheDocument();
+        });
+        it('Skal vise feilmelding dersom ingenting er valgt', async () => {
+            const { queryByText, getByText } = render(<Sporsmal />);
+            expect(queryByText(tekster['sykmeldtFra.feilmelding'])).toBeNull();
+            fireEvent.click(getByText(tekster['knapp.submit']));
+            await wait(() => queryByText(tekster['sykmeldtFra.feilmelding']));
+            expect(queryByText(tekster['sykmeldtFra.feilmelding'])).toBeInTheDocument();
+        });
+        it('Skal rendre arbeidsgiver-bekreftelse radioknapper dersom arbeidsgiver er valgt', () => {
+            const { queryByText } = render(<Sporsmal />);
+            expect(queryByText(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'])).toBeNull();
+            // TODO: utvid test slik at riktig arbeidsgiver trykkes på
+        });
+    });
+
+    describe('Avbrytdialog', () => {
+        it('Skal vise avbrytdialog dersom man ønsker å avbryte sykmeldingen', () => {
+            const { queryByText, getByText } = render(<Sporsmal />);
+            expect(queryByText(tekster['avbrytdialog.avbryt-knapp'])).toBeNull();
+            fireEvent.click(getByText(tekster['knapp.onsker-ikke-bruke-sykmelding']));
+            expect(getByText(tekster['avbrytdialog.avbryt-knapp'])).toBeInTheDocument();
+            expect(getByText(tekster['avbrytdialog.er-du-sikker'])).toBeInTheDocument();
+            expect(getByText(tekster['avbrytdialog.kan-sende-papir'])).toBeInTheDocument();
+        });
+    });
+
+    describe('Alertbanner', () => {
+        it('Skal vise alertbanner dersom det finnes feil i valideringen', async () => {
+            const { queryByText, getByText } = render(<Sporsmal />);
+            expect(queryByText(tekster['alertstripe.tekst'])).toBeNull();
+            fireEvent.click(getByText(tekster['knapp.submit']));
+            await wait(() => queryByText(tekster['alertstripe.tekst']));
+            expect(queryByText(tekster['alertstripe.tekst'])).toBeInTheDocument();
+        });
+        it('Skal vise alertbanner helt til alle feil er vekke', async () => {
+            const { queryByText, getByText, getByLabelText } = render(<Sporsmal />);
+            expect(queryByText(tekster['alertstripe.tekst'])).toBeNull();
+            act(() => {
+                fireEvent.click(getByText(tekster['knapp.submit']));
+            });
+            await wait(() => queryByText(tekster['alertstripe.tekst']));
+            expect(queryByText(tekster['alertstripe.tekst'])).toBeInTheDocument();
+            act(() => {
+                fireEvent.click(getByLabelText(tekster['ja']));
+            });
+            await wait(() => queryByText(tekster['alertstripe.tekst']));
+            expect(queryByText(tekster['alertstripe.tekst'])).toBeInTheDocument();
+            act(() => {
+                fireEvent.click(getByLabelText(tekster['sykmeldtFra.frilanser']));
+            });
+            await wait(() => queryByText(tekster['alertstripe.tekst']));
+            expect(queryByText(tekster['alertstripe.tekst'])).toBeNull();
+        });
+    });
+
+    describe('Send inn sykmeldingen', () => {
+        // TODO: utvid med fetch mock og sjekk at dataen som blir submittet er riktig
     });
 });

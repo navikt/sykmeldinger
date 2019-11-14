@@ -16,7 +16,7 @@ const SporsmalTekster: any = {
         'sykmeldtFra.hjelpetekst':
             'Er du sykmeldt fra flere arbeidssituasjoner må du ha én sykmelding per arbeidssituasjon. Trenger du flere sykmeldinger, må du kontakte den som har sykmeldt deg.',
         'sykmeldtFra.feilmelding': 'Du må må svare på hva du er sykmeldt fra',
-            'sykmeldtFra.selvstending-naringsdrivende': 'Jobb som selvstendig næringsdrivende',
+        'sykmeldtFra.selvstending-naringsdrivende': 'Jobb som selvstendig næringsdrivende',
         'sykmeldtFra.frilanser': 'Jobb som frilanser',
         'sykmeldtFra.annen-arbeidsgiver': 'Jobb hos en annen arbeidsgiver',
         'sykmeldtFra.arbeidsledig': 'Jeg er arbeidsledig',
