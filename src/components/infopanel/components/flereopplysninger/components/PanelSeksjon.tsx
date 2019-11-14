@@ -4,12 +4,12 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 
 import Margin from '../../Margin';
 
-interface PanelInnholdSeksjonProps {
+interface PanelSeksjonProps {
     tittel?: string;
-    children: JSX.Element[];
+    children: (JSX.Element | null)[];
 }
 
-const PanelInnholdSeksjon = ({ tittel, children }: PanelInnholdSeksjonProps) => {
+const PanelSeksjon = ({ tittel, children }: PanelSeksjonProps) => {
     return (
         <>
             {tittel && (
@@ -26,4 +26,4 @@ const PanelInnholdSeksjon = ({ tittel, children }: PanelInnholdSeksjonProps) => 
     );
 };
 
-export default PanelInnholdSeksjon;
+export default PanelSeksjon;

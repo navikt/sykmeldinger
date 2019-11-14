@@ -6,7 +6,8 @@ import { Sykmelding } from '../../../../types/sykmeldingTypes';
 
 import tekster from '../../infopanel-tekster';
 
-import PanelInnhold from './components/PanelInnhold';
+import BehandlingsDatoer from './components/BehandlingsDatoer';
+import Friskmelding from './components/Friskmelding';
 
 interface PanelHeadingProps {
     tittel: string;
@@ -29,7 +30,15 @@ const FlereOpplysninger = ({ sykmelding }: FlereOpplysningerProps) => {
     return (
         <div className="ekspanderbart-panel">
             <EkspanderbartpanelBase heading={<PanelHeading tittel={tekster['flere-opplysninger.tittel']} />} border>
-                <PanelInnhold sykmelding={sykmelding} />
+                <BehandlingsDatoer
+                    behandletTidspunkt={sykmelding.behandletTidspunkt}
+                    syketilfelleStartDato={sykmelding.syketilfelleStartDato}
+                />
+                <div>mulighet for arbeid</div> <hr />
+                <Friskmelding prognose={sykmelding.prognose} />
+                <div>utdypende opplysninger</div> <hr />
+                <div>hva skal til for å bedre arbeidsevnen</div> <hr />
+                <div>annet</div> <hr />
             </EkspanderbartpanelBase>
         </div>
     );

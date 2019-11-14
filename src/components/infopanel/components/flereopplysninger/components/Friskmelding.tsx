@@ -5,18 +5,22 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Prognose } from '../../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
 
-import PanelInnholdSeksjon from './PanelInnholdSeksjon';
+import PanelSeksjon from './PanelSeksjon';
 
 import tekster from '../flereopplysninger-tekster';
 import Margin from '../../Margin';
 
 interface FriskmeldingProps {
-    prognose: Prognose;
+    prognose?: Prognose;
 }
 
-const Friskmelding = ({
-    prognose: { arbeidsforEtterPeriode, hensynArbeidsplassen, erIArbeid, erIkkeIArbeid },
-}: FriskmeldingProps) => {
+const Friskmelding = ({ prognose }: FriskmeldingProps) => {
+    if (!prognose) {
+        return null;
+    }
+
+    const { erIArbeid, erIkkeIArbeid, hensynArbeidsplassen, arbeidsforEtterPeriode } = prognose;
+
     const ErIArbeidSeksjon = () => {
         if (!erIArbeid) {
             return null;
@@ -96,12 +100,12 @@ const Friskmelding = ({
     };
 
     return (
-        <PanelInnholdSeksjon tittel={tekster['friskmelding.tittel']}>
+        <PanelSeksjon tittel={tekster['friskmelding.tittel']}>
             <Checkbox label={tekster['friskmelding.arbeidsfor.tittel']} checked={arbeidsforEtterPeriode} readOnly />
             <HensynArbeidsplassenSeksjon />
             <ErIArbeidSeksjon />
             <ErIkkeIArbeidSeksjon />
-        </PanelInnholdSeksjon>
+        </PanelSeksjon>
     );
 };
 
