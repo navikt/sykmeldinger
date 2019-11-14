@@ -1,5 +1,6 @@
 import React from 'react';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import Innrykk from './Innrykk';
 
 interface PanelSeksjonProps {
     tittel: string;
@@ -9,13 +10,15 @@ interface PanelSeksjonProps {
 }
 
 const PanelSeksjon = ({ tittel, verdi, skjultForArbeidsgiverTekst, innrykk }: PanelSeksjonProps) => {
-    return (
-        <div style={{ flex: '1', marginLeft: innrykk ? '2.3rem' : 'inherit' }}>
+    const innhold = (
+        <>
             <EtikettLiten>{tittel}</EtikettLiten>
             <Normaltekst>{verdi}</Normaltekst>
             {skjultForArbeidsgiverTekst && <Undertekst>{skjultForArbeidsgiverTekst}</Undertekst>}
-        </div>
+        </>
     );
+
+    return <div style={{ flex: '1' }}>{innrykk ? <Innrykk>{innhold}</Innrykk> : innhold}</div>;
 };
 
 export default PanelSeksjon;

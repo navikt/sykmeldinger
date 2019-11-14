@@ -9,12 +9,24 @@ import PanelSeksjon from './PanelSeksjon';
 
 import tekster from '../flereopplysninger-tekster';
 import Margin from '../../Margin';
+import Innrykk from '../../Innrykk';
 
 interface FriskmeldingProps {
     prognose?: Prognose;
 }
 
 const Friskmelding = ({ prognose }: FriskmeldingProps) => {
+    // TODO: legg til logikk for visning av seksjon
+    /*
+    const visSeksjon = (sykmelding.friskmelding.antarReturSammeArbeidsgiver ||
+    sykmelding.friskmelding.antattDatoReturSammeArbeidsgiver ||
+    sykmelding.friskmelding.antarReturAnnenArbeidsgiver ||
+    sykmelding.friskmelding.tilbakemeldingReturArbeid ||
+    sykmelding.friskmelding.utenArbeidsgiverTilbakemelding ||
+    sykmelding.friskmelding.utenArbeidsgiverAntarTilbakeIArbeid ||
+    sykmelding.friskmelding.utenArbeidsgiverAntarTilbakeIArbeidDato ||
+    sykmelding.friskmelding.utenArbeidsgiverTilbakemelding);
+    */
     if (!prognose) {
         return null;
     }
@@ -34,12 +46,12 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                         checked={erIArbeid.egetArbeidPaSikt}
                         readOnly
                     />
-                    {erIArbeid.egetArbeidPaSikt && erIArbeid.arbeidFOM ? (
-                        <>
+                    {erIArbeid.egetArbeidPaSikt && erIArbeid.arbeidFOM && (
+                        <Innrykk>
                             <Element>{tekster['friskmelding.arbeidfom']}</Element>
                             <Normaltekst>- {tilLesbarDatoMedArstall(erIArbeid.arbeidFOM)}</Normaltekst>
-                        </>
-                    ) : null}
+                        </Innrykk>
+                    )}
                 </Margin>
                 <Margin>
                     <Checkbox
@@ -47,12 +59,12 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                         checked={erIArbeid.annetArbeidPaSikt}
                         readOnly
                     />
-                    {erIArbeid.annetArbeidPaSikt && erIArbeid.vurderingsdato ? (
-                        <>
+                    {erIArbeid.annetArbeidPaSikt && erIArbeid.vurderingsdato && (
+                        <Innrykk>
                             <Element>{tekster['friskmelding.vurderingsdato']}</Element>
                             <Normaltekst>- {tilLesbarDatoMedArstall(erIArbeid.vurderingsdato)}</Normaltekst>
-                        </>
-                    ) : null}
+                        </Innrykk>
+                    )}
                 </Margin>
             </>
         );
@@ -70,18 +82,18 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                     checked={erIkkeIArbeid.arbeidsforPaSikt}
                     readOnly
                 />
-                {erIkkeIArbeid.arbeidsforFOM ? (
+                {erIkkeIArbeid.arbeidsforFOM && (
                     <>
                         <Element>{tekster['friskmelding.arbeidfom']}</Element>
                         <Normaltekst>- {tilLesbarDatoMedArstall(erIkkeIArbeid.arbeidsforFOM)}</Normaltekst>
                     </>
-                ) : null}
-                {erIkkeIArbeid.vurderingsdato ? (
+                )}
+                {erIkkeIArbeid.vurderingsdato && (
                     <>
                         <Element>{tekster['friskmelding.ingen-arbeidsgiver.vurdering']}</Element>
                         <Normaltekst>- {tilLesbarDatoMedArstall(erIkkeIArbeid.vurderingsdato)}</Normaltekst>
                     </>
-                ) : null}
+                )}
             </>
         );
     };
@@ -93,7 +105,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
 
         return (
             <Margin>
-                <EtikettLiten>{tekster['friskmelding.hensyn']}</EtikettLiten>
+                <Element>{tekster['friskmelding.hensyn']}</Element>
                 <Normaltekst>{hensynArbeidsplassen}</Normaltekst>
             </Margin>
         );

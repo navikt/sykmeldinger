@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface MarginProps {
-    children: null | JSX.Element | (JSX.Element | null)[];
+    children: any | any[];
 }
 
 const Margin = ({ children }: MarginProps) => {

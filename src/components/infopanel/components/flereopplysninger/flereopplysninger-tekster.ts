@@ -1,5 +1,6 @@
 const FlereOpplysningerTekster: any = {
     nb: {
+        'utdypende.tittel': 'Utdypende opplysninger',
         'friskmelding.tittel': 'Friskmelding/prognose',
         'friskmelding.arbeidsfor.tittel': 'Pasienten er 100 prosent arbeidsfør etter denne perioden',
         'friskmelding.hensyn': 'Beskriv eventuelle hensyn som må tas på arbeidsplassen',

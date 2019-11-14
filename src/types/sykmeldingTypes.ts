@@ -269,7 +269,7 @@ export enum SvarRestriksjon {
     SKJERMET_FOR_NAV = 'Informasjonen skal ikke vises NAV',
 }
 
-class SporsmalSvar {
+export class SporsmalSvar {
     sporsmal: string;
     svar: string;
     restriksjoner: SvarRestriksjon[];
