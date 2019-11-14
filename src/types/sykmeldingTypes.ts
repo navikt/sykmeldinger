@@ -172,7 +172,7 @@ export class Prognose {
     }
 }
 
-class ErIArbeid {
+export class ErIArbeid {
     egetArbeidPaSikt: boolean;
     annetArbeidPaSikt: boolean;
     arbeidFOM?: Date;
@@ -185,7 +185,7 @@ class ErIArbeid {
     }
 }
 
-class ErIkkeIArbeid {
+export class ErIkkeIArbeid {
     arbeidsforPaSikt: boolean;
     arbeidsforFOM?: Date;
     vurderingsdato?: Date;

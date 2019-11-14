@@ -12,10 +12,16 @@ interface PanelInnholdSeksjonProps {
 const PanelInnholdSeksjon = ({ tittel, children }: PanelInnholdSeksjonProps) => {
     return (
         <>
-            {tittel && <Innholdstittel>{tittel}</Innholdstittel>}
+            {tittel && (
+                <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+                    <Innholdstittel>{tittel}</Innholdstittel>
+                </div>
+            )}
             {children.map((child, index) => (
                 <Margin key={index.toString()}>{child}</Margin>
             ))}
+
+            <hr />
         </>
     );
 };
