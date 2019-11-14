@@ -11,9 +11,9 @@ import sluttfasen3 from './svg/sluttfasen-3.svg';
 
 const TidslinjeMedArbeidsgiver: React.FC = () => (
     <>
-        <TidslinjeElement erEkspanderbar={false} erForsteElement={true} tittel={'Første sykmeldingsdag'} />
+        <TidslinjeElement erForsteElement tittel={'Første sykmeldingsdag'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Når du er blitt syk'}
             bilde={sykmeldtHvaNa}
             innhold={
@@ -23,7 +23,7 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
             }
         />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Snakk med arbeidsgiveren din'}
             bilde={innen4uker}
             innhold={
@@ -32,9 +32,9 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'4 uker'} />
+        <TidslinjeElement tittel={'4 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Tid for dialogmøte med lederen din'}
             bilde={innen7uker}
             innhold={
@@ -43,9 +43,9 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'7 uker'} />
+        <TidslinjeElement tittel={'7 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Oppfyller du aktivitetsplikten?'}
             bilde={innen8uker}
             innhold={
@@ -55,7 +55,7 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
             }
         />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'placeholder for nærmeste leder stuff'}
             innhold={
                 <Normaltekst>
@@ -63,9 +63,9 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'17 uker'} />
+        <TidslinjeElement tittel={'17 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Tid for dialogmøte med NAV'}
             bilde={innen26uker}
             innhold={
@@ -74,9 +74,9 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'26 uker'} />
+        <TidslinjeElement tittel={'26 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Når du har vært sykmeldt lenge'}
             bilde={innen39uker}
             innhold={
@@ -85,9 +85,9 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'39 uker'} />
+        <TidslinjeElement tittel={'39 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Snart slutt på sykepengene'}
             bilde={sluttfasen3}
             innhold={
@@ -96,7 +96,7 @@ const TidslinjeMedArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} erSisteElement={true} tittel={'52 uker: slutt på sykepenger'} />
+        <TidslinjeElement erSisteElement tittel={'52 uker: slutt på sykepenger'} />
     </>
 );
 

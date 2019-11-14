@@ -7,7 +7,7 @@ import plaster from './svg/plaster.svg';
 import sirkel from './svg/sirkel.svg';
 
 interface TidslinjeElementProps {
-    erEkspanderbar: boolean;
+    erEkspanderbar?: boolean;
     erForsteElement?: boolean;
     erSisteElement?: boolean;
     innhold?: ReactNode;
@@ -17,7 +17,7 @@ interface TidslinjeElementProps {
 }
 
 const TidslinjeElement: React.FC<TidslinjeElementProps> = ({
-    erEkspanderbar,
+    erEkspanderbar = false,
     erForsteElement = false,
     erSisteElement = false,
     erApen = false,
@@ -25,13 +25,13 @@ const TidslinjeElement: React.FC<TidslinjeElementProps> = ({
     tittel,
     innhold,
 }: TidslinjeElementProps) => {
-    const panelRef = useRef<HTMLDivElement>(document.createElement("div"));
+    const panelRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     const scrollTilAktueltPanel = (): void => {
         setTimeout(() => {
             window.scrollTo({ top: panelRef.current.offsetTop, behavior: 'smooth' });
         }, 300);
-    }
+    };
 
     return (
         <div className="tidslinje-element">
@@ -57,15 +57,25 @@ const TidslinjeElement: React.FC<TidslinjeElementProps> = ({
                 {!erEkspanderbar && !erForsteElement && <img src={klokke} alt="klokkeikon" width={25} />}
             </div>
 
-            {erEkspanderbar && (
+            {erEkspanderbar ? (
                 <div ref={panelRef} className="tidslinje-element tidslinje-element__ekspanderbar">
-                    <Ekspanderbartpanel onClick={scrollTilAktueltPanel} tittel={tittel} apen={erApen} className="ekspanderbar">
-                        <img src={bilde} alt="bilde i ekspanderbart panel" className="ekspanderbar__bilde" width={500}/>
+                    <Ekspanderbartpanel
+                        onClick={scrollTilAktueltPanel}
+                        tittel={tittel}
+                        apen={erApen}
+                        renderContentWhenClosed
+                        className="ekspanderbar"
+                    >
+                        <img
+                            src={bilde}
+                            alt="bilde i ekspanderbart panel"
+                            className="ekspanderbar__bilde"
+                            width={500}
+                        />
                         {innhold}
                     </Ekspanderbartpanel>
                 </div>
-            )}
-            {!erEkspanderbar && (
+            ) : (
                 <div className="tidslinje-element tidslinje-element__ukeNummer">
                     <Element>{tittel}</Element>
                 </div>

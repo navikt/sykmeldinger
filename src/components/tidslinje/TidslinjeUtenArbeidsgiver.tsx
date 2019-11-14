@@ -9,9 +9,9 @@ import sluttfasen3 from './svg/sluttfasen-3.svg';
 
 const TidslinjeUtenArbeidsgiver: React.FC = () => (
     <>
-        <TidslinjeElement erEkspanderbar={false} erForsteElement={true} tittel={'Første sykmeldingsdag'} />
+        <TidslinjeElement erForsteElement tittel={'Første sykmeldingsdag'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Når du er blitt syk'}
             bilde={sykmeldtHvaNa}
             innhold={
@@ -21,7 +21,7 @@ const TidslinjeUtenArbeidsgiver: React.FC = () => (
             }
         />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Har du vurdert din mulighet for å være i aktivitet?'}
             bilde={innen8uker}
             innhold={
@@ -30,9 +30,9 @@ const TidslinjeUtenArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'8 uker'} />
+        <TidslinjeElement tittel={'8 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Har du snakket med en veileder på NAV-kontoret?'}
             bilde={innen12uker}
             innhold={
@@ -41,9 +41,9 @@ const TidslinjeUtenArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'12 uker'} />
+        <TidslinjeElement tittel={'12 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Har du og veilederen laget en plan?'}
             bilde={innen39uker}
             innhold={
@@ -52,9 +52,9 @@ const TidslinjeUtenArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} tittel={'39 uker'} />
+        <TidslinjeElement tittel={'39 uker'} />
         <TidslinjeElement
-            erEkspanderbar={true}
+            erEkspanderbar
             tittel={'Snart slutt på sykepengene'}
             bilde={sluttfasen3}
             innhold={
@@ -63,7 +63,7 @@ const TidslinjeUtenArbeidsgiver: React.FC = () => (
                 </Normaltekst>
             }
         />
-        <TidslinjeElement erEkspanderbar={false} erSisteElement={true} tittel={'52 uker: slutt på sykepenger'} />
+        <TidslinjeElement erSisteElement tittel={'52 uker: slutt på sykepenger'} />
     </>
 );
 
