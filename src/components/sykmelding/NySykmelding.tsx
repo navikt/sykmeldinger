@@ -7,7 +7,6 @@ interface SykmeldingProps {
 }
 
 const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps) => {
-
     return (
         <div className="sykmelding-container">
             <Sporsmal />
