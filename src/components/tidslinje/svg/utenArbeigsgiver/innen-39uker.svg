@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 244 116" style="enable-background:new 0 0 244 116;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#ABB2BA;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#506572;}
+	.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#959BA5;}
+	.st3{fill:#EFEFEF;}
+	.st4{fill-rule:evenodd;clip-rule:evenodd;fill:#EFEFEF;}
+	.st5{fill:#C5C1BE;}
+	.st6{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+	.st7{fill-rule:evenodd;clip-rule:evenodd;fill:#005B82;}
+</style>
+<title>Aktivitetsplan</title>
+<desc>Created with Sketch.</desc>
+<g id="Ikon-Aktivitetsplan">
+	<g id="Aktivitetsplan" transform="translate(-2.000000, -3.000000)">
+		<g>
+			<g>
+				<g id="Group">
+					<path id="Fill-16" class="st0" d="M150.3,86.2v12.6c0,2.7-2.1,4.8-4.8,4.8H6.8c-2.6,0-4.8-2.1-4.8-4.8V86.2H150.3z"/>
+					<path id="Fill-17" class="st1" d="M2,86.2V7.8C2,5.1,4.2,3,6.8,3h138.8c2.6,0,4.8,2.1,4.8,4.8v78.4H2z"/>
+					<polygon id="Fill-19" class="st0" points="58.8,116.6 93.6,116.6 93.6,103.6 58.8,103.6      "/>
+					<polygon id="Fill-20" class="st0" points="45.4,119 107,119 107,114.8 45.4,114.8      "/>
+					<path id="Fill-21" class="st2" d="M77.3,96c0,0.6-0.5,1.1-1.1,1.1s-1.1-0.5-1.1-1.1c0-0.6,0.5-1.1,1.1-1.1S77.3,95.4,77.3,96"/>
+				</g>
+				<rect id="Rectangle" x="6.7" y="18.2" class="st3" width="138.5" height="62.9"/>
+				<path id="Fill-18" class="st4" d="M6.7,19v-8.5c0-1.4,1.1-2.4,2.4-2.4h133.6c1.3,0,2.4,1.1,2.4,2.4V19C145.2,19,6.7,19,6.7,19z"/>
+			</g>
+		</g>
+		<g transform="translate(95.000000, 57.000000)">
+			<g id="Group-48" transform="translate(0.000000, 58.000000)">
+				<path class="st5" d="M-78.3-93h35.4c1,0,1.8,0.7,1.8,1.6v39.5c0,0.9-0.8,1.6-1.8,1.6h-35.4c-1,0-1.8-0.7-1.8-1.6v-39.5      C-80.1-92.3-79.3-93-78.3-93z"/>
+				<path id="Rectangle-Copy" class="st5" d="M-36.5-93h35.4c1,0,1.8,0.8,1.8,1.8v3.6c0,1-0.8,1.8-1.8,1.8h-35.4      c-1,0-1.8-0.8-1.8-1.8v-3.6C-38.3-92.2-37.5-93-36.5-93z"/>
+				<path id="Rectangle-Copy-2" class="st5" d="M4.6-93H40c1,0,1.8,0.8,1.8,1.8v26.5c0,1-0.8,1.8-1.8,1.8H4.6c-1,0-1.8-0.8-1.8-1.8      v-26.5C2.8-92.2,3.6-93,4.6-93z"/>
+			</g>
+			<g id="Group-60" transform="translate(1.000000, 69.000000)">
+				<g id="Clip-59">
+				</g>
+				<polygon id="Fill-58" class="st6" points="-83.8,-76.6 -39.7,-76.6 -39.7,-100.5 -83.8,-100.5     "/>
+			</g>
+			<g id="Group-63" transform="translate(5.000000, 88.000000)">
+				<g id="Clip-62">
+				</g>
+				<polygon id="Fill-61" class="st7" points="-85.3,-98 -63.2,-98 -63.2,-108.1 -85.3,-108.1     "/>
+			</g>
+			<g id="Group-66" transform="translate(1.000000, 99.000000)">
+				<g id="Clip-65">
+				</g>
+				<polygon id="Fill-64" class="st6" points="-83.8,-91.3 -39.7,-91.3 -39.7,-111.5 -83.8,-111.5     "/>
+			</g>
+			<g id="Group-5" transform="translate(141.000000, 69.000000)">
+				<g id="Group-72">
+					<g id="Clip-71">
+					</g>
+					<polygon id="Fill-70" class="st6" points="-140.6,-74.7 -96.5,-74.7 -96.5,-100.6 -140.6,-100.6      "/>
+				</g>
+				<g id="Group-75" transform="translate(3.566038, 23.571429)">
+					<g id="Clip-74">
+					</g>
+					<polygon id="Fill-73" class="st7" points="-142,-100.2 -119.6,-100.2 -119.6,-110.4 -142,-110.4      "/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>
