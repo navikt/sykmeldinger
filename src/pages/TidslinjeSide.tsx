@@ -25,9 +25,9 @@ const TidslinjeSide: React.FC = () => {
     const [harArbeidsgiver, setHarArbeidsgiver] = useState(true);
 
     const radioEndring = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if (e.target.value === 'med-arbg') {
+        if (e.target.value === 'med-arbeidsgiver') {
             setHarArbeidsgiver(true);
-        } else if (e.target.value === 'uten-arbg') {
+        } else if (e.target.value === 'uten-arbeidsgiver') {
             setHarArbeidsgiver(false);
         }
     };
@@ -45,14 +45,14 @@ const TidslinjeSide: React.FC = () => {
                 <Radio
                     label={'Jeg har arbeidsgiver'}
                     name="arbeidssituasjon"
-                    value="med-arbg"
+                    value="med-arbeidsgiver"
                     checked={harArbeidsgiver}
                     onChange={radioEndring}
-                    className="arbeidssituasjon__med-arbg"
+                    className="arbeidssituasjon__med-arbeidsgiver"
                 />
                 <Radio
                     label={
-                        <div className="arbeidssituasjon__uten-arbg-label">
+                        <div className="arbeidssituasjon__uten-arbeidsgiver-label">
                             Jeg har ikke arbeidsgiver
                             <Hjelpetekst className="arbeidssituasjon__hjelpetekst">
                                 Velg «Jeg har ikke arbeidsgiver» dersom du er for eks. selvstendig næringsdrivende,
@@ -61,14 +61,13 @@ const TidslinjeSide: React.FC = () => {
                         </div>
                     }
                     name="arbeidssituasjon"
-                    value="uten-arbg"
+                    value="uten-arbeidsgiver"
                     onChange={radioEndring}
                     checked={!harArbeidsgiver}
                 />
             </div>
             <span className="tidslinje">
-                {harArbeidsgiver && <TidslinjeMedArbeidsgiver />}
-                {!harArbeidsgiver && <TidslinjeUtenArbeidsgiver />}
+                {harArbeidsgiver ? <TidslinjeMedArbeidsgiver /> : <TidslinjeUtenArbeidsgiver />}
             </span>
         </div>
     );
