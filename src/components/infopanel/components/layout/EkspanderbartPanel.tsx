@@ -3,6 +3,8 @@ import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 
 import tekster from '../../infopanel-tekster';
 
+import doktor from '../../../../svg/doktor.svg';
+
 import './ekspanderbartpanel.less';
 
 interface PanelHeadingProps {
@@ -12,8 +14,10 @@ interface PanelHeadingProps {
 const PanelHeading = ({ tittel }: PanelHeadingProps) => {
     return (
         <div className="ekspanderbartpanel-heading">
-            <div className="ekspanderbartpanel-ikon">ikon</div>
-            <div className="ekspanderbartpanel-tekst">{tittel}</div>
+            <img className="ekspanderbartpanel-ikon" src={doktor} />
+            <span>
+                <strong className="ekspanderbartpanel-tekst">{tittel}</strong>
+            </span>
         </div>
     );
 };
