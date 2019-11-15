@@ -50,9 +50,23 @@ export const valideringsSkjema = yup
         },
     )
     .test('manglerFrilanserSpr', 'Fyll ut forsikringsspørsmål', (obj): any => {
-        if (obj.sykmeldtFra === Arbeidsforhold.FRILANSER) {
-            if (obj.frilanser === '') {
-                return new yup.ValidationError('Fyll ut forsikringsspørsmål', null, 'frilanser');
+        if (
+            (obj.sykmeldtFra === Arbeidsforhold.FRILANSER) ||
+            (obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE)
+        ) {
+            if (obj.frilanserEgenmelding === '') {
+                return new yup.ValidationError('Fyll ut egenmeldingsspørsmål', null, 'frilanserEgenmelding');
+            }
+        }
+        return true;
+    })
+    .test('manglerFrilanserSpr', 'Fyll ut forsikringsspørsmål', (obj): any => {
+        if (
+            (obj.sykmeldtFra === Arbeidsforhold.FRILANSER) ||
+            (obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE)
+        ) {
+            if (obj.frilanserForsikring === '') {
+                return new yup.ValidationError('Fyll ut forsikringsspørsmål', null, 'frilanserForsikring');
             }
         }
         return true;

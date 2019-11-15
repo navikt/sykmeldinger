@@ -4,7 +4,7 @@ import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Checkbox } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { AlertStripeFeil, AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import useForm from 'react-hook-form';
@@ -13,6 +13,7 @@ import useFetch, { isNotStarted, FetchState, hasData, FetchStatus, hasFinished }
 import tekster from './sporsmal-tekster';
 import { endreLedetekst } from '../../utils/ledetekst-utils';
 import './Sporsmal.less';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -32,6 +33,8 @@ interface SykmeldingFormData {
     andreOpplysninger?: boolean;
     sykmeldtFra?: Arbeidsforhold;
     oppfolging?: string;
+    frilanserEgenmelding?: string;
+    frilanserForsikring?: string;
 }
 
 const Sporsmal: React.FC = () => {
@@ -47,6 +50,11 @@ const Sporsmal: React.FC = () => {
     const watchOpplysningeneErRiktige = watch('opplysningeneErRiktige');
     const watchSykmeldtFra = watch('sykmeldtFra');
     const watchOppfolging = watch('oppfolging');
+    const watchPeriode = watch('periode');
+    const watchSykmeldingsgrad = watch('sykmeldingsgrad');
+    const watchArbeidsgiver = watch('arbeidsgiver');
+    const watchDiagnose = watch('diagnose');
+    const watchAndreOpplysninger = watch('andreOpplysninger');
 
     const onSubmit = (data: SykmeldingFormData) => {
         console.log(data);
@@ -138,6 +146,26 @@ const Sporsmal: React.FC = () => {
                             </Fieldset>
                         </SkjemaGruppe>
                     )}
+                    {(watchPeriode || watchSykmeldingsgrad) && (
+                        <AlertStripeAdvarsel>
+                            <Element>Du trenger ny sykmelding</Element>
+                            <Normaltekst>
+                                Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
+                            </Normaltekst>
+                        </AlertStripeAdvarsel>
+                    )}
+                    {!(watchPeriode || watchSykmeldingsgrad) &&
+                        (watchDiagnose || watchArbeidsgiver || watchAndreOpplysninger) && (
+                            <AlertStripeInfo>
+                                <Element>Du kan bruke sykmeldingen din</Element>
+                                <Normaltekst>
+                                    Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs!
+                                    Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for
+                                    arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi
+                                    beskjed til den som sykmelder deg om at det er lagt inn feil arbeidsgiver.
+                                </Normaltekst>
+                            </AlertStripeInfo>
+                        )}
                 </PanelBase>
                 <br />
                 <PanelBase>
@@ -237,23 +265,58 @@ const Sporsmal: React.FC = () => {
                             )}
                         </SkjemaGruppe>
                     )}
-                    {watchSykmeldtFra === 'frilanser' && (
-                        <SkjemaGruppe
-                            feil={errors.frilanser ? { feilmelding: 'Velg frilanser stuff' } : undefined}
-                            className="skjemagruppe--undersporsmal"
-                        >
-                            <Fieldset legend="Frilanserspørsmål">
-                                <Radio
-                                    label="jeg er frilanser hallooo"
-                                    name="frilanser"
-                                    value="true"
-                                    radioRef={register as any}
-                                />
-                                <Radio label="Nei" name="frilanser" value="false" radioRef={register as any} />
-                            </Fieldset>
-                        </SkjemaGruppe>
+                    {(watchSykmeldtFra === Arbeidsforhold.FRILANSER ||
+                        watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE) && (
+                        <>
+                            <SkjemaGruppe
+                                feil={
+                                    errors.frilanserEgenmelding
+                                        ? { feilmelding: 'Velg om du har hatt egenmelding' }
+                                        : undefined
+                                }
+                                className="skjemagruppe--undersporsmal"
+                            >
+                                <Fieldset legend={tekster['frilanser.egenmelding.tittel']}>
+                                    <Radio
+                                        label={tekster['ja']}
+                                        name="frilanserEgenmelding"
+                                        value="true"
+                                        radioRef={register as any}
+                                    />
+                                    <Radio
+                                        label={tekster['nei']}
+                                        name="frilanserEgenmelding"
+                                        value="false"
+                                        radioRef={register as any}
+                                    />
+                                </Fieldset>
+                            </SkjemaGruppe>
+                            <SkjemaGruppe
+                                feil={
+                                    errors.frilanserForsikring
+                                        ? { feilmelding: 'Velg om du har hatt forsikring' }
+                                        : undefined
+                                }
+                                className="skjemagruppe--undersporsmal"
+                            >
+                                <Fieldset legend={tekster['frilanser.forsikring.tittel']}>
+                                    <Radio
+                                        label={tekster['ja']}
+                                        name="frilanserForsikring"
+                                        value="true"
+                                        radioRef={register as any}
+                                    />
+                                    <Radio
+                                        label={tekster['nei']}
+                                        name="frilanserForsikring"
+                                        value="false"
+                                        radioRef={register as any}
+                                    />
+                                </Fieldset>
+                            </SkjemaGruppe>
+                        </>
                     )}
-                    {watchSykmeldtFra === 'annenArbeidsgiver' && (
+                    {watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER && (
                         <div>Her k ommer det en komponent for å skrive ut sykmeldingen</div>
                     )}
                 </PanelBase>
