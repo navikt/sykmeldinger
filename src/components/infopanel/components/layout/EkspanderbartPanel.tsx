@@ -14,7 +14,7 @@ interface PanelHeadingProps {
 const PanelHeading = ({ tittel }: PanelHeadingProps) => {
     return (
         <div className="ekspanderbartpanel-heading">
-            <img className="ekspanderbartpanel-ikon" src={doktor} />
+            <img className="ekspanderbartpanel-ikon" alt="doktor ikon" src={doktor} />
             <span>
                 <strong className="ekspanderbartpanel-tekst">{tittel}</strong>
             </span>

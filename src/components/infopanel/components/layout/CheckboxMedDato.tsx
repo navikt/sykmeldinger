@@ -1,8 +1,10 @@
 import React from 'react';
 import Innrykk from './Innrykk';
 import Margin from './Margin';
-import { Checkbox } from 'nav-frontend-skjema';
+import boks from '../../../../svg/boks.svg';
+import sjekkboks from '../../../../svg/sjekkboks.svg';
 import EtikettMedTekst from './EtikettMedTekst';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 interface CheckboxMedDatoProps {
     checkboxTittel: string;
@@ -16,7 +18,14 @@ interface CheckboxMedDatoProps {
 const CheckboxMedDato = ({ checkboxTittel, checked, tittel, tekst, margin, innrykk }: CheckboxMedDatoProps) => {
     const innhold = (
         <>
-            <Checkbox label={checkboxTittel} checked={checked} readOnly />
+            <Margin liten>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img style={{ marginRight: '1rem' }} src={checked ? sjekkboks : boks} alt="sjekkboks ikon" />
+                    <span>
+                        <Normaltekst>{checkboxTittel}</Normaltekst>
+                    </span>
+                </div>
+            </Margin>
             {tekst && <EtikettMedTekst tittel={tittel} tekst={tekst} innrykk margin />}
         </>
     );

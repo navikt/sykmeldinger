@@ -95,7 +95,12 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
 
     return (
         <OpplysningerSeksjon tittel={tekster['friskmelding.tittel']}>
-            <Checkbox label={tekster['friskmelding.arbeidsfor.tittel']} checked={arbeidsforEtterPeriode} readOnly />
+            <EnkelCheckbox
+                tittel={tekster['friskmelding.arbeidsfor.tittel']}
+                checked={arbeidsforEtterPeriode}
+                margin
+                bold
+            />
             <ElementMedTekst tittel={tekster['friskmelding.hensyn']} tekst={hensynArbeidsplassen} margin />
             <ErIArbeidSeksjon />
             <ErIkkeIArbeidSeksjon />

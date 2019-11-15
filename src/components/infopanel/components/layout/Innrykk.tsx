@@ -9,7 +9,7 @@ const Innrykk = ({ children }: InnrykkProps) => {
         return null;
     }
 
-    return <div style={{ marginLeft: '2.3rem' }}>{children}</div>;
+    return <div style={{ marginLeft: '2.5rem' }}>{children}</div>;
 };
 
 export default Innrykk;
