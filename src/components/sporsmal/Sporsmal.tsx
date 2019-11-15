@@ -5,7 +5,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { AlertStripeFeil, AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
+import { Knapp, Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
 import useForm from 'react-hook-form';
 import { valideringsSkjema } from './valideringsSkjema';
@@ -308,7 +308,12 @@ const Sporsmal: React.FC = () => {
                         </>
                     )}
                     {watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER && (
-                        <div>Her k ommer det en komponent for å skrive ut sykmeldingen</div>
+                        <AlertStripeAdvarsel>
+                            <Tekstomrade>{tekster['alertstripe.annen-arbeidsgiver']}</Tekstomrade>
+                            <span className="knapp--sentrer">
+                                <Knapp htmlType="button">{tekster['skriv-ut']}</Knapp>
+                            </span>
+                        </AlertStripeAdvarsel>
                     )}
                 </PanelBase>
                 <br />
