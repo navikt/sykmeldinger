@@ -4,7 +4,7 @@ import Margin from './Margin';
 import boks from '../../../../svg/boks.svg';
 import sjekkboks from '../../../../svg/sjekkboks.svg';
 import EtikettMedTekst from './EtikettMedTekst';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 interface CheckboxMedDatoProps {
     checkboxTittel: string;
@@ -13,16 +13,17 @@ interface CheckboxMedDatoProps {
     tekst?: string;
     margin?: boolean;
     innrykk?: boolean;
+    bold?: boolean;
 }
 
-const CheckboxMedDato = ({ checkboxTittel, checked, tittel, tekst, margin, innrykk }: CheckboxMedDatoProps) => {
+const CheckboxMedDato = ({ checkboxTittel, checked, tittel, tekst, bold, margin, innrykk }: CheckboxMedDatoProps) => {
     const innhold = (
         <>
             <Margin liten>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img style={{ marginRight: '1rem' }} src={checked ? sjekkboks : boks} alt="sjekkboks ikon" />
                     <span>
-                        <Normaltekst>{checkboxTittel}</Normaltekst>
+                        {bold ? <Element>{checkboxTittel}</Element> : <Normaltekst>{checkboxTittel}</Normaltekst>}
                     </span>
                 </div>
             </Margin>

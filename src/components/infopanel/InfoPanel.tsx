@@ -24,6 +24,8 @@ import { Sykmelding } from '../../types/sykmeldingTypes';
 
 import plaster from '../../svg/plaster.svg';
 
+import tekster from './infopanel-tekster';
+
 import './infopanel.less';
 
 interface InfoPanelProps {
@@ -55,7 +57,7 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Ekspanderbartpanel>
+                <Ekspanderbartpanel tittel={tekster['flere-opplysninger.tittel']}>
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
                         syketilfelleStartDato={sykmelding.syketilfelleStartDato}

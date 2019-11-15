@@ -43,6 +43,8 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                 <Margin>
                     <EnkelCheckbox
                         tittel={tekster['friskmelding.samme-arbeidsgiver']}
+                        bold
+                        margin
                         checked={erIArbeid.egetArbeidPaSikt}
                     />
                     <ElementMedTekst
@@ -55,6 +57,8 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                 <Margin>
                     <EnkelCheckbox
                         tittel={tekster['friskmelding.annen-arbeidsgiver']}
+                        bold
+                        margin
                         checked={erIArbeid.annetArbeidPaSikt}
                     />
                     <ElementMedTekst
@@ -77,6 +81,8 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
             <Margin>
                 <EnkelCheckbox
                     tittel={tekster['friskmelding.ingen-arbeidsgiver']}
+                    bold
+                    margin
                     checked={erIkkeIArbeid.arbeidsforPaSikt}
                 />
                 <ElementMedTekst

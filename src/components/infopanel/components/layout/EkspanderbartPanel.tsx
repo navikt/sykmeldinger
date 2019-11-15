@@ -23,13 +23,14 @@ const PanelHeading = ({ tittel }: PanelHeadingProps) => {
 };
 
 interface EkspanderbartpanelProps {
+    tittel: string;
     children: any | any[];
 }
 
-const Ekspanderbartpanel = ({ children }: EkspanderbartpanelProps) => {
+const Ekspanderbartpanel = ({ tittel, children }: EkspanderbartpanelProps) => {
     return (
         <div className="ekspanderbart-panel">
-            <EkspanderbartpanelBase heading={<PanelHeading tittel={tekster['flere-opplysninger.tittel']} />} border>
+            <EkspanderbartpanelBase heading={<PanelHeading tittel={tittel} />} border>
                 {children}
             </EkspanderbartpanelBase>
         </div>
