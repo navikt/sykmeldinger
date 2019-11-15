@@ -2,7 +2,6 @@ import React from 'react';
 import { Diagnose } from '../../../../../types/sykmeldingTypes';
 import PanelRad from '../../layout/PanelRad';
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
-import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import tekster from '../../../infopanel-tekster';
 import EtikettMedTekst from '../../layout/EtikettMedTekst';

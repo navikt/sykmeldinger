@@ -1,11 +1,9 @@
 import React from 'react';
 import { MedisinskVurdering } from '../../../../types/sykmeldingTypes';
-import { Checkbox } from 'nav-frontend-skjema';
 
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 
 import tekster from '../../infopanel-tekster';
-import EtikettMedTekst from '../layout/EtikettMedTekst';
 import CheckboxMedDato from '../layout/CheckboxMedDato';
 
 interface SkadeSeksjonProps {

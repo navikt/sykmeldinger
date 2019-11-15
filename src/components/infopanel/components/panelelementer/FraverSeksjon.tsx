@@ -1,5 +1,4 @@
 import React from 'react';
-import PanelRad from '../layout/PanelRad';
 import EtikettMedTekst from '../layout/EtikettMedTekst';
 
 import tekster from '../../infopanel-tekster';

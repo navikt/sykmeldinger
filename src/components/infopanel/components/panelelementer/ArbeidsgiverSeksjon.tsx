@@ -1,6 +1,5 @@
 import React from 'react';
 import { Arbeidsgiver } from '../../../../types/sykmeldingTypes';
-import PanelRad from '../layout/PanelRad';
 
 import tekster from '../../infopanel-tekster';
 import EtikettMedTekst from '../layout/EtikettMedTekst';

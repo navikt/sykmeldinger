@@ -9,7 +9,6 @@ import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
 import tekster from '../../infopanel-tekster';
 import Margin from '../layout/Margin';
 import ElementMedTekst from '../layout/ElementMedTekst';
-import CheckboxMedDato from '../layout/CheckboxMedDato';
 import EnkelCheckbox from '../layout/EnkelCheckbox';
 
 interface FriskmeldingProps {

@@ -52,7 +52,5 @@ export const tilLesbarDatoUtenAarstall = (datoArg: Date) => {
 };
 
 export function getDuration(from: Date, to: Date) {
-    const tom = to.getTime();
-    const fom = from.getTime();
     return Math.round(Math.floor((to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24))) + 1;
 }
