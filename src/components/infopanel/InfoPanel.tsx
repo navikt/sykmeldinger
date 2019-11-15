@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Sidetittel, Element } from 'nav-frontend-typografi';
 
 import Ekspanderbartpanel from './components/layout/EkspanderbartPanel';
 
@@ -22,6 +22,8 @@ import ElementMedTekst from './components/layout/ElementMedTekst';
 
 import { Sykmelding } from '../../types/sykmeldingTypes';
 
+import plaster from '../../svg/plaster.svg';
+
 import './infopanel.less';
 
 interface InfoPanelProps {
@@ -32,7 +34,12 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
     console.log(sykmelding);
     return (
         <article className="panel">
-            <header className="panel-header">ikon navn</header>
+            <header className="panel-header">
+                <img className="panel-header-icon" src={plaster} alt="plasterikon" />{' '}
+                <span>
+                    <Element>Din sykmelding</Element>
+                </span>
+            </header>
             <div className="panel-content">
                 <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
