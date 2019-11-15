@@ -34,8 +34,8 @@ const UtdypendeOpplysninger = ({ opplysninger }: UtdypendeOpplysningerProps) => 
     */
 
     const opplysningGrupper = Array.from(opplysninger).map(([key, opplysningGruppe]) => (
-        <Margin>
-            <OpplysningsGruppe key={key} opplysningGruppe={opplysningGruppe} />
+        <Margin key={key}>
+            <OpplysningsGruppe opplysningGruppe={opplysningGruppe} />
         </Margin>
     ));
 

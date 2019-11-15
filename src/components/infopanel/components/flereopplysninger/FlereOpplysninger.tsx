@@ -10,6 +10,8 @@ import BehandlingsDatoer from './components/BehandlingsDatoer';
 import Friskmelding from './components/Friskmelding';
 import UtdypendeOpplysninger from './components/UtdypendeOpplysninger';
 import Arbeidsevne from './components/Arbeidsevne';
+import OpplysningerSeksjon from './components/OpplysningerSeksjon';
+import ElementMedTekst from './components/ElementMedTekst';
 
 interface PanelHeadingProps {
     tittel: string;
@@ -44,7 +46,9 @@ const FlereOpplysninger = ({ sykmelding }: FlereOpplysningerProps) => {
                 <Friskmelding prognose={sykmelding.prognose} />
                 <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
                 <Arbeidsevne tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} tiltakNAV={sykmelding.tiltakNAV} />
-                <div>annet</div> <hr />
+                <OpplysningerSeksjon tittel="Annet" utenUnderstrek>
+                    <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
+                </OpplysningerSeksjon>
             </EkspanderbartpanelBase>
         </div>
     );

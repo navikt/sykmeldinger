@@ -4,10 +4,11 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 
 interface OpplysningerSeksjonProps {
     tittel?: string;
-    children: (JSX.Element | null)[];
+    children: JSX.Element | (JSX.Element | null)[];
+    utenUnderstrek?: boolean;
 }
 
-const OpplysningerSeksjon = ({ tittel, children }: OpplysningerSeksjonProps) => {
+const OpplysningerSeksjon = ({ tittel, children, utenUnderstrek }: OpplysningerSeksjonProps) => {
     return (
         <>
             {tittel && (
@@ -18,7 +19,7 @@ const OpplysningerSeksjon = ({ tittel, children }: OpplysningerSeksjonProps) => 
 
             {children}
 
-            <hr />
+            {!utenUnderstrek && <hr />}
         </>
     );
 };
