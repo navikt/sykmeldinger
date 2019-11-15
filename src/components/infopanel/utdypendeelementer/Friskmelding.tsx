@@ -1,5 +1,4 @@
 import React from 'react';
-import { Checkbox } from 'nav-frontend-skjema';
 
 import { Prognose } from '../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
