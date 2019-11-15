@@ -46,7 +46,7 @@ const Sporsmal: React.FC = () => {
 
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
-    // For conditional visning av underspørsmål
+    // For conditional visning av underspørsmål og alertbokser
     const watchOpplysningeneErRiktige = watch('opplysningeneErRiktige');
     const watchSykmeldtFra = watch('sykmeldtFra');
     const watchOppfolging = watch('oppfolging');
@@ -81,7 +81,7 @@ const Sporsmal: React.FC = () => {
     return (
         <>
             {formState.isSubmitted && !formState.isValid && (
-                <AlertStripeFeil>{tekster['alertstripe.tekst']}</AlertStripeFeil>
+                <AlertStripeFeil>{tekster['alertstripe.feil-i-utfyllingen.tekst']}</AlertStripeFeil>
             )}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <PanelBase>
@@ -148,21 +148,18 @@ const Sporsmal: React.FC = () => {
                     )}
                     {(watchPeriode || watchSykmeldingsgrad) && (
                         <AlertStripeAdvarsel>
-                            <Element>Du trenger ny sykmelding</Element>
+                            <Element>{tekster['alertstripe.du-trenger-ny-sykmelding.tittel']}</Element>
                             <Normaltekst>
-                                Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
+                                {tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}
                             </Normaltekst>
                         </AlertStripeAdvarsel>
                     )}
                     {!(watchPeriode || watchSykmeldingsgrad) &&
                         (watchDiagnose || watchArbeidsgiver || watchAndreOpplysninger) && (
                             <AlertStripeInfo>
-                                <Element>Du kan bruke sykmeldingen din</Element>
+                                <Element>{tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}</Element>
                                 <Normaltekst>
-                                    Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs!
-                                    Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for
-                                    arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi
-                                    beskjed til den som sykmelder deg om at det er lagt inn feil arbeidsgiver.
+                                    {tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
                                 </Normaltekst>
                             </AlertStripeInfo>
                         )}

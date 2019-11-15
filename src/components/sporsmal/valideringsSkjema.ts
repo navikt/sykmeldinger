@@ -49,7 +49,7 @@ export const valideringsSkjema = yup
             return true;
         },
     )
-    .test('manglerFrilanserSpr', 'Fyll ut forsikringsspørsmål', (obj): any => {
+    .test('manglerEgenmeldingbekreftelse', 'Fyll ut om du har brukt egenmelding', (obj): any => {
         if (
             (obj.sykmeldtFra === Arbeidsforhold.FRILANSER) ||
             (obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE)
@@ -60,7 +60,7 @@ export const valideringsSkjema = yup
         }
         return true;
     })
-    .test('manglerFrilanserSpr', 'Fyll ut forsikringsspørsmål', (obj): any => {
+    .test('manglerForsikringbekreftelse', 'Fyll ut forsikringsspørsmål', (obj): any => {
         if (
             (obj.sykmeldtFra === Arbeidsforhold.FRILANSER) ||
             (obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE)

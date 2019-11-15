@@ -2,7 +2,13 @@ const SporsmalTekster: any = {
     nb: {
         ja: 'Ja',
         nei: 'Nei',
-        'alertstripe.tekst': 'Vennligst svar på alle feltene i skjemaet',
+        'alertstripe.feil-i-utfyllingen.tekst': 'Vennligst svar på alle feltene i skjemaet',
+        'alertstripe.du-trenger-ny-sykmelding.tittel': 'Du trenger ny sykmelding.',
+        'alertstripe.du-trenger-ny-sykmelding.tekst':
+            'Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny. For å avbryte, velg "Jeg ønsker ikke å bruke denne sykmeldingen" nederst på siden',
+        'alertstripe.du-kan-bruke-sykmeldingen.tittel': 'Du kan bruke sykmeldingen din.',
+        'alertstripe.du-kan-bruke-sykmeldingen.tekst':
+            'Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs! Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi beskjed til den som sykmelder deg om at det er lagt inn feil arbeidsgiver.',
         'jaEllerNei.tittel': 'Er opplysningene i sykmeldingen riktige?',
         'jaEllerNei.feilmelding': 'Du må svare på om opplysningene i sykmeldingen er riktige',
         'opplysningeneErFeil.tittel': 'Hvilke opplysninger er ikke riktige?',
