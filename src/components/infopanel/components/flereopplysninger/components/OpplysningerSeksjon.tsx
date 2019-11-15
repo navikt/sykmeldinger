@@ -2,14 +2,12 @@ import React from 'react';
 
 import { Innholdstittel } from 'nav-frontend-typografi';
 
-import Margin from '../../Margin';
-
-interface PanelSeksjonProps {
+interface OpplysningerSeksjonProps {
     tittel?: string;
     children: (JSX.Element | null)[];
 }
 
-const PanelSeksjon = ({ tittel, children }: PanelSeksjonProps) => {
+const OpplysningerSeksjon = ({ tittel, children }: OpplysningerSeksjonProps) => {
     return (
         <>
             {tittel && (
@@ -17,13 +15,12 @@ const PanelSeksjon = ({ tittel, children }: PanelSeksjonProps) => {
                     <Innholdstittel>{tittel}</Innholdstittel>
                 </div>
             )}
-            {children.map((child, index) => (
-                <Margin key={index.toString()}>{child}</Margin>
-            ))}
+
+            {children}
 
             <hr />
         </>
     );
 };
 
-export default PanelSeksjon;
+export default OpplysningerSeksjon;

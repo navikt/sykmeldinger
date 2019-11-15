@@ -5,8 +5,9 @@ import { SporsmalSvar } from '../../../../../types/sykmeldingTypes';
 
 import tekster from '../flereopplysninger-tekster';
 
-import PanelSeksjon from '../components/PanelSeksjon';
+import OpplysningerSeksjon from './OpplysningerSeksjon';
 import Margin from '../../Margin';
+import ElementMedTekst from './ElementMedTekst';
 
 interface OpplysningsGruppeProps {
     opplysningGruppe: Map<string, SporsmalSvar>;
@@ -14,23 +15,9 @@ interface OpplysningsGruppeProps {
 
 const OpplysningsGruppe = ({ opplysningGruppe }: OpplysningsGruppeProps) => {
     const sporsmal = Array.from(opplysningGruppe).map(([key, sporsmalSvar]) => (
-        <Sporsmal key={key} sporsmalSvar={sporsmalSvar} />
+        <ElementMedTekst key={key} tittel={sporsmalSvar.sporsmal} tekst={sporsmalSvar.svar} margin />
     ));
     return <>{sporsmal}</>;
-};
-
-interface SporsmalProps {
-    sporsmalSvar: SporsmalSvar;
-}
-
-const Sporsmal = ({ sporsmalSvar: { restriksjoner, sporsmal, svar } }: SporsmalProps) => {
-    return (
-        <Margin>
-            <Element>{sporsmal}</Element>
-            <Normaltekst>- {svar}</Normaltekst>
-            {restriksjoner}
-        </Margin>
-    );
 };
 
 interface UtdypendeOpplysningerProps {
@@ -47,10 +34,12 @@ const UtdypendeOpplysninger = ({ opplysninger }: UtdypendeOpplysningerProps) => 
     */
 
     const opplysningGrupper = Array.from(opplysninger).map(([key, opplysningGruppe]) => (
-        <OpplysningsGruppe key={key} opplysningGruppe={opplysningGruppe} />
+        <Margin>
+            <OpplysningsGruppe key={key} opplysningGruppe={opplysningGruppe} />
+        </Margin>
     ));
 
-    return <PanelSeksjon tittel={tekster['utdypende.tittel']}>{opplysningGrupper}</PanelSeksjon>;
+    return <OpplysningerSeksjon tittel={tekster['utdypende.tittel']}>{opplysningGrupper}</OpplysningerSeksjon>;
 };
 
 export default UtdypendeOpplysninger;

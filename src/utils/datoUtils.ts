@@ -24,8 +24,11 @@ export const tilLesbarPeriodeMedArstall = (fom: Date, tom: Date): string => {
         : `${tilLesbarDatoMedArstall(fom)} ${SKILLETEGN_PERIODE} ${tilLesbarDatoMedArstall(tom)}`;
 };
 
-export const tilLesbarDatoMedArstall = (datoArg: Date) => {
-    return datoArg ? `${tilLesbarDatoUtenAarstall(new Date(datoArg))} ${new Date(datoArg).getFullYear()}` : undefined;
+export const tilLesbarDatoMedArstall = (datoArg?: Date) => {
+    if (!datoArg) {
+        return undefined;
+    }
+    return `${tilLesbarDatoUtenAarstall(new Date(datoArg))} ${new Date(datoArg).getFullYear()}`;
 };
 
 export const tilLesbarPeriodeUtenArstall = (fomArg: string, tomArg: string): string => {

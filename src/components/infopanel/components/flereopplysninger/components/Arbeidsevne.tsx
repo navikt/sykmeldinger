@@ -2,9 +2,8 @@ import React from 'react';
 
 import tekster from '../flereopplysninger-tekster';
 
-import PanelSeksjon from '../components/PanelSeksjon';
-import Margin from '../../Margin';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import OpplysningerSeksjon from './OpplysningerSeksjon';
+import ElementMedTekst from './ElementMedTekst';
 
 interface ArbeidsevneProps {
     tiltakArbeidsplassen?: string;
@@ -13,16 +12,14 @@ interface ArbeidsevneProps {
 
 const Arbeidsevne = ({ tiltakArbeidsplassen, tiltakNAV }: ArbeidsevneProps) => {
     return (
-        <PanelSeksjon tittel={tekster['arbeidsevne.tittel']}>
-            <Margin>
-                <Element>{tekster['arbeidsevne.tilrettelegging.tittel']}</Element>
-                <Normaltekst>- {tiltakArbeidsplassen}</Normaltekst>
-            </Margin>
-            <Margin>
-                <Element>{tekster['arbeidsevne.tiltak.tittel']}</Element>
-                <Normaltekst>- {tiltakNAV}</Normaltekst>
-            </Margin>
-        </PanelSeksjon>
+        <OpplysningerSeksjon tittel={tekster['arbeidsevne.tittel']}>
+            <ElementMedTekst
+                tittel={tekster['arbeidsevne.tilrettelegging.tittel']}
+                tekst={tiltakArbeidsplassen}
+                margin
+            />
+            <ElementMedTekst tittel={tekster['arbeidsevne.tiltak.tittel']} tekst={tiltakNAV} margin />
+        </OpplysningerSeksjon>
     );
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
 
-import PanelSeksjon from './PanelSeksjon';
+import OpplysningerSeksjon from './OpplysningerSeksjon';
+import ElementMedTekst from './ElementMedTekst';
 
 interface BehandlingsDatoerProps {
     behandletTidspunkt: Date;
@@ -12,18 +12,19 @@ interface BehandlingsDatoerProps {
 
 const BehandlingsDatoer = ({ behandletTidspunkt, syketilfelleStartDato }: BehandlingsDatoerProps) => {
     return (
-        <PanelSeksjon>
-            <>
-                <Element>Dato sykmeldingen ble skrevet</Element>
-                <Normaltekst>- {tilLesbarDatoMedArstall(behandletTidspunkt)}</Normaltekst>
-            </>
-            {syketilfelleStartDato ? (
-                <>
-                    <Element>Når startet det legemeldte fraværet?</Element>
-                    <Normaltekst>- {tilLesbarDatoMedArstall(syketilfelleStartDato)}</Normaltekst>
-                </>
-            ) : null}
-        </PanelSeksjon>
+        <OpplysningerSeksjon>
+            <ElementMedTekst
+                tittel="Dato sykmeldingen ble skrevet"
+                tekst={tilLesbarDatoMedArstall(behandletTidspunkt)}
+                margin
+            />
+            <ElementMedTekst
+                vis={!!syketilfelleStartDato}
+                tittel="Når startet det legemeldte fraværet?"
+                tekst={tilLesbarDatoMedArstall(syketilfelleStartDato)}
+                margin
+            />
+        </OpplysningerSeksjon>
     );
 };
 

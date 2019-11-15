@@ -1,15 +1,14 @@
 import React from 'react';
-import { Element, Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';
 
 import { Prognose } from '../../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
 
-import PanelSeksjon from './PanelSeksjon';
+import OpplysningerSeksjon from './OpplysningerSeksjon';
 
 import tekster from '../flereopplysninger-tekster';
 import Margin from '../../Margin';
-import Innrykk from '../../Innrykk';
+import ElementMedTekst from './ElementMedTekst';
 
 interface FriskmeldingProps {
     prognose?: Prognose;
@@ -39,19 +38,19 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
         }
 
         return (
-            <>
+            <Margin>
                 <Margin>
                     <Checkbox
                         label={tekster['friskmelding.samme-arbeidsgiver']}
                         checked={erIArbeid.egetArbeidPaSikt}
                         readOnly
                     />
-                    {erIArbeid.egetArbeidPaSikt && erIArbeid.arbeidFOM && (
-                        <Innrykk>
-                            <Element>{tekster['friskmelding.arbeidfom']}</Element>
-                            <Normaltekst>- {tilLesbarDatoMedArstall(erIArbeid.arbeidFOM)}</Normaltekst>
-                        </Innrykk>
-                    )}
+                    <ElementMedTekst
+                        vis={erIArbeid.egetArbeidPaSikt && !!erIArbeid.arbeidFOM}
+                        tittel={tekster['friskmelding.arbeidfom']}
+                        tekst={tilLesbarDatoMedArstall(erIArbeid.arbeidFOM)}
+                        innrykk
+                    />
                 </Margin>
                 <Margin>
                     <Checkbox
@@ -59,14 +58,14 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                         checked={erIArbeid.annetArbeidPaSikt}
                         readOnly
                     />
-                    {erIArbeid.annetArbeidPaSikt && erIArbeid.vurderingsdato && (
-                        <Innrykk>
-                            <Element>{tekster['friskmelding.vurderingsdato']}</Element>
-                            <Normaltekst>- {tilLesbarDatoMedArstall(erIArbeid.vurderingsdato)}</Normaltekst>
-                        </Innrykk>
-                    )}
+                    <ElementMedTekst
+                        vis={erIArbeid.annetArbeidPaSikt && !!erIArbeid.vurderingsdato}
+                        tittel={tekster['friskmelding.vurderingsdato']}
+                        tekst={tilLesbarDatoMedArstall(erIArbeid.vurderingsdato)}
+                        innrykk
+                    />
                 </Margin>
-            </>
+            </Margin>
         );
     };
 
@@ -76,38 +75,33 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
         }
 
         return (
-            <>
+            <Margin>
                 <Checkbox
                     label={tekster['friskmelding.ingen-arbeidsgiver']}
                     checked={erIkkeIArbeid.arbeidsforPaSikt}
                     readOnly
                 />
-                {erIkkeIArbeid.arbeidsforFOM && (
-                    <>
-                        <Element>{tekster['friskmelding.arbeidfom']}</Element>
-                        <Normaltekst>- {tilLesbarDatoMedArstall(erIkkeIArbeid.arbeidsforFOM)}</Normaltekst>
-                    </>
-                )}
-                {erIkkeIArbeid.vurderingsdato && (
-                    <>
-                        <Element>{tekster['friskmelding.ingen-arbeidsgiver.vurdering']}</Element>
-                        <Normaltekst>- {tilLesbarDatoMedArstall(erIkkeIArbeid.vurderingsdato)}</Normaltekst>
-                    </>
-                )}
-            </>
+                <ElementMedTekst
+                    vis={!!erIkkeIArbeid.arbeidsforFOM}
+                    tittel={tekster['friskmelding.arbeidfom']}
+                    tekst={tilLesbarDatoMedArstall(erIkkeIArbeid.arbeidsforFOM)}
+                />
+                <ElementMedTekst
+                    vis={!!erIkkeIArbeid.vurderingsdato}
+                    tittel={tekster['friskmelding.ingen-arbeidsgiver.vurdering']}
+                    tekst={tilLesbarDatoMedArstall(erIkkeIArbeid.vurderingsdato)}
+                />
+            </Margin>
         );
     };
 
     return (
-        <PanelSeksjon tittel={tekster['friskmelding.tittel']}>
+        <OpplysningerSeksjon tittel={tekster['friskmelding.tittel']}>
             <Checkbox label={tekster['friskmelding.arbeidsfor.tittel']} checked={arbeidsforEtterPeriode} readOnly />
-            <Margin>
-                <Element>{tekster['friskmelding.hensyn']}</Element>
-                <Normaltekst>{hensynArbeidsplassen}</Normaltekst>
-            </Margin>
+            <ElementMedTekst tittel={tekster['friskmelding.hensyn']} tekst={hensynArbeidsplassen} margin />
             <ErIArbeidSeksjon />
             <ErIkkeIArbeidSeksjon />
-        </PanelSeksjon>
+        </OpplysningerSeksjon>
     );
 };
 
