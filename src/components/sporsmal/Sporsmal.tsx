@@ -91,7 +91,6 @@ const Sporsmal: React.FC = () => {
                                 ? { feilmelding: tekster['jaEllerNei.feilmelding'] }
                                 : undefined
                         }
-                        className="js-opplysningeneErRiktige"
                     >
                         <Fieldset legend={tekster['jaEllerNei.tittel']}>
                             <Radio
@@ -149,18 +148,14 @@ const Sporsmal: React.FC = () => {
                     {(watchPeriode || watchSykmeldingsgrad) && (
                         <AlertStripeAdvarsel>
                             <Element>{tekster['alertstripe.du-trenger-ny-sykmelding.tittel']}</Element>
-                            <Normaltekst>
-                                {tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}
-                            </Normaltekst>
+                            <Normaltekst>{tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}</Normaltekst>
                         </AlertStripeAdvarsel>
                     )}
                     {!(watchPeriode || watchSykmeldingsgrad) &&
                         (watchDiagnose || watchArbeidsgiver || watchAndreOpplysninger) && (
                             <AlertStripeInfo>
                                 <Element>{tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}</Element>
-                                <Normaltekst>
-                                    {tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
-                                </Normaltekst>
+                                <Normaltekst>{tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}</Normaltekst>
                             </AlertStripeInfo>
                         )}
                 </PanelBase>
@@ -168,7 +163,6 @@ const Sporsmal: React.FC = () => {
                 <PanelBase>
                     <SkjemaGruppe
                         feil={errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined}
-                        className="js-sykmeldtFra"
                     >
                         <Fieldset
                             legend={
