@@ -1,12 +1,12 @@
 import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { SporsmalSvar } from '../../../../../types/sykmeldingTypes';
+import { SporsmalSvar } from '../../../../types/sykmeldingTypes';
 
-import tekster from '../flereopplysninger-tekster';
+import tekster from './flereopplysninger-tekster';
 
 import OpplysningerSeksjon from './OpplysningerSeksjon';
-import Margin from '../../Margin';
+import Margin from '../Margin';
 import ElementMedTekst from './ElementMedTekst';
 
 interface OpplysningsGruppeProps {

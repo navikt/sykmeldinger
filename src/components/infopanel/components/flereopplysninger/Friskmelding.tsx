@@ -1,13 +1,13 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 
-import { Prognose } from '../../../../../types/sykmeldingTypes';
-import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
+import { Prognose } from '../../../../types/sykmeldingTypes';
+import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 
 import OpplysningerSeksjon from './OpplysningerSeksjon';
 
-import tekster from '../flereopplysninger-tekster';
-import Margin from '../../Margin';
+import tekster from './flereopplysninger-tekster';
+import Margin from '../Margin';
 import ElementMedTekst from './ElementMedTekst';
 
 interface FriskmeldingProps {

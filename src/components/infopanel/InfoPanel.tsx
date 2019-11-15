@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sykmelding } from '../../types/sykmeldingTypes';
 import { Sidetittel } from 'nav-frontend-typografi';
 
-import FlereOpplysninger from './components/flereopplysninger/FlereOpplysninger';
+import Ekspanderbartpanel from './components/ekspanderbartpanel/EkspanderbartPanel';
+
 import SykmeldingPerioder from './components/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
 import LegeSeksjon from './components/LegeSeksjon';
@@ -12,6 +12,15 @@ import FraverSeksjon from './components/FraverSeksjon';
 import SkadeSeksjon from './components/SkadeSeksjon';
 import SvangerskapSeksjon from './components/SvangerskapSeksjon';
 import ArbeidsuforSeksjon from './components/ArbeidsuforSeksjon';
+
+import BehandlingsDatoer from './components/flereopplysninger/BehandlingsDatoer';
+import Friskmelding from './components/flereopplysninger/Friskmelding';
+import UtdypendeOpplysninger from './components/flereopplysninger/UtdypendeOpplysninger';
+import Arbeidsevne from './components/flereopplysninger/Arbeidsevne';
+import OpplysningerSeksjon from './components/flereopplysninger/OpplysningerSeksjon';
+import ElementMedTekst from './components/flereopplysninger/ElementMedTekst';
+
+import { Sykmelding } from '../../types/sykmeldingTypes';
 
 import './infopanel.less';
 
@@ -38,7 +47,25 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                 <PrognoseSeksjon prognose={sykmelding.prognose} />
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
-                <FlereOpplysninger sykmelding={sykmelding} />
+
+                <Ekspanderbartpanel>
+                    <BehandlingsDatoer
+                        behandletTidspunkt={sykmelding.behandletTidspunkt}
+                        syketilfelleStartDato={sykmelding.syketilfelleStartDato}
+                    />
+                    <OpplysningerSeksjon tittel="Mulighet for arbeid">
+                        <div>pasienten kan ikke være i arbeid</div>
+                    </OpplysningerSeksjon>
+                    <Friskmelding prognose={sykmelding.prognose} />
+                    <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
+                    <Arbeidsevne
+                        tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
+                        tiltakNAV={sykmelding.tiltakNAV}
+                    />
+                    <OpplysningerSeksjon tittel="Annet" utenUnderstrek>
+                        <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
+                    </OpplysningerSeksjon>
+                </Ekspanderbartpanel>
             </div>
         </article>
     );
