@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SporsmalSvar } from '../../../../types/sykmeldingTypes';
+import { SporsmalSvar } from '../../../types/sykmeldingTypes';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../infopanel-tekster';
 
 import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
 import Margin from '../layout/Margin';

@@ -1,9 +1,9 @@
 import React from 'react';
 import EtikettMedTekst from '../layout/EtikettMedTekst';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../infopanel-tekster';
 
-import { AnnenFraversArsak } from '../../../../types/sykmeldingTypes';
+import { AnnenFraversArsak } from '../../../types/sykmeldingTypes';
 
 interface FraverSeksjonProps {
     fraver?: AnnenFraversArsak;

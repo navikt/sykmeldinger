@@ -1,6 +1,6 @@
 import React from 'react';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../infopanel-tekster';
 
 import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
 import ElementMedTekst from '../layout/ElementMedTekst';

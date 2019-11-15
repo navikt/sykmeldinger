@@ -19,7 +19,7 @@ interface CheckboxMedDatoProps {
 const CheckboxMedDato = ({ checkboxTittel, checked, tittel, tekst, bold, margin, innrykk }: CheckboxMedDatoProps) => {
     const innhold = (
         <>
-            <Margin liten>
+            <Margin>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img style={{ marginRight: '1rem' }} src={checked ? sjekkboks : boks} alt="sjekkboks ikon" />
                     <span>

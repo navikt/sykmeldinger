@@ -1,6 +1,6 @@
 import React from 'react';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../infopanel-tekster';
 import EtikettMedTekst from '../layout/EtikettMedTekst';
 
 interface LegeSeksjonProps {

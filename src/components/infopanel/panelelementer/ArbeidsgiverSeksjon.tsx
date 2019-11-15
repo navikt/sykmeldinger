@@ -1,7 +1,7 @@
 import React from 'react';
-import { Arbeidsgiver } from '../../../../types/sykmeldingTypes';
+import { Arbeidsgiver } from '../../../types/sykmeldingTypes';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../infopanel-tekster';
 import EtikettMedTekst from '../layout/EtikettMedTekst';
 
 interface ArbeidsgiverSeksjonProps {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 
-import { Prognose } from '../../../../types/sykmeldingTypes';
-import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
+import { Prognose } from '../../../types/sykmeldingTypes';
+import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
 
 import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../infopanel-tekster';
 import Margin from '../layout/Margin';
 import ElementMedTekst from '../layout/ElementMedTekst';
 import EnkelCheckbox from '../layout/EnkelCheckbox';

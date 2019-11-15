@@ -1,7 +1,7 @@
 import React from 'react';
 
-import tekster from '../../infopanel-tekster';
-import { Prognose } from '../../../../types/sykmeldingTypes';
+import tekster from '../infopanel-tekster';
+import { Prognose } from '../../../types/sykmeldingTypes';
 import EtikettMedTekst from '../layout/EtikettMedTekst';
 
 interface PrognoseSeksjonProps {

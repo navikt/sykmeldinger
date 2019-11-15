@@ -1,9 +1,9 @@
 import React from 'react';
-import { Diagnose } from '../../../../../types/sykmeldingTypes';
+import { Diagnose } from '../../../../types/sykmeldingTypes';
 import PanelRad from '../../layout/PanelRad';
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 
-import tekster from '../../../infopanel-tekster';
+import tekster from '../../infopanel-tekster';
 import EtikettMedTekst from '../../layout/EtikettMedTekst';
 
 interface DiagnoseSeksjonProps {
