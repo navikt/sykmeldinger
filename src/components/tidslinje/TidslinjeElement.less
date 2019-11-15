@@ -1,0 +1,63 @@
+@import '../../basic.less';
+
+.tidslinje-element {
+    display: flex;
+    align-items: center;
+
+    .tidslinje-element__linje {
+        left: 1.54rem;
+        position: relative;
+        width: 0.08rem;
+        background-color: grey;
+        align-self: stretch;
+    }
+
+    .tidslinje-element__linje--forste {
+        top: 1rem;
+    }
+    
+    .tidslinje-element__linje--siste {
+        bottom: 2rem;
+    }
+
+    .tidslinje-element__stegindikator {
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        width: 3rem;
+        margin-right: 1rem;
+    }
+    
+    .tidslinje-element__stegindikator--plaster {
+        display: flex;
+        justify-content: center;
+        background-color: @navLysBla;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .tidslinje-element__stegindikator--sirkel {
+        display: flex;
+        justify-content: center;
+        background-color: @navLysGra;
+        border-radius: 50%;
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .tidslinje-element__ekspanderbar {
+        flex: 1;
+        padding: 0.7rem 0;
+    }
+}
+
+.ekspanderbar {
+    width: 100%;
+
+    .ekspanderbar__bilde{
+        width: 100%;
+        max-width: 25rem;
+        margin-bottom: 2rem;
+    }
+}
