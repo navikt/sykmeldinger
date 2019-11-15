@@ -1,24 +1,24 @@
 import React from 'react';
 import { Sidetittel } from 'nav-frontend-typografi';
 
-import Ekspanderbartpanel from './components/ekspanderbartpanel/EkspanderbartPanel';
+import Ekspanderbartpanel from './components/layout/EkspanderbartPanel';
 
-import SykmeldingPerioder from './components/periode/SykmeldingPerioder';
-import DiagnoseSeksjon from './components/diagnose/DiagnoseSeksjon';
-import LegeSeksjon from './components/LegeSeksjon';
-import ArbeidsgiverSeksjon from './components/ArbeidsgiverSeksjon';
-import PrognoseSeksjon from './components/PrognoseSeksjon';
-import FraverSeksjon from './components/FraverSeksjon';
-import SkadeSeksjon from './components/SkadeSeksjon';
-import SvangerskapSeksjon from './components/SvangerskapSeksjon';
-import ArbeidsuforSeksjon from './components/ArbeidsuforSeksjon';
+import SykmeldingPerioder from './components/panelelementer/periode/SykmeldingPerioder';
+import DiagnoseSeksjon from './components/panelelementer/diagnose/DiagnoseSeksjon';
+import LegeSeksjon from './components/panelelementer/LegeSeksjon';
+import ArbeidsgiverSeksjon from './components/panelelementer/ArbeidsgiverSeksjon';
+import PrognoseSeksjon from './components/panelelementer/PrognoseSeksjon';
+import FraverSeksjon from './components/panelelementer/FraverSeksjon';
+import SkadeSeksjon from './components/panelelementer/SkadeSeksjon';
+import SvangerskapSeksjon from './components/panelelementer/SvangerskapSeksjon';
+import ArbeidsuforSeksjon from './components/panelelementer/ArbeidsuforSeksjon';
 
-import BehandlingsDatoer from './components/flereopplysninger/BehandlingsDatoer';
-import Friskmelding from './components/flereopplysninger/Friskmelding';
-import UtdypendeOpplysninger from './components/flereopplysninger/UtdypendeOpplysninger';
-import Arbeidsevne from './components/flereopplysninger/Arbeidsevne';
-import OpplysningerSeksjon from './components/flereopplysninger/OpplysningerSeksjon';
-import ElementMedTekst from './components/flereopplysninger/ElementMedTekst';
+import BehandlingsDatoer from './components/utdypendeelementer/BehandlingsDatoer';
+import Friskmelding from './components/utdypendeelementer/Friskmelding';
+import UtdypendeOpplysninger from './components/utdypendeelementer/UtdypendeOpplysninger';
+import Arbeidsevne from './components/utdypendeelementer/Arbeidsevne';
+import OpplysningerSeksjon from './components/layout/OpplysningerSeksjon';
+import ElementMedTekst from './components/layout/ElementMedTekst';
 
 import { Sykmelding } from '../../types/sykmeldingTypes';
 

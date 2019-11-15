@@ -4,11 +4,13 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Prognose } from '../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 
-import OpplysningerSeksjon from './OpplysningerSeksjon';
+import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
 
-import tekster from './flereopplysninger-tekster';
-import Margin from '../Margin';
-import ElementMedTekst from './ElementMedTekst';
+import tekster from '../../infopanel-tekster';
+import Margin from '../layout/Margin';
+import ElementMedTekst from '../layout/ElementMedTekst';
+import CheckboxMedDato from '../layout/CheckboxMedDato';
+import EnkelCheckbox from '../layout/EnkelCheckbox';
 
 interface FriskmeldingProps {
     prognose?: Prognose;
@@ -40,10 +42,9 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
         return (
             <Margin>
                 <Margin>
-                    <Checkbox
-                        label={tekster['friskmelding.samme-arbeidsgiver']}
+                    <EnkelCheckbox
+                        tittel={tekster['friskmelding.samme-arbeidsgiver']}
                         checked={erIArbeid.egetArbeidPaSikt}
-                        readOnly
                     />
                     <ElementMedTekst
                         vis={erIArbeid.egetArbeidPaSikt && !!erIArbeid.arbeidFOM}
@@ -53,10 +54,9 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                     />
                 </Margin>
                 <Margin>
-                    <Checkbox
-                        label={tekster['friskmelding.annen-arbeidsgiver']}
+                    <EnkelCheckbox
+                        tittel={tekster['friskmelding.annen-arbeidsgiver']}
                         checked={erIArbeid.annetArbeidPaSikt}
-                        readOnly
                     />
                     <ElementMedTekst
                         vis={erIArbeid.annetArbeidPaSikt && !!erIArbeid.vurderingsdato}
@@ -76,10 +76,9 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
 
         return (
             <Margin>
-                <Checkbox
-                    label={tekster['friskmelding.ingen-arbeidsgiver']}
+                <EnkelCheckbox
+                    tittel={tekster['friskmelding.ingen-arbeidsgiver']}
                     checked={erIkkeIArbeid.arbeidsforPaSikt}
-                    readOnly
                 />
                 <ElementMedTekst
                     vis={!!erIkkeIArbeid.arbeidsforFOM}

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 
-import OpplysningerSeksjon from './OpplysningerSeksjon';
-import ElementMedTekst from './ElementMedTekst';
+import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
+import ElementMedTekst from '../layout/ElementMedTekst';
 
 interface BehandlingsDatoerProps {
     behandletTidspunkt: Date;

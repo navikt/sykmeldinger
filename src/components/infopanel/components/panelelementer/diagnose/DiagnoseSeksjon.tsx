@@ -1,10 +1,11 @@
 import React from 'react';
-import { Diagnose } from '../../../../types/sykmeldingTypes';
-import PanelRad from '../PanelRad';
+import { Diagnose } from '../../../../../types/sykmeldingTypes';
+import PanelRad from '../../layout/PanelRad';
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../../../infopanel-tekster';
+import EtikettMedTekst from '../../layout/EtikettMedTekst';
 
 interface DiagnoseSeksjonProps {
     diagnose?: Diagnose;
@@ -23,9 +24,7 @@ const DiagnoseSeksjon = ({ diagnose, bidiagnose }: DiagnoseSeksjonProps) => {
     return (
         <PanelRad>
             <div style={{ flex: '1' }}>
-                <EtikettLiten>{tittel}</EtikettLiten>
-                <Normaltekst>{tekst}</Normaltekst>
-                <Undertekst>{tekster['diagnose.meta']}</Undertekst>
+                <EtikettMedTekst tittel={tittel} tekst={tekst} undertekst={tekster['diagnose.meta']} />
             </div>
             <DiagnoseKodeSeksjon kode={kode} system={system} showHelp={!bidiagnose} />
         </PanelRad>

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import tekster from './flereopplysninger-tekster';
+import tekster from '../../infopanel-tekster';
 
-import OpplysningerSeksjon from './OpplysningerSeksjon';
-import ElementMedTekst from './ElementMedTekst';
+import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
+import ElementMedTekst from '../layout/ElementMedTekst';
 
 interface ArbeidsevneProps {
     tiltakArbeidsplassen?: string;

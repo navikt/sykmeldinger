@@ -1,7 +1,7 @@
 import React from 'react';
-import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import tekster from '../../infopanel-tekster';
+import tekster from '../../../infopanel-tekster';
+import EtikettMedTekst from '../../layout/EtikettMedTekst';
 
 interface DiagnoseKodeSeksjonProps {
     kode: string;
@@ -13,9 +13,7 @@ const DiagnoseKodeSeksjon = ({ kode, system, showHelp }: DiagnoseKodeSeksjonProp
     return (
         <div style={{ flex: '1', display: 'flex' }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <EtikettLiten>{tekster['diagnosekode.tittel']}</EtikettLiten>
-                <Normaltekst>{kode}</Normaltekst>
-                <Undertekst>{system}</Undertekst>
+                <EtikettMedTekst tittel={tekster['diagnosekode.tittel']} tekst={kode} undertekst={system} />
             </div>
             {showHelp && <Hjelpetekst>{tekster['diagnosekode.hjelpetekst.tekst']}</Hjelpetekst>}
         </div>

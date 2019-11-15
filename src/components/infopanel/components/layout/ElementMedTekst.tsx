@@ -1,8 +1,8 @@
 import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import Innrykk from '../Innrykk';
-import Margin from '../Margin';
+import Innrykk from './Innrykk';
+import Margin from './Margin';
 
 interface ElementMedTekstProps {
     vis?: boolean;

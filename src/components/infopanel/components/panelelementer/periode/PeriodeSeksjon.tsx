@@ -1,9 +1,9 @@
 import React from 'react';
-import { Periode } from '../../../../types/sykmeldingTypes';
+import { Periode } from '../../../../../types/sykmeldingTypes';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
-import { tilLesbarPeriodeMedArstall, getDuration } from '../../../../utils/datoUtils';
-import tekster from '../../infopanel-tekster';
+import { tilLesbarPeriodeMedArstall, getDuration } from '../../../../../utils/datoUtils';
+import tekster from '../../../infopanel-tekster';
 import './periodeseksjon.less';
 
 interface PeriodeSeksjonProps {
