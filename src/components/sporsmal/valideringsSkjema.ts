@@ -12,7 +12,8 @@ export const valideringsSkjema = yup
         andreOpplysninger: yup.boolean(),
         sykmeldtFra: yup.string().required(),
         oppfolging: yup.string(),
-        frilanser: yup.string(),
+        frilanserEgenmelding: yup.string(),
+        frilanserForsikring: yup.string(),
     })
     .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (obj): any => {
         if (obj.opplysningeneErRiktige === 'false') {

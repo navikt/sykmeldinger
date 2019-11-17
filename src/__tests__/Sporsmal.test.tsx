@@ -43,6 +43,44 @@ describe('Sporsmal', () => {
         });
     });
 
+    describe('Hvilke opplysninger er ikke riktige?', () => {
+        it('Skal rendre alertstripe "Du trenger ny sykmelding." dersom "periode" eller "symeldingsgrad" er valgt', async () => {
+            const { queryByLabelText, getByLabelText, queryByText } = render(<Sporsmal />);
+            fireEvent.click(getByLabelText(tekster['nei']));
+            await wait(() => queryByLabelText(tekster['opplysningeneErFeil.periode']));
+
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.periode']));
+            await wait(() => queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel']));
+            expect(queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel'])).toBeInTheDocument();
+
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.sykmeldingsgrad']));
+            await wait(() => queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel']));
+            expect(queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel'])).toBeInTheDocument();
+
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.arbeidsgiver']));
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.diagnose']));
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.andreOpplysninger']));
+            await wait(() => queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel']));
+            expect(queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel'])).toBeInTheDocument();
+        });
+        it('Skal rendre varselstripe "Du kan bruke sykmeldingen din." dersom "arbeidsgiver", "diagnose" eller "andre opplysninger" er valgt, men ikke "periode" eller "sykmeldingsgrad"', async () => {
+            const { queryByLabelText, getByLabelText, queryByText } = render(<Sporsmal />);
+            fireEvent.click(getByLabelText(tekster['nei']));
+            await wait(() => queryByLabelText(tekster['opplysningeneErFeil.diagnose']));
+    
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.arbeidsgiver']));
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.diagnose']));
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.andreOpplysninger']));
+            await wait(() => queryByText(tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']));
+            expect(queryByText(tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel'])).toBeInTheDocument();
+            
+            fireEvent.click(getByLabelText(tekster['opplysningeneErFeil.sykmeldingsgrad']));
+            await wait(() => queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel']));
+            expect(queryByText(tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel'])).toBeNull();
+            expect(queryByText(tekster['alertstripe.du-trenger-ny-sykmelding.tittel'])).toBeInTheDocument();
+        });
+    });
+
     describe('Jeg er sykmeldt fra', () => {
         it('Skal rendre radiogruppe', () => {
             const { queryByLabelText } = render(<Sporsmal />);
@@ -81,29 +119,29 @@ describe('Sporsmal', () => {
     describe('Alertbanner', () => {
         it('Skal vise alertbanner dersom det finnes feil i valideringen', async () => {
             const { queryByText, getByText } = render(<Sporsmal />);
-            expect(queryByText(tekster['alertstripe.tekst'])).toBeNull();
+            expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeNull();
             fireEvent.click(getByText(tekster['knapp.submit']));
-            await wait(() => queryByText(tekster['alertstripe.tekst']));
-            expect(queryByText(tekster['alertstripe.tekst'])).toBeInTheDocument();
+            await wait(() => queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst']));
+            expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeInTheDocument();
         });
         it('Skal vise alertbanner helt til alle feil er vekke', async () => {
             const { queryByText, getByText, getByLabelText } = render(<Sporsmal />);
-            expect(queryByText(tekster['alertstripe.tekst'])).toBeNull();
+            expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeNull();
             act(() => {
                 fireEvent.click(getByText(tekster['knapp.submit']));
             });
-            await wait(() => queryByText(tekster['alertstripe.tekst']));
-            expect(queryByText(tekster['alertstripe.tekst'])).toBeInTheDocument();
+            await wait(() => queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst']));
+            expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeInTheDocument();
             act(() => {
                 fireEvent.click(getByLabelText(tekster['ja']));
             });
-            await wait(() => queryByText(tekster['alertstripe.tekst']));
-            expect(queryByText(tekster['alertstripe.tekst'])).toBeInTheDocument();
+            await wait(() => queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst']));
+            expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeInTheDocument();
             act(() => {
                 fireEvent.click(getByLabelText(tekster['sykmeldtFra.frilanser']));
             });
-            await wait(() => queryByText(tekster['alertstripe.tekst']));
-            expect(queryByText(tekster['alertstripe.tekst'])).toBeNull();
+            await wait(() => queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst']));
+            expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeNull();
         });
     });
 

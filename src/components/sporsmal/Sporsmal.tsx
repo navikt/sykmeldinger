@@ -68,10 +68,6 @@ const Sporsmal: React.FC = () => {
     };
 
     useEffect(() => {
-        console.table(errors);
-    }, [errors]);
-
-    useEffect(() => {
         if (hasFinished(sykmeldingPoster)) {
             console.log('Innsending fullført');
             // TODO: Redirect til kvitteringside
