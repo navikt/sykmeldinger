@@ -17,6 +17,7 @@ import BehandlingsDatoer from './utdypendeelementer/BehandlingsDatoer';
 import Friskmelding from './utdypendeelementer/Friskmelding';
 import UtdypendeOpplysninger from './utdypendeelementer/UtdypendeOpplysninger';
 import Arbeidsevne from './utdypendeelementer/Arbeidsevne';
+import MulighetForArbeid from './utdypendeelementer/MulighetForArbeid';
 import OpplysningerSeksjon from './layout/OpplysningerSeksjon';
 import ElementMedTekst from './layout/ElementMedTekst';
 
@@ -62,9 +63,7 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
                         syketilfelleStartDato={sykmelding.syketilfelleStartDato}
                     />
-                    <OpplysningerSeksjon tittel="Mulighet for arbeid">
-                        <div>pasienten kan ikke være i arbeid</div>
-                    </OpplysningerSeksjon>
+                    <MulighetForArbeid />
                     <Friskmelding prognose={sykmelding.prognose} />
                     <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
                     <Arbeidsevne

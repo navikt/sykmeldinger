@@ -20,7 +20,7 @@ const ElementMedTekst = ({ vis, tittel, tekst, innrykk, margin }: ElementMedTeks
     const innhold = (
         <>
             <Element>{tittel}</Element>
-            <Normaltekst>- {tekst}</Normaltekst>
+            {tekst && <Normaltekst>- {tekst}</Normaltekst>}
         </>
     );
 

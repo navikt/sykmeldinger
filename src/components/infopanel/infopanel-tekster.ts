@@ -34,6 +34,14 @@ const InfopanelTekster: any = {
         'friskmelding.vurderingsdato': 'Når antar du å kunne gi tilbakemelding på dette?',
         'friskmelding.ingen-arbeidsgiver': 'Jeg antar at pasienten på sikt kan komme tilbake i arbeid',
         'friskmelding.ingen-arbeidsgiver.vurdering': 'Når antar du å kunne gi tilbakemelding på dette?',
+        'muliget-for-arbeid.tittel': 'Mulighet for arbeid',
+        'muliget-for-arbeid.medisinske-arsaker.tittel': 'Pasienten kan ikke være i arbeid (100% sykmeldt)',
+        'muliget-for-arbeid.medisinske-arsaker': 'Det er medisinske årsaker som hindrer arbeidsrelatert aktivitet',
+        'muliget-for-arbeid.medisinske-arsaker.beskriv': 'Beskriv nærmere',
+        'muliget-for-arbeid.forhold-pa-arbeidsplassen.tittel': 'Pasienten kan ikke være i arbeid (100% sykmeldt)',
+        'muliget-for-arbeid.forhold-pa-arbeidsplassen':
+            'Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet',
+        'muliget-for-arbeid.forhold-pa-arbeidsplassen.angi': 'Angi hva som er årsaken',
     },
     en: {},
 };
