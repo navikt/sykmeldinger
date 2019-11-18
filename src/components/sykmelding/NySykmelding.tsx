@@ -4,12 +4,13 @@ import Sporsmal from '../sporsmal/Sporsmal';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
+    sykmeldingUtenforVentetid: boolean;
 }
 
-const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps) => {
+const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding, sykmeldingUtenforVentetid }: SykmeldingProps) => {
     return (
         <div className="sykmelding-container">
-            <Sporsmal />
+            <Sporsmal sykmelding={sykmelding} sykmeldingUtenforVentetid={sykmeldingUtenforVentetid} />
         </div>
     );
 };

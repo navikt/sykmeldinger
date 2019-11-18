@@ -16,6 +16,8 @@ import AvbrytDialog from './AvbrytDialog';
 import tekster from './sporsmal-tekster';
 import './Sporsmal.less';
 import AnnenArbeidsgiver from './AnnenArbeidsgiver';
+import { Sykmelding } from '../../types/sykmeldingTypes';
+import { skalViseFrilansersporsmal } from '../../utils/sporsmal-utils';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -39,11 +41,17 @@ interface SykmeldingFormData {
     frilanserForsikring?: string;
 }
 
-const Sporsmal: React.FC = () => {
+interface SporsmalProps {
+    sykmelding: Sykmelding;
+    sykmeldingUtenforVentetid: boolean;
+}
+
+const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, sykmeldingUtenforVentetid }: SporsmalProps) => {
     const { register, handleSubmit, watch, errors, formState } = useForm({
         validationSchema: valideringsSkjema,
     });
-    const sykmeldingPoster = useFetch<any>();
+    const sendSykmelding = useFetch<any>();
+
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
 
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
@@ -60,8 +68,8 @@ const Sporsmal: React.FC = () => {
 
     const onSubmit = (data: SykmeldingFormData) => {
         console.log(data);
-        if (isNotStarted(sykmeldingPoster)) {
-            sykmeldingPoster.fetch('/syforest/sendSykmelding', { method: 'POST' }, (fetchState: FetchState<any>) => {
+        if (isNotStarted(sendSykmelding)) {
+            sendSykmelding.fetch('/syforest/sendSykmelding', { method: 'POST' }, (fetchState: FetchState<any>) => {
                 if (hasData(fetchState)) {
                     console.log(fetchState.data);
                 }
@@ -70,11 +78,11 @@ const Sporsmal: React.FC = () => {
     };
 
     useEffect(() => {
-        if (hasFinished(sykmeldingPoster)) {
+        if (hasFinished(sendSykmelding)) {
             console.log('Innsending fullført');
             // TODO: Redirect til kvitteringside
         }
-    }, [sykmeldingPoster]);
+    }, [sendSykmelding]);
 
     return (
         <>
@@ -119,9 +127,15 @@ const Sporsmal: React.FC = () => {
                         tekst={tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}
                     />
                     <AlertStripeHjelper
+                        vis={!(watchPeriode || watchSykmeldingsgrad) && watchArbeidsgiver}
+                        type="info"
+                        tittel={tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}
+                        tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.arbeidsgiver.tekst']}
+                    />
+                    <AlertStripeHjelper
                         vis={
-                            !(watchPeriode || watchSykmeldingsgrad) &&
-                            (watchDiagnose || watchArbeidsgiver || watchAndreOpplysninger)
+                            !(watchPeriode || watchSykmeldingsgrad || watchArbeidsgiver) &&
+                            (watchDiagnose || watchAndreOpplysninger)
                         }
                         type="info"
                         tittel={tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}
@@ -186,8 +200,9 @@ const Sporsmal: React.FC = () => {
                     />
                     <FrilanserSporsmal
                         vis={
-                            watchSykmeldtFra === Arbeidsforhold.FRILANSER ||
-                            watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE
+                            (watchSykmeldtFra === Arbeidsforhold.FRILANSER ||
+                                watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE) &&
+                            skalViseFrilansersporsmal(sykmelding, sykmeldingUtenforVentetid)
                         }
                         register={register}
                         errors={errors}
@@ -197,7 +212,7 @@ const Sporsmal: React.FC = () => {
                 <Tekstomrade>placeholder for "Slik ser sykmeldingen ut for arbeidsgiveren din"</Tekstomrade>
                 <br />
                 <div className="knapp--sentrer">
-                    <Hovedknapp htmlType="submit" spinner={sykmeldingPoster.status === FetchStatus.PENDING}>
+                    <Hovedknapp htmlType="submit" spinner={sendSykmelding.status === FetchStatus.PENDING}>
                         {tekster['knapp.submit']}
                     </Hovedknapp>
                 </div>

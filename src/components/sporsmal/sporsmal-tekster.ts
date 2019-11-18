@@ -9,6 +9,8 @@ const SporsmalTekster: any = {
             'Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny. For å avbryte, velg "Jeg ønsker ikke å bruke denne sykmeldingen" nederst på siden',
         'alertstripe.du-kan-bruke-sykmeldingen.tittel': 'Du kan bruke sykmeldingen din.',
         'alertstripe.du-kan-bruke-sykmeldingen.tekst':
+            'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at den inneholder feil.',
+        'alertstripe.du-kan-bruke-sykmeldingen.arbeidsgiver.tekst':
             'Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs! Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi beskjed til den som sykmelder deg om at det er lagt inn feil arbeidsgiver.',
         'alertstripe.annen-arbeidsgiver':
             'Siden du ikke finner arbeidsgiveren din i denne listen, kan du ikke sende sykmeldingen digitalt. Du bør spørre arbeidsgiveren din om hvorfor de ikke har registrert deg som arbeidstaker i A-meldingen.',

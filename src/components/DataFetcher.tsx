@@ -1,14 +1,28 @@
 import React, { useEffect } from 'react';
 import Spinner from 'nav-frontend-spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import useFetch, { isNotStarted, FetchState, hasData, isAnyNotStartedOrPending, hasAnyFailed } from '../hooks/useFetch';
+import useFetch, {
+    isNotStarted,
+    FetchState,
+    hasData,
+    isAnyNotStartedOrPending,
+    hasAnyFailed,
+    isPending,
+} from '../hooks/useFetch';
 import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
-import { SykmeldingData } from '../types/sykmeldingDataTypes';
+import { SykmeldingData, Status } from '../types/sykmeldingDataTypes';
 
 const DataFetcher = (props: { children: any }) => {
-    const { setSykmelding, setSykmeldingStatus, setNaermesteLedere } = useAppStore();
+    const {
+        sykmelding,
+        sykmeldingStatus,
+        setSykmelding,
+        setSykmeldingStatus,
+        setSykmeldingUtenforVentetid,
+    } = useAppStore();
     const sykmeldingFetcher = useFetch<SykmeldingData>();
+    const sykmeldingUtenforVentetidFetcher = useFetch<boolean>();
 
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
@@ -19,16 +33,37 @@ const DataFetcher = (props: { children: any }) => {
                     const sykmeldingStatus = data.status;
                     setSykmelding(sykmelding);
                     setSykmeldingStatus(sykmeldingStatus);
+
+                    // Dersom sykmeldingen er ny skal den berikes
+                    if (sykmeldingStatus === Status.NY) {
+                        sykmeldingUtenforVentetidFetcher.fetch(
+                            `/syforest/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
+                            { method: 'POST' },
+                            (fetchState: FetchState<boolean>) => {
+                                if (hasData(fetchState)) {
+                                    setSykmeldingUtenforVentetid(fetchState.data);
+                                }
+                            },
+                        );
+                    }
                 }
             });
         }
-    }, [setSykmelding, sykmeldingFetcher]);
+    }, [
+        setSykmeldingUtenforVentetid,
+        setSykmelding,
+        setSykmeldingStatus,
+        sykmelding,
+        sykmeldingFetcher,
+        sykmeldingStatus,
+        sykmeldingUtenforVentetidFetcher,
+    ]);
 
-    if (isAnyNotStartedOrPending([sykmeldingFetcher])) {
+    if (isAnyNotStartedOrPending([sykmeldingFetcher]) || isPending(sykmeldingUtenforVentetidFetcher)) {
         return <Spinner />;
     }
 
-    if (hasAnyFailed([sykmeldingFetcher])) {
+    if (hasAnyFailed([sykmeldingFetcher, sykmeldingUtenforVentetidFetcher])) {
         return (
             <AlertStripeFeil>
                 Det oppsto feil ved henting av data. Vi jobber med å løse saken. Vennligst prøv igjen senere.
