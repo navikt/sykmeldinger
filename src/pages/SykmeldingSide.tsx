@@ -4,7 +4,7 @@ import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 import useAppStore from '../store/useAppStore';
 import NySykmelding from '../components/sykmelding/nysykmelding/NySykmelding';
 import { Status } from '../types/sykmeldingDataTypes';
-import AvvistSykmelding from '../components/sykmelding/AvvistSykmelding';
+import AvvistSykmelding from '../components/sykmelding/avvistsykmelding/AvvistSykmelding';
 import AvbruttSykmelding from '../components/sykmelding/AvbruttSykmelding';
 
 const brodsmuler: Brodsmule[] = [
