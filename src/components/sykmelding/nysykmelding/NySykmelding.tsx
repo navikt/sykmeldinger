@@ -65,7 +65,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Ekspanderbartpanel tittel={tekster['sykmelding.flere-opplysninger.tittel']}>
+                <Ekspanderbartpanel tittel={tekster['ny-sykmelding.flere-opplysninger.tittel']}>
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
                         syketilfelleStartDato={sykmelding.syketilfelleStartDato}

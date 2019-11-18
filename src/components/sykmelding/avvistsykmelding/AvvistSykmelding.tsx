@@ -25,6 +25,9 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
+
+            <Statuspanel sykmelding={sykmelding} />
+
             <Veileder
                 type="plakat"
                 kompakt
@@ -33,7 +36,6 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 innhold={<VeilederInnhold sykmelding={sykmelding} />}
             />
 
-            <Statuspanel sykmelding={sykmelding} />
             <InfoPanel fargetema="feil" tittel="Avvist sykmelding">
                 <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
