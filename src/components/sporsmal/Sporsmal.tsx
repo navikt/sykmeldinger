@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
-import PanelBase from 'nav-frontend-paneler';
-import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Checkbox } from 'nav-frontend-skjema';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { AlertStripeFeil, AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Knapp, Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
+import useFetch, { isNotStarted, FetchState, hasData, FetchStatus, hasFinished } from '../../hooks/useFetch';
 import useForm from 'react-hook-form';
 import { valideringsSkjema } from './valideringsSkjema';
-import useFetch, { isNotStarted, FetchState, hasData, FetchStatus, hasFinished } from '../../hooks/useFetch';
+import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+import { AlertStripeHjelper } from '../../utils/alertstripe-utils';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import PanelBase from 'nav-frontend-paneler';
+import Lenke from 'nav-frontend-lenker';
+import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
+import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
+import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
+import AvbrytDialog from './AvbrytDialog';
 import tekster from './sporsmal-tekster';
-import { endreLedetekst } from '../../utils/ledetekst-utils';
 import './Sporsmal.less';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import AnnenArbeidsgiver from './AnnenArbeidsgiver';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -41,7 +43,7 @@ const Sporsmal: React.FC = () => {
     const { register, handleSubmit, watch, errors, formState } = useForm({
         validationSchema: valideringsSkjema,
     });
-    const sykmeldingPoster = useFetch<any>(); // Posting av form-data
+    const sykmeldingPoster = useFetch<any>();
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
 
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
@@ -76,11 +78,13 @@ const Sporsmal: React.FC = () => {
 
     return (
         <>
-            {formState.isSubmitted && !formState.isValid && (
-                <AlertStripeFeil>{tekster['alertstripe.feil-i-utfyllingen.tekst']}</AlertStripeFeil>
-            )}
+            <AlertStripeHjelper
+                vis={formState.isSubmitted && !formState.isValid}
+                type="feil"
+                tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
+            />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <PanelBase>
+                <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={
                             errors.opplysningeneErRiktige
@@ -103,60 +107,28 @@ const Sporsmal: React.FC = () => {
                             />
                         </Fieldset>
                     </SkjemaGruppe>
-                    {watchOpplysningeneErRiktige === 'false' && (
-                        <SkjemaGruppe
-                            feil={
-                                errors.opplysninger
-                                    ? { feilmelding: tekster['opplysningeneErFeil.feilmelding'] }
-                                    : undefined
-                            }
-                            className="skjemagruppe--undersporsmal"
-                        >
-                            <Fieldset legend={tekster['opplysningeneErFeil.tittel']}>
-                                <Checkbox
-                                    label={tekster['opplysningeneErFeil.periode']}
-                                    name="periode"
-                                    checkboxRef={register as any}
-                                />
-                                <Checkbox
-                                    label={tekster['opplysningeneErFeil.sykmeldingsgrad']}
-                                    name="sykmeldingsgrad"
-                                    checkboxRef={register as any}
-                                />
-                                <Checkbox
-                                    label={tekster['opplysningeneErFeil.arbeidsgiver']}
-                                    name="arbeidsgiver"
-                                    checkboxRef={register as any}
-                                />
-                                <Checkbox
-                                    label={tekster['opplysningeneErFeil.diagnose']}
-                                    name="diagnose"
-                                    checkboxRef={register as any}
-                                />
-                                <Checkbox
-                                    label={tekster['opplysningeneErFeil.andreOpplysninger']}
-                                    name="andreOpplysninger"
-                                    checkboxRef={register as any}
-                                />
-                            </Fieldset>
-                        </SkjemaGruppe>
-                    )}
-                    {(watchPeriode || watchSykmeldingsgrad) && (
-                        <AlertStripeAdvarsel>
-                            <Element>{tekster['alertstripe.du-trenger-ny-sykmelding.tittel']}</Element>
-                            <Normaltekst>{tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}</Normaltekst>
-                        </AlertStripeAdvarsel>
-                    )}
-                    {!(watchPeriode || watchSykmeldingsgrad) &&
-                        (watchDiagnose || watchArbeidsgiver || watchAndreOpplysninger) && (
-                            <AlertStripeInfo>
-                                <Element>{tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}</Element>
-                                <Normaltekst>{tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}</Normaltekst>
-                            </AlertStripeInfo>
-                        )}
+                    <OpplysningeneErFeil
+                        vis={watchOpplysningeneErRiktige === 'false'}
+                        register={register}
+                        errors={errors}
+                    />
+                    <AlertStripeHjelper
+                        vis={watchPeriode || watchSykmeldingsgrad}
+                        type="advarsel"
+                        tittel={tekster['alertstripe.du-trenger-ny-sykmelding.tittel']}
+                        tekst={tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}
+                    />
+                    <AlertStripeHjelper
+                        vis={
+                            !(watchPeriode || watchSykmeldingsgrad) &&
+                            (watchDiagnose || watchArbeidsgiver || watchAndreOpplysninger)
+                        }
+                        type="info"
+                        tittel={tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}
+                        tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
+                    />
                 </PanelBase>
-                <br />
-                <PanelBase>
+                <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined}
                     >
@@ -169,7 +141,7 @@ const Sporsmal: React.FC = () => {
                             }
                         >
                             <Radio
-                                label="PLACEHOLDE arbeidsgiver"
+                                label="PLACEHOLDER arbeidsgiver"
                                 name="sykmeldtFra"
                                 value={Arbeidsforhold.ARBEIDSGIVER}
                                 radioRef={register as any}
@@ -206,113 +178,22 @@ const Sporsmal: React.FC = () => {
                             />
                         </Fieldset>
                     </SkjemaGruppe>
-                    {watchSykmeldtFra === 'arbeidsgiver' && (
-                        <SkjemaGruppe
-                            feil={
-                                errors.oppfolging
-                                    ? {
-                                          feilmelding: endreLedetekst(
-                                              tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'],
-                                              {
-                                                  '%ARBEIDSGIVER%': 'PLACEHOLDER',
-                                              },
-                                          ),
-                                      }
-                                    : undefined
-                            }
-                            className="skjemagruppe--undersporsmal"
-                        >
-                            <Fieldset
-                                legend={endreLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
-                                    '%ARBEIDSGIVER%': 'PLACEHOLDER',
-                                })}
-                            >
-                                <Radio
-                                    label={tekster['ja']}
-                                    name="oppfolging"
-                                    value="true"
-                                    radioRef={register as any}
-                                />
-                                <Radio
-                                    label={tekster['nei']}
-                                    name="oppfolging"
-                                    value="false"
-                                    radioRef={register as any}
-                                />
-                            </Fieldset>
-                            {watchOppfolging === 'true' && (
-                                <Tekstomrade>
-                                    {endreLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
-                                        '%ARBEIDSGIVER%': 'PLACEHOLDER',
-                                    })}
-                                </Tekstomrade>
-                            )}
-                            {watchOppfolging === 'false' && (
-                                <Tekstomrade>{tekster['sykmeldtFra.arbeidsgiver.bekreft.nei']}</Tekstomrade>
-                            )}
-                        </SkjemaGruppe>
-                    )}
-                    {(watchSykmeldtFra === Arbeidsforhold.FRILANSER ||
-                        watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE) && (
-                        <>
-                            <SkjemaGruppe
-                                feil={
-                                    errors.frilanserEgenmelding
-                                        ? { feilmelding: 'Velg om du har hatt egenmelding' }
-                                        : undefined
-                                }
-                                className="skjemagruppe--undersporsmal"
-                            >
-                                <Fieldset legend={tekster['frilanser.egenmelding.tittel']}>
-                                    <Radio
-                                        label={tekster['ja']}
-                                        name="frilanserEgenmelding"
-                                        value="true"
-                                        radioRef={register as any}
-                                    />
-                                    <Radio
-                                        label={tekster['nei']}
-                                        name="frilanserEgenmelding"
-                                        value="false"
-                                        radioRef={register as any}
-                                    />
-                                </Fieldset>
-                            </SkjemaGruppe>
-                            <SkjemaGruppe
-                                feil={
-                                    errors.frilanserForsikring
-                                        ? { feilmelding: 'Velg om du har hatt forsikring' }
-                                        : undefined
-                                }
-                                className="skjemagruppe--undersporsmal"
-                            >
-                                <Fieldset legend={tekster['frilanser.forsikring.tittel']}>
-                                    <Radio
-                                        label={tekster['ja']}
-                                        name="frilanserForsikring"
-                                        value="true"
-                                        radioRef={register as any}
-                                    />
-                                    <Radio
-                                        label={tekster['nei']}
-                                        name="frilanserForsikring"
-                                        value="false"
-                                        radioRef={register as any}
-                                    />
-                                </Fieldset>
-                            </SkjemaGruppe>
-                        </>
-                    )}
-                    {watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER && (
-                        <AlertStripeAdvarsel>
-                            <Tekstomrade>{tekster['alertstripe.annen-arbeidsgiver']}</Tekstomrade>
-                            <span className="knapp--sentrer">
-                                <Knapp htmlType="button">{tekster['skriv-ut']}</Knapp>
-                            </span>
-                        </AlertStripeAdvarsel>
-                    )}
+                    <ArbeidsgiverSporsmal
+                        vis={watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER}
+                        register={register}
+                        errors={errors}
+                        watchOppfolging={watchOppfolging}
+                    />
+                    <FrilanserSporsmal
+                        vis={
+                            watchSykmeldtFra === Arbeidsforhold.FRILANSER ||
+                            watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE
+                        }
+                        register={register}
+                        errors={errors}
+                    />
+                    <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
                 </PanelBase>
-                <br />
                 <Tekstomrade>placeholder for "Slik ser sykmeldingen ut for arbeidsgiveren din"</Tekstomrade>
                 <br />
                 <div className="knapp--sentrer">
@@ -337,28 +218,7 @@ const Sporsmal: React.FC = () => {
                     {tekster['knapp.onsker-ikke-bruke-sykmelding']}
                 </Lenke>
             </div>
-            {visAvbrytDialog && (
-                <PanelBase className="avbrytdialog">
-                    <Tekstomrade className="avbrytdialog--margin-bottom">
-                        {tekster['avbrytdialog.er-du-sikker']}
-                    </Tekstomrade>
-                    <Tekstomrade className="avbrytdialog--margin-bottom">
-                        {tekster['avbrytdialog.kan-sende-papir']}
-                    </Tekstomrade>
-                    <Fareknapp htmlType="button" className="avbrytdialog--margin-bottom">
-                        {tekster['avbrytdialog.avbryt-knapp']}
-                    </Fareknapp>
-                    <Lenke
-                        href="_blank"
-                        onClick={e => {
-                            e.preventDefault();
-                            setVisAvbrytDialog(navarendeVerdi => !navarendeVerdi);
-                        }}
-                    >
-                        {tekster['avbrytdialog.angre-knapp']}
-                    </Lenke>
-                </PanelBase>
-            )}
+            <AvbrytDialog vis={visAvbrytDialog} setVisAvbrytDialog={setVisAvbrytDialog} />
         </>
     );
 };

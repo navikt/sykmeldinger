@@ -1,7 +1,7 @@
 import React from 'react';
 import Sporsmal from '../components/sporsmal/Sporsmal';
 import tekster from '../components/sporsmal/sporsmal-tekster';
-import { render, fireEvent, wait, getByLabelText, act } from '@testing-library/react';
+import { render, fireEvent, wait, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 // TODO: finn en bedre løsning på dette

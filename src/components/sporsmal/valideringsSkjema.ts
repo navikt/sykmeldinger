@@ -36,12 +36,12 @@ export const valideringsSkjema = yup
     })
     .test(
         'manglerOppfolging',
-        'Du må svare på om det er Station Officer Steele som skal følge deg opp på jobben når du er syk',
+        'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
         (obj): any => {
             if (obj.sykmeldtFra === Arbeidsforhold.ARBEIDSGIVER) {
                 if (obj.oppfolging === '') {
                     return new yup.ValidationError(
-                        'Du må svare på om det er Station Officer Steele som skal følge deg opp på jobben når du er syk',
+                        'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
                         null,
                         'oppfolging',
                     );
