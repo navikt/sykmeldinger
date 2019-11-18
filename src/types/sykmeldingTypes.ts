@@ -34,17 +34,6 @@ class Diagnose {
     }
 }
 
-class AnnenFraversArsak {
-    beskrivelse?: string;
-    grunn: AnnenFraverGrunn[];
-    constructor(annenFraversArsak: any) {
-        this.beskrivelse = annenFraversArsak.beskrivelse ? annenFraversArsak.beskrivelse : null;
-        this.grunn = annenFraversArsak.grunn.map(
-            (grunn: any) => AnnenFraverGrunn[grunn as keyof typeof AnnenFraverGrunn],
-        );
-    }
-}
-
 export enum AnnenFraverGrunn {
     GODKJENT_HELSEINSTITUSJON = 'Når vedkommende er innlagt i en godkjent helseinstitusjon',
     BEHANDLING_FORHINDRER_ARBEID = 'Når vedkommende er under behandling og legen erklærer at behandlingen gjør det nødvendig at vedkommende ikke arbeider',
@@ -56,6 +45,23 @@ export enum AnnenFraverGrunn {
     UFOR_GRUNNET_BARNLOSHET = 'Når vedkommende er arbeidsufør som følge av behandling for barnløshet',
     DONOR = 'Når vedkommende er donor eller er under vurdering som donor',
     BEHANDLING_STERILISERING = 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering',
+}
+
+class AnnenFraversArsak {
+    beskrivelse?: string;
+    grunn: AnnenFraverGrunn[];
+    constructor(annenFraversArsak: any) {
+        this.beskrivelse = annenFraversArsak.beskrivelse ? annenFraversArsak.beskrivelse : null;
+        this.grunn = annenFraversArsak.grunn.map(
+            (grunn: any) => AnnenFraverGrunn[grunn as keyof typeof AnnenFraverGrunn],
+        );
+    }
+}
+
+export enum HarArbeidsgiver {
+    EN_ARBEIDSGIVER = 'Én arbeidsgiver',
+    FLERE_ARBEIDSGIVERE = 'Flere arbeidsgivere',
+    INGEN_ARBEIDSGIVER = 'Ingen arbeidsgiver',
 }
 
 class Arbeidsgiver {
@@ -70,12 +76,6 @@ class Arbeidsgiver {
         this.yrkesbetegnelse = arbeidsgiver.yrkesbetegnelse ? arbeidsgiver.yrkesbetegnelse : null;
         this.stillingsprosent = arbeidsgiver.stillingsprosent ? arbeidsgiver.stillingsprosent : null;
     }
-}
-
-export enum HarArbeidsgiver {
-    EN_ARBEIDSGIVER = 'Én arbeidsgiver',
-    FLERE_ARBEIDSGIVERE = 'Flere arbeidsgivere',
-    INGEN_ARBEIDSGIVER = 'Ingen arbeidsgiver',
 }
 
 class Periode {
