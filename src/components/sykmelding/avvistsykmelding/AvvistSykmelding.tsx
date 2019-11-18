@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Sidetopp from '../../sidetopp/Sidetopp';
 import Veileder from '../../veileder/Veileder';
@@ -12,12 +12,15 @@ import DiagnoseSeksjon from '../../infopanel/panelelementer/diagnose/DiagnoseSek
 import ArbeidsgiverSeksjon from '../../infopanel/panelelementer/ArbeidsgiverSeksjon';
 import LegeSeksjon from '../../infopanel/panelelementer/LegeSeksjon';
 import { Sidetittel } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
+    const [bekreftet, setBekreftet] = useState(false);
     console.log(sykmelding);
     return (
         <div className="sykmelding-container">
@@ -41,6 +44,19 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
             </InfoPanel>
+
+            <div style={{ textAlign: 'center' }}>
+                <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
+                    <BekreftCheckboksPanel
+                        label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
+                        checked={bekreftet}
+                        onChange={() => setBekreftet(!bekreftet)}
+                    />
+                </div>
+                <Hovedknapp disabled={!bekreftet} onClick={() => console.log('bekreft')}>
+                    Bekreft
+                </Hovedknapp>
+            </div>
         </div>
     );
 };
