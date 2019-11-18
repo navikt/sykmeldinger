@@ -1,5 +1,5 @@
 import React from 'react';
-import { Diagnose } from '../../../../types/sykmeldingTypes';
+import { Diagnose } from '../../../../../../../types/sykmeldingTypes';
 import PanelRad from '../../layout/PanelRad';
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 

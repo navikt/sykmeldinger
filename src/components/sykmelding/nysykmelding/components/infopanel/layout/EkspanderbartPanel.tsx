@@ -1,7 +1,7 @@
 import React from 'react';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 
-import doktor from '../../../svg/doktor.svg';
+import doktor from '../../../../../../svg/doktor.svg';
 
 import './ekspanderbartpanel.less';
 

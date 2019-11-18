@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
+import { tilLesbarDatoMedArstall } from '../../../../../../utils/datoUtils';
 
-import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
+import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 import ElementMedTekst from '../layout/ElementMedTekst';
 
 interface BehandlingsDatoerProps {
@@ -12,7 +12,7 @@ interface BehandlingsDatoerProps {
 
 const BehandlingsDatoer = ({ behandletTidspunkt, syketilfelleStartDato }: BehandlingsDatoerProps) => {
     return (
-        <OpplysningerSeksjon>
+        <SeksjonMedTittel>
             <ElementMedTekst
                 tittel="Dato sykmeldingen ble skrevet"
                 tekst={tilLesbarDatoMedArstall(behandletTidspunkt)}
@@ -24,7 +24,7 @@ const BehandlingsDatoer = ({ behandletTidspunkt, syketilfelleStartDato }: Behand
                 tekst={tilLesbarDatoMedArstall(syketilfelleStartDato)}
                 margin
             />
-        </OpplysningerSeksjon>
+        </SeksjonMedTittel>
     );
 };
 

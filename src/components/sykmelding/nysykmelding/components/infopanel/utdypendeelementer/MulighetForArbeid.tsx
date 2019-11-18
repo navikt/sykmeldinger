@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
+import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 
 import tekster from '../infopanel-tekster';
 import Margin from '../layout/Margin';
@@ -16,7 +16,7 @@ const MulighetForArbeid = () => {
     }
 
     return (
-        <OpplysningerSeksjon tittel={tekster['muliget-for-arbeid.tittel']}>
+        <SeksjonMedTittel tittel={tekster['muliget-for-arbeid.tittel']}>
             <Margin>
                 <ElementMedTekst tittel={tekster['muliget-for-arbeid.medisinske-arsaker.tittel']} />
                 <EnkelCheckbox tittel={tekster['muliget-for-arbeid.medisinske-arsaker']} margin checked={true} />
@@ -38,7 +38,7 @@ const MulighetForArbeid = () => {
                 tekst={testSvar}
                 margin
             />
-        </OpplysningerSeksjon>
+        </SeksjonMedTittel>
     );
 };
 

@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Innholdstittel } from 'nav-frontend-typografi';
 
-interface OpplysningerSeksjonProps {
+interface SeksjonMedTittelProps {
     tittel?: string;
     children: JSX.Element | (JSX.Element | null)[];
     utenUnderstrek?: boolean;
 }
 
-const OpplysningerSeksjon = ({ tittel, children, utenUnderstrek }: OpplysningerSeksjonProps) => {
+const SeksjonMedTittel = ({ tittel, children, utenUnderstrek }: SeksjonMedTittelProps) => {
     return (
         <>
             {tittel && (
@@ -24,4 +24,4 @@ const OpplysningerSeksjon = ({ tittel, children, utenUnderstrek }: OpplysningerS
     );
 };
 
-export default OpplysningerSeksjon;
+export default SeksjonMedTittel;

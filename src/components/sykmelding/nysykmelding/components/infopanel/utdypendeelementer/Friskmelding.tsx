@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Prognose } from '../../../types/sykmeldingTypes';
-import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
+import { Prognose } from '../../../../../../types/sykmeldingTypes';
+import { tilLesbarDatoMedArstall } from '../../../../../../utils/datoUtils';
 
-import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
+import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 
 import tekster from '../infopanel-tekster';
 import Margin from '../layout/Margin';
@@ -99,7 +99,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
     };
 
     return (
-        <OpplysningerSeksjon tittel={tekster['friskmelding.tittel']}>
+        <SeksjonMedTittel tittel={tekster['friskmelding.tittel']}>
             <EnkelCheckbox
                 tittel={tekster['friskmelding.arbeidsfor.tittel']}
                 checked={arbeidsforEtterPeriode}
@@ -109,7 +109,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
             <ElementMedTekst tittel={tekster['friskmelding.hensyn']} tekst={hensynArbeidsplassen} margin />
             <ErIArbeidSeksjon />
             <ErIkkeIArbeidSeksjon />
-        </OpplysningerSeksjon>
+        </SeksjonMedTittel>
     );
 };
 

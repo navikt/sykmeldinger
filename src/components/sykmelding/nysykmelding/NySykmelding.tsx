@@ -4,9 +4,10 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import tekster from './nysykmelding-tekster';
 import Sidetopp from '../../sidetopp/Sidetopp';
-import InfoPanel from '../../infopanel/InfoPanel';
+import InfoPanel from './components/infopanel/InfoPanel';
 import Lenke from 'nav-frontend-lenker';
 import Veileder from '../../veileder/Veileder';
+import EldreSykmeldingVarsel from './components/EldreSykmeldingVarsel';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -22,6 +23,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
     return (
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
+            <EldreSykmeldingVarsel />
             <Veileder
                 tekst={tekster['sykmelding.introtekst']}
                 onClick={() => window.scrollTo({ top: utfyllingRef.current.offsetTop - 100, behavior: 'smooth' })}

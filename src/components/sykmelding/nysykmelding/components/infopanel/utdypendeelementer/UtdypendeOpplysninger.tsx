@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { SporsmalSvar } from '../../../types/sykmeldingTypes';
+import { SporsmalSvar } from '../../../../../../types/sykmeldingTypes';
 
 import tekster from '../infopanel-tekster';
 
-import OpplysningerSeksjon from '../layout/OpplysningerSeksjon';
+import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 import Margin from '../layout/Margin';
 import ElementMedTekst from '../layout/ElementMedTekst';
 
@@ -38,7 +38,7 @@ const UtdypendeOpplysninger = ({ opplysninger }: UtdypendeOpplysningerProps) => 
         </Margin>
     ));
 
-    return <OpplysningerSeksjon tittel={tekster['utdypende.tittel']}>{opplysningGrupper}</OpplysningerSeksjon>;
+    return <SeksjonMedTittel tittel={tekster['utdypende.tittel']}>{opplysningGrupper}</SeksjonMedTittel>;
 };
 
 export default UtdypendeOpplysninger;

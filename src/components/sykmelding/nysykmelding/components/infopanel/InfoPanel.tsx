@@ -18,12 +18,12 @@ import Friskmelding from './utdypendeelementer/Friskmelding';
 import UtdypendeOpplysninger from './utdypendeelementer/UtdypendeOpplysninger';
 import Arbeidsevne from './utdypendeelementer/Arbeidsevne';
 import MulighetForArbeid from './utdypendeelementer/MulighetForArbeid';
-import OpplysningerSeksjon from './layout/OpplysningerSeksjon';
+import SeksjonMedTittel from './layout/SeksjonMedTittel';
 import ElementMedTekst from './layout/ElementMedTekst';
 
-import { Sykmelding } from '../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../../../types/sykmeldingTypes';
 
-import plaster from '../../svg/plaster.svg';
+import plaster from '../../../../../svg/plaster.svg';
 
 import tekster from './infopanel-tekster';
 
@@ -70,9 +70,9 @@ const InfoPanel = ({ sykmelding }: InfoPanelProps) => {
                         tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
                         tiltakNAV={sykmelding.tiltakNAV}
                     />
-                    <OpplysningerSeksjon tittel="Annet" utenUnderstrek>
+                    <SeksjonMedTittel tittel="Annet" utenUnderstrek>
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
-                    </OpplysningerSeksjon>
+                    </SeksjonMedTittel>
                 </Ekspanderbartpanel>
             </div>
         </article>

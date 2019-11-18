@@ -1,5 +1,5 @@
 import React from 'react';
-import { Prognose } from '../../../types/sykmeldingTypes';
+import { Prognose } from '../../../../../../types/sykmeldingTypes';
 
 import tekster from '../infopanel-tekster';
 import EnkelCheckbox from '../layout/EnkelCheckbox';
