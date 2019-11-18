@@ -12,8 +12,8 @@ const EldreSykmeldingVarsel = () => {
 
     return (
         <AlertStripe type="info">
-            {tekster['sykmelding.eldre-sykmeldinger.tekst']}
-            <Lenke href="www.nav.no">{tekster['sykmelding.eldre-sykmeldinger.lenke']}</Lenke>
+            {tekster['ny-sykmelding.eldre-sykmeldinger.tekst']}
+            <Lenke href="www.nav.no">{tekster['ny-sykmelding.eldre-sykmeldinger.lenke']}</Lenke>
         </AlertStripe>
     );
 };

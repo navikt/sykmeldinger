@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { tilLesbarDatoMedArstall } from '../../../../../../utils/datoUtils';
+import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
 
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 import ElementMedTekst from '../layout/ElementMedTekst';

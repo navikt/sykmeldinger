@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SporsmalSvar } from '../../../../../../types/sykmeldingTypes';
+import { SporsmalSvar } from '../../../types/sykmeldingTypes';
 
 import tekster from '../infopanel-tekster';
 

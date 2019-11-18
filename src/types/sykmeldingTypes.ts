@@ -216,7 +216,7 @@ class KontaktMedPasient {
     }
 }
 
-class Behandler {
+export class Behandler {
     fornavn: string;
     mellomnavn?: string;
     etternavn: string;

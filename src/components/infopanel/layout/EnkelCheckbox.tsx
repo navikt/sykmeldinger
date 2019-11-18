@@ -1,8 +1,8 @@
 import React from 'react';
 import Innrykk from './Innrykk';
 import Margin from './Margin';
-import boks from '../../../../../../svg/boks.svg';
-import sjekkboks from '../../../../../../svg/sjekkboks.svg';
+import boks from '../../../svg/boks.svg';
+import sjekkboks from '../../../svg/sjekkboks.svg';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 interface EnkelCheckboxProps {
