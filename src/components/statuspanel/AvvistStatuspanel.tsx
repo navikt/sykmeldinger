@@ -1,15 +1,15 @@
 import React from 'react';
-import { Sykmelding } from '../../../../types/sykmeldingTypes';
-import EtikettMedTekst from '../../../infopanel/layout/EtikettMedTekst';
-import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
+import { Sykmelding } from '../../types/sykmeldingTypes';
+import EtikettMedTekst from '../infopanel/layout/EtikettMedTekst';
+import { tilLesbarDatoMedArstall } from '../../utils/datoUtils';
 
 import './statuspanel.less';
 
-interface StatuspanelProps {
+interface AvvistStatuspanelProps {
     sykmelding: Sykmelding;
 }
 
-const Statuspanel = ({ sykmelding }: StatuspanelProps) => {
+const AvvistStatuspanel = ({ sykmelding }: AvvistStatuspanelProps) => {
     // TODO: sykmelding.bekreftetDato
     if (!true) {
         return null;
@@ -21,17 +21,13 @@ const Statuspanel = ({ sykmelding }: StatuspanelProps) => {
 
     return (
         <div className="statuspanel">
-            <div style={{ flex: '1' }}>
+            <div className="statuspanel-rad">
                 <EtikettMedTekst tittel="Status" tekst="Avvist av NAV" />
-            </div>
-            <div style={{ flex: '1' }}>
                 <EtikettMedTekst tittel="Dato avvist" tekst={tilLesbarDatoMedArstall(new Date())} />
-            </div>
-            <div style={{ flex: '1' }}>
                 <EtikettMedTekst tittel="Bekreftet av deg" tekst={tilLesbarDatoMedArstall(new Date())} />
             </div>
         </div>
     );
 };
 
-export default Statuspanel;
+export default AvvistStatuspanel;

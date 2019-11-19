@@ -5,7 +5,7 @@ import Margin from './Margin';
 
 interface EtikettMedTekstProps {
     tittel: string;
-    tekst?: string;
+    tekst?: string | JSX.Element;
     undertekst?: string;
     margin?: boolean;
     innrykk?: boolean;

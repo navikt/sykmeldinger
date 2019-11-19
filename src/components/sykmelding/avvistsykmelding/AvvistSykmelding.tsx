@@ -3,7 +3,7 @@ import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Sidetopp from '../../sidetopp/Sidetopp';
 import Veileder from '../../veileder/Veileder';
 
-import Statuspanel from './components/Statuspanel';
+import AvvistStatuspanel from '../../statuspanel/AvvistStatuspanel';
 import NoytralMann from '../../veileder/NoytralMann';
 import VeilederInnhold from './components/VeilederInnhold';
 import InfoPanel from '../../infopanel/InfoPanel';
@@ -26,7 +26,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
 
-            <Statuspanel sykmelding={sykmelding} />
+            <AvvistStatuspanel sykmelding={sykmelding} />
 
             <Veileder
                 type="plakat"

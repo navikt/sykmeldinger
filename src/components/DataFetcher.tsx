@@ -13,7 +13,7 @@ const DataFetcher = (props: { children: any }) => {
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
             sykmeldingFetcher.fetch(
-                '/syforest/sykmelding/avvist',
+                '/syforest/sykmelding/sendt',
                 undefined,
                 (fetchState: FetchState<SykmeldingData>) => {
                     if (hasData(fetchState)) {
