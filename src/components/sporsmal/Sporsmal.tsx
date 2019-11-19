@@ -151,7 +151,7 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                         tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
                     />
                 </PanelBase>
-                {!watchPeriode && !watchSykmeldingsgrad && (
+                {watchOpplysningeneErRiktige && !watchPeriode && !watchSykmeldingsgrad && (
                     <PanelBase className="panelbase">
                         <SkjemaGruppe
                             feil={errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined}
@@ -234,16 +234,14 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                         <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
                     </PanelBase>
                 )}
-                <Tekstomrade>placeholder for "Slik ser sykmeldingen ut for arbeidsgiveren din"</Tekstomrade>
-                <br />
                 <FormSubmitKnapp
                     visAvbryt={watchPeriode || watchSykmeldingsgrad}
                     onAvbryt={onAvbryt}
-                    visSpinner={
+                    visSubmitSpinner={
                         sendSykmelding.status === FetchStatus.PENDING ||
-                        bekreftSykmelding.status === FetchStatus.PENDING ||
-                        avbrytSykmelding.status === FetchStatus.PENDING
+                        bekreftSykmelding.status === FetchStatus.PENDING
                     }
+                    visAvbrytSpinner={avbrytSykmelding.status === FetchStatus.PENDING}
                     watchSykmeldtFra={watchSykmeldtFra}
                 />
             </form>
@@ -263,7 +261,12 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                     {tekster['knapp.onsker-ikke-bruke-sykmelding']}
                 </Lenke>
             </div>
-            <AvbrytDialog vis={visAvbrytDialog} setVisAvbrytDialog={setVisAvbrytDialog} />
+            <AvbrytDialog
+                vis={visAvbrytDialog}
+                visSpinner={avbrytSykmelding.status === FetchStatus.PENDING}
+                onAvbryt={onAvbryt}
+                setVisAvbrytDialog={setVisAvbrytDialog}
+            />
         </>
     );
 };

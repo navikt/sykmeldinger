@@ -6,20 +6,29 @@ import { Arbeidsforhold } from './Sporsmal';
 interface FormSubmitKnappProps {
     visAvbryt: boolean;
     onAvbryt: () => void;
-    visSpinner: boolean;
+    visSubmitSpinner: boolean;
+    visAvbrytSpinner: boolean;
     watchSykmeldtFra: any;
 }
 
 const FormSubmitKnapp: React.FC<FormSubmitKnappProps> = ({
     visAvbryt,
     onAvbryt,
-    visSpinner,
+    visSubmitSpinner,
+    visAvbrytSpinner,
     watchSykmeldtFra,
 }: FormSubmitKnappProps) => {
     if (visAvbryt) {
         return (
             <div className="knapp--sentrer">
-                <Fareknapp spinner={visSpinner} data-testid="knapp-submit" onClick={onAvbryt}>
+                <Fareknapp
+                    spinner={visAvbrytSpinner}
+                    data-testid="knapp-submit"
+                    onClick={e => {
+                        e.preventDefault();
+                        onAvbryt();
+                    }}
+                >
                     {tekster['knapp.avbryt-sykmeldingen']}
                 </Fareknapp>
             </div>
@@ -28,7 +37,7 @@ const FormSubmitKnapp: React.FC<FormSubmitKnappProps> = ({
 
     return (
         <div className="knapp--sentrer">
-            <Hovedknapp htmlType="submit" spinner={visSpinner} data-testid="knapp-submit">
+            <Hovedknapp htmlType="submit" spinner={visSubmitSpinner} data-testid="knapp-submit">
                 {watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER
                     ? tekster['knapp.send-sykmeldingen']
                     : tekster['knapp.bekreft-sykmeldingen']}

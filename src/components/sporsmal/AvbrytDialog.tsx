@@ -7,10 +7,17 @@ import Lenke from 'nav-frontend-lenker';
 
 interface AvbrytDialogProps {
     vis: boolean;
+    visSpinner: boolean;
+    onAvbryt: () => void;
     setVisAvbrytDialog: (arg: any) => void;
 }
 
-const AvbrytDialog: React.FC<AvbrytDialogProps> = ({ vis, setVisAvbrytDialog }: AvbrytDialogProps) => {
+const AvbrytDialog: React.FC<AvbrytDialogProps> = ({
+    vis,
+    visSpinner,
+    onAvbryt,
+    setVisAvbrytDialog,
+}: AvbrytDialogProps) => {
     if (vis) {
         return (
             <PanelBase className="avbrytdialog">
@@ -20,7 +27,15 @@ const AvbrytDialog: React.FC<AvbrytDialogProps> = ({ vis, setVisAvbrytDialog }: 
                 <Tekstomrade className="avbrytdialog--margin-bottom">
                     {tekster['avbrytdialog.kan-sende-papir']}
                 </Tekstomrade>
-                <Fareknapp htmlType="button" className="avbrytdialog--margin-bottom">
+                <Fareknapp
+                    htmlType="button"
+                    className="avbrytdialog--margin-bottom"
+                    spinner={visSpinner}
+                    onClick={e => {
+                        e.preventDefault();
+                        onAvbryt();
+                    }}
+                >
                     {tekster['avbrytdialog.avbryt-knapp']}
                 </Fareknapp>
                 <Lenke

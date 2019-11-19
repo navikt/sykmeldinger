@@ -10,7 +10,7 @@ export const valideringsSkjema = yup
         arbeidsgiver: yup.boolean(),
         diagnose: yup.boolean(),
         andreOpplysninger: yup.boolean(),
-        sykmeldtFra: yup.string().required(),
+        sykmeldtFra: yup.string(),
         oppfolging: yup.string(),
         frilanserEgenmelding: yup.string(),
         frilanserForsikring: yup.string(),
@@ -30,7 +30,14 @@ export const valideringsSkjema = yup
                     'opplysninger',
                 );
             }
-            return true;
+        }
+        return true;
+    })
+    .test('manglerSykmeldtFra', 'Du må oppgi hva du er sykmeldt fra', (obj): any => {
+        if (!!obj.opplysningeneErRiktige || (obj.periode === false || obj.sykmeldingsgrad === false)) {
+            if (obj.sykmeldtFra === '') {
+                return new yup.ValidationError('Du må oppgi hva du er sykmeldt fra', null, 'sykmeldtFra');
+            }
         }
         return true;
     })
@@ -52,8 +59,8 @@ export const valideringsSkjema = yup
     )
     .test('manglerEgenmeldingbekreftelse', 'Fyll ut om du har brukt egenmelding', (obj): any => {
         if (
-            (obj.sykmeldtFra === Arbeidsforhold.FRILANSER) ||
-            (obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE)
+            obj.sykmeldtFra === Arbeidsforhold.FRILANSER ||
+            obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE
         ) {
             if (obj.frilanserEgenmelding === '') {
                 return new yup.ValidationError('Fyll ut egenmeldingsspørsmål', null, 'frilanserEgenmelding');
@@ -63,8 +70,8 @@ export const valideringsSkjema = yup
     })
     .test('manglerForsikringbekreftelse', 'Fyll ut forsikringsspørsmål', (obj): any => {
         if (
-            (obj.sykmeldtFra === Arbeidsforhold.FRILANSER) ||
-            (obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE)
+            obj.sykmeldtFra === Arbeidsforhold.FRILANSER ||
+            obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE
         ) {
             if (obj.frilanserForsikring === '') {
                 return new yup.ValidationError('Fyll ut forsikringsspørsmål', null, 'frilanserForsikring');
