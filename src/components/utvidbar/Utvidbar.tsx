@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { erSynligIViewport } from '../../utils/browser-utils';
 import Chevron from 'nav-frontend-chevron';
 import './utvidbar.less';
 
@@ -28,17 +27,15 @@ const Utvidbar = (props: UtvidbarProps) => {
         setApen(props.apen);
     }, [props.apen]);
 
-    const scroll = () => {
+    const scroll = async (isApen: boolean) => {
         if (!utvidbar.current || !utvidKnapp.current) {
             return;
         }
 
-        if (apen) {
+        if (isApen) {
+            await new Promise(resolve => setTimeout(resolve, 200));
             window.scrollTo({ top: utvidbar.current.offsetTop, left: 0, behavior: 'smooth' });
         } else {
-            if (!erSynligIViewport(utvidbar.current)) {
-                window.scrollTo({ top: utvidbar.current.offsetTop, left: 0, behavior: 'smooth' });
-            }
             utvidKnapp.current.focus();
         }
     };
@@ -51,7 +48,7 @@ const Utvidbar = (props: UtvidbarProps) => {
                 onMouseEnter={() => setIkon(props.ikonHover)}
                 onMouseLeave={() => setIkon(props.ikon)}
                 onClick={() => {
-                    scroll();
+                    scroll(!apen);
                     setApen(!apen);
                 }}
                 className={`utvidbar__toggle ${props.fargetema ? `utvidbar__toggle-${props.fargetema}` : ''}`}
@@ -76,7 +73,7 @@ const Utvidbar = (props: UtvidbarProps) => {
                             aria-pressed={!apen}
                             tabIndex={apen ? undefined : -1}
                             onClick={() => {
-                                scroll();
+                                scroll(!apen);
                                 setApen(!apen);
                             }}
                         >
