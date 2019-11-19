@@ -22,17 +22,13 @@ const Utvidbar = (props: UtvidbarProps) => {
     const utvidKnapp = useRef<HTMLButtonElement>(null);
     const utvidbar = useRef<HTMLDivElement>(null);
 
-    const [innholdHeight, setInnholdHeight] = useState<number>(0);
     const innhold = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setApen(props.apen);
-        if (innhold.current) {
-            setInnholdHeight(innhold.current.offsetHeight);
-        }
     }, [props.apen]);
 
-    const onTransitionEnd = () => {
+    const scroll = () => {
         if (!utvidbar.current || !utvidKnapp.current) {
             return;
         }
@@ -54,10 +50,13 @@ const Utvidbar = (props: UtvidbarProps) => {
                 ref={utvidKnapp}
                 onMouseEnter={() => setIkon(props.ikonHover)}
                 onMouseLeave={() => setIkon(props.ikon)}
-                onClick={() => setApen(!apen)}
+                onClick={() => {
+                    scroll();
+                    setApen(!apen);
+                }}
                 className={`utvidbar__toggle ${props.fargetema ? `utvidbar__toggle-${props.fargetema}` : ''}`}
             >
-                <img aria-hidden="true" className="utvidbar__ikon" alt={props.ikonAltTekst} src={ikon} />
+                <img aria-hidden="true" className="utvidbar__ikon" width={30} alt={props.ikonAltTekst} src={ikon} />
                 <Element tag="h3">{props.tittel}</Element>
                 <div className="utvidbar__handling">
                     <Normaltekst tag="em">{apen ? 'Lukk' : 'Åpne'}</Normaltekst>
@@ -66,8 +65,7 @@ const Utvidbar = (props: UtvidbarProps) => {
             </button>
             <div
                 className={'utvidbar__innholdContainer' + (apen ? ' apen' : '')}
-                onTransitionEnd={() => onTransitionEnd()}
-                style={{ maxHeight: apen ? innholdHeight + 'px' : '0' }}
+                style={{ maxHeight: apen ? 'fit-content' : '0' }}
             >
                 <div ref={innhold} className="utvidbar__innhold">
                     {props.children}
@@ -77,7 +75,10 @@ const Utvidbar = (props: UtvidbarProps) => {
                             className="lenke"
                             aria-pressed={!apen}
                             tabIndex={apen ? undefined : -1}
-                            onClick={() => setApen(!apen)}
+                            onClick={() => {
+                                scroll();
+                                setApen(!apen);
+                            }}
                         >
                             <Normaltekst tag="span">Lukk</Normaltekst>
                         </button>
