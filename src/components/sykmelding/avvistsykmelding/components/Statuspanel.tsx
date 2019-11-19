@@ -3,6 +3,8 @@ import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import EtikettMedTekst from '../../../infopanel/layout/EtikettMedTekst';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 
+import './statuspanel.less';
+
 interface StatuspanelProps {
     sykmelding: Sykmelding;
 }
@@ -18,15 +20,7 @@ const Statuspanel = ({ sykmelding }: StatuspanelProps) => {
     // dato bekreftet: bekreftetDato
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                background: 'white',
-                padding: '2rem 3rem 2rem 3rem',
-                marginTop: '2rem',
-                marginBottom: '4rem',
-            }}
-        >
+        <div className="statuspanel">
             <div style={{ flex: '1' }}>
                 <EtikettMedTekst tittel="Status" tekst="Avvist av NAV" />
             </div>
