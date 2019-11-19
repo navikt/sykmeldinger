@@ -1,4 +1,4 @@
-export const endreLedetekst = (text: string, data: any): string => {
+export const getLedetekst = (text: string, data: any): string => {
     if (text === undefined || data === undefined) {
         return '';
     }

@@ -1,16 +1,26 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Sykmelding } from '../../types/sykmeldingTypes';
 import Sporsmal from '../sporsmal/Sporsmal';
+import Arbeidsgiver from '../../types/arbeidsgiverTypes';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
+    arbeidsgivere: Arbeidsgiver[];
     sykmeldingUtenforVentetid: boolean;
 }
 
-const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding, sykmeldingUtenforVentetid }: SykmeldingProps) => {
+const NySykmelding: React.FC<SykmeldingProps> = ({
+    sykmelding,
+    arbeidsgivere,
+    sykmeldingUtenforVentetid,
+}: SykmeldingProps) => {
     return (
         <div className="sykmelding-container">
-            <Sporsmal sykmelding={sykmelding} sykmeldingUtenforVentetid={sykmeldingUtenforVentetid} />
+            <Sporsmal
+                sykmelding={sykmelding}
+                arbeidsgivere={arbeidsgivere}
+                sykmeldingUtenforVentetid={sykmeldingUtenforVentetid}
+            />
         </div>
     );
 };

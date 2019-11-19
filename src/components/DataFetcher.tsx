@@ -13,10 +13,12 @@ import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
 import { SykmeldingData, Status } from '../types/sykmeldingDataTypes';
 import ErUtenforVentetidData from '../types/erUtenforVentetidTypes';
+import Arbeidsgiver from '../types/arbeidsgiverTypes';
 
 const DataFetcher = (props: { children: any }) => {
-    const { setSykmelding, setSykmeldingStatus, setSykmeldingUtenforVentetid } = useAppStore();
+    const { setSykmelding, setSykmeldingStatus, setArbeidsgivere, setSykmeldingUtenforVentetid } = useAppStore();
     const sykmeldingFetcher = useFetch<SykmeldingData>();
+    const arbeidsgivereFetcher = useFetch<Arbeidsgiver[]>();
     const sykmeldingUtenforVentetidFetcher = useFetch<ErUtenforVentetidData>();
 
     useEffect(() => {
@@ -41,6 +43,17 @@ const DataFetcher = (props: { children: any }) => {
                                 }
                             },
                         );
+                        arbeidsgivereFetcher.fetch(
+                            `/syforest/informasjon/arbeidsgivere?sykmeldingId=${sykmelding.id}`,
+                            undefined,
+                            (fetchState: FetchState<Arbeidsgiver[]>) => {
+                                if (hasData(fetchState)) {
+                                    const { data } = fetchState;
+                                    const arbeidsgivere = data.map(ag => new Arbeidsgiver(ag));
+                                    setArbeidsgivere(arbeidsgivere);
+                                }
+                            },
+                        );
                     }
                 }
             });
@@ -51,13 +64,15 @@ const DataFetcher = (props: { children: any }) => {
         setSykmeldingStatus,
         sykmeldingFetcher,
         sykmeldingUtenforVentetidFetcher,
+        arbeidsgivereFetcher,
+        setArbeidsgivere,
     ]);
 
-    if (isAnyNotStartedOrPending([sykmeldingFetcher]) || isPending(sykmeldingUtenforVentetidFetcher)) {
+    if (isAnyNotStartedOrPending([sykmeldingFetcher, sykmeldingUtenforVentetidFetcher, arbeidsgivereFetcher])) {
         return <Spinner />;
     }
 
-    if (hasAnyFailed([sykmeldingFetcher, sykmeldingUtenforVentetidFetcher])) {
+    if (hasAnyFailed([sykmeldingFetcher, sykmeldingUtenforVentetidFetcher, arbeidsgivereFetcher])) {
         return (
             <AlertStripeFeil>
                 Det oppsto feil ved henting av data. Vi jobber med å løse saken. Vennligst prøv igjen senere.

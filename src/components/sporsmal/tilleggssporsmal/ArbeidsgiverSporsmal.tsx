@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldError } from 'react-hook-form/dist/types';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
-import { endreLedetekst } from '../../../utils/ledetekst-utils';
+import { getLedetekst } from '../../../utils/ledetekst-utils';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 
 interface ArbeidsgiverSporsmalProps {
@@ -24,7 +24,7 @@ const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
                 feil={
                     errors.oppfolging
                         ? {
-                              feilmelding: endreLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'], {
+                              feilmelding: getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'], {
                                   '%ARBEIDSGIVER%': 'PLACEHOLDER',
                               }),
                           }
@@ -33,7 +33,7 @@ const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
                 className="skjemagruppe--undersporsmal"
             >
                 <Fieldset
-                    legend={endreLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
+                    legend={getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
                         '%ARBEIDSGIVER%': 'PLACEHOLDER',
                     })}
                 >
@@ -42,7 +42,7 @@ const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
                 </Fieldset>
                 {watchOppfolging === 'true' && (
                     <Tekstomrade>
-                        {endreLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
+                        {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
                             '%ARBEIDSGIVER%': 'PLACEHOLDER',
                         })}
                     </Tekstomrade>

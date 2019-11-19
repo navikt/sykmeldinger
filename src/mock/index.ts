@@ -1,6 +1,7 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import { nySykmeldingMock } from './data/sykmeldingMock';
 import naermesteLedereMock from './data/narmesteLedereMock';
+import arbeidsgiverMock from './data/arbeidsgivereMock';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -8,6 +9,6 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/syforest/sykmelding', nySykmeldingMock);
-mock.get('/syforest/naermesteledere', naermesteLedereMock);
+mock.get('/syforest/informasjon/arbeidsgivere', arbeidsgiverMock);
 mock.post('/syforest/sendSykmelding', { res: 'posted sykmelding' });
 mock.post('/syforest/sykmeldinger/:id/actions/erUtenforVentetid', { erUtenforVentetid: false });

@@ -14,10 +14,12 @@ import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
 import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
 import AvbrytDialog from './AvbrytDialog';
 import tekster from './sporsmal-tekster';
-import './Sporsmal.less';
 import AnnenArbeidsgiver from './AnnenArbeidsgiver';
 import { Sykmelding } from '../../types/sykmeldingTypes';
 import { skalViseFrilansersporsmal } from '../../utils/sporsmal-utils';
+import Arbeidsgiver from '../../types/arbeidsgiverTypes';
+import FormSubmitKnapp from './FormSubmitKnapp';
+import './Sporsmal.less';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -43,14 +45,17 @@ interface SykmeldingFormData {
 
 interface SporsmalProps {
     sykmelding: Sykmelding;
+    arbeidsgivere: Arbeidsgiver[];
     sykmeldingUtenforVentetid: boolean;
 }
 
-const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, sykmeldingUtenforVentetid }: SporsmalProps) => {
+const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: SporsmalProps) => {
     const { register, handleSubmit, watch, errors, formState } = useForm({
         validationSchema: valideringsSkjema,
     });
     const sendSykmelding = useFetch<any>();
+    const bekreftSykmelding = useFetch<any>();
+    const avbrytSykmelding = useFetch<any>();
 
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
 
@@ -68,21 +73,25 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, sykmeldingUtenforVentet
 
     const onSubmit = (data: SykmeldingFormData) => {
         console.log(data);
+        // TODO: Sjekk om sykmeldingen skal sendes eller bekreftes
         if (isNotStarted(sendSykmelding)) {
             sendSykmelding.fetch('/syforest/sendSykmelding', { method: 'POST' }, (fetchState: FetchState<any>) => {
-                if (hasData(fetchState)) {
-                    console.log(fetchState.data);
-                }
+                console.log(fetchState.data);
+                // TODO: Redirect til kvitteringsside
             });
         }
     };
 
-    useEffect(() => {
-        if (hasFinished(sendSykmelding)) {
-            console.log('Innsending fullført');
-            // TODO: Redirect til kvitteringside
-        }
-    }, [sendSykmelding]);
+    const onAvbryt = () => {
+        console.log('avbryter sykmelding');
+        avbrytSykmelding.fetch(
+            `/syforest/sykmeldinger/${sykmelding.id}/actions/avbryt`,
+            undefined,
+            (fetchState: FetchState<any>) => {
+                // TODO: Redirect til ...
+            },
+        );
+    };
 
     return (
         <>
@@ -142,82 +151,101 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, sykmeldingUtenforVentet
                         tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
                     />
                 </PanelBase>
-                <PanelBase className="panelbase">
-                    <SkjemaGruppe
-                        feil={errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined}
-                    >
-                        <Fieldset
-                            legend={
-                                <div>
-                                    {tekster['sykmeldtFra.tittel']}
-                                    <Hjelpetekst>{tekster['sykmeldtFra.hjelpetekst']}</Hjelpetekst>
-                                </div>
-                            }
+                {!watchPeriode && !watchSykmeldingsgrad && (
+                    <PanelBase className="panelbase">
+                        <SkjemaGruppe
+                            feil={errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined}
                         >
-                            <Radio
-                                label="PLACEHOLDER arbeidsgiver"
-                                name="sykmeldtFra"
-                                value={Arbeidsforhold.ARBEIDSGIVER}
-                                radioRef={register as any}
+                            <Fieldset
+                                legend={
+                                    <div>
+                                        {tekster['sykmeldtFra.tittel']}
+                                        <Hjelpetekst>{tekster['sykmeldtFra.hjelpetekst']}</Hjelpetekst>
+                                    </div>
+                                }
+                            >
+                                {arbeidsgivere.map((arbeidsgiver, index) => (
+                                    <Radio
+                                        key={index}
+                                        label={arbeidsgiver.navn + ` (Org. nummer:${arbeidsgiver.orgnummer})`}
+                                        name="sykmeldtFra"
+                                        value={Arbeidsforhold.ARBEIDSGIVER.concat(arbeidsgiver.orgnummer)}
+                                        radioRef={register as any}
+                                    ></Radio>
+                                ))}
+                                <Radio
+                                    label={sykmelding.arbeidsgiver.navn}
+                                    name="sykmeldtFra"
+                                    value={Arbeidsforhold.ARBEIDSGIVER}
+                                    radioRef={register as any}
+                                />
+                                <Radio
+                                    label={tekster['sykmeldtFra.selvstending-naringsdrivende']}
+                                    name="sykmeldtFra"
+                                    value={Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE}
+                                    radioRef={register as any}
+                                />
+                                <Radio
+                                    label={tekster['sykmeldtFra.frilanser']}
+                                    name="sykmeldtFra"
+                                    value={Arbeidsforhold.FRILANSER}
+                                    radioRef={register as any}
+                                />
+                                <Radio
+                                    label={tekster['sykmeldtFra.annen-arbeidsgiver']}
+                                    name="sykmeldtFra"
+                                    value={Arbeidsforhold.ANNEN_ARBEIDSGIVER}
+                                    radioRef={register as any}
+                                />
+                                <Radio
+                                    label={tekster['sykmeldtFra.arbeidsledig']}
+                                    name="sykmeldtFra"
+                                    value={Arbeidsforhold.ARBEIDSLEDIG}
+                                    radioRef={register as any}
+                                />
+                                <Radio
+                                    label={tekster['sykmeldtFra.ingenting-passer']}
+                                    name="sykmeldtFra"
+                                    value={Arbeidsforhold.INGENTING_PASSER}
+                                    radioRef={register as any}
+                                />
+                            </Fieldset>
+                            <AlertStripeHjelper
+                                vis={!!sykmelding.arbeidsgiver.navn}
+                                type="info"
+                                tekst={`Den som sykmeldte deg har oppgitt at du er sykmeldt fra ${sykmelding.arbeidsgiver.navn}`}
                             />
-                            <Radio
-                                label={tekster['sykmeldtFra.selvstending-naringsdrivende']}
-                                name="sykmeldtFra"
-                                value={Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE}
-                                radioRef={register as any}
-                            />
-                            <Radio
-                                label={tekster['sykmeldtFra.frilanser']}
-                                name="sykmeldtFra"
-                                value={Arbeidsforhold.FRILANSER}
-                                radioRef={register as any}
-                            />
-                            <Radio
-                                label={tekster['sykmeldtFra.annen-arbeidsgiver']}
-                                name="sykmeldtFra"
-                                value={Arbeidsforhold.ANNEN_ARBEIDSGIVER}
-                                radioRef={register as any}
-                            />
-                            <Radio
-                                label={tekster['sykmeldtFra.arbeidsledig']}
-                                name="sykmeldtFra"
-                                value={Arbeidsforhold.ARBEIDSLEDIG}
-                                radioRef={register as any}
-                            />
-                            <Radio
-                                label={tekster['sykmeldtFra.ingenting-passer']}
-                                name="sykmeldtFra"
-                                value={Arbeidsforhold.INGENTING_PASSER}
-                                radioRef={register as any}
-                            />
-                        </Fieldset>
-                    </SkjemaGruppe>
-                    <ArbeidsgiverSporsmal
-                        vis={watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER}
-                        register={register}
-                        errors={errors}
-                        watchOppfolging={watchOppfolging}
-                    />
-                    <FrilanserSporsmal
-                        vis={
-                            (watchSykmeldtFra === Arbeidsforhold.FRILANSER ||
-                                watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE) &&
-                            skalViseFrilansersporsmal(sykmelding, sykmeldingUtenforVentetid)
-                        }
-                        register={register}
-                        errors={errors}
-                    />
-                    <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
-                </PanelBase>
+                        </SkjemaGruppe>
+                        <ArbeidsgiverSporsmal
+                            vis={watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER}
+                            register={register}
+                            errors={errors}
+                            watchOppfolging={watchOppfolging}
+                        />
+                        <FrilanserSporsmal
+                            vis={
+                                (watchSykmeldtFra === Arbeidsforhold.FRILANSER ||
+                                    watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE) &&
+                                skalViseFrilansersporsmal(sykmelding, sykmeldingUtenforVentetid)
+                            }
+                            register={register}
+                            errors={errors}
+                        />
+                        <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
+                    </PanelBase>
+                )}
                 <Tekstomrade>placeholder for "Slik ser sykmeldingen ut for arbeidsgiveren din"</Tekstomrade>
                 <br />
-                <div className="knapp--sentrer">
-                    <Hovedknapp htmlType="submit" spinner={sendSykmelding.status === FetchStatus.PENDING} data-testid="knapp-submit">
-                        {watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER
-                            ? tekster['knapp.send-sykmeldingen']
-                            : tekster['knapp.bekreft-sykmeldingen']}
-                    </Hovedknapp>
-                </div>
+                <FormSubmitKnapp
+                    visAvbryt={watchPeriode || watchSykmeldingsgrad}
+                    onAvbryt={onAvbryt}
+                    visSpinner={
+                        sendSykmelding.status === FetchStatus.PENDING ||
+                        bekreftSykmelding.status === FetchStatus.PENDING ||
+                        avbrytSykmelding.status === FetchStatus.PENDING
+                    }
+                    watchSykmeldtFra={watchSykmeldtFra}
+                />
             </form>
             <div className="knapp--sentrer" ref={avbrytdialogRef}>
                 <Lenke

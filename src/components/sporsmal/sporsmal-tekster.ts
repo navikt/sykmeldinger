@@ -43,6 +43,7 @@ const SporsmalTekster: any = {
         'knapp.send-sykmeldingen': 'SEND SYKMELDINGEN',
         'knapp.bekreft-sykmeldingen': 'BEKREFT SYKMELDINGEN',
         'knapp.onsker-ikke-bruke-sykmelding': 'Jeg ønsker ikke å bruke denne sykmeldingen',
+        'knapp.avbryt-sykmeldingen': 'AVBRYT SYKMELDINGEN',
         'avbrytdialog.avbryt-knapp': 'JA, JEG ER SIKKER',
         'avbrytdialog.angre-knapp': 'Angre',
         'avbrytdialog.er-du-sikker': 'Er du sikker på at du vil avbryte denne sykmeldingen?',
