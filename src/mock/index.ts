@@ -10,4 +10,4 @@ const mock = FetchMock.configure({
 mock.get('/syforest/sykmelding', nySykmeldingMock);
 mock.get('/syforest/naermesteledere', naermesteLedereMock);
 mock.post('/syforest/sendSykmelding', { res: 'posted sykmelding' });
-mock.post('/syforest/sykmeldinger/:id/actions/erUtenforVentetid', { res: true });
+mock.post('/syforest/sykmeldinger/:id/actions/erUtenforVentetid', { erUtenforVentetid: false });

@@ -12,17 +12,12 @@ import useFetch, {
 import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
 import { SykmeldingData, Status } from '../types/sykmeldingDataTypes';
+import ErUtenforVentetidData from '../types/erUtenforVentetidTypes';
 
 const DataFetcher = (props: { children: any }) => {
-    const {
-        sykmelding,
-        sykmeldingStatus,
-        setSykmelding,
-        setSykmeldingStatus,
-        setSykmeldingUtenforVentetid,
-    } = useAppStore();
+    const { setSykmelding, setSykmeldingStatus, setSykmeldingUtenforVentetid } = useAppStore();
     const sykmeldingFetcher = useFetch<SykmeldingData>();
-    const sykmeldingUtenforVentetidFetcher = useFetch<boolean>();
+    const sykmeldingUtenforVentetidFetcher = useFetch<ErUtenforVentetidData>();
 
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
@@ -39,9 +34,10 @@ const DataFetcher = (props: { children: any }) => {
                         sykmeldingUtenforVentetidFetcher.fetch(
                             `/syforest/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
                             { method: 'POST' },
-                            (fetchState: FetchState<boolean>) => {
+                            (fetchState: FetchState<ErUtenforVentetidData>) => {
                                 if (hasData(fetchState)) {
-                                    setSykmeldingUtenforVentetid(fetchState.data);
+                                    console.log(fetchState);
+                                    setSykmeldingUtenforVentetid(fetchState.data.erUtenforVentetid);
                                 }
                             },
                         );
@@ -53,9 +49,7 @@ const DataFetcher = (props: { children: any }) => {
         setSykmeldingUtenforVentetid,
         setSykmelding,
         setSykmeldingStatus,
-        sykmelding,
         sykmeldingFetcher,
-        sykmeldingStatus,
         sykmeldingUtenforVentetidFetcher,
     ]);
 

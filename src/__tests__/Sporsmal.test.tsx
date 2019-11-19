@@ -23,11 +23,11 @@ describe('Sporsmal', () => {
             expect(queryByLabelText(tekster['nei'])).toBeInTheDocument();
         });
         it('Skal vise feilmelding dersom ingenting er valgt', async () => {
-            const { queryByText, getByText } = render(
+            const { queryByText, getByTestId } = render(
                 <Sporsmal sykmelding={sykmelding} sykmeldingUtenforVentetid={false} />,
             );
             expect(queryByText(tekster['jaEllerNei.feilmelding'])).toBeNull();
-            fireEvent.click(getByText(tekster['knapp.submit']));
+            fireEvent.click(getByTestId('knapp-submit'));
             await wait(() => queryByText(tekster['jaEllerNei.feilmelding']));
             expect(queryByText(tekster['jaEllerNei.feilmelding'])).toBeInTheDocument();
         });
@@ -125,11 +125,11 @@ describe('Sporsmal', () => {
             expect(queryByLabelText(tekster['sykmeldtFra.ingenting-passer'])).toBeInTheDocument();
         });
         it('Skal vise feilmelding dersom ingenting er valgt', async () => {
-            const { queryByText, getByText } = render(
+            const { queryByText, getByTestId } = render(
                 <Sporsmal sykmelding={sykmelding} sykmeldingUtenforVentetid={false} />,
             );
             expect(queryByText(tekster['sykmeldtFra.feilmelding'])).toBeNull();
-            fireEvent.click(getByText(tekster['knapp.submit']));
+            fireEvent.click(getByTestId('knapp-submit'));
             await wait(() => queryByText(tekster['sykmeldtFra.feilmelding']));
             expect(queryByText(tekster['sykmeldtFra.feilmelding'])).toBeInTheDocument();
         });
@@ -155,21 +155,21 @@ describe('Sporsmal', () => {
 
     describe('Alertbanner', () => {
         it('Skal vise alertbanner dersom det finnes feil i valideringen', async () => {
-            const { queryByText, getByText } = render(
+            const { queryByText, getByTestId } = render(
                 <Sporsmal sykmelding={sykmelding} sykmeldingUtenforVentetid={false} />,
             );
             expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeNull();
-            fireEvent.click(getByText(tekster['knapp.submit']));
+            fireEvent.click(getByTestId('knapp-submit'));
             await wait(() => queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst']));
             expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeInTheDocument();
         });
         it('Skal vise alertbanner helt til alle feil er vekke', async () => {
-            const { queryByText, getByText, getByLabelText } = render(
+            const { queryByText, getByTestId, getByLabelText } = render(
                 <Sporsmal sykmelding={sykmelding} sykmeldingUtenforVentetid={false} />,
             );
             expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeNull();
             act(() => {
-                fireEvent.click(getByText(tekster['knapp.submit']));
+                fireEvent.click(getByTestId('knapp-submit'));
             });
             await wait(() => queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst']));
             expect(queryByText(tekster['alertstripe.feil-i-utfyllingen.tekst'])).toBeInTheDocument();

@@ -212,8 +212,10 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, sykmeldingUtenforVentet
                 <Tekstomrade>placeholder for "Slik ser sykmeldingen ut for arbeidsgiveren din"</Tekstomrade>
                 <br />
                 <div className="knapp--sentrer">
-                    <Hovedknapp htmlType="submit" spinner={sendSykmelding.status === FetchStatus.PENDING}>
-                        {tekster['knapp.submit']}
+                    <Hovedknapp htmlType="submit" spinner={sendSykmelding.status === FetchStatus.PENDING} data-testid="knapp-submit">
+                        {watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER
+                            ? tekster['knapp.send-sykmeldingen']
+                            : tekster['knapp.bekreft-sykmeldingen']}
                     </Hovedknapp>
                 </div>
             </form>

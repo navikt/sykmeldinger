@@ -28,7 +28,7 @@ const brodsmuler: Brodsmule[] = [
 const SykmeldingSide: React.FC = props => {
     const { sykmelding, sykmeldingStatus, sykmeldingUtenforVentetid } = useAppStore();
 
-    if (!sykmelding || !sykmeldingUtenforVentetid) {
+    if (!!!sykmelding || sykmeldingUtenforVentetid === null) {
         // TODO: Error-melding, ingen sykmelding funnet
         return null;
     }
