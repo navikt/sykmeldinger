@@ -64,7 +64,6 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
                 <Utvidbar
-                    apen
                     ikon={doktor}
                     ikonHover={doktorHover}
                     tittel={tekster['sendt-sykmelding.flere-opplysninger.tittel']}
