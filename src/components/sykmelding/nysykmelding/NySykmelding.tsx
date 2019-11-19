@@ -18,7 +18,6 @@ import ArbeidsuforSeksjon from '../../infopanel/panelelementer/ArbeidsuforSeksjo
 import PrognoseSeksjon from '../../infopanel/panelelementer/PrognoseSeksjon';
 import ArbeidsgiverSeksjon from '../../infopanel/panelelementer/ArbeidsgiverSeksjon';
 import LegeSeksjon from '../../infopanel/panelelementer/LegeSeksjon';
-import Ekspanderbartpanel from '../../infopanel/layout/EkspanderbartPanel';
 import BehandlingsDatoer from '../../infopanel/utdypendeelementer/BehandlingsDatoer';
 import MulighetForArbeid from '../../infopanel/utdypendeelementer/MulighetForArbeid';
 import Friskmelding from '../../infopanel/utdypendeelementer/Friskmelding';
@@ -26,6 +25,11 @@ import UtdypendeOpplysninger from '../../infopanel/utdypendeelementer/UtdypendeO
 import Arbeidsevne from '../../infopanel/utdypendeelementer/Arbeidsevne';
 import SeksjonMedTittel from '../../infopanel/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../infopanel/layout/ElementMedTekst';
+import VisningArbeidsgiver from '../../visning-arbeidsgiver/VisningArbeidsgiver';
+import Utvidbar from '../../utvidbar/Utvidbar';
+
+import doktor from '../../../svg/doktor.svg';
+import doktorHover from '../../../svg/doktorHover.svg';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -42,6 +46,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
 
     return (
         <div className="sykmelding-container">
+            <VisningArbeidsgiver sykmelding={sykmelding} />
             <Sidetopp tekst="Sykmelding" />
             <EldreSykmeldingVarsel />
             <Veileder
@@ -65,7 +70,12 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Ekspanderbartpanel tittel={tekster['ny-sykmelding.flere-opplysninger.tittel']}>
+                <Utvidbar
+                    fargetema="lilla"
+                    ikon={doktor}
+                    ikonHover={doktorHover}
+                    tittel={tekster['ny-sykmelding.flere-opplysninger.tittel']}
+                >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
                         syketilfelleStartDato={sykmelding.syketilfelleStartDato}
@@ -80,7 +90,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
                     <SeksjonMedTittel tittel="Annet" utenUnderstrek>
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
-                </Ekspanderbartpanel>
+                </Utvidbar>
             </InfoPanel>
 
             <div ref={utfyllingRef} className="third">
