@@ -1,0 +1,31 @@
+.diagnose-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.diagnose-seksjon {
+    flex: 1 1 auto;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.diagnose-seksjon-kode {
+    &:extend(.diagnose-seksjon);
+    display: flex;
+    flex-direction: column;
+}
+
+.diagnose-seksjon-kode-tittel-container {
+    display: flex;
+}
+
+.diagnose-seksjon-kode-hjelpetekst {
+    margin-left: 1rem;
+}
+
+// TODO: Vurder om det er riktig å endre på NAV-komponenters CSS i enkelte tilfeller.
+// Setter position: absolute slik at ikonet ikke påvirker linjehøyden.
+.hjelpetekst {
+    position: absolute;
+}

@@ -16,7 +16,7 @@ const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
     return (
         <div className="periodeseksjon">
             <EtikettLiten>Periode</EtikettLiten>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 <Normaltekst>
                     <strong>{tilLesbarPeriodeMedArstall(periode.fom, periode.tom)}</strong>
                 </Normaltekst>
