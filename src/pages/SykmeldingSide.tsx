@@ -5,7 +5,7 @@ import useAppStore from '../store/useAppStore';
 import NySykmelding from '../components/sykmelding/nysykmelding/NySykmelding';
 import { Status } from '../types/sykmeldingDataTypes';
 import AvvistSykmelding from '../components/sykmelding/avvistsykmelding/AvvistSykmelding';
-import AvbruttSykmelding from '../components/sykmelding/AvbruttSykmelding';
+import AvbruttSykmelding from '../components/sykmelding/avbruttsykmelding/AvbruttSykmelding';
 import SendtSykmelding from '../components/sykmelding/sendtsykmelding/SendtSykmelding';
 
 const brodsmuler: Brodsmule[] = [
