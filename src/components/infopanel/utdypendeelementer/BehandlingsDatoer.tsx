@@ -12,7 +12,7 @@ interface BehandlingsDatoerProps {
 
 const BehandlingsDatoer = ({ behandletTidspunkt, syketilfelleStartDato }: BehandlingsDatoerProps) => {
     return (
-        <SeksjonMedTittel>
+        <SeksjonMedTittel understrek>
             <ElementMedTekst
                 tittel="Dato sykmeldingen ble skrevet"
                 tekst={tilLesbarDatoMedArstall(behandletTidspunkt)}

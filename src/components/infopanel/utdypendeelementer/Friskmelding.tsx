@@ -99,7 +99,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
     };
 
     return (
-        <SeksjonMedTittel tittel={tekster['friskmelding.tittel']}>
+        <SeksjonMedTittel understrek tittel={tekster['friskmelding.tittel']}>
             <EnkelCheckbox
                 tittel={tekster['friskmelding.arbeidsfor.tittel']}
                 checked={arbeidsforEtterPeriode}

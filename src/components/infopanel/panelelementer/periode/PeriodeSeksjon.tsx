@@ -8,10 +8,10 @@ import './periodeseksjon.less';
 
 interface PeriodeSeksjonProps {
     periode: Periode;
-    underlined: boolean;
+    understrek: boolean;
 }
 
-const PeriodeSeksjon = ({ periode, underlined }: PeriodeSeksjonProps) => {
+const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
     const antallDager = getDuration(periode.fom, periode.tom);
     return (
         <div className="periodeseksjon">
@@ -47,7 +47,7 @@ const PeriodeSeksjon = ({ periode, underlined }: PeriodeSeksjonProps) => {
                     <Normaltekst>{periode.avventendeInnspillTilArbeidsgiver}</Normaltekst>
                 </>
             )}
-            {underlined && <hr />}
+            {understrek && <hr />}
         </div>
     );
 };
