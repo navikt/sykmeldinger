@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 interface SeksjonMedTittelProps {
     tittel?: string;

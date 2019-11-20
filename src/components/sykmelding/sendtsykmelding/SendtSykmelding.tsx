@@ -1,9 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Sidetopp from '../../sidetopp/Sidetopp';
 import SendtStatuspanel from '../../statuspanel/SendtStatuspanel';
 import VisningArbeidsgiver from '../../visning-arbeidsgiver/VisningArbeidsgiver';
-import InfoPanel from '../../infopanel/InfoPanel';
 import { Sidetittel } from 'nav-frontend-typografi';
 import SykmeldingPerioder from '../../infopanel/panelelementer/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from '../../infopanel/panelelementer/diagnose/DiagnoseSeksjon';
@@ -35,13 +34,6 @@ interface SendtSykmeldingProps {
 }
 
 const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
-    console.log(sykmelding);
-    const thirdRef = useRef<HTMLDivElement>(document.createElement('div'));
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
-
     return (
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />

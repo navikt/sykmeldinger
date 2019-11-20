@@ -38,7 +38,7 @@ const VisningArbeidsgiver = ({ sykmelding }: VisningArbeidsgiverProps) => {
                 <Undertekst>TODO: Pasientens personnummer</Undertekst>
             </div>
             <SykmeldingPerioder perioder={sykmelding.perioder} />
-            <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} />} />
+            <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} alt="skjult diagnose" />} />
 
             <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
             <PrognoseSeksjon prognose={sykmelding.prognose} />
