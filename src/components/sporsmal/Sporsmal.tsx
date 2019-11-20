@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
-import useFetch, { isNotStarted, FetchState, hasData, FetchStatus, hasFinished } from '../../hooks/useFetch';
+import React, { useState, useRef, useEffect } from 'react';
+import useFetch, { isNotStarted, FetchState, FetchStatus } from '../../hooks/useFetch';
 import useForm from 'react-hook-form';
 import { valideringsSkjema } from './valideringsSkjema';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { AlertStripeHjelper } from '../../utils/alertstripe-utils';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import PanelBase from 'nav-frontend-paneler';
-import Lenke from 'nav-frontend-lenker';
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
 import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
 import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
@@ -19,6 +16,7 @@ import { Sykmelding } from '../../types/sykmeldingTypes';
 import { skalViseFrilansersporsmal } from '../../utils/sporsmal-utils';
 import Arbeidsgiver from '../../types/arbeidsgiverTypes';
 import FormSubmitKnapp from './FormSubmitKnapp';
+import Vis from '../../utils/vis';
 import './Sporsmal.less';
 
 export enum Arbeidsforhold {
@@ -28,6 +26,11 @@ export enum Arbeidsforhold {
     ANNEN_ARBEIDSGIVER = 'annenArbeidsgiver',
     ARBEIDSLEDIG = 'arbeidsledig',
     INGENTING_PASSER = 'ingentingPasser',
+}
+
+export enum JaEllerNei {
+    JA = 'ja',
+    NEI = 'nei',
 }
 
 interface SykmeldingFormData {
@@ -93,6 +96,17 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
         );
     };
 
+    useEffect(() => {
+        console.log('periode', watchPeriode);
+        console.log('eropplysningeneriktige', watchOpplysningeneErRiktige);
+        console.log('sykmeldtFra', watchSykmeldtFra);
+        console.log('');
+    }, [watchAndreOpplysninger, watchOpplysningeneErRiktige, watchPeriode, watchSykmeldtFra]);
+
+    useEffect(() => {
+        console.table(errors);
+    }, [errors]);
+
     return (
         <>
             <AlertStripeHjelper
@@ -113,45 +127,36 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                             <Radio
                                 label={tekster['ja']}
                                 name="opplysningeneErRiktige"
-                                value="true"
+                                value={JaEllerNei.JA}
                                 radioRef={register as any}
                             />
                             <Radio
                                 label={tekster['nei']}
                                 name="opplysningeneErRiktige"
-                                value="false"
+                                value={JaEllerNei.NEI}
                                 radioRef={register as any}
                             />
                         </Fieldset>
                     </SkjemaGruppe>
                     <OpplysningeneErFeil
-                        vis={watchOpplysningeneErRiktige === 'false'}
-                        register={register}
-                        errors={errors}
-                    />
-                    <AlertStripeHjelper
-                        vis={watchPeriode || watchSykmeldingsgrad}
-                        type="advarsel"
-                        tittel={tekster['alertstripe.du-trenger-ny-sykmelding.tittel']}
-                        tekst={tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}
-                    />
-                    <AlertStripeHjelper
-                        vis={!(watchPeriode || watchSykmeldingsgrad) && watchArbeidsgiver}
-                        type="info"
-                        tittel={tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}
-                        tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.arbeidsgiver.tekst']}
-                    />
-                    <AlertStripeHjelper
-                        vis={
+                        vis={watchOpplysningeneErRiktige === JaEllerNei.NEI}
+                        visAlertstripeAvbryt={watchPeriode || watchSykmeldingsgrad}
+                        visAlertstripeBrukArbeidsgiver={!(watchPeriode || watchSykmeldingsgrad) && watchArbeidsgiver}
+                        visAlertstripeBruk={
                             !(watchPeriode || watchSykmeldingsgrad || watchArbeidsgiver) &&
                             (watchDiagnose || watchAndreOpplysninger)
                         }
-                        type="info"
-                        tittel={tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}
-                        tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
+                        register={register}
+                        errors={errors}
                     />
                 </PanelBase>
-                {watchOpplysningeneErRiktige && !watchPeriode && !watchSykmeldingsgrad && (
+                <Vis
+                    hvis={
+                        watchOpplysningeneErRiktige === JaEllerNei.JA ||
+                        ((!watchPeriode || !watchSykmeldingsgrad) &&
+                            (watchArbeidsgiver || watchDiagnose || watchAndreOpplysninger))
+                    }
+                >
                     <PanelBase className="panelbase">
                         <SkjemaGruppe
                             feil={errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined}
@@ -233,10 +238,12 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                         />
                         <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
                     </PanelBase>
-                )}
+                </Vis>
                 <FormSubmitKnapp
-                    visAvbryt={watchPeriode || watchSykmeldingsgrad}
+                    visAvbryt={watchOpplysningeneErRiktige === JaEllerNei.NEI && (watchPeriode || watchSykmeldingsgrad)}
                     onAvbryt={onAvbryt}
+                    avbrytdialogRef={avbrytdialogRef}
+                    setVisAvbrytdialog={setVisAvbrytDialog}
                     visSubmitSpinner={
                         sendSykmelding.status === FetchStatus.PENDING ||
                         bekreftSykmelding.status === FetchStatus.PENDING
@@ -245,22 +252,7 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                     watchSykmeldtFra={watchSykmeldtFra}
                 />
             </form>
-            <div className="knapp--sentrer" ref={avbrytdialogRef}>
-                <Lenke
-                    href="#"
-                    onClick={e => {
-                        e.preventDefault();
-                        setVisAvbrytDialog(vises => !vises);
-                        setTimeout(
-                            () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
-                            300,
-                        );
-                    }}
-                    className="knapp--ikke-bruk-sykmeldingen"
-                >
-                    {tekster['knapp.onsker-ikke-bruke-sykmelding']}
-                </Lenke>
-            </div>
+
             <AvbrytDialog
                 vis={visAvbrytDialog}
                 visSpinner={avbrytSykmelding.status === FetchStatus.PENDING}

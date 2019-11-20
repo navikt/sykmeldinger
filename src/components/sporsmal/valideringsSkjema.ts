@@ -16,7 +16,7 @@ export const valideringsSkjema = yup
         frilanserForsikring: yup.string(),
     })
     .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (obj): any => {
-        if (obj.opplysningeneErRiktige === 'false') {
+        if (obj.opplysningeneErRiktige === 'nei') {
             if (
                 obj.periode === false &&
                 obj.sykmeldingsgrad === false &&
