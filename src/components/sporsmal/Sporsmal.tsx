@@ -18,6 +18,7 @@ import Arbeidsgiver from '../../types/arbeidsgiverTypes';
 import FormSubmitKnapp from './FormSubmitKnapp';
 import Vis from '../../utils/vis';
 import './Sporsmal.less';
+import { getLedetekst } from '../../utils/ledetekst-utils';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -95,7 +96,7 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
             },
         );
     };
-    
+
     return (
         <>
             <AlertStripeHjelper
@@ -142,7 +143,8 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                 <Vis
                     hvis={
                         watchOpplysningeneErRiktige === JaEllerNei.JA ||
-                        ((!watchPeriode || !watchSykmeldingsgrad) &&
+                        (!watchPeriode &&
+                            !watchSykmeldingsgrad &&
                             (watchArbeidsgiver || watchDiagnose || watchAndreOpplysninger))
                     }
                 >
@@ -163,16 +165,10 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                                         key={index}
                                         label={arbeidsgiver.navn + ` (Org. nummer:${arbeidsgiver.orgnummer})`}
                                         name="sykmeldtFra"
-                                        value={Arbeidsforhold.ARBEIDSGIVER.concat(arbeidsgiver.orgnummer)}
+                                        value={Arbeidsforhold.ARBEIDSGIVER.concat('-', arbeidsgiver.orgnummer)}
                                         radioRef={register as any}
                                     ></Radio>
                                 ))}
-                                <Radio
-                                    label={sykmelding.arbeidsgiver.navn}
-                                    name="sykmeldtFra"
-                                    value={Arbeidsforhold.ARBEIDSGIVER}
-                                    radioRef={register as any}
-                                />
                                 <Radio
                                     label={tekster['sykmeldtFra.selvstending-naringsdrivende']}
                                     name="sykmeldtFra"
@@ -207,11 +203,16 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
                             <AlertStripeHjelper
                                 vis={!!sykmelding.arbeidsgiver.navn}
                                 type="info"
-                                tekst={`Den som sykmeldte deg har oppgitt at du er sykmeldt fra ${sykmelding.arbeidsgiver.navn}`}
+                                tekst={getLedetekst(tekster['sykmeldtFra.sykmelders-svar'], {
+                                    '%ARBEIDSGIVER%': sykmelding.arbeidsgiver.navn,
+                                })}
                             />
                         </SkjemaGruppe>
                         <ArbeidsgiverSporsmal
-                            vis={watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER}
+                            vis={new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra)}
+                            arbeidsgiver={arbeidsgivere.find(arbeidsgiver =>
+                                new RegExp(arbeidsgiver.orgnummer).test(watchSykmeldtFra),
+                            )}
                             register={register}
                             errors={errors}
                             watchOppfolging={watchOppfolging}

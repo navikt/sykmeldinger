@@ -40,6 +40,7 @@ const SporsmalTekster: any = {
             'Vi sender sykmeldingen til %ARBEIDSGIVER%, som finner den ved å logge inn på nav.no.',
         'sykmeldtFra.arbeidsgiver.bekreft.nei':
             'Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.',
+        'sykmeldtFra.sykmelders-svar': 'Den som sykmeldte deg har oppgitt at du er sykmeldt fra %ARBEIDSGIVER%',
         'knapp.send-sykmeldingen': 'SEND SYKMELDINGEN',
         'knapp.bekreft-sykmeldingen': 'BEKREFT SYKMELDINGEN',
         'knapp.onsker-ikke-bruke-sykmelding': 'Jeg ønsker ikke å bruke denne sykmeldingen',

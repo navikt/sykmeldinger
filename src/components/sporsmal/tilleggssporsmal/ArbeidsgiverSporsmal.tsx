@@ -4,9 +4,11 @@ import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
 import { getLedetekst } from '../../../utils/ledetekst-utils';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 
 interface ArbeidsgiverSporsmalProps {
     vis: boolean;
+    arbeidsgiver: Arbeidsgiver | undefined;
     register: any;
     errors: Partial<Record<string, FieldError>>;
     watchOppfolging: string;
@@ -14,10 +16,15 @@ interface ArbeidsgiverSporsmalProps {
 
 const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
     vis,
+    arbeidsgiver,
     register,
     errors,
     watchOppfolging
 }: ArbeidsgiverSporsmalProps) => {
+    if (!arbeidsgiver) {
+        return null;
+    }
+
     if (vis) {
         return (
             <SkjemaGruppe
@@ -25,7 +32,7 @@ const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
                     errors.oppfolging
                         ? {
                               feilmelding: getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'], {
-                                  '%ARBEIDSGIVER%': 'PLACEHOLDER',
+                                  '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
                               }),
                           }
                         : undefined
@@ -34,7 +41,7 @@ const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
             >
                 <Fieldset
                     legend={getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
-                        '%ARBEIDSGIVER%': 'PLACEHOLDER',
+                        '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
                     })}
                 >
                     <Radio label={tekster['ja']} name="oppfolging" value="true" radioRef={register as any} />
@@ -43,7 +50,7 @@ const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
                 {watchOppfolging === 'true' && (
                     <Tekstomrade>
                         {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
-                            '%ARBEIDSGIVER%': 'PLACEHOLDER',
+                            '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
                         })}
                     </Tekstomrade>
                 )}
