@@ -95,18 +95,7 @@ const Sporsmal: React.FC<SporsmalProps> = ({ sykmelding, arbeidsgivere, sykmeldi
             },
         );
     };
-
-    useEffect(() => {
-        console.log('periode', watchPeriode);
-        console.log('eropplysningeneriktige', watchOpplysningeneErRiktige);
-        console.log('sykmeldtFra', watchSykmeldtFra);
-        console.log('');
-    }, [watchAndreOpplysninger, watchOpplysningeneErRiktige, watchPeriode, watchSykmeldtFra]);
-
-    useEffect(() => {
-        console.table(errors);
-    }, [errors]);
-
+    
     return (
         <>
             <AlertStripeHjelper
