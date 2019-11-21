@@ -45,6 +45,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                         bold
                         margin
                         checked={erIArbeid.egetArbeidPaSikt}
+                        vis={erIArbeid.egetArbeidPaSikt}
                     />
                     <ElementMedTekst
                         vis={erIArbeid.egetArbeidPaSikt && !!erIArbeid.arbeidFOM}
@@ -59,6 +60,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                         bold
                         margin
                         checked={erIArbeid.annetArbeidPaSikt}
+                        vis={erIArbeid.annetArbeidPaSikt}
                     />
                     <ElementMedTekst
                         vis={erIArbeid.annetArbeidPaSikt && !!erIArbeid.vurderingsdato}
@@ -83,6 +85,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                     bold
                     margin
                     checked={erIkkeIArbeid.arbeidsforPaSikt}
+                    vis={erIkkeIArbeid.arbeidsforPaSikt}
                 />
                 <ElementMedTekst
                     vis={!!erIkkeIArbeid.arbeidsforFOM}
@@ -99,12 +102,13 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
     };
 
     return (
-        <SeksjonMedTittel tittel={tekster['friskmelding.tittel']}>
+        <SeksjonMedTittel understrek tittel={tekster['friskmelding.tittel']}>
             <EnkelCheckbox
                 tittel={tekster['friskmelding.arbeidsfor.tittel']}
                 checked={arbeidsforEtterPeriode}
                 margin
                 bold
+                vis={arbeidsforEtterPeriode}
             />
             <ElementMedTekst tittel={tekster['friskmelding.hensyn']} tekst={hensynArbeidsplassen} margin />
             <ErIArbeidSeksjon />
