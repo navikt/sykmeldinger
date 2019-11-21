@@ -16,7 +16,7 @@ interface TidslinjeElementProps {
     tittel: string;
 }
 
-const TidslinjeElement: React.FC<TidslinjeElementProps> = ({
+const TidslinjeElement = ({
     erEkspanderbar = false,
     erForsteElement = false,
     erSisteElement = false,

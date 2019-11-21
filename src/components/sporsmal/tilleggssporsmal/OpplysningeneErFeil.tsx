@@ -13,7 +13,7 @@ interface OpplysningeneErFeilProps {
     errors: Partial<Record<string, FieldError>>;
 }
 
-const OpplysningeneErFeil: React.FC<OpplysningeneErFeilProps> = ({
+const OpplysningeneErFeil = ({
     vis,
     visAlertstripeAvbryt,
     visAlertstripeBrukArbeidsgiver,

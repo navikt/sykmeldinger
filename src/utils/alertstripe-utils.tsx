@@ -9,7 +9,7 @@ interface AlertStripeHjelperProps {
     tekst: string;
 }
 
-export const AlertStripeHjelper: React.FC<AlertStripeHjelperProps> = ({
+export const AlertStripeHjelper = ({
     vis,
     type,
     tittel,

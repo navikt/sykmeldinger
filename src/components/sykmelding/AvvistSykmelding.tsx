@@ -5,7 +5,7 @@ interface SykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const AvvistSykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps) => {
+const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
     return <div className="sykmelding-container">avvist</div>;
 };
 

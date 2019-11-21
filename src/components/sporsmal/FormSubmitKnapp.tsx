@@ -14,7 +14,7 @@ interface FormSubmitKnappProps {
     watchSykmeldtFra: any;
 }
 
-const FormSubmitKnapp: React.FC<FormSubmitKnappProps> = ({
+const FormSubmitKnapp = ({
     visAvbryt,
     onAvbryt,
     avbrytdialogRef,

@@ -14,7 +14,7 @@ interface ArbeidsgiverSporsmalProps {
     watchOppfolging: string;
 }
 
-const ArbeidsgiverSporsmal: React.FC<ArbeidsgiverSporsmalProps> = ({
+const ArbeidsgiverSporsmal = ({
     vis,
     arbeidsgiver,
     register,

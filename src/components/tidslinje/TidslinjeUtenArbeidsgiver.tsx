@@ -7,7 +7,7 @@ import innen12uker from './svg/utenArbeigsgiver/innen-12uker.svg';
 import innen39uker from './svg/utenArbeigsgiver/innen-39uker.svg';
 import sluttfasen3 from './svg/sluttfasen-3.svg';
 
-const TidslinjeUtenArbeidsgiver: React.FC = () => (
+const TidslinjeUtenArbeidsgiver = () => (
     <>
         <TidslinjeElement erForsteElement tittel={'Første sykmeldingsdag'} />
         <TidslinjeElement

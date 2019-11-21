@@ -7,7 +7,6 @@ import useFetch, {
     hasData,
     isAnyNotStartedOrPending,
     hasAnyFailed,
-    isPending,
 } from '../hooks/useFetch';
 import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';

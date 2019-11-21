@@ -12,7 +12,7 @@ interface AvbrytDialogProps {
     setVisAvbrytDialog: (arg: any) => void;
 }
 
-const AvbrytDialog: React.FC<AvbrytDialogProps> = ({
+const AvbrytDialog = ({
     vis,
     visSpinner,
     onAvbryt,

@@ -9,7 +9,7 @@ interface SykmeldingProps {
     sykmeldingUtenforVentetid: boolean;
 }
 
-const NySykmelding: React.FC<SykmeldingProps> = ({
+const NySykmelding = ({
     sykmelding,
     arbeidsgivere,
     sykmeldingUtenforVentetid,

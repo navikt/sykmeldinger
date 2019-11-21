@@ -25,7 +25,7 @@ const brodsmuler: Brodsmule[] = [
     },
 ];
 
-const SykmeldingSide: React.FC = props => {
+const SykmeldingSide = () => {
     const { sykmelding, sykmeldingStatus, arbeidsgivere, sykmeldingUtenforVentetid } = useAppStore();
 
     if (!!!sykmelding || sykmeldingUtenforVentetid === null || arbeidsgivere === null) {

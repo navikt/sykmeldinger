@@ -8,7 +8,7 @@ interface AnnenArbeidsgiverProps {
     vis: boolean;
 }
 
-const AnnenArbeidsgiver: React.FC<AnnenArbeidsgiverProps> = ({ vis }: AnnenArbeidsgiverProps) => {
+const AnnenArbeidsgiver = ({ vis }: AnnenArbeidsgiverProps) => {
     if (vis) {
         return (
             <AlertStripeAdvarsel>

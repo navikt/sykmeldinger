@@ -9,7 +9,7 @@ interface FrilanserSporsmalProps {
     errors: Partial<Record<string, FieldError>>;
 }
 
-const FrilanserSporsmal: React.FC<FrilanserSporsmalProps> = ({ vis, register, errors }: FrilanserSporsmalProps) => {
+const FrilanserSporsmal = ({ vis, register, errors }: FrilanserSporsmalProps) => {
     if (vis) {
         return (
             <>
