@@ -2,7 +2,7 @@ import React from 'react';
 import { Periode } from '../../../../types/sykmeldingTypes';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
-import { tilLesbarPeriodeMedArstall, getDuration } from '../../../../utils/datoUtils';
+import { tilLesbarPeriodeMedArstall, hentDagerMellomDatoer } from '../../../../utils/datoUtils';
 import tekster from '../../infopanel-tekster';
 import './periodeseksjon.less';
 
@@ -12,7 +12,7 @@ interface PeriodeSeksjonProps {
 }
 
 const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
-    const antallDager = getDuration(periode.fom, periode.tom);
+    const antallDager = hentDagerMellomDatoer(periode.fom, periode.tom);
     return (
         <div className="periodeseksjon">
             <EtikettLiten>Periode</EtikettLiten>

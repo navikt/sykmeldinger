@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 const maaneder = [
     'januar',
     'februar',
@@ -51,6 +53,20 @@ export const tilLesbarDatoUtenAarstall = (datoArg: Date) => {
     return null;
 };
 
-export function getDuration(from: Date, to: Date) {
-    return Math.round(Math.floor((to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24))) + 1;
+export function hentDagerMellomDatoer(fra: Date, til: Date) {
+    const f = dayjs(fra);
+    const t = dayjs(til);
+
+    const diff = t.diff(f, 'day');
+
+    if (diff === 0) {
+        return 1;
+    }
+
+    if (diff === 1) {
+        return 2;
+    }
+
+    // +2 for å inkludere til og fra-datoen
+    return diff + 2;
 }
