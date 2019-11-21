@@ -16,10 +16,10 @@ const MulighetForArbeid = () => {
     }
 
     return (
-        <SeksjonMedTittel tittel={tekster['muliget-for-arbeid.tittel']}>
+        <SeksjonMedTittel understrek tittel={tekster['muliget-for-arbeid.tittel']}>
             <Margin>
                 <ElementMedTekst tittel={tekster['muliget-for-arbeid.medisinske-arsaker.tittel']} />
-                <EnkelCheckbox tittel={tekster['muliget-for-arbeid.medisinske-arsaker']} margin checked={true} />
+                <EnkelCheckbox tittel={tekster['muliget-for-arbeid.medisinske-arsaker']} margin checked vis />
             </Margin>
 
             <ElementMedTekst
@@ -30,7 +30,7 @@ const MulighetForArbeid = () => {
 
             <Margin>
                 <ElementMedTekst tittel={tekster['muliget-for-arbeid.forhold-pa-arbeidsplassen.tittel']} />
-                <EnkelCheckbox tittel={tekster['muliget-for-arbeid.forhold-pa-arbeidsplassen']} margin checked={true} />
+                <EnkelCheckbox tittel={tekster['muliget-for-arbeid.forhold-pa-arbeidsplassen']} margin checked vis />
             </Margin>
 
             <ElementMedTekst

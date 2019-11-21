@@ -15,7 +15,7 @@ const SykmeldingPerioder = ({ perioder }: SykmeldingPerioderProps) => {
         <>
             {sortert.map((periode, index) => (
                 <Margin key={index.toString()}>
-                    <PeriodeSeksjon periode={periode} underlined={sortert.length > 1} />
+                    <PeriodeSeksjon periode={periode} understrek={sortert.length > 1} />
                 </Margin>
             ))}
         </>

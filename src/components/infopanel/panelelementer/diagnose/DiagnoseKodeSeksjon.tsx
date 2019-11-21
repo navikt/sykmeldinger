@@ -1,22 +1,31 @@
 import React from 'react';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import tekster from '../../infopanel-tekster';
-import EtikettMedTekst from '../../layout/EtikettMedTekst';
+import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+
+import './diagnoseseksjon.less';
 
 interface DiagnoseKodeSeksjonProps {
     kode: string;
     system: string;
-    showHelp: boolean;
+    visHjelp: boolean;
 }
 
-const DiagnoseKodeSeksjon = ({ kode, system, showHelp }: DiagnoseKodeSeksjonProps) => {
+const DiagnoseKodeSeksjon = ({ kode, system, visHjelp }: DiagnoseKodeSeksjonProps) => {
     return (
-        <div style={{ flex: '1', display: 'flex' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <EtikettMedTekst tittel={tekster['diagnosekode.tittel']} tekst={kode} undertekst={system} />
+        <>
+            <div className="diagnose-seksjon-kode-tittel-container">
+                <EtikettLiten>{tekster['diagnosekode.tittel']}</EtikettLiten>
+                {visHjelp && (
+                    <div className="diagnose-seksjon-kode-hjelpetekst">
+                        <Hjelpetekst>{tekster['diagnosekode.hjelpetekst.tekst']}</Hjelpetekst>
+                    </div>
+                )}
             </div>
-            {showHelp && <Hjelpetekst>{tekster['diagnosekode.hjelpetekst.tekst']}</Hjelpetekst>}
-        </div>
+
+            <Normaltekst>{kode}</Normaltekst>
+            <Undertekst>{system}</Undertekst>
+        </>
     );
 };
 

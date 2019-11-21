@@ -5,10 +5,10 @@ import { Systemtittel } from 'nav-frontend-typografi';
 interface SeksjonMedTittelProps {
     tittel?: string;
     children: JSX.Element | (JSX.Element | null)[];
-    utenUnderstrek?: boolean;
+    understrek?: boolean;
 }
 
-const SeksjonMedTittel = ({ tittel, children, utenUnderstrek }: SeksjonMedTittelProps) => {
+const SeksjonMedTittel = ({ tittel, children, understrek }: SeksjonMedTittelProps) => {
     return (
         <>
             {tittel && (
@@ -19,7 +19,7 @@ const SeksjonMedTittel = ({ tittel, children, utenUnderstrek }: SeksjonMedTittel
 
             {children}
 
-            {!utenUnderstrek && <hr />}
+            {understrek && <hr />}
         </>
     );
 };

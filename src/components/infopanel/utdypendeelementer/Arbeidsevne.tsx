@@ -12,7 +12,7 @@ interface ArbeidsevneProps {
 
 const Arbeidsevne = ({ tiltakArbeidsplassen, tiltakNAV }: ArbeidsevneProps) => {
     return (
-        <SeksjonMedTittel tittel={tekster['arbeidsevne.tittel']}>
+        <SeksjonMedTittel understrek tittel={tekster['arbeidsevne.tittel']}>
             <ElementMedTekst
                 tittel={tekster['arbeidsevne.tilrettelegging.tittel']}
                 tekst={tiltakArbeidsplassen}
