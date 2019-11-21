@@ -57,9 +57,9 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const { register, handleSubmit, watch, errors, formState } = useForm({
         validationSchema: valideringsSkjema,
     });
-    const sendSykmelding = useFetch<any>();
-    const bekreftSykmelding = useFetch<any>();
-    const avbrytSykmelding = useFetch<any>();
+    const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type 
+    const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type 
+    const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type 
 
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
 
