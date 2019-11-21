@@ -38,7 +38,11 @@ const UtdypendeOpplysninger = ({ opplysninger }: UtdypendeOpplysningerProps) => 
         </Margin>
     ));
 
-    return <SeksjonMedTittel tittel={tekster['utdypende.tittel']}>{opplysningGrupper}</SeksjonMedTittel>;
+    return (
+        <SeksjonMedTittel understrek tittel={tekster['utdypende.tittel']}>
+            {opplysningGrupper}
+        </SeksjonMedTittel>
+    );
 };
 
 export default UtdypendeOpplysninger;

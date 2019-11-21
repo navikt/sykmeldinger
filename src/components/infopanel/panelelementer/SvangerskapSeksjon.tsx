@@ -11,7 +11,7 @@ const SvangerskapSeksjon = ({ svangerskap }: SvangerskapSeksjonProps) => {
     if (!svangerskap) {
         return null;
     }
-    return <EnkelCheckbox tittel={tekster['svangerskap.tittel']} checked margin />;
+    return <EnkelCheckbox tittel={tekster['svangerskap.tittel']} checked margin vis />;
 };
 
 export default SvangerskapSeksjon;

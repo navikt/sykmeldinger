@@ -17,7 +17,7 @@ const ArbeidsuforSeksjon = ({ prognose }: ArbeidsuforSeksjonProps) => {
         return null;
     }
 
-    return <EnkelCheckbox tittel={tekster['arbeidsufor.tittel']} checked margin />;
+    return <EnkelCheckbox tittel={tekster['arbeidsufor.tittel']} checked margin vis />;
 };
 
 export default ArbeidsuforSeksjon;

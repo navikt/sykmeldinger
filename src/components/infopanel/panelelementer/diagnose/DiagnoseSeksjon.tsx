@@ -1,10 +1,11 @@
 import React from 'react';
 import { Diagnose } from '../../../../types/sykmeldingTypes';
-import PanelRad from '../../layout/PanelRad';
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 
 import tekster from '../../infopanel-tekster';
 import EtikettMedTekst from '../../layout/EtikettMedTekst';
+
+import './diagnoseseksjon.less';
 
 interface DiagnoseSeksjonProps {
     diagnose?: Diagnose;
@@ -21,12 +22,14 @@ const DiagnoseSeksjon = ({ diagnose, bidiagnose }: DiagnoseSeksjonProps) => {
     const tittel = bidiagnose ? tekster['bidiagnose.tittel'] : tekster['diagnose.tittel'];
 
     return (
-        <PanelRad>
-            <div style={{ flex: '1' }}>
+        <div className="diagnose-container">
+            <div className="diagnose-seksjon">
                 <EtikettMedTekst tittel={tittel} tekst={tekst} undertekst={tekster['diagnose.meta']} />
             </div>
-            <DiagnoseKodeSeksjon kode={kode} system={system} showHelp={!bidiagnose} />
-        </PanelRad>
+            <div className="diagnose-seksjon-kode">
+                <DiagnoseKodeSeksjon kode={kode} system={system} visHjelp={!bidiagnose} />
+            </div>
+        </div>
     );
 };
 
