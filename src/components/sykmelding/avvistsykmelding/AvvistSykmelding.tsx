@@ -14,6 +14,8 @@ import LegeSeksjon from '../../infopanel/panelelementer/LegeSeksjon';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 
+import tekster from './avvistsykmelding-tekster';
+
 interface SykmeldingProps {
     sykmelding: Sykmelding;
 }
@@ -49,7 +51,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
             <div style={{ textAlign: 'center' }}>
                 <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
                     <BekreftCheckboksPanel
-                        label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
+                        label={tekster['sykmelding.bekreft-lest']}
                         checked={bekreftet}
                         onChange={() => setBekreftet(!bekreftet)}
                     />
