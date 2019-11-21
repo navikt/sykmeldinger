@@ -2,6 +2,7 @@ import React from 'react';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import EtikettMedTekst from '../../../infopanel/layout/EtikettMedTekst';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
+import { Panel } from 'nav-frontend-paneler';
 
 import './statuspanel.less';
 
@@ -20,17 +21,17 @@ const Statuspanel = ({ sykmelding }: StatuspanelProps) => {
     // dato bekreftet: bekreftetDato
 
     return (
-        <div className="statuspanel">
-            <div style={{ flex: '1' }}>
+        <Panel border className="statuspanel">
+            <div className="statuspanel-element">
                 <EtikettMedTekst tittel="Status" tekst="Avvist av NAV" />
             </div>
-            <div style={{ flex: '1' }}>
+            <div className="statuspanel-element">
                 <EtikettMedTekst tittel="Dato avvist" tekst={tilLesbarDatoMedArstall(new Date())} />
             </div>
-            <div style={{ flex: '1' }}>
+            <div className="statuspanel-element">
                 <EtikettMedTekst tittel="Bekreftet av deg" tekst={tilLesbarDatoMedArstall(new Date())} />
             </div>
-        </div>
+        </Panel>
     );
 };
 

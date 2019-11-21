@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
-
+import Tittel from '../../infopanel/layout/Tittel';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import tekster from './nysykmelding-tekster';
 import Sidetopp from '../../sidetopp/Sidetopp';
@@ -51,7 +51,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
             />
 
             <InfoPanel tittel="Din sykmelding" fargetema="info">
-                <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
+                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
