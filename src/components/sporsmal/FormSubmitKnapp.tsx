@@ -8,7 +8,7 @@ interface FormSubmitKnappProps {
     visAvbryt: boolean;
     onAvbryt: () => void;
     avbrytdialogRef: React.MutableRefObject<HTMLDivElement>;
-    setVisAvbrytdialog: (arg: any) => void;
+    setVisAvbrytdialog: React.Dispatch<React.SetStateAction<boolean>>;
     visSubmitSpinner: boolean;
     visAvbrytSpinner: boolean;
     watchSykmeldtFra: any;
@@ -54,7 +54,7 @@ const FormSubmitKnapp = ({
                     href="#"
                     onClick={e => {
                         e.preventDefault();
-                        setVisAvbrytdialog((vises: boolean) => !vises);
+                        setVisAvbrytdialog(vises => !vises);
                         setTimeout(
                             () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
                             300,

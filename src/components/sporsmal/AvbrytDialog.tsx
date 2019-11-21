@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import tekster from './sporsmal-tekster';
@@ -9,7 +9,7 @@ interface AvbrytDialogProps {
     vis: boolean;
     visSpinner: boolean;
     onAvbryt: () => void;
-    setVisAvbrytDialog: (arg: any) => void;
+    setVisAvbrytDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytDialogProps) => {
@@ -36,7 +36,7 @@ const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytD
                 href="_blank"
                 onClick={e => {
                     e.preventDefault();
-                    setVisAvbrytDialog((navarendeVerdi: any) => !navarendeVerdi);
+                    setVisAvbrytDialog(navarendeVerdi => !navarendeVerdi);
                 }}
             >
                 {tekster['avbrytdialog.angre-knapp']}
