@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-class MedisinskVurdering {
+export class MedisinskVurdering {
     hovedDiagnose?: Diagnose;
     biDiagnoser: Diagnose[];
     svangerskap: boolean;
@@ -23,7 +23,7 @@ class MedisinskVurdering {
     }
 }
 
-class Diagnose {
+export class Diagnose {
     system: string;
     kode: string;
     tekst: string;
@@ -31,17 +31,6 @@ class Diagnose {
         this.system = diagnose.system;
         this.kode = diagnose.kode;
         this.tekst = diagnose.tekst;
-    }
-}
-
-class AnnenFraversArsak {
-    beskrivelse?: string;
-    grunn: AnnenFraverGrunn[];
-    constructor(annenFraversArsak: any) {
-        this.beskrivelse = annenFraversArsak.beskrivelse ? annenFraversArsak.beskrivelse : null;
-        this.grunn = annenFraversArsak.grunn.map(
-            (grunn: any) => AnnenFraverGrunn[grunn as keyof typeof AnnenFraverGrunn],
-        );
     }
 }
 
@@ -58,7 +47,24 @@ export enum AnnenFraverGrunn {
     BEHANDLING_STERILISERING = 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering',
 }
 
-class Arbeidsgiver {
+export class AnnenFraversArsak {
+    beskrivelse?: string;
+    grunn: AnnenFraverGrunn[];
+    constructor(annenFraversArsak: any) {
+        this.beskrivelse = annenFraversArsak.beskrivelse ? annenFraversArsak.beskrivelse : null;
+        this.grunn = annenFraversArsak.grunn.map(
+            (grunn: any) => AnnenFraverGrunn[grunn as keyof typeof AnnenFraverGrunn],
+        );
+    }
+}
+
+export enum HarArbeidsgiver {
+    EN_ARBEIDSGIVER = 'Én arbeidsgiver',
+    FLERE_ARBEIDSGIVERE = 'Flere arbeidsgivere',
+    INGEN_ARBEIDSGIVER = 'Ingen arbeidsgiver',
+}
+
+export class Arbeidsgiver {
     harArbeidsgiver: HarArbeidsgiver;
     navn?: string;
     yrkesbetegnelse?: string;
@@ -72,13 +78,7 @@ class Arbeidsgiver {
     }
 }
 
-export enum HarArbeidsgiver {
-    EN_ARBEIDSGIVER = 'Én arbeidsgiver',
-    FLERE_ARBEIDSGIVERE = 'Flere arbeidsgivere',
-    INGEN_ARBEIDSGIVER = 'Ingen arbeidsgiver',
-}
-
-class Periode {
+export class Periode {
     fom: Date;
     tom: Date;
     aktivitetIkkeMulig?: AktivitetIkkeMulig;
@@ -159,7 +159,7 @@ class Gradert {
     }
 }
 
-class Prognose {
+export class Prognose {
     arbeidsforEtterPeriode: boolean;
     hensynArbeidsplassen?: string;
     erIArbeid?: ErIArbeid;
@@ -172,7 +172,7 @@ class Prognose {
     }
 }
 
-class ErIArbeid {
+export class ErIArbeid {
     egetArbeidPaSikt: boolean;
     annetArbeidPaSikt: boolean;
     arbeidFOM?: Date;
@@ -185,7 +185,7 @@ class ErIArbeid {
     }
 }
 
-class ErIkkeIArbeid {
+export class ErIkkeIArbeid {
     arbeidsforPaSikt: boolean;
     arbeidsforFOM?: Date;
     vurderingsdato?: Date;
@@ -196,7 +196,7 @@ class ErIkkeIArbeid {
     }
 }
 
-class MeldingTilNAV {
+export class MeldingTilNAV {
     bistandUmiddelbart: boolean;
     beskrivBistand?: string;
     constructor(meldingTilNAV: any) {
@@ -216,7 +216,7 @@ class KontaktMedPasient {
     }
 }
 
-class Behandler {
+export class Behandler {
     fornavn: string;
     mellomnavn?: string;
     etternavn: string;
@@ -269,7 +269,7 @@ export enum SvarRestriksjon {
     SKJERMET_FOR_NAV = 'Informasjonen skal ikke vises NAV',
 }
 
-class SporsmalSvar {
+export class SporsmalSvar {
     sporsmal: string;
     svar: string;
     restriksjoner: SvarRestriksjon[];

@@ -22,7 +22,7 @@ const DataFetcher = (props: { children: any }) => {
                 }
             });
         }
-    }, [setSykmelding, sykmeldingFetcher]);
+    }, [setSykmelding, setSykmeldingStatus, sykmeldingFetcher]);
 
     if (isAnyNotStartedOrPending([sykmeldingFetcher])) {
         return <Spinner />;
