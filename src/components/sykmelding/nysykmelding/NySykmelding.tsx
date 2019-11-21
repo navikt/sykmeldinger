@@ -84,7 +84,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
                         tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
                         tiltakNAV={sykmelding.tiltakNAV}
                     />
-                    <SeksjonMedTittel tittel="Annet" utenUnderstrek>
+                    <SeksjonMedTittel tittel="Annet">
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
                 </Utvidbar>

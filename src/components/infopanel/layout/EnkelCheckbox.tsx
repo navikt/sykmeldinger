@@ -11,9 +11,14 @@ interface EnkelCheckboxProps {
     margin?: boolean;
     innrykk?: boolean;
     bold?: boolean;
+    vis: boolean;
 }
 
-const EnkelCheckbox = ({ tittel, checked, margin, innrykk, bold }: EnkelCheckboxProps) => {
+const EnkelCheckbox = ({ tittel, checked, margin, innrykk, bold, vis }: EnkelCheckboxProps) => {
+    if (!vis) {
+        return null;
+    }
+
     const innhold = (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             <img style={{ marginRight: '1rem' }} src={checked ? sjekkboks : boks} alt="sjekkboks ikon" />

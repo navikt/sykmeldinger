@@ -2,21 +2,21 @@ import React from 'react';
 import { Periode } from '../../../../types/sykmeldingTypes';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
-import { tilLesbarPeriodeMedArstall, getDuration } from '../../../../utils/datoUtils';
+import { tilLesbarPeriodeMedArstall, hentDagerMellomDatoer } from '../../../../utils/datoUtils';
 import tekster from '../../infopanel-tekster';
 import './periodeseksjon.less';
 
 interface PeriodeSeksjonProps {
     periode: Periode;
-    underlined: boolean;
+    understrek: boolean;
 }
 
-const PeriodeSeksjon = ({ periode, underlined }: PeriodeSeksjonProps) => {
-    const antallDager = getDuration(periode.fom, periode.tom);
+const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
+    const antallDager = hentDagerMellomDatoer(periode.fom, periode.tom);
     return (
         <div className="periodeseksjon">
             <EtikettLiten>Periode</EtikettLiten>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 <Normaltekst>
                     <strong>{tilLesbarPeriodeMedArstall(periode.fom, periode.tom)}</strong>
                 </Normaltekst>
@@ -47,7 +47,7 @@ const PeriodeSeksjon = ({ periode, underlined }: PeriodeSeksjonProps) => {
                     <Normaltekst>{periode.avventendeInnspillTilArbeidsgiver}</Normaltekst>
                 </>
             )}
-            {underlined && <hr />}
+            {understrek && <hr />}
         </div>
     );
 };
