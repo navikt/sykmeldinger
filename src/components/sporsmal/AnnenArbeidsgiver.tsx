@@ -9,18 +9,18 @@ interface AnnenArbeidsgiverProps {
 }
 
 const AnnenArbeidsgiver = ({ vis }: AnnenArbeidsgiverProps) => {
-    if (vis) {
-        return (
-            <AlertStripeAdvarsel>
-                <Tekstomrade>{tekster['alertstripe.annen-arbeidsgiver']}</Tekstomrade>
-                <span className="knapp--sentrer">
-                    <Knapp htmlType="button">{tekster['skriv-ut']}</Knapp>
-                </span>
-            </AlertStripeAdvarsel>
-        );
+    if (!vis) {
+        return null;
     }
 
-    return <></>;
+    return (
+        <AlertStripeAdvarsel>
+            <Tekstomrade>{tekster['alertstripe.annen-arbeidsgiver']}</Tekstomrade>
+            <span className="knapp--sentrer">
+                <Knapp htmlType="button">{tekster['skriv-ut']}</Knapp>
+            </span>
+        </AlertStripeAdvarsel>
+    );
 };
 
 export default AnnenArbeidsgiver;

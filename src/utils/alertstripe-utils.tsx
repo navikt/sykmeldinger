@@ -9,20 +9,15 @@ interface AlertStripeHjelperProps {
     tekst: string;
 }
 
-export const AlertStripeHjelper = ({
-    vis,
-    type,
-    tittel,
-    tekst,
-}: AlertStripeHjelperProps) => {
-    if (vis) {
-        return (
-            <AlertStripe type={type}>
-                {!!tittel && <Element>{tittel}</Element>}
-                <Normaltekst>{tekst}</Normaltekst>
-            </AlertStripe>
-        );
+export const AlertStripeHjelper = ({ vis, type, tittel, tekst }: AlertStripeHjelperProps) => {
+    if (!vis) {
+        return null;
     }
 
-    return <></>;
+    return (
+        <AlertStripe type={type}>
+            {!!tittel && <Element>{tittel}</Element>}
+            <Normaltekst>{tekst}</Normaltekst>
+        </AlertStripe>
+    );
 };

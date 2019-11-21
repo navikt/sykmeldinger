@@ -14,54 +14,48 @@ interface ArbeidsgiverSporsmalProps {
     watchOppfolging: string;
 }
 
-const ArbeidsgiverSporsmal = ({
-    vis,
-    arbeidsgiver,
-    register,
-    errors,
-    watchOppfolging
-}: ArbeidsgiverSporsmalProps) => {
+const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver, register, errors, watchOppfolging }: ArbeidsgiverSporsmalProps) => {
+    if (!vis) {
+        return null;
+    }
+
     if (!arbeidsgiver) {
         return null;
     }
 
-    if (vis) {
-        return (
-            <SkjemaGruppe
-                feil={
-                    errors.oppfolging
-                        ? {
-                              feilmelding: getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'], {
-                                  '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
-                              }),
-                          }
-                        : undefined
-                }
-                className="skjemagruppe--undersporsmal"
+    return (
+        <SkjemaGruppe
+            feil={
+                errors.oppfolging
+                    ? {
+                          feilmelding: getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'], {
+                              '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
+                          }),
+                      }
+                    : undefined
+            }
+            className="skjemagruppe--undersporsmal"
+        >
+            <Fieldset
+                legend={getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
+                    '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
+                })}
             >
-                <Fieldset
-                    legend={getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
+                <Radio label={tekster['ja']} name="oppfolging" value="true" radioRef={register as any} />
+                <Radio label={tekster['nei']} name="oppfolging" value="false" radioRef={register as any} />
+            </Fieldset>
+            {watchOppfolging === 'true' && (
+                <Tekstomrade>
+                    {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
                         '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
                     })}
-                >
-                    <Radio label={tekster['ja']} name="oppfolging" value="true" radioRef={register as any} />
-                    <Radio label={tekster['nei']} name="oppfolging" value="false" radioRef={register as any} />
-                </Fieldset>
-                {watchOppfolging === 'true' && (
-                    <Tekstomrade>
-                        {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
-                            '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
-                        })}
-                    </Tekstomrade>
-                )}
-                {watchOppfolging === 'false' && (
-                    <Tekstomrade>{tekster['sykmeldtFra.arbeidsgiver.bekreft.nei']}</Tekstomrade>
-                )}
-            </SkjemaGruppe>
-        );
-    }
-
-    return <></>;
+                </Tekstomrade>
+            )}
+            {watchOppfolging === 'false' && (
+                <Tekstomrade>{tekster['sykmeldtFra.arbeidsgiver.bekreft.nei']}</Tekstomrade>
+            )}
+        </SkjemaGruppe>
+    );
 };
 
 export default ArbeidsgiverSporsmal;
