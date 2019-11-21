@@ -12,19 +12,15 @@ const DataFetcher = (props: { children: any }) => {
 
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
-            sykmeldingFetcher.fetch(
-                '/syforest/sykmelding/avvist',
-                undefined,
-                (fetchState: FetchState<SykmeldingData>) => {
-                    if (hasData(fetchState)) {
-                        const { data } = fetchState;
-                        const sykmelding = new Sykmelding(data.sykmelding);
-                        const sykmeldingStatus = data.status;
-                        setSykmelding(sykmelding);
-                        setSykmeldingStatus(sykmeldingStatus);
-                    }
-                },
-            );
+            sykmeldingFetcher.fetch('/syforest/sykmelding/', undefined, (fetchState: FetchState<SykmeldingData>) => {
+                if (hasData(fetchState)) {
+                    const { data } = fetchState;
+                    const sykmelding = new Sykmelding(data.sykmelding);
+                    const sykmeldingStatus = data.status;
+                    setSykmelding(sykmelding);
+                    setSykmeldingStatus(sykmeldingStatus);
+                }
+            });
         }
     }, [setSykmelding, setSykmeldingStatus, sykmeldingFetcher]);
 
