@@ -44,7 +44,7 @@ const FormSubmitKnapp = ({
         <>
             <div className="knapp--sentrer">
                 <Hovedknapp htmlType="submit" spinner={visSubmitSpinner} data-testid="knapp-submit">
-                    {watchSykmeldtFra === Arbeidsforhold.ARBEIDSGIVER
+                    {new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra)
                         ? tekster['knapp.send-sykmeldingen']
                         : tekster['knapp.bekreft-sykmeldingen']}
                 </Hovedknapp>
