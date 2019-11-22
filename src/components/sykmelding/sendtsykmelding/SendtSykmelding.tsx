@@ -28,6 +28,7 @@ import person from '../../../svg/person.svg';
 import personHover from '../../../svg/personHover.svg';
 
 import tekster from './sendtsykmelding-tekster';
+import Tittel from '../../infopanel/layout/Tittel';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -41,7 +42,7 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
             <SendtStatuspanel sykmelding={sykmelding} />
 
             <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
-                <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
+                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
