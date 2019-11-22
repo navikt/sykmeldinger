@@ -72,7 +72,11 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                         tiltakNAV={sykmelding.tiltakNAV}
                     />
                     <SeksjonMedTittel tittel="Annet">
-                        <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
+                        <ElementMedTekst
+                            margin
+                            tittel={tekster['sendt-sykmelding.lege.tittel']}
+                            tekst={sykmelding.behandler.tlf}
+                        />
                     </SeksjonMedTittel>
                 </Utvidbar>
             </Utvidbar>
