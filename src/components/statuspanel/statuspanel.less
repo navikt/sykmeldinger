@@ -1,0 +1,30 @@
+@import '../../basic.less';
+
+.statuspanel {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.statuspanel__element {
+    flex: 1 1 auto;
+}
+
+@media (max-width: @screen-sm) {
+    .statuspanel__element {
+        margin: 1rem;
+    }
+}
+
+.statuspanel__kolonne {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+.statuspanel__kolonne > * {
+    flex: 1 1 auto;
+}
+
+.statuspanel__kolonne > .statuspanel__element:not(:last-child) {
+    margin-bottom: 1rem;
+}

@@ -6,6 +6,7 @@ import NySykmelding from '../components/sykmelding/nysykmelding/NySykmelding';
 import { Status } from '../types/sykmeldingDataTypes';
 import AvvistSykmelding from '../components/sykmelding/avvistsykmelding/AvvistSykmelding';
 import AvbruttSykmelding from '../components/sykmelding/AvbruttSykmelding';
+import SendtSykmelding from '../components/sykmelding/sendtsykmelding/SendtSykmelding';
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -41,6 +42,8 @@ const SykmeldingSide: React.FC = props => {
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
             case Status.AVVIST:
                 return <AvvistSykmelding sykmelding={sykmelding} />;
+            case Status.SENDT:
+                return <SendtSykmelding sykmelding={sykmelding} />;
             default:
                 return null;
         }
