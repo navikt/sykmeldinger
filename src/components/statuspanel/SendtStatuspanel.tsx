@@ -23,21 +23,23 @@ const SendtStatuspanel = ({ sykmelding }: SendtStatuspanelProps) => {
 
     return (
         <Margin>
-            <Panel border className="statuspanel">
-                <div className="statuspanel__rad">
-                    <div className="statuspanel__element">
-                        <EtikettMedTekst tittel="Status" tekst="Sendt til arbeidsgiver" />
+            <Panel border>
+                <div className="statuspanel">
+                    <div className="statuspanel__kolonne">
+                        <div className="statuspanel__element">
+                            <EtikettMedTekst tittel="Status" tekst="Sendt til arbeidsgiver" />
+                        </div>
+                        <div className="statuspanel__element">
+                            <EtikettMedTekst tittel="Arbeidsgiver" tekst={sykmelding.arbeidsgiver.navn} />
+                        </div>
                     </div>
-                    <div className="statuspanel__element">
-                        <EtikettMedTekst tittel="Dato sendt" tekst={tilLesbarDatoMedArstall(new Date())} />
-                    </div>
-                </div>
-                <div className="statuspanel__rad">
-                    <div className="statuspanel__element">
-                        <EtikettMedTekst tittel="Arbeidsgiver" tekst={sykmelding.arbeidsgiver.navn} />
-                    </div>
-                    <div className="statuspanel__element">
-                        <EtikettMedTekst tittel="Organisasjonsnummer" tekst="TODO: Organisasjonsnummer" />
+                    <div className="statuspanel__kolonne">
+                        <div className="statuspanel__element">
+                            <EtikettMedTekst tittel="Dato sendt" tekst={tilLesbarDatoMedArstall(new Date())} />
+                        </div>
+                        <div className="statuspanel__element">
+                            <EtikettMedTekst tittel="Organisasjonsnummer" tekst="TODO: Organisasjonsnummer" />
+                        </div>
                     </div>
                 </div>
             </Panel>

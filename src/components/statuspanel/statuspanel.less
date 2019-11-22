@@ -15,12 +15,16 @@
     }
 }
 
-.statuspanel__rad {
+.statuspanel__kolonne {
     display: flex;
-    flex: 1;
-    flex-direction: row;
+    flex: 1 1 auto;
+    flex-direction: column;
 }
 
-.statuspanel__rad > * {
-    flex: 1;
+.statuspanel__kolonne > * {
+    flex: 1 1 auto;
+}
+
+.statuspanel__kolonne > .statuspanel__element:not(:last-child) {
+    margin-bottom: 1rem;
 }
