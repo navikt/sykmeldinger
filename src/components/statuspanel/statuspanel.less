@@ -1,15 +1,26 @@
+@import '../../basic.less';
+
 .statuspanel {
-    background: white;
-    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.statuspanel-rad {
+.statuspanel__element {
+    flex: 1 1 auto;
+}
+
+@media (max-width: @screen-sm) {
+    .statuspanel__element {
+        margin: 1rem;
+    }
+}
+
+.statuspanel__rad {
     display: flex;
     flex: 1;
     flex-direction: row;
-    padding: 1rem 1rem 1rem 1rem;
 }
 
-.statuspanel-rad > * {
+.statuspanel__rad > * {
     flex: 1;
 }

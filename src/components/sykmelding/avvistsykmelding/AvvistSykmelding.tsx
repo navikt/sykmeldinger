@@ -4,6 +4,7 @@ import Sidetopp from '../../sidetopp/Sidetopp';
 import Veileder from '../../veileder/Veileder';
 
 import AvvistStatuspanel from '../../statuspanel/AvvistStatuspanel';
+import Tittel from '../../infopanel/layout/Tittel';
 import NoytralMann from '../../veileder/NoytralMann';
 import VeilederInnhold from './components/VeilederInnhold';
 import InfoPanel from '../../infopanel/InfoPanel';
@@ -11,9 +12,10 @@ import SykmeldingPerioder from '../../infopanel/panelelementer/periode/Sykmeldin
 import DiagnoseSeksjon from '../../infopanel/panelelementer/diagnose/DiagnoseSeksjon';
 import ArbeidsgiverSeksjon from '../../infopanel/panelelementer/ArbeidsgiverSeksjon';
 import LegeSeksjon from '../../infopanel/panelelementer/LegeSeksjon';
-import { Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
+
+import tekster from './avvistsykmelding-tekster';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -37,7 +39,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
             />
 
             <InfoPanel fargetema="feil" tittel="Avvist sykmelding">
-                <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
+                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
@@ -50,7 +52,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
             <div style={{ textAlign: 'center' }}>
                 <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
                     <BekreftCheckboksPanel
-                        label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
+                        label={tekster['sykmelding.bekreft-lest']}
                         checked={bekreftet}
                         onChange={() => setBekreftet(!bekreftet)}
                     />

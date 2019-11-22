@@ -22,6 +22,7 @@ const AvvistSykmeldingTekster: any = {
             'Du bør kontakte den som har sykmeldt deg eller få sykmelding fra en annen behandler.',
         'sykmelding.avvist.handling.ikkeRettTilASykmelde': 'Du må oppsøke en som har rett til å sykmelde.',
         'sykmelding.avvist.grunn': 'Grunnen til at sykmeldingen er avvist:',
+        'sykmelding.bekreft-lest': 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist',
     },
     en: {},
 };
