@@ -6,6 +6,8 @@ import { Sykmelding, Behandler } from '../../../../types/sykmeldingTypes';
 import { getLedetekst } from '../../../../utils/utils';
 import Begrunnelser from './Begrunnelser';
 
+import './veilederinnhold.less';
+
 const byggLegeNavn = (behandler: Behandler) => {
     const { fornavn, mellomnavn, etternavn } = behandler;
 
@@ -90,9 +92,7 @@ const VeilederInnhold = ({ sykmelding }: VeilederInnholdProps) => {
     const handling = hentHandlingsstreng(sykmelding);
     return (
         <>
-            <Systemtittel style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '2rem' }}>
-                Sykmeldingen kan dessverre ikke brukes
-            </Systemtittel>
+            <Systemtittel className="veilederinnhold-tittel">Sykmeldingen kan dessverre ikke brukes</Systemtittel>
             <div>
                 <p>{tekster['sykmelding.veileder.beklager']}</p>
                 <p>{introtekst}</p>

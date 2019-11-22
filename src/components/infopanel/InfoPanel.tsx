@@ -13,14 +13,14 @@ interface InfoPanelProps {
 
 const InfoPanel = ({ fargetema, tittel, children }: InfoPanelProps) => {
     return (
-        <article className="panel">
-            <header className={`panel-header panel-${fargetema}`}>
-                <img className="panel-header-icon" src={plaster} alt="plasterikon" />{' '}
+        <article className="infopanel">
+            <header className={`infopanel-header infopanel-${fargetema}`}>
+                <img className="infopanel-header-icon" src={plaster} alt="plasterikon" />{' '}
                 <span>
                     <Element>{tittel}</Element>
                 </span>
             </header>
-            <div className="panel-content">{children}</div>
+            <div className="infopanel-content">{children}</div>
         </article>
     );
 };
