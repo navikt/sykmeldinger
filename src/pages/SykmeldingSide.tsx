@@ -2,7 +2,7 @@ import React from 'react';
 
 import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 import useAppStore from '../store/useAppStore';
-import NySykmelding from '../components/sykmelding/NySykmelding';
+import NySykmelding from '../components/sykmelding/nysykmelding/NySykmelding';
 import { Status } from '../types/sykmeldingDataTypes';
 import AvvistSykmelding from '../components/sykmelding/AvvistSykmelding';
 import AvbruttSykmelding from '../components/sykmelding/AvbruttSykmelding';
@@ -60,7 +60,6 @@ const SykmeldingSide = () => {
     return (
         <div className="limit">
             <Brodsmuler brodsmuler={brodsmuler} />
-            <p>Sykmelding side</p>
             {SykmeldingComponent}
         </div>
     );

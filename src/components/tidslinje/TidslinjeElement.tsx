@@ -3,7 +3,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Element } from 'nav-frontend-typografi';
 import './TidslinjeElement.less';
 import klokke from './svg/klokke.svg';
-import plaster from './svg/plaster.svg';
+import plaster from '../../svg/plaster.svg';
 import sirkel from './svg/sirkel.svg';
 
 interface TidslinjeElementProps {
