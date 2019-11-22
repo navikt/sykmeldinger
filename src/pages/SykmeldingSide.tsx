@@ -28,7 +28,7 @@ const brodsmuler: Brodsmule[] = [
 const SykmeldingSide = () => {
     const { sykmelding, sykmeldingStatus, arbeidsgivere, sykmeldingUtenforVentetid } = useAppStore();
 
-    if (!!!sykmelding || sykmeldingUtenforVentetid === null || arbeidsgivere === null) {
+    if (!sykmelding || sykmeldingUtenforVentetid === null || arbeidsgivere === null) {
         // TODO: Error-melding, ingen sykmelding funnet
         return null;
     }
