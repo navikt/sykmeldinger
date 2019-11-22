@@ -1,9 +1,16 @@
+@import '../../../../basic.less';
+
 .statuspanel {
     display: flex;
     flex-wrap: wrap;
 }
 
-.statuspanel-element {
+.statuspanel__element {
     flex: 1 1 auto;
-    margin-bottom: 1rem;
+}
+
+@media (max-width: @screen-sm) {
+    .statuspanel__element {
+        margin: 1rem;
+    }
 }
