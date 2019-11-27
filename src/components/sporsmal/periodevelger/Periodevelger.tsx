@@ -8,18 +8,20 @@ import './reactDaterangePicker.less';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 interface PeriodevelgerProps {
+    vis: boolean;
     minDato: Date;
     maksDato: Date;
-    name: string;
-    register: any;
+    id: number;
+    setValue: (id:number, value: Date[]) => void;
 }
 
-const Periodevelger = ({ minDato, maksDato, name, register }: PeriodevelgerProps) => {
-    const [value, setValue] = useState<Date[]>([dayjs(new Date()).toDate(), dayjs(new Date()).toDate()]);
+const Periodevelger = ({ vis, minDato, maksDato, id, setValue }: PeriodevelgerProps) => {
+    const [val, setVal] = useState<Date[] | null>(null);
     const [open, setOpen] = useState<boolean>(false);
 
     const onChange = (value: any) => {
-        setValue(value);
+        setVal(value);
+        setValue(id, value);
         setOpen(true);
     };
 
@@ -33,25 +35,27 @@ const Periodevelger = ({ minDato, maksDato, name, register }: PeriodevelgerProps
         cal.focus();
     };
 
+    if (!vis) {
+        return null;
+    }
+
     return (
         <>
             <Normaltekst className="skjema__sporsmal">date stuff</Normaltekst>
             <DateRangePicker
-                id="compId"
-                name={name}
+                id={id}
                 locale="nb-NO"
                 format="dd.MM.yyyy"
+                dayPlaceholder="dd"
+                monthPlaceholder="mm"
+                yearPlaceholder="åååå"
                 minDate={dayjs(minDato).toDate()}
                 maxDate={dayjs(maksDato).toDate()}
                 onChange={onChange}
                 onCalendarOpen={onOpen}
                 onCalendarClose={onClose}
                 isOpen={open}
-                value={value}
-                ref={register({
-                    validate: (value: any) => value === true,
-                    required: true,
-                })}
+                value={val}
                 calendarAriaLabel="Åpne/lukk kalender"
                 clearAriaLabel="Tøm"
                 dayAriaLabel="Dag"

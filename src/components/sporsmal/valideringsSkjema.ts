@@ -15,6 +15,12 @@ export const valideringsSkjema = yup
         frilanserEgenmelding: yup.string(),
         frilanserForsikring: yup.string(),
     })
+    .test('dwada', 'fawfaw', (obj): any => {
+        if (obj.egenmeldingsperioder === undefined) {
+            return new yup.ValidationError('garge', null, 'egenmeldingsperioder');
+        }
+        return true;
+    })
     .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (obj): any => {
         if (obj.opplysningeneErRiktige === 'nei') {
             if (
@@ -34,7 +40,7 @@ export const valideringsSkjema = yup
         return true;
     })
     .test('manglerSykmeldtFra', 'Du må oppgi hva du er sykmeldt fra', (obj): any => {
-        if (!!obj.opplysningeneErRiktige || (obj.periode === false || obj.sykmeldingsgrad === false)) {
+        if (!!obj.opplysningeneErRiktige || obj.periode === false || obj.sykmeldingsgrad === false) {
             if (obj.sykmeldtFra === '') {
                 return new yup.ValidationError('Du må oppgi hva du er sykmeldt fra', null, 'sykmeldtFra');
             }

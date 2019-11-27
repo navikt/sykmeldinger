@@ -20,6 +20,7 @@ import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
 import Periodevelger from './periodevelger/Periodevelger';
+import Egenmeldingsdager from './tilleggssporsmal/Egenmeldingsdager';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -55,7 +56,7 @@ interface SporsmalProps {
 }
 
 const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: SporsmalProps) => {
-    const { register, handleSubmit, watch, errors, formState } = useForm({
+    const { register, handleSubmit, watch, errors, formState, setValue, triggerValidation } = useForm({
         validationSchema: valideringsSkjema,
     });
     const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
@@ -75,6 +76,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const watchArbeidsgiver = watch('arbeidsgiver');
     const watchDiagnose = watch('diagnose');
     const watchAndreOpplysninger = watch('andreOpplysninger');
+    const watchFrilanserEgenmelding = watch('frilanserEgenmelding');
 
     const onSubmit = (data: SykmeldingFormData) => {
         console.log(data);
@@ -98,6 +100,10 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
         );
     };
 
+    useEffect(() => {
+        console.log(errors);
+    }, [errors]);
+
     return (
         <>
             <AlertStripeHjelper
@@ -106,12 +112,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
             />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Periodevelger
-                    name={'value'}
-                    minDato={new Date('11.01.1994')}
-                    maksDato={new Date('11.10.1994')}
-                    register={register}
-                />
+                <Egenmeldingsdager vis={true} register={register} setValue={setValue}  />
                 <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={
