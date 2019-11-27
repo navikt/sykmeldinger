@@ -5,6 +5,7 @@ import { tilLesbarDatoMedArstall } from '../../utils/datoUtils';
 import { Knapp } from 'nav-frontend-knapper';
 
 import './statuspanel.less';
+import tekster from './statuspanel-tekster';
 
 interface AvbruttStatuspanelProps {
     sykmelding: Sykmelding;
@@ -22,8 +23,8 @@ const AvbruttStatuspanel = ({ sykmelding }: AvbruttStatuspanelProps) => {
     return (
         <div className="statuspanel">
             <div className="statuspanel-rad">
-                <EtikettMedTekst tittel="Status" tekst="Avbrutt av deg" />
-                <EtikettMedTekst tittel="Dato sendt" tekst={tilLesbarDatoMedArstall(new Date())} />
+                <EtikettMedTekst tittel={tekster['statuspanel.status']} tekst={tekster['statuspanel.status.avvist']} />
+                <EtikettMedTekst tittel={tekster['statuspanel.status']} tekst={tilLesbarDatoMedArstall(new Date())} />
             </div>
             <div style={{ padding: '1rem' }}>
                 <Knapp onClick={() => console.log('bruk sykmelding')}>Bruk sykmeldingen</Knapp>

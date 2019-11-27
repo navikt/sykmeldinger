@@ -7,6 +7,8 @@ import { Panel } from 'nav-frontend-paneler';
 import './statuspanel.less';
 import Margin from '../infopanel/layout/Margin';
 
+import tekster from './statuspanel-tekster';
+
 interface BekreftetStatuspanelProps {
     sykmelding: Sykmelding;
 }
@@ -24,13 +26,19 @@ const BekreftetStatuspanel = ({ sykmelding }: BekreftetStatuspanelProps) => {
         <Margin>
             <Panel border className="statuspanel">
                 <div className="statuspanel__element">
-                    <EtikettMedTekst tittel="Status" tekst="Bekreftet av deg" />
+                    <EtikettMedTekst
+                        tittel={tekster['statuspanel.status']}
+                        tekst={tekster['statuspanel.status.bekreftet']}
+                    />
                 </div>
                 <div className="statuspanel__element">
-                    <EtikettMedTekst tittel="Dato bekreftet" tekst={tilLesbarDatoMedArstall(new Date())} />
+                    <EtikettMedTekst
+                        tittel={tekster['statuspanel.dato-bekreftet']}
+                        tekst={tilLesbarDatoMedArstall(new Date())}
+                    />
                 </div>
                 <div className="statuspanel__element">
-                    <EtikettMedTekst tittel="Jeg er sykmeldt fra" tekst="TODO: Sykmeldt fra" />
+                    <EtikettMedTekst tittel={tekster['statuspanel.sykmeldt-fra']} tekst="TODO: Sykmeldt fra" />
                 </div>
             </Panel>
         </Margin>

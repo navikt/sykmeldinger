@@ -6,6 +6,7 @@ import { Panel } from 'nav-frontend-paneler';
 
 import './statuspanel.less';
 import Margin from '../infopanel/layout/Margin';
+import tekster from './statuspanel-tekster';
 
 interface AvvistStatuspanelProps {
     sykmelding: Sykmelding;
@@ -25,13 +26,22 @@ const AvvistStatuspanel = ({ sykmelding }: AvvistStatuspanelProps) => {
         <Margin stor>
             <Panel border className="statuspanel">
                 <div className="statuspanel__element">
-                    <EtikettMedTekst tittel="Status" tekst="Avvist av NAV" />
+                    <EtikettMedTekst
+                        tittel={tekster['statuspanel.status']}
+                        tekst={tekster['statuspanel.status.avvist']}
+                    />
                 </div>
                 <div className="statuspanel__element">
-                    <EtikettMedTekst tittel="Dato avvist" tekst={tilLesbarDatoMedArstall(new Date())} />
+                    <EtikettMedTekst
+                        tittel={tekster['statuspanel.dato-avvist']}
+                        tekst={tilLesbarDatoMedArstall(new Date())}
+                    />
                 </div>
                 <div className="statuspanel__element">
-                    <EtikettMedTekst tittel="Bekreftet av deg" tekst={tilLesbarDatoMedArstall(new Date())} />
+                    <EtikettMedTekst
+                        tittel={tekster['statuspanel.bekreftet-avvist-dato']}
+                        tekst={tilLesbarDatoMedArstall(new Date())}
+                    />
                 </div>
             </Panel>
         </Margin>
