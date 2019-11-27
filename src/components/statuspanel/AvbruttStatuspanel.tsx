@@ -6,6 +6,8 @@ import { Knapp } from 'nav-frontend-knapper';
 
 import './statuspanel.less';
 import tekster from './statuspanel-tekster';
+import Margin from '../infopanel/layout/Margin';
+import { Panel } from 'nav-frontend-paneler';
 
 interface AvbruttStatuspanelProps {
     sykmelding: Sykmelding;
@@ -21,15 +23,27 @@ const AvbruttStatuspanel = ({ sykmelding }: AvbruttStatuspanelProps) => {
     // dato sendt
 
     return (
-        <div className="statuspanel">
-            <div className="statuspanel-rad">
-                <EtikettMedTekst tittel={tekster['statuspanel.status']} tekst={tekster['statuspanel.status.avvist']} />
-                <EtikettMedTekst tittel={tekster['statuspanel.status']} tekst={tilLesbarDatoMedArstall(new Date())} />
-            </div>
-            <div style={{ padding: '1rem' }}>
-                <Knapp onClick={() => console.log('bruk sykmelding')}>Bruk sykmeldingen</Knapp>
-            </div>
-        </div>
+        <Margin>
+            <Panel border>
+                <div className="statuspanel">
+                    <div className="statuspanel__element">
+                        <EtikettMedTekst
+                            tittel={tekster['statuspanel.status']}
+                            tekst={tekster['statuspanel.status.avvist']}
+                        />
+                    </div>
+                    <div className="statuspanel__element">
+                        <EtikettMedTekst
+                            tittel={tekster['statuspanel.dato-sendt']}
+                            tekst={tilLesbarDatoMedArstall(new Date())}
+                        />
+                    </div>
+                </div>
+                <div className="statuspanel-knapp">
+                    <Knapp onClick={() => console.log('bruk sykmelding')}>Bruk sykmeldingen</Knapp>
+                </div>
+            </Panel>
+        </Margin>
     );
 };
 
