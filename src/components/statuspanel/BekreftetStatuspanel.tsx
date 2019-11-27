@@ -6,46 +6,43 @@ import { Panel } from 'nav-frontend-paneler';
 
 import './statuspanel.less';
 import Margin from '../infopanel/layout/Margin';
+
 import tekster from './statuspanel-tekster';
 
-interface AvvistStatuspanelProps {
+interface BekreftetStatuspanelProps {
     sykmelding: Sykmelding;
 }
 
-const AvvistStatuspanel = ({ sykmelding }: AvvistStatuspanelProps) => {
+const BekreftetStatuspanel = ({ sykmelding }: BekreftetStatuspanelProps) => {
     // TODO: sykmelding.bekreftetDato
     if (!true) {
         return null;
     }
 
     // TODO: Erstatt datoer med de faktiske datoene
-    // dato avvist: mottattTidspunkt
-    // dato bekreftet: bekreftetDato
+    // dato bekreftet
 
     return (
-        <Margin stor>
+        <Margin>
             <Panel border className="statuspanel">
                 <div className="statuspanel__element">
                     <EtikettMedTekst
                         tittel={tekster['statuspanel.status']}
-                        tekst={tekster['statuspanel.status.avvist']}
+                        tekst={tekster['statuspanel.status.bekreftet']}
                     />
                 </div>
                 <div className="statuspanel__element">
                     <EtikettMedTekst
-                        tittel={tekster['statuspanel.dato-avvist']}
+                        tittel={tekster['statuspanel.dato-bekreftet']}
                         tekst={tilLesbarDatoMedArstall(new Date())}
                     />
                 </div>
                 <div className="statuspanel__element">
-                    <EtikettMedTekst
-                        tittel={tekster['statuspanel.bekreftet-avvist-dato']}
-                        tekst={tilLesbarDatoMedArstall(new Date())}
-                    />
+                    <EtikettMedTekst tittel={tekster['statuspanel.sykmeldt-fra']} tekst="TODO: Sykmeldt fra" />
                 </div>
             </Panel>
         </Margin>
     );
 };
 
-export default AvvistStatuspanel;
+export default BekreftetStatuspanel;

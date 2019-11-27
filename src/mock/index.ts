@@ -4,6 +4,7 @@ import {
     avvistSykmeldingMock,
     sendtSykmeldingMock,
     avbruttSykmeldingMock,
+    bekreftetSykmeldingMock,
 } from './data/sykmeldingMock';
 import naermesteLedereMock from './data/narmesteLedereMock';
 
@@ -13,7 +14,10 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/syforest/sykmelding', nySykmeldingMock);
+mock.get('/syforest/naermesteledere', naermesteLedereMock);
+
+// TODO:
 mock.get('/syforest/sykmelding/avvist', avvistSykmeldingMock);
 mock.get('/syforest/sykmelding/sendt', sendtSykmeldingMock);
 mock.get('/syforest/sykmelding/avbrutt', avbruttSykmeldingMock);
-mock.get('/syforest/naermesteledere', naermesteLedereMock);
+mock.get('/syforest/sykmelding/bekreftet', bekreftetSykmeldingMock);
