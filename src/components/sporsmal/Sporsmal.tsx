@@ -19,6 +19,7 @@ import FormSubmitKnapp from './FormSubmitKnapp';
 import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
+import Periodevelger from './periodevelger/Periodevelger';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -57,9 +58,9 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const { register, handleSubmit, watch, errors, formState } = useForm({
         validationSchema: valideringsSkjema,
     });
-    const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type 
-    const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type 
-    const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type 
+    const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
+    const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
+    const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
 
@@ -105,6 +106,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
             />
             <form onSubmit={handleSubmit(onSubmit)}>
+                <Periodevelger
+                    name={'value'}
+                    minDato={new Date('11.01.1994')}
+                    maksDato={new Date('11.10.1994')}
+                    register={register}
+                />
                 <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={
