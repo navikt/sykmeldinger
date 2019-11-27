@@ -27,6 +27,7 @@ import personHover from '../../../svg/personHover.svg';
 
 import tekster from './bekreftetsykmelding-tekster';
 import BekreftetStatuspanel from '../../statuspanel/BekreftetStatuspanel';
+import Tittel from '../../infopanel/layout/Tittel';
 
 interface BekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -40,7 +41,7 @@ const BekreftetSykmelding = ({ sykmelding }: BekreftetSykmeldingProps) => {
             <BekreftetStatuspanel sykmelding={sykmelding} />
 
             <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
-                <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
+                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
