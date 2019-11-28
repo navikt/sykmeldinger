@@ -48,6 +48,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
             <Sidetopp tekst="Sykmelding" />
             <EldreSykmeldingVarsel />
             <Veileder
+                fargetema="info"
                 innhold={<Normaltekst>{tekster['ny-sykmelding.introtekst']}</Normaltekst>}
                 onClick={() => window.scrollTo({ top: utfyllingRef.current.offsetTop - 100, behavior: 'smooth' })}
                 knappTekst="Gå til utfyllingen"
