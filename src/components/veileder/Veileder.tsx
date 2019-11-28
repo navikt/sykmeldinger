@@ -3,7 +3,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import { Knapp } from 'nav-frontend-knapper';
 
 import './veileder.less';
-import SmilendeMann from './SmilendeMann';
+import Bjorn from './Bjorn.svg';
 
 interface VeilederProps {
     innhold: JSX.Element;
@@ -12,7 +12,7 @@ interface VeilederProps {
     kompakt?: boolean;
     onClick?: () => void;
     knappTekst?: string;
-    svg?: JSX.Element;
+    svg?: string;
 }
 
 const Veileder = ({
@@ -22,11 +22,16 @@ const Veileder = ({
     innhold,
     onClick,
     knappTekst,
-    svg = <SmilendeMann />,
+    svg = Bjorn,
 }: VeilederProps) => {
     return (
         <div className="veileder-container">
-            <Veilederpanel kompakt={kompakt} type={type as any} fargetema={fargetema as any} svg={svg}>
+            <Veilederpanel
+                kompakt={kompakt}
+                type={type as any}
+                fargetema={fargetema as any}
+                svg={<img src={svg} alt="NAV Veileder" />}
+            >
                 {innhold}
                 {onClick && (
                     <div className="veileder-knapp">

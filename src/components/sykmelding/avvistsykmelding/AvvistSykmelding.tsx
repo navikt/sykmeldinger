@@ -5,7 +5,7 @@ import Veileder from '../../veileder/Veileder';
 
 import AvvistStatuspanel from '../../statuspanel/AvvistStatuspanel';
 import Tittel from '../../infopanel/layout/Tittel';
-import NoytralMann from '../../veileder/NoytralMann';
+import NoytralMann from '../../veileder/NoytralMann.svg';
 import VeilederInnhold from './components/VeilederInnhold';
 import InfoPanel from '../../infopanel/InfoPanel';
 import SykmeldingPerioder from '../../infopanel/panelelementer/periode/SykmeldingPerioder';
@@ -34,7 +34,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 type="plakat"
                 kompakt
                 fargetema="feilmelding"
-                svg={<NoytralMann />}
+                svg={NoytralMann}
                 innhold={<VeilederInnhold sykmelding={sykmelding} />}
             />
 
