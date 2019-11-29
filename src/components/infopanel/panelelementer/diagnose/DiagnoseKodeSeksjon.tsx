@@ -18,7 +18,9 @@ const DiagnoseKodeSeksjon = ({ kode, system, visHjelp }: DiagnoseKodeSeksjonProp
                 <EtikettLiten>{tekster['diagnosekode.tittel']}</EtikettLiten>
                 {visHjelp && (
                     <div className="diagnose-seksjon-kode-hjelpetekst">
-                        <Hjelpetekst>{tekster['diagnosekode.hjelpetekst.tekst']}</Hjelpetekst>
+                        <Hjelpetekst>
+                            <div style={{ maxWidth: 300 }}>{tekster['diagnosekode.hjelpetekst.tekst']}</div>
+                        </Hjelpetekst>
                     </div>
                 )}
             </div>
