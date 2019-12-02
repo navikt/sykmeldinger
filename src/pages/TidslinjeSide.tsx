@@ -21,7 +21,7 @@ const brodsmuler: Brodsmule[] = [
     },
 ];
 
-const TidslinjeSide: React.FC = () => {
+const TidslinjeSide = () => {
     const [harArbeidsgiver, setHarArbeidsgiver] = useState(true);
 
     const radioEndring = (e: React.ChangeEvent<HTMLInputElement>): void => {

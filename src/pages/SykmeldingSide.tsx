@@ -27,10 +27,10 @@ const brodsmuler: Brodsmule[] = [
     },
 ];
 
-const SykmeldingSide: React.FC = props => {
-    const { sykmelding, sykmeldingStatus } = useAppStore();
+const SykmeldingSide = () => {
+    const { sykmelding, sykmeldingStatus, arbeidsgivere, sykmeldingUtenforVentetid } = useAppStore();
 
-    if (!sykmelding) {
+    if (!sykmelding || sykmeldingUtenforVentetid === null || arbeidsgivere === null) {
         // TODO: Error-melding, ingen sykmelding funnet
         return null;
     }
@@ -38,7 +38,13 @@ const SykmeldingSide: React.FC = props => {
     const SykmeldingComponent = (() => {
         switch (sykmeldingStatus) {
             case Status.NY:
-                return <NySykmelding sykmelding={sykmelding} />;
+                return (
+                    <NySykmelding
+                        sykmelding={sykmelding}
+                        arbeidsgivere={arbeidsgivere}
+                        sykmeldingUtenforVentetid={sykmeldingUtenforVentetid}
+                    />
+                );
             case Status.AVBRUTT:
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
             case Status.AVVIST:

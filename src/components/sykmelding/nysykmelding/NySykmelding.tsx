@@ -25,6 +25,9 @@ import UtdypendeOpplysninger from '../../infopanel/utdypendeelementer/UtdypendeO
 import Arbeidsevne from '../../infopanel/utdypendeelementer/Arbeidsevne';
 import SeksjonMedTittel from '../../infopanel/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../infopanel/layout/ElementMedTekst';
+import Sporsmal from '../../sporsmal/Sporsmal';
+import SporsmalInfoheader from '../../sporsmal/SporsmalInfoheader';
+import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import Utvidbar from '../../utvidbar/Utvidbar';
 
 import doktor from '../../../svg/doktor.svg';
@@ -32,9 +35,15 @@ import doktorHover from '../../../svg/doktorHover.svg';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
+    arbeidsgivere: Arbeidsgiver[];
+    sykmeldingUtenforVentetid: boolean;
 }
 
-const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps) => {
+const NySykmelding: React.FC<SykmeldingProps> = ({
+    sykmelding,
+    arbeidsgivere,
+    sykmeldingUtenforVentetid,
+}: SykmeldingProps) => {
     const utfyllingRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     useEffect(() => {
@@ -90,18 +99,16 @@ const NySykmelding: React.FC<SykmeldingProps> = ({ sykmelding }: SykmeldingProps
                 </Utvidbar>
             </InfoPanel>
 
-            <div ref={utfyllingRef} className="third">
-                <h1>Bruk sykmeldingen</h1>
-                Ifølge folketrygdloven har den to formål: melde fra om sykefravær til NAV og arbeidsgiveren slik at du
-                kan få hjelp til å komme tilbake i jobb legge til rette for at du kan søke om sykepenger Les mer om
-                hvordan NAV behandler personopplysninger
+            {/* TODO: Bestemme om denne skal være i Sporsmal-komponent eller som egen komponent */}
+            <div ref={utfyllingRef} style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+                <SporsmalInfoheader />
             </div>
-            <div>riktige opplysninger</div>
 
-            <div>jeg er sykmeldt fra</div>
-
-            <Hovedknapp onClick={() => console.log('send')}>Send sykmeldingen</Hovedknapp>
-            <Lenke href="www.nav.no">Jeg ønsker ikke å bruke denne sykmeldingen</Lenke>
+            <Sporsmal
+                sykmelding={sykmelding}
+                arbeidsgivere={arbeidsgivere}
+                sykmeldingUtenforVentetid={sykmeldingUtenforVentetid}
+            />
         </div>
     );
 };
