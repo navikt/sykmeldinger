@@ -5,14 +5,13 @@ import dayjs from 'dayjs';
 
 import './reactCalendar.less';
 import './reactDaterangePicker.less';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 interface PeriodevelgerProps {
     vis: boolean;
     minDato: Date;
     maksDato: Date;
     id: number;
-    setValue: (id:number, value: Date[]) => void;
+    setValue: (id: number, value: Date[]) => void;
 }
 
 const Periodevelger = ({ vis, minDato, maksDato, id, setValue }: PeriodevelgerProps) => {
@@ -41,7 +40,6 @@ const Periodevelger = ({ vis, minDato, maksDato, id, setValue }: PeriodevelgerPr
 
     return (
         <>
-            <Normaltekst className="skjema__sporsmal">date stuff</Normaltekst>
             <DateRangePicker
                 id={id}
                 locale="nb-NO"

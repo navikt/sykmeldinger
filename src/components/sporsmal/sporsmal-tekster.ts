@@ -51,9 +51,13 @@ const SporsmalTekster: any = {
         'avbrytdialog.kan-sende-papir': 'Du kan fortsatt levere den på papir.',
         'frilanser.egenmelding.tittel':
             'Vi har registrert at du ble sykmeldt 5. oktober 2019. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-        'frilanser.egenmelding.feilmelding': '',
+        'frilanser.egenmelding.feilmelding': 'Velg om du har hatt egenmelding',
         'frilanser.forsikring.tittel': 'Har du forsikring som gjelder de første 16 dagene av sykefraværet?',
-        'frilanser.forsikring.feilmelding': 'Har du forsikring som gjelder de første 16 dagene av sykefraværet?',
+        'frilanser.forsikring.feilmelding': 'Velg om du har hatt forsikring',
+        'egenmeldingsperioder.tittel': 'Når hadde du egenmelding?',
+        'egenmeldingsperioder.legg-til-periode': 'Legg til periode',
+        'egenmeldingsperioder.slett-periode': 'Slett periode',
+        'egenmeldingsperioder.feilmelding': 'Velg periode(r) for egenmelding',
     },
     en: {},
 };

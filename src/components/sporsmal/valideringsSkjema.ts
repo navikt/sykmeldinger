@@ -15,9 +15,15 @@ export const valideringsSkjema = yup
         frilanserEgenmelding: yup.string(),
         frilanserForsikring: yup.string(),
     })
-    .test('dwada', 'fawfaw', (obj): any => {
-        if (obj.egenmeldingsperioder === undefined) {
-            return new yup.ValidationError('garge', null, 'egenmeldingsperioder');
+    .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (obj): any => {
+        console.log(obj);
+        if (obj.hasOwnProperty('egenmeldingsperioder') && obj.egenmeldingsperioder === undefined) {
+            return new yup.ValidationError('Periode mangler ufylling', null, 'egenmeldingsperioder');
+        } else if (
+            obj.hasOwnProperty('egenmeldingsperioder') &&
+            obj.egenmeldingsperioder.some((periode: any) => periode['startDato'] === undefined)
+        ) {
+            return new yup.ValidationError('En eller flere perioder mangler utfylling', null, 'egenmeldingsperioder');
         }
         return true;
     })

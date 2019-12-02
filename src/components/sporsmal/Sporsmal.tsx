@@ -19,8 +19,6 @@ import FormSubmitKnapp from './FormSubmitKnapp';
 import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
-import Periodevelger from './periodevelger/Periodevelger';
-import Egenmeldingsdager from './tilleggssporsmal/Egenmeldingsdager';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -56,7 +54,7 @@ interface SporsmalProps {
 }
 
 const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: SporsmalProps) => {
-    const { register, handleSubmit, watch, errors, formState, setValue, triggerValidation } = useForm({
+    const { register, unregister, handleSubmit, watch, errors, formState, setValue, triggerValidation } = useForm({
         validationSchema: valideringsSkjema,
     });
     const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
@@ -77,7 +75,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const watchDiagnose = watch('diagnose');
     const watchAndreOpplysninger = watch('andreOpplysninger');
     const watchFrilanserEgenmelding = watch('frilanserEgenmelding');
-    const watchEgenmelding = watch('egenmeldingsperioder');
 
     const onSubmit = (data: SykmeldingFormData) => {
         console.log(data);
@@ -113,8 +110,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
             />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Egenmeldingsdager vis={true} register={register} setValue={setValue} />
-                <AlertStripeHjelper vis={!!errors.egenmeldingsperioder} type="feil" tekst="feil" />
                 <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={
@@ -234,7 +229,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                 skalViseFrilansersporsmal(sykmelding, sykmeldingUtenforVentetid)
                             }
                             register={register}
+                            unregister={unregister}
                             errors={errors}
+                            setValue={setValue}
+                            triggerValidation={triggerValidation}
+                            isSubmitted={formState.isSubmitted}
+                            watchFrilanserEgemelding={watchFrilanserEgenmelding}
                         />
                         <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
                     </PanelBase>
