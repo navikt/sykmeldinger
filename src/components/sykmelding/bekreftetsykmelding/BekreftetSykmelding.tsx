@@ -1,7 +1,6 @@
 import React from 'react';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Sidetopp from '../../sidetopp/Sidetopp';
-import { Sidetittel } from 'nav-frontend-typografi';
 import SykmeldingPerioder from '../../infopanel/panelelementer/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from '../../infopanel/panelelementer/diagnose/DiagnoseSeksjon';
 import FraverSeksjon from '../../infopanel/panelelementer/FraverSeksjon';

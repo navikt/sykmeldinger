@@ -2,7 +2,6 @@ import React from 'react';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Sidetopp from '../../sidetopp/Sidetopp';
 import AvbruttStatuspanel from '../../statuspanel/AvbruttStatuspanel';
-import { Sidetittel } from 'nav-frontend-typografi';
 import SykmeldingPerioder from '../../infopanel/panelelementer/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from '../../infopanel/panelelementer/diagnose/DiagnoseSeksjon';
 import FraverSeksjon from '../../infopanel/panelelementer/FraverSeksjon';
@@ -27,6 +26,7 @@ import person from '../../../svg/person.svg';
 import personHover from '../../../svg/personHover.svg';
 
 import tekster from './avbruttsykmelding-tekster';
+import Tittel from '../../infopanel/layout/Tittel';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
@@ -40,7 +40,7 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
             <AvbruttStatuspanel sykmelding={sykmelding} />
 
             <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
-                <Sidetittel className="panel-content-header">Sykmelding</Sidetittel>
+                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
