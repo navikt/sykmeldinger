@@ -15,4 +15,5 @@ export enum Status {
     AVVIST = 'avvist',
     AVBRUTT = 'avbrutt',
     SENDT = 'sendt',
+    BEKREFTET = 'bekreftet',
 }
