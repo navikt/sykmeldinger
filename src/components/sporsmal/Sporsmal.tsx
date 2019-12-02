@@ -77,6 +77,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const watchDiagnose = watch('diagnose');
     const watchAndreOpplysninger = watch('andreOpplysninger');
     const watchFrilanserEgenmelding = watch('frilanserEgenmelding');
+    const watchEgenmelding = watch('egenmeldingsperioder');
 
     const onSubmit = (data: SykmeldingFormData) => {
         console.log(data);
@@ -112,7 +113,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
             />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Egenmeldingsdager vis={true} register={register} setValue={setValue}  />
+                <Egenmeldingsdager vis={true} register={register} setValue={setValue} />
+                <AlertStripeHjelper vis={!!errors.egenmeldingsperioder} type="feil" tekst="feil" />
                 <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={

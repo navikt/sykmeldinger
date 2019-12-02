@@ -64,8 +64,8 @@ const Egenmeldingsdager = ({ vis, sykmeldingStartdato, register, setValue, error
                         <Periodevelger
                             vis={true}
                             id={periode.id}
-                            minDato={new Date('11.01.2019')}
-                            maksDato={new Date('11.10.2019')}
+                            minDato={new Date('12.01.2019')}
+                            maksDato={new Date('12.10.2019')}
                             setValue={updateValue}
                         />
                         {periode.id !== 0 && (
