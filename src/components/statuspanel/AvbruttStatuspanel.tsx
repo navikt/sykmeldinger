@@ -29,7 +29,7 @@ const AvbruttStatuspanel = ({ sykmelding }: AvbruttStatuspanelProps) => {
                     <div className="statuspanel__element">
                         <EtikettMedTekst
                             tittel={tekster['statuspanel.status']}
-                            tekst={tekster['statuspanel.status.avvist']}
+                            tekst={tekster['statuspanel.status.avbrutt']}
                         />
                     </div>
                     <div className="statuspanel__element">
