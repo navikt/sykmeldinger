@@ -58,6 +58,11 @@ const SporsmalTekster: any = {
         'egenmeldingsperioder.legg-til-periode': 'Legg til periode',
         'egenmeldingsperioder.slett-periode': 'Slett periode',
         'egenmeldingsperioder.feilmelding': 'Velg periode(r) for egenmelding',
+        'infoheader.bruk-sykmeldingen': 'Bruk sykmeldingen',
+        'infoheader.trygdeloven.del-en':
+            'melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i jobb',
+        'infoheader.trygdeloven.del-to': 'legge til rette for at du kan søke om sykepenger',
+        'infoheader.personvern-lenke': 'Les mer om hvordan NAV behandler personopplysninger',
     },
     en: {},
 };

@@ -26,6 +26,7 @@ import Arbeidsevne from '../../infopanel/utdypendeelementer/Arbeidsevne';
 import SeksjonMedTittel from '../../infopanel/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../infopanel/layout/ElementMedTekst';
 import Sporsmal from '../../sporsmal/Sporsmal';
+import SporsmalInfoheader from '../../sporsmal/SporsmalInfoheader';
 import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import Utvidbar from '../../utvidbar/Utvidbar';
 
@@ -100,12 +101,9 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
 
             {/* TODO: Bestemme om denne skal være i Sporsmal-komponent eller som egen komponent */}
             <div ref={utfyllingRef} style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-                <h1>Bruk sykmeldingen</h1>
-                Ifølge folketrygdloven har den to formål: melde fra om sykefravær til NAV og arbeidsgiveren slik at du
-                kan få hjelp til å komme tilbake i jobb legge til rette for at du kan søke om sykepenger Les mer om
-                hvordan NAV behandler personopplysninger
+                <SporsmalInfoheader />
             </div>
-            
+
             <Sporsmal
                 sykmelding={sykmelding}
                 arbeidsgivere={arbeidsgivere}
