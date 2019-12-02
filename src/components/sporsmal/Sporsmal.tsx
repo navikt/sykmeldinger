@@ -161,7 +161,9 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                 legend={
                                     <div>
                                         {tekster['sykmeldtFra.tittel']}
-                                        <Hjelpetekst>{tekster['sykmeldtFra.hjelpetekst']}</Hjelpetekst>
+                                        <Hjelpetekst>
+                                            <div style={{ maxWidth: 300 }}>{tekster['sykmeldtFra.hjelpetekst']}</div>
+                                        </Hjelpetekst>
                                     </div>
                                 }
                             >

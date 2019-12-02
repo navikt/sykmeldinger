@@ -16,7 +16,6 @@ export const valideringsSkjema = yup
         frilanserForsikring: yup.string(),
     })
     .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (obj): any => {
-        console.log(obj);
         if (obj.hasOwnProperty('egenmeldingsperioder') && obj.egenmeldingsperioder === undefined) {
             return new yup.ValidationError('Periode mangler ufylling', null, 'egenmeldingsperioder');
         } else if (
