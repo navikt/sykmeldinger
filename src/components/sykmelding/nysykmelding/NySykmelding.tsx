@@ -25,15 +25,12 @@ import UtdypendeOpplysninger from '../../infopanel/utdypendeelementer/UtdypendeO
 import Arbeidsevne from '../../infopanel/utdypendeelementer/Arbeidsevne';
 import SeksjonMedTittel from '../../infopanel/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../infopanel/layout/ElementMedTekst';
-<<<<<<< HEAD
 import Sporsmal from '../../sporsmal/Sporsmal';
 import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
-=======
 import Utvidbar from '../../utvidbar/Utvidbar';
 
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
->>>>>>> 400cd7c62b9ec622b3f98f0c3e91427b59e5811c
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
