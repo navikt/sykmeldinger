@@ -9,7 +9,7 @@ import useAppStore from './store/useAppStore';
 import DataFetcher from './components/DataFetcher';
 import TidslinjeSide from './pages/TidslinjeSide';
 
-const App: React.FC = () => {
+const App = () => {
     return (
         <useAppStore.Provider>
             <DataFetcher>
