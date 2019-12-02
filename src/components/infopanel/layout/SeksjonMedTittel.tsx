@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 interface SeksjonMedTittelProps {
     tittel?: string;
@@ -13,7 +13,7 @@ const SeksjonMedTittel = ({ tittel, children, understrek }: SeksjonMedTittelProp
         <>
             {tittel && (
                 <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-                    <Innholdstittel>{tittel}</Innholdstittel>
+                    <Systemtittel>{tittel}</Systemtittel>
                 </div>
             )}
 

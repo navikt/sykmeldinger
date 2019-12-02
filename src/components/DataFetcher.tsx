@@ -22,7 +22,7 @@ const DataFetcher = (props: { children: any }) => {
 
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
-            sykmeldingFetcher.fetch('/syforest/sykmelding', undefined, (fetchState: FetchState<SykmeldingData>) => {
+            sykmeldingFetcher.fetch('/syforest/sykmelding/', undefined, (fetchState: FetchState<SykmeldingData>) => {
                 if (hasData(fetchState)) {
                     const { data } = fetchState;
                     const sykmelding = new Sykmelding(data.sykmelding);

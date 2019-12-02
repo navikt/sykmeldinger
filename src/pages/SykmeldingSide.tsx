@@ -4,8 +4,10 @@ import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 import useAppStore from '../store/useAppStore';
 import NySykmelding from '../components/sykmelding/nysykmelding/NySykmelding';
 import { Status } from '../types/sykmeldingDataTypes';
-import AvvistSykmelding from '../components/sykmelding/AvvistSykmelding';
-import AvbruttSykmelding from '../components/sykmelding/AvbruttSykmelding';
+import AvvistSykmelding from '../components/sykmelding/avvistsykmelding/AvvistSykmelding';
+import AvbruttSykmelding from '../components/sykmelding/avbruttsykmelding/AvbruttSykmelding';
+import SendtSykmelding from '../components/sykmelding/sendtsykmelding/SendtSykmelding';
+import BekreftetSykmelding from '../components/sykmelding/bekreftetsykmelding/BekreftetSykmelding';
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -47,6 +49,10 @@ const SykmeldingSide = () => {
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
             case Status.AVVIST:
                 return <AvvistSykmelding sykmelding={sykmelding} />;
+            case Status.SENDT:
+                return <SendtSykmelding sykmelding={sykmelding} />;
+            case Status.BEKREFTET:
+                return <BekreftetSykmelding sykmelding={sykmelding} />;
             default:
                 return null;
         }

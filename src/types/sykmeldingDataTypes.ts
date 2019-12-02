@@ -14,4 +14,6 @@ export enum Status {
     NY = 'ny',
     AVVIST = 'avvist',
     AVBRUTT = 'avbrutt',
+    SENDT = 'sendt',
+    BEKREFTET = 'bekreftet',
 }
