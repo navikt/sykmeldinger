@@ -6,6 +6,7 @@ import { Panel } from 'nav-frontend-paneler';
 
 import './statuspanel.less';
 import Margin from '../infopanel/layout/Margin';
+import tekster from './statuspanel-tekster';
 
 interface SendtStatuspanelProps {
     sykmelding: Sykmelding;
@@ -27,18 +28,30 @@ const SendtStatuspanel = ({ sykmelding }: SendtStatuspanelProps) => {
                 <div className="statuspanel">
                     <div className="statuspanel__kolonne">
                         <div className="statuspanel__element">
-                            <EtikettMedTekst tittel="Status" tekst="Sendt til arbeidsgiver" />
+                            <EtikettMedTekst
+                                tittel={tekster['statuspanel.status']}
+                                tekst={tekster['statuspanel.status.sendt']}
+                            />
                         </div>
                         <div className="statuspanel__element">
-                            <EtikettMedTekst tittel="Arbeidsgiver" tekst={sykmelding.arbeidsgiver.navn} />
+                            <EtikettMedTekst
+                                tittel={tekster['statuspanel.arbeidsgiver']}
+                                tekst={sykmelding.arbeidsgiver.navn}
+                            />
                         </div>
                     </div>
                     <div className="statuspanel__kolonne">
                         <div className="statuspanel__element">
-                            <EtikettMedTekst tittel="Dato sendt" tekst={tilLesbarDatoMedArstall(new Date())} />
+                            <EtikettMedTekst
+                                tittel={tekster['statuspanel.dato-sendt']}
+                                tekst={tilLesbarDatoMedArstall(new Date())}
+                            />
                         </div>
                         <div className="statuspanel__element">
-                            <EtikettMedTekst tittel="Organisasjonsnummer" tekst="TODO: Organisasjonsnummer" />
+                            <EtikettMedTekst
+                                tittel={tekster['statuspanel.organisasjonsnummer']}
+                                tekst="TODO: Organisasjonsnummer"
+                            />
                         </div>
                     </div>
                 </div>
