@@ -30,14 +30,19 @@ const brodsmuler: Brodsmule[] = [
 const SykmeldingSide = () => {
     const { sykmelding, sykmeldingStatus, arbeidsgivere, sykmeldingUtenforVentetid } = useAppStore();
 
-    if (!sykmelding || sykmeldingUtenforVentetid === null || arbeidsgivere === null) {
+    if (!sykmelding || arbeidsgivere === null) {
         // TODO: Error-melding, ingen sykmelding funnet
         return null;
     }
 
     const SykmeldingComponent = (() => {
         switch (sykmeldingStatus) {
-            case Status.NY:
+            case Status.NY: {
+                if (sykmeldingUtenforVentetid === null) {
+                    // TODO: Error-melding, ingen sykmelding funnet
+                    return null;
+                }
+
                 return (
                     <NySykmelding
                         sykmelding={sykmelding}
@@ -45,6 +50,8 @@ const SykmeldingSide = () => {
                         sykmeldingUtenforVentetid={sykmeldingUtenforVentetid}
                     />
                 );
+            }
+
             case Status.AVBRUTT:
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
             case Status.AVVIST:
