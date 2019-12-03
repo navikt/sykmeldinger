@@ -38,7 +38,6 @@ const DataFetcher = (props: { children: any }) => {
                             if (hasData(fetchState)) {
                                 const { data } = fetchState;
                                 const arbeidsgivere = data.map(ag => new Arbeidsgiver(ag));
-                                console.log(arbeidsgivere);
                                 setArbeidsgivere(arbeidsgivere);
                             }
                         },
@@ -51,7 +50,6 @@ const DataFetcher = (props: { children: any }) => {
                             { method: 'POST' },
                             (fetchState: FetchState<ErUtenforVentetidData>) => {
                                 if (hasData(fetchState)) {
-                                    console.log(fetchState);
                                     setSykmeldingUtenforVentetid(fetchState.data.erUtenforVentetid);
                                 }
                             },
