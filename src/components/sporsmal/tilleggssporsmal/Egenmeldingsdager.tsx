@@ -15,14 +15,14 @@ interface EgenmeldingsdagerProps {
         shouldRender?: any,
     ) => Promise<boolean>;
     isSubmitted: boolean;
-    setValue: (name: string, value: any, shouldValidate?: boolean) => void;
+    setValue: (name: string, startOgSlutt: any, shouldValidate?: boolean) => void;
     errors: Partial<Record<string, FieldError>>;
 }
 
-interface Periode {
+export interface Egenmeldingsperiode {
     id: number;
-    startDato?: Date;
-    sluttDato?: Date;
+    startDato: Date | null;
+    sluttDato: Date | null;
 }
 
 const Egenmeldingsdager = ({
@@ -35,7 +35,7 @@ const Egenmeldingsdager = ({
     triggerValidation,
     isSubmitted,
 }: EgenmeldingsdagerProps) => {
-    const [perioder, setPerioder] = useState<Periode[]>([{ id: 0 }]); // Legger til første periode
+    const [perioder, setPerioder] = useState<Egenmeldingsperiode[]>([{ id: 0, startDato: null, sluttDato: null }]); // Legger til første periode
     const name = 'egenmeldingsperioder';
 
     // Registrer ved mount, unregistrer ved unmount
@@ -55,20 +55,26 @@ const Egenmeldingsdager = ({
                 }
             });
         });
-
         // Setter name og value manuelt til form.
         setValue(
             name,
             perioder.map(periode => {
                 if (periode.id === id) {
-                    return { startDato: value[0], sluttDato: value[1] };
+                    return { ...periode, startDato: value[0], sluttDato: value[1] };
                 }
-                return { startDato: periode.startDato, sluttDato: periode.sluttDato };
+                return { ...periode, startDato: periode.startDato, sluttDato: periode.sluttDato };
             }),
         );
 
-        // Trigger revalidering ved value-oppdatering (dersom det ikke er forsøkt sendt inn)
-        // TODO: ikke trigger ved første render
+        if (isSubmitted) {
+            triggerValidation({ name: name });
+        }
+    };
+
+    const slettValue = (id: number): void => {
+        const nyPerioder = perioder.filter(periode => periode.id !== id);
+        setPerioder(nyPerioder);
+        setValue(name, nyPerioder);
         if (isSubmitted) {
             triggerValidation({ name: name });
         }
@@ -94,8 +100,8 @@ const Egenmeldingsdager = ({
                                 <Periodevelger
                                     vis={true}
                                     id={periode.id}
-                                    minDato={new Date('10.01.2019')} // TODO: lage logikk for å intervallbegrensning
-                                    maksDato={new Date('10.10.2019')}
+                                    minDato={new Date('12.01.2019')} // TODO: lage logikk for å intervallbegrensning
+                                    maksDato={new Date('12.10.2019')}
                                     setValue={updateValue}
                                 />
                                 {periode.id !== 0 && (
@@ -105,9 +111,7 @@ const Egenmeldingsdager = ({
                                         mini
                                         onClick={e => {
                                             e.preventDefault();
-                                            setPerioder(forrigePerioder =>
-                                                forrigePerioder.filter(prevPeriode => prevPeriode.id !== periode.id),
-                                            );
+                                            slettValue(periode.id);
                                         }}
                                     >
                                         {tekster['egenmeldingsperioder.slett-periode']}
@@ -125,7 +129,11 @@ const Egenmeldingsdager = ({
                         e.preventDefault();
                         setPerioder(forrigePerioder => [
                             ...forrigePerioder,
-                            { id: forrigePerioder[forrigePerioder.length - 1].id + 1 },
+                            {
+                                id: forrigePerioder[forrigePerioder.length - 1].id + 1,
+                                startDato: null,
+                                sluttDato: null,
+                            },
                         ]); // Legger til periode med id én høyere enn siste element i listen
                     }}
                 >
