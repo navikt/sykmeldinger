@@ -19,6 +19,7 @@ import FormSubmitKnapp from './FormSubmitKnapp';
 import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
+import PeriodevelgerNy from './periodevelger/Periodevelger-ny';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -110,6 +111,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
             />
             <form onSubmit={handleSubmit(onSubmit)}>
+                <PeriodevelgerNy />
                 <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={
