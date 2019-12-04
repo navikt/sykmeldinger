@@ -4,7 +4,6 @@ import useForm from 'react-hook-form';
 import { valideringsSkjema } from './valideringsSkjema';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { AlertStripeHjelper } from '../../utils/alertstripe-utils';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import PanelBase from 'nav-frontend-paneler';
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
 import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
@@ -19,6 +18,7 @@ import FormSubmitKnapp from './FormSubmitKnapp';
 import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
+import HjelpetekstWrapper from '../hjelpetekst/HjelpetekstWrapper';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',
@@ -159,11 +159,9 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         >
                             <Fieldset
                                 legend={
-                                    <div>
+                                    <div style={{ display: 'flex' }}>
                                         {tekster['sykmeldtFra.tittel']}
-                                        <Hjelpetekst>
-                                            <div style={{ maxWidth: 300 }}>{tekster['sykmeldtFra.hjelpetekst']}</div>
-                                        </Hjelpetekst>
+                                        <HjelpetekstWrapper tekst={tekster['sykmeldtFra.hjelpetekst']} />
                                     </div>
                                 }
                             >

@@ -7,6 +7,7 @@ import useFetch, {
     hasData,
     isAnyNotStartedOrPending,
     hasAnyFailed,
+    isAnyPending,
 } from '../hooks/useFetch';
 import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
@@ -30,6 +31,18 @@ const DataFetcher = (props: { children: any }) => {
                     setSykmelding(sykmelding);
                     setSykmeldingStatus(sykmeldingStatus);
 
+                    arbeidsgivereFetcher.fetch(
+                        `/syforest/informasjon/arbeidsgivere?sykmeldingId=${sykmelding.id}`,
+                        undefined,
+                        (fetchState: FetchState<Arbeidsgiver[]>) => {
+                            if (hasData(fetchState)) {
+                                const { data } = fetchState;
+                                const arbeidsgivere = data.map(ag => new Arbeidsgiver(ag));
+                                setArbeidsgivere(arbeidsgivere);
+                            }
+                        },
+                    );
+
                     // Dersom sykmeldingen er ny skal den berikes
                     if (sykmeldingStatus === Status.NY) {
                         sykmeldingUtenforVentetidFetcher.fetch(
@@ -37,19 +50,7 @@ const DataFetcher = (props: { children: any }) => {
                             { method: 'POST' },
                             (fetchState: FetchState<ErUtenforVentetidData>) => {
                                 if (hasData(fetchState)) {
-                                    console.log(fetchState);
                                     setSykmeldingUtenforVentetid(fetchState.data.erUtenforVentetid);
-                                }
-                            },
-                        );
-                        arbeidsgivereFetcher.fetch(
-                            `/syforest/informasjon/arbeidsgivere?sykmeldingId=${sykmelding.id}`,
-                            undefined,
-                            (fetchState: FetchState<Arbeidsgiver[]>) => {
-                                if (hasData(fetchState)) {
-                                    const { data } = fetchState;
-                                    const arbeidsgivere = data.map(ag => new Arbeidsgiver(ag));
-                                    setArbeidsgivere(arbeidsgivere);
                                 }
                             },
                         );
@@ -67,7 +68,11 @@ const DataFetcher = (props: { children: any }) => {
         setArbeidsgivere,
     ]);
 
-    if (isAnyNotStartedOrPending([sykmeldingFetcher, sykmeldingUtenforVentetidFetcher, arbeidsgivereFetcher])) {
+    if (isAnyNotStartedOrPending([sykmeldingFetcher, arbeidsgivereFetcher])) {
+        return <Spinner />;
+    }
+
+    if (isAnyPending([sykmeldingFetcher, sykmeldingUtenforVentetidFetcher, arbeidsgivereFetcher])) {
         return <Spinner />;
     }
 

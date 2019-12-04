@@ -1,7 +1,7 @@
 import React from 'react';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import tekster from '../../infopanel-tekster';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import HjelpetekstWrapper from '../../../hjelpetekst/HjelpetekstWrapper';
 
 import './diagnoseseksjon.less';
 
@@ -16,11 +16,7 @@ const DiagnoseKodeSeksjon = ({ kode, system, visHjelp }: DiagnoseKodeSeksjonProp
         <>
             <div className="diagnose-seksjon-kode-tittel-container">
                 <EtikettLiten>{tekster['diagnosekode.tittel']}</EtikettLiten>
-                {visHjelp && (
-                    <div className="diagnose-seksjon-kode-hjelpetekst">
-                        <Hjelpetekst>{tekster['diagnosekode.hjelpetekst.tekst']}</Hjelpetekst>
-                    </div>
-                )}
+                {visHjelp && <HjelpetekstWrapper tekst={tekster['diagnosekode.hjelpetekst.tekst']} />}
             </div>
 
             <Normaltekst>{kode}</Normaltekst>

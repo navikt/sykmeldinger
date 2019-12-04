@@ -16,7 +16,7 @@ const InfoPanel = ({ fargetema, tittel, children }: InfoPanelProps) => {
         <article className="infopanel">
             <header className={`infopanel-header infopanel-${fargetema}`}>
                 <img className="infopanel-header-icon" src={plaster} alt="plasterikon" />{' '}
-                <span>
+                <span className="infopanel-header-tekst">
                     <Element>{tittel}</Element>
                 </span>
             </header>
