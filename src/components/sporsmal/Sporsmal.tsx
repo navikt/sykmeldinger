@@ -62,7 +62,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
-
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     // For conditional visning av underspørsmål og alertbokser
@@ -97,10 +96,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
             },
         );
     };
-
-    useEffect(() => {
-        console.log(errors);
-    }, [errors]);
 
     return (
         <>
@@ -234,7 +229,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                             setValue={setValue}
                             triggerValidation={triggerValidation}
                             isSubmitted={formState.isSubmitted}
-                            watchFrilanserEgemelding={watchFrilanserEgenmelding}
+                            visEgenmeldingsdager={watchFrilanserEgenmelding === JaEllerNei.JA}
                         />
                         <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
                     </PanelBase>

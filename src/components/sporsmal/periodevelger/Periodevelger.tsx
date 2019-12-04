@@ -11,7 +11,7 @@ interface PeriodevelgerProps {
     minDato: Date;
     maksDato: Date;
     id: number;
-    setValue: (id: number, value: Date[]) => void;
+    setValue: (id: number, startOgSlutt: Date[]) => void;
 }
 
 const Periodevelger = ({ vis, minDato, maksDato, id, setValue }: PeriodevelgerProps) => {

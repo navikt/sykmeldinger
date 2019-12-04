@@ -16,7 +16,7 @@ interface FrilanserSporsmalProps {
         shouldRender?: any,
     ) => Promise<boolean>;
     isSubmitted: boolean;
-    watchFrilanserEgemelding: string;
+    visEgenmeldingsdager: boolean;
 }
 
 const FrilanserSporsmal = ({
@@ -27,7 +27,7 @@ const FrilanserSporsmal = ({
     setValue,
     triggerValidation,
     isSubmitted,
-    watchFrilanserEgemelding,
+    visEgenmeldingsdager,
 }: FrilanserSporsmalProps) => {
     if (!vis) {
         return null;
@@ -36,7 +36,11 @@ const FrilanserSporsmal = ({
     return (
         <>
             <SkjemaGruppe
-                feil={errors.frilanserEgenmelding ? { feilmelding: tekster['frilanser.egenmelding.feilmelding'] } : undefined}
+                feil={
+                    errors.frilanserEgenmelding
+                        ? { feilmelding: tekster['frilanser.egenmelding.feilmelding'] }
+                        : undefined
+                }
                 className="skjemagruppe--undersporsmal"
             >
                 <Fieldset legend={tekster['frilanser.egenmelding.tittel']}>
@@ -55,7 +59,7 @@ const FrilanserSporsmal = ({
                 </Fieldset>
             </SkjemaGruppe>
             <Egenmeldingsdager
-                vis={watchFrilanserEgemelding === JaEllerNei.JA}
+                vis={visEgenmeldingsdager}
                 register={register}
                 unregister={unregister}
                 setValue={setValue}
@@ -64,7 +68,11 @@ const FrilanserSporsmal = ({
                 errors={errors}
             />
             <SkjemaGruppe
-                feil={errors.frilanserForsikring ? { feilmelding: tekster['frilanser.forsikring.feilmelding'] } : undefined}
+                feil={
+                    errors.frilanserForsikring
+                        ? { feilmelding: tekster['frilanser.forsikring.feilmelding'] }
+                        : undefined
+                }
                 className="skjemagruppe--undersporsmal"
             >
                 <Fieldset legend={tekster['frilanser.forsikring.tittel']}>
