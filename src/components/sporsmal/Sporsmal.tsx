@@ -19,7 +19,6 @@ import FormSubmitKnapp from './FormSubmitKnapp';
 import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
-import PeriodevelgerNy from './periodevelger/Periodevelger-ny';
 
 export enum Arbeidsforhold {
     ARBEIDSGIVER = 'arbeidsgiver',

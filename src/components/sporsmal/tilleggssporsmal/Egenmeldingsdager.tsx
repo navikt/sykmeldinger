@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FieldError, ValidationPayload } from 'react-hook-form/dist/types';
-import Periodevelger from '../periodevelger/Periodevelger';
 import { Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
@@ -68,8 +67,6 @@ const Egenmeldingsdager = ({
             }),
         );
 
-        // Trigger revalidering ved value-oppdatering (dersom det ikke er forsøkt sendt inn)
-        // TODO: ikke trigger ved første render
         if (isSubmitted) {
             triggerValidation({ name: name });
         }
