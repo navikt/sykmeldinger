@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 import { Arbeidsforhold } from './Sporsmal';
+import { Egenmeldingsperiode } from './tilleggssporsmal/Egenmeldingsdager';
+import dayjs from 'dayjs';
 
 export const valideringsSkjema = yup
     .object()
@@ -14,17 +16,6 @@ export const valideringsSkjema = yup
         oppfolging: yup.string(),
         frilanserEgenmelding: yup.string(),
         frilanserForsikring: yup.string(),
-    })
-    .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (obj): any => {
-        if (obj.hasOwnProperty('egenmeldingsperioder') && obj.egenmeldingsperioder === undefined) {
-            return new yup.ValidationError('Periode mangler ufylling', null, 'egenmeldingsperioder');
-        } else if (
-            obj.hasOwnProperty('egenmeldingsperioder') &&
-            obj.egenmeldingsperioder.some((periode: any) => periode['startDato'] === undefined)
-        ) {
-            return new yup.ValidationError('En eller flere perioder mangler utfylling', null, 'egenmeldingsperioder');
-        }
-        return true;
     })
     .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (obj): any => {
         if (obj.opplysningeneErRiktige === 'nei') {
@@ -75,6 +66,44 @@ export const valideringsSkjema = yup
         ) {
             if (obj.frilanserEgenmelding === '') {
                 return new yup.ValidationError('Fyll ut egenmeldingsspørsmål', null, 'frilanserEgenmelding');
+            }
+        }
+        return true;
+    })
+    .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (obj): any => {
+        // Hvis egenmeldingsperioder er registert ved skjema, men ikke har noen verdi
+        if (!!obj.egenmeldingsperioder && obj.egenmeldingsperioder === undefined) {
+            return new yup.ValidationError('Periode mangler ufylling', null, 'egenmeldingsperioder');
+        }
+        // Hvis en eller flere av egenmeldingsperiodene mangler dato, eller det kun finnes én dato
+        if (
+            !!obj.egenmeldingsperioder &&
+            obj.egenmeldingsperioder.some(
+                (periode: Egenmeldingsperiode) => periode.datoer === undefined || periode.datoer.length < 2,
+            )
+        ) {
+            return new yup.ValidationError('En eller flere perioder mangler utfylling', null, 'egenmeldingsperioder');
+        }
+        const perioderMedDato: Egenmeldingsperiode[] = obj.egenmeldingsperioder.filter(
+            (periode: Egenmeldingsperiode) => periode.datoer !== undefined,
+        );
+
+        const sortertEtterStartDato = [...perioderMedDato].sort((a, b) => {
+            // @ts-ignore
+            if (dayjs(a.datoer[0]).isBefore(dayjs(b.datoer[0]))) {
+                return -1;
+                // @ts-ignore
+            } else if (dayjs(a.datoer[0]).isSame(dayjs(b.datoer[0]))) {
+                return 0;
+            }
+            return 1;
+        });
+        console.log(sortertEtterStartDato);
+        // Hvis noen av periodene overlapper
+        for (let i = 0; i < sortertEtterStartDato.length - 1; i++) {
+            // @ts-ignore
+            if (dayjs(sortertEtterStartDato[i + 1].datoer[0]).isBefore(dayjs(sortertEtterStartDato[i].datoer[1]))) {
+                return new yup.ValidationError('En eller flere perioder overlapper', null, 'egenmeldingsperioder');
             }
         }
         return true;

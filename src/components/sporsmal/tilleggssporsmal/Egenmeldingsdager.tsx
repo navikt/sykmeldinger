@@ -5,6 +5,7 @@ import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_green.css';
+import { CustomLocale } from 'flatpickr/dist/types/locale';
 
 interface EgenmeldingsdagerProps {
     vis: boolean;
@@ -16,14 +17,26 @@ interface EgenmeldingsdagerProps {
         shouldRender?: any,
     ) => Promise<boolean>;
     isSubmitted: boolean;
-    setValue: (name: string, value: any, shouldValidate?: boolean) => void;
+    setValue: (name: string, value: Egenmeldingsperiode[], shouldValidate?: boolean) => void;
     errors: Partial<Record<string, FieldError>>;
 }
 
-interface Periode {
+export interface Egenmeldingsperiode {
     id: number;
     datoer?: Date[];
 }
+
+const locale: CustomLocale = {
+    firstDayOfWeek: 1,
+    weekdays: {
+        shorthand: ['søn', 'man', 'tirs', 'ons', 'tors', 'fre', 'lør'],
+        longhand: ['søndag', 'mandag', 'tirsadg', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
+    },
+    months: {
+        shorthand: ['jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan'],
+        longhand: ['jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan'],
+    },
+};
 
 const Egenmeldingsdager = ({
     vis,
@@ -35,7 +48,7 @@ const Egenmeldingsdager = ({
     triggerValidation,
     isSubmitted,
 }: EgenmeldingsdagerProps) => {
-    const [perioder, setPerioder] = useState<Periode[]>([{ id: 0 }]); // Legger til første periode
+    const [perioder, setPerioder] = useState<Egenmeldingsperiode[]>([{ id: 0 }]); // Legger til første periode
     const name = 'egenmeldingsperioder';
 
     // Registrer ved mount, unregistrer ved unmount
@@ -44,29 +57,42 @@ const Egenmeldingsdager = ({
         return () => unregister(name);
     }, [register, unregister]);
 
-    const updateValue = (id: number, value: Date[]): void => {
-        // Setter lokal state
+    const opprettNyPeriode = (): void => {
+        const nyPeriode: Egenmeldingsperiode = { id: perioder[perioder.length - 1].id + 1 };
+        const nyPerioder = [...perioder, nyPeriode];
+        setPerioder(nyPerioder); // Legger til periode med id én høyere enn siste element i listen
+        setValue(name, nyPerioder);
+    };
+
+    const slettPeriode = (id: number): void => {
+        const nyPerioder = perioder.filter(periode => periode.id !== id);
+        setPerioder(nyPerioder);
+        setValue(name, nyPerioder);
+        if (isSubmitted) {
+            triggerValidation({ name: name });
+        }
+    };
+
+    const oppdaterPeriode = (id: number, datoer: Date[]): void => {
         setPerioder(perioder => {
             return perioder.map(periode => {
                 if (periode.id === id) {
-                    return { ...periode, value };
+                    return { ...periode, datoer };
                 } else {
                     return periode;
                 }
             });
         });
-
-        // Setter name og value manuelt til form.
         setValue(
             name,
             perioder.map(periode => {
                 if (periode.id === id) {
-                    return value;
+                    const nyPeriode: Egenmeldingsperiode = { ...periode, datoer };
+                    return nyPeriode;
                 }
-                return periode.datoer;
+                return periode;
             }),
         );
-
         if (isSubmitted) {
             triggerValidation({ name: name });
         }
@@ -91,7 +117,7 @@ const Egenmeldingsdager = ({
                             <div key={periode.id}>
                                 <Flatpickr
                                     value={periode.datoer}
-                                    onChange={datoer => updateValue(periode.id, datoer)}
+                                    onChange={datoer => oppdaterPeriode(periode.id, datoer)}
                                     options={{
                                         minDate: new Date('10.02.2019'),
                                         maxDate: new Date('11.10.2019'),
@@ -100,9 +126,10 @@ const Egenmeldingsdager = ({
                                         dateFormat: 'd-m-y',
                                         altInput: true,
                                         altFormat: 'F j, Y',
+                                        locale: locale,
                                     }}
                                 />
-                                
+                                {/* Skal ikke kunne slette første periode */}
                                 {periode.id !== 0 && (
                                     <Knapp
                                         type={'fare'}
@@ -110,9 +137,7 @@ const Egenmeldingsdager = ({
                                         mini
                                         onClick={e => {
                                             e.preventDefault();
-                                            setPerioder(forrigePerioder =>
-                                                forrigePerioder.filter(prevPeriode => prevPeriode.id !== periode.id),
-                                            );
+                                            slettPeriode(periode.id);
                                         }}
                                     >
                                         {tekster['egenmeldingsperioder.slett-periode']}
@@ -128,10 +153,7 @@ const Egenmeldingsdager = ({
                     mini
                     onClick={e => {
                         e.preventDefault();
-                        setPerioder(forrigePerioder => [
-                            ...forrigePerioder,
-                            { id: forrigePerioder[forrigePerioder.length - 1].id + 1 },
-                        ]); // Legger til periode med id én høyere enn siste element i listen
+                        opprettNyPeriode();
                     }}
                 >
                     {tekster['egenmeldingsperioder.legg-til-periode']}
