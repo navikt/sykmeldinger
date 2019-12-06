@@ -111,7 +111,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
             />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <PeriodevelgerNy />
                 <PanelBase className="panelbase">
                     <SkjemaGruppe
                         feil={

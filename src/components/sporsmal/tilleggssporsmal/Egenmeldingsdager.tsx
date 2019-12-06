@@ -4,6 +4,8 @@ import Periodevelger from '../periodevelger/Periodevelger';
 import { Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/material_green.css';
 
 interface EgenmeldingsdagerProps {
     vis: boolean;
@@ -21,8 +23,7 @@ interface EgenmeldingsdagerProps {
 
 interface Periode {
     id: number;
-    startDato?: Date;
-    sluttDato?: Date;
+    datoer?: Date[];
 }
 
 const Egenmeldingsdager = ({
@@ -49,7 +50,7 @@ const Egenmeldingsdager = ({
         setPerioder(perioder => {
             return perioder.map(periode => {
                 if (periode.id === id) {
-                    return { ...periode, startDato: value[0], sluttDato: value[1] };
+                    return { ...periode, value };
                 } else {
                     return periode;
                 }
@@ -61,9 +62,9 @@ const Egenmeldingsdager = ({
             name,
             perioder.map(periode => {
                 if (periode.id === id) {
-                    return { startDato: value[0], sluttDato: value[1] };
+                    return value;
                 }
-                return { startDato: periode.startDato, sluttDato: periode.sluttDato };
+                return periode.datoer;
             }),
         );
 
@@ -91,13 +92,20 @@ const Egenmeldingsdager = ({
                     {perioder.map(periode => {
                         return (
                             <div key={periode.id}>
-                                <Periodevelger
-                                    vis={true}
-                                    id={periode.id}
-                                    minDato={new Date('10.01.2019')} // TODO: lage logikk for å intervallbegrensning
-                                    maksDato={new Date('10.10.2019')}
-                                    setValue={updateValue}
+                                <Flatpickr
+                                    value={periode.datoer}
+                                    onChange={datoer => updateValue(periode.id, datoer)}
+                                    options={{
+                                        minDate: new Date('10.02.2019'),
+                                        maxDate: new Date('11.10.2019'),
+                                        mode: 'range',
+                                        enableTime: false,
+                                        dateFormat: 'd-m-y',
+                                        altInput: true,
+                                        altFormat: 'F j, Y',
+                                    }}
                                 />
+                                
                                 {periode.id !== 0 && (
                                     <Knapp
                                         type={'fare'}
