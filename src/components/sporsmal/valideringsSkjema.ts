@@ -1,11 +1,35 @@
 import * as yup from 'yup';
-import { Arbeidsforhold } from './Sporsmal';
+import { Arbeidsforhold, JaEllerNei } from './Sporsmal';
 import { Egenmeldingsperiode } from './tilleggssporsmal/Egenmeldingsdager';
 import dayjs from 'dayjs';
 
+interface Valideringsfeil {
+    opplysningeneErRiktige?: JaEllerNei;
+    periode?: boolean;
+    sykmeldingsgrad?: boolean;
+    arbeidsgiver?: boolean;
+    diagnose?: boolean;
+    andreOpplysninger?: boolean;
+    sykmeldtFra?: string;
+    oppfolging?: string;
+    frilanserEgenmelding?: string;
+    frilanserForsikring?: string;
+}
+
+const skjema = yup.object({
+    opplysningeneErRiktige: yup
+        .mixed()
+        .required(),
+    periode: yup.boolean(),
+    sykmeldingsgrad: yup.boolean(),
+    arbeidsgiver: yup.boolean(),
+    diagnose: yup.boolean(),
+    andreOpplysninger: yup.boolean(),
+    sykmeldtFra: yup.mixed().oneOf(['filanser', 1]),
+});
+
 export const valideringsSkjema = yup
-    .object()
-    .shape({
+    .object({
         opplysningeneErRiktige: yup.string().required(),
         periode: yup.boolean(),
         sykmeldingsgrad: yup.boolean(),
@@ -17,8 +41,8 @@ export const valideringsSkjema = yup
         frilanserEgenmelding: yup.string(),
         frilanserForsikring: yup.string(),
     })
-    .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (obj): any => {
-        if (obj.opplysningeneErRiktige === 'nei') {
+    .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (obj: Valideringsfeil) => {
+        if (obj.opplysningeneErRiktige === JaEllerNei.NEI) {
             if (
                 obj.periode === false &&
                 obj.sykmeldingsgrad === false &&
@@ -84,9 +108,10 @@ export const valideringsSkjema = yup
         ) {
             return new yup.ValidationError('En eller flere perioder mangler utfylling', null, 'egenmeldingsperioder');
         }
-        const perioderMedDato: Egenmeldingsperiode[] = obj.egenmeldingsperioder.filter(
-            (periode: Egenmeldingsperiode) => periode.datoer !== undefined,
-        );
+
+        const perioderMedDato: Egenmeldingsperiode[] = obj.egenmeldingsperioder
+            ? obj.egenmeldingsperioder.filter((periode: Egenmeldingsperiode) => periode.datoer !== undefined)
+            : [];
 
         const sortertEtterStartDato = [...perioderMedDato].sort((a, b) => {
             // @ts-ignore

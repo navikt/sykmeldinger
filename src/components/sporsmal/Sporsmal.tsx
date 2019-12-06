@@ -34,6 +34,10 @@ export enum JaEllerNei {
     NEI = 'nei',
 }
 
+export enum SykmeldtFra {
+    
+}
+
 interface SykmeldingFormData {
     opplysningeneErRiktige?: string;
     periode?: boolean;
