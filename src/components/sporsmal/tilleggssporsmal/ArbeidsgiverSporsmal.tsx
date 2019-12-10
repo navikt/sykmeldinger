@@ -5,6 +5,7 @@ import tekster from '../sporsmal-tekster';
 import { getLedetekst } from '../../../utils/ledetekst-utils';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
+import { JaEllerNei, Skjemafelt } from '../../../types/sporsmalTypes';
 
 interface ArbeidsgiverSporsmalProps {
     vis: boolean;
@@ -41,8 +42,18 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver, register, errors, watchOppfol
                     '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
                 })}
             >
-                <Radio label={tekster['ja']} name="oppfolging" value="true" radioRef={register as any} />
-                <Radio label={tekster['nei']} name="oppfolging" value="false" radioRef={register as any} />
+                <Radio
+                    label={tekster['ja']}
+                    name={Skjemafelt.OPPFOLGING}
+                    value={JaEllerNei.JA}
+                    radioRef={register as any}
+                />
+                <Radio
+                    label={tekster['nei']}
+                    name={Skjemafelt.OPPFOLGING}
+                    value={JaEllerNei.NEI}
+                    radioRef={register as any}
+                />
             </Fieldset>
             {watchOppfolging === 'true' && (
                 <Tekstomrade>

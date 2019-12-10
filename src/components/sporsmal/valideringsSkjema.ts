@@ -1,54 +1,70 @@
 import * as yup from 'yup';
-import { Arbeidsforhold, JaEllerNei } from './Sporsmal';
-import { Egenmeldingsperiode } from './tilleggssporsmal/Egenmeldingsdager';
 import dayjs from 'dayjs';
+import { JaEllerNei, Skjemafelt, Arbeidsforhold } from '../../types/sporsmalTypes';
 
-interface Valideringsfeil {
-    opplysningeneErRiktige?: JaEllerNei;
-    periode?: boolean;
-    sykmeldingsgrad?: boolean;
-    arbeidsgiver?: boolean;
-    diagnose?: boolean;
-    andreOpplysninger?: boolean;
-    sykmeldtFra?: string;
-    oppfolging?: string;
-    frilanserEgenmelding?: string;
-    frilanserForsikring?: string;
-}
-
-const skjema = yup.object({
-    opplysningeneErRiktige: yup
-        .mixed()
-        .required(),
-    periode: yup.boolean(),
-    sykmeldingsgrad: yup.boolean(),
-    arbeidsgiver: yup.boolean(),
-    diagnose: yup.boolean(),
-    andreOpplysninger: yup.boolean(),
-    sykmeldtFra: yup.mixed().oneOf(['filanser', 1]),
+const egenmeldingsperiodeValidering = yup.object({
+    id: yup.number(),
+    datoer: yup
+        .array()
+        .of(yup.date())
+        .notRequired(),
 });
 
-export const valideringsSkjema = yup
-    .object({
-        opplysningeneErRiktige: yup.string().required(),
-        periode: yup.boolean(),
-        sykmeldingsgrad: yup.boolean(),
-        arbeidsgiver: yup.boolean(),
-        diagnose: yup.boolean(),
-        andreOpplysninger: yup.boolean(),
-        sykmeldtFra: yup.string(),
-        oppfolging: yup.string(),
-        frilanserEgenmelding: yup.string(),
-        frilanserForsikring: yup.string(),
-    })
-    .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (obj: Valideringsfeil) => {
-        if (obj.opplysningeneErRiktige === JaEllerNei.NEI) {
+export type Egenmeldingsperiode = yup.InferType<typeof egenmeldingsperiodeValidering>;
+
+const skjemaShape = yup.object({
+    opplysningeneErRiktige: yup
+        .string()
+        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
+        .required(),
+    periode: yup.boolean().notRequired(),
+    sykmeldingsgrad: yup.boolean().notRequired(),
+    arbeidsgiver: yup.boolean().notRequired(),
+    diagnose: yup.boolean().notRequired(),
+    andreOpplysninger: yup.boolean().notRequired(),
+    sykmeldtFra: yup.string().when(Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, {
+        is: JaEllerNei.JA,
+        then: yup.string().required(), // Dette skaper problemer når formState === 'dirty'
+        otherwise: yup.string().notRequired(),
+    }),
+    oppfolging: yup
+        .string()
+        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
+        .notRequired(),
+    frilanserEgenmelding: yup
+        .string()
+        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
+        .notRequired(),
+    egenmeldingsperioder: yup
+        .array()
+        .of(egenmeldingsperiodeValidering)
+        .min(1)
+        .when(Skjemafelt.FRILANSER_EGENMELDING, {
+            is: JaEllerNei.JA,
+            then: yup
+                .array()
+                .of(egenmeldingsperiodeValidering)
+                .min(1)
+                .required(),
+            otherwise: yup.array().notRequired(),
+        }),
+    frilanserForsikring: yup
+        .string()
+        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
+        .notRequired(),
+});
+
+export type Skjema = yup.InferType<typeof skjemaShape>;
+
+export const skjemavalidering = skjemaShape
+    .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (skjema: Skjema) => {
+        if (skjema.opplysningeneErRiktige === JaEllerNei.NEI) {
             if (
-                obj.periode === false &&
-                obj.sykmeldingsgrad === false &&
-                obj.arbeidsgiver === false &&
-                obj.diagnose === false &&
-                obj.andreOpplysninger === false
+                skjema.periode === false &&
+                skjema.sykmeldingsgrad === false &&
+                skjema.arbeidsgiver === false &&
+                skjema.diagnose === false &&
+                skjema.andreOpplysninger === false
             ) {
                 return new yup.ValidationError(
                     'Du må oppgi hvilke opplysninger som ikke er riktige',
@@ -59,10 +75,10 @@ export const valideringsSkjema = yup
         }
         return true;
     })
-    .test('manglerSykmeldtFra', 'Du må oppgi hva du er sykmeldt fra', (obj): any => {
-        if (!!obj.opplysningeneErRiktige || obj.periode === false || obj.sykmeldingsgrad === false) {
-            if (obj.sykmeldtFra === '') {
-                return new yup.ValidationError('Du må oppgi hva du er sykmeldt fra', null, 'sykmeldtFra');
+    .test('manglerSykmeldtFra', 'Du må oppgi hva du er sykmeldt fra', (skjema: Skjema) => {
+        if (!!skjema.opplysningeneErRiktige || skjema.periode === false || skjema.sykmeldingsgrad === false) {
+            if (skjema.sykmeldtFra === '') {
+                return new yup.ValidationError('Du må oppgi hva du er sykmeldt fra', null, Skjemafelt.SYKMELDT_FRA);
             }
         }
         return true;
@@ -70,47 +86,40 @@ export const valideringsSkjema = yup
     .test(
         'manglerOppfolging',
         'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
-        (obj): any => {
-            if (obj.sykmeldtFra === Arbeidsforhold.ARBEIDSGIVER) {
-                if (obj.oppfolging === '') {
+        (skjema: Skjema) => {
+            if (skjema.sykmeldtFra === Arbeidsforhold.ARBEIDSGIVER) {
+                if (!!skjema.oppfolging) {
                     return new yup.ValidationError(
                         'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
                         null,
-                        'oppfolging',
+                        Skjemafelt.OPPFOLGING,
                     );
                 }
             }
             return true;
         },
     )
-    .test('manglerEgenmeldingbekreftelse', 'Fyll ut om du har brukt egenmelding', (obj): any => {
-        if (
-            obj.sykmeldtFra === Arbeidsforhold.FRILANSER ||
-            obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE
-        ) {
-            if (obj.frilanserEgenmelding === '') {
-                return new yup.ValidationError('Fyll ut egenmeldingsspørsmål', null, 'frilanserEgenmelding');
-            }
-        }
-        return true;
-    })
-    .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (obj): any => {
+    .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (skjema: Skjema) => {
         // Hvis egenmeldingsperioder er registert ved skjema, men ikke har noen verdi
-        if (!!obj.egenmeldingsperioder && obj.egenmeldingsperioder === undefined) {
-            return new yup.ValidationError('Periode mangler ufylling', null, 'egenmeldingsperioder');
+        if (!!skjema.egenmeldingsperioder && skjema.egenmeldingsperioder === undefined) {
+            return new yup.ValidationError('Periode mangler ufylling', null, Skjemafelt.EGENMELDINGSPERIODER);
         }
         // Hvis en eller flere av egenmeldingsperiodene mangler dato, eller det kun finnes én dato
         if (
-            !!obj.egenmeldingsperioder &&
-            obj.egenmeldingsperioder.some(
+            !!skjema.egenmeldingsperioder &&
+            skjema.egenmeldingsperioder.some(
                 (periode: Egenmeldingsperiode) => periode.datoer === undefined || periode.datoer.length < 2,
             )
         ) {
-            return new yup.ValidationError('En eller flere perioder mangler utfylling', null, 'egenmeldingsperioder');
+            return new yup.ValidationError(
+                'En eller flere perioder mangler utfylling',
+                null,
+                Skjemafelt.EGENMELDINGSPERIODER,
+            );
         }
 
-        const perioderMedDato: Egenmeldingsperiode[] = obj.egenmeldingsperioder
-            ? obj.egenmeldingsperioder.filter((periode: Egenmeldingsperiode) => periode.datoer !== undefined)
+        const perioderMedDato: Egenmeldingsperiode[] = skjema.egenmeldingsperioder
+            ? skjema.egenmeldingsperioder.filter((periode: Egenmeldingsperiode) => periode.datoer !== undefined)
             : [];
 
         const sortertEtterStartDato = [...perioderMedDato].sort((a, b) => {
@@ -123,23 +132,15 @@ export const valideringsSkjema = yup
             }
             return 1;
         });
-        console.log(sortertEtterStartDato);
         // Hvis noen av periodene overlapper
         for (let i = 0; i < sortertEtterStartDato.length - 1; i++) {
             // @ts-ignore
             if (dayjs(sortertEtterStartDato[i + 1].datoer[0]).isBefore(dayjs(sortertEtterStartDato[i].datoer[1]))) {
-                return new yup.ValidationError('En eller flere perioder overlapper', null, 'egenmeldingsperioder');
-            }
-        }
-        return true;
-    })
-    .test('manglerForsikringbekreftelse', 'Fyll ut forsikringsspørsmål', (obj): any => {
-        if (
-            obj.sykmeldtFra === Arbeidsforhold.FRILANSER ||
-            obj.sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE
-        ) {
-            if (obj.frilanserForsikring === '') {
-                return new yup.ValidationError('Fyll ut forsikringsspørsmål', null, 'frilanserForsikring');
+                return new yup.ValidationError(
+                    'En eller flere perioder overlapper',
+                    null,
+                    Skjemafelt.EGENMELDINGSPERIODER,
+                );
             }
         }
         return true;

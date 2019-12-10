@@ -1,8 +1,8 @@
 import React from 'react';
 import { Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
 import tekster from './sporsmal-tekster';
-import { Arbeidsforhold } from './Sporsmal';
 import Lenke from 'nav-frontend-lenker';
+import { Arbeidsforhold } from '../../types/sporsmalTypes';
 
 interface FormSubmitKnappProps {
     visAvbryt: boolean;

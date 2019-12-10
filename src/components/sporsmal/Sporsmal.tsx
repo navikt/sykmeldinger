@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useFetch, { isNotStarted, FetchState, FetchStatus } from '../../hooks/useFetch';
 import useForm from 'react-hook-form';
-import { valideringsSkjema } from './valideringsSkjema';
+import { skjemavalidering } from './valideringsSkjema';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { AlertStripeHjelper } from '../../utils/alertstripe-utils';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -19,24 +19,7 @@ import FormSubmitKnapp from './FormSubmitKnapp';
 import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
-
-export enum Arbeidsforhold {
-    ARBEIDSGIVER = 'arbeidsgiver',
-    SELSTENDIG_NARINGSDRIVENDE = 'selvstendigNaringsdrivende',
-    FRILANSER = 'frilanser',
-    ANNEN_ARBEIDSGIVER = 'annenArbeidsgiver',
-    ARBEIDSLEDIG = 'arbeidsledig',
-    INGENTING_PASSER = 'ingentingPasser',
-}
-
-export enum JaEllerNei {
-    JA = 'ja',
-    NEI = 'nei',
-}
-
-export enum SykmeldtFra {
-    
-}
+import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../types/sporsmalTypes';
 
 interface SykmeldingFormData {
     opplysningeneErRiktige?: string;
@@ -59,7 +42,7 @@ interface SporsmalProps {
 
 const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: SporsmalProps) => {
     const { register, unregister, handleSubmit, watch, errors, formState, setValue, triggerValidation } = useForm({
-        validationSchema: valideringsSkjema,
+        validationSchema: skjemavalidering,
     });
     const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
     const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
@@ -70,15 +53,15 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     // For conditional visning av underspørsmål og alertbokser
-    const watchOpplysningeneErRiktige = watch('opplysningeneErRiktige');
-    const watchSykmeldtFra = watch('sykmeldtFra');
+    const watchOpplysningeneErRiktige = watch(Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE);
+    const watchSykmeldtFra = watch(Skjemafelt.SYKMELDT_FRA);
     const watchOppfolging = watch('oppfolging');
-    const watchPeriode = watch('periode');
-    const watchSykmeldingsgrad = watch('sykmeldingsgrad');
-    const watchArbeidsgiver = watch('arbeidsgiver');
-    const watchDiagnose = watch('diagnose');
-    const watchAndreOpplysninger = watch('andreOpplysninger');
-    const watchFrilanserEgenmelding = watch('frilanserEgenmelding');
+    const watchPeriode = watch(Skjemafelt.PERIODE);
+    const watchSykmeldingsgrad = watch(Skjemafelt.SYKMELDINGSGRAD);
+    const watchArbeidsgiver = watch(Skjemafelt.ARBEIDSGIVER);
+    const watchDiagnose = watch(Skjemafelt.DIAGNOSE);
+    const watchAndreOpplysninger = watch(Skjemafelt.ANDRE_OPPLYSNINGER);
+    const watchFrilanserEgenmelding = watch(Skjemafelt.FRILANSER_EGENMELDING);
 
     const onSubmit = (data: SykmeldingFormData) => {
         console.log(data);
@@ -104,7 +87,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
 
     useEffect(() => {
         console.log(errors);
-    }, [errors]);
+    }, [errors, formState]);
 
     return (
         <>
@@ -125,13 +108,13 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         <Fieldset legend={tekster['jaEllerNei.tittel']}>
                             <Radio
                                 label={tekster['ja']}
-                                name="opplysningeneErRiktige"
+                                name={Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE}
                                 value={JaEllerNei.JA}
                                 radioRef={register as any}
                             />
                             <Radio
                                 label={tekster['nei']}
-                                name="opplysningeneErRiktige"
+                                name={Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE}
                                 value={JaEllerNei.NEI}
                                 radioRef={register as any}
                             />
@@ -175,38 +158,38 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                     <Radio
                                         key={index}
                                         label={arbeidsgiver.navn + ` (Org. nummer:${arbeidsgiver.orgnummer})`}
-                                        name="sykmeldtFra"
+                                        name={Skjemafelt.SYKMELDT_FRA}
                                         value={Arbeidsforhold.ARBEIDSGIVER.concat('-', arbeidsgiver.orgnummer)}
                                         radioRef={register as any}
                                     ></Radio>
                                 ))}
                                 <Radio
                                     label={tekster['sykmeldtFra.selvstending-naringsdrivende']}
-                                    name="sykmeldtFra"
+                                    name={Skjemafelt.SYKMELDT_FRA}
                                     value={Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE}
                                     radioRef={register as any}
                                 />
                                 <Radio
                                     label={tekster['sykmeldtFra.frilanser']}
-                                    name="sykmeldtFra"
+                                    name={Skjemafelt.SYKMELDT_FRA}
                                     value={Arbeidsforhold.FRILANSER}
                                     radioRef={register as any}
                                 />
                                 <Radio
                                     label={tekster['sykmeldtFra.annen-arbeidsgiver']}
-                                    name="sykmeldtFra"
+                                    name={Skjemafelt.SYKMELDT_FRA}
                                     value={Arbeidsforhold.ANNEN_ARBEIDSGIVER}
                                     radioRef={register as any}
                                 />
                                 <Radio
                                     label={tekster['sykmeldtFra.arbeidsledig']}
-                                    name="sykmeldtFra"
+                                    name={Skjemafelt.SYKMELDT_FRA}
                                     value={Arbeidsforhold.ARBEIDSLEDIG}
                                     radioRef={register as any}
                                 />
                                 <Radio
                                     label={tekster['sykmeldtFra.ingenting-passer']}
-                                    name="sykmeldtFra"
+                                    name={Skjemafelt.SYKMELDT_FRA}
                                     value={Arbeidsforhold.INGENTING_PASSER}
                                     radioRef={register as any}
                                 />

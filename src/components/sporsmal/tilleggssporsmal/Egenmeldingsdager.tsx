@@ -6,6 +6,8 @@ import tekster from '../sporsmal-tekster';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_green.css';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
+import { Egenmeldingsperiode } from '../valideringsSkjema';
+import { Skjemafelt } from '../../../types/sporsmalTypes';
 
 interface EgenmeldingsdagerProps {
     vis: boolean;
@@ -21,10 +23,10 @@ interface EgenmeldingsdagerProps {
     errors: Partial<Record<string, FieldError>>;
 }
 
-export interface Egenmeldingsperiode {
+/* export interface Egenmeldingsperiode {
     id: number;
     datoer?: Date[];
-}
+} */
 
 const locale: CustomLocale = {
     firstDayOfWeek: 1,
@@ -49,13 +51,13 @@ const Egenmeldingsdager = ({
     isSubmitted,
 }: EgenmeldingsdagerProps) => {
     const [perioder, setPerioder] = useState<Egenmeldingsperiode[]>([{ id: 0 }]); // Legger til første periode
-    const name = 'egenmeldingsperioder';
+    const name = Skjemafelt.EGENMELDINGSPERIODER;
 
     // Registrer ved mount, unregistrer ved unmount
     useEffect(() => {
         register({ name: name });
         return () => unregister(name);
-    }, [register, unregister]);
+    }, [name, register, unregister]);
 
     const opprettNyPeriode = (): void => {
         const nyPeriode: Egenmeldingsperiode = { id: perioder[perioder.length - 1].id + 1 };
