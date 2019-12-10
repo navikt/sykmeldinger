@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 export enum FetchStatus {
     NOT_STARTED = 'NOT_STARTED',
     PENDING = 'PENDING',
-    FINISHED = 'FINISHED'
+    FINISHED = 'FINISHED',
 }
 
 export interface FetchState<D = {}> {
@@ -22,6 +22,13 @@ export const isAnyNotStartedOrPending = (fetch: FetchState | FetchState[]): bool
         return fetch.some(f => isNotStartedOrPending(f));
     }
     return isNotStartedOrPending(fetch);
+};
+
+export const isAnyPending = (fetch: FetchState | FetchState[]): boolean => {
+    if (Array.isArray(fetch)) {
+        return fetch.some(f => isPending(f));
+    }
+    return isPending(fetch);
 };
 
 export const hasAnyFailed = (fetch: FetchState | FetchState[]): boolean => {
@@ -48,7 +55,7 @@ export const isNotStartedOrPending = (fetch: FetchState): boolean => {
 
 export const isPending = (fetch: FetchState): boolean => {
     return fetch.status === FetchStatus.PENDING;
-}
+};
 
 export const hasFinished = (fetch: FetchState): boolean => {
     return fetch.status === FetchStatus.FINISHED;

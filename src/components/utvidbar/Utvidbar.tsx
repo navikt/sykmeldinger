@@ -56,7 +56,9 @@ const Utvidbar = (props: UtvidbarProps) => {
                 <img aria-hidden="true" className="utvidbar__ikon" width={30} alt={props.ikonAltTekst} src={ikon} />
                 <Element tag="h3">{props.tittel}</Element>
                 <div className="utvidbar__handling">
-                    <Normaltekst tag="em">{apen ? 'Lukk' : 'Åpne'}</Normaltekst>
+                    <Normaltekst className="utvidbar__handling__tekst" tag="em">
+                        {apen ? 'Lukk' : 'Åpne'}
+                    </Normaltekst>
                     <Chevron type={apen ? 'opp' : 'ned'} />
                 </div>
             </button>

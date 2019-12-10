@@ -4,7 +4,6 @@ import useForm from 'react-hook-form';
 import { skjemavalidering } from './valideringsSkjema';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { AlertStripeHjelper } from '../../utils/alertstripe-utils';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import PanelBase from 'nav-frontend-paneler';
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
 import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
@@ -20,6 +19,7 @@ import Vis from '../../utils/vis';
 import './Sporsmal.less';
 import { getLedetekst } from '../../utils/ledetekst-utils';
 import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../types/sporsmalTypes';
+import HjelpetekstWrapper from '../hjelpetekst/HjelpetekstWrapper';
 
 interface SykmeldingFormData {
     opplysningeneErRiktige?: string;
@@ -49,7 +49,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
-
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     // For conditional visning av underspørsmål og alertbokser
@@ -146,11 +145,9 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         >
                             <Fieldset
                                 legend={
-                                    <div>
+                                    <div style={{ display: 'flex' }}>
                                         {tekster['sykmeldtFra.tittel']}
-                                        <Hjelpetekst>
-                                            <div style={{ maxWidth: 300 }}>{tekster['sykmeldtFra.hjelpetekst']}</div>
-                                        </Hjelpetekst>
+                                        <HjelpetekstWrapper tekst={tekster['sykmeldtFra.hjelpetekst']} />
                                     </div>
                                 }
                             >
@@ -223,7 +220,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                             setValue={setValue}
                             triggerValidation={triggerValidation}
                             isSubmitted={formState.isSubmitted}
-                            watchFrilanserEgemelding={watchFrilanserEgenmelding}
+                            visEgenmeldingsdager={watchFrilanserEgenmelding === JaEllerNei.JA}
                         />
                         <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
                     </PanelBase>

@@ -16,7 +16,7 @@ interface FrilanserSporsmalProps {
         shouldRender?: any,
     ) => Promise<boolean>;
     isSubmitted: boolean;
-    watchFrilanserEgemelding: string;
+    visEgenmeldingsdager: boolean;
 }
 
 const FrilanserSporsmal = ({
@@ -27,7 +27,7 @@ const FrilanserSporsmal = ({
     setValue,
     triggerValidation,
     isSubmitted,
-    watchFrilanserEgemelding,
+    visEgenmeldingsdager,
 }: FrilanserSporsmalProps) => {
     if (!vis) {
         return null;
@@ -59,7 +59,7 @@ const FrilanserSporsmal = ({
                 </Fieldset>
             </SkjemaGruppe>
             <Egenmeldingsdager
-                vis={watchFrilanserEgemelding === JaEllerNei.JA}
+                vis={visEgenmeldingsdager}
                 register={register}
                 unregister={unregister}
                 setValue={setValue}
