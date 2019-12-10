@@ -4,7 +4,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
 import Flatpickr from 'react-flatpickr';
-import 'flatpickr/dist/themes/material_green.css';
+import './flatpickr.less';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Egenmeldingsperiode } from '../valideringsSkjema';
 import { Skjemafelt } from '../../../types/sporsmalTypes';

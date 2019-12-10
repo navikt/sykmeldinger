@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useFetch, { isNotStarted, FetchState, FetchStatus } from '../../hooks/useFetch';
 import useForm from 'react-hook-form';
-import { skjemavalidering } from './valideringsSkjema';
+import { skjemavalidering, Skjema } from './valideringsSkjema';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { AlertStripeHjelper } from '../../utils/alertstripe-utils';
 import PanelBase from 'nav-frontend-paneler';
@@ -62,8 +62,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const watchAndreOpplysninger = watch(Skjemafelt.ANDRE_OPPLYSNINGER);
     const watchFrilanserEgenmelding = watch(Skjemafelt.FRILANSER_EGENMELDING);
 
-    const onSubmit = (data: SykmeldingFormData) => {
-        console.log(data);
+    const onSubmit = (skjemaData: any) => {
+        console.log(skjemaData);
         // TODO: Sjekk om sykmeldingen skal sendes eller bekreftes
         if (isNotStarted(sendSykmelding)) {
             sendSykmelding.fetch('/syforest/sendSykmelding', { method: 'POST' }, (fetchState: FetchState<any>) => {
@@ -83,10 +83,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
             },
         );
     };
-
-    useEffect(() => {
-        console.log(errors);
-    }, [errors, formState]);
 
     return (
         <>

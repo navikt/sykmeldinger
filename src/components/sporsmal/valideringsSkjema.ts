@@ -22,11 +22,14 @@ const skjemaShape = yup.object({
     arbeidsgiver: yup.boolean().notRequired(),
     diagnose: yup.boolean().notRequired(),
     andreOpplysninger: yup.boolean().notRequired(),
-    sykmeldtFra: yup.string().when(Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, {
-        is: JaEllerNei.JA,
-        then: yup.string().required(), // Dette skaper problemer når formState === 'dirty'
-        otherwise: yup.string().notRequired(),
-    }),
+    sykmeldtFra: yup
+        .string()
+        .notRequired()
+        .when(Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, {
+            is: JaEllerNei.JA,
+            then: yup.string().required(), // Dette skaper problemer når formState === 'dirty'
+            otherwise: yup.string().notRequired(),
+        }),
     oppfolging: yup
         .string()
         .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
@@ -39,6 +42,7 @@ const skjemaShape = yup.object({
         .array()
         .of(egenmeldingsperiodeValidering)
         .min(1)
+        .notRequired()
         .when(Skjemafelt.FRILANSER_EGENMELDING, {
             is: JaEllerNei.JA,
             then: yup
@@ -46,7 +50,11 @@ const skjemaShape = yup.object({
                 .of(egenmeldingsperiodeValidering)
                 .min(1)
                 .required(),
-            otherwise: yup.array().notRequired(),
+            otherwise: yup
+                .array()
+                .of(egenmeldingsperiodeValidering)
+                .min(1)
+                .notRequired(),
         }),
     frilanserForsikring: yup
         .string()
