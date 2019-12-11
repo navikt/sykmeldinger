@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { FieldError, ValidationPayload } from 'react-hook-form/dist/types';
 import { Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
@@ -11,27 +12,8 @@ import { Skjemafelt } from '../../../types/sporsmalTypes';
 import Lenke from 'nav-frontend-lenker';
 import './egenmeldingsdager.less';
 
-interface EgenmeldingsdagerProps {
-    vis: boolean;
-    sykmeldingStartdato?: Date;
-    register: any;
-    unregister: any;
-    triggerValidation: (
-        payload?: ValidationPayload<string, any> | ValidationPayload<string, any>[] | undefined,
-        shouldRender?: any,
-    ) => Promise<boolean>;
-    isSubmitted: boolean;
-    setValue: (name: string, value: Egenmeldingsperiode[], shouldValidate?: boolean) => void;
-    errors: Partial<Record<string, FieldError>>;
-}
-
-/* export interface Egenmeldingsperiode {
-    id: number;
-    datoer?: Date[];
-} */
-
 const locale: CustomLocale = {
-    rangeSeparator: " til ",
+    rangeSeparator: ' til ',
     firstDayOfWeek: 1,
     weekdays: {
         shorthand: ['søn', 'man', 'tirs', 'ons', 'tors', 'fre', 'lør'],
@@ -39,22 +21,34 @@ const locale: CustomLocale = {
     },
     months: {
         shorthand: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
-        longhand: ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'aug', 'september', 'oktober', 'november', 'desember'],
+        longhand: [
+            'januar',
+            'februar',
+            'mars',
+            'april',
+            'mai',
+            'juni',
+            'juli',
+            'aug',
+            'september',
+            'oktober',
+            'november',
+            'desember',
+        ],
     },
 };
 
-const Egenmeldingsdager = ({
-    vis,
-    sykmeldingStartdato,
-    register,
-    unregister,
-    setValue,
-    errors,
-    triggerValidation,
-    isSubmitted,
-}: EgenmeldingsdagerProps) => {
+interface EgenmeldingsdagerProps {
+    vis: boolean;
+    name: string;
+    sykmeldingStartdato?: Date;
+}
+
+const Egenmeldingsdager = ({ vis, name, sykmeldingStartdato }: EgenmeldingsdagerProps) => {
+    const { register, unregister, errors, setValue, triggerValidation, formState } = useFormContext();
+    const { isSubmitted } = formState;
+
     const [perioder, setPerioder] = useState<Egenmeldingsperiode[]>([{ id: 0 }]); // Legger til første periode
-    const name = Skjemafelt.EGENMELDINGSPERIODER;
 
     // Registrer ved mount, unregistrer ved unmount
     useEffect(() => {

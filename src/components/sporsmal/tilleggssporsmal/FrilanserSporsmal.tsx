@@ -58,15 +58,7 @@ const FrilanserSporsmal = ({
                     />
                 </Fieldset>
             </SkjemaGruppe>
-            <Egenmeldingsdager
-                vis={visEgenmeldingsdager}
-                register={register}
-                unregister={unregister}
-                setValue={setValue}
-                triggerValidation={triggerValidation}
-                isSubmitted={isSubmitted}
-                errors={errors}
-            />
+            <Egenmeldingsdager vis={visEgenmeldingsdager} name={Skjemafelt.EGENMELDINGSPERIODER} />
             <SkjemaGruppe
                 feil={
                     errors.frilanserForsikring
