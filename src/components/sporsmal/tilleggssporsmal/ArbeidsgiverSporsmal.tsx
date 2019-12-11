@@ -1,21 +1,22 @@
 import React from 'react';
-import { FieldError } from 'react-hook-form/dist/types';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
 import { getLedetekst } from '../../../utils/ledetekst-utils';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import { JaEllerNei, Skjemafelt } from '../../../types/sporsmalTypes';
+import { useFormContext } from 'react-hook-form';
 
 interface ArbeidsgiverSporsmalProps {
     vis: boolean;
     arbeidsgiver: Arbeidsgiver | undefined;
-    register: any;
-    errors: Partial<Record<string, FieldError>>;
-    watchOppfolging: string;
 }
 
-const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver, register, errors, watchOppfolging }: ArbeidsgiverSporsmalProps) => {
+const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) => {
+    const { register, errors, watch } = useFormContext();
+
+    const watchOppfolging = watch(Skjemafelt.OPPFOLGING);
+
     if (!vis) {
         return null;
     }
@@ -55,14 +56,14 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver, register, errors, watchOppfol
                     radioRef={register as any}
                 />
             </Fieldset>
-            {watchOppfolging === 'true' && (
+            {watchOppfolging === JaEllerNei.JA && (
                 <Tekstomrade>
                     {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
                         '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
                     })}
                 </Tekstomrade>
             )}
-            {watchOppfolging === 'false' && (
+            {watchOppfolging === JaEllerNei.NEI && (
                 <Tekstomrade>{tekster['sykmeldtFra.arbeidsgiver.bekreft.nei']}</Tekstomrade>
             )}
         </SkjemaGruppe>

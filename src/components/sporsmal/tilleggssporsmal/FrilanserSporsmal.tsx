@@ -1,34 +1,18 @@
 import React from 'react';
-import { FieldError, ValidationPayload } from 'react-hook-form/dist/types';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
 import Egenmeldingsdager from './Egenmeldingsdager';
 import { JaEllerNei, Skjemafelt } from '../../../types/sporsmalTypes';
+import { useFormContext } from 'react-hook-form';
 
 interface FrilanserSporsmalProps {
     vis: boolean;
-    register: any;
-    unregister: any;
-    errors: Partial<Record<string, FieldError>>;
-    setValue: (name: string, value: any, shouldValidate?: boolean) => void;
-    triggerValidation: (
-        payload?: ValidationPayload<string, any> | ValidationPayload<string, any>[] | undefined,
-        shouldRender?: any,
-    ) => Promise<boolean>;
-    isSubmitted: boolean;
-    visEgenmeldingsdager: boolean;
 }
 
-const FrilanserSporsmal = ({
-    vis,
-    register,
-    unregister,
-    errors,
-    setValue,
-    triggerValidation,
-    isSubmitted,
-    visEgenmeldingsdager,
-}: FrilanserSporsmalProps) => {
+const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
+    const { register, errors, watch } = useFormContext();
+    const watchFrilanserEgenmelding = watch(Skjemafelt.FRILANSER_EGENMELDING);
+
     if (!vis) {
         return null;
     }
@@ -58,7 +42,10 @@ const FrilanserSporsmal = ({
                     />
                 </Fieldset>
             </SkjemaGruppe>
-            <Egenmeldingsdager vis={visEgenmeldingsdager} name={Skjemafelt.EGENMELDINGSPERIODER} />
+            <Egenmeldingsdager
+                vis={watchFrilanserEgenmelding === JaEllerNei.JA}
+                name={Skjemafelt.EGENMELDINGSPERIODER}
+            />
             <SkjemaGruppe
                 feil={
                     errors.frilanserForsikring

@@ -21,19 +21,6 @@ import { getLedetekst } from '../../utils/ledetekst-utils';
 import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../types/sporsmalTypes';
 import HjelpetekstWrapper from '../hjelpetekst/HjelpetekstWrapper';
 
-/* interface SykmeldingFormData {
-    opplysningeneErRiktige?: string;
-    periode?: boolean;
-    sykmeldingsGrad?: boolean;
-    arbeidsgiver?: boolean;
-    diagnose?: boolean;
-    andreOpplysninger?: boolean;
-    sykmeldtFra?: Arbeidsforhold;
-    oppfolging?: string;
-    frilanserEgenmelding?: string;
-    frilanserForsikring?: string;
-} */
-
 interface SporsmalProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
@@ -44,7 +31,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const metoder = useForm({
         validationSchema: skjemavalidering,
     });
-    const { register, unregister, handleSubmit, watch, errors, formState, setValue, triggerValidation } = metoder;
+    const { register, handleSubmit, watch, errors, formState } = metoder;
+
     const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
     const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
     const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
@@ -55,13 +43,11 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     // For conditional visning av underspørsmål og alertbokser
     const watchOpplysningeneErRiktige = watch(Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE);
     const watchSykmeldtFra = watch(Skjemafelt.SYKMELDT_FRA);
-    const watchOppfolging = watch('oppfolging');
     const watchPeriode = watch(Skjemafelt.PERIODE);
     const watchSykmeldingsgrad = watch(Skjemafelt.SYKMELDINGSGRAD);
     const watchArbeidsgiver = watch(Skjemafelt.ARBEIDSGIVER);
     const watchDiagnose = watch(Skjemafelt.DIAGNOSE);
     const watchAndreOpplysninger = watch(Skjemafelt.ANDRE_OPPLYSNINGER);
-    const watchFrilanserEgenmelding = watch(Skjemafelt.FRILANSER_EGENMELDING);
 
     const onSubmit = (skjemaData: any) => {
         console.log(skjemaData);
@@ -127,8 +113,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                 !(watchPeriode || watchSykmeldingsgrad || watchArbeidsgiver) &&
                                 (watchDiagnose || watchAndreOpplysninger)
                             }
-                            register={register}
-                            errors={errors}
                         />
                     </PanelBase>
                     <Vis
@@ -206,9 +190,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                 arbeidsgiver={arbeidsgivere.find(arbeidsgiver =>
                                     new RegExp(arbeidsgiver.orgnummer).test(watchSykmeldtFra),
                                 )}
-                                register={register}
-                                errors={errors}
-                                watchOppfolging={watchOppfolging}
                             />
                             <FrilanserSporsmal
                                 vis={
@@ -216,13 +197,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                         watchSykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE) &&
                                     skalViseFrilansersporsmal(sykmelding, sykmeldingUtenforVentetid)
                                 }
-                                register={register}
-                                unregister={unregister}
-                                errors={errors}
-                                setValue={setValue}
-                                triggerValidation={triggerValidation}
-                                isSubmitted={formState.isSubmitted}
-                                visEgenmeldingsdager={watchFrilanserEgenmelding === JaEllerNei.JA}
                             />
                             <AnnenArbeidsgiver vis={watchSykmeldtFra === Arbeidsforhold.ANNEN_ARBEIDSGIVER} />
                         </PanelBase>
@@ -239,7 +213,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                             bekreftSykmelding.status === FetchStatus.PENDING
                         }
                         visAvbrytSpinner={avbrytSykmelding.status === FetchStatus.PENDING}
-                        watchSykmeldtFra={watchSykmeldtFra}
                     />
                 </form>
 

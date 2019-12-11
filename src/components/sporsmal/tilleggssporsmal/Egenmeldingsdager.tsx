@@ -1,42 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FieldError, ValidationPayload } from 'react-hook-form/dist/types';
-import { Knapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
+import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
+import Lenke from 'nav-frontend-lenker';
+import { Egenmeldingsperiode } from '../valideringsSkjema';
 import Flatpickr from 'react-flatpickr';
 import './flatpickr.less';
-import { CustomLocale } from 'flatpickr/dist/types/locale';
-import { Egenmeldingsperiode } from '../valideringsSkjema';
-import { Skjemafelt } from '../../../types/sporsmalTypes';
-import Lenke from 'nav-frontend-lenker';
 import './egenmeldingsdager.less';
-
-const locale: CustomLocale = {
-    rangeSeparator: ' til ',
-    firstDayOfWeek: 1,
-    weekdays: {
-        shorthand: ['søn', 'man', 'tirs', 'ons', 'tors', 'fre', 'lør'],
-        longhand: ['søndag', 'mandag', 'tirsadg', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
-    },
-    months: {
-        shorthand: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
-        longhand: [
-            'januar',
-            'februar',
-            'mars',
-            'april',
-            'mai',
-            'juni',
-            'juli',
-            'aug',
-            'september',
-            'oktober',
-            'november',
-            'desember',
-        ],
-    },
-};
+import { locale } from '../../../types/sporsmalTypes';
 
 interface EgenmeldingsdagerProps {
     vis: boolean;

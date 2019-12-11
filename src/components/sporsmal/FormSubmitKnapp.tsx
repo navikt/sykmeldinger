@@ -2,7 +2,8 @@ import React from 'react';
 import { Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
 import tekster from './sporsmal-tekster';
 import Lenke from 'nav-frontend-lenker';
-import { Arbeidsforhold } from '../../types/sporsmalTypes';
+import { Arbeidsforhold, Skjemafelt } from '../../types/sporsmalTypes';
+import { useFormContext } from 'react-hook-form';
 
 interface FormSubmitKnappProps {
     visAvbryt: boolean;
@@ -11,7 +12,6 @@ interface FormSubmitKnappProps {
     setVisAvbrytdialog: React.Dispatch<React.SetStateAction<boolean>>;
     visSubmitSpinner: boolean;
     visAvbrytSpinner: boolean;
-    watchSykmeldtFra: any;
 }
 
 const FormSubmitKnapp = ({
@@ -21,8 +21,12 @@ const FormSubmitKnapp = ({
     setVisAvbrytdialog,
     visSubmitSpinner,
     visAvbrytSpinner,
-    watchSykmeldtFra,
 }: FormSubmitKnappProps) => {
+    const { watch } = useFormContext();
+
+    const watchSykmeldtFra = watch(Skjemafelt.SYKMELDT_FRA);
+    const skalViseSendknapp = new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra);
+
     if (visAvbryt) {
         return (
             <div className="knapp--sentrer">
@@ -44,9 +48,7 @@ const FormSubmitKnapp = ({
         <>
             <div className="knapp--sentrer">
                 <Hovedknapp htmlType="submit" spinner={visSubmitSpinner} data-testid="knapp-submit">
-                    {new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra)
-                        ? tekster['knapp.send-sykmeldingen']
-                        : tekster['knapp.bekreft-sykmeldingen']}
+                    {skalViseSendknapp ? tekster['knapp.send-sykmeldingen'] : tekster['knapp.bekreft-sykmeldingen']}
                 </Hovedknapp>
             </div>
             <div className="knapp--sentrer" ref={avbrytdialogRef}>
