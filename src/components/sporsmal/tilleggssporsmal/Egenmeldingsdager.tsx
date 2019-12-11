@@ -8,6 +8,8 @@ import './flatpickr.less';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Egenmeldingsperiode } from '../valideringsSkjema';
 import { Skjemafelt } from '../../../types/sporsmalTypes';
+import Lenke from 'nav-frontend-lenker';
+import './egenmeldingsdager.less';
 
 interface EgenmeldingsdagerProps {
     vis: boolean;
@@ -29,14 +31,15 @@ interface EgenmeldingsdagerProps {
 } */
 
 const locale: CustomLocale = {
+    rangeSeparator: " til ",
     firstDayOfWeek: 1,
     weekdays: {
         shorthand: ['søn', 'man', 'tirs', 'ons', 'tors', 'fre', 'lør'],
         longhand: ['søndag', 'mandag', 'tirsadg', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
     },
     months: {
-        shorthand: ['jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan'],
-        longhand: ['jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan', 'jan'],
+        shorthand: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
+        longhand: ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'aug', 'september', 'oktober', 'november', 'desember'],
     },
 };
 
@@ -116,9 +119,11 @@ const Egenmeldingsdager = ({
                 <Fieldset legend={tekster['egenmeldingsperioder.tittel']}>
                     {perioder.map(periode => {
                         return (
-                            <div key={periode.id}>
+                            <div className="periode" key={periode.id}>
                                 <Flatpickr
                                     value={periode.datoer}
+                                    className="typo-normal flatpickr"
+                                    placeholder="Trykk for å velge periode"
                                     onChange={datoer => oppdaterPeriode(periode.id, datoer)}
                                     options={{
                                         minDate: new Date('10.02.2019'),
@@ -127,39 +132,36 @@ const Egenmeldingsdager = ({
                                         enableTime: false,
                                         dateFormat: 'd-m-y',
                                         altInput: true,
-                                        altFormat: 'F j, Y',
+                                        altFormat: 'j. M, Y',
                                         locale: locale,
                                     }}
                                 />
                                 {/* Skal ikke kunne slette første periode */}
                                 {periode.id !== 0 && (
-                                    <Knapp
-                                        type={'fare'}
-                                        form={'kompakt'}
-                                        mini
+                                    <Lenke
+                                        className="periode__slett"
+                                        href="#"
                                         onClick={e => {
                                             e.preventDefault();
                                             slettPeriode(periode.id);
                                         }}
                                     >
                                         {tekster['egenmeldingsperioder.slett-periode']}
-                                    </Knapp>
+                                    </Lenke>
                                 )}
                             </div>
                         );
                     })}
                 </Fieldset>
-                <Knapp
-                    type={'flat'}
-                    form={'kompakt'}
-                    mini
+                <Lenke
+                    href="#"
                     onClick={e => {
                         e.preventDefault();
                         opprettNyPeriode();
                     }}
                 >
                     {tekster['egenmeldingsperioder.legg-til-periode']}
-                </Knapp>
+                </Lenke>
             </SkjemaGruppe>
         </>
     );

@@ -55,7 +55,7 @@ const SporsmalTekster: any = {
         'frilanser.forsikring.tittel': 'Har du forsikring som gjelder de første 16 dagene av sykefraværet?',
         'frilanser.forsikring.feilmelding': 'Velg om du har hatt forsikring',
         'egenmeldingsperioder.tittel': 'Når hadde du egenmelding?',
-        'egenmeldingsperioder.legg-til-periode': 'Legg til periode',
+        'egenmeldingsperioder.legg-til-periode': '+ Legg til en ekstra periode',
         'egenmeldingsperioder.slett-periode': 'Slett periode',
         'egenmeldingsperioder.feilmelding': 'Velg periode(r) for egenmelding',
         'infoheader.bruk-sykmeldingen': 'Bruk sykmeldingen',
