@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import useFetch, { isNotStarted, FetchState, FetchStatus } from '../../hooks/useFetch';
 import useForm, { FormContext } from 'react-hook-form';
-import { skjemavalidering, Skjema } from './valideringsSkjema';
+import { skjemavalidering } from './valideringsSkjema';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { AlertStripeHjelper } from '../../utils/alertstripe-utils';
 import PanelBase from 'nav-frontend-paneler';
