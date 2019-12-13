@@ -24,7 +24,6 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
     useEffect(() => {
         register({ name: name });
         return () => {
-            console.log('unmounted egenmedingsperiode');
             setValue(name, undefined);
             unregister(name);
         };
