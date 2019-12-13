@@ -95,8 +95,8 @@ export const skjemavalidering = skjemaShape
         'manglerOppfolging',
         'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
         (skjema: Skjema) => {
-            if (skjema.sykmeldtFra === Arbeidsforhold.ARBEIDSGIVER) {
-                if (!!skjema.oppfolging) {
+            if (skjema.sykmeldtFra && new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(skjema.sykmeldtFra)) {
+                if (!!!skjema.oppfolging || skjema.oppfolging === undefined) {
                     return new yup.ValidationError(
                         'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
                         null,

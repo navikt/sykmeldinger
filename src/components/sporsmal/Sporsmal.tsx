@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import useFetch, { isNotStarted, FetchState, FetchStatus } from '../../hooks/useFetch';
 import useForm, { FormContext } from 'react-hook-form';
 import { skjemavalidering } from './valideringsSkjema';
@@ -70,6 +70,10 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
             },
         );
     };
+
+    useEffect(() => {
+        console.log(errors);
+    }, [errors]);
 
     return (
         <>
@@ -185,12 +189,15 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                     })}
                                 />
                             </SkjemaGruppe>
-                            <ArbeidsgiverSporsmal
-                                vis={new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra)}
-                                arbeidsgiver={arbeidsgivere.find(arbeidsgiver =>
-                                    new RegExp(arbeidsgiver.orgnummer).test(watchSykmeldtFra),
-                                )}
-                            />
+                            {new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra) && (
+                                <ArbeidsgiverSporsmal
+                                    vis={new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra)}
+                                    arbeidsgiver={arbeidsgivere.find(arbeidsgiver =>
+                                        new RegExp(arbeidsgiver.orgnummer).test(watchSykmeldtFra),
+                                    )}
+                                />
+                            )}
+
                             <FrilanserSporsmal
                                 vis={
                                     (watchSykmeldtFra === Arbeidsforhold.FRILANSER ||

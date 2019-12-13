@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
 import { getLedetekst } from '../../../utils/ledetekst-utils';
@@ -13,9 +13,28 @@ interface ArbeidsgiverSporsmalProps {
 }
 
 const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) => {
-    const { register, errors, watch } = useFormContext();
+    const { register, triggerValidation, unregister, setValue, errors, watch } = useFormContext();
+    const [harOppfolging, setHarOppfolging] = useState<JaEllerNei | undefined>(undefined);
 
     const watchOppfolging = watch(Skjemafelt.OPPFOLGING);
+
+    useEffect(() => {
+        register({ name: Skjemafelt.OPPFOLGING });
+        return () => {
+            unregister(Skjemafelt.OPPFOLGING);
+        };
+    }, [register, setValue, unregister]);
+
+    useEffect(() => {
+        setHarOppfolging(undefined);
+        setValue(Skjemafelt.OPPFOLGING, undefined);
+    }, [arbeidsgiver, setValue]);
+
+    const handterEndring = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setHarOppfolging(e.target.value as JaEllerNei);
+        setValue(Skjemafelt.OPPFOLGING, e.target.value);
+        triggerValidation({ name: Skjemafelt.OPPFOLGING });
+    };
 
     if (!vis) {
         return null;
@@ -47,13 +66,15 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) 
                     label={tekster['ja']}
                     name={Skjemafelt.OPPFOLGING}
                     value={JaEllerNei.JA}
-                    radioRef={register as any}
+                    checked={harOppfolging === JaEllerNei.JA}
+                    onChange={handterEndring}
                 />
                 <Radio
                     label={tekster['nei']}
                     name={Skjemafelt.OPPFOLGING}
                     value={JaEllerNei.NEI}
-                    radioRef={register as any}
+                    checked={harOppfolging === JaEllerNei.NEI}
+                    onChange={handterEndring}
                 />
             </Fieldset>
             {watchOppfolging === JaEllerNei.JA && (

@@ -22,7 +22,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
 
     // Registrer ved mount, unregistrer ved unmount
     useEffect(() => {
-        register({ name: name });
+        register({ name });
         return () => {
             setValue(name, undefined);
             unregister(name);
