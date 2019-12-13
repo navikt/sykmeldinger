@@ -42,10 +42,10 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
                     />
                 </Fieldset>
             </SkjemaGruppe>
-            <Egenmeldingsdager
-                vis={watchFrilanserEgenmelding === JaEllerNei.JA}
-                name={Skjemafelt.EGENMELDINGSPERIODER}
-            />
+            {watchFrilanserEgenmelding === JaEllerNei.JA && (
+                <Egenmeldingsdager name={Skjemafelt.EGENMELDINGSPERIODER} />
+            )}
+
             <SkjemaGruppe
                 feil={
                     errors.frilanserForsikring

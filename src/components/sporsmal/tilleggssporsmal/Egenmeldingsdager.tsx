@@ -10,12 +10,11 @@ import './egenmeldingsdager.less';
 import { locale } from '../../../types/sporsmalTypes';
 
 interface EgenmeldingsdagerProps {
-    vis: boolean;
     name: string;
     sykmeldingStartdato?: Date;
 }
 
-const Egenmeldingsdager = ({ vis, name, sykmeldingStartdato }: EgenmeldingsdagerProps) => {
+const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps) => {
     const { register, unregister, errors, setValue, triggerValidation, formState } = useFormContext();
     const { isSubmitted } = formState;
 
@@ -24,8 +23,12 @@ const Egenmeldingsdager = ({ vis, name, sykmeldingStartdato }: Egenmeldingsdager
     // Registrer ved mount, unregistrer ved unmount
     useEffect(() => {
         register({ name: name });
-        return () => unregister(name);
-    }, [name, register, unregister]);
+        return () => {
+            console.log('unmounted egenmedingsperiode');
+            setValue(name, undefined);
+            unregister(name);
+        };
+    }, [name, register, setValue, unregister]);
 
     const opprettNyPeriode = (): void => {
         const nyPeriode: Egenmeldingsperiode = { id: perioder[perioder.length - 1].id + 1 };
@@ -67,10 +70,6 @@ const Egenmeldingsdager = ({ vis, name, sykmeldingStartdato }: Egenmeldingsdager
             triggerValidation({ name: name });
         }
     };
-
-    if (!vis) {
-        return null;
-    }
 
     return (
         <>
