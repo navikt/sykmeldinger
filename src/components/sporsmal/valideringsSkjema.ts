@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 import { JaEllerNei, Skjemafelt, Arbeidsforhold } from '../../types/sporsmalTypes';
+import tekster from './sporsmal-tekster';
+import { getLedetekst } from '../../utils/ledetekst-utils';
 
 const egenmeldingsperiodeValidering = yup.object({
     id: yup.number(),
@@ -16,7 +18,7 @@ const skjemaShape = yup.object({
     opplysningeneErRiktige: yup
         .string()
         .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
-        .required(),
+        .required(tekster['feilmelding.opplysningene-er-riktige']),
     periode: yup.boolean().notRequired(),
     sykmeldingsgrad: yup.boolean().notRequired(),
     arbeidsgiver: yup.boolean().notRequired(),
@@ -27,7 +29,7 @@ const skjemaShape = yup.object({
         .notRequired()
         .when(Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, {
             is: JaEllerNei.JA,
-            then: yup.string().required(), // Dette skaper problemer når formState === 'dirty'
+            then: yup.string().required(tekster['feilmelding.sykmeldt-fra']), // Dette skaper problemer når formState === 'dirty'
             otherwise: yup.string().notRequired(),
         }),
     oppfolging: yup
@@ -36,8 +38,26 @@ const skjemaShape = yup.object({
         .notRequired(),
     frilanserEgenmelding: yup
         .string()
-        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
-        .notRequired(),
+        .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.egenmelding'])
+        .when(Skjemafelt.SYKMELDT_FRA, {
+            is: Arbeidsforhold.FRILANSER || Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE,
+            then: yup
+                .string()
+                .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.egenmelding'])
+                .required(),
+            otherwise: yup.string().notRequired(),
+        }),
+    frilanserForsikring: yup
+        .string()
+        .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.forsikring'])
+        .when(Skjemafelt.SYKMELDT_FRA, {
+            is: Arbeidsforhold.FRILANSER || Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE,
+            then: yup
+                .string()
+                .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.forsikring'])
+                .required(),
+            otherwise: yup.string().notRequired(),
+        }),
     egenmeldingsperioder: yup
         .array()
         .of(egenmeldingsperiodeValidering)
@@ -49,23 +69,19 @@ const skjemaShape = yup.object({
                 .array()
                 .of(egenmeldingsperiodeValidering)
                 .min(1)
-                .required(),
+                .required(tekster['feilmelding.egenmeldingsperioder.periode-mangler-utfylling']),
             otherwise: yup
                 .array()
                 .of(egenmeldingsperiodeValidering)
                 .min(1)
                 .notRequired(),
         }),
-    frilanserForsikring: yup
-        .string()
-        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
-        .notRequired(),
 });
 
 export type Skjema = yup.InferType<typeof skjemaShape>;
 
 export const skjemavalidering = skjemaShape
-    .test('manglerOpplysninger', 'Du må oppgi hvilke opplysninger som ikke er riktige', (skjema: Skjema) => {
+    .test('sjekk-om-opplysninger-mangler', tekster['feilmelding.mangler-opplysninger'], (skjema: Skjema) => {
         if (skjema.opplysningeneErRiktige === JaEllerNei.NEI) {
             if (
                 skjema.periode === false &&
@@ -74,39 +90,36 @@ export const skjemavalidering = skjemaShape
                 skjema.diagnose === false &&
                 skjema.andreOpplysninger === false
             ) {
+                return new yup.ValidationError(tekster['feilmelding.mangler-opplysninger'], null, 'opplysninger');
+            }
+        }
+        return true;
+    })
+    .test('sjekk-om-sykmeldFra-er-fylt-ut', tekster['feilmelding.sykmeldt-fra'], (skjema: Skjema) => {
+        if (!!skjema.opplysningeneErRiktige || skjema.periode === false || skjema.sykmeldingsgrad === false) {
+            if (skjema.sykmeldtFra === '') {
+                return new yup.ValidationError(tekster['feilmelding.sykmeldt-fra'], null, Skjemafelt.SYKMELDT_FRA);
+            }
+        }
+        return true;
+    })
+    .test('sjekk-om-oppfolging-mangler', tekster['feilmelding.sykmeldt-fra.oppfolging'], (skjema: Skjema) => {
+        if (skjema.sykmeldtFra && new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(skjema.sykmeldtFra)) {
+            if (!!!skjema.oppfolging || skjema.oppfolging === undefined) {
+                const naermesteLederNavn = skjema.sykmeldtFra.split('-')[2];
+
                 return new yup.ValidationError(
-                    'Du må oppgi hvilke opplysninger som ikke er riktige',
+                    getLedetekst(tekster['feilmelding.sykmeldt-fra.oppfolging'], {
+                        '%ARBEIDSGIVER%': naermesteLederNavn,
+                    }),
                     null,
-                    'opplysninger',
+                    Skjemafelt.OPPFOLGING,
                 );
             }
         }
         return true;
     })
-    .test('manglerSykmeldtFra', 'Du må oppgi hva du er sykmeldt fra', (skjema: Skjema) => {
-        if (!!skjema.opplysningeneErRiktige || skjema.periode === false || skjema.sykmeldingsgrad === false) {
-            if (skjema.sykmeldtFra === '') {
-                return new yup.ValidationError('Du må oppgi hva du er sykmeldt fra', null, Skjemafelt.SYKMELDT_FRA);
-            }
-        }
-        return true;
-    })
-    .test(
-        'manglerOppfolging',
-        'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
-        (skjema: Skjema) => {
-            if (skjema.sykmeldtFra && new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(skjema.sykmeldtFra)) {
-                if (!!!skjema.oppfolging || skjema.oppfolging === undefined) {
-                    return new yup.ValidationError(
-                        'Du må svare på om det er *ARBEIDSGIVER* som skal følge deg opp på jobben når du er syk',
-                        null,
-                        Skjemafelt.OPPFOLGING,
-                    );
-                }
-            }
-            return true;
-        },
-    )
+
     .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (skjema: Skjema) => {
         // Hvis egenmeldingsperioder er registert ved skjema, men ikke har noen verdi
         if (!!skjema.egenmeldingsperioder && skjema.egenmeldingsperioder === undefined) {
@@ -120,7 +133,7 @@ export const skjemavalidering = skjemaShape
             )
         ) {
             return new yup.ValidationError(
-                'En eller flere perioder mangler utfylling',
+                tekster['feilmelding.egenmeldingsperioder.flere-perioder-mangler-utfylling'],
                 null,
                 Skjemafelt.EGENMELDINGSPERIODER,
             );
@@ -145,7 +158,7 @@ export const skjemavalidering = skjemaShape
             // @ts-ignore
             if (dayjs(sortertEtterStartDato[i + 1].datoer[0]).isBefore(dayjs(sortertEtterStartDato[i].datoer[1]))) {
                 return new yup.ValidationError(
-                    'En eller flere perioder overlapper',
+                    tekster['feilmelding.egenmeldingsperioder.overlapp'],
                     null,
                     Skjemafelt.EGENMELDINGSPERIODER,
                 );

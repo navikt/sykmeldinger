@@ -146,7 +146,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                             key={index}
                                             label={arbeidsgiver.navn + ` (Org. nummer:${arbeidsgiver.orgnummer})`}
                                             name={Skjemafelt.SYKMELDT_FRA}
-                                            value={Arbeidsforhold.ARBEIDSGIVER.concat('-', arbeidsgiver.orgnummer)}
+                                            value={Arbeidsforhold.ARBEIDSGIVER.concat(
+                                                '-',
+                                                arbeidsgiver.orgnummer, // legg på orgnummer for å kunne sende inn riktig arbeidsgiver til ArbeidsgiverSporsmal-komponent
+                                                '-',
+                                                arbeidsgiver.naermesteLeder.navn, // legg på navn til nærmeste leder for å kunne sette riktig navn ved error validering
+                                            )}
                                             radioRef={register as any}
                                         ></Radio>
                                     ))}
@@ -191,9 +196,9 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                             </SkjemaGruppe>
                             {new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra) && (
                                 <ArbeidsgiverSporsmal
-                                    vis={new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra)}
-                                    arbeidsgiver={arbeidsgivere.find(arbeidsgiver =>
-                                        new RegExp(arbeidsgiver.orgnummer).test(watchSykmeldtFra),
+                                    vis={new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra)} // sjekk om strengen "arbeidsgiver" finnes i sykmleldtFra
+                                    arbeidsgiver={arbeidsgivere.find(
+                                        arbeidsgiver => new RegExp(arbeidsgiver.orgnummer).test(watchSykmeldtFra), // send inn riktig arbeidsgiver basert på orgnummer
                                     )}
                                 />
                             )}

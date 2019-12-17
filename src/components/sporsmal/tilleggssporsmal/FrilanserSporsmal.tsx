@@ -20,11 +20,7 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
     return (
         <>
             <SkjemaGruppe
-                feil={
-                    errors.frilanserEgenmelding
-                        ? { feilmelding: tekster['frilanser.egenmelding.feilmelding'] }
-                        : undefined
-                }
+                feil={errors.frilanserEgenmelding ? { feilmelding: errors.frilanserEgenmelding.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
                 <Fieldset legend={tekster['frilanser.egenmelding.tittel']}>
@@ -47,11 +43,7 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
             )}
 
             <SkjemaGruppe
-                feil={
-                    errors.frilanserForsikring
-                        ? { feilmelding: tekster['frilanser.forsikring.feilmelding'] }
-                        : undefined
-                }
+                feil={errors.frilanserForsikring ? { feilmelding: errors.frilanserForsikring.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
                 <Fieldset legend={tekster['frilanser.forsikring.tittel']}>

@@ -75,7 +75,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
             <SkjemaGruppe
                 feil={
                     errors.egenmeldingsperioder
-                        ? { feilmelding: tekster['egenmeldingsperioder.feilmelding'] }
+                        ? { feilmelding: errors.egenmeldingsperioder.message }
                         : undefined
                 }
             >
