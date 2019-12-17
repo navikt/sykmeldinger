@@ -1,0 +1,2 @@
+/*tslint:disable*/ module.exports =
+    '<script src="https://appres.nav.no/_public/appressurser/built-appres-v4/js/feature-detection-bundle.min.js?_ts=165c8849db8"></script><script src="https://appres.nav.no/_public/appressurser/built-appres-v4/js/app.min.js?_ts=165c88499d0"></script><link href="https://appres.nav.no/_public/appressurser/built-appres-v4/styles/css/varselmenu-decorator-v4.css?_ts=165c884a970" rel="stylesheet">';
