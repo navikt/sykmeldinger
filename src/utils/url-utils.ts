@@ -15,7 +15,7 @@ export const getUrlTilTidslinje = (): string => {
 };
 
 export const erHerokuApp = () => {
-    const url = window && window.location && window.location.href ? window.location.href : '';
+    const url = window?.location?.href ? window.location.href : '';
 
     return url.indexOf('herokuapp') > -1;
 };

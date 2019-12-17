@@ -9,7 +9,7 @@ interface PrognoseSeksjonProps {
 }
 
 const PrognoseSeksjon = ({ prognose }: PrognoseSeksjonProps) => {
-    if (!prognose || !prognose.hensynArbeidsplassen) {
+    if (!prognose?.hensynArbeidsplassen) {
         return null;
     }
     return <EtikettMedTekst tittel={tekster['prognose.hensyn.tittel']} tekst={prognose.hensynArbeidsplassen} margin />;

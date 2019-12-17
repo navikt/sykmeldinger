@@ -10,7 +10,7 @@ interface FraverSeksjonProps {
 }
 
 const FraverSeksjon = ({ fraver }: FraverSeksjonProps) => {
-    if (!fraver || !fraver.beskrivelse) {
+    if (!fraver?.beskrivelse) {
         return null;
     }
 
