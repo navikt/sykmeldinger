@@ -18,7 +18,7 @@ const OpplysningeneErFeil = ({
     visAlertstripeBrukArbeidsgiver,
     visAlertstripeBruk,
 }: OpplysningeneErFeilProps) => {
-    const { register, errors} = useFormContext();
+    const { register, errors } = useFormContext();
 
     if (!vis) {
         return null;
@@ -27,7 +27,7 @@ const OpplysningeneErFeil = ({
     return (
         <>
             <SkjemaGruppe
-                feil={errors.opplysninger ? { feilmelding: tekster['opplysningeneErFeil.feilmelding'] } : undefined}
+                feil={errors.opplysninger ? { feilmelding: errors.opplysninger.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
                 <Fieldset legend={tekster['opplysningeneErFeil.tittel']}>

@@ -88,7 +88,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         <SkjemaGruppe
                             feil={
                                 errors.opplysningeneErRiktige
-                                    ? { feilmelding: tekster['jaEllerNei.feilmelding'] }
+                                    ? { feilmelding: errors.opplysningeneErRiktige.message }
                                     : undefined
                             }
                         >
@@ -129,9 +129,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     >
                         <PanelBase className="panelbase">
                             <SkjemaGruppe
-                                feil={
-                                    errors.sykmeldtFra ? { feilmelding: tekster['sykmeldtFra.feilmelding'] } : undefined
-                                }
+                                feil={errors.sykmeldtFra ? { feilmelding: errors.sykmeldtFra.message } : undefined}
                             >
                                 <Fieldset
                                     legend={

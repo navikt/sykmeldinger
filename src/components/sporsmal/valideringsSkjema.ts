@@ -17,7 +17,7 @@ export type Egenmeldingsperiode = yup.InferType<typeof egenmeldingsperiodeValide
 const skjemaShape = yup.object({
     opplysningeneErRiktige: yup
         .string()
-        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
+        .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.opplysningene-er-riktige'])
         .required(tekster['feilmelding.opplysningene-er-riktige']),
     periode: yup.boolean().notRequired(),
     sykmeldingsgrad: yup.boolean().notRequired(),
