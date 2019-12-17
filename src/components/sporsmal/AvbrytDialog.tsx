@@ -16,7 +16,7 @@ const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytD
     if (!vis) {
         return null;
     }
-    
+
     return (
         <PanelBase className="avbrytdialog">
             <Tekstomrade className="avbrytdialog--margin-bottom">{tekster['avbrytdialog.er-du-sikker']}</Tekstomrade>

@@ -1,4 +1,9 @@
-import { getSykefravaerUrl, getUrlTilSykmeldinger, getUrlTilSykmelding, getUrlTilTidslinje } from '../../utils/url-utils';
+import {
+    getSykefravaerUrl,
+    getUrlTilSykmeldinger,
+    getUrlTilSykmelding,
+    getUrlTilTidslinje,
+} from '../../utils/url-utils';
 
 interface BrodSmule {
     tittel: string;
@@ -26,10 +31,10 @@ const beregnBrodsmulesti = (sti: string, id: string) => {
     };
 
     const tidslinjeSmule: BrodSmule = {
-        tittel: "Hva skjer under sykefraværet?",
+        tittel: 'Hva skjer under sykefraværet?',
         sti: getUrlTilTidslinje(),
         erKlikkbar: true,
-    }
+    };
 
     return [dittSykefravaerSmule, sykmeldingerSmule, sykmeldingSmule];
 };
