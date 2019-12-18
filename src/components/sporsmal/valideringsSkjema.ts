@@ -40,22 +40,24 @@ const skjemaShape = yup.object({
         .string()
         .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.egenmelding'])
         .when(Skjemafelt.SYKMELDT_FRA, {
-            is: Arbeidsforhold.FRILANSER || Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE,
+            is: (sykmeldtFra: string) =>
+                sykmeldtFra === Arbeidsforhold.FRILANSER || sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE,
             then: yup
                 .string()
                 .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.egenmelding'])
-                .required(),
+                .required(tekster['feilmelding.frilanser.egenmelding']),
             otherwise: yup.string().notRequired(),
         }),
     frilanserForsikring: yup
         .string()
         .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.forsikring'])
         .when(Skjemafelt.SYKMELDT_FRA, {
-            is: Arbeidsforhold.FRILANSER || Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE,
+            is: (sykmeldtFra: string) =>
+                sykmeldtFra === Arbeidsforhold.FRILANSER || sykmeldtFra === Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE,
             then: yup
                 .string()
                 .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.forsikring'])
-                .required(),
+                .required(tekster['feilmelding.frilanser.forsikring']),
             otherwise: yup.string().notRequired(),
         }),
     egenmeldingsperioder: yup
@@ -123,7 +125,11 @@ export const skjemavalidering = skjemaShape
     .test('egenmeldingsperioder', 'Du må oppgi hvilke periode du brukte egenmelding', (skjema: Skjema) => {
         // Hvis egenmeldingsperioder er registert ved skjema, men ikke har noen verdi
         if (!!skjema.egenmeldingsperioder && skjema.egenmeldingsperioder === undefined) {
-            return new yup.ValidationError('Periode mangler ufylling', null, Skjemafelt.EGENMELDINGSPERIODER);
+            return new yup.ValidationError(
+                tekster['feilmelding.egenmeldingsperioder.periode-mangler-utfylling'],
+                null,
+                Skjemafelt.EGENMELDINGSPERIODER,
+            );
         }
         // Hvis en eller flere av egenmeldingsperiodene mangler dato, eller det kun finnes én dato
         if (
@@ -155,8 +161,12 @@ export const skjemavalidering = skjemaShape
         });
         // Hvis noen av periodene overlapper
         for (let i = 0; i < sortertEtterStartDato.length - 1; i++) {
-            // @ts-ignore
-            if (dayjs(sortertEtterStartDato[i + 1].datoer[0]).isBefore(dayjs(sortertEtterStartDato[i].datoer[1]))) {
+            if (
+                // @ts-ignore
+                dayjs(sortertEtterStartDato[i + 1].datoer[0]).isBefore(dayjs(sortertEtterStartDato[i].datoer[1])) ||
+                // @ts-ignore
+                dayjs(sortertEtterStartDato[i + 1].datoer[0]).isSame(dayjs(sortertEtterStartDato[i].datoer[1]))
+            ) {
                 return new yup.ValidationError(
                     tekster['feilmelding.egenmeldingsperioder.overlapp'],
                     null,
