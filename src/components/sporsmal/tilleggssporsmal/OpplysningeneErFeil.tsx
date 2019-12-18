@@ -1,16 +1,15 @@
 import React from 'react';
-import { FieldError } from 'react-hook-form/dist/types';
 import { Fieldset, SkjemaGruppe, Checkbox } from 'nav-frontend-skjema';
 import tekster from '../sporsmal-tekster';
 import { AlertStripeHjelper } from '../../../utils/alertstripe-utils';
+import { Skjemafelt } from '../../../types/sporsmalTypes';
+import { useFormContext } from 'react-hook-form';
 
 interface OpplysningeneErFeilProps {
     vis: boolean;
     visAlertstripeAvbryt: boolean;
     visAlertstripeBrukArbeidsgiver: boolean;
     visAlertstripeBruk: boolean;
-    register: any;
-    errors: Partial<Record<string, FieldError>>;
 }
 
 const OpplysningeneErFeil = ({
@@ -18,9 +17,9 @@ const OpplysningeneErFeil = ({
     visAlertstripeAvbryt,
     visAlertstripeBrukArbeidsgiver,
     visAlertstripeBruk,
-    register,
-    errors,
 }: OpplysningeneErFeilProps) => {
+    const { register, errors } = useFormContext();
+
     if (!vis) {
         return null;
     }
@@ -28,33 +27,33 @@ const OpplysningeneErFeil = ({
     return (
         <>
             <SkjemaGruppe
-                feil={errors.opplysninger ? { feilmelding: tekster['opplysningeneErFeil.feilmelding'] } : undefined}
+                feil={errors.opplysninger ? { feilmelding: errors.opplysninger.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
                 <Fieldset legend={tekster['opplysningeneErFeil.tittel']}>
                     <Checkbox
                         label={tekster['opplysningeneErFeil.periode']}
-                        name="periode"
+                        name={Skjemafelt.PERIODE}
                         checkboxRef={register as any}
                     />
                     <Checkbox
                         label={tekster['opplysningeneErFeil.sykmeldingsgrad']}
-                        name="sykmeldingsgrad"
+                        name={Skjemafelt.SYKMELDINGSGRAD}
                         checkboxRef={register as any}
                     />
                     <Checkbox
                         label={tekster['opplysningeneErFeil.arbeidsgiver']}
-                        name="arbeidsgiver"
+                        name={Skjemafelt.ARBEIDSGIVER}
                         checkboxRef={register as any}
                     />
                     <Checkbox
                         label={tekster['opplysningeneErFeil.diagnose']}
-                        name="diagnose"
+                        name={Skjemafelt.DIAGNOSE}
                         checkboxRef={register as any}
                     />
                     <Checkbox
                         label={tekster['opplysningeneErFeil.andreOpplysninger']}
-                        name="andreOpplysninger"
+                        name={Skjemafelt.ANDRE_OPPLYSNINGER}
                         checkboxRef={register as any}
                     />
                 </Fieldset>
