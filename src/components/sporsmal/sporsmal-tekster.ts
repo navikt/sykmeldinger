@@ -55,7 +55,7 @@ const SporsmalTekster: any = {
         'frilanser.forsikring.tittel': 'Har du forsikring som gjelder de første 16 dagene av sykefraværet?',
         'frilanser.forsikring.feilmelding': 'Velg om du har hatt forsikring',
         'egenmeldingsperioder.tittel': 'Når hadde du egenmelding?',
-        'egenmeldingsperioder.legg-til-periode': 'Legg til periode',
+        'egenmeldingsperioder.legg-til-periode': '+ Legg til en ekstra periode',
         'egenmeldingsperioder.slett-periode': 'Slett periode',
         'egenmeldingsperioder.feilmelding': 'Velg periode(r) for egenmelding',
         'infoheader.bruk-sykmeldingen': 'Bruk sykmeldingen',
@@ -63,6 +63,17 @@ const SporsmalTekster: any = {
             'melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i jobb',
         'infoheader.trygdeloven.del-to': 'legge til rette for at du kan søke om sykepenger',
         'infoheader.personvern-lenke': 'Les mer om hvordan NAV behandler personopplysninger',
+        'feilmelding.opplysningene-er-riktige': 'Du må bekrefte om opplysningene er riktige',
+        'feilmelding.mangler-opplysninger': 'Du må oppgi hvilke opplysninger som ikke er riktige',
+        'feilmelding.sykmeldt-fra': 'Du må oppgi hvor du er sykmeldt fra',
+        'feilmelding.sykmeldt-fra.oppfolging':
+            'Du må svare på om det er %ARBEIDSGIVER% som skal følge deg på på jobben når du er syk',
+        'feilmelding.frilanser.egenmelding': 'Du må svare på om du har brukt egenmeldingsdager under sykefraværet',
+        'feilmelding.frilanser.forsikring':
+            'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet',
+        'feilmelding.egenmeldingsperioder.periode-mangler-utfylling': 'Periode mangler utfylling',
+        'feilmelding.egenmeldingsperioder.flere-perioder-mangler-utfylling': 'Flerer perioder mangler utfylling',
+        'feilmelding.egenmeldingsperioder.overlapp': 'Perioder kan ikke overlappe',
     },
     en: {},
 };
