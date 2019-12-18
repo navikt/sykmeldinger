@@ -12,10 +12,10 @@ export const getUrlTilSykmelding = (sykmeldingId: string): string => {
 
 export const getUrlTilTidslinje = (): string => {
     return '/tidslinje';
-}
+};
 
 export const erHerokuApp = () => {
-    const url = window && window.location && window.location.href ? window.location.href : '';
+    const url = window?.location?.href ? window.location.href : '';
 
     return url.indexOf('herokuapp') > -1;
 };

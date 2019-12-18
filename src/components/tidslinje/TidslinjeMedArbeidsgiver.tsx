@@ -16,85 +16,53 @@ const TidslinjeMedArbeidsgiver = () => (
             erEkspanderbar
             tittel={'Når du er blitt syk'}
             bilde={sykmeldtHvaNa}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Snakk med arbeidsgiveren din'}
             bilde={innen4uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'4 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Tid for dialogmøte med lederen din'}
             bilde={innen7uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'7 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Oppfyller du aktivitetsplikten?'}
             bilde={innen8uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement
             erEkspanderbar
             tittel={'placeholder for nærmeste leder stuff'}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'17 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Tid for dialogmøte med NAV'}
             bilde={innen26uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'26 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Når du har vært sykmeldt lenge'}
             bilde={innen39uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'39 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Snart slutt på sykepengene'}
             bilde={sluttfasen3}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement erSisteElement tittel={'52 uker: slutt på sykepenger'} />
     </>

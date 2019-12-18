@@ -6,7 +6,6 @@ import { render, fireEvent, wait, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Sykmelding } from '../types/sykmeldingTypes';
 
-
 // TODO: finn en bedre løsning på dette
 global.MutationObserver = class {
     constructor(callback) {}

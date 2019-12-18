@@ -14,54 +14,34 @@ const TidslinjeUtenArbeidsgiver = () => (
             erEkspanderbar
             tittel={'Når du er blitt syk'}
             bilde={sykmeldtHvaNa}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Har du vurdert din mulighet for å være i aktivitet?'}
             bilde={innen8uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'8 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Har du snakket med en veileder på NAV-kontoret?'}
             bilde={innen12uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'12 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Har du og veilederen laget en plan?'}
             bilde={innen39uker}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement tittel={'39 uker'} />
         <TidslinjeElement
             erEkspanderbar
             tittel={'Snart slutt på sykepengene'}
             bilde={sluttfasen3}
-            innhold={
-                <Normaltekst>
-                    placeholder
-                </Normaltekst>
-            }
+            innhold={<Normaltekst>placeholder</Normaltekst>}
         />
         <TidslinjeElement erSisteElement tittel={'52 uker: slutt på sykepenger'} />
     </>
