@@ -1,4 +1,4 @@
-import './brodsmuler.less';
+import './Brodsmuler.less';
 
 import Lenke from 'nav-frontend-lenker';
 import React, { useState } from 'react';

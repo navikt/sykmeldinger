@@ -11,7 +11,7 @@ import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
 import AvbrytDialog from './AvbrytDialog';
 import FormSubmitKnapp from './FormSubmitKnapp';
 import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
-import HjelpetekstWrapper from '../../../../components/hjelpetekst/HjelpetekstWrapper';
+import HjelpetekstWrapper from '../../../../components/Hjelpetekst/HjelpetekstWrapper';
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
 import Vis from '../../../../utils/vis';
 import tekster from './Sporsmal-tekster';

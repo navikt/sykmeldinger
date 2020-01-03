@@ -14,7 +14,7 @@ import PrognoseSeksjon from '../../../components/Infopanel/panelelementer/Progno
 import SeksjonMedTittel from '../../../components/Infopanel/layout/SeksjonMedTittel';
 import SykmeldingPerioder from '../../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import UtdypendeOpplysninger from '../../../components/Infopanel/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../../../components/utvidbar/Utvidbar';
+import Utvidbar from '../../../components/Utvidbar/Utvidbar';
 import arbeidsgiver from '../../../svg/arbeidsgiver.svg';
 import arbeidsgiverHover from '../../../svg/arbeidsgiverHover.svg';
 import sladd from '../../../svg/sladd.svg';

@@ -1,4 +1,4 @@
-import './veileder.less';
+import './Veileder.less';
 
 import React from 'react';
 import Veilederpanel from 'nav-frontend-veilederpanel';

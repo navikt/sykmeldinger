@@ -24,8 +24,8 @@ import SvangerskapSeksjon from '../../components/Infopanel/panelelementer/Svange
 import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../../components/Infopanel/layout/Tittel';
 import UtdypendeOpplysninger from '../../components/Infopanel/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../../components/utvidbar/Utvidbar';
-import Veileder from '../../components/veileder/Veileder';
+import Utvidbar from '../../components/Utvidbar/Utvidbar';
+import Veileder from '../../components/Veileder/Veileder';
 import doktor from '../../svg/doktor.svg';
 import doktorHover from '../../svg/doktorHover.svg';
 import tekster from './NySykmelding-tekster';

@@ -1,4 +1,4 @@
-import './diagnoseseksjon.less';
+import './Diagnoseseksjon.less';
 
 import React from 'react';
 

@@ -6,7 +6,7 @@ import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
 import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import useAppStore from '../store/useAppStore';
-import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
+import Brodsmuler, { Brodsmule } from '../components/Brodsmuler/Brodsmuler';
 import { Status } from '../types/sykmeldingDataTypes';
 
 const brodsmuler: Brodsmule[] = [

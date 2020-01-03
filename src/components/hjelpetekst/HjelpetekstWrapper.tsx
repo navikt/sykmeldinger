@@ -1,4 +1,4 @@
-import './hjelpetekstwrapper.less';
+import './Hjelpetekstwrapper.less';
 
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import React from 'react';

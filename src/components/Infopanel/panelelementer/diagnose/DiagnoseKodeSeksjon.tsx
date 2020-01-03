@@ -1,9 +1,9 @@
-import './diagnoseseksjon.less';
+import './Diagnoseseksjon.less';
 
 import React from 'react';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import HjelpetekstWrapper from '../../../hjelpetekst/HjelpetekstWrapper';
+import HjelpetekstWrapper from '../../../Hjelpetekst/HjelpetekstWrapper';
 import tekster from '../../Infopanel-tekster';
 
 interface DiagnoseKodeSeksjonProps {

@@ -1,4 +1,4 @@
-import './utvidbar.less';
+import './Utvidbar.less';
 
 import Chevron from 'nav-frontend-chevron';
 import React, { useEffect, useRef, useState } from 'react';
