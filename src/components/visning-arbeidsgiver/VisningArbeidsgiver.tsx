@@ -3,23 +3,23 @@ import React from 'react';
 import arbeidsgiver from '../../svg/arbeidsgiver.svg';
 import arbeidsgiverHover from '../../svg/arbeidsgiverHover.svg';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
-import SykmeldingPerioder from '../infopanel/panelelementer/periode/SykmeldingPerioder';
+import SykmeldingPerioder from '../../pages/Sykmeldingside/components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import { Sykmelding } from '../../types/sykmeldingTypes';
 
 import sladd from '../../svg/sladd.svg';
 import Utvidbar from '../utvidbar/Utvidbar';
-import EtikettMedTekst from '../infopanel/layout/EtikettMedTekst';
-import ArbeidsuforSeksjon from '../infopanel/panelelementer/ArbeidsuforSeksjon';
-import PrognoseSeksjon from '../infopanel/panelelementer/PrognoseSeksjon';
-import ArbeidsgiverSeksjon from '../infopanel/panelelementer/ArbeidsgiverSeksjon';
-import LegeSeksjon from '../infopanel/panelelementer/LegeSeksjon';
-import BehandlingsDatoer from '../infopanel/utdypendeelementer/BehandlingsDatoer';
-import MulighetForArbeid from '../infopanel/utdypendeelementer/MulighetForArbeid';
-import Friskmelding from '../infopanel/utdypendeelementer/Friskmelding';
-import UtdypendeOpplysninger from '../infopanel/utdypendeelementer/UtdypendeOpplysninger';
-import Arbeidsevne from '../infopanel/utdypendeelementer/Arbeidsevne';
-import SeksjonMedTittel from '../infopanel/layout/SeksjonMedTittel';
-import ElementMedTekst from '../infopanel/layout/ElementMedTekst';
+import EtikettMedTekst from '../../pages/Sykmeldingside/components/Infopanel/layout/EtikettMedTekst';
+import ArbeidsuforSeksjon from '../../pages/Sykmeldingside/components/Infopanel/panelelementer/ArbeidsuforSeksjon';
+import PrognoseSeksjon from '../../pages/Sykmeldingside/components/Infopanel/panelelementer/PrognoseSeksjon';
+import ArbeidsgiverSeksjon from '../../pages/Sykmeldingside/components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
+import LegeSeksjon from '../../pages/Sykmeldingside/components/Infopanel/panelelementer/LegeSeksjon';
+import BehandlingsDatoer from '../../pages/Sykmeldingside/components/Infopanel/utdypendeelementer/BehandlingsDatoer';
+import MulighetForArbeid from '../../pages/Sykmeldingside/components/Infopanel/utdypendeelementer/MulighetForArbeid';
+import Friskmelding from '../../pages/Sykmeldingside/components/Infopanel/utdypendeelementer/Friskmelding';
+import UtdypendeOpplysninger from '../../pages/Sykmeldingside/components/Infopanel/utdypendeelementer/UtdypendeOpplysninger';
+import Arbeidsevne from '../../pages/Sykmeldingside/components/Infopanel/utdypendeelementer/Arbeidsevne';
+import SeksjonMedTittel from '../../pages/Sykmeldingside/components/Infopanel/layout/SeksjonMedTittel';
+import ElementMedTekst from '../../pages/Sykmeldingside/components/Infopanel/layout/ElementMedTekst';
 
 interface VisningArbeidsgiverProps {
     sykmelding: Sykmelding;
