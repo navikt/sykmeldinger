@@ -1,4 +1,4 @@
-import { CustomLocale } from "flatpickr/dist/types/locale";
+import { CustomLocale } from 'flatpickr/dist/types/locale';
 
 export enum Skjemafelt {
     OPPLYSNINGENE_ER_RIKTIGE = 'opplysningeneErRiktige',

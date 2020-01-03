@@ -10,10 +10,6 @@ export const getUrlTilSykmelding = (sykmeldingId: string): string => {
     return `/sykmeldinger/${sykmeldingId}/`;
 };
 
-export const getUrlTilTidslinje = (): string => {
-    return '/tidslinje';
-};
-
 export const erHerokuApp = () => {
     const url = window?.location?.href ? window.location.href : '';
 
