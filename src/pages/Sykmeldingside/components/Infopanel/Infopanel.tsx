@@ -1,7 +1,7 @@
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 
-import plaster from '../../svg/plaster.svg';
+import plaster from '../../../../svg/plaster.svg';
 
 import './Infopanel.less';
 

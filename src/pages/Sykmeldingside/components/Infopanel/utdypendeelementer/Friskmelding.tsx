@@ -5,7 +5,7 @@ import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
 
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 
-import tekster from '../infopanel-tekster';
+import tekster from '../Infopanel-tekster';
 import Margin from '../layout/Margin';
 import ElementMedTekst from '../layout/ElementMedTekst';
 import EnkelCheckbox from '../layout/EnkelCheckbox';

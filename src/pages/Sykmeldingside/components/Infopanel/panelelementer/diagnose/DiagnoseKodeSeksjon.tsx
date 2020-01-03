@@ -1,5 +1,5 @@
 import React from 'react';
-import tekster from '../../infopanel-tekster';
+import tekster from '../../Infopanel-tekster';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import HjelpetekstWrapper from '../../../../../../components/hjelpetekst/HjelpetekstWrapper';
 

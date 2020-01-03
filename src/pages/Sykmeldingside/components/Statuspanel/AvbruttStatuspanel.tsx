@@ -4,7 +4,7 @@ import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 import { Knapp } from 'nav-frontend-knapper';
 
-import './statuspanel.less';
+import './Statuspanel.less';
 import tekster from './Statuspanel-tekster';
 import Margin from '../Infopanel/layout/Margin';
 import { Panel } from 'nav-frontend-paneler';

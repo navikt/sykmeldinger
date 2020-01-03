@@ -1,11 +1,11 @@
 import React from 'react';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
-import EtikettMedTekst from '../infopanel/layout/EtikettMedTekst';
+import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 import { Panel } from 'nav-frontend-paneler';
 
 import './Statuspanel.less';
-import Margin from '../infopanel/layout/Margin';
+import Margin from '../Infopanel/layout/Margin';
 import tekster from './Statuspanel-tekster';
 
 interface AvvistStatuspanelProps {

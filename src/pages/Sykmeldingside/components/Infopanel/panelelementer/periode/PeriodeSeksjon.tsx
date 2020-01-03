@@ -3,8 +3,8 @@ import { Periode } from '../../../../../../types/sykmeldingTypes';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
 import { tilLesbarPeriodeMedArstall, hentDagerMellomDatoer } from '../../../../../../utils/datoUtils';
-import tekster from '../../infopanel-tekster';
-import './periodeseksjon.less';
+import tekster from '../../Infopanel-tekster';
+import './PeriodeSeksjon.less';
 
 interface PeriodeSeksjonProps {
     periode: Periode;

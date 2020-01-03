@@ -1,7 +1,7 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import tekster from '../Avvistsykmelding-tekster';
+import tekster from '../AvvistSykmelding-tekster';
 import { Sykmelding, Behandler } from '../../../../../types/sykmeldingTypes';
 import { getLedetekst } from '../../../../../utils/utils';
 import Begrunnelser from './Begrunnelser';

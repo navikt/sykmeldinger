@@ -1,7 +1,7 @@
 import React from 'react';
 import { Prognose } from '../../../../../types/sykmeldingTypes';
 
-import tekster from '../infopanel-tekster';
+import tekster from '../Infopanel-tekster';
 import EnkelCheckbox from '../layout/EnkelCheckbox';
 
 interface ArbeidsuforSeksjonProps {

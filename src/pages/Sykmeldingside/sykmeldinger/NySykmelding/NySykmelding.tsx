@@ -3,7 +3,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Tittel from '../../components/Infopanel/layout/Tittel';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import tekster from './NySykmelding-tekster';
-import Sidetopp from '../../components/sidetopp/Sidetopp';
+import Sidetopp from '../../components/Sidetopp/Sidetopp';
 import Infopanel from '../../components/Infopanel/Infopanel';
 import Veileder from '../../../../components/veileder/Veileder';
 import EldreSykmeldingVarsel from './components/EldreSykmeldingVarsel';
@@ -28,8 +28,8 @@ import SporsmalInfoheader from '../../../../components/sporsmal/SporsmalInfohead
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import Utvidbar from '../../../../components/utvidbar/Utvidbar';
 
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
+import doktor from '../../../../svg/doktor.svg';
+import doktorHover from '../../../../svg/doktorHover.svg';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
-import Sidetopp from '../../components/sidetopp/Sidetopp';
+import Sidetopp from '../../components/Sidetopp/Sidetopp';
 import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from '../../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
 import FraverSeksjon from '../../components/Infopanel/panelelementer/FraverSeksjon';
@@ -19,10 +19,10 @@ import Arbeidsevne from '../../components/Infopanel/utdypendeelementer/Arbeidsev
 import SeksjonMedTittel from '../../components/Infopanel/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../components/Infopanel/layout/ElementMedTekst';
 
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
-import person from '../../../svg/person.svg';
-import personHover from '../../../svg/personHover.svg';
+import doktor from '../../../../svg/doktor.svg';
+import doktorHover from '../../../../svg/doktorHover.svg';
+import person from '../../../../svg/person.svg';
+import personHover from '../../../../svg/personHover.svg';
 
 import tekster from './BekreftetSykmelding-tekster';
 import BekreftetStatuspanel from '../../components/Statuspanel/BekreftetStatuspanel';

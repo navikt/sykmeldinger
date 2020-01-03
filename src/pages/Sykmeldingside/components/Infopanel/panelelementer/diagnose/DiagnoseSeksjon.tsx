@@ -2,7 +2,7 @@ import React from 'react';
 import { Diagnose } from '../../../../../../types/sykmeldingTypes';
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 
-import tekster from '../../infopanel-tekster';
+import tekster from '../../Infopanel-tekster';
 import EtikettMedTekst from '../../layout/EtikettMedTekst';
 
 import './diagnoseseksjon.less';

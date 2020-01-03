@@ -3,7 +3,7 @@ import { MedisinskVurdering } from '../../../../../types/sykmeldingTypes';
 
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
 
-import tekster from '../infopanel-tekster';
+import tekster from '../Infopanel-tekster';
 import CheckboxMedDato from '../layout/CheckboxMedDato';
 
 interface SkadeSeksjonProps {

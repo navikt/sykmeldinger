@@ -5,7 +5,7 @@ import Veileder from '../../../../components/veileder/Veileder';
 
 import AvvistStatuspanel from '../../components/Statuspanel/AvvistStatuspanel';
 import Tittel from '../../components/Infopanel/layout/Tittel';
-import NoytralMann from '../../veileder/NoytralMann.svg';
+import NoytralMann from '../../../../components/veileder/NoytralMann.svg';
 import VeilederInnhold from './components/VeilederInnhold';
 import Infopanel from '../../components/Infopanel/Infopanel';
 import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';

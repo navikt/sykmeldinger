@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SporsmalSvar } from '../../../../../types/sykmeldingTypes';
 
-import tekster from '../infopanel-tekster';
+import tekster from '../Infopanel-tekster';
 
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 import Margin from '../layout/Margin';

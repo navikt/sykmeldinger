@@ -21,10 +21,10 @@ import Arbeidsevne from '../../components/Infopanel/utdypendeelementer/Arbeidsev
 import SeksjonMedTittel from '../../components/Infopanel/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../components/Infopanel/layout/ElementMedTekst';
 
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
-import person from '../../../svg/person.svg';
-import personHover from '../../../svg/personHover.svg';
+import doktor from '../../../../svg/doktor.svg';
+import doktorHover from '../../../../svg/doktorHover.svg';
+import person from '../../../../svg/person.svg';
+import personHover from '../../../../svg/personHover.svg';
 
 import tekster from './SendtSykmelding-tekster';
 import Tittel from '../../components/Infopanel/layout/Tittel';
