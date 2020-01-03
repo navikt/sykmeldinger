@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
-import Veileder from '../../../components/veileder/Veileder';
+import { Sykmelding } from '../../../../types/sykmeldingTypes';
+import Sidetopp from '../../components/Sidetopp/Sidetopp';
+import Veileder from '../../../../components/veileder/Veileder';
 
-import AvvistStatuspanel from '../components/Statuspanel/AvvistStatuspanel';
-import Tittel from '../components/Infopanel/layout/Tittel';
+import AvvistStatuspanel from '../../components/Statuspanel/AvvistStatuspanel';
+import Tittel from '../../components/Infopanel/layout/Tittel';
 import NoytralMann from '../../veileder/NoytralMann.svg';
 import VeilederInnhold from './components/VeilederInnhold';
-import Infopanel from '../components/Infopanel/Infopanel';
-import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
-import DiagnoseSeksjon from '../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
-import ArbeidsgiverSeksjon from '../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
-import LegeSeksjon from '../components/Infopanel/panelelementer/LegeSeksjon';
+import Infopanel from '../../components/Infopanel/Infopanel';
+import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
+import DiagnoseSeksjon from '../../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
+import ArbeidsgiverSeksjon from '../../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
+import LegeSeksjon from '../../components/Infopanel/panelelementer/LegeSeksjon';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 

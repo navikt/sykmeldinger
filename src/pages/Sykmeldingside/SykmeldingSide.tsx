@@ -2,12 +2,12 @@ import React from 'react';
 
 import Brodsmuler, { Brodsmule } from '../../components/brodsmuler/brodsmuler';
 import useAppStore from '../../store/useAppStore';
-import NySykmelding from './NySykmelding/NySykmelding';
+import NySykmelding from './sykmeldinger/NySykmelding/NySykmelding';
 import { Status } from '../../types/sykmeldingDataTypes';
-import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
-import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
-import SendtSykmelding from './sendtsykmelding/SendtSykmelding';
-import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
+import AvvistSykmelding from './sykmeldinger/AvvistSykmelding/AvvistSykmelding';
+import AvbruttSykmelding from './sykmeldinger/AvbruttSykmelding/AvbruttSykmelding';
+import SendtSykmelding from './sykmeldinger/SendtSykmelding/SendtSykmelding';
+import BekreftetSykmelding from './sykmeldinger/BekreftetSykmelding/BekreftetSykmelding';
 
 const brodsmuler: Brodsmule[] = [
     {

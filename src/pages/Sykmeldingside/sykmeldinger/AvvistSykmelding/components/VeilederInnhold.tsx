@@ -1,9 +1,9 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import tekster from '../avvistsykmelding-tekster';
-import { Sykmelding, Behandler } from '../../../../types/sykmeldingTypes';
-import { getLedetekst } from '../../../../utils/utils';
+import tekster from '../Avvistsykmelding-tekster';
+import { Sykmelding, Behandler } from '../../../../../types/sykmeldingTypes';
+import { getLedetekst } from '../../../../../utils/utils';
 import Begrunnelser from './Begrunnelser';
 
 import './veilederinnhold.less';

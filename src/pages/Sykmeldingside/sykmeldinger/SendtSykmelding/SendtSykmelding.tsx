@@ -1,33 +1,33 @@
 import React from 'react';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
-import SendtStatuspanel from '../components/Statuspanel/SendtStatuspanel';
-import VisningArbeidsgiver from '../../../components/visning-arbeidsgiver/VisningArbeidsgiver';
-import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
-import DiagnoseSeksjon from '../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
-import FraverSeksjon from '../components/Infopanel/panelelementer/FraverSeksjon';
-import SvangerskapSeksjon from '../components/Infopanel/panelelementer/SvangerskapSeksjon';
-import SkadeSeksjon from '../components/Infopanel/panelelementer/SkadeSeksjon';
-import PrognoseSeksjon from '../components/Infopanel/panelelementer/PrognoseSeksjon';
-import ArbeidsuforSeksjon from '../components/Infopanel/panelelementer/ArbeidsuforSeksjon';
-import ArbeidsgiverSeksjon from '../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
-import LegeSeksjon from '../components/Infopanel/panelelementer/LegeSeksjon';
-import Utvidbar from '../../../components/utvidbar/Utvidbar';
-import BehandlingsDatoer from '../components/Infopanel/utdypendeelementer/BehandlingsDatoer';
-import MulighetForArbeid from '../components/Infopanel/utdypendeelementer/MulighetForArbeid';
-import Friskmelding from '../components/Infopanel/utdypendeelementer/Friskmelding';
-import UtdypendeOpplysninger from '../components/Infopanel/utdypendeelementer/UtdypendeOpplysninger';
-import Arbeidsevne from '../components/Infopanel/utdypendeelementer/Arbeidsevne';
-import SeksjonMedTittel from '../components/Infopanel/layout/SeksjonMedTittel';
-import ElementMedTekst from '../components/Infopanel/layout/ElementMedTekst';
+import { Sykmelding } from '../../../../types/sykmeldingTypes';
+import Sidetopp from '../../components/Sidetopp/Sidetopp';
+import SendtStatuspanel from '../../components/Statuspanel/SendtStatuspanel';
+import VisningArbeidsgiver from '../../../../components/visning-arbeidsgiver/VisningArbeidsgiver';
+import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
+import DiagnoseSeksjon from '../../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
+import FraverSeksjon from '../../components/Infopanel/panelelementer/FraverSeksjon';
+import SvangerskapSeksjon from '../../components/Infopanel/panelelementer/SvangerskapSeksjon';
+import SkadeSeksjon from '../../components/Infopanel/panelelementer/SkadeSeksjon';
+import PrognoseSeksjon from '../../components/Infopanel/panelelementer/PrognoseSeksjon';
+import ArbeidsuforSeksjon from '../../components/Infopanel/panelelementer/ArbeidsuforSeksjon';
+import ArbeidsgiverSeksjon from '../../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
+import LegeSeksjon from '../../components/Infopanel/panelelementer/LegeSeksjon';
+import Utvidbar from '../../../../components/utvidbar/Utvidbar';
+import BehandlingsDatoer from '../../components/Infopanel/utdypendeelementer/BehandlingsDatoer';
+import MulighetForArbeid from '../../components/Infopanel/utdypendeelementer/MulighetForArbeid';
+import Friskmelding from '../../components/Infopanel/utdypendeelementer/Friskmelding';
+import UtdypendeOpplysninger from '../../components/Infopanel/utdypendeelementer/UtdypendeOpplysninger';
+import Arbeidsevne from '../../components/Infopanel/utdypendeelementer/Arbeidsevne';
+import SeksjonMedTittel from '../../components/Infopanel/layout/SeksjonMedTittel';
+import ElementMedTekst from '../../components/Infopanel/layout/ElementMedTekst';
 
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
 import person from '../../../svg/person.svg';
 import personHover from '../../../svg/personHover.svg';
 
-import tekster from './sendtsykmelding-tekster';
-import Tittel from '../components/Infopanel/layout/Tittel';
+import tekster from './SendtSykmelding-tekster';
+import Tittel from '../../components/Infopanel/layout/Tittel';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
