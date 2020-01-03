@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.less';
 import './basic.less';
 
-import SykmeldingSide from './pages/Sykmeldingside/SykmeldingSide';
+import SykmeldingSide from './pages/SykmeldingSide';
 
 import useAppStore from './store/useAppStore';
 import DataFetcher from './components/DataFetcher';
