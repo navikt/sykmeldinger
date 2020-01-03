@@ -2,7 +2,7 @@ import React from 'react';
 import { Sykmelding } from '../../types/sykmeldingTypes';
 import Sidetopp from '../../components/Sidetopp/Sidetopp';
 import SendtStatuspanel from '../../components/Statuspanel/SendtStatuspanel';
-import VisningArbeidsgiver from '../../components/visning-arbeidsgiver/VisningArbeidsgiver';
+import VisningArbeidsgiver from './components/VisningArbeidsgiver';
 import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import DiagnoseSeksjon from '../../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
 import FraverSeksjon from '../../components/Infopanel/panelelementer/FraverSeksjon';

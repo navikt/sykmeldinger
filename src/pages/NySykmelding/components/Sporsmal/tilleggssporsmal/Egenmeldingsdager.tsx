@@ -6,7 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Egenmeldingsperiode } from '../valideringsSkjema';
 import Flatpickr from 'react-flatpickr';
 import './flatpickr.less';
-import './egenmeldingsdager.less';
+import './Egenmeldingsdager.less';
 import { locale } from '../../../../../types/sporsmalTypes';
 
 interface EgenmeldingsdagerProps {
