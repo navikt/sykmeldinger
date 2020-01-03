@@ -20,6 +20,7 @@ interface BegrunnelserProps {
 }
 
 const Begrunnelser = ({ sykmelding }: BegrunnelserProps) => {
+    /* TODO:
     const reglerUtenBegrunnelse = [
         Avvisningsregler.PASIENT_ELDRE_ENN_70,
         Avvisningsregler.UGYLDIG_REGELSETTVERSJON,
@@ -29,7 +30,6 @@ const Begrunnelser = ({ sykmelding }: BegrunnelserProps) => {
         Avvisningsregler.BEHANDLER_SUSPENDERT,
     ];
 
-    /* TODO:
     const visBegrunnelse = smSykmelding
         && smSykmelding.behandlingsutfall
         && smSykmelding.behandlingsutfall.ruleHits
