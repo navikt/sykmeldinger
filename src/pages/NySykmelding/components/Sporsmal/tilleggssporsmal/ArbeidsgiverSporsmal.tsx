@@ -1,11 +1,12 @@
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useEffect, useState } from 'react';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import tekster from '../Sporsmal-tekster';
-import { getLedetekst } from '../../../../../utils/ledetekst-utils';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
-import { JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
 import { useFormContext } from 'react-hook-form';
+
+import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
+import tekster from '../Sporsmal-tekster';
+import { JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
+import { getLedetekst } from '../../../../../utils/ledetekst-utils';
 
 interface ArbeidsgiverSporsmalProps {
     vis: boolean;

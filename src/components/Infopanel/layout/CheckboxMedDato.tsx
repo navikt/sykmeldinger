@@ -1,10 +1,11 @@
 import React from 'react';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+
+import EtikettMedTekst from './EtikettMedTekst';
 import Innrykk from './Innrykk';
 import Margin from './Margin';
 import boks from '../../../svg/boks.svg';
 import sjekkboks from '../../../svg/sjekkboks.svg';
-import EtikettMedTekst from './EtikettMedTekst';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 interface CheckboxMedDatoProps {
     checkboxTittel: string;

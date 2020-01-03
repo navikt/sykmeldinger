@@ -1,8 +1,9 @@
+import './veileder.less';
+
 import React from 'react';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import { Knapp } from 'nav-frontend-knapper';
 
-import './veileder.less';
 import Bjorn from './Bjorn.svg';
 
 interface VeilederProps {

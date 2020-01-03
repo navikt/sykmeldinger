@@ -1,25 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
-import useFetch, { isNotStarted, FetchState, FetchStatus } from '../../../../hooks/useFetch';
-import useForm, { FormContext } from 'react-hook-form';
-import { skjemavalidering } from './valideringsSkjema';
-import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import { AlertStripeHjelper } from '../../../../utils/alertstripe-utils';
-import PanelBase from 'nav-frontend-paneler';
-import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
-import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
-import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
-import AvbrytDialog from './AvbrytDialog';
-import tekster from './Sporsmal-tekster';
-import AnnenArbeidsgiver from './AnnenArbeidsgiver';
-import { Sykmelding } from '../../../../types/sykmeldingTypes';
-import { skalViseFrilansersporsmal } from '../../../../utils/sporsmal-utils';
-import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
-import FormSubmitKnapp from './FormSubmitKnapp';
-import Vis from '../../../../utils/vis';
 import './Sporsmal.less';
-import { getLedetekst } from '../../../../utils/ledetekst-utils';
-import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsmalTypes';
+
+import PanelBase from 'nav-frontend-paneler';
+import React, { useEffect, useRef, useState } from 'react';
+import useForm, { FormContext } from 'react-hook-form';
+import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+
+import AnnenArbeidsgiver from './AnnenArbeidsgiver';
+import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
+import AvbrytDialog from './AvbrytDialog';
+import FormSubmitKnapp from './FormSubmitKnapp';
+import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
 import HjelpetekstWrapper from '../../../../components/hjelpetekst/HjelpetekstWrapper';
+import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
+import Vis from '../../../../utils/vis';
+import tekster from './Sporsmal-tekster';
+import useFetch, { FetchState, FetchStatus, isNotStarted } from '../../../../hooks/useFetch';
+import { AlertStripeHjelper } from '../../../../utils/alertstripe-utils';
+import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsmalTypes';
+import { Sykmelding } from '../../../../types/sykmeldingTypes';
+import { getLedetekst } from '../../../../utils/ledetekst-utils';
+import { skalViseFrilansersporsmal } from '../../../../utils/sporsmal-utils';
+import { skjemavalidering } from './valideringsSkjema';
 
 interface SporsmalProps {
     sykmelding: Sykmelding;

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Diagnose } from '../../../../types/sykmeldingTypes';
-import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
-
-import tekster from '../../Infopanel-tekster';
-import EtikettMedTekst from '../../layout/EtikettMedTekst';
-
 import './diagnoseseksjon.less';
+
+import React from 'react';
+
+import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
+import EtikettMedTekst from '../../layout/EtikettMedTekst';
+import tekster from '../../Infopanel-tekster';
+import { Diagnose } from '../../../../types/sykmeldingTypes';
 
 interface DiagnoseSeksjonProps {
     diagnose?: Diagnose;

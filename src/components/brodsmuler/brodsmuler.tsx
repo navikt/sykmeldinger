@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import Lenke from 'nav-frontend-lenker';
-import personIkon from './person.svg';
-import { Normaltekst } from 'nav-frontend-typografi';
 import './brodsmuler.less';
+
+import Lenke from 'nav-frontend-lenker';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Normaltekst } from 'nav-frontend-typografi';
+
+import personIkon from './person.svg';
 
 export interface Brodsmule {
     sti: string;

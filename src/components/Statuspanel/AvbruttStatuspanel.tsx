@@ -1,13 +1,14 @@
-import React from 'react';
-import { Sykmelding } from '../../types/sykmeldingTypes';
-import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
-import { tilLesbarDatoMedArstall } from '../../utils/datoUtils';
-import { Knapp } from 'nav-frontend-knapper';
-
 import './Statuspanel.less';
-import tekster from './Statuspanel-tekster';
-import Margin from '../Infopanel/layout/Margin';
+
+import React from 'react';
+import { Knapp } from 'nav-frontend-knapper';
 import { Panel } from 'nav-frontend-paneler';
+
+import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
+import Margin from '../Infopanel/layout/Margin';
+import tekster from './Statuspanel-tekster';
+import { Sykmelding } from '../../types/sykmeldingTypes';
+import { tilLesbarDatoMedArstall } from '../../utils/datoUtils';
 
 interface AvbruttStatuspanelProps {
     sykmelding: Sykmelding;

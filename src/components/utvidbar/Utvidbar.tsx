@@ -1,7 +1,8 @@
+import './utvidbar.less';
+
+import Chevron from 'nav-frontend-chevron';
 import React, { useEffect, useRef, useState } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Chevron from 'nav-frontend-chevron';
-import './utvidbar.less';
 
 interface UtvidbarProps {
     apen?: boolean;

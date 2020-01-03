@@ -1,8 +1,9 @@
-import React from 'react';
-import { Innholdstittel } from 'nav-frontend-typografi';
-import tekster from './Sporsmal-tekster';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import Lenke from 'nav-frontend-lenker';
+import React from 'react';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+import { Innholdstittel } from 'nav-frontend-typografi';
+
+import tekster from './Sporsmal-tekster';
 
 const SporsmalInfoheader = () => (
     <>

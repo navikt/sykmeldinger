@@ -1,10 +1,9 @@
 import React from 'react';
-import { MedisinskVurdering } from '../../../types/sykmeldingTypes';
 
-import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
-
-import tekster from '../Infopanel-tekster';
 import CheckboxMedDato from '../layout/CheckboxMedDato';
+import tekster from '../Infopanel-tekster';
+import { MedisinskVurdering } from '../../../types/sykmeldingTypes';
+import { tilLesbarDatoMedArstall } from '../../../utils/datoUtils';
 
 interface SkadeSeksjonProps {
     medisinskVurdering: MedisinskVurdering;

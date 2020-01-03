@@ -1,10 +1,12 @@
-import React from 'react';
-import Sporsmal from './Sporsmal';
-import { nySykmeldingMock } from '../../../../mock/data/sykmeldingMock';
-import tekster from './Sporsmal-tekster';
-import { render, fireEvent, wait, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+
+import React from 'react';
+import { act, fireEvent, render, wait } from '@testing-library/react';
+
+import Sporsmal from './Sporsmal';
+import tekster from './Sporsmal-tekster';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
+import { nySykmeldingMock } from '../../../../mock/data/sykmeldingMock';
 
 // TODO: finn en bedre løsning på dette
 global.MutationObserver = class {

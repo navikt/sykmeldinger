@@ -1,7 +1,7 @@
 import React from 'react';
+import { Sidetittel } from 'nav-frontend-typografi';
 
 import Margin from './Margin';
-import { Sidetittel } from 'nav-frontend-typografi';
 
 interface TittelProps {
     tekst: string;

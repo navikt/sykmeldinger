@@ -1,9 +1,10 @@
 import React from 'react';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import tekster from '../Sporsmal-tekster';
-import Egenmeldingsdager from './Egenmeldingsdager';
-import { JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
 import { useFormContext } from 'react-hook-form';
+
+import Egenmeldingsdager from './Egenmeldingsdager';
+import tekster from '../Sporsmal-tekster';
+import { JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
 
 interface FrilanserSporsmalProps {
     vis: boolean;

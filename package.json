@@ -70,7 +70,7 @@
     },
     "importSort": {
         ".js, .jsx, .ts, .tsx": {
-            "style": "module",
+            "style": "renke",
             "parser": "typescript"
         }
     },
@@ -96,7 +96,7 @@
         "@types/react-flatpickr": "^3.8.0",
         "@types/react-router-dom": "^5.1.1",
         "@types/yup": "^0.26.24",
-        "import-sort-style-module": "^6.0.0",
+        "import-sort-style-renke": "^6.0.0",
         "prettier": "^1.19.1",
         "prettier-plugin-import-sort": "0.0.3",
         "yet-another-fetch-mock": "^3.3.1"

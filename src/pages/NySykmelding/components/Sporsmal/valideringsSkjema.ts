@@ -1,7 +1,8 @@
 import * as yup from 'yup';
 import dayjs from 'dayjs';
-import { JaEllerNei, Skjemafelt, Arbeidsforhold } from '../../../../types/sporsmalTypes';
+
 import tekster from './Sporsmal-tekster';
+import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsmalTypes';
 import { getLedetekst } from '../../../../utils/ledetekst-utils';
 
 const egenmeldingsperiodeValidering = yup.object({

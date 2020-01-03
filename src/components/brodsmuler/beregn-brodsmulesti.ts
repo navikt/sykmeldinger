@@ -1,4 +1,4 @@
-import { getSykefravaerUrl, getUrlTilSykmeldinger, getUrlTilSykmelding } from '../../utils/url-utils';
+import { getSykefravaerUrl, getUrlTilSykmelding, getUrlTilSykmeldinger } from '../../utils/url-utils';
 
 interface BrodSmule {
     tittel: string;

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Fieldset, SkjemaGruppe, Checkbox } from 'nav-frontend-skjema';
+import { Checkbox, Fieldset, SkjemaGruppe } from 'nav-frontend-skjema';
+import { useFormContext } from 'react-hook-form';
+
 import tekster from '../Sporsmal-tekster';
 import { AlertStripeHjelper } from '../../../../../utils/alertstripe-utils';
 import { Skjemafelt } from '../../../../../types/sporsmalTypes';
-import { useFormContext } from 'react-hook-form';
 
 interface OpplysningeneErFeilProps {
     vis: boolean;

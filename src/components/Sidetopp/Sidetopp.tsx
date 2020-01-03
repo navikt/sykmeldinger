@@ -1,6 +1,7 @@
+import './Sidetopp.less';
+
 import React from 'react';
 import { Sidetittel } from 'nav-frontend-typografi';
-import './Sidetopp.less';
 
 interface SidetoppProps {
     tekst: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import tekster from '../Infopanel-tekster';
 import EnkelCheckbox from '../layout/EnkelCheckbox';
+import tekster from '../Infopanel-tekster';
 
 interface SvangerskapSeksjonProps {
     svangerskap: boolean;

@@ -1,13 +1,14 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
-import {
-    nySykmeldingMock,
-    avvistSykmeldingMock,
-    sendtSykmeldingMock,
-    avbruttSykmeldingMock,
-    bekreftetSykmeldingMock,
-} from './data/sykmeldingMock';
-import naermesteLedereMock from './data/narmesteLedereMock';
+
 import arbeidsgiverMock from './data/arbeidsgivereMock';
+import naermesteLedereMock from './data/narmesteLedereMock';
+import {
+    avbruttSykmeldingMock,
+    avvistSykmeldingMock,
+    bekreftetSykmeldingMock,
+    nySykmeldingMock,
+    sendtSykmeldingMock,
+} from './data/sykmeldingMock';
 
 const mock = FetchMock.configure({
     enableFallback: true,

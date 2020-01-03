@@ -1,12 +1,12 @@
+import './Veilederinnhold.less';
+
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import tekster from '../AvvistSykmelding-tekster';
-import { Sykmelding, Behandler } from '../../../types/sykmeldingTypes';
-import { getLedetekst } from '../../../utils/utils';
 import Begrunnelser from './Begrunnelser';
-
-import './Veilederinnhold.less';
+import tekster from '../AvvistSykmelding-tekster';
+import { Behandler, Sykmelding } from '../../../types/sykmeldingTypes';
+import { getLedetekst } from '../../../utils/utils';
 
 const byggLegeNavn = (behandler: Behandler) => {
     const { fornavn, mellomnavn, etternavn } = behandler;

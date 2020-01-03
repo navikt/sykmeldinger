@@ -1,11 +1,10 @@
 import React from 'react';
 
-import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-
-import tekster from '../Infopanel-tekster';
-import Margin from '../layout/Margin';
 import ElementMedTekst from '../layout/ElementMedTekst';
 import EnkelCheckbox from '../layout/EnkelCheckbox';
+import Margin from '../layout/Margin';
+import SeksjonMedTittel from '../layout/SeksjonMedTittel';
+import tekster from '../Infopanel-tekster';
 
 // TODO: Koble opp til data i sykmelding
 const testSvar = 'andre årsaker til sykefravær';

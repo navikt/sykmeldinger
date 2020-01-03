@@ -1,9 +1,10 @@
-import React from 'react';
-import PanelBase from 'nav-frontend-paneler';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import tekster from './Sporsmal-tekster';
-import { Fareknapp } from 'nav-frontend-knapper';
 import Lenke from 'nav-frontend-lenker';
+import PanelBase from 'nav-frontend-paneler';
+import React from 'react';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+import { Fareknapp } from 'nav-frontend-knapper';
+
+import tekster from './Sporsmal-tekster';
 
 interface AvbrytDialogProps {
     vis: boolean;

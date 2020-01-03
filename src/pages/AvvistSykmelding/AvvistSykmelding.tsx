@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
-import { Sykmelding } from '../../types/sykmeldingTypes';
-import Sidetopp from '../../components/Sidetopp/Sidetopp';
-import Veileder from '../../components/veileder/Veileder';
-
-import AvvistStatuspanel from '../../components/Statuspanel/AvvistStatuspanel';
-import Tittel from '../../components/Infopanel/layout/Tittel';
-import NoytralMann from '../../components/veileder/NoytralMann.svg';
-import VeilederInnhold from './components/VeilederInnhold';
-import Infopanel from '../../components/Infopanel/Infopanel';
-import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
-import DiagnoseSeksjon from '../../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
-import ArbeidsgiverSeksjon from '../../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
-import LegeSeksjon from '../../components/Infopanel/panelelementer/LegeSeksjon';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
+import ArbeidsgiverSeksjon from '../../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
+import AvvistStatuspanel from '../../components/Statuspanel/AvvistStatuspanel';
+import DiagnoseSeksjon from '../../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
+import Infopanel from '../../components/Infopanel/Infopanel';
+import LegeSeksjon from '../../components/Infopanel/panelelementer/LegeSeksjon';
+import NoytralMann from '../../components/veileder/NoytralMann.svg';
+import Sidetopp from '../../components/Sidetopp/Sidetopp';
+import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
+import Tittel from '../../components/Infopanel/layout/Tittel';
+import Veileder from '../../components/veileder/Veileder';
+import VeilederInnhold from './components/VeilederInnhold';
 import tekster from './AvvistSykmelding-tekster';
+import { Sykmelding } from '../../types/sykmeldingTypes';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;

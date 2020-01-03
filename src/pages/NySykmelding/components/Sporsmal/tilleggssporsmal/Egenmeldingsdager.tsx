@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
-import tekster from '../Sporsmal-tekster';
-import { SkjemaGruppe, Fieldset } from 'nav-frontend-skjema';
-import Lenke from 'nav-frontend-lenker';
-import { Egenmeldingsperiode } from '../valideringsSkjema';
-import Flatpickr from 'react-flatpickr';
 import './flatpickr.less';
 import './Egenmeldingsdager.less';
+
+import Flatpickr from 'react-flatpickr';
+import Lenke from 'nav-frontend-lenker';
+import React, { useEffect, useState } from 'react';
+import { Fieldset, SkjemaGruppe } from 'nav-frontend-skjema';
+import { useFormContext } from 'react-hook-form';
+
+import tekster from '../Sporsmal-tekster';
+import { Egenmeldingsperiode } from '../valideringsSkjema';
 import { locale } from '../../../../../types/sporsmalTypes';
 
 interface EgenmeldingsdagerProps {

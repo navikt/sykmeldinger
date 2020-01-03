@@ -1,8 +1,9 @@
 import React from 'react';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import tekster from './Sporsmal-tekster';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
+
+import tekster from './Sporsmal-tekster';
 
 interface AnnenArbeidsgiverProps {
     vis: boolean;

@@ -1,12 +1,10 @@
 import React from 'react';
 
-import { SporsmalSvar } from '../../../types/sykmeldingTypes';
-
-import tekster from '../Infopanel-tekster';
-
-import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import Margin from '../layout/Margin';
 import ElementMedTekst from '../layout/ElementMedTekst';
+import Margin from '../layout/Margin';
+import SeksjonMedTittel from '../layout/SeksjonMedTittel';
+import tekster from '../Infopanel-tekster';
+import { SporsmalSvar } from '../../../types/sykmeldingTypes';
 
 interface OpplysningsGruppeProps {
     opplysningGruppe: Map<string, SporsmalSvar>;

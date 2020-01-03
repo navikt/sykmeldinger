@@ -1,9 +1,10 @@
-import React from 'react';
-import { Hovedknapp, Fareknapp } from 'nav-frontend-knapper';
-import tekster from './Sporsmal-tekster';
 import Lenke from 'nav-frontend-lenker';
-import { Arbeidsforhold, Skjemafelt } from '../../../../types/sporsmalTypes';
+import React from 'react';
+import { Fareknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { useFormContext } from 'react-hook-form';
+
+import tekster from './Sporsmal-tekster';
+import { Arbeidsforhold, Skjemafelt } from '../../../../types/sporsmalTypes';
 
 interface FormSubmitKnappProps {
     visAvbryt: boolean;

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Systemtittel } from 'nav-frontend-typografi';
 
 interface SeksjonMedTittelProps {

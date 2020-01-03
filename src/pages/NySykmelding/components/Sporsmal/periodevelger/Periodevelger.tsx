@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import './reactCalendar.less';
+import './reactDaterangePicker.less';
 
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 import dayjs from 'dayjs';
-
-import './reactCalendar.less';
-import './reactDaterangePicker.less';
+import React, { useState } from 'react';
 
 interface PeriodevelgerProps {
     vis: boolean;
