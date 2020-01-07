@@ -3,7 +3,7 @@ import React from 'react';
 import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
 import useAppStore from '../store/useAppStore';
 import NySykmelding from '../components/sykmelding/nysykmelding/NySykmelding';
-import { Status } from '../types/sykmeldingDataTypes';
+import { StatusTyper } from '../types/sykmeldingDataTypes';
 import AvvistSykmelding from '../components/sykmelding/avvistsykmelding/AvvistSykmelding';
 import AvbruttSykmelding from '../components/sykmelding/avbruttsykmelding/AvbruttSykmelding';
 import SendtSykmelding from '../components/sykmelding/sendtsykmelding/SendtSykmelding';
@@ -37,7 +37,7 @@ const SykmeldingSide = () => {
 
     const SykmeldingComponent = (() => {
         switch (sykmeldingStatus) {
-            case Status.NY: {
+            case StatusTyper.NY: {
                 if (sykmeldingUtenforVentetid === null) {
                     // TODO: Error-melding, ingen sykmelding funnet
                     return null;
@@ -52,13 +52,13 @@ const SykmeldingSide = () => {
                 );
             }
 
-            case Status.AVBRUTT:
+            case StatusTyper.AVBRUTT:
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
-            case Status.AVVIST:
+            case StatusTyper.AVVIST:
                 return <AvvistSykmelding sykmelding={sykmelding} />;
-            case Status.SENDT:
+            case StatusTyper.SENDT:
                 return <SendtSykmelding sykmelding={sykmelding} />;
-            case Status.BEKREFTET:
+            case StatusTyper.BEKREFTET:
                 return <BekreftetSykmelding sykmelding={sykmelding} />;
             default:
                 return null;

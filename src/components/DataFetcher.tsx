@@ -11,7 +11,7 @@ import useFetch, {
 } from '../hooks/useFetch';
 import useAppStore from '../store/useAppStore';
 import { Sykmelding } from '../types/sykmeldingTypes';
-import { SykmeldingData, Status } from '../types/sykmeldingDataTypes';
+import { SykmeldingData, StatusTyper } from '../types/sykmeldingDataTypes';
 import ErUtenforVentetidData from '../types/erUtenforVentetidTypes';
 import Arbeidsgiver from '../types/arbeidsgiverTypes';
 
@@ -44,7 +44,7 @@ const DataFetcher = (props: { children: any }) => {
                     );
 
                     // Dersom sykmeldingen er ny skal den berikes
-                    if (sykmeldingStatus === Status.NY) {
+                    if (sykmeldingStatus === StatusTyper.NY) {
                         sykmeldingUtenforVentetidFetcher.fetch(
                             `/syforest/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
                             { method: 'POST' },
