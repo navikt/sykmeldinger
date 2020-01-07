@@ -87,6 +87,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                                     placeholder="Trykk for å velge periode"
                                     onChange={datoer => oppdaterPeriode(periode.id, datoer)}
                                     options={{
+                                        position: 'below',
                                         minDate: new Date('10.02.2019'),
                                         maxDate: new Date('11.10.2019'),
                                         mode: 'range',

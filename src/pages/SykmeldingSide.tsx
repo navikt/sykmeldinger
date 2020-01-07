@@ -7,7 +7,7 @@ import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import useAppStore from '../store/useAppStore';
 import Brodsmuler, { Brodsmule } from '../components/Brodsmuler/Brodsmuler';
-import { Status } from '../types/sykmeldingDataTypes';
+import { StatusTyper } from '../types/sykmeldingDataTypes';
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -37,7 +37,7 @@ const SykmeldingSide = () => {
 
     const SykmeldingComponent = (() => {
         switch (sykmeldingStatus) {
-            case Status.NY: {
+            case StatusTyper.NY: {
                 if (sykmeldingUtenforVentetid === null) {
                     // TODO: Error-melding, ingen sykmelding funnet
                     return null;
@@ -52,13 +52,13 @@ const SykmeldingSide = () => {
                 );
             }
 
-            case Status.AVBRUTT:
+            case StatusTyper.AVBRUTT:
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
-            case Status.AVVIST:
+            case StatusTyper.AVVIST:
                 return <AvvistSykmelding sykmelding={sykmelding} />;
-            case Status.SENDT:
+            case StatusTyper.SENDT:
                 return <SendtSykmelding sykmelding={sykmelding} />;
-            case Status.BEKREFTET:
+            case StatusTyper.BEKREFTET:
                 return <BekreftetSykmelding sykmelding={sykmelding} />;
             default:
                 return null;

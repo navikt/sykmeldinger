@@ -13,7 +13,7 @@ import useFetch, {
     isAnyPending,
     isNotStarted,
 } from '../hooks/useFetch';
-import { Status, SykmeldingData } from '../types/sykmeldingDataTypes';
+import { StatusTyper, SykmeldingData } from '../types/sykmeldingDataTypes';
 import { Sykmelding } from '../types/sykmeldingTypes';
 
 const DataFetcher = (props: { children: any }) => {
@@ -45,7 +45,7 @@ const DataFetcher = (props: { children: any }) => {
                     );
 
                     // Dersom sykmeldingen er ny skal den berikes
-                    if (sykmeldingStatus === Status.NY) {
+                    if (sykmeldingStatus === StatusTyper.NY) {
                         sykmeldingUtenforVentetidFetcher.fetch(
                             `/syforest/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
                             { method: 'POST' },
