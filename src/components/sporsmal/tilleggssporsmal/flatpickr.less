@@ -1,5 +1,9 @@
 @import '~nav-frontend-core/less/_variabler.less';
 
+.flatpickr {
+    cursor: pointer;
+}
+
 .form-control .input {
     width: 100%;
     padding: 12px 20px;
@@ -146,6 +150,8 @@
 
     &.arrowBottom {
         &:before {
+            transform: rotate(-225deg);
+            left: 44px;
             border-top-color: @navGra40;
         }
 
