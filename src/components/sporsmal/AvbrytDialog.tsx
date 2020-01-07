@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import tekster from './sporsmal-tekster';
