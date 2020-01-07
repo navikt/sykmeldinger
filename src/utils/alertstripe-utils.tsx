@@ -1,6 +1,6 @@
 import React from 'react';
 import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 interface AlertStripeHjelperProps {
     vis: boolean;

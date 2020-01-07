@@ -1,13 +1,12 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.less';
 import './basic.less';
 
-import SykmeldingSide from './pages/SykmeldingSide';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import useAppStore from './store/useAppStore';
 import DataFetcher from './components/DataFetcher';
-import TidslinjeSide from './pages/TidslinjeSide';
+import SykmeldingSide from './pages/SykmeldingSide';
+import useAppStore from './store/useAppStore';
 
 const App = () => {
     return (
@@ -17,7 +16,6 @@ const App = () => {
                     <Switch>
                         <Route exact path="/sykmeldinger" component={SykmeldingSide} />
                         <Route path="/sykmeldinger/:id" component={SykmeldingSide} />
-                        <Route path="/tidslinje" component={TidslinjeSide} />
                     </Switch>
                 </BrowserRouter>
             </DataFetcher>

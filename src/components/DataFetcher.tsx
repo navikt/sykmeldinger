@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
 import Spinner from 'nav-frontend-spinner';
+import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+
+import Arbeidsgiver from '../types/arbeidsgiverTypes';
+import ErUtenforVentetidData from '../types/erUtenforVentetidTypes';
+import useAppStore from '../store/useAppStore';
 import useFetch, {
-    isNotStarted,
     FetchState,
+    hasAnyFailed,
     hasData,
     isAnyNotStartedOrPending,
-    hasAnyFailed,
     isAnyPending,
+    isNotStarted,
 } from '../hooks/useFetch';
-import useAppStore from '../store/useAppStore';
+import { StatusTyper, SykmeldingData } from '../types/sykmeldingDataTypes';
 import { Sykmelding } from '../types/sykmeldingTypes';
-import { SykmeldingData, StatusTyper } from '../types/sykmeldingDataTypes';
-import ErUtenforVentetidData from '../types/erUtenforVentetidTypes';
-import Arbeidsgiver from '../types/arbeidsgiverTypes';
 
 const DataFetcher = (props: { children: any }) => {
     const { setSykmelding, setSykmeldingStatus, setArbeidsgivere, setSykmeldingUtenforVentetid } = useAppStore();

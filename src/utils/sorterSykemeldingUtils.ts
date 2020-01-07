@@ -1,5 +1,6 @@
-import { Periode } from '../types/sykmeldingTypes';
 import dayjs from 'dayjs';
+
+import { Periode } from '../types/sykmeldingTypes';
 
 export function sorterPerioderEldsteFoerst(perioder: Periode[]) {
     return perioder.sort(({ fom }, { tom }) => {

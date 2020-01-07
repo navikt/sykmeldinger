@@ -1,5 +1,5 @@
-import { sorterPerioderEldsteFoerst } from './sorterSykemeldingUtils';
 import { Periode } from '../types/sykmeldingTypes';
+import { sorterPerioderEldsteFoerst } from './sorterSykemeldingUtils';
 
 it('Sorterer perioder etter eldste først', () => {
     const perioder: Periode[] = [

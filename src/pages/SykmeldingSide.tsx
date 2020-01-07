@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Brodsmuler, { Brodsmule } from '../components/brodsmuler/brodsmuler';
+import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
+import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
+import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
+import NySykmelding from './NySykmelding/NySykmelding';
+import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import useAppStore from '../store/useAppStore';
-import NySykmelding from '../components/sykmelding/nysykmelding/NySykmelding';
+import Brodsmuler, { Brodsmule } from '../components/Brodsmuler/Brodsmuler';
 import { StatusTyper } from '../types/sykmeldingDataTypes';
-import AvvistSykmelding from '../components/sykmelding/avvistsykmelding/AvvistSykmelding';
-import AvbruttSykmelding from '../components/sykmelding/avbruttsykmelding/AvbruttSykmelding';
-import SendtSykmelding from '../components/sykmelding/sendtsykmelding/SendtSykmelding';
-import BekreftetSykmelding from '../components/sykmelding/bekreftetsykmelding/BekreftetSykmelding';
 
 const brodsmuler: Brodsmule[] = [
     {
