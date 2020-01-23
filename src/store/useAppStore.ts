@@ -2,7 +2,7 @@ import createUseContext from 'constate';
 import { useState } from 'react';
 
 import Arbeidsgiver from '../types/arbeidsgiverTypes';
-import { StatusTyper } from '../types/sykmeldingDataTypes';
+import { StatusTyper } from '../types/sykmeldingTypes';
 import { Sykmelding } from '../types/sykmeldingTypes';
 
 const useAppStore = createUseContext(() => {

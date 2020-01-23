@@ -1,5 +1,31 @@
 import dayjs from 'dayjs';
 
+export enum StatusTyper {
+    NY = 'ny',
+    AVVIST = 'avvist',
+    AVBRUTT = 'avbrutt',
+    SENDT = 'sendt',
+    BEKREFTET = 'bekreftet',
+}
+
+export class Status {
+    status: StatusTyper;
+    dato?: Date;
+    datoBekreftet?: Date;
+    sykmeldtFra?: string;
+    arbeidsgiver?: string;
+    organisasjonsnummer?: string;
+
+    constructor(data: any) {
+        this.status = data.status;
+        this.dato = data.dato;
+        this.datoBekreftet = data.datoBekreftet;
+        this.sykmeldtFra = data.sykmeldtFra;
+        this.arbeidsgiver = data.arbeidsgiver;
+        this.organisasjonsnummer = data.organisasjonsnummer;
+    }
+}
+
 export class MedisinskVurdering {
     hovedDiagnose?: Diagnose;
     biDiagnoser: Diagnose[];
@@ -340,5 +366,178 @@ export class Sykmelding {
             : undefined;
         this.signaturDato = dayjs(sykmelding.signaturDato).toDate();
         this.navnFastlege = sykmelding.navnFastlege;
+    }
+}
+
+export class SykmeldingDTO {
+    id: string;
+    mottattTidspunkt: Date;
+    bekreftetDato?: Date;
+    behandlingsutfall: BehandlingsutfallDTO;
+    legekontorOrgnummer?: string;
+    legeNavn?: string;
+    arbeidsgiver?: ArbeidsgiverDTO;
+    sykmeldingsperioder: SykmeldingsperiodeDTO[];
+    sykmeldingStatus?: SykmeldingStatusDTO; // todo: opprett statusklasse og gjør obligatorisk
+
+    constructor(sykmeldingDTO: any) {
+        this.id = sykmeldingDTO.id;
+        this.mottattTidspunkt = sykmeldingDTO.mottattTidspunkt;
+        this.bekreftetDato = sykmeldingDTO.bekreftetDato ? dayjs(sykmeldingDTO.bekreftetDato).toDate() : undefined;
+        this.behandlingsutfall = new BehandlingsutfallDTO(sykmeldingDTO.behandlingsutfall);
+        this.legekontorOrgnummer = sykmeldingDTO.legekontorOrgnummer ? sykmeldingDTO.legekontorOrgnummer : undefined;
+        this.legeNavn = sykmeldingDTO.legeNavn ? sykmeldingDTO.legeNavn : undefined;
+        this.arbeidsgiver = sykmeldingDTO.arbeidsgiver ? new ArbeidsgiverDTO(sykmeldingDTO.arbeidsgiver) : undefined;
+        this.sykmeldingsperioder = sykmeldingDTO.sykmeldingsperioder.map(
+            (periode: SykmeldingsperiodeDTO) => new SykmeldingsperiodeDTO(periode),
+        );
+    }
+}
+
+export class SkjermetSykmeldingDTO {
+    id: string;
+    mottattTidspunkt: Date;
+    bekreftetDato?: Date;
+    behandlingsutfall: BehandlingsutfallDTO;
+    legekontorOrgnummer?: string;
+    legeNavn?: string;
+    arbeidsgiver?: ArbeidsgiverDTO;
+    sykmeldingsperioder: SykmeldingsperiodeDTO[];
+    sykmeldingStatus?: SykmeldingStatusDTO; // todo: opprett statusklasse og gjør obligatorisk
+
+    constructor(skjermetSykmeldingDTO: any) {
+        this.id = skjermetSykmeldingDTO.id;
+        this.mottattTidspunkt = skjermetSykmeldingDTO.mottattTidspunkt;
+        this.bekreftetDato = skjermetSykmeldingDTO.bekreftetDato
+            ? dayjs(skjermetSykmeldingDTO.bekreftetDato).toDate()
+            : undefined;
+        this.behandlingsutfall = new BehandlingsutfallDTO(skjermetSykmeldingDTO.behandlingsutfall);
+        this.legekontorOrgnummer = skjermetSykmeldingDTO.legekontorOrgnummer
+            ? skjermetSykmeldingDTO.legekontorOrgnummer
+            : undefined;
+        this.legeNavn = skjermetSykmeldingDTO.legeNavn ? skjermetSykmeldingDTO.legeNavn : undefined;
+        this.arbeidsgiver = skjermetSykmeldingDTO.arbeidsgiver
+            ? new ArbeidsgiverDTO(skjermetSykmeldingDTO.arbeidsgiver)
+            : undefined;
+        this.sykmeldingsperioder = skjermetSykmeldingDTO.sykmeldingsperioder.map(
+            (periode: SykmeldingsperiodeDTO) => new SykmeldingsperiodeDTO(periode),
+        );
+    }
+}
+
+export class FullstendigSykmeldingDTO {
+    id: string;
+    mottattTidspunkt: Date;
+    bekreftetDato?: Date;
+    behandlingsutfall: BehandlingsutfallDTO;
+    legekontorOrgnummer?: string;
+    legeNavn?: string;
+    arbeidsgiver?: ArbeidsgiverDTO;
+    sykmeldingsperioder: SykmeldingsperiodeDTO[];
+    sykmeldingStatus?: SykmeldingStatusDTO; // todo: opprett statusklasse og gjør obligatorisk
+    medisinskVurdering: MedisinskVurdering;
+
+    constructor(fullstendigSykmeldingDTO: any) {
+        this.id = fullstendigSykmeldingDTO.id;
+        this.mottattTidspunkt = fullstendigSykmeldingDTO.mottattTidspunkt;
+        this.bekreftetDato = fullstendigSykmeldingDTO.bekreftetDato
+            ? dayjs(fullstendigSykmeldingDTO.bekreftetDato).toDate()
+            : undefined;
+        this.behandlingsutfall = new BehandlingsutfallDTO(fullstendigSykmeldingDTO.behandlingsutfall);
+        this.legekontorOrgnummer = fullstendigSykmeldingDTO.legekontorOrgnummer
+            ? fullstendigSykmeldingDTO.legekontorOrgnummer
+            : undefined;
+        this.legeNavn = fullstendigSykmeldingDTO.legeNavn ? fullstendigSykmeldingDTO.legeNavn : undefined;
+        this.arbeidsgiver = fullstendigSykmeldingDTO.arbeidsgiver
+            ? new ArbeidsgiverDTO(fullstendigSykmeldingDTO.arbeidsgiver)
+            : undefined;
+        this.sykmeldingsperioder = fullstendigSykmeldingDTO.sykmeldingsperioder.map(
+            (periode: SykmeldingsperiodeDTO) => new SykmeldingsperiodeDTO(periode),
+        );
+        this.medisinskVurdering = new MedisinskVurdering(fullstendigSykmeldingDTO.medisinskVurdering);
+    }
+}
+enum BehandlingsutfallStatusDTO {
+    OK = 'OK',
+    MANUAL_PROCESSING = 'MANUAL_PROCESSING',
+    INVALID = 'INVALID',
+}
+
+class BehandlingsutfallDTO {
+    ruleHits: RegelinfoDTO[];
+    status: BehandlingsutfallStatusDTO;
+
+    constructor(behandlingsutfallDTO: any) {
+        this.ruleHits = behandlingsutfallDTO.ruleHits.map((regel: RegelinfoDTO) => new RegelinfoDTO(regel));
+        this.status =
+            BehandlingsutfallStatusDTO[behandlingsutfallDTO.status as keyof typeof BehandlingsutfallStatusDTO];
+    }
+}
+
+class SykmeldingStatusDTO {}
+
+class RegelinfoDTO {
+    messageForSender: string;
+    messageForUser: string;
+    ruleName: string;
+    ruleStatus?: BehandlingsutfallStatusDTO;
+
+    constructor(regelinfoDTO: any) {
+        this.messageForSender = regelinfoDTO.messageForSender;
+        this.messageForUser = regelinfoDTO.messageForUser;
+        this.ruleName = regelinfoDTO.ruleName;
+        this.ruleStatus = regelinfoDTO.ruleStatus
+            ? BehandlingsutfallStatusDTO[regelinfoDTO.status as keyof typeof BehandlingsutfallStatusDTO]
+            : undefined;
+    }
+}
+
+class ArbeidsgiverDTO {
+    navn: string;
+    stillingsprosent?: number;
+
+    constructor(arbeidsgiverDTO: any) {
+        this.navn = arbeidsgiverDTO.navn;
+        this.stillingsprosent = arbeidsgiverDTO.stillingsprosent ? arbeidsgiverDTO.stillingsprosent : undefined;
+    }
+}
+
+enum PeriodetypeDTO {
+    AKTIVITET_IKKE_MULIG = 'AKTIVITET_IKKE_MULIG',
+    AVVENTENDE = 'AVVENTENDE',
+    BEHANDLINGSDAGER = 'BEHANDLINGSDAGER',
+    GRADERT = 'GRADERT',
+    REISETILSKUDD = 'REISETILSKUDD',
+}
+
+class SykmeldingsperiodeDTO {
+    fom: Date;
+    tom: Date;
+    gradert?: GradertDTO;
+    behandlingsdager?: number;
+    innspillTilArbeidsgiver?: string;
+    type: PeriodetypeDTO;
+
+    constructor(sykmeldingsperiodeDTO: any) {
+        this.fom = dayjs(sykmeldingsperiodeDTO.fom).toDate();
+        this.tom = dayjs(sykmeldingsperiodeDTO.tom).toDate();
+        this.gradert = sykmeldingsperiodeDTO.gradert ? new GradertDTO(sykmeldingsperiodeDTO.gradert) : undefined;
+        this.behandlingsdager = sykmeldingsperiodeDTO.behandlingsdager
+            ? sykmeldingsperiodeDTO.behandlingsdager
+            : undefined;
+        this.innspillTilArbeidsgiver = sykmeldingsperiodeDTO.innspillTilArbeidsgiver
+            ? sykmeldingsperiodeDTO.innspillTilArbeidsgiver
+            : undefined;
+        this.type = PeriodetypeDTO[sykmeldingsperiodeDTO.type as keyof typeof PeriodetypeDTO];
+    }
+}
+
+class GradertDTO {
+    grad: number;
+    reisetilskudd: boolean;
+
+    constructor(gradertDTO: any) {
+        this.grad = gradertDTO.grad;
+        this.reisetilskudd = gradertDTO.reisetilskudd;
     }
 }
