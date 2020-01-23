@@ -3,11 +3,12 @@ import React from 'react';
 import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
 import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
+import DataFetcher from '../components/DataFetcher';
 import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import useAppStore from '../store/useAppStore';
 import Brodsmuler, { Brodsmule } from '../components/Brodsmuler/Brodsmuler';
-import { StatusTyper } from '../types/sykmeldingDataTypes';
+import { StatusTyper } from '../types/sykmeldingTypes';
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -78,4 +79,12 @@ const SykmeldingSide = () => {
     );
 };
 
-export default SykmeldingSide;
+const SykmeldingWithFetcher = () => {
+    return (
+        <DataFetcher>
+            <SykmeldingSide />
+        </DataFetcher>
+    );
+};
+
+export default SykmeldingWithFetcher;

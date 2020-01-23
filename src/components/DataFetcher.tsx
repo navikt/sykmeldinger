@@ -1,6 +1,7 @@
 import Spinner from 'nav-frontend-spinner';
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { useParams } from 'react-router-dom';
 
 import Arbeidsgiver from '../types/arbeidsgiverTypes';
 import ErUtenforVentetidData from '../types/erUtenforVentetidTypes';
@@ -13,53 +14,60 @@ import useFetch, {
     isAnyPending,
     isNotStarted,
 } from '../hooks/useFetch';
-import { StatusTyper, SykmeldingData } from '../types/sykmeldingDataTypes';
-import { Sykmelding } from '../types/sykmeldingTypes';
+import { StatusTyper, Sykmelding } from '../types/sykmeldingTypes';
+import { SykmeldingData } from '../types/sykmeldingDataTypes';
 
-const DataFetcher = (props: { children: any }) => {
+const DataFetcher = (props: { children?: any }) => {
     const { setSykmelding, setSykmeldingStatus, setArbeidsgivere, setSykmeldingUtenforVentetid } = useAppStore();
     const sykmeldingFetcher = useFetch<SykmeldingData>();
     const arbeidsgivereFetcher = useFetch<Arbeidsgiver[]>();
     const sykmeldingUtenforVentetidFetcher = useFetch<ErUtenforVentetidData>();
 
+    const { id } = useParams();
+
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
-            sykmeldingFetcher.fetch('/syforest/sykmelding/', undefined, (fetchState: FetchState<SykmeldingData>) => {
-                if (hasData(fetchState)) {
-                    const { data } = fetchState;
-                    const sykmelding = new Sykmelding(data.sykmelding);
-                    const sykmeldingStatus = data.status;
-                    setSykmelding(sykmelding);
-                    setSykmeldingStatus(sykmeldingStatus);
+            sykmeldingFetcher.fetch(
+                `${process.env.REACT_APP_API_URL}/sykmelding/${id}`,
+                undefined,
+                (fetchState: FetchState<SykmeldingData>) => {
+                    if (hasData(fetchState)) {
+                        const { data } = fetchState;
+                        const sykmelding = new Sykmelding(data.sykmelding);
+                        const sykmeldingStatus = data.status.status;
+                        setSykmelding(sykmelding);
+                        setSykmeldingStatus(sykmeldingStatus);
 
-                    arbeidsgivereFetcher.fetch(
-                        `/syforest/informasjon/arbeidsgivere?sykmeldingId=${sykmelding.id}`,
-                        undefined,
-                        (fetchState: FetchState<Arbeidsgiver[]>) => {
-                            if (hasData(fetchState)) {
-                                const { data } = fetchState;
-                                const arbeidsgivere = data.map(ag => new Arbeidsgiver(ag));
-                                setArbeidsgivere(arbeidsgivere);
-                            }
-                        },
-                    );
-
-                    // Dersom sykmeldingen er ny skal den berikes
-                    if (sykmeldingStatus === StatusTyper.NY) {
-                        sykmeldingUtenforVentetidFetcher.fetch(
-                            `/syforest/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
-                            { method: 'POST' },
-                            (fetchState: FetchState<ErUtenforVentetidData>) => {
+                        arbeidsgivereFetcher.fetch(
+                            `${process.env.REACT_APP_API_URL}/informasjon/arbeidsgivere/${sykmelding.id}`,
+                            undefined,
+                            (fetchState: FetchState<Arbeidsgiver[]>) => {
                                 if (hasData(fetchState)) {
-                                    setSykmeldingUtenforVentetid(fetchState.data.erUtenforVentetid);
+                                    const { data } = fetchState;
+                                    const arbeidsgivere = data.map(ag => new Arbeidsgiver(ag));
+                                    setArbeidsgivere(arbeidsgivere);
                                 }
                             },
                         );
+
+                        // Dersom sykmeldingen er ny skal den berikes
+                        if (sykmeldingStatus === StatusTyper.NY) {
+                            sykmeldingUtenforVentetidFetcher.fetch(
+                                `${process.env.REACT_APP_API_URL}/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
+                                { method: 'POST' },
+                                (fetchState: FetchState<ErUtenforVentetidData>) => {
+                                    if (hasData(fetchState)) {
+                                        setSykmeldingUtenforVentetid(fetchState.data.erUtenforVentetid);
+                                    }
+                                },
+                            );
+                        }
                     }
-                }
-            });
+                },
+            );
         }
     }, [
+        id,
         setSykmeldingUtenforVentetid,
         setSykmelding,
         setSykmeldingStatus,
