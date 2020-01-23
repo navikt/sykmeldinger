@@ -8,13 +8,8 @@ import ReactDOM from 'react-dom';
 
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import env from './utils/environment';
 
 dayjs.locale('nb');
-
-if (env.isDevelopment || env.isRunningOnHeroku) {
-    require('./mock');
-}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
