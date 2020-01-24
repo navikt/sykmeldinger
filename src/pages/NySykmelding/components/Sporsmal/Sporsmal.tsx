@@ -1,10 +1,10 @@
 import './Sporsmal.less';
 
 import PanelBase from 'nav-frontend-paneler';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import useForm, { FormContext } from 'react-hook-form';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import AnnenArbeidsgiver from './AnnenArbeidsgiver';
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
@@ -53,6 +53,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const watchDiagnose = watch(Skjemafelt.DIAGNOSE);
     const watchAndreOpplysninger = watch(Skjemafelt.ANDRE_OPPLYSNINGER);
 
+    // TODO: legg til skjemadata type
     const onSubmit = (skjemaData: any) => {
         const skalSende = skjemaData.sykmeldtFra.includes(Arbeidsforhold.ARBEIDSGIVER);
 
@@ -69,7 +70,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            console.log('redirect');
                             history.push('/sendt');
                         }
                     },
@@ -88,7 +88,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            console.log('redirect');
                             history.push('/bekreftet');
                         }
                     },
@@ -98,18 +97,19 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     };
 
     const onAvbryt = () => {
-        avbrytSykmelding.fetch(
-            `${process.env.REACT_APP_API_URL}/sykmelding/avbryt/${sykmelding.id}`,
-            {
-                method: 'POST',
-            },
-            (fetchState: FetchState<any>) => {
-                if (hasFinished(fetchState)) {
-                    console.log('redirect');
-                    history.push('/avbrutt');
-                }
-            },
-        );
+        if (isNotStarted(avbrytSykmelding)) {
+            avbrytSykmelding.fetch(
+                `${process.env.REACT_APP_API_URL}/sykmelding/avbryt/${sykmelding.id}`,
+                {
+                    method: 'POST',
+                },
+                (fetchState: FetchState<any>) => {
+                    if (hasFinished(fetchState)) {
+                        history.push('/avbrutt');
+                    }
+                },
+            );
+        }
     };
 
     return (
