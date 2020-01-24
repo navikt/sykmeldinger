@@ -73,17 +73,19 @@ const SykmeldingSide = () => {
     }
 
     return (
-        <div className="limit">
-            <Brodsmuler brodsmuler={brodsmuler} />
-            {SykmeldingComponent}
-        </div>
+        <>
+            <Header location="Sykmelding" />
+            <div className="limit">
+                <Brodsmuler brodsmuler={brodsmuler} />
+                {SykmeldingComponent}
+            </div>
+        </>
     );
 };
 
 const SykmeldingWithFetcher = () => {
     return (
         <DataFetcher>
-            <Header location="Sykmelding" />
             <SykmeldingSide />
         </DataFetcher>
     );
