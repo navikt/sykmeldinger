@@ -4,6 +4,7 @@ import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
 import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
 import DataFetcher from '../components/DataFetcher';
+import Header from '../components/Header/Header';
 import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import useAppStore from '../store/useAppStore';
@@ -82,6 +83,7 @@ const SykmeldingSide = () => {
 const SykmeldingWithFetcher = () => {
     return (
         <DataFetcher>
+            <Header location="Sykmelding" />
             <SykmeldingSide />
         </DataFetcher>
     );
