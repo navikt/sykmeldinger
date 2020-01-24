@@ -59,6 +59,7 @@
     },
     "scripts": {
         "start": "craco start",
+        "standalone": "REACT_APP_STANDALONE craco start",
         "build": "craco build",
         "test": "craco test",
         "eject": "react-scripts eject",

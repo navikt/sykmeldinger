@@ -13,7 +13,13 @@ Ny landingsside for ditt sykefravær.
 
 Last ned og start https://github.com/navikt/sykefravaer-mock for å kunne hente data.
 
-Start appen med:
+Ved utvikling uten redirects til https://github.com/navikt/nytt-sykefravaer:
+
+```
+npm run standalone
+```
+
+Ved utvikling med redirect til https://github.com/navikt/nytt-sykefravaer
 
 ```
 npm start

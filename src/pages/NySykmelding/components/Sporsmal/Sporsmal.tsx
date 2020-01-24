@@ -70,7 +70,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            window.location.reload();
+                            // Hvis appen kjører i standalone modus, skal vi ikke redirecte til annen app
+                            if (process.env.REACT_APP_STANDALONE) {
+                                window.location.reload();
+                            } else {
+                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
+                            }
                         }
                     },
                 );
@@ -88,7 +93,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            window.location.reload();
+                            // Hvis appen kjører i standalone modus, skal vi ikke redirecte til annen app
+                            if (process.env.REACT_APP_STANDALONE) {
+                                window.location.reload();
+                            } else {
+                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
+                            }
                         }
                     },
                 );
@@ -105,7 +115,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 },
                 (fetchState: FetchState<any>) => {
                     if (hasFinished(fetchState)) {
-                        window.location.reload();
+                        // Hvis appen kjører i standalone modus, skal vi ikke redirecte til annen app
+                        if (process.env.REACT_APP_STANDALONE) {
+                            window.location.reload();
+                        } else {
+                            window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
+                        }
                     }
                 },
             );
