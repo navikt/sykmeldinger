@@ -87,8 +87,10 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         body: JSON.stringify({ id: sykmelding.id, skjemaData }),
                     },
                     (fetchState: FetchState<any>) => {
-                        console.log(fetchState.data);
-                        // TODO: Redirect til kvitteringsside
+                        if (hasFinished(fetchState)) {
+                            console.log('redirect');
+                            history.push('/bekreftet');
+                        }
                     },
                 );
             }
@@ -96,12 +98,16 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     };
 
     const onAvbryt = () => {
-        console.log('avbryter sykmelding');
         avbrytSykmelding.fetch(
-            `${process.env.REACT_APP_API_URL}/sykmelding/avbryt/${sykmelding.id}/`,
-            undefined,
+            `${process.env.REACT_APP_API_URL}/sykmelding/avbryt/${sykmelding.id}`,
+            {
+                method: 'POST',
+            },
             (fetchState: FetchState<any>) => {
-                // TODO: Redirect til ...
+                if (hasFinished(fetchState)) {
+                    console.log('redirect');
+                    history.push('/avbrutt');
+                }
             },
         );
     };
