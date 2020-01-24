@@ -70,7 +70,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            history.push('/sendt');
+                            window.location.reload();
                         }
                     },
                 );
@@ -88,7 +88,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            history.push('/bekreftet');
+                            window.location.reload();
                         }
                     },
                 );
@@ -105,7 +105,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 },
                 (fetchState: FetchState<any>) => {
                     if (hasFinished(fetchState)) {
-                        history.push('/avbrutt');
+                        window.location.reload();
                     }
                 },
             );
