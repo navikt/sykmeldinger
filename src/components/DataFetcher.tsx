@@ -23,12 +23,12 @@ const DataFetcher = (props: { children?: any }) => {
     const arbeidsgivereFetcher = useFetch<Arbeidsgiver[]>();
     const sykmeldingUtenforVentetidFetcher = useFetch<ErUtenforVentetidData>();
 
-    const { id } = useParams();
+    const { sykmeldingId } = useParams();
 
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
             sykmeldingFetcher.fetch(
-                `${process.env.REACT_APP_API_URL}/sykmelding/${id}`,
+                `${process.env.REACT_APP_API_URL}/sykmelding/${sykmeldingId}`,
                 undefined,
                 (fetchState: FetchState<SykmeldingData>) => {
                     if (hasData(fetchState)) {
@@ -67,7 +67,7 @@ const DataFetcher = (props: { children?: any }) => {
             );
         }
     }, [
-        id,
+        sykmeldingId,
         setSykmeldingUtenforVentetid,
         setSykmelding,
         setSykmeldingStatus,
