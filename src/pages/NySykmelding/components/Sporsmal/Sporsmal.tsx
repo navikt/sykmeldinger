@@ -70,8 +70,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            // Hvis appen kjører i standalone modus, skal vi ikke redirecte til annen app
-                            if (process.env.REACT_APP_STANDALONE) {
+                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                            if (process.env.REACT_APP_SOLO) {
                                 window.location.reload();
                             } else {
                                 window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
@@ -93,8 +93,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                     },
                     (fetchState: FetchState<any>) => {
                         if (hasFinished(fetchState)) {
-                            // Hvis appen kjører i standalone modus, skal vi ikke redirecte til annen app
-                            if (process.env.REACT_APP_STANDALONE) {
+                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                            if (process.env.REACT_APP_SOLO) {
                                 window.location.reload();
                             } else {
                                 window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
@@ -115,8 +115,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 },
                 (fetchState: FetchState<any>) => {
                     if (hasFinished(fetchState)) {
-                        // Hvis appen kjører i standalone modus, skal vi ikke redirecte til annen app
-                        if (process.env.REACT_APP_STANDALONE) {
+                        // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                        if (process.env.REACT_APP_SOLO) {
                             window.location.reload();
                         } else {
                             window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);

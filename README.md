@@ -16,7 +16,7 @@ Last ned og start https://github.com/navikt/sykefravaer-mock for å kunne hente 
 Ved utvikling uten redirects til https://github.com/navikt/nytt-sykefravaer:
 
 ```
-npm run standalone
+npm run solo
 ```
 
 Ved utvikling med redirect til https://github.com/navikt/nytt-sykefravaer
@@ -24,6 +24,8 @@ Ved utvikling med redirect til https://github.com/navikt/nytt-sykefravaer
 ```
 npm start
 ```
+
+Merk at ved utvikling med redirect må riktig URL til Sykefravær-appen settes. Dette gjøres i .env-filen ved å endre REACT_APP_SYKEFRAVAER_URL.
 
 ### Kjør tester
 
