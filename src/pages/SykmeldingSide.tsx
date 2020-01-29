@@ -1,36 +1,45 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
 import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
+import Brodsmuler from '../components/Brodsmuler/Brodsmuler';
 import DataFetcher from '../components/DataFetcher';
 import Header from '../components/Header/Header';
 import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import useAppStore from '../store/useAppStore';
-import Brodsmuler, { Brodsmule } from '../components/Brodsmuler/Brodsmuler';
 import { StatusTyper } from '../types/sykmeldingTypes';
 
-const brodsmuler: Brodsmule[] = [
-    {
-        tittel: 'Ditt sykefravaer',
-        sti: '/',
-        erKlikkbar: true,
-    },
-    {
-        tittel: 'Sykmeldinger',
-        sti: '/sykmeldinger',
-        erKlikkbar: true,
-    },
-    {
-        tittel: 'Sykmelding',
-        sti: '/sykmeldinger/:id',
-        erKlikkbar: false,
-    },
-];
+const getBrodsmuler = (fravaerId?: string) => {
+    return [
+        {
+            tittel: 'Sykefravær',
+            sti: '/',
+            erKlikkbar: true,
+        },
+        {
+            tittel: 'Oversikt',
+            sti: '/fravaer',
+            erKlikkbar: true,
+        },
+        {
+            tittel: 'Status',
+            sti: `/fravaer/${fravaerId}`,
+            erKlikkbar: true,
+        },
+        {
+            tittel: 'Sykmelding',
+            sti: '/sykmeldinger/:id',
+            erKlikkbar: false,
+        },
+    ];
+};
 
 const SykmeldingSide = () => {
     const { sykmelding, sykmeldingStatus, arbeidsgivere, sykmeldingUtenforVentetid } = useAppStore();
+    const { fravaerId } = useParams();
 
     if (!sykmelding || arbeidsgivere === null) {
         // TODO: Error-melding, ingen sykmelding funnet
@@ -71,6 +80,8 @@ const SykmeldingSide = () => {
         // TODO: Error-melding, ingen gyldig sykemeldingstype definert
         return null;
     }
+
+    const brodsmuler = getBrodsmuler(fravaerId);
 
     return (
         <>
