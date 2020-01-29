@@ -30,6 +30,10 @@ const UtdypendeOpplysninger = ({ opplysninger }: UtdypendeOpplysningerProps) => 
         sykmelding.utdypendeOpplysninger.henvisningUtredningBehandling;
     */
 
+    if (opplysninger.size === 0) {
+        return null;
+    }
+
     const opplysningGrupper = Array.from(opplysninger).map(([key, opplysningGruppe]) => (
         <Margin key={key}>
             <OpplysningsGruppe opplysningGruppe={opplysningGruppe} />

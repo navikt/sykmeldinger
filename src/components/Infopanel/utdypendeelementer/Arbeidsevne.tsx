@@ -10,14 +10,19 @@ interface ArbeidsevneProps {
 }
 
 const Arbeidsevne = ({ tiltakArbeidsplassen, tiltakNAV }: ArbeidsevneProps) => {
+    if (!tiltakArbeidsplassen && !tiltakNAV) {
+        return null;
+    }
+
     return (
         <SeksjonMedTittel understrek tittel={tekster['arbeidsevne.tittel']}>
             <ElementMedTekst
                 tittel={tekster['arbeidsevne.tilrettelegging.tittel']}
                 tekst={tiltakArbeidsplassen}
                 margin
+                vis={!!tiltakArbeidsplassen}
             />
-            <ElementMedTekst tittel={tekster['arbeidsevne.tiltak.tittel']} tekst={tiltakNAV} margin />
+            <ElementMedTekst tittel={tekster['arbeidsevne.tiltak.tittel']} tekst={tiltakNAV} margin vis={!!tiltakNAV} />
         </SeksjonMedTittel>
     );
 };
