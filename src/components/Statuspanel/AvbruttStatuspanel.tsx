@@ -7,6 +7,7 @@ import { Panel } from 'nav-frontend-paneler';
 import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
 import Margin from '../Infopanel/layout/Margin';
 import tekster from './Statuspanel-tekster';
+import useFetch, { FetchState, hasFinished, isNotStarted } from '../../hooks/useFetch';
 import { Sykmelding } from '../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../utils/datoUtils';
 
@@ -15,6 +16,8 @@ interface AvbruttStatuspanelProps {
 }
 
 const AvbruttStatuspanel = ({ sykmelding }: AvbruttStatuspanelProps) => {
+    const brukSykmelding = useFetch<any>();
+
     // TODO: sykmelding.bekreftetDato
     if (!true) {
         return null;
@@ -41,7 +44,26 @@ const AvbruttStatuspanel = ({ sykmelding }: AvbruttStatuspanelProps) => {
                     </div>
                 </div>
                 <div className="statuspanel-knapp">
-                    <Knapp onClick={() => console.log('bruk sykmelding')}>Bruk sykmeldingen</Knapp>
+                    <Knapp
+                        onClick={() => {
+                            if (isNotStarted(brukSykmelding)) {
+                                brukSykmelding.fetch(
+                                    `${process.env.REACT_APP_API_URL}/sykmelding/bruk/${sykmelding.id}`,
+                                    {
+                                        method: 'POST',
+                                    },
+                                    (fetchState: FetchState<any>) => {
+                                        if (hasFinished(fetchState)) {
+                                            // TODO: Trigger refetch uten å reloade siden
+                                            window.location.reload();
+                                        }
+                                    },
+                                );
+                            }
+                        }}
+                    >
+                        Bruk sykmeldingen
+                    </Knapp>
                 </div>
             </Panel>
         </Margin>
