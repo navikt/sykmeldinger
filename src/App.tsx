@@ -7,7 +7,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SykmeldingSide from './pages/SykmeldingSide';
 import useAppStore from './store/useAppStore';
 
-const App = () => {
+const App = ({ sykmeldingId }: { sykmeldingId: string }) => {
+    console.log(sykmeldingId);
     return (
         <useAppStore.Provider>
             <BrowserRouter>

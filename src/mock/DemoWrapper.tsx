@@ -31,7 +31,7 @@ const DemoWrapper = () => {
             >
                 Reset
             </button>
-            <App />
+            <App sykmeldingId="asd" />
         </>
     );
 };

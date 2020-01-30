@@ -1,8 +1,12 @@
 {
     "name": "sykmeldinger-test3",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "private": false,
     "license": "MIT",
+    "files": [
+        "dist/*"
+    ],
+    "main": "dist/App.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/navikt/sykmeldinger"
@@ -105,6 +109,8 @@
         "react-dom": "^16.12.0"
     },
     "devDependencies": {
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.4",
         "@babel/plugin-proposal-optional-chaining": "^7.8.3",

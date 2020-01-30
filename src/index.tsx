@@ -16,7 +16,7 @@ dayjs.locale('nb');
 if (env.isDevelopment || env.isRunningOnHeroku) {
     ReactDOM.render(<DemoWrapper />, document.getElementById('root'));
 } else {
-    ReactDOM.render(<App />, document.getElementById('root'));
+    ReactDOM.render(<App sykmeldingId="asd" />, document.getElementById('root'));
 }
 
 // If you want your app to work offline and load faster, you can change
