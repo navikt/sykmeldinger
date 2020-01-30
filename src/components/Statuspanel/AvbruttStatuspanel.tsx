@@ -7,7 +7,7 @@ import { Panel } from 'nav-frontend-paneler';
 import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
 import Margin from '../Infopanel/layout/Margin';
 import tekster from './Statuspanel-tekster';
-import useFetch, { FetchState, hasFinished, isNotStarted } from '../../hooks/useFetch';
+import useFetch, { isNotStarted } from '../../hooks/useFetch';
 import { Sykmelding } from '../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../utils/datoUtils';
 
@@ -52,11 +52,9 @@ const AvbruttStatuspanel = ({ sykmelding }: AvbruttStatuspanelProps) => {
                                     {
                                         method: 'POST',
                                     },
-                                    (fetchState: FetchState<any>) => {
-                                        if (hasFinished(fetchState)) {
-                                            // TODO: Trigger refetch uten å reloade siden
-                                            window.location.reload();
-                                        }
+                                    () => {
+                                        // TODO: Trigger refetch uten å reloade siden
+                                        window.location.reload();
                                     },
                                 );
                             }

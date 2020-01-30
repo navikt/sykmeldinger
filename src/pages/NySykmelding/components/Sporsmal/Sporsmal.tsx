@@ -4,7 +4,6 @@ import PanelBase from 'nav-frontend-paneler';
 import React, { useRef, useState } from 'react';
 import useForm, { FormContext } from 'react-hook-form';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import { useHistory } from 'react-router-dom';
 
 import AnnenArbeidsgiver from './AnnenArbeidsgiver';
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
@@ -16,7 +15,7 @@ import HjelpetekstWrapper from '../../../../components/Hjelpetekst/HjelpetekstWr
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
 import Vis from '../../../../utils/vis';
 import tekster from './Sporsmal-tekster';
-import useFetch, { FetchState, FetchStatus, hasFinished, isNotStarted } from '../../../../hooks/useFetch';
+import useFetch, { FetchStatus, isNotStarted } from '../../../../hooks/useFetch';
 import { AlertStripeHjelper } from '../../../../utils/alertstripe-utils';
 import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsmalTypes';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
@@ -39,7 +38,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
     const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
     const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
-    const history = useHistory();
 
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
@@ -68,14 +66,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         },
                         body: JSON.stringify({ id: sykmelding.id, skjemaData }),
                     },
-                    (fetchState: FetchState<any>) => {
-                        if (hasFinished(fetchState)) {
-                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                            if (process.env.REACT_APP_SOLO) {
-                                window.location.reload();
-                            } else {
-                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                            }
+                    () => {
+                        // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                        if (process.env.REACT_APP_SOLO) {
+                            window.location.reload();
+                        } else {
+                            window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
                         }
                     },
                 );
@@ -91,14 +87,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         },
                         body: JSON.stringify({ id: sykmelding.id, skjemaData }),
                     },
-                    (fetchState: FetchState<any>) => {
-                        if (hasFinished(fetchState)) {
-                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                            if (process.env.REACT_APP_SOLO) {
-                                window.location.reload();
-                            } else {
-                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                            }
+                    () => {
+                        // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                        if (process.env.REACT_APP_SOLO) {
+                            window.location.reload();
+                        } else {
+                            window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
                         }
                     },
                 );
@@ -113,14 +107,12 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                 {
                     method: 'POST',
                 },
-                (fetchState: FetchState<any>) => {
-                    if (hasFinished(fetchState)) {
-                        // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                        if (process.env.REACT_APP_SOLO) {
-                            window.location.reload();
-                        } else {
-                            window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                        }
+                () => {
+                    // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                    if (process.env.REACT_APP_SOLO) {
+                        window.location.reload();
+                    } else {
+                        window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
                     }
                 },
             );
