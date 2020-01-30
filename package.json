@@ -1,7 +1,21 @@
 {
-    "name": "sykmeldinger",
+    "name": "sykmeldinger-test3",
     "version": "0.1.0",
-    "private": true,
+    "private": false,
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/navikt/sykmeldinger"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-typescript",
+            "@babel/preset-react"
+        ],
+        "plugins": [
+            "@babel/plugin-proposal-optional-chaining"
+        ]
+    },
     "dependencies": {
         "@craco/craco": "^5.6.2",
         "@wojtekmaj/react-daterange-picker": "^2.5.0",
@@ -47,9 +61,7 @@
         "nav-frontend-veilederpanel": "^0.1.20",
         "nav-frontend-veilederpanel-style": "0.0.23",
         "prop-types": "^15.7.2",
-        "react": "^16.12.0",
         "react-collapse": "^5.0.0",
-        "react-dom": "^16.12.0",
         "react-flatpickr": "^3.9.1",
         "react-hook-form": "^3.28.11",
         "react-router-dom": "^5.1.2",
@@ -64,7 +76,8 @@
         "test": "craco test",
         "eject": "react-scripts eject",
         "lint": "eslint 'src/**/**.{ts,tsx,js,jsx}'",
-        "format": "prettier --write 'src/**/**.{ts,tsx,js,jsx}'"
+        "format": "prettier --write 'src/**/**.{ts,tsx,js,jsx}'",
+        "publish:npm": "rm -rf dist && mkdir dist && babel src --out-dir dist --extensions \".ts,.tsx,.js,.jsx\" --source-maps inline --copy-files"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -87,7 +100,16 @@
             "last 1 safari version"
         ]
     },
+    "peerDependencies": {
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0"
+    },
     "devDependencies": {
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.8.4",
+        "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+        "@babel/preset-react": "^7.8.3",
+        "@babel/preset-typescript": "^7.8.3",
         "@testing-library/jest-dom": "^4.2.3",
         "@testing-library/react": "^9.3.2",
         "@types/jest": "24.0.23",
