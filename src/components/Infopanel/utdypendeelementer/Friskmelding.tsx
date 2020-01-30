@@ -108,7 +108,12 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                 bold
                 vis={arbeidsforEtterPeriode}
             />
-            <ElementMedTekst tittel={tekster['friskmelding.hensyn']} tekst={hensynArbeidsplassen} margin />
+            <ElementMedTekst
+                tittel={tekster['friskmelding.hensyn']}
+                tekst={hensynArbeidsplassen}
+                margin
+                vis={!!hensynArbeidsplassen}
+            />
             <ErIArbeidSeksjon />
             <ErIkkeIArbeidSeksjon />
         </SeksjonMedTittel>

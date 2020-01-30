@@ -1,8 +1,8 @@
-import { Sykmelding } from './sykmeldingTypes';
+import { Status, Sykmelding } from './sykmeldingTypes';
 
 export class SykmeldingData {
     sykmelding: Sykmelding;
-    status: StatusTyper;
+    status: Status;
 
     constructor(data: any) {
         this.sykmelding = data.sykmelding;
@@ -10,10 +10,20 @@ export class SykmeldingData {
     }
 }
 
-export enum StatusTyper {
-    NY = 'ny',
-    AVVIST = 'avvist',
-    AVBRUTT = 'avbrutt',
-    SENDT = 'sendt',
-    BEKREFTET = 'bekreftet',
+export class StatusData {
+    status: string;
+    dato?: string;
+    datoBekreftet?: string;
+    sykmeldtFra?: string;
+    arbeidsgiver?: string;
+    organisasjonsnummer?: string;
+
+    constructor(data: any) {
+        this.status = data.status;
+        this.dato = data.dato;
+        this.datoBekreftet = data.datoBekreftet;
+        this.sykmeldtFra = data.sykmeldtFra;
+        this.arbeidsgiver = data.arbeidsgiver;
+        this.organisasjonsnummer = data.organisasjonsnummer;
+    }
 }

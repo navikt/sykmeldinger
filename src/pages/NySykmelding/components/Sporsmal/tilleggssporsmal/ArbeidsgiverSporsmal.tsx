@@ -29,7 +29,7 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) 
     useEffect(() => {
         setHarOppfolging(undefined);
         setValue(Skjemafelt.OPPFOLGING, undefined);
-    }, [arbeidsgiver, setValue]);
+    }, [arbeidsgiver, setHarOppfolging, setValue]);
 
     const handterEndring = (e: React.ChangeEvent<HTMLInputElement>) => {
         setHarOppfolging(e.target.value as JaEllerNei);
