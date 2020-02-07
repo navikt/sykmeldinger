@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@craco/craco": "^5.6.3",
+        "@navikt/fnrvalidator": "^1.1.0",
         "babel-polyfill": "^6.26.0",
         "classnames": "^2.2.6",
         "constate": "^1.3.2",
@@ -32,8 +33,8 @@
         "nav-frontend-paneler-style": "^0.3.17",
         "nav-frontend-popover": "0.0.21",
         "nav-frontend-popover-style": "0.0.2",
-        "nav-frontend-skjema": "^1.0.78",
-        "nav-frontend-skjema-style": "^1.0.48",
+        "nav-frontend-skjema": "^2.0.8",
+        "nav-frontend-skjema-style": "^2.0.2",
         "nav-frontend-spinner": "^1.0.21",
         "nav-frontend-spinner-style": "^0.2.5",
         "nav-frontend-stegindikator": "0.0.42",
