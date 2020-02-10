@@ -1,36 +1,63 @@
 import React, { SyntheticEvent, useRef, useState } from 'react';
-import { CheckboksPanelGruppe, Feiloppsummering, FeiloppsummeringFeil, Input, SkjemaGruppe } from 'nav-frontend-skjema';
+import {
+    CheckboksPanelGruppe,
+    Feiloppsummering,
+    FeiloppsummeringFeil,
+    Input,
+    RadioPanelGruppe,
+    SkjemaGruppe,
+} from 'nav-frontend-skjema';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Panel } from 'nav-frontend-paneler';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-type FieldNames = 'choices' | 'address' | 'zip' | 'city';
+import Vis from '../../utils/vis';
+
+type FieldNames = 'opplysninger' | 'sykmeldtFra' | 'sykmeldtDato' | 'forsikring' | 'oppfolging' | 'opplysninger_feil';
 
 type FieldValuesType = {
-    choices: string[];
-    address: string;
-    zip: string;
-    city: string;
+    opplysninger: string;
+    sykmeldtFra: string;
+    sykmeldtDato: string;
+    forsikring: string;
+    oppfolging: string;
+    opplysninger_feil: string[];
 };
 
 type ErrorsSchemaType = {
-    choices: string | null;
-    address: string | null;
-    zip: string | null;
-    city: string | null;
+    opplysninger: string | null;
+    sykmeldtFra: string | null;
+    sykmeldtDato: string | null;
+    forsikring: string | null;
+    oppfolging: string | null;
+    opplysninger_feil: string | null;
 };
 
 const fieldValuesSchema: FieldValuesType = {
-    choices: [],
-    address: '',
-    zip: '',
-    city: '',
+    opplysninger: '',
+    sykmeldtFra: '',
+    sykmeldtDato: '',
+    forsikring: '',
+    oppfolging: '',
+    opplysninger_feil: [],
 };
 
 const errorSchema: ErrorsSchemaType = {
-    choices: null,
-    address: null,
-    zip: null,
-    city: null,
+    opplysninger: null,
+    sykmeldtFra: null,
+    sykmeldtDato: null,
+    forsikring: null,
+    oppfolging: null,
+    opplysninger_feil: null,
+};
+
+type ValidatorSchemaType = {
+    opplysninger: ValidatorType[];
+    sykmeldtFra: ValidatorType[];
+    sykmeldtDato: ValidatorType[];
+    forsikring: ValidatorType[];
+    oppfolging: ValidatorType[];
+    opplysninger_feil: ValidatorType[];
 };
 
 type FormProps = {
@@ -47,69 +74,184 @@ type FormProps = {
 const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, reset, feiloppsummering }: FormProps) => {
     return (
         <form onSubmit={onSubmit}>
-            <CheckboksPanelGruppe
-                legend={'Hva vil du ha levert'}
-                checkboxes={[
-                    {
-                        label: 'Eplejuice',
-                        value: 'juice1',
-                        checked: fieldValues.choices.indexOf('juice1') !== -1,
-                        id: 'b-choices',
-                    },
-                    {
-                        label: 'Appelsinjuice',
-                        value: 'juice2',
-                        checked: fieldValues.choices.indexOf('juice2') !== -1,
-                    },
-                    {
-                        label: 'Melk',
-                        value: 'melk',
-                        checked: fieldValues.choices.indexOf('melk') !== -1,
-                    },
-                    {
-                        label: 'Ananasjuice',
-                        value: 'juice3',
-                        checked: fieldValues.choices.indexOf('juice3') !== -1,
-                    },
-                ]}
-                onChange={(e, value) => handleChange(value, 'choices')}
-                // @ts-ignore // TODO: Finn ut av riktig TS type her
-                feil={errors.choices ? errors.choices : null}
-            />
-            <br />
-            <br />
-            <SkjemaGruppe legend="Leveringsadresse">
-                <Input
-                    id="b-address"
-                    label="Adresse"
-                    value={fieldValues.address}
-                    onChange={e => handleChange(e.currentTarget.value, 'address')}
+            <Panel>
+                <RadioPanelGruppe
+                    name="opplysninger"
+                    legend={'Er opplysningene i sykmeldingen riktige?'}
+                    radios={[
+                        {
+                            label: 'Ja',
+                            value: 'ja',
+                            id: 'b-opplysninger',
+                        },
+                        {
+                            label: 'Nei',
+                            value: 'nei',
+                        },
+                    ]}
+                    onChange={(e, value) => handleChange(value, 'opplysninger')}
+                    checked={fieldValues.opplysninger}
                     // @ts-ignore // TODO: Finn ut av riktig TS type her
-                    feil={errors.address ? errors.address : null}
+                    feil={errors.opplysninger ? errors.opplysninger : null}
                 />
-                <div className="fields postnr-sted">
-                    <div className="postnr-sted__postnr">
-                        <Input
-                            id="b-zip"
-                            label="Postnummer (4 siffer)"
-                            value={fieldValues.zip}
-                            onChange={e => handleChange(e.currentTarget.value, 'zip')}
+                <Vis hvis={fieldValues.opplysninger === 'ja'}>
+                    <br />
+                    <RadioPanelGruppe
+                        name="sykmeldtFra"
+                        legend={'Jeg er sykmeldt fra'}
+                        radios={[
+                            {
+                                label: 'arbeidsgiver1',
+                                value: 'arbeidsgiver1',
+                                id: 'b-sykmeldtFra',
+                            },
+                            {
+                                label: 'arbeidsgiver2',
+                                value: 'arbeidsgiver2',
+                            },
+                            {
+                                label: 'Jobb som selvstendig næringsdrivende',
+                                value: 'selvstendig',
+                            },
+                            {
+                                label: 'Jobb som frilanser',
+                                value: 'frilanser',
+                            },
+                            {
+                                label: 'Jobb hos en annen arbeidsgiver',
+                                value: 'annenArbeidsgiver',
+                            },
+                            {
+                                label: 'Jeg er arbeidsledig',
+                                value: 'arbeidsledig',
+                            },
+                            {
+                                label: 'Jeg finner ingenting som passer for meg',
+                                value: 'annet',
+                            },
+                        ]}
+                        onChange={(e, value) => handleChange(value, 'sykmeldtFra')}
+                        checked={fieldValues.sykmeldtFra}
+                        // @ts-ignore // TODO: Finn ut av riktig TS type her
+                        feil={errors.sykmeldtFra ? errors.sykmeldtFra : null}
+                    />
+                    <Vis
+                        hvis={
+                            ['arbeidsgiver1', 'arbeidsgiver2'].includes(
+                                fieldValues.sykmeldtFra,
+                            ) /* skal gjelde på alle valgte arbeidsgivere */
+                        }
+                    >
+                        <br />
+                        <RadioPanelGruppe
+                            name="oppfolging"
+                            legend={'Er det <ARBEIDSGIVER> som skal følge deg opp på jobben når du er syk?'}
+                            radios={[
+                                {
+                                    label: 'Ja',
+                                    value: 'ja',
+                                    id: 'b-oppfolging',
+                                },
+                                {
+                                    label: 'Nei',
+                                    value: 'nei',
+                                },
+                            ]}
+                            onChange={(e, value) => handleChange(value, 'oppfolging')}
+                            checked={fieldValues.oppfolging}
                             // @ts-ignore // TODO: Finn ut av riktig TS type her
-                            feil={errors.zip ? errors.zip : null}
+                            feil={errors.oppfolging ? errors.oppfolging : null}
                         />
-                    </div>
-                    <div className="postnr-sted__poststed">
-                        <Input
-                            id="b-city"
-                            label="Poststed"
-                            value={fieldValues.city}
-                            onChange={e => handleChange(e.currentTarget.value, 'city')}
+                    </Vis>
+                    <Vis
+                        hvis={
+                            ['selvstendig', 'frilanser'].includes(
+                                fieldValues.sykmeldtFra,
+                            ) /* skal gjelde på alle valgte arbeidsgivere */
+                        }
+                    >
+                        <br />
+                        <RadioPanelGruppe
+                            name="sykmeldtDato"
+                            legend={
+                                'Vi har registrert at du ble sykmeldt <SYKMELDING DATO>. Brukte du egenmelding eller noen annen sykmelding før denne datoen?'
+                            }
+                            radios={[
+                                {
+                                    label: 'Ja',
+                                    value: 'ja',
+                                    id: 'b-sykmeldtDato',
+                                },
+                                {
+                                    label: 'Nei',
+                                    value: 'nei',
+                                },
+                            ]}
+                            onChange={(e, value) => handleChange(value, 'sykmeldtDato')}
+                            checked={fieldValues.sykmeldtDato}
                             // @ts-ignore // TODO: Finn ut av riktig TS type her
-                            feil={errors.city ? errors.city : null}
+                            feil={errors.sykmeldtDato ? errors.sykmeldtDato : null}
                         />
-                    </div>
-                </div>
-            </SkjemaGruppe>
+                        <br />
+                        <RadioPanelGruppe
+                            name="forsikring"
+                            legend={'Har du forsikring som gjelder de første 16 dagene av sykefraværet?'}
+                            radios={[
+                                {
+                                    label: 'Ja',
+                                    value: 'ja',
+                                    id: 'b-forsikring',
+                                },
+                                {
+                                    label: 'Nei',
+                                    value: 'nei',
+                                },
+                            ]}
+                            onChange={(e, value) => handleChange(value, 'forsikring')}
+                            checked={fieldValues.forsikring}
+                            // @ts-ignore // TODO: Finn ut av riktig TS type her
+                            feil={errors.forsikring ? errors.forsikring : null}
+                        />
+                    </Vis>
+                </Vis>
+                <Vis hvis={fieldValues.opplysninger === 'nei'}>
+                    <br />
+                    <CheckboksPanelGruppe
+                        legend={'Hvilke opplysninger er ikke riktige?'}
+                        checkboxes={[
+                            {
+                                label: 'Periode',
+                                value: 'periode',
+                                id: 'b-opplysninger_feil',
+                                checked: fieldValues.opplysninger_feil.indexOf('periode') !== -1,
+                            },
+                            {
+                                label: 'Sykmeldingsgrad',
+                                value: 'sykmeldingsgrad',
+                                checked: fieldValues.opplysninger_feil.indexOf('sykmeldingsgrad') !== -1,
+                            },
+                            {
+                                label: 'Arbeidsgiver',
+                                value: 'arbeidsgiver',
+                                checked: fieldValues.opplysninger_feil.indexOf('arbeidsgiver') !== -1,
+                            },
+                            {
+                                label: 'Diagnose',
+                                value: 'diagnose',
+                                checked: fieldValues.opplysninger_feil.indexOf('diagnose') !== -1,
+                            },
+                            {
+                                label: 'Andre opplysninger',
+                                value: 'andre',
+                                checked: fieldValues.opplysninger_feil.indexOf('andre') !== -1,
+                            },
+                        ]}
+                        onChange={(e, value) => handleChange(value, 'opplysninger_feil')}
+                        // @ts-ignore // TODO: Finn ut av riktig TS type her
+                        feil={errors.opplysninger_feil ? errors.opplysninger_feil : null}
+                    />
+                </Vis>
+            </Panel>
             {errorMessages && !!errorMessages.length && (
                 <Feiloppsummering
                     innerRef={feiloppsummering}
@@ -126,7 +268,7 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
 };
 
 const getErrorMessages = (errors: ErrorsSchemaType) => {
-    const definedErrors = Object.entries(errors).filter(([key, value]) => !!value);
+    const definedErrors = Object.entries(errors).filter(([_key, value]) => !!value);
 
     const errorMessages = definedErrors.map(
         ([key, value]) =>
@@ -139,34 +281,57 @@ const getErrorMessages = (errors: ErrorsSchemaType) => {
     return errorMessages;
 };
 
+type ValidatorType = {
+    test: (value: string | string[]) => boolean;
+    failText: string;
+    requires?: {
+        name: FieldNames;
+        requiredValue: string;
+    }[];
+};
+
 const validators: ValidatorSchemaType = {
-    choices: [
+    opplysninger: [
         {
-            test: (value: string | string[] | number): value is string[] => (value as string[]).length > 0,
-            failText: 'Du må velge minst èn ting',
+            test: (value: string | string[]): value is string => !!(value as string),
+            failText: 'Du må bekrefte om opplysningene er riktige',
         },
     ],
-    address: [
+    sykmeldtFra: [
         {
-            test: (value: string | string[] | number): value is string => !!(value as string),
-            failText: 'Du må oppgi en gateadresse',
+            test: (value: string | string[]): value is string => !!(value as string),
+            failText: 'Du må oppgi hvor du er sykmeldt fra',
+            requires: [{ name: 'opplysninger', requiredValue: 'ja' }],
         },
     ],
-    zip: [
+    sykmeldtDato: [
         {
-            test: (value: string | string[] | number): value is string => !!(value as string),
-            failText: 'Du må oppgi et postnummer',
-        },
-        {
-            test: (value: string | string[] | number): value is string =>
-                (value as string).toString().length === 4 && /^\d+$/.test(value as string),
-            failText: 'Postnummer må ha 4 siffer',
+            test: (value: string | string[]): value is string => !!(value as string),
+            failText: 'Du må svare på om du har brukt egenmeldingsdager under sykefraværet',
+            requires: [{ name: 'sykmeldtFra', requiredValue: 'frilanser' /* TODO: Og selvstendig */ }],
         },
     ],
-    city: [
+    forsikring: [
         {
-            test: (value: string | string[] | number): value is string => !!(value as string),
-            failText: 'Du må oppgi et poststed',
+            test: (value: string | string[]): value is string => !!(value as string),
+            failText: 'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet',
+            requires: [{ name: 'sykmeldtFra', requiredValue: 'frilanser' /* TODO: Og selvstendig */ }],
+        },
+    ],
+    oppfolging: [
+        {
+            test: (value: string | string[]): value is string => !!(value as string),
+            failText: 'Du må oppgi hvor du er sykmeldt fra',
+            requires: [
+                { name: 'sykmeldtFra', requiredValue: 'arbeidsgiver1' /* TODO: Må støtte en eller flere felter */ },
+            ],
+        },
+    ],
+    opplysninger_feil: [
+        {
+            test: (value: string | string[]): value is string[] => (value as string[]).length > 0,
+            failText: 'Du må oppgi hvilke opplysninger som ikke er riktige',
+            requires: [{ name: 'opplysninger', requiredValue: 'nei' }],
         },
     ],
 };
@@ -179,6 +344,17 @@ const validateField = (name: FieldNames, validators: ValidatorSchemaType, fieldV
     }
 
     return validator.find((v: ValidatorType) => {
+        if (v.requires) {
+            const requirementsAreFulfilled = v.requires.every(({ name, requiredValue }) => {
+                return fieldValues[name] === requiredValue;
+            });
+
+            if (requirementsAreFulfilled) {
+                return !v.test(fieldValues[name]);
+            }
+
+            return null;
+        }
         return !v.test(fieldValues[name]);
     });
 };
@@ -202,18 +378,6 @@ const validateAll = (fieldValues: FieldValuesType) => {
     }
 
     return errorSchema;
-};
-
-type ValidatorType = {
-    test: (value: string | string[] | number) => boolean;
-    failText: string;
-};
-
-type ValidatorSchemaType = {
-    choices: ValidatorType[];
-    address: ValidatorType[];
-    zip: ValidatorType[];
-    city: ValidatorType[];
 };
 
 const FormTest = () => {
@@ -260,27 +424,46 @@ const FormTest = () => {
         }
     };
 
+    const clearDependentValues = (name: FieldNames) => {
+        let updatedFieldValues = { ...fieldValues };
+        let updatedErrors = { ...errors };
+
+        if (name === 'opplysninger') {
+            updatedFieldValues = { ...updatedFieldValues, opplysninger_feil: [], sykmeldtFra: '' };
+            updatedErrors = { ...errors, opplysninger_feil: null, sykmeldtFra: null };
+        }
+
+        if (name === 'sykmeldtFra') {
+            updatedFieldValues = { ...updatedFieldValues, forsikring: '', sykmeldtDato: '' };
+            updatedErrors = { ...errors, forsikring: null, sykmeldtDato: null };
+        }
+
+        return { updatedFieldValues, updatedErrors };
+    };
+
     const handleChange = (value: string, name: FieldNames) => {
+        const { updatedFieldValues, updatedErrors } = clearDependentValues(name);
+
         const getValue = () => {
-            if (name === 'choices') {
-                const index = fieldValues.choices.indexOf(value);
+            if (name === 'opplysninger_feil') {
+                const index = fieldValues.opplysninger_feil.indexOf(value);
 
                 if (index === -1) {
-                    return [...fieldValues.choices, value];
+                    return [...fieldValues.opplysninger_feil, value];
                 }
 
-                return fieldValues.choices.filter((_choice, choiceIndex) => choiceIndex !== index);
+                return fieldValues.opplysninger_feil.filter((_opplysninger_feil, oIndex) => oIndex !== index);
             }
 
             return value;
         };
 
-        const updatedValues = { ...fieldValues, [name]: getValue() };
+        const updatedValues = { ...updatedFieldValues, [name]: getValue() };
 
         const invalid = validateField(name, validators, updatedValues);
 
         if (submitAttempt) {
-            const newErrors = { ...errors, [name]: invalid ? invalid.failText : null };
+            const newErrors = { ...updatedErrors, [name]: invalid ? invalid.failText : null };
 
             setErrors(newErrors);
 
@@ -298,9 +481,6 @@ const FormTest = () => {
 
     return (
         <div className="form-test">
-            <Systemtittel>Skjema</Systemtittel>
-            <br />
-            <br />
             <div aria-live="assertive">
                 {!submitSuccess && (
                     <Form
