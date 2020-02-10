@@ -48,8 +48,6 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
         window.scrollTo(0, 0);
     }, []);
 
-    console.log(sykmelding);
-
     return (
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
@@ -103,7 +101,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 <SporsmalInfoheader />
             </div>
 
-            <FormTest />
+            <FormTest sykmelding={sykmelding} />
         </div>
     );
 };

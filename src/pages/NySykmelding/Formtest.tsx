@@ -12,6 +12,7 @@ import { Panel } from 'nav-frontend-paneler';
 import { Systemtittel } from 'nav-frontend-typografi';
 
 import Vis from '../../utils/vis';
+import { Sykmelding } from '../../types/sykmeldingTypes';
 
 type FieldNames = 'opplysninger' | 'sykmeldtFra' | 'sykmeldtDato' | 'forsikring' | 'oppfolging' | 'opplysninger_feil';
 
@@ -94,8 +95,53 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                     // @ts-ignore // TODO: Finn ut av riktig TS type her
                     feil={errors.opplysninger ? errors.opplysninger : null}
                 />
-                <Vis hvis={fieldValues.opplysninger === 'ja'}>
+                <Vis hvis={fieldValues.opplysninger === 'nei'}>
                     <br />
+                    <CheckboksPanelGruppe
+                        legend={'Hvilke opplysninger er ikke riktige?'}
+                        checkboxes={[
+                            {
+                                label: 'Periode',
+                                value: 'periode',
+                                id: 'b-opplysninger_feil',
+                                checked: fieldValues.opplysninger_feil.indexOf('periode') !== -1,
+                            },
+                            {
+                                label: 'Sykmeldingsgrad',
+                                value: 'sykmeldingsgrad',
+                                checked: fieldValues.opplysninger_feil.indexOf('sykmeldingsgrad') !== -1,
+                            },
+                            {
+                                label: 'Arbeidsgiver',
+                                value: 'arbeidsgiver',
+                                checked: fieldValues.opplysninger_feil.indexOf('arbeidsgiver') !== -1,
+                            },
+                            {
+                                label: 'Diagnose',
+                                value: 'diagnose',
+                                checked: fieldValues.opplysninger_feil.indexOf('diagnose') !== -1,
+                            },
+                            {
+                                label: 'Andre opplysninger',
+                                value: 'andre',
+                                checked: fieldValues.opplysninger_feil.indexOf('andre') !== -1,
+                            },
+                        ]}
+                        onChange={(e, value) => handleChange(value, 'opplysninger_feil')}
+                        // @ts-ignore // TODO: Finn ut av riktig TS type her
+                        feil={errors.opplysninger_feil ? errors.opplysninger_feil : null}
+                    />
+                </Vis>
+            </Panel>
+
+            <Vis
+                hvis={
+                    fieldValues.opplysninger === 'ja' ||
+                    fieldValues.opplysninger_feil.some(verdi => ['arbeidsgiver', 'diagnose', 'andre'].includes(verdi))
+                }
+            >
+                <br />
+                <Panel>
                     <RadioPanelGruppe
                         name="sykmeldtFra"
                         legend={'Jeg er sykmeldt fra'}
@@ -135,6 +181,7 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                         // @ts-ignore // TODO: Finn ut av riktig TS type her
                         feil={errors.sykmeldtFra ? errors.sykmeldtFra : null}
                     />
+
                     <Vis
                         hvis={
                             ['arbeidsgiver1', 'arbeidsgiver2'].includes(
@@ -162,6 +209,15 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                             // @ts-ignore // TODO: Finn ut av riktig TS type her
                             feil={errors.oppfolging ? errors.oppfolging : null}
                         />
+
+                        <Vis hvis={fieldValues.oppfolging === 'ja'}>
+                            <br />
+                            Vi sender sykmeldingen til Station Officer Steele, som finner den ved å logge inn på nav.no.
+                        </Vis>
+                        <Vis hvis={fieldValues.oppfolging === 'nei'}>
+                            <br />
+                            Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
+                        </Vis>
                     </Vis>
                     <Vis
                         hvis={
@@ -192,6 +248,11 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                             // @ts-ignore // TODO: Finn ut av riktig TS type her
                             feil={errors.sykmeldtDato ? errors.sykmeldtDato : null}
                         />
+
+                        <Vis hvis={fieldValues.sykmeldtDato === 'ja'}>
+                            <br />
+                            DATOVALG
+                        </Vis>
                         <br />
                         <RadioPanelGruppe
                             name="forsikring"
@@ -213,52 +274,19 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                             feil={errors.forsikring ? errors.forsikring : null}
                         />
                     </Vis>
-                </Vis>
-                <Vis hvis={fieldValues.opplysninger === 'nei'}>
-                    <br />
-                    <CheckboksPanelGruppe
-                        legend={'Hvilke opplysninger er ikke riktige?'}
-                        checkboxes={[
-                            {
-                                label: 'Periode',
-                                value: 'periode',
-                                id: 'b-opplysninger_feil',
-                                checked: fieldValues.opplysninger_feil.indexOf('periode') !== -1,
-                            },
-                            {
-                                label: 'Sykmeldingsgrad',
-                                value: 'sykmeldingsgrad',
-                                checked: fieldValues.opplysninger_feil.indexOf('sykmeldingsgrad') !== -1,
-                            },
-                            {
-                                label: 'Arbeidsgiver',
-                                value: 'arbeidsgiver',
-                                checked: fieldValues.opplysninger_feil.indexOf('arbeidsgiver') !== -1,
-                            },
-                            {
-                                label: 'Diagnose',
-                                value: 'diagnose',
-                                checked: fieldValues.opplysninger_feil.indexOf('diagnose') !== -1,
-                            },
-                            {
-                                label: 'Andre opplysninger',
-                                value: 'andre',
-                                checked: fieldValues.opplysninger_feil.indexOf('andre') !== -1,
-                            },
-                        ]}
-                        onChange={(e, value) => handleChange(value, 'opplysninger_feil')}
-                        // @ts-ignore // TODO: Finn ut av riktig TS type her
-                        feil={errors.opplysninger_feil ? errors.opplysninger_feil : null}
-                    />
-                </Vis>
-            </Panel>
+                </Panel>
+            </Vis>
             {errorMessages && !!errorMessages.length && (
-                <Feiloppsummering
-                    innerRef={feiloppsummering}
-                    tittel="For å gå videre må du rette opp følgende:"
-                    feil={errorMessages}
-                />
+                <>
+                    <br />
+                    <Feiloppsummering
+                        innerRef={feiloppsummering}
+                        tittel="For å gå videre må du rette opp følgende:"
+                        feil={errorMessages}
+                    />
+                </>
             )}
+            <br />
             <div className="form-buttons" style={{ display: 'flex' }}>
                 <Hovedknapp htmlType="submit">Fullfør</Hovedknapp>
                 <Flatknapp onClick={reset}>Nullstill</Flatknapp>
@@ -380,13 +408,15 @@ const validateAll = (fieldValues: FieldValuesType) => {
     return errorSchema;
 };
 
-const FormTest = () => {
+const FormTest = ({ sykmelding }: { sykmelding: Sykmelding }) => {
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitAttempt, setSubmitAttempt] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [errors, setErrors] = useState(errorSchema);
     const [fieldValues, setFieldValues] = useState(fieldValuesSchema);
     const feiloppsummering = useRef<HTMLDivElement>(null);
+
+    console.log(sykmelding);
 
     const reset = (event: SyntheticEvent) => {
         if (event) {
@@ -436,6 +466,17 @@ const FormTest = () => {
         if (name === 'sykmeldtFra') {
             updatedFieldValues = { ...updatedFieldValues, forsikring: '', sykmeldtDato: '' };
             updatedErrors = { ...errors, forsikring: null, sykmeldtDato: null };
+        }
+
+        if (name === 'opplysninger_feil') {
+            updatedFieldValues = {
+                ...updatedFieldValues,
+                sykmeldtFra: '',
+                oppfolging: '',
+                sykmeldtDato: '',
+                forsikring: '',
+            };
+            updatedErrors = { ...errors, sykmeldtFra: null, oppfolging: null, sykmeldtDato: null, forsikring: null };
         }
 
         return { updatedFieldValues, updatedErrors };
