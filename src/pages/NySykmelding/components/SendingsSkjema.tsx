@@ -1,3 +1,5 @@
+import AlertStripe from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
 import React, { SyntheticEvent, useRef, useState } from 'react';
 import { CheckboksPanelGruppe, Feiloppsummering, FeiloppsummeringFeil, RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
@@ -44,10 +46,28 @@ export type FormProps = {
     handleChange: any;
     reset: (event: SyntheticEvent) => void;
     feiloppsummering: React.RefObject<HTMLDivElement>;
+    submitting: boolean;
 };
 
 // TODO: Erstatt any
-const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, reset, feiloppsummering }: FormProps) => {
+const Form = ({
+    errorMessages,
+    fieldValues,
+    errors,
+    onSubmit,
+    handleChange,
+    reset,
+    feiloppsummering,
+    submitting,
+}: FormProps) => {
+    const trengerNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
+        [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(value as FeilOpplysninger),
+    );
+    const feilArbeidsgiver = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].includes(FeilOpplysninger.ARBEIDSGIVER);
+    const trengerIkkeNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
+        [FeilOpplysninger.DIAGNOSE, FeilOpplysninger.ANDRE_OPPLYSNINGER].includes(value as FeilOpplysninger),
+    );
+
     return (
         <form onSubmit={onSubmit}>
             <Panel>
@@ -116,6 +136,38 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                         // @ts-ignore // TODO: Finn ut av riktig TS type her
                         feil={errors[Skjemafelt.FEIL_OPPLYSNINGER] ? errors[Skjemafelt.FEIL_OPPLYSNINGER] : null}
                     />
+                    <Vis hvis={trengerNySykmelding}>
+                        <br />
+                        <AlertStripe type="advarsel">
+                            <strong>Du trenger ny sykmelding.</strong>
+                            <br />
+                            Du trenger ny sykmelding. Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt
+                            deg for å få en ny. For å avbryte, velg "Jeg ønsker ikke å bruke denne sykmeldingen" nederst
+                            på siden
+                        </AlertStripe>
+                    </Vis>
+
+                    <Vis hvis={!trengerNySykmelding && feilArbeidsgiver}>
+                        <br />
+                        <AlertStripe type="info">
+                            <strong>Du kan bruke sykmeldingen din.</strong>
+                            <br />
+                            Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs!
+                            Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for
+                            arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi beskjed til
+                            den som sykmelder deg om at det er lagt inn feil arbeidsgiver.
+                        </AlertStripe>
+                    </Vis>
+
+                    <Vis hvis={trengerIkkeNySykmelding && !feilArbeidsgiver && !trengerNySykmelding}>
+                        <br />
+                        <AlertStripe type="info">
+                            <strong>Du kan bruke sykmeldingen din.</strong>
+                            <br />
+                            Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at
+                            den inneholder feil.
+                        </AlertStripe>
+                    </Vis>
                 </Vis>
             </Panel>
 
@@ -129,11 +181,7 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                             FeilOpplysninger.ANDRE_OPPLYSNINGER,
                         ].includes(verdi as FeilOpplysninger),
                     ) &&
-                        !fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(verdi =>
-                            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(
-                                verdi as FeilOpplysninger,
-                            ),
-                        ))
+                        !trengerNySykmelding)
                 }
             >
                 <br />
@@ -285,10 +333,28 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
                 </>
             )}
             <br />
-            <div className="form-buttons" style={{ display: 'flex' }}>
-                <Hovedknapp htmlType="submit">Fullfør</Hovedknapp>
-                <Flatknapp onClick={reset}>Nullstill</Flatknapp>
-            </div>
+            <>
+                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                    <Hovedknapp htmlType="submit" spinner={submitting} data-testid="knapp-submit">
+                        {true ? 'knapp.send-sykmeldingen' : 'knapp.bekreft-sykmeldingen'}
+                    </Hovedknapp>
+                </div>
+                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                    <Lenke
+                        href="#"
+                        onClick={e => {
+                            e.preventDefault();
+                            // setVisAvbrytdialog(vises => !vises);
+                            /*setTimeout(
+                                () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
+                                300,
+                            );*/
+                        }}
+                    >
+                        knapp.onsker-ikke-bruke-sykmelding
+                    </Lenke>
+                </div>
+            </>
         </form>
     );
 };
@@ -389,6 +455,7 @@ const SendingsSkjema = ({ sykmelding }: { sykmelding: Sykmelding }) => {
                         handleChange={handleChange}
                         reset={reset}
                         feiloppsummering={feiloppsummering}
+                        submitting={submitting}
                     />
                 )}
                 {submitSuccess && <div>Skjema sendt</div>}
