@@ -9,7 +9,6 @@ import BehandlingsDatoer from '../../components/Infopanel/utdypendeelementer/Beh
 import DiagnoseSeksjon from '../../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
 import EldreSykmeldingVarsel from './components/EldreSykmeldingVarsel';
 import ElementMedTekst from '../../components/Infopanel/layout/ElementMedTekst';
-import FormTest from './Formtest';
 import FraverSeksjon from '../../components/Infopanel/panelelementer/FraverSeksjon';
 import Friskmelding from '../../components/Infopanel/utdypendeelementer/Friskmelding';
 import Infopanel from '../../components/Infopanel/Infopanel';
@@ -17,6 +16,7 @@ import LegeSeksjon from '../../components/Infopanel/panelelementer/LegeSeksjon';
 import MulighetForArbeid from '../../components/Infopanel/utdypendeelementer/MulighetForArbeid';
 import PrognoseSeksjon from '../../components/Infopanel/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../../components/Infopanel/layout/SeksjonMedTittel';
+import SendingsSkjema from './components/SendingsSkjema';
 import Sidetopp from '../../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../../components/Infopanel/panelelementer/SkadeSeksjon';
 import SporsmalInfoheader from './components/Sporsmal/SporsmalInfoheader';
@@ -101,7 +101,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 <SporsmalInfoheader />
             </div>
 
-            <FormTest sykmelding={sykmelding} />
+            <SendingsSkjema sykmelding={sykmelding} />
         </div>
     );
 };

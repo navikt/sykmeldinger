@@ -1,72 +1,22 @@
 import React, { SyntheticEvent, useRef, useState } from 'react';
-import {
-    CheckboksPanelGruppe,
-    Feiloppsummering,
-    FeiloppsummeringFeil,
-    Input,
-    RadioPanelGruppe,
-    SkjemaGruppe,
-} from 'nav-frontend-skjema';
+import { CheckboksPanelGruppe, Feiloppsummering, FeiloppsummeringFeil, RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Panel } from 'nav-frontend-paneler';
-import { Systemtittel } from 'nav-frontend-typografi';
 
-import Vis from '../../utils/vis';
-import { Sykmelding } from '../../types/sykmeldingTypes';
+import Vis from '../../../utils/vis';
+import {
+    Arbeidsforhold,
+    ErrorsSchemaType,
+    FeilOpplysninger,
+    FieldValuesType,
+    JaEllerNei,
+    Skjemafelt,
+} from './skjemaComponents/skjemaTypes';
+import { Sykmelding } from '../../../types/sykmeldingTypes';
+import { clearDependentValues, getErrorMessages } from './skjemaComponents/skjemaUtils';
+import { validateAll, validateField, validators } from './skjemaComponents/validators';
 
-enum Skjemafelt {
-    OPPLYSNINGENE_ER_RIKTIGE = 'opplysningeneErRiktige',
-    SYKMELDT_FRA = 'sykmeldtFra',
-    OPPFOLGING = 'oppfolging',
-    FRILANSER_EGENMELDING = 'frilanserEgenmelding',
-    EGENMELDINGSPERIODER = 'egenmeldingsperioder',
-    FRILANSER_FORSIKRING = 'frilanserForsikring',
-    FEIL_OPPLYSNINGER = 'feilOpplysninger',
-}
-
-enum FeilOpplysninger {
-    PERIODE = 'periode',
-    SYKMELDINGSGRAD = 'sykmeldingsgrad',
-    ARBEIDSGIVER = 'arbeidsgiver',
-    DIAGNOSE = 'diagnose',
-    ANDRE_OPPLYSNINGER = 'andreOpplysninger',
-}
-
-enum JaEllerNei {
-    JA = 'ja',
-    NEI = 'nei',
-}
-
-enum Arbeidsforhold {
-    ARBEIDSGIVER = 'arbeidsgiver',
-    SELVSTENDIG_NARINGSDRIVENDE = 'selvstendigNaringsdrivende',
-    FRILANSER = 'frilanser',
-    ANNEN_ARBEIDSGIVER = 'annenArbeidsgiver',
-    ARBEIDSLEDIG = 'arbeidsledig',
-    INGENTING_PASSER = 'ingentingPasser',
-}
-
-type FieldValuesType = {
-    [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: JaEllerNei | undefined;
-    [Skjemafelt.SYKMELDT_FRA]: Arbeidsforhold | undefined;
-    [Skjemafelt.FRILANSER_EGENMELDING]: string | undefined;
-    [Skjemafelt.FRILANSER_FORSIKRING]: JaEllerNei | undefined;
-    [Skjemafelt.OPPFOLGING]: JaEllerNei | undefined;
-    [Skjemafelt.FEIL_OPPLYSNINGER]: string[];
-    [Skjemafelt.EGENMELDINGSPERIODER]: string[]; // TODO: Dato
-};
-
-type ErrorsSchemaType = {
-    [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: string | null;
-    [Skjemafelt.SYKMELDT_FRA]: string | null;
-    [Skjemafelt.FRILANSER_EGENMELDING]: string | null;
-    [Skjemafelt.FRILANSER_FORSIKRING]: string | null;
-    [Skjemafelt.OPPFOLGING]: string | null;
-    [Skjemafelt.FEIL_OPPLYSNINGER]: string | null;
-    [Skjemafelt.EGENMELDINGSPERIODER]: string | null;
-};
-
-const fieldValuesSchema: FieldValuesType = {
+export const fieldValuesSchema: FieldValuesType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: undefined,
     [Skjemafelt.SYKMELDT_FRA]: undefined,
     [Skjemafelt.FRILANSER_EGENMELDING]: undefined,
@@ -76,7 +26,7 @@ const fieldValuesSchema: FieldValuesType = {
     [Skjemafelt.EGENMELDINGSPERIODER]: [], // TODO: Dato
 };
 
-const errorSchema: ErrorsSchemaType = {
+export const errorSchema: ErrorsSchemaType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: null,
     [Skjemafelt.SYKMELDT_FRA]: null,
     [Skjemafelt.FRILANSER_EGENMELDING]: null,
@@ -86,17 +36,7 @@ const errorSchema: ErrorsSchemaType = {
     [Skjemafelt.EGENMELDINGSPERIODER]: null,
 };
 
-type ValidatorSchemaType = {
-    [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: ValidatorType[];
-    [Skjemafelt.SYKMELDT_FRA]: ValidatorType[];
-    [Skjemafelt.FRILANSER_EGENMELDING]: ValidatorType[];
-    [Skjemafelt.FRILANSER_FORSIKRING]: ValidatorType[];
-    [Skjemafelt.OPPFOLGING]: ValidatorType[];
-    [Skjemafelt.FEIL_OPPLYSNINGER]: ValidatorType[];
-    [Skjemafelt.EGENMELDINGSPERIODER]: ValidatorType[];
-};
-
-type FormProps = {
+export type FormProps = {
     errorMessages: FeiloppsummeringFeil[];
     fieldValues: FieldValuesType;
     errors: ErrorsSchemaType;
@@ -182,9 +122,18 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
             <Vis
                 hvis={
                     fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.JA ||
-                    fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(verdi =>
-                        ['arbeidsgiver', 'diagnose', 'andre'].includes(verdi),
-                    )
+                    (fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(verdi =>
+                        [
+                            FeilOpplysninger.ARBEIDSGIVER,
+                            FeilOpplysninger.DIAGNOSE,
+                            FeilOpplysninger.ANDRE_OPPLYSNINGER,
+                        ].includes(verdi as FeilOpplysninger),
+                    ) &&
+                        !fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(verdi =>
+                            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(
+                                verdi as FeilOpplysninger,
+                            ),
+                        ))
                 }
             >
                 <br />
@@ -254,7 +203,7 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
 
                         <Vis hvis={fieldValues.oppfolging === JaEllerNei.JA}>
                             <br />
-                            Vi sender sykmeldingen til Station Officer Steele, som finner den ved å logge inn på nav.no.
+                            Vi sender sykmeldingen til ANSVARLIG LEDER, som finner den ved å logge inn på nav.no.
                         </Vis>
                         <Vis hvis={fieldValues.oppfolging === JaEllerNei.NEI}>
                             <br />
@@ -344,146 +293,7 @@ const Form = ({ errorMessages, fieldValues, errors, onSubmit, handleChange, rese
     );
 };
 
-const getErrorMessages = (errors: ErrorsSchemaType) => {
-    const definedErrors = Object.entries(errors).filter(([_key, value]) => !!value);
-
-    const errorMessages = definedErrors.map(
-        ([key, value]) =>
-            ({
-                skjemaelementId: `b-${key}`,
-                feilmelding: value,
-            } as FeiloppsummeringFeil),
-    );
-
-    return errorMessages;
-};
-
-type ValidatorType = {
-    test: (value?: string | string[]) => boolean;
-    failText: string;
-    requires?: {
-        name: Skjemafelt;
-        requiredValue?: string;
-        requiredValues?: string[];
-    }[];
-};
-
-const validators: ValidatorSchemaType = {
-    [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: [
-        {
-            test: (value?: string | string[]): value is string => !!(value as string),
-            failText: 'Du må bekrefte om opplysningene er riktige',
-        },
-    ],
-    [Skjemafelt.SYKMELDT_FRA]: [
-        {
-            test: (value?: string | string[]): value is string => !!(value as string),
-            failText: 'Du må oppgi hvor du er sykmeldt fra',
-            requires: [{ name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.JA }],
-        },
-    ],
-    [Skjemafelt.FRILANSER_EGENMELDING]: [
-        {
-            test: (value?: string | string[]): value is string => !!(value as string),
-            failText: 'Du må svare på om du har brukt egenmeldingsdager under sykefraværet',
-            requires: [
-                {
-                    name: Skjemafelt.SYKMELDT_FRA,
-                    requiredValues: [Arbeidsforhold.FRILANSER, Arbeidsforhold.SELVSTENDIG_NARINGSDRIVENDE],
-                },
-            ],
-        },
-    ],
-    [Skjemafelt.FRILANSER_FORSIKRING]: [
-        {
-            test: (value?: string | string[]): value is string => !!(value as string),
-            failText: 'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet',
-            requires: [
-                {
-                    name: Skjemafelt.SYKMELDT_FRA,
-                    requiredValues: [Arbeidsforhold.FRILANSER, Arbeidsforhold.SELVSTENDIG_NARINGSDRIVENDE],
-                },
-            ],
-        },
-    ],
-    [Skjemafelt.OPPFOLGING]: [
-        {
-            test: (value?: string | string[]): value is string => !!(value as string),
-            failText: 'Du må oppgi hvor du er sykmeldt fra',
-            requires: [
-                {
-                    name: Skjemafelt.SYKMELDT_FRA,
-                    requiredValue: Arbeidsforhold.ARBEIDSGIVER,
-                },
-            ],
-        },
-    ],
-    [Skjemafelt.FEIL_OPPLYSNINGER]: [
-        {
-            test: (value?: string | string[]): value is string[] => (value as string[]).length > 0,
-            failText: 'Du må oppgi hvilke opplysninger som ikke er riktige',
-            requires: [{ name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.NEI }],
-        },
-    ],
-    [Skjemafelt.EGENMELDINGSPERIODER]: [
-        {
-            test: (value?: string | string[]): value is string[] => true, // TODO: Validator
-            failText: 'Periode mangler utfylling',
-            requires: [
-                {
-                    name: Skjemafelt.FRILANSER_EGENMELDING,
-                    requiredValue: JaEllerNei.JA,
-                },
-            ],
-        },
-    ],
-};
-
-const validateField = (name: Skjemafelt, validators: ValidatorSchemaType, fieldValues: FieldValuesType) => {
-    const validator = validators[name];
-
-    if (!validator) {
-        return null;
-    }
-
-    return validator.find((v: ValidatorType) => {
-        if (v.requires) {
-            const requirementsAreFulfilled = v.requires.every(({ name, requiredValue }) => {
-                return fieldValues[name] === requiredValue;
-            });
-
-            if (requirementsAreFulfilled) {
-                return !v.test(fieldValues[name]);
-            }
-
-            return null;
-        }
-        return !v.test(fieldValues[name]);
-    });
-};
-
-const validateAll = (fieldValues: FieldValuesType) => {
-    const validationErrors = errorSchema;
-
-    const newErrors = Object.keys(fieldValues).reduce((accumulatedErrors, fieldKey) => {
-        const failedValidation = validateField(fieldKey as Skjemafelt, validators, fieldValues);
-        if (failedValidation) {
-            return {
-                ...accumulatedErrors,
-                [fieldKey]: failedValidation.failText,
-            };
-        }
-        return accumulatedErrors;
-    }, validationErrors);
-
-    if (Object.keys(newErrors).length > 0) {
-        return newErrors;
-    }
-
-    return errorSchema;
-};
-
-const FormTest = ({ sykmelding }: { sykmelding: Sykmelding }) => {
+const SendingsSkjema = ({ sykmelding }: { sykmelding: Sykmelding }) => {
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitAttempt, setSubmitAttempt] = useState(false);
     const [submitting, setSubmitting] = useState(false);
@@ -507,7 +317,7 @@ const FormTest = ({ sykmelding }: { sykmelding: Sykmelding }) => {
 
     const submit = (event: SyntheticEvent) => {
         event.preventDefault();
-        const errors = validateAll(fieldValues);
+        const errors = validateAll(fieldValues, errorSchema);
 
         const hasErrors = Object.values(errors).some(error => !!error);
 
@@ -529,58 +339,12 @@ const FormTest = ({ sykmelding }: { sykmelding: Sykmelding }) => {
         }
     };
 
-    const clearDependentValues = (name: Skjemafelt) => {
-        let updatedFieldValues = { ...fieldValues };
-        let updatedErrors = { ...errors };
-
-        if (name === Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE) {
-            updatedFieldValues = {
-                ...updatedFieldValues,
-                [Skjemafelt.FEIL_OPPLYSNINGER]: [],
-                [Skjemafelt.SYKMELDT_FRA]: undefined,
-            };
-            updatedErrors = { ...errors, [Skjemafelt.FEIL_OPPLYSNINGER]: null, [Skjemafelt.SYKMELDT_FRA]: null };
-        }
-
-        if (name === Skjemafelt.SYKMELDT_FRA) {
-            updatedFieldValues = {
-                ...updatedFieldValues,
-                [Skjemafelt.FRILANSER_FORSIKRING]: undefined,
-                [Skjemafelt.FRILANSER_EGENMELDING]: undefined,
-            };
-            updatedErrors = {
-                ...errors,
-                [Skjemafelt.FRILANSER_FORSIKRING]: null,
-                [Skjemafelt.FRILANSER_EGENMELDING]: null,
-            };
-        }
-
-        if (name === Skjemafelt.FEIL_OPPLYSNINGER) {
-            updatedFieldValues = {
-                ...updatedFieldValues,
-                [Skjemafelt.SYKMELDT_FRA]: undefined,
-                [Skjemafelt.OPPFOLGING]: undefined,
-                [Skjemafelt.FRILANSER_EGENMELDING]: undefined,
-                [Skjemafelt.FRILANSER_FORSIKRING]: undefined,
-            };
-            updatedErrors = {
-                ...errors,
-                [Skjemafelt.SYKMELDT_FRA]: null,
-                [Skjemafelt.OPPFOLGING]: null,
-                [Skjemafelt.FRILANSER_EGENMELDING]: null,
-                [Skjemafelt.FRILANSER_FORSIKRING]: null,
-            };
-        }
-
-        return { updatedFieldValues, updatedErrors };
-    };
-
     const handleChange = (value: string, name: Skjemafelt) => {
-        const { updatedFieldValues, updatedErrors } = clearDependentValues(name);
+        const { updatedFieldValues, updatedErrors } = clearDependentValues(name, errors, fieldValues);
 
         const getValue = () => {
             if (name === Skjemafelt.FEIL_OPPLYSNINGER) {
-                const index = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(value);
+                const index = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(value as FeilOpplysninger);
 
                 if (index === -1) {
                     return [...fieldValues[Skjemafelt.FEIL_OPPLYSNINGER], value];
@@ -601,7 +365,7 @@ const FormTest = ({ sykmelding }: { sykmelding: Sykmelding }) => {
 
             setErrors(newErrors);
 
-            const hasErrors = validateAll(updatedValues);
+            const hasErrors = validateAll(updatedValues, errorSchema);
 
             if (!hasErrors) {
                 setSubmitAttempt(false);
@@ -633,4 +397,4 @@ const FormTest = ({ sykmelding }: { sykmelding: Sykmelding }) => {
     );
 };
 
-export default FormTest;
+export default SendingsSkjema;
