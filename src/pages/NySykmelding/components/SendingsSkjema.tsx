@@ -1,8 +1,8 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import React, { SyntheticEvent, useRef, useState } from 'react';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { CheckboksPanelGruppe, Feiloppsummering, FeiloppsummeringFeil, RadioPanelGruppe } from 'nav-frontend-skjema';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Fareknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Panel } from 'nav-frontend-paneler';
 
 import Vis from '../../../utils/vis';
@@ -39,6 +39,7 @@ export const errorSchema: ErrorsSchemaType = {
 };
 
 export type FormProps = {
+    sykmelding: Sykmelding;
     errorMessages: FeiloppsummeringFeil[];
     fieldValues: FieldValuesType;
     errors: ErrorsSchemaType;
@@ -51,6 +52,7 @@ export type FormProps = {
 
 // TODO: Erstatt any
 const Form = ({
+    sykmelding,
     errorMessages,
     fieldValues,
     errors,
@@ -67,6 +69,19 @@ const Form = ({
     const trengerIkkeNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
         [FeilOpplysninger.DIAGNOSE, FeilOpplysninger.ANDRE_OPPLYSNINGER].includes(value as FeilOpplysninger),
     );
+
+    const skalViseAvbryt =
+        fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
+        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
+            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
+        );
+
+    const skalViseSend =
+        !skalViseAvbryt &&
+        !!(
+            fieldValues[Skjemafelt.SYKMELDT_FRA] &&
+            Arbeidsforhold.ARBEIDSGIVER.includes(fieldValues[Skjemafelt.SYKMELDT_FRA]!)
+        );
 
     return (
         <form onSubmit={onSubmit}>
@@ -88,7 +103,9 @@ const Form = ({
                     onChange={(e, value) => handleChange(value, Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE)}
                     checked={fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]}
                     // @ts-ignore // TODO: Finn ut av riktig TS type her
-                    feil={errors.opplysninger ? errors.opplysninger : null}
+                    feil={
+                        errors[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] ? errors[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] : null
+                    }
                 />
                 <Vis hvis={fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI}>
                     <br />
@@ -138,35 +155,35 @@ const Form = ({
                     />
                     <Vis hvis={trengerNySykmelding}>
                         <br />
-                        <AlertStripe type="advarsel">
+                        <AlertStripeAdvarsel>
                             <strong>Du trenger ny sykmelding.</strong>
                             <br />
                             Du trenger ny sykmelding. Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt
                             deg for å få en ny. For å avbryte, velg "Jeg ønsker ikke å bruke denne sykmeldingen" nederst
                             på siden
-                        </AlertStripe>
+                        </AlertStripeAdvarsel>
                     </Vis>
 
                     <Vis hvis={!trengerNySykmelding && feilArbeidsgiver}>
                         <br />
-                        <AlertStripe type="info">
+                        <AlertStripeInfo>
                             <strong>Du kan bruke sykmeldingen din.</strong>
                             <br />
                             Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs!
                             Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for
                             arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi beskjed til
                             den som sykmelder deg om at det er lagt inn feil arbeidsgiver.
-                        </AlertStripe>
+                        </AlertStripeInfo>
                     </Vis>
 
                     <Vis hvis={trengerIkkeNySykmelding && !feilArbeidsgiver && !trengerNySykmelding}>
                         <br />
-                        <AlertStripe type="info">
+                        <AlertStripeInfo>
                             <strong>Du kan bruke sykmeldingen din.</strong>
                             <br />
                             Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at
                             den inneholder feil.
-                        </AlertStripe>
+                        </AlertStripeInfo>
                     </Vis>
                 </Vis>
             </Panel>
@@ -221,6 +238,25 @@ const Form = ({
                         // @ts-ignore // TODO: Finn ut av riktig TS type her
                         feil={errors[Skjemafelt.SYKMELDT_FRA] ? errors[Skjemafelt.SYKMELDT_FRA] : null}
                     />
+
+                    <Vis hvis={!!sykmelding.arbeidsgiver.navn}>
+                        <br />
+                        <AlertStripeInfo>
+                            Den som sykmeldte deg har oppgitt at du er sykmeldt fra ARBEIDSGIVER
+                        </AlertStripeInfo>
+                    </Vis>
+
+                    <Vis hvis={fieldValues[Skjemafelt.SYKMELDT_FRA] === Arbeidsforhold.ANNEN_ARBEIDSGIVER}>
+                        <br />
+                        <AlertStripeAdvarsel>
+                            Siden du ikke finner arbeidsgiveren din i denne listen, kan du ikke sende sykmeldingen
+                            digitalt. Du bør spørre arbeidsgiveren din om hvorfor de ikke har registrert deg som
+                            arbeidstaker i A-meldingen.
+                            <br />
+                            <br />
+                            <Knapp>Skriv ut</Knapp>
+                        </AlertStripeAdvarsel>
+                    </Vis>
 
                     <Vis
                         hvis={
@@ -333,29 +369,55 @@ const Form = ({
                 </>
             )}
             <br />
-            <>
-                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                    <Hovedknapp htmlType="submit" spinner={submitting} data-testid="knapp-submit">
-                        {true ? 'knapp.send-sykmeldingen' : 'knapp.bekreft-sykmeldingen'}
-                    </Hovedknapp>
-                </div>
-                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                    <Lenke
-                        href="#"
-                        onClick={e => {
-                            e.preventDefault();
-                            // setVisAvbrytdialog(vises => !vises);
-                            /*setTimeout(
-                                () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
-                                300,
-                            );*/
-                        }}
-                    >
-                        knapp.onsker-ikke-bruke-sykmelding
-                    </Lenke>
-                </div>
-            </>
+            <SubmitKnapp skalViseAvbryt={skalViseAvbryt} skalViseSend={skalViseSend} submitting={submitting} />
         </form>
+    );
+};
+
+type SubmitKnappProps = {
+    skalViseAvbryt: boolean;
+    skalViseSend: boolean;
+    submitting: boolean;
+};
+
+const SubmitKnapp = ({ skalViseAvbryt, skalViseSend, submitting }: SubmitKnappProps) => {
+    if (skalViseAvbryt) {
+        return (
+            <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                <Fareknapp spinner={submitting} onClick={() => console.log('avbryt sykmelding')}>
+                    Avbryt Sykmelding
+                </Fareknapp>
+            </div>
+        );
+    }
+
+    const sendKnapp = (
+        <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+            <Hovedknapp htmlType="submit" spinner={submitting} data-testid="knapp-submit">
+                {skalViseSend ? 'Send' : 'Bekreft'} sykmelding
+            </Hovedknapp>
+        </div>
+    );
+
+    return (
+        <>
+            {sendKnapp}
+            <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                <Lenke
+                    href="#"
+                    onClick={e => {
+                        e.preventDefault();
+                        // setVisAvbrytdialog(vises => !vises);
+                        /*setTimeout(
+                        () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
+                        300,
+                    );*/
+                    }}
+                >
+                    knapp.onsker-ikke-bruke-sykmelding
+                </Lenke>
+            </div>
+        </>
     );
 };
 
@@ -448,6 +510,7 @@ const SendingsSkjema = ({ sykmelding }: { sykmelding: Sykmelding }) => {
             <div aria-live="assertive">
                 {!submitSuccess && (
                     <Form
+                        sykmelding={sykmelding}
                         errorMessages={errorMessages}
                         fieldValues={fieldValues}
                         errors={errors}
