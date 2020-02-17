@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { CheckboksPanelGruppe, Feiloppsummering, RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
@@ -48,6 +48,8 @@ const Form = ({
     arbeidsgivere,
     setVisAvbrytDialog,
 }: FormProps) => {
+    const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
+
     const trengerNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
         [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(value as FeilOpplysninger),
     );
@@ -345,6 +347,7 @@ const Form = ({
                 submitting={submitting}
                 onAvbryt={onAvbryt}
                 setVisAvbrytDialog={setVisAvbrytDialog}
+                avbrytdialogRef={avbrytdialogRef}
             />
         </form>
     );

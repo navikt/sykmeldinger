@@ -1,3 +1,4 @@
+import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 import { Fareknapp, Hovedknapp } from 'nav-frontend-knapper';
 
@@ -7,9 +8,17 @@ type SubmitKnappProps = {
     submitting: boolean;
     onAvbryt: () => void;
     setVisAvbrytDialog: (val: boolean) => void;
+    avbrytdialogRef: React.MutableRefObject<HTMLDivElement>;
 };
 
-const SubmitKnapp = ({ skalViseAvbryt, skalViseSend, submitting, onAvbryt, setVisAvbrytDialog }: SubmitKnappProps) => {
+const SubmitKnapp = ({
+    skalViseAvbryt,
+    skalViseSend,
+    submitting,
+    onAvbryt,
+    setVisAvbrytDialog,
+    avbrytdialogRef,
+}: SubmitKnappProps) => {
     if (skalViseAvbryt) {
         return (
             <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
@@ -31,15 +40,20 @@ const SubmitKnapp = ({ skalViseAvbryt, skalViseSend, submitting, onAvbryt, setVi
     return (
         <>
             {submit}
-            <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                <Fareknapp
+            <div style={{ marginBottom: '2rem', textAlign: 'center' }} ref={avbrytdialogRef}>
+                <Lenke
+                    href="#"
                     onClick={e => {
                         e.preventDefault();
                         setVisAvbrytDialog(true);
+                        setTimeout(
+                            () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
+                            300,
+                        );
                     }}
                 >
-                    knapp.onsker-ikke-bruke-sykmelding
-                </Fareknapp>
+                    Jeg ønsker ikke å bruke denne sykmeldingen
+                </Lenke>
             </div>
         </>
     );
