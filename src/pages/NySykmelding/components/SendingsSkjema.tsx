@@ -1,11 +1,19 @@
 import Lenke from 'nav-frontend-lenker';
 import React, { SyntheticEvent, useRef, useState } from 'react';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { CheckboksPanelGruppe, Feiloppsummering, FeiloppsummeringFeil, RadioPanelGruppe } from 'nav-frontend-skjema';
+import {
+    CheckboksPanelGruppe,
+    Feiloppsummering,
+    FeiloppsummeringFeil,
+    RadioPanelGruppe,
+    RadioPanelProps,
+} from 'nav-frontend-skjema';
 import { Fareknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Panel } from 'nav-frontend-paneler';
 
+import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import Vis from '../../../utils/vis';
+import useFetch, { isNotStarted } from '../../../hooks/useFetch';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -15,7 +23,12 @@ import {
     Skjemafelt,
 } from './skjemaComponents/skjemaTypes';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
-import { clearDependentValues, getErrorMessages } from './skjemaComponents/skjemaUtils';
+import {
+    clearDependentValues,
+    getErrorMessages,
+    hentArbeidsGiverRadios,
+    hentValgtArbeidsgiver,
+} from './skjemaComponents/skjemaUtils';
 import { validateAll, validateField, validators } from './skjemaComponents/validators';
 
 export const fieldValuesSchema: FieldValuesType = {
@@ -40,27 +53,31 @@ export const errorSchema: ErrorsSchemaType = {
 
 export type FormProps = {
     sykmelding: Sykmelding;
-    errorMessages: FeiloppsummeringFeil[];
     fieldValues: FieldValuesType;
     errors: ErrorsSchemaType;
     onSubmit: any;
+    onAvbryt: () => void;
     handleChange: any;
-    reset: (event: SyntheticEvent) => void;
     feiloppsummering: React.RefObject<HTMLDivElement>;
     submitting: boolean;
+    skalViseSend: boolean;
+    skalViseAvbryt: boolean;
+    arbeidsgivere: Arbeidsgiver[];
 };
 
 // TODO: Erstatt any
 const Form = ({
     sykmelding,
-    errorMessages,
     fieldValues,
     errors,
     onSubmit,
+    onAvbryt,
     handleChange,
-    reset,
     feiloppsummering,
     submitting,
+    skalViseSend,
+    skalViseAvbryt,
+    arbeidsgivere,
 }: FormProps) => {
     const trengerNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
         [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(value as FeilOpplysninger),
@@ -70,18 +87,9 @@ const Form = ({
         [FeilOpplysninger.DIAGNOSE, FeilOpplysninger.ANDRE_OPPLYSNINGER].includes(value as FeilOpplysninger),
     );
 
-    const skalViseAvbryt =
-        fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
-        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
-            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
-        );
-
-    const skalViseSend =
-        !skalViseAvbryt &&
-        !!(
-            fieldValues[Skjemafelt.SYKMELDT_FRA] &&
-            Arbeidsforhold.ARBEIDSGIVER.includes(fieldValues[Skjemafelt.SYKMELDT_FRA]!)
-        );
+    const errorMessages = getErrorMessages(errors);
+    const arbeidsGiverRadios = hentArbeidsGiverRadios(arbeidsgivere);
+    const valgtArbeidsgiver = hentValgtArbeidsgiver(fieldValues, arbeidsgivere);
 
     return (
         <form onSubmit={onSubmit}>
@@ -207,11 +215,7 @@ const Form = ({
                         name={Skjemafelt.SYKMELDT_FRA}
                         legend={'Jeg er sykmeldt fra'}
                         radios={[
-                            {
-                                label: 'arbeidsgiver1',
-                                value: Arbeidsforhold.ARBEIDSGIVER,
-                                id: `b-${Arbeidsforhold.ARBEIDSGIVER}`,
-                            },
+                            ...arbeidsGiverRadios,
                             {
                                 label: 'Jobb som selvstendig næringsdrivende',
                                 value: Arbeidsforhold.SELVSTENDIG_NARINGSDRIVENDE,
@@ -242,7 +246,7 @@ const Form = ({
                     <Vis hvis={!!sykmelding.arbeidsgiver.navn}>
                         <br />
                         <AlertStripeInfo>
-                            Den som sykmeldte deg har oppgitt at du er sykmeldt fra ARBEIDSGIVER
+                            Den som sykmeldte deg har oppgitt at du er sykmeldt fra {sykmelding.arbeidsgiver.navn}
                         </AlertStripeInfo>
                     </Vis>
 
@@ -258,16 +262,11 @@ const Form = ({
                         </AlertStripeAdvarsel>
                     </Vis>
 
-                    <Vis
-                        hvis={
-                            fieldValues[Skjemafelt.SYKMELDT_FRA] ===
-                            Arbeidsforhold.ARBEIDSGIVER /* TODO: Legg til alle arbeidsgivere */
-                        }
-                    >
+                    <Vis hvis={!!fieldValues[Skjemafelt.SYKMELDT_FRA]?.startsWith(Arbeidsforhold.ARBEIDSGIVER)}>
                         <br />
                         <RadioPanelGruppe
                             name={Skjemafelt.OPPFOLGING}
-                            legend={'Er det <ARBEIDSGIVER> som skal følge deg opp på jobben når du er syk?'}
+                            legend={`Er det ${valgtArbeidsgiver?.naermesteLeder.navn} som skal følge deg opp på jobben når du er syk?`}
                             radios={[
                                 {
                                     label: 'Ja',
@@ -285,11 +284,12 @@ const Form = ({
                             feil={errors[Skjemafelt.OPPFOLGING] ? errors[Skjemafelt.OPPFOLGING] : null}
                         />
 
-                        <Vis hvis={fieldValues.oppfolging === JaEllerNei.JA}>
+                        <Vis hvis={fieldValues[Skjemafelt.OPPFOLGING] === JaEllerNei.JA}>
                             <br />
-                            Vi sender sykmeldingen til ANSVARLIG LEDER, som finner den ved å logge inn på nav.no.
+                            Vi sender sykmeldingen til {valgtArbeidsgiver?.naermesteLeder.navn}, som finner den ved å
+                            logge inn på nav.no.
                         </Vis>
-                        <Vis hvis={fieldValues.oppfolging === JaEllerNei.NEI}>
+                        <Vis hvis={fieldValues[Skjemafelt.OPPFOLGING] === JaEllerNei.NEI}>
                             <br />
                             Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
                         </Vis>
@@ -306,6 +306,7 @@ const Form = ({
                         <RadioPanelGruppe
                             name={Skjemafelt.FRILANSER_EGENMELDING}
                             legend={
+                                // TODO: Dato
                                 'Vi har registrert at du ble sykmeldt <SYKMELDING DATO>. Brukte du egenmelding eller noen annen sykmelding før denne datoen?'
                             }
                             radios={[
@@ -369,7 +370,12 @@ const Form = ({
                 </>
             )}
             <br />
-            <SubmitKnapp skalViseAvbryt={skalViseAvbryt} skalViseSend={skalViseSend} submitting={submitting} />
+            <SubmitKnapp
+                skalViseAvbryt={skalViseAvbryt}
+                skalViseSend={skalViseSend}
+                submitting={submitting}
+                onAvbryt={onAvbryt}
+            />
         </form>
     );
 };
@@ -378,20 +384,21 @@ type SubmitKnappProps = {
     skalViseAvbryt: boolean;
     skalViseSend: boolean;
     submitting: boolean;
+    onAvbryt: () => void;
 };
 
-const SubmitKnapp = ({ skalViseAvbryt, skalViseSend, submitting }: SubmitKnappProps) => {
+const SubmitKnapp = ({ skalViseAvbryt, skalViseSend, submitting, onAvbryt }: SubmitKnappProps) => {
     if (skalViseAvbryt) {
         return (
             <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                <Fareknapp spinner={submitting} onClick={() => console.log('avbryt sykmelding')}>
+                <Fareknapp spinner={submitting} onClick={onAvbryt}>
                     Avbryt Sykmelding
                 </Fareknapp>
             </div>
         );
     }
 
-    const sendKnapp = (
+    const submit = (
         <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
             <Hovedknapp htmlType="submit" spinner={submitting} data-testid="knapp-submit">
                 {skalViseSend ? 'Send' : 'Bekreft'} sykmelding
@@ -401,7 +408,7 @@ const SubmitKnapp = ({ skalViseAvbryt, skalViseSend, submitting }: SubmitKnappPr
 
     return (
         <>
-            {sendKnapp}
+            {submit}
             <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
                 <Lenke
                     href="#"
@@ -421,7 +428,12 @@ const SubmitKnapp = ({ skalViseAvbryt, skalViseSend, submitting }: SubmitKnappPr
     );
 };
 
-const SendingsSkjema = ({ sykmelding }: { sykmelding: Sykmelding }) => {
+type SendingsSkjemaProps = {
+    sykmelding: Sykmelding;
+    arbeidsgivere: Arbeidsgiver[];
+};
+
+const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitAttempt, setSubmitAttempt] = useState(false);
     const [submitting, setSubmitting] = useState(false);
@@ -429,19 +441,22 @@ const SendingsSkjema = ({ sykmelding }: { sykmelding: Sykmelding }) => {
     const [fieldValues, setFieldValues] = useState(fieldValuesSchema);
     const feiloppsummering = useRef<HTMLDivElement>(null);
 
-    console.log(sykmelding);
+    const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
+    const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
+    const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
-    const reset = (event: SyntheticEvent) => {
-        if (event) {
-            event.preventDefault();
-        }
+    const skalViseAvbryt =
+        fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
+        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
+            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
+        );
 
-        setSubmitSuccess(false);
-        setSubmitAttempt(false);
-        setSubmitting(false);
-        setErrors(errorSchema);
-        setFieldValues(fieldValuesSchema);
-    };
+    const skalViseSend =
+        !skalViseAvbryt &&
+        !!(
+            fieldValues[Skjemafelt.SYKMELDT_FRA] &&
+            Arbeidsforhold.ARBEIDSGIVER.includes(fieldValues[Skjemafelt.SYKMELDT_FRA]!)
+        );
 
     const submit = (event: SyntheticEvent) => {
         event.preventDefault();
@@ -457,13 +472,68 @@ const SendingsSkjema = ({ sykmelding }: { sykmelding: Sykmelding }) => {
             setSubmitAttempt(false);
             setSubmitting(true);
 
-            // do submit
-            console.log('submitting', fieldValues);
+            if (skalViseSend) {
+                if (isNotStarted(sendSykmelding)) {
+                    sendSykmelding.fetch(
+                        `${process.env.REACT_APP_API_URL}/sykmelding/send/`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ id: sykmelding.id, fieldValues }),
+                        },
+                        () => {
+                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                            if (process.env.REACT_APP_SOLO) {
+                                window.location.reload();
+                            } else {
+                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
+                            }
+                        },
+                    );
+                }
+            } else {
+                if (isNotStarted(bekreftSykmelding)) {
+                    sendSykmelding.fetch(
+                        `${process.env.REACT_APP_API_URL}/sykmelding/bekreft/`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ id: sykmelding.id, fieldValues }),
+                        },
+                        () => {
+                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                            if (process.env.REACT_APP_SOLO) {
+                                window.location.reload();
+                            } else {
+                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
+                            }
+                        },
+                    );
+                }
+            }
+        }
+    };
 
-            window.setTimeout(() => {
-                setSubmitting(false);
-                setSubmitSuccess(true);
-            }, 500);
+    const onAvbryt = () => {
+        if (isNotStarted(avbrytSykmelding)) {
+            avbrytSykmelding.fetch(
+                `${process.env.REACT_APP_API_URL}/sykmelding/avbryt/${sykmelding.id}`,
+                {
+                    method: 'POST',
+                },
+                () => {
+                    // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
+                    if (process.env.REACT_APP_SOLO) {
+                        window.location.reload();
+                    } else {
+                        window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
+                    }
+                },
+            );
         }
     };
 
@@ -503,22 +573,22 @@ const SendingsSkjema = ({ sykmelding }: { sykmelding: Sykmelding }) => {
         setFieldValues(updatedValues);
     };
 
-    const errorMessages = getErrorMessages(errors);
-
     return (
         <div className="form-test">
             <div aria-live="assertive">
                 {!submitSuccess && (
                     <Form
                         sykmelding={sykmelding}
-                        errorMessages={errorMessages}
                         fieldValues={fieldValues}
                         errors={errors}
                         onSubmit={submit}
+                        onAvbryt={onAvbryt}
                         handleChange={handleChange}
-                        reset={reset}
                         feiloppsummering={feiloppsummering}
                         submitting={submitting}
+                        skalViseSend={skalViseSend}
+                        skalViseAvbryt={skalViseAvbryt}
+                        arbeidsgivere={arbeidsgivere}
                     />
                 )}
                 {submitSuccess && <div>Skjema sendt</div>}

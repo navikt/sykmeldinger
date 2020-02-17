@@ -101,7 +101,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 <SporsmalInfoheader />
             </div>
 
-            <SendingsSkjema sykmelding={sykmelding} />
+            <SendingsSkjema sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} />
         </div>
     );
 };

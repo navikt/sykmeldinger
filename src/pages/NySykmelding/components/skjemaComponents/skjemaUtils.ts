@@ -1,6 +1,7 @@
-import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
+import { FeiloppsummeringFeil, RadioPanelProps } from 'nav-frontend-skjema';
 
-import { ErrorsSchemaType, FieldValuesType, Skjemafelt } from './skjemaTypes';
+import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+import { Arbeidsforhold, ErrorsSchemaType, FieldValuesType, Skjemafelt } from './skjemaTypes';
 
 export const getErrorMessages = (errors: ErrorsSchemaType) => {
     const definedErrors = Object.entries(errors).filter(([_key, value]) => !!value);
@@ -32,11 +33,13 @@ export const clearDependentValues = (name: Skjemafelt, errors: ErrorsSchemaType,
     if (name === Skjemafelt.SYKMELDT_FRA) {
         updatedFieldValues = {
             ...updatedFieldValues,
+            [Skjemafelt.OPPFOLGING]: undefined,
             [Skjemafelt.FRILANSER_FORSIKRING]: undefined,
             [Skjemafelt.FRILANSER_EGENMELDING]: undefined,
         };
         updatedErrors = {
             ...errors,
+            [Skjemafelt.OPPFOLGING]: null,
             [Skjemafelt.FRILANSER_FORSIKRING]: null,
             [Skjemafelt.FRILANSER_EGENMELDING]: null,
         };
@@ -60,4 +63,27 @@ export const clearDependentValues = (name: Skjemafelt, errors: ErrorsSchemaType,
     }
 
     return { updatedFieldValues, updatedErrors };
+};
+
+export const hentValgtArbeidsgiver = (fieldValues: FieldValuesType, arbeidsgivere: Arbeidsgiver[]) => {
+    if (fieldValues[Skjemafelt.SYKMELDT_FRA]?.startsWith(Arbeidsforhold.ARBEIDSGIVER)) {
+        const orgnummer = fieldValues[Skjemafelt.SYKMELDT_FRA]?.split('-')[1];
+        return arbeidsgivere.find(arbeidsgiver => arbeidsgiver.orgnummer === orgnummer);
+    }
+
+    return null;
+};
+
+export const hentArbeidsGiverRadios = (arbeidsgivere: Arbeidsgiver[]) => {
+    return arbeidsgivere.map((arbeidsgiver, index) => {
+        const radio: RadioPanelProps = {
+            label: `${arbeidsgiver.navn} (Org. nummer: ${arbeidsgiver.orgnummer})`,
+            value: Arbeidsforhold.ARBEIDSGIVER.concat('-', arbeidsgiver.orgnummer),
+        };
+
+        if (index === 0) {
+            return { ...radio, id: `b-${Arbeidsforhold.ARBEIDSGIVER}` };
+        }
+        return radio;
+    });
 };
