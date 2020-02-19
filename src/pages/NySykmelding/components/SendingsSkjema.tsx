@@ -23,7 +23,7 @@ export const fieldValuesSchema: FieldValuesType = {
     [Skjemafelt.FRILANSER_FORSIKRING]: undefined,
     [Skjemafelt.OPPFOLGING]: undefined,
     [Skjemafelt.FEIL_OPPLYSNINGER]: [],
-    [Skjemafelt.EGENMELDINGSPERIODER]: [], // TODO: Dato
+    [Skjemafelt.EGENMELDINGSPERIODER]: [[]],
 };
 
 export const errorSchema: ErrorsSchemaType = {
@@ -152,7 +152,7 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
         }
     };
 
-    const handleChange = (value: string, name: Skjemafelt) => {
+    const handleChange = (value: string | string[] | string[][], name: Skjemafelt) => {
         if (visAvbrytDialog) {
             setVisAvbrytDialog(false);
         }

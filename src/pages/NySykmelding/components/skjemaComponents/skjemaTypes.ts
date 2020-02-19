@@ -1,5 +1,5 @@
 export type ValidatorType = {
-    test: (value?: string | string[]) => boolean;
+    test: (value?: string | string[] | string[][]) => boolean;
     failText: string;
     requiresOneOf?: {
         name: Skjemafelt;
@@ -48,28 +48,28 @@ export type FieldValuesType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: JaEllerNei | undefined;
     [Skjemafelt.SYKMELDT_FRA]: Arbeidsforhold | undefined;
     [Skjemafelt.FRILANSER_EGENMELDING]: string | undefined;
+    [Skjemafelt.EGENMELDINGSPERIODER]: string[][];
     [Skjemafelt.FRILANSER_FORSIKRING]: JaEllerNei | undefined;
     [Skjemafelt.OPPFOLGING]: JaEllerNei | undefined;
     [Skjemafelt.FEIL_OPPLYSNINGER]: string[];
-    [Skjemafelt.EGENMELDINGSPERIODER]: string[]; // TODO: Dato
 };
 
 export type ErrorsSchemaType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: string | null;
     [Skjemafelt.SYKMELDT_FRA]: string | null;
     [Skjemafelt.FRILANSER_EGENMELDING]: string | null;
+    [Skjemafelt.EGENMELDINGSPERIODER]: string | null;
     [Skjemafelt.FRILANSER_FORSIKRING]: string | null;
     [Skjemafelt.OPPFOLGING]: string | null;
     [Skjemafelt.FEIL_OPPLYSNINGER]: string | null;
-    [Skjemafelt.EGENMELDINGSPERIODER]: string | null;
 };
 
 export type ValidatorSchemaType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: ValidatorType[];
     [Skjemafelt.SYKMELDT_FRA]: ValidatorType[];
     [Skjemafelt.FRILANSER_EGENMELDING]: ValidatorType[];
+    [Skjemafelt.EGENMELDINGSPERIODER]: ValidatorType[];
     [Skjemafelt.FRILANSER_FORSIKRING]: ValidatorType[];
     [Skjemafelt.OPPFOLGING]: ValidatorType[];
     [Skjemafelt.FEIL_OPPLYSNINGER]: ValidatorType[];
-    [Skjemafelt.EGENMELDINGSPERIODER]: ValidatorType[];
 };

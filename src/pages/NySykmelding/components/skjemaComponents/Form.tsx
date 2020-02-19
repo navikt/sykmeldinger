@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { CheckboksPanelGruppe, Feiloppsummering, RadioPanelGruppe } from 'nav-frontend-skjema';
+import { CheckboksPanelGruppe, Feiloppsummering, RadioPanelGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { Panel } from 'nav-frontend-paneler';
 
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+import Egenmeldingsdager from './Egenmeldingsdager';
 import SubmitKnapp from './SubmitKnapp';
 import Vis from '../../../../utils/vis';
 import {
@@ -24,7 +25,7 @@ export type FormProps = {
     errors: ErrorsSchemaType;
     onSubmit: any;
     onAvbryt: () => void;
-    handleChange: any;
+    handleChange: (value: string | string[] | string[][], name: Skjemafelt) => void;
     feiloppsummering: React.RefObject<HTMLDivElement>;
     submitting: boolean;
     skalViseSend: boolean;
@@ -303,7 +304,24 @@ const Form = ({
 
                         <Vis hvis={fieldValues[Skjemafelt.FRILANSER_EGENMELDING] === JaEllerNei.JA}>
                             <br />
-                            DATOVALG
+                            <SkjemaGruppe
+                                feil={
+                                    errors[Skjemafelt.EGENMELDINGSPERIODER]
+                                        ? errors[Skjemafelt.EGENMELDINGSPERIODER]
+                                        : null
+                                }
+                            >
+                                <Egenmeldingsdager
+                                    name={Skjemafelt.EGENMELDINGSPERIODER}
+                                    handleChange={handleChange}
+                                    perioder={fieldValues[Skjemafelt.EGENMELDINGSPERIODER]}
+                                    sykmeldingStartdato={
+                                        new Date(
+                                            Date.now() - 5 * 24 * 60 * 60 * 1000,
+                                        ) /* // TODO: Erstatt med faktisk startdato */
+                                    }
+                                />
+                            </SkjemaGruppe>
                         </Vis>
                         <br />
                         <RadioPanelGruppe

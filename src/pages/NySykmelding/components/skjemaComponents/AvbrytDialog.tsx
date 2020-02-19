@@ -1,6 +1,5 @@
 import './AvbrytDialog.less';
 
-import Lenke from 'nav-frontend-lenker';
 import PanelBase from 'nav-frontend-paneler';
 import React from 'react';
 import Tekstomrade from 'nav-frontend-tekstomrade';

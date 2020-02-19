@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -12,13 +14,13 @@ import {
 export const validators: ValidatorSchemaType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: [
         {
-            test: (value?: string | string[]): value is string => !!(value as string),
+            test: (value?: string | string[] | string[][]): value is string => !!(value as string),
             failText: 'Du må bekrefte om opplysningene er riktige',
         },
     ],
     [Skjemafelt.SYKMELDT_FRA]: [
         {
-            test: (value?: string | string[]): value is string => !!(value as string),
+            test: (value?: string | string[] | string[][]): value is string => !!(value as string),
             failText: 'Du må oppgi hvor du er sykmeldt fra',
             requiresOneOf: [
                 { name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.JA },
@@ -41,7 +43,7 @@ export const validators: ValidatorSchemaType = {
     ],
     [Skjemafelt.FRILANSER_EGENMELDING]: [
         {
-            test: (value?: string | string[]): value is string => !!(value as string),
+            test: (value?: string | string[] | string[][]): value is string => !!(value as string),
             failText: 'Du må svare på om du har brukt egenmeldingsdager under sykefraværet',
             requiresOneOf: [
                 {
@@ -51,9 +53,56 @@ export const validators: ValidatorSchemaType = {
             ],
         },
     ],
+    [Skjemafelt.EGENMELDINGSPERIODER]: [
+        {
+            test: (value?: string | string[] | string[][]): value is string[][] => {
+                const perioder = value as string[][];
+                console.log(perioder.every(periode => periode.length === 2));
+                return perioder.every(periode => periode.length === 2);
+            },
+            failText: 'Periode mangler utfylling',
+            requiresOneOf: [
+                {
+                    name: Skjemafelt.FRILANSER_EGENMELDING,
+                    requiredValue: JaEllerNei.JA,
+                },
+            ],
+        },
+        {
+            test: (value?: string | string[] | string[][]): value is string[][] => {
+                const perioder = value as string[][];
+
+                const sortertEtterStartDato = perioder.sort((a, b) => {
+                    if (dayjs(a[0]).isBefore(dayjs(b[0]))) {
+                        return -1;
+                    } else if (dayjs(a[0]).isSame(dayjs(b[0]))) {
+                        return 0;
+                    }
+                    return 1;
+                });
+
+                for (let i = 0; i < sortertEtterStartDato.length - 1; i++) {
+                    if (
+                        dayjs(sortertEtterStartDato[i + 1][0]).isBefore(dayjs(sortertEtterStartDato[i][1])) ||
+                        dayjs(sortertEtterStartDato[i + 1][0]).isSame(dayjs(sortertEtterStartDato[i][1]))
+                    ) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            failText: 'Perioder kan ikke overlappe',
+            requiresOneOf: [
+                {
+                    name: Skjemafelt.FRILANSER_EGENMELDING,
+                    requiredValue: JaEllerNei.JA,
+                },
+            ],
+        },
+    ],
     [Skjemafelt.FRILANSER_FORSIKRING]: [
         {
-            test: (value?: string | string[]): value is string => !!(value as string),
+            test: (value?: string | string[] | string[][]): value is string => !!(value as string),
             failText: 'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet',
             requiresOneOf: [
                 {
@@ -65,7 +114,7 @@ export const validators: ValidatorSchemaType = {
     ],
     [Skjemafelt.OPPFOLGING]: [
         {
-            test: (value?: string | string[]): value is string => !!(value as string),
+            test: (value?: string | string[] | string[][]): value is string => !!(value as string),
             failText: 'Du må svare på om det er ANSVARLIG_NAVN som skal følge deg opp på jobben når du er syk',
             requiresOneOf: [
                 {
@@ -77,21 +126,9 @@ export const validators: ValidatorSchemaType = {
     ],
     [Skjemafelt.FEIL_OPPLYSNINGER]: [
         {
-            test: (value?: string | string[]): value is string[] => (value as string[]).length > 0,
+            test: (value?: string | string[] | string[][]): value is string[] => (value as string[]).length > 0,
             failText: 'Du må oppgi hvilke opplysninger som ikke er riktige',
             requiresOneOf: [{ name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.NEI }],
-        },
-    ],
-    [Skjemafelt.EGENMELDINGSPERIODER]: [
-        {
-            test: (value?: string | string[]): value is string[] => true, // TODO: Validator
-            failText: 'Periode mangler utfylling',
-            requiresOneOf: [
-                {
-                    name: Skjemafelt.FRILANSER_EGENMELDING,
-                    requiredValue: JaEllerNei.JA,
-                },
-            ],
         },
     ],
 };
@@ -109,7 +146,7 @@ export const validateField = (name: Skjemafelt, validators: ValidatorSchemaType,
                 const fieldValue = fieldValues[name];
 
                 if (fieldValue instanceof Array) {
-                    return !values.some(value => fieldValue.includes(value));
+                    return !values.some(value => fieldValue.flat().includes(value));
                 }
 
                 return !values.some(value => fieldValue === value);
@@ -126,11 +163,11 @@ export const validateField = (name: Skjemafelt, validators: ValidatorSchemaType,
 
                 if (fieldValue instanceof Array) {
                     if (requiredValue) {
-                        return fieldValue.includes(requiredValue);
+                        return fieldValue.flat().includes(requiredValue);
                     }
 
                     if (requiredValues) {
-                        return requiredValues.some(value => fieldValue.includes(value));
+                        return requiredValues.some(value => fieldValue.flat().includes(value));
                     }
                 } else {
                     if (requiredValue) {
