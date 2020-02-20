@@ -1,4 +1,4 @@
-const SporsmalTekster: any = {
+const SendingsSkjemaTekster: any = {
     nb: {
         ja: 'Ja',
         nei: 'Nei',
@@ -22,7 +22,7 @@ const SporsmalTekster: any = {
         'opplysningeneErFeil.sykmeldingsgrad': 'Sykmeldingsgrad',
         'opplysningeneErFeil.arbeidsgiver': 'Arbeidsgiver',
         'opplysningeneErFeil.diagnose': 'Diagnose',
-        'opplysningeneErFeil.andreOpplysninger': 'Andre Opplysninger',
+        'opplysningeneErFeil.andreOpplysninger': 'Andre opplysninger',
         'sykmeldtFra.tittel': 'Jeg er sykmeldt fra',
         'sykmeldtFra.hjelpetekst':
             'Er du sykmeldt fra flere arbeidssituasjoner må du ha én sykmelding per arbeidssituasjon. Trenger du flere sykmeldinger, må du kontakte den som har sykmeldt deg.',
@@ -50,7 +50,7 @@ const SporsmalTekster: any = {
         'avbrytdialog.er-du-sikker': 'Er du sikker på at du vil avbryte denne sykmeldingen?',
         'avbrytdialog.kan-sende-papir': 'Du kan fortsatt levere den på papir.',
         'frilanser.egenmelding.tittel':
-            'Vi har registrert at du ble sykmeldt 5. oktober 2019. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+            'Vi har registrert at du ble sykmeldt %DATO%. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
         'frilanser.egenmelding.feilmelding': 'Velg om du har hatt egenmelding',
         'frilanser.forsikring.tittel': 'Har du forsikring som gjelder de første 16 dagene av sykefraværet?',
         'frilanser.forsikring.feilmelding': 'Velg om du har hatt forsikring',
@@ -58,6 +58,7 @@ const SporsmalTekster: any = {
         'egenmeldingsperioder.legg-til-periode': '+ Legg til en ekstra periode',
         'egenmeldingsperioder.slett-periode': 'Slett periode',
         'egenmeldingsperioder.feilmelding': 'Velg periode(r) for egenmelding',
+        'egenmeldingsperioder.placeholder': 'Trykk for å velge periode',
         'infoheader.bruk-sykmeldingen': 'Bruk sykmeldingen',
         'infoheader.trygdeloven.del-en':
             'melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i jobb',
@@ -74,10 +75,11 @@ const SporsmalTekster: any = {
         'feilmelding.egenmeldingsperioder.periode-mangler-utfylling': 'Periode mangler utfylling',
         'feilmelding.egenmeldingsperioder.flere-perioder-mangler-utfylling': 'Flerer perioder mangler utfylling',
         'feilmelding.egenmeldingsperioder.overlapp': 'Perioder kan ikke overlappe',
+        'feilmelding.feiloppsummering.tittel': 'For å gå videre må du rette opp følgende',
     },
     en: {},
 };
 
-const tekster = SporsmalTekster.nb;
+const tekster = SendingsSkjemaTekster.nb;
 
 export default tekster;

@@ -19,7 +19,7 @@ import SeksjonMedTittel from '../../components/Infopanel/layout/SeksjonMedTittel
 import SendingsSkjema from './components/SendingsSkjema';
 import Sidetopp from '../../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../../components/Infopanel/panelelementer/SkadeSeksjon';
-import SporsmalInfoheader from './components/Sporsmal/SporsmalInfoheader';
+import SporsmalInfoheader from './components/SporsmalInfoheader';
 import SvangerskapSeksjon from '../../components/Infopanel/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../../components/Infopanel/layout/Tittel';

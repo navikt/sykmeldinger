@@ -1,15 +1,27 @@
+import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+
+export type RequiresOneOf = {
+    name: Skjemafelt;
+    startsWith?: string;
+    requiredValue?: string;
+    requiredValues?: string[];
+};
+
+export type RequiresNoneOf = {
+    name: Skjemafelt;
+    values: string[];
+};
+
+export type ValidationProps = {
+    arbeidsgivere?: Arbeidsgiver[];
+};
+
 export type ValidatorType = {
     test: (value?: string | string[] | string[][]) => boolean;
     failText: string;
-    requiresOneOf?: {
-        name: Skjemafelt;
-        requiredValue?: string;
-        requiredValues?: string[];
-    }[];
-    requiresNoneOf?: {
-        name: Skjemafelt;
-        values: string[];
-    }[];
+    failTextReplacement?: (fieldValues: FieldValuesType, failText: string, props: ValidationProps) => string;
+    requiresOneOf?: RequiresOneOf[];
+    requiresNoneOf?: RequiresNoneOf[];
 };
 
 export enum Skjemafelt {

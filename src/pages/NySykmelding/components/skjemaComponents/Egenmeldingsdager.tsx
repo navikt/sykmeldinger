@@ -8,6 +8,7 @@ import labelPlugin from 'flatpickr/dist/plugins/labelPlugin/labelPlugin';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Label } from 'nav-frontend-skjema';
 
+import tekster from '../SendingsSkjema-tekster';
 import { Skjemafelt } from './skjemaTypes';
 
 export const locale: CustomLocale = {
@@ -65,14 +66,14 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
     return (
         <>
             <>
-                <Label htmlFor="periodevelger">Når hadde du egenmelding?</Label>
+                <Label htmlFor="periodevelger">{tekster['egenmeldingsperioder.tittel']}</Label>
                 {perioder.map((periode, index) => (
                     <div className="periode" key={index.toString()}>
                         <Flatpickr
                             id={`b-${Skjemafelt.EGENMELDINGSPERIODER}`}
                             value={periode}
                             className="typo-normal flatpickr"
-                            placeholder="Trykk for å velge periode"
+                            placeholder={tekster['egenmeldingsperioder.placeholder']}
                             onChange={nyeDatoer => oppdaterPeriode(index, nyeDatoer)}
                             options={{
                                 position: 'below',
@@ -97,7 +98,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
                                     slettPeriode(index);
                                 }}
                             >
-                                Slett periode
+                                {tekster['egenmeldingsperioder.slett-periode']}
                             </Lenke>
                         )}
                     </div>
@@ -111,7 +112,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
                     opprettNyPeriode();
                 }}
             >
-                + Legg til en ekstra periode
+                {tekster['egenmeldingsperioder.legg-til-periode']}
             </Lenke>
         </>
     );

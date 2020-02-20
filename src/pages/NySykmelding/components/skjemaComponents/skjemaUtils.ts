@@ -1,6 +1,7 @@
 import { FeiloppsummeringFeil, RadioPanelProps } from 'nav-frontend-skjema';
 
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+import useAppStore from '../../../../store/useAppStore';
 import { Arbeidsforhold, ErrorsSchemaType, FieldValuesType, Skjemafelt } from './skjemaTypes';
 
 export const getErrorMessages = (errors: ErrorsSchemaType) => {
@@ -74,7 +75,23 @@ export const hentValgtArbeidsgiver = (fieldValues: FieldValuesType, arbeidsgiver
     return null;
 };
 
-export const hentArbeidsGiverRadios = (arbeidsgivere: Arbeidsgiver[]) => {
+export const hentValgtArbeidsgiverNaermesteLederNavn = (
+    fieldValues: FieldValuesType,
+    arbeidsgivere: Arbeidsgiver[] | null | undefined,
+) => {
+    if (!arbeidsgivere) {
+        return null;
+    }
+
+    const arbeidsgiver = hentValgtArbeidsgiver(fieldValues, arbeidsgivere);
+    return arbeidsgiver?.naermesteLeder.navn;
+};
+
+export const hentArbeidsGiverRadios = (arbeidsgivere: Arbeidsgiver[] | null) => {
+    if (!arbeidsgivere) {
+        return [];
+    }
+
     return arbeidsgivere.map((arbeidsgiver, index) => {
         const radio: RadioPanelProps = {
             label: `${arbeidsgiver.navn} (Org. nummer: ${arbeidsgiver.orgnummer})`,

@@ -2,6 +2,8 @@ import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 import { Fareknapp, Hovedknapp } from 'nav-frontend-knapper';
 
+import tekster from '../SendingsSkjema-tekster';
+
 type SubmitKnappProps = {
     skalViseAvbryt: boolean;
     skalViseSend: boolean;
@@ -23,7 +25,7 @@ const SubmitKnapp = ({
         return (
             <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
                 <Fareknapp spinner={submitting} onClick={onAvbryt}>
-                    Avbryt Sykmelding
+                    {tekster['knapp.avbryt-sykmeldingen']}
                 </Fareknapp>
             </div>
         );
@@ -32,7 +34,7 @@ const SubmitKnapp = ({
     const submit = (
         <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
             <Hovedknapp htmlType="submit" spinner={submitting} data-testid="knapp-submit">
-                {skalViseSend ? 'Send' : 'Bekreft'} sykmelding
+                {skalViseSend ? tekster['knapp.send-sykmeldingen'] : tekster['knapp.bekreft-sykmeldingen']}
             </Hovedknapp>
         </div>
     );
@@ -52,7 +54,7 @@ const SubmitKnapp = ({
                         );
                     }}
                 >
-                    Jeg ønsker ikke å bruke denne sykmeldingen
+                    {tekster['knapp.onsker-ikke-bruke-sykmelding']}
                 </Lenke>
             </div>
         </>

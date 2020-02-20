@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
 
+import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+import tekster from '../SendingsSkjema-tekster';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -7,21 +9,24 @@ import {
     FieldValuesType,
     JaEllerNei,
     Skjemafelt,
+    ValidationProps,
     ValidatorSchemaType,
     ValidatorType,
 } from './skjemaTypes';
+import { getLedetekst } from '../../../../utils/utils';
+import { hentValgtArbeidsgiverNaermesteLederNavn } from './skjemaUtils';
 
 export const validators: ValidatorSchemaType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: 'Du må bekrefte om opplysningene er riktige',
+            failText: tekster['feilmelding.opplysningene-er-riktige'],
         },
     ],
     [Skjemafelt.SYKMELDT_FRA]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: 'Du må oppgi hvor du er sykmeldt fra',
+            failText: tekster['feilmelding.sykmeldt-fra'],
             requiresOneOf: [
                 { name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.JA },
                 {
@@ -44,7 +49,7 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.FRILANSER_EGENMELDING]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: 'Du må svare på om du har brukt egenmeldingsdager under sykefraværet',
+            failText: tekster['feilmelding.frilanser.egenmelding'],
             requiresOneOf: [
                 {
                     name: Skjemafelt.SYKMELDT_FRA,
@@ -57,10 +62,9 @@ export const validators: ValidatorSchemaType = {
         {
             test: (value?: string | string[] | string[][]): value is string[][] => {
                 const perioder = value as string[][];
-                console.log(perioder.every(periode => periode.length === 2));
                 return perioder.every(periode => periode.length === 2);
             },
-            failText: 'Periode mangler utfylling',
+            failText: tekster['feilmelding.egenmeldingsperioder.periode-mangler-utfylling'],
             requiresOneOf: [
                 {
                     name: Skjemafelt.FRILANSER_EGENMELDING,
@@ -91,7 +95,7 @@ export const validators: ValidatorSchemaType = {
                 }
                 return true;
             },
-            failText: 'Perioder kan ikke overlappe',
+            failText: tekster['feilmelding.egenmeldingsperioder.overlapp'],
             requiresOneOf: [
                 {
                     name: Skjemafelt.FRILANSER_EGENMELDING,
@@ -103,7 +107,7 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.FRILANSER_FORSIKRING]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: 'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet',
+            failText: tekster['feilmelding.frilanser.forsikring'],
             requiresOneOf: [
                 {
                     name: Skjemafelt.SYKMELDT_FRA,
@@ -115,11 +119,19 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.OPPFOLGING]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: 'Du må svare på om det er ANSVARLIG_NAVN som skal følge deg opp på jobben når du er syk',
+            failText: tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'],
+            failTextReplacement: (
+                fieldValues: FieldValuesType,
+                failText: string,
+                { arbeidsgivere }: ValidationProps,
+            ) => {
+                const arbeidsgivernavn = hentValgtArbeidsgiverNaermesteLederNavn(fieldValues, arbeidsgivere);
+                return getLedetekst(failText, { '%ARBEIDSGIVER%': arbeidsgivernavn });
+            },
             requiresOneOf: [
                 {
                     name: Skjemafelt.SYKMELDT_FRA,
-                    requiredValue: Arbeidsforhold.ARBEIDSGIVER,
+                    startsWith: Arbeidsforhold.ARBEIDSGIVER,
                 },
             ],
         },
@@ -127,7 +139,7 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.FEIL_OPPLYSNINGER]: [
         {
             test: (value?: string | string[] | string[][]): value is string[] => (value as string[]).length > 0,
-            failText: 'Du må oppgi hvilke opplysninger som ikke er riktige',
+            failText: tekster['opplysningeneErFeil.feilmelding'],
             requiresOneOf: [{ name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.NEI }],
         },
     ],
@@ -158,29 +170,35 @@ export const validateField = (name: Skjemafelt, validators: ValidatorSchemaType,
         }
 
         if (v.requiresOneOf) {
-            const oneRequiredFieldIsDefined = v.requiresOneOf.some(({ name, requiredValue, requiredValues }) => {
-                const fieldValue = fieldValues[name];
+            const oneRequiredFieldIsDefined = v.requiresOneOf.some(
+                ({ name, startsWith, requiredValue, requiredValues }) => {
+                    const fieldValue = fieldValues[name];
 
-                if (fieldValue instanceof Array) {
-                    if (requiredValue) {
-                        return fieldValue.flat().includes(requiredValue);
+                    if (fieldValue instanceof Array) {
+                        if (requiredValue) {
+                            return fieldValue.flat().includes(requiredValue);
+                        }
+
+                        if (requiredValues) {
+                            return requiredValues.some(value => fieldValue.flat().includes(value));
+                        }
+                    } else {
+                        if (startsWith) {
+                            return fieldValue?.startsWith(startsWith);
+                        }
+
+                        if (requiredValue) {
+                            return fieldValue === requiredValue;
+                        }
+
+                        if (requiredValues) {
+                            return requiredValues.some(value => fieldValue === value);
+                        }
                     }
 
-                    if (requiredValues) {
-                        return requiredValues.some(value => fieldValue.flat().includes(value));
-                    }
-                } else {
-                    if (requiredValue) {
-                        return fieldValue === requiredValue;
-                    }
-
-                    if (requiredValues) {
-                        return requiredValues.some(value => fieldValue === value);
-                    }
-                }
-
-                return false;
-            });
+                    return false;
+                },
+            );
 
             if (!oneRequiredFieldIsDefined) {
                 return null;
@@ -191,15 +209,25 @@ export const validateField = (name: Skjemafelt, validators: ValidatorSchemaType,
     });
 };
 
-export const validateAll = (fieldValues: FieldValuesType, errorSchema: ErrorsSchemaType) => {
+export const getFailText = (fieldValues: FieldValuesType, failedValidation: ValidatorType, props: ValidationProps) => {
+    if (!failedValidation.failTextReplacement) {
+        return failedValidation.failText;
+    }
+
+    return failedValidation.failTextReplacement(fieldValues, failedValidation.failText, props);
+};
+
+export const validateAll = (fieldValues: FieldValuesType, errorSchema: ErrorsSchemaType, props: ValidationProps) => {
     const validationErrors = errorSchema;
 
     const newErrors = Object.keys(fieldValues).reduce((accumulatedErrors, fieldKey) => {
         const failedValidation = validateField(fieldKey as Skjemafelt, validators, fieldValues);
+
         if (failedValidation) {
+            const failText = getFailText(fieldValues, failedValidation, props);
             return {
                 ...accumulatedErrors,
-                [fieldKey]: failedValidation.failText,
+                [fieldKey]: failText,
             };
         }
         return accumulatedErrors;

@@ -14,7 +14,7 @@ import {
 } from './skjemaComponents/skjemaTypes';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import { clearDependentValues } from './skjemaComponents/skjemaUtils';
-import { validateAll, validateField, validators } from './skjemaComponents/validators';
+import { getFailText, validateAll, validateField, validators } from './skjemaComponents/validators';
 
 export const fieldValuesSchema: FieldValuesType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: undefined,
@@ -69,7 +69,7 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
 
     const submit = (event: SyntheticEvent) => {
         event.preventDefault();
-        const errors = validateAll(fieldValues, errorSchema);
+        const errors = validateAll(fieldValues, errorSchema, { arbeidsgivere });
 
         const hasErrors = Object.values(errors).some(error => !!error);
 
@@ -178,11 +178,14 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
         const invalid = validateField(name, validators, updatedValues);
 
         if (submitAttempt) {
-            const newErrors = { ...updatedErrors, [name]: invalid ? invalid.failText : null };
+            const newErrors = {
+                ...updatedErrors,
+                [name]: invalid ? getFailText(fieldValues, invalid, { arbeidsgivere }) : null,
+            };
 
             setErrors(newErrors);
 
-            const hasErrors = validateAll(updatedValues, errorSchema);
+            const hasErrors = validateAll(updatedValues, errorSchema, { arbeidsgivere });
 
             if (!hasErrors) {
                 setSubmitAttempt(false);
@@ -217,7 +220,6 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
                     onAvbryt={onAvbryt}
                     visSpinner={submitting}
                 />
-                {submitSuccess && <div>Skjema sendt</div>}
             </div>
         </div>
     );
