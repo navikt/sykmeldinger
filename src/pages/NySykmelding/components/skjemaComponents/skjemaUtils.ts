@@ -1,7 +1,6 @@
 import { FeiloppsummeringFeil, RadioPanelProps } from 'nav-frontend-skjema';
 
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
-import useAppStore from '../../../../store/useAppStore';
 import { Arbeidsforhold, ErrorsSchemaType, FieldValuesType, Skjemafelt } from './skjemaTypes';
 
 export const getErrorMessages = (errors: ErrorsSchemaType) => {

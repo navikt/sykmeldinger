@@ -55,9 +55,13 @@ const Form = ({
 
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
-    const trengerNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
-        [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(value as FeilOpplysninger),
-    );
+    const trengerNySykmelding =
+        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
+            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(value as FeilOpplysninger),
+        ) || fieldValues[Skjemafelt.SYKMELDT_FRA]
+            ? fieldValues[Skjemafelt.SYKMELDT_FRA]!.includes(Arbeidsforhold.ANNEN_ARBEIDSGIVER)
+            : false;
+
     const feilArbeidsgiver = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].includes(FeilOpplysninger.ARBEIDSGIVER);
     const trengerIkkeNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
         [FeilOpplysninger.DIAGNOSE, FeilOpplysninger.ANDRE_OPPLYSNINGER].includes(value as FeilOpplysninger),

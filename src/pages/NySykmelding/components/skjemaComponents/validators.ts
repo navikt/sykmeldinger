@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 
-import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import tekster from '../SendingsSkjema-tekster';
 import {
     Arbeidsforhold,

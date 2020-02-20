@@ -55,10 +55,13 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
     const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
     const skalViseAvbryt =
-        fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
-        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
-            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
-        );
+        (fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
+            fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
+                [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
+            )) ||
+        fieldValues[Skjemafelt.SYKMELDT_FRA]
+            ? fieldValues[Skjemafelt.SYKMELDT_FRA]!.includes(Arbeidsforhold.ANNEN_ARBEIDSGIVER)
+            : false;
 
     const skalViseSend =
         !skalViseAvbryt &&
