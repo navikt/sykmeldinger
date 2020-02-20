@@ -9,11 +9,10 @@ import {
     ErrorsSchemaType,
     FeilOpplysninger,
     FieldValuesType,
-    JaEllerNei,
     Skjemafelt,
 } from './skjemaComponents/skjemaTypes';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
-import { clearDependentValues } from './skjemaComponents/skjemaUtils';
+import { brukerTrengerNySykmelding, clearDependentValues } from './skjemaComponents/skjemaUtils';
 import { getFailText, validateAll, validateField, validators } from './skjemaComponents/validators';
 
 export const fieldValuesSchema: FieldValuesType = {
@@ -41,27 +40,6 @@ type SendingsSkjemaProps = {
     arbeidsgivere: Arbeidsgiver[];
 };
 
-const visAvbryt = (fieldValues: FieldValuesType) => {
-    if (
-        fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
-        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
-            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
-        )
-    ) {
-        return true;
-    }
-
-    const sykmeldtFra = fieldValues[Skjemafelt.SYKMELDT_FRA];
-
-    if (sykmeldtFra) {
-        if (sykmeldtFra.includes(Arbeidsforhold.ANNEN_ARBEIDSGIVER)) {
-            return true;
-        }
-    }
-
-    return false;
-};
-
 const visSend = (fieldValues: FieldValuesType, skalViseAvbryt: boolean) => {
     if (!skalViseAvbryt) {
         const sykmeldtFra = fieldValues[Skjemafelt.SYKMELDT_FRA];
@@ -87,7 +65,7 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
     const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
     const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
-    const skalViseAvbryt = visAvbryt(fieldValues);
+    const skalViseAvbryt = brukerTrengerNySykmelding(fieldValues);
 
     const skalViseSend = visSend(fieldValues, skalViseAvbryt);
 

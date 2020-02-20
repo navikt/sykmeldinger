@@ -1,7 +1,14 @@
 import { FeiloppsummeringFeil, RadioPanelProps } from 'nav-frontend-skjema';
 
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
-import { Arbeidsforhold, ErrorsSchemaType, FieldValuesType, Skjemafelt } from './skjemaTypes';
+import {
+    Arbeidsforhold,
+    ErrorsSchemaType,
+    FeilOpplysninger,
+    FieldValuesType,
+    JaEllerNei,
+    Skjemafelt,
+} from './skjemaTypes';
 
 export const getErrorMessages = (errors: ErrorsSchemaType) => {
     const definedErrors = Object.entries(errors).filter(([_key, value]) => !!value);
@@ -104,4 +111,25 @@ export const hentArbeidsGiverRadios = (arbeidsgivere: Arbeidsgiver[] | null) => 
         }
         return radio;
     });
+};
+
+export const brukerTrengerNySykmelding = (fieldValues: FieldValuesType) => {
+    if (
+        fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
+        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
+            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
+        )
+    ) {
+        return true;
+    }
+
+    const sykmeldtFra = fieldValues[Skjemafelt.SYKMELDT_FRA];
+
+    if (sykmeldtFra) {
+        if (sykmeldtFra.includes(Arbeidsforhold.ANNEN_ARBEIDSGIVER)) {
+            return true;
+        }
+    }
+
+    return false;
 };

@@ -19,7 +19,12 @@ import {
     Skjemafelt,
 } from './skjemaTypes';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
-import { getErrorMessages, hentArbeidsGiverRadios, hentValgtArbeidsgiverNaermesteLederNavn } from './skjemaUtils';
+import {
+    brukerTrengerNySykmelding,
+    getErrorMessages,
+    hentArbeidsGiverRadios,
+    hentValgtArbeidsgiverNaermesteLederNavn,
+} from './skjemaUtils';
 import { getLedetekst } from '../../../../utils/utils';
 
 export type FormProps = {
@@ -55,12 +60,7 @@ const Form = ({
 
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
-    const trengerNySykmelding =
-        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
-            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(value as FeilOpplysninger),
-        ) || fieldValues[Skjemafelt.SYKMELDT_FRA]
-            ? fieldValues[Skjemafelt.SYKMELDT_FRA]!.includes(Arbeidsforhold.ANNEN_ARBEIDSGIVER)
-            : false;
+    const trengerNySykmelding = brukerTrengerNySykmelding(fieldValues);
 
     const feilArbeidsgiver = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].includes(FeilOpplysninger.ARBEIDSGIVER);
     const trengerIkkeNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
