@@ -1,3 +1,5 @@
+import './SubmitKnapp.less';
+
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 import { Fareknapp, Hovedknapp } from 'nav-frontend-knapper';
@@ -23,7 +25,7 @@ const SubmitKnapp = ({
 }: SubmitKnappProps) => {
     if (skalViseAvbryt) {
         return (
-            <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+            <div className="submitknapp-container">
                 <Fareknapp spinner={submitting} onClick={onAvbryt}>
                     {tekster['knapp.avbryt-sykmeldingen']}
                 </Fareknapp>
@@ -32,7 +34,7 @@ const SubmitKnapp = ({
     }
 
     const submit = (
-        <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+        <div className="submitknapp-container">
             <Hovedknapp htmlType="submit" spinner={submitting} data-testid="knapp-submit">
                 {skalViseSend ? tekster['knapp.send-sykmeldingen'] : tekster['knapp.bekreft-sykmeldingen']}
             </Hovedknapp>
@@ -42,7 +44,7 @@ const SubmitKnapp = ({
     return (
         <>
             {submit}
-            <div style={{ marginBottom: '2rem', textAlign: 'center' }} ref={avbrytdialogRef}>
+            <div className="submitknapp-container" ref={avbrytdialogRef}>
                 <Lenke
                     href="#"
                     onClick={e => {
