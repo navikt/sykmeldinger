@@ -20,25 +20,58 @@ export const fieldValuesSchema: FieldValuesType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: undefined,
     [Skjemafelt.SYKMELDT_FRA]: undefined,
     [Skjemafelt.FRILANSER_EGENMELDING]: undefined,
+    [Skjemafelt.EGENMELDINGSPERIODER]: [[]],
     [Skjemafelt.FRILANSER_FORSIKRING]: undefined,
     [Skjemafelt.OPPFOLGING]: undefined,
     [Skjemafelt.FEIL_OPPLYSNINGER]: [],
-    [Skjemafelt.EGENMELDINGSPERIODER]: [[]],
 };
 
 export const errorSchema: ErrorsSchemaType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: null,
     [Skjemafelt.SYKMELDT_FRA]: null,
     [Skjemafelt.FRILANSER_EGENMELDING]: null,
+    [Skjemafelt.EGENMELDINGSPERIODER]: null,
     [Skjemafelt.FRILANSER_FORSIKRING]: null,
     [Skjemafelt.OPPFOLGING]: null,
     [Skjemafelt.FEIL_OPPLYSNINGER]: null,
-    [Skjemafelt.EGENMELDINGSPERIODER]: null,
 };
 
 type SendingsSkjemaProps = {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
+};
+
+const visAvbryt = (fieldValues: FieldValuesType) => {
+    if (
+        fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
+        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
+            [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
+        )
+    ) {
+        return true;
+    }
+
+    const sykmeldtFra = fieldValues[Skjemafelt.SYKMELDT_FRA];
+
+    if (sykmeldtFra) {
+        if (sykmeldtFra.includes(Arbeidsforhold.ANNEN_ARBEIDSGIVER)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+const visSend = (fieldValues: FieldValuesType, skalViseAvbryt: boolean) => {
+    if (!skalViseAvbryt) {
+        const sykmeldtFra = fieldValues[Skjemafelt.SYKMELDT_FRA];
+
+        if (sykmeldtFra) {
+            return Arbeidsforhold.ARBEIDSGIVER.includes(sykmeldtFra);
+        }
+    }
+
+    return false;
 };
 
 const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
@@ -54,21 +87,9 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
     const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
     const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
-    const skalViseAvbryt =
-        (fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
-            fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
-                [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
-            )) ||
-        fieldValues[Skjemafelt.SYKMELDT_FRA]
-            ? fieldValues[Skjemafelt.SYKMELDT_FRA]!.includes(Arbeidsforhold.ANNEN_ARBEIDSGIVER)
-            : false;
+    const skalViseAvbryt = visAvbryt(fieldValues);
 
-    const skalViseSend =
-        !skalViseAvbryt &&
-        !!(
-            fieldValues[Skjemafelt.SYKMELDT_FRA] &&
-            Arbeidsforhold.ARBEIDSGIVER.includes(fieldValues[Skjemafelt.SYKMELDT_FRA]!)
-        );
+    const skalViseSend = visSend(fieldValues, skalViseAvbryt);
 
     const submit = (event: SyntheticEvent) => {
         event.preventDefault();

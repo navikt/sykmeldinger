@@ -24,24 +24,26 @@ export const clearDependentValues = (name: Skjemafelt, errors: ErrorsSchemaType,
     if (name === Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE) {
         updatedFieldValues = {
             ...updatedFieldValues,
-            [Skjemafelt.FEIL_OPPLYSNINGER]: [],
             [Skjemafelt.SYKMELDT_FRA]: undefined,
+            [Skjemafelt.FEIL_OPPLYSNINGER]: [],
         };
-        updatedErrors = { ...errors, [Skjemafelt.FEIL_OPPLYSNINGER]: null, [Skjemafelt.SYKMELDT_FRA]: null };
+        updatedErrors = { ...errors, [Skjemafelt.SYKMELDT_FRA]: null, [Skjemafelt.FEIL_OPPLYSNINGER]: null };
     }
 
     if (name === Skjemafelt.SYKMELDT_FRA) {
         updatedFieldValues = {
             ...updatedFieldValues,
             [Skjemafelt.OPPFOLGING]: undefined,
-            [Skjemafelt.FRILANSER_FORSIKRING]: undefined,
             [Skjemafelt.FRILANSER_EGENMELDING]: undefined,
+            [Skjemafelt.EGENMELDINGSPERIODER]: [[]],
+            [Skjemafelt.FRILANSER_FORSIKRING]: undefined,
         };
         updatedErrors = {
             ...errors,
             [Skjemafelt.OPPFOLGING]: null,
-            [Skjemafelt.FRILANSER_FORSIKRING]: null,
             [Skjemafelt.FRILANSER_EGENMELDING]: null,
+            [Skjemafelt.EGENMELDINGSPERIODER]: null,
+            [Skjemafelt.FRILANSER_FORSIKRING]: null,
         };
     }
 
