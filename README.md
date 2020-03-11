@@ -1,8 +1,8 @@
-# Ditt sykefravær
+# Sykmeldinger
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Ny landingsside for ditt sykefravær.
+Frontend-app for visning og behandling av enkeltsykmeldinger.
 
 -   Laget med [Create React App](https://github.com/facebook/create-react-app)
 -   Craco for konfigurasjon av utvidelser
