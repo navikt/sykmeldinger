@@ -1,8 +1,8 @@
-import { Status, Sykmelding } from './sykmeldingTypes';
+import { Status, Sykmelding, StatusTyper } from './sykmeldingTypes';
 
 export class SykmeldingData {
     sykmelding: Sykmelding;
-    status: Status;
+    status: StatusTyper;
 
     constructor(data: any) {
         this.sykmelding = data.sykmelding;

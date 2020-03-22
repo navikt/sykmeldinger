@@ -14,6 +14,7 @@ import env from './utils/environment';
 dayjs.locale('nb');
 
 if (env.isDevelopment || env.isRunningOnHeroku) {
+    require('./mock/mock');
     ReactDOM.render(<DemoWrapper />, document.getElementById('root'));
 } else {
     ReactDOM.render(<App />, document.getElementById('root'));

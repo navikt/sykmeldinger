@@ -34,7 +34,7 @@ const DataFetcher = (props: { children?: any }) => {
                     if (hasData(fetchState)) {
                         const { data } = fetchState;
                         const sykmelding = new Sykmelding(data.sykmelding);
-                        const sykmeldingStatus = data.status.status;
+                        const sykmeldingStatus = data.status;
                         setSykmelding(sykmelding);
                         setSykmeldingStatus(sykmeldingStatus);
 

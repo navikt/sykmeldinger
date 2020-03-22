@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 
 const server = express();
-const PORT = process.env['PORT'] || 3000;
+const PORT = process.env['PORT'] || 4000;
 
 try {
     server.use(express.static(path.join(__dirname, '../../client/build')));

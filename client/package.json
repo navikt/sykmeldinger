@@ -58,7 +58,7 @@
     },
     "scripts": {
         "start": "craco start",
-        "solo": "REACT_APP_SOLO=true craco start",
+        "start-with-mock-backend": "REACT_APP_MOCK_BACKEND=true craco start",
         "build": "craco build",
         "test": "craco test",
         "eject": "react-scripts eject",
