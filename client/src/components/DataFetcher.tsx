@@ -14,8 +14,8 @@ import useFetch, {
     isAnyPending,
     isNotStarted,
 } from '../hooks/useFetch';
-import { StatusTyper, Sykmelding } from '../types/sykmeldingTypes';
 import { ReceivedSykmelding } from '../types/receivedSykmeldingTypes';
+import { StatusTyper, Sykmelding } from '../types/sykmeldingTypes';
 
 const DataFetcher = (props: { children?: any }) => {
     const { setSykmelding, setSykmeldingStatus, setArbeidsgivere, setSykmeldingUtenforVentetid } = useAppStore();
