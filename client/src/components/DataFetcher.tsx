@@ -15,11 +15,11 @@ import useFetch, {
     isNotStarted,
 } from '../hooks/useFetch';
 import { StatusTyper, Sykmelding } from '../types/sykmeldingTypes';
-import { SykmeldingData } from '../types/sykmeldingDataTypes';
+import { ReceivedSykmelding } from '../types/receivedSykmeldingTypes';
 
 const DataFetcher = (props: { children?: any }) => {
     const { setSykmelding, setSykmeldingStatus, setArbeidsgivere, setSykmeldingUtenforVentetid } = useAppStore();
-    const sykmeldingFetcher = useFetch<SykmeldingData>();
+    const sykmeldingFetcher = useFetch<ReceivedSykmelding>();
     const arbeidsgivereFetcher = useFetch<Arbeidsgiver[]>();
     const sykmeldingUtenforVentetidFetcher = useFetch<ErUtenforVentetidData>();
 
@@ -30,7 +30,7 @@ const DataFetcher = (props: { children?: any }) => {
             sykmeldingFetcher.fetch(
                 `${process.env.REACT_APP_API_URL}/sykmelding/${sykmeldingId}`,
                 undefined,
-                (fetchState: FetchState<SykmeldingData>) => {
+                (fetchState: FetchState<ReceivedSykmelding>) => {
                     if (hasData(fetchState)) {
                         const { data } = fetchState;
                         const sykmelding = new Sykmelding(data.sykmelding);
