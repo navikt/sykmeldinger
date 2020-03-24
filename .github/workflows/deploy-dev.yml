@@ -9,40 +9,40 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-                uses: actions/checkout@v1
+            uses: actions/checkout@v1
             - name: Use Node 
-                uses: actions/setup-node@v1
-                with:
-                node-version: "12.x"
+            uses: actions/setup-node@v1
+            with:
+            node-version: "12.x"
             - name: Install dependencies for server
-                run: |
-                    npm install
-                working-directory: ./server
+            run: |
+                npm install
+            working-directory: ./server
             - name: Run tests for server
-                run: |
-                    npm run test
-                working-directory: ./server
+            run: |
+                npm run test
+            working-directory: ./server
             - name: Install dependencies for client
-                run: |
-                    npm install
-                working-directory: ./client
+            run: |
+                npm install
+            working-directory: ./client
             - name: Run tests for client
-                env:
-                CI: true
-                run: |
-                    npm run test
-                working-directory: ./client
+            env:
+            CI: true
+            run: |
+                npm run test
+            working-directory: ./client
             - name: Build server
-                run: |
-                    npm run compile
-                working-directory: ./server
+            run: |
+                npm run compile
+            working-directory: ./server
             - name: Build client
-                env:
-                    REACT_APP_API_URL: # TODO
-                    REACT_APP_SYKEFRAVAER_URL: # TODO
-                run: |
-                    npm run build
-                working-directory: ./client
+            env:
+                REACT_APP_API_URL: # TODO
+                REACT_APP_SYKEFRAVAER_URL: # TODO
+            run: |
+                npm run build
+            working-directory: ./client
             #- name: Build and publish Docker image
             #    env:
             #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
