@@ -35,5 +35,5 @@ spec:
       memory: 128Mi
   webproxy: false
   ingresses:
-    - "https://tjenester-q.nav.no/sykmelding"
+    - "https://tjenester-q1.nav.no/sykmelding"
     - "https://sykmelding.nais.preprod.local"
