@@ -33,14 +33,7 @@ spec:
     requests:
       cpu: 100m
       memory: 128Mi
-  vault:
-    enabled: true
-    paths:
-      - kvPath: /azuread/data/dev/creds/smregistrering
-        mountPath: /secrets/azuread/smregistrering
-      - kvPath: /kv/preprod/fss/smregistrering/default
-        mountPath: /var/run/secrets/nais.io/vault
-  webproxy: true
+  webproxy: false
   ingresses:
     - "https://tjenester-q.nav.no/sykmelding"
     - "https://sykmelding.nais.preprod.local"

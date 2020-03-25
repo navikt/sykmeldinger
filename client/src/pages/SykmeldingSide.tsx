@@ -13,20 +13,11 @@ import useAppStore from '../data/useAppStore';
 import { StatusTyper } from '../types/sykmeldingTypes';
 
 const getBrodsmuler = (fravaerId?: string) => {
+    // TODO: Oppdatere brødsmuler når vi vet hvordan routing mellom apper skal fungere
     return [
         {
             tittel: 'Sykefravær',
-            sti: '/',
-            erKlikkbar: true,
-        },
-        {
-            tittel: 'Oversikt',
-            sti: '/fravaer',
-            erKlikkbar: true,
-        },
-        {
-            tittel: 'Status',
-            sti: `/fravaer/${fravaerId}`,
+            sti: '/sykefravaer',
             erKlikkbar: true,
         },
         {
@@ -40,8 +31,6 @@ const getBrodsmuler = (fravaerId?: string) => {
 const SykmeldingSide = () => {
     const { sykmelding, sykmeldingStatus, arbeidsgivere, sykmeldingUtenforVentetid } = useAppStore();
     const { fravaerId } = useParams();
-
-    console.log(sykmeldingStatus)
 
     if (!sykmelding || arbeidsgivere === null) {
         // TODO: Error-melding, ingen sykmelding funnet

@@ -57,5 +57,5 @@ jobs:
               uses: nais/deploy/actions/deploy@master
               env:
                 APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                CLUSTER: dev-fss
+                CLUSTER: dev-sbs
                 RESOURCE: naiserator-dev.yml
