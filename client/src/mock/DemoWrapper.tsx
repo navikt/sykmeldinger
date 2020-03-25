@@ -64,7 +64,7 @@ const DemoWrapper = () => {
                         -- Velg sykmelding --
                     </option>
                     {Object.keys(StatusTyper).map((key, index) => (
-                        <option key={index} value={`/fravaer/fravaerId/${key}`}>
+                        <option key={index} value={`${process.env.REACT_APP_SYKMELDING_ROOT}/${key}`}>
                             {key}
                         </option>
                     ))}

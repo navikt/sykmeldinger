@@ -37,22 +37,25 @@ jobs:
                 npm run compile
               working-directory: ./server
             - name: Build client
-              #env:
-                #REACT_APP_API_URL: 
-                #REACT_APP_SYKEFRAVAER_URL:
+              env:
+                REACT_APP_SYKMELDING_ROOT: "/sykmelding"
+                REACT_APP_LOGINSERVICE_URL: "https://loginservice-q.nav.no/login"
+                REACT_APP_SM_REGISTER_URL: "https://syfosmregisterproxy-q.nav.no"
+                REACT_APP_SYFOREST_ROOT: "/syforest"
+                REACT_APP_SYKEFRAVAER_ROOT: "/sykefravaer"
               run: |
                 npm run build
               working-directory: ./client
-            #- name: Build and publish Docker image
-            #    env:
-            #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #    run: |
-            #        docker build --tag ${IMAGE} .
-            #        docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-            #        docker push ${IMAGE}
-            #- name: Deploy app to preprod
-            #    uses: nais/deploy/actions/deploy@master
-            #    env:
-            #        APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-            #        CLUSTER: dev-fss
-            #       RESOURCE: naiserator-dev.yml
+            - name: Build and publish Docker image
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                docker build --tag ${IMAGE} .
+                docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+                docker push ${IMAGE}
+            - name: Deploy app to preprod
+              uses: nais/deploy/actions/deploy@master
+              env:
+                APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                CLUSTER: dev-fss
+                RESOURCE: naiserator-dev.yml

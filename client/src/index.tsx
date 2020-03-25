@@ -13,6 +13,13 @@ import env from './utils/environment';
 
 dayjs.locale('nb');
 
+const REDIRECT_ETTER_LOGIN = window.localStorage.getItem('REDIRECT_ETTER_LOGIN');
+if (REDIRECT_ETTER_LOGIN) {
+    // Fjerner slik at den ikke skal gå i loop
+    window.localStorage.removeItem('REDIRECT_ETTER_LOGIN');
+    window.location.href = REDIRECT_ETTER_LOGIN;
+}
+
 if (env.isDevelopment || env.isRunningOnHeroku) {
     require('./mock/mock');
     ReactDOM.render(<DemoWrapper />, document.getElementById('root'));

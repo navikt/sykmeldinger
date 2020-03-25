@@ -5,11 +5,11 @@ import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
 import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
 import Brodsmuler from '../components/Brodsmuler/Brodsmuler';
-import DataFetcher from '../components/DataFetcher';
+import DataFetcher from '../data/DataFetcher';
 import Header from '../components/Header/Header';
 import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
-import useAppStore from '../store/useAppStore';
+import useAppStore from '../data/useAppStore';
 import { StatusTyper } from '../types/sykmeldingTypes';
 
 const getBrodsmuler = (fravaerId?: string) => {

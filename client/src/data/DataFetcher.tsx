@@ -5,9 +5,10 @@ import { useParams } from 'react-router-dom';
 
 import Arbeidsgiver from '../types/arbeidsgiverTypes';
 import ErUtenforVentetidData from '../types/erUtenforVentetidTypes';
-import useAppStore from '../store/useAppStore';
+import useAppStore from './useAppStore';
 import useFetch, {
     FetchState,
+    hasAny401,
     hasAnyFailed,
     hasData,
     isAnyNotStartedOrPending,
@@ -28,7 +29,7 @@ const DataFetcher = (props: { children?: any }) => {
     useEffect(() => {
         if (isNotStarted(sykmeldingFetcher)) {
             sykmeldingFetcher.fetch(
-                `${process.env.REACT_APP_API_URL}/sykmelding/${sykmeldingId}`,
+                `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`,
                 undefined,
                 (fetchState: FetchState<ReceivedSykmelding>) => {
                     if (hasData(fetchState)) {
@@ -39,7 +40,7 @@ const DataFetcher = (props: { children?: any }) => {
                         setSykmeldingStatus(sykmeldingStatus);
 
                         arbeidsgivereFetcher.fetch(
-                            `${process.env.REACT_APP_API_URL}/informasjon/arbeidsgivere/${sykmelding.id}`,
+                            `${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere/${sykmelding.id}`,
                             undefined,
                             (fetchState: FetchState<Arbeidsgiver[]>) => {
                                 if (hasData(fetchState)) {
@@ -53,7 +54,7 @@ const DataFetcher = (props: { children?: any }) => {
                         // Dersom sykmeldingen er ny skal den berikes
                         if (sykmeldingStatus === StatusTyper.NY) {
                             sykmeldingUtenforVentetidFetcher.fetch(
-                                `${process.env.REACT_APP_API_URL}/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
+                                `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
                                 { method: 'POST' },
                                 (fetchState: FetchState<ErUtenforVentetidData>) => {
                                     if (hasData(fetchState)) {
@@ -76,6 +77,11 @@ const DataFetcher = (props: { children?: any }) => {
         arbeidsgivereFetcher,
         setArbeidsgivere,
     ]);
+
+    if (hasAny401([sykmeldingFetcher, arbeidsgivereFetcher, sykmeldingUtenforVentetidFetcher])) {
+        window.localStorage.setItem('REDIRECT_ETTER_LOGIN', window.location.href);
+        window.location.href = `${process.env.REACT_APP_LOGINSERVICE_URL}?redirect=${window.location.origin}${process.env.REACT_APP_SYKMELDING_ROOT}`;
+    }
 
     if (isAnyNotStartedOrPending([sykmeldingFetcher, arbeidsgivereFetcher])) {
         return <Spinner />;
