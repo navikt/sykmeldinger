@@ -11,7 +11,7 @@ try {
     server.get('/is_ready', (_req, res) => res.status(200).send('ready'));
 
     server.listen(PORT, () => {
-        console.log(`Server running on port: ${PORT})`);
+        console.log(`Server running on port: ${PORT}`);
     });
 } catch (error) {
     console.error('Error during startup', error);
