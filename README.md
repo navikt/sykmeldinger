@@ -10,6 +10,9 @@ Frontend-app for visning og behandling av enkeltsykmeldinger.
 -   Prettier er brukt lokalt i VSCode med config `.prettierrc.js`
 
 ### Kjør lokalt
+``
+
+
 
 Last ned og start https://github.com/navikt/sykefravaer-mock for å kunne hente data.
 
