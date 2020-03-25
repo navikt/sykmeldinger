@@ -9,34 +9,27 @@ Frontend-app for visning og behandling av enkeltsykmeldinger.
 -   Less for styling
 -   Prettier er brukt lokalt i VSCode med config `.prettierrc.js`
 
-### Kjør lokalt
-``
+## Environment-variabler
+Alle environment-variabler som er prefix-et med `REACT_APP_` injeseres 
 
+## Kjør lokalt
+Appen består av en `/client`-mappe og en `/server`-mappe, hvor henholdsvis frontend- og node-backend-applikasjonen lever. Node-backend bruker for å serve statiske filer.
 
-
-Last ned og start https://github.com/navikt/sykefravaer-mock for å kunne hente data.
-
-Ved utvikling uten redirects til https://github.com/navikt/nytt-sykefravaer:
-
+### Utvikling av frontend
 ```
-npm run solo
-```
-
-Ved utvikling med redirect til https://github.com/navikt/nytt-sykefravaer
-
-```
-npm start
+cd client
+npm install
+npm start # starter development-server med hot-reloading
 ```
 
-Merk at ved utvikling med redirect må riktig URL til Sykefravær-appen settes. Dette gjøres i .env-filen ved å endre REACT_APP_SYKEFRAVAER_URL.
-
-### Kjør tester
-
+### Utvikling av Node backend 
 ```
-npm test
+cd server
+npm install
+npm run dev
 ```
 
-### Bygg til produksjon
+## Bygg til produksjon
 
 ```
 npm run build
