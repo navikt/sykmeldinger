@@ -36,4 +36,4 @@ spec:
   webproxy: false
   ingresses:
     - "https://tjenester-q1.nav.no/sykmelding"
-    - "https://sykmelding.nais.preprod.local"
+    - "https://sykmelding.nais.oera-q.local/"
