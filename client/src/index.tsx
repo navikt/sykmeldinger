@@ -22,9 +22,9 @@ if (REDIRECT_ETTER_LOGIN) {
 
 if (env.isDevelopment || env.isRunningOnHeroku) {
     require('./mock/mock');
-    ReactDOM.render(<DemoWrapper />, document.getElementById('root'));
+    ReactDOM.render(<p>Hello wolrd </p>, document.getElementById('root'));
 } else {
-    ReactDOM.render(<App />, document.getElementById('root'));
+    ReactDOM.render(<p>Hello world</p>, document.getElementById('root'));
 }
 
 // If you want your app to work offline and load faster, you can change
