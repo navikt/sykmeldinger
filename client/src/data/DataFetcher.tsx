@@ -27,6 +27,7 @@ const DataFetcher = (props: { children?: any }) => {
     const { sykmeldingId } = useParams();
 
     useEffect(() => {
+        console.log('Datafetcher');
         if (isNotStarted(sykmeldingFetcher)) {
             sykmeldingFetcher.fetch(
                 `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`,

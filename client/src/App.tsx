@@ -11,6 +11,7 @@ const App = () => {
     return (
         <useAppStore.Provider>
             <BrowserRouter>
+                <p>browser router</p>
                 <Switch>
                     <Route path={`${process.env.REACT_APP_SYKMELDING_ROOT}/:sykmeldingId`} component={SykmeldingSide} />
                 </Switch>
