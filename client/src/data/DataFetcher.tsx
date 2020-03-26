@@ -31,7 +31,7 @@ const DataFetcher = (props: { children?: any }) => {
         if (isNotStarted(sykmeldingFetcher)) {
             sykmeldingFetcher.fetch(
                 `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`,
-                { credentials: 'include' },
+                undefined,
                 (fetchState: FetchState<ReceivedSykmelding>) => {
                     if (hasData(fetchState)) {
                         const { data } = fetchState;
@@ -56,7 +56,7 @@ const DataFetcher = (props: { children?: any }) => {
                         if (sykmeldingStatus === StatusTyper.NY) {
                             sykmeldingUtenforVentetidFetcher.fetch(
                                 `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmelding.id}/actions/erUtenforVentetid`,
-                                { method: 'POST', credentials: 'include' },
+                                { method: 'POST' },
                                 (fetchState: FetchState<ErUtenforVentetidData>) => {
                                     if (hasData(fetchState)) {
                                         setSykmeldingUtenforVentetid(fetchState.data.erUtenforVentetid);
