@@ -17,13 +17,13 @@ const navInterpolations = () => {
 module.exports = {
     plugins: [
         { plugin: CracoLessPlugin },
-        {
+        /* {
             plugin: interpolateHtml,
             // Enter the variable to be interpolated in the html file
             options: {
                 ...navInterpolations(),
             },
-        },
+        }, */
     ],
     eslint: {
         extends: ['eslint-config-react-app'],
