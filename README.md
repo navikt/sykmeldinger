@@ -10,10 +10,17 @@ Frontend-app for visning og behandling av enkeltsykmeldinger.
 -   Prettier er brukt lokalt i VSCode med config `.prettierrc.js`
 
 ## Environment-variabler
-Alle environment-variabler som er prefix-et med `REACT_APP_` injiseres 
+Alle environment-variabler som er prefix-et med `REACT_APP_` injiseres i koden ved bygging av frontend. For utvikling lokalt settes disse i `./client/.env` (opprett fil selv), mens for bygg til dev og prod settes de i `./github/workflows/deploy-*.yml`. Liste over environment variabler som må settes:
+- REACT_APP_LOGINSERVICE_URL
+- REACT_APP_SYKMELDING_ROOT
+- REACT_APP_SM_REGISTER_URL
+- REACT_APP_SYFOREST_ROOT
+- REACT_APP_SYKEFRAVAER_URL
+
+Ved mangler i denne listen, gjør et søk i koden etter `REACT_APP_`
 
 ## Kjør lokalt
-Appen består av en `/client`-mappe og en `/server`-mappe, hvor henholdsvis frontend- og node-backend-applikasjonen lever. Node-backend bruker for å serve statiske filer.
+Appen består av en `./client/`-mappe og en `./server/`-mappe, hvor henholdsvis frontend- og node-backend-applikasjonen lever. Node-backend bruker for å serve statiske filer.
 
 ### Utvikling av frontend
 ```bash
@@ -26,13 +33,20 @@ npm start # starter development-server med hot-reloading
 ```bash
 cd server
 npm install
-npm run dev
+npm run dev # Starter Nodemon med hot-reloading
 ```
 
 ## Bygg til produksjon
-
+### Produksjonsbygg av frontend
 ```bash
+cd client
 npm run build
 ```
+Bygger statiske filer til `./client/build/`-mappen.
 
-Bygger statiske filer til `build`-mappen.
+### Produksjonsbygg av Node backend
+```bash
+cd client
+npm run build
+```
+Bygger statiske filer til `./server/build/`-mappen.
