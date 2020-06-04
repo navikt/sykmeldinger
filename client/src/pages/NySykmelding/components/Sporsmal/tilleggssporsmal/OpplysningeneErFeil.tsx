@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Fieldset, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import tekster from '../Sporsmal-tekster';
@@ -31,7 +31,8 @@ const OpplysningeneErFeil = ({
                 feil={errors.opplysninger ? { feilmelding: errors.opplysninger.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
-                <Fieldset legend={tekster['opplysningeneErFeil.tittel']}>
+                <fieldset>
+                    <legend>{tekster['opplysningeneErFeil.tittel']}</legend>
                     <Checkbox
                         label={tekster['opplysningeneErFeil.periode']}
                         name={Skjemafelt.PERIODE}
@@ -57,7 +58,7 @@ const OpplysningeneErFeil = ({
                         name={Skjemafelt.ANDRE_OPPLYSNINGER}
                         checkboxRef={register as any}
                     />
-                </Fieldset>
+                </fieldset>
             </SkjemaGruppe>
             <AlertStripeHjelper
                 vis={visAlertstripeAvbryt}

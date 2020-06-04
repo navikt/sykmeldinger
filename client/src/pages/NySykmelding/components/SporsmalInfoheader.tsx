@@ -3,7 +3,7 @@ import React from 'react';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Innholdstittel } from 'nav-frontend-typografi';
 
-import tekster from '../SendingsSkjema-tekster';
+import tekster from './SendingsSkjema-tekster';
 
 const SporsmalInfoheader = () => (
     <>

@@ -3,7 +3,7 @@ import './Sporsmal.less';
 import PanelBase from 'nav-frontend-paneler';
 import React, { useRef, useState } from 'react';
 import useForm, { FormContext } from 'react-hook-form';
-import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 
 import AnnenArbeidsgiver from './AnnenArbeidsgiver';
 import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
@@ -136,7 +136,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                     : undefined
                             }
                         >
-                            <Fieldset legend={tekster['jaEllerNei.tittel']}>
+                            <fieldset>
+                                <legend>{tekster['jaEllerNei.tittel']}</legend>
                                 <Radio
                                     label={tekster['ja']}
                                     name={Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE}
@@ -149,7 +150,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                     value={JaEllerNei.NEI}
                                     radioRef={register as any}
                                 />
-                            </Fieldset>
+                            </fieldset>
                         </SkjemaGruppe>
                         <OpplysningeneErFeil
                             vis={watchOpplysningeneErRiktige === JaEllerNei.NEI}
@@ -175,14 +176,13 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                             <SkjemaGruppe
                                 feil={errors.sykmeldtFra ? { feilmelding: errors.sykmeldtFra.message } : undefined}
                             >
-                                <Fieldset
-                                    legend={
+                                <fieldset>
+                                    <legend>
                                         <div style={{ display: 'flex' }}>
                                             {tekster['sykmeldtFra.tittel']}
                                             <HjelpetekstWrapper tekst={tekster['sykmeldtFra.hjelpetekst']} />
                                         </div>
-                                    }
-                                >
+                                    </legend>
                                     {arbeidsgivere.map((arbeidsgiver, index) => (
                                         <Radio
                                             key={index}
@@ -227,7 +227,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                         value={Arbeidsforhold.INGENTING_PASSER}
                                         radioRef={register as any}
                                     />
-                                </Fieldset>
+                                </fieldset>
                                 <AlertStripeHjelper
                                     vis={!!sykmelding.arbeidsgiver.navn}
                                     type="info"

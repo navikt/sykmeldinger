@@ -4,7 +4,7 @@ import './Egenmeldingsdager.less';
 import Flatpickr from 'react-flatpickr';
 import Lenke from 'nav-frontend-lenker';
 import React, { useEffect, useState } from 'react';
-import { Fieldset, SkjemaGruppe } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import tekster from '../Sporsmal-tekster';
@@ -77,7 +77,8 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
             <SkjemaGruppe
                 feil={errors.egenmeldingsperioder ? { feilmelding: errors.egenmeldingsperioder.message } : undefined}
             >
-                <Fieldset legend={tekster['egenmeldingsperioder.tittel']}>
+                <fieldset>
+                    <legend>{tekster['egenmeldingsperioder.tittel']}</legend>
                     {perioder.map(periode => {
                         return (
                             <div className="periode" key={periode.id}>
@@ -114,7 +115,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                             </div>
                         );
                     })}
-                </Fieldset>
+                </fieldset>
                 <Lenke
                     href="#"
                     onClick={e => {
