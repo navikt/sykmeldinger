@@ -1,5 +1,5 @@
 import React from 'react';
-import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import Egenmeldingsdager from './Egenmeldingsdager';
@@ -24,7 +24,8 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
                 feil={errors.frilanserEgenmelding ? { feilmelding: errors.frilanserEgenmelding.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
-                <Fieldset legend={tekster['frilanser.egenmelding.tittel']}>
+                <fieldset>
+                    <legend>{tekster['frilanser.egenmelding.tittel']}</legend>
                     <Radio
                         label={tekster['ja']}
                         name={Skjemafelt.FRILANSER_EGENMELDING}
@@ -37,7 +38,7 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
                         value={JaEllerNei.NEI}
                         radioRef={register as any}
                     />
-                </Fieldset>
+                </fieldset>
             </SkjemaGruppe>
             {watchFrilanserEgenmelding === JaEllerNei.JA && (
                 <Egenmeldingsdager name={Skjemafelt.EGENMELDINGSPERIODER} />
@@ -47,7 +48,8 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
                 feil={errors.frilanserForsikring ? { feilmelding: errors.frilanserForsikring.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
-                <Fieldset legend={tekster['frilanser.forsikring.tittel']}>
+                <fieldset>
+                    <legend>{tekster['frilanser.forsikring.tittel']}</legend>
                     <Radio
                         label={tekster['ja']}
                         name={Skjemafelt.FRILANSER_FORSIKRING}
@@ -60,7 +62,7 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
                         value={JaEllerNei.NEI}
                         radioRef={register as any}
                     />
-                </Fieldset>
+                </fieldset>
             </SkjemaGruppe>
         </>
     );

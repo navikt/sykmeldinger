@@ -1,6 +1,6 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useEffect, useState } from 'react';
-import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
@@ -58,11 +58,12 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) 
             }
             className="skjemagruppe--undersporsmal"
         >
-            <Fieldset
-                legend={getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
-                    '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
-                })}
-            >
+            <fieldset>
+                <legend>
+                    {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
+                        '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
+                    })}
+                </legend>
                 <Radio
                     label={tekster['ja']}
                     name={Skjemafelt.OPPFOLGING}
@@ -77,7 +78,7 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) 
                     checked={harOppfolging === JaEllerNei.NEI}
                     onChange={handterEndring}
                 />
-            </Fieldset>
+            </fieldset>
             {watchOppfolging === JaEllerNei.JA && (
                 <Tekstomrade>
                     {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
