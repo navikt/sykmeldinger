@@ -16,10 +16,10 @@ import LegeSeksjon from '../../components/Infopanel/panelelementer/LegeSeksjon';
 import MulighetForArbeid from '../../components/Infopanel/utdypendeelementer/MulighetForArbeid';
 import PrognoseSeksjon from '../../components/Infopanel/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../../components/Infopanel/layout/SeksjonMedTittel';
+import SendingsSkjema from './components/SendingsSkjema';
 import Sidetopp from '../../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../../components/Infopanel/panelelementer/SkadeSeksjon';
-import Sporsmal from './components/Sporsmal/Sporsmal';
-import SporsmalInfoheader from './components/Sporsmal/SporsmalInfoheader';
+import SporsmalInfoheader from './components/SporsmalInfoheader';
 import SvangerskapSeksjon from '../../components/Infopanel/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../../components/Infopanel/layout/Tittel';
@@ -47,8 +47,6 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-
-    console.log(sykmelding);
 
     return (
         <div className="sykmelding-container">
@@ -103,11 +101,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 <SporsmalInfoheader />
             </div>
 
-            <Sporsmal
-                sykmelding={sykmelding}
-                arbeidsgivere={arbeidsgivere}
-                sykmeldingUtenforVentetid={sykmeldingUtenforVentetid}
-            />
+            <SendingsSkjema sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} />
         </div>
     );
 };

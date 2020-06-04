@@ -178,12 +178,10 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                             >
                                 <fieldset>
                                     <legend>
-                                        {
-                                            <div style={{ display: 'flex' }}>
-                                                {tekster['sykmeldtFra.tittel']}
-                                                <HjelpetekstWrapper tekst={tekster['sykmeldtFra.hjelpetekst']} />
-                                            </div>
-                                        }
+                                        <div style={{ display: 'flex' }}>
+                                            {tekster['sykmeldtFra.tittel']}
+                                            <HjelpetekstWrapper tekst={tekster['sykmeldtFra.hjelpetekst']} />
+                                        </div>
                                     </legend>
                                     {arbeidsgivere.map((arbeidsgiver, index) => (
                                         <Radio
