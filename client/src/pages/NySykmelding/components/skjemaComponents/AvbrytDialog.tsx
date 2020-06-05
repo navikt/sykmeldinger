@@ -27,7 +27,7 @@ const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytD
                 htmlType="button"
                 className="avbrytdialog--margin-bottom"
                 spinner={visSpinner}
-                onClick={e => {
+                onClick={(e) => {
                     e.preventDefault();
                     onAvbryt();
                 }}
@@ -35,7 +35,7 @@ const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytD
                 {tekster['avbrytdialog.avbryt-knapp']}
             </Fareknapp>
             <Knapp
-                onClick={e => {
+                onClick={(e) => {
                     e.preventDefault();
                     setVisAvbrytDialog(false);
                 }}

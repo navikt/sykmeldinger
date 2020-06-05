@@ -31,7 +31,7 @@ const OpplysningeneErFeil = ({
                 feil={errors.opplysninger ? { feilmelding: errors.opplysninger.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
-                <fieldset >
+                <fieldset>
                     <legend>{tekster['opplysningeneErFeil.tittel']}</legend>
                     <Checkbox
                         label={tekster['opplysningeneErFeil.periode']}

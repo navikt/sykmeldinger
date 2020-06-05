@@ -63,7 +63,7 @@ const Form = ({
     const trengerNySykmelding = brukerTrengerNySykmelding(fieldValues);
 
     const feilArbeidsgiver = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].includes(FeilOpplysninger.ARBEIDSGIVER);
-    const trengerIkkeNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(value =>
+    const trengerIkkeNySykmelding = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some((value) =>
         [FeilOpplysninger.DIAGNOSE, FeilOpplysninger.ANDRE_OPPLYSNINGER].includes(value as FeilOpplysninger),
     );
 
@@ -173,7 +173,7 @@ const Form = ({
             <Vis
                 hvis={
                     fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.JA ||
-                    (fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(verdi =>
+                    (fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some((verdi) =>
                         [
                             FeilOpplysninger.ARBEIDSGIVER,
                             FeilOpplysninger.DIAGNOSE,

@@ -73,7 +73,7 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
         event.preventDefault();
         const errors = validateAll(fieldValues, errorSchema, { arbeidsgivere });
 
-        const hasErrors = Object.values(errors).some(error => !!error);
+        const hasErrors = Object.values(errors).some((error) => !!error);
 
         if (hasErrors) {
             setErrors(errors);

@@ -90,7 +90,7 @@
         "@types/react-flatpickr": "^3.8.1",
         "@types/react-router-dom": "^5.1.5",
         "@types/yup": "^0.26.29",
-        "prettier": "^1.19.1",
+        "prettier": "^2.0.5",
         "yet-another-fetch-mock": "^3.4.0"
     }
 }

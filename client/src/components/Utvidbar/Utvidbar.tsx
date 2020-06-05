@@ -34,7 +34,7 @@ const Utvidbar = (props: UtvidbarProps) => {
         }
 
         if (isApen) {
-            await new Promise(resolve => setTimeout(resolve, 200));
+            await new Promise((resolve) => setTimeout(resolve, 200));
             window.scrollTo({ top: utvidbar.current.offsetTop, left: 0, behavior: 'smooth' });
         } else {
             utvidKnapp.current.focus();

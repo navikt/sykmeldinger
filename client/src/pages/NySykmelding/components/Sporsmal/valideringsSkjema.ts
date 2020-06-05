@@ -7,10 +7,7 @@ import { getLedetekst } from '../../../../utils/ledetekst-utils';
 
 const egenmeldingsperiodeValidering = yup.object({
     id: yup.number(),
-    datoer: yup
-        .array()
-        .of(yup.date())
-        .notRequired(),
+    datoer: yup.array().of(yup.date()).notRequired(),
 });
 
 export type Egenmeldingsperiode = yup.InferType<typeof egenmeldingsperiodeValidering>;
@@ -33,10 +30,7 @@ const skjemaShape = yup.object({
             then: yup.string().required(tekster['feilmelding.sykmeldt-fra']), // Dette skaper problemer når formState === 'dirty'
             otherwise: yup.string().notRequired(),
         }),
-    oppfolging: yup
-        .string()
-        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
-        .notRequired(),
+    oppfolging: yup.string().oneOf([JaEllerNei.JA, JaEllerNei.NEI]).notRequired(),
     frilanserEgenmelding: yup
         .string()
         .oneOf([JaEllerNei.JA, JaEllerNei.NEI], tekster['feilmelding.frilanser.egenmelding'])
@@ -73,11 +67,7 @@ const skjemaShape = yup.object({
                 .of(egenmeldingsperiodeValidering)
                 .min(1)
                 .required(tekster['feilmelding.egenmeldingsperioder.periode-mangler-utfylling']),
-            otherwise: yup
-                .array()
-                .of(egenmeldingsperiodeValidering)
-                .min(1)
-                .notRequired(),
+            otherwise: yup.array().of(egenmeldingsperiodeValidering).min(1).notRequired(),
         }),
 });
 

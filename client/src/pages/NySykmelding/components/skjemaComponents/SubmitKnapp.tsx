@@ -47,7 +47,7 @@ const SubmitKnapp = ({
             <div className="submitknapp-container" ref={avbrytdialogRef}>
                 <Lenke
                     href="#"
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
                         setVisAvbrytDialog(true);
                         setTimeout(

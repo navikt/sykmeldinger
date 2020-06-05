@@ -20,7 +20,7 @@ const DemoWrapper = () => {
                     style={{ position: 'absolute', right: 0, zIndex: 1, background: 'white' }}
                     name="sykmeldinger"
                     id="sykmelding-select"
-                    onChange={event => {
+                    onChange={(event) => {
                         console.log(event.target.value);
                         window.location.href = event.target.value;
                     }}
@@ -54,7 +54,7 @@ const DemoWrapper = () => {
                     style={{ position: 'absolute', right: 0, zIndex: 1, background: 'white' }}
                     name="sykmeldinger"
                     id="sykmelding-select"
-                    onChange={event => {
+                    onChange={(event) => {
                         console.log(event.target.value);
                         window.location.href = event.target.value;
                     }}
