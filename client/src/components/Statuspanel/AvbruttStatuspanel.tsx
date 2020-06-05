@@ -2,7 +2,7 @@ import './Statuspanel.less';
 
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 
 import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
 import Margin from '../Infopanel/layout/Margin';
