@@ -1,0 +1,91 @@
+@import '../../../../App.less';
+
+.utvidbar {
+    border: 1px solid @navGra40;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    overflow: auto;
+
+    .utvidbar__toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 0;
+        color: @navMorkGra;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .utvidbar__toggle-lilla {
+        background-color: @navLillaLighten80;
+    }
+
+    .utvidbar__toggle-info {
+        background-color: @navLysBlaLighten80;
+    }
+
+    .utvidbar__toggle:focus {
+        box-shadow: 0 0 0 3px @fokusFarge;
+        z-index: 1;
+        position: relative;
+    }
+
+    .utvidbar__toggle:hover {
+        color: @navBla;
+    }
+
+    .utvidbar__tittel {
+        padding-right: 2rem;
+        background-size: 1rem 0.5rem;
+        flex: 1;
+    }
+
+    .utvidbar__handling {
+        color: @navBla;
+
+        em {
+            font-style: normal;
+            margin-right: 0.5rem;
+        }
+    }
+
+    .utvidbar__innholdContainer {
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+    .utvidbar__innhold {
+        padding: 1.5rem 2.5rem 2.5rem;
+        background-color: @white;
+    }
+
+    .lenkerad {
+        padding-top: 1rem;
+        text-align: center;
+
+        .lenke {
+            border: 0;
+        }
+    }
+}
+
+@media print {
+    .utvidbar {
+        .utvidbar__toggle {
+            border-bottom: 1px solid @navGra40;
+            text-decoration: none;
+        }
+    }
+}
+
+@media (max-width: @screen-sm) {
+    .utvidbar__handling__tekst {
+        display: none;
+    }
+
+    .utvidbar__innhold {
+        padding: 1.5rem 1rem 2.5rem 1rem;
+    }
+}

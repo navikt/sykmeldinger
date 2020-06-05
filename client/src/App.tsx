@@ -1,10 +1,9 @@
 import './App.less';
-import './basic.less';
 
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import SykmeldingSide from './pages/SykmeldingSide';
+import SykmeldingSide from './pages/sykmelding/SykmeldingSide';
 import useAppStore from './data/useAppStore';
 
 const App = () => {
