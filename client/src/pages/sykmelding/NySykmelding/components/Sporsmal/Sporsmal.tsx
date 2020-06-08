@@ -18,7 +18,6 @@ import useFetch, { FetchStatus, isNotStarted } from '../../../../../hooks/useFet
 import { AlertStripeHjelper } from '../../../../../utils/alertstripe-utils';
 import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
 import { Sykmelding } from '../../../../../types/sykmeldingTypes';
-import { getLedetekst } from '../../../../../utils/ledetekst-utils';
 import { skalViseFrilansersporsmal } from '../../../../../utils/sporsmal-utils';
 import { skjemavalidering } from './valideringsSkjema';
 
