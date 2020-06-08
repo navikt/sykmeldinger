@@ -4,11 +4,11 @@ import { CheckboksPanelGruppe, Feiloppsummering, RadioPanelGruppe, SkjemaGruppe 
 import { Knapp } from 'nav-frontend-knapper';
 import { Panel } from 'nav-frontend-paneler';
 
-import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
+import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import Egenmeldingsdager from './Egenmeldingsdager';
 import SubmitKnapp from './SubmitKnapp';
-import Vis from '../../../../../utils/vis';
-import useAppStore from '../../../../../data/useAppStore';
+import Vis from '../../../../utils/vis';
+import useAppStore from '../../../../data/useAppStore';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -17,7 +17,7 @@ import {
     JaEllerNei,
     Skjemafelt,
 } from './skjemaTypes';
-import { Sykmelding } from '../../../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import {
     brukerTrengerNySykmelding,
     getErrorMessages,

@@ -1,9 +1,9 @@
 import React, { SyntheticEvent, useRef, useState } from 'react';
 
-import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import AvbrytDialog from './skjemaComponents/AvbrytDialog';
 import Form from './skjemaComponents/Form';
-import useFetch, { isNotStarted } from '../../../../hooks/useFetch';
+import useFetch, { isNotStarted } from '../../../hooks/useFetch';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -11,7 +11,7 @@ import {
     FieldValuesType,
     Skjemafelt,
 } from './skjemaComponents/skjemaTypes';
-import { Sykmelding } from '../../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../types/sykmeldingTypes';
 import { brukerTrengerNySykmelding, clearDependentValues } from './skjemaComponents/skjemaUtils';
 import { getFailText, validateAll, validateField, validators } from './skjemaComponents/validators';
 

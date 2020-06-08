@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 
-import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
+import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsmalTypes';
 
 const egenmeldingsperiodeValidering = yup.object({
     id: yup.number(),

@@ -3,7 +3,7 @@ import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import Egenmeldingsdager from './Egenmeldingsdager';
-import { JaEllerNei, Skjemafelt } from '../../../../../../types/sporsmalTypes';
+import { JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
 
 interface FrilanserSporsmalProps {
     vis: boolean;

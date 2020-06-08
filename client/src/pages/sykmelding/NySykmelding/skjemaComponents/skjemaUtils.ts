@@ -1,6 +1,6 @@
 import { FeiloppsummeringFeil, RadioPanelProps } from 'nav-frontend-skjema';
 
-import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
+import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,

@@ -3,7 +3,7 @@ import React from 'react';
 import { Fareknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { useFormContext } from 'react-hook-form';
 
-import { Arbeidsforhold, Skjemafelt } from '../../../../../types/sporsmalTypes';
+import { Arbeidsforhold, Skjemafelt } from '../../../../types/sporsmalTypes';
 
 interface FormSubmitKnappProps {
     visAvbryt: boolean;

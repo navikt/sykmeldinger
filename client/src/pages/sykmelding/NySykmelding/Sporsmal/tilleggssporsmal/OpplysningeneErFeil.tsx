@@ -2,8 +2,8 @@ import React from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
-import { AlertStripeHjelper } from '../../../../../../utils/alertstripe-utils';
-import { Skjemafelt } from '../../../../../../types/sporsmalTypes';
+import { AlertStripeHjelper } from '../../../../../utils/alertstripe-utils';
+import { Skjemafelt } from '../../../../../types/sporsmalTypes';
 
 interface OpplysningeneErFeilProps {
     vis: boolean;

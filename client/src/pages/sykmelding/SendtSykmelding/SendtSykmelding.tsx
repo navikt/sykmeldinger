@@ -20,7 +20,7 @@ import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/S
 import Tittel from '../components/Infopanel/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Infopanel/utdypendeelementer/UtdypendeOpplysninger';
 import Utvidbar from '../components/Utvidbar/Utvidbar';
-import VisningArbeidsgiver from './components/VisningArbeidsgiver';
+import VisningArbeidsgiver from './VisningArbeidsgiver';
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
 import person from '../../../svg/person.svg';

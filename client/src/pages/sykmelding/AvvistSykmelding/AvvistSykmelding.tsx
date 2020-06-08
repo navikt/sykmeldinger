@@ -12,7 +12,7 @@ import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Infopanel/layout/Tittel';
 import Veileder from '../components/Veileder/Veileder';
-import VeilederInnhold from './components/VeilederInnhold';
+import VeilederInnhold from './VeilederInnhold';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 
 interface SykmeldingProps {

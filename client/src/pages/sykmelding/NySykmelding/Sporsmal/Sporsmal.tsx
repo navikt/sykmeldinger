@@ -6,19 +6,19 @@ import useForm, { FormContext } from 'react-hook-form';
 import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 
 import AnnenArbeidsgiver from './AnnenArbeidsgiver';
-import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
+import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import ArbeidsgiverSporsmal from './tilleggssporsmal/ArbeidsgiverSporsmal';
 import AvbrytDialog from './AvbrytDialog';
 import FormSubmitKnapp from './FormSubmitKnapp';
 import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
-import HjelpetekstWrapper from '../../../components/Hjelpetekst/HjelpetekstWrapper';
+import HjelpetekstWrapper from '../../components/Hjelpetekst/HjelpetekstWrapper';
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
-import Vis from '../../../../../utils/vis';
-import useFetch, { FetchStatus, isNotStarted } from '../../../../../hooks/useFetch';
-import { AlertStripeHjelper } from '../../../../../utils/alertstripe-utils';
-import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
-import { Sykmelding } from '../../../../../types/sykmeldingTypes';
-import { skalViseFrilansersporsmal } from '../../../../../utils/sporsmal-utils';
+import Vis from '../../../../utils/vis';
+import useFetch, { FetchStatus, isNotStarted } from '../../../../hooks/useFetch';
+import { AlertStripeHjelper } from '../../../../utils/alertstripe-utils';
+import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsmalTypes';
+import { Sykmelding } from '../../../../types/sykmeldingTypes';
+import { skalViseFrilansersporsmal } from '../../../../utils/sporsmal-utils';
 import { skjemavalidering } from './valideringsSkjema';
 
 interface SporsmalProps {

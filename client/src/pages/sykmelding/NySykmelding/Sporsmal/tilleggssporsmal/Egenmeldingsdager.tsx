@@ -8,7 +8,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import { Egenmeldingsperiode } from '../valideringsSkjema';
-import { locale } from '../../../../../../types/sporsmalTypes';
+import { locale } from '../../../../../types/sporsmalTypes';
 
 interface EgenmeldingsdagerProps {
     name: string;

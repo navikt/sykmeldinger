@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
-import Arbeidsgiver from '../../../../../../types/arbeidsgiverTypes';
-import { JaEllerNei, Skjemafelt } from '../../../../../../types/sporsmalTypes';
+import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
+import { JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
 
 interface ArbeidsgiverSporsmalProps {
     vis: boolean;
