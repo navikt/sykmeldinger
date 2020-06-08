@@ -3,7 +3,6 @@ import React from 'react';
 import { Fareknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { useFormContext } from 'react-hook-form';
 
-import tekster from './Sporsmal-tekster';
 import { Arbeidsforhold, Skjemafelt } from '../../../../../types/sporsmalTypes';
 
 interface FormSubmitKnappProps {
@@ -39,7 +38,7 @@ const FormSubmitKnapp = ({
                         onAvbryt();
                     }}
                 >
-                    {tekster['knapp.avbryt-sykmeldingen']}
+                    AVBRYT SYKMELDINGEN
                 </Fareknapp>
             </div>
         );
@@ -49,7 +48,7 @@ const FormSubmitKnapp = ({
         <>
             <div className="knapp--sentrer">
                 <Hovedknapp htmlType="submit" spinner={visSubmitSpinner} data-testid="knapp-submit">
-                    {skalViseSendknapp ? tekster['knapp.send-sykmeldingen'] : tekster['knapp.bekreft-sykmeldingen']}
+                    {skalViseSendknapp ? 'SEND SYKMELDINGEN' : 'BEKREFT SYKMELDINGEN'}
                 </Hovedknapp>
             </div>
             <div className="knapp--sentrer" ref={avbrytdialogRef}>
@@ -65,7 +64,7 @@ const FormSubmitKnapp = ({
                     }}
                     className="knapp--ikke-bruk-sykmeldingen"
                 >
-                    {tekster['knapp.onsker-ikke-bruke-sykmelding']}
+                    Jeg ønsker ikke å bruke denne sykmeldingen
                 </Lenke>
             </div>
         </>

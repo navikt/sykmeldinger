@@ -1,7 +1,6 @@
 import React from 'react';
 
 import EnkelCheckbox from '../layout/Checkbox/EnkelCheckbox';
-import tekster from '../Infopanel-tekster';
 import { Prognose } from '../../../../../types/sykmeldingTypes';
 
 interface ArbeidsuforSeksjonProps {
@@ -17,7 +16,7 @@ const ArbeidsuforSeksjon = ({ prognose }: ArbeidsuforSeksjonProps) => {
         return null;
     }
 
-    return <EnkelCheckbox tittel={tekster['arbeidsufor.tittel']} checked margin vis />;
+    return <EnkelCheckbox tittel="Pasienten er 100 % arbeidsfør etter perioden" checked margin vis />;
 };
 
 export default ArbeidsuforSeksjon;

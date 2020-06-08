@@ -3,7 +3,6 @@ import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import Egenmeldingsdager from './Egenmeldingsdager';
-import tekster from '../Sporsmal-tekster';
 import { JaEllerNei, Skjemafelt } from '../../../../../../types/sporsmalTypes';
 
 interface FrilanserSporsmalProps {
@@ -25,15 +24,18 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
                 className="skjemagruppe--undersporsmal"
             >
                 <fieldset>
-                    <legend>{tekster['frilanser.egenmelding.tittel']}</legend>
+                    <legend>
+                        Vi har registrert at du ble sykmeldt {new Date() /* TODO: Dato */}. Brukte du egenmelding eller
+                        noen annen sykmelding før denne datoen?
+                    </legend>
                     <Radio
-                        label={tekster['ja']}
+                        label="Ja"
                         name={Skjemafelt.FRILANSER_EGENMELDING}
                         value={JaEllerNei.JA}
                         radioRef={register as any}
                     />
                     <Radio
-                        label={tekster['nei']}
+                        label="Nei"
                         name={Skjemafelt.FRILANSER_EGENMELDING}
                         value={JaEllerNei.NEI}
                         radioRef={register as any}
@@ -49,15 +51,15 @@ const FrilanserSporsmal = ({ vis }: FrilanserSporsmalProps) => {
                 className="skjemagruppe--undersporsmal"
             >
                 <fieldset>
-                    <legend>{tekster['frilanser.forsikring.tittel']}</legend>
+                    <legend>Har du forsikring som gjelder de første 16 dagene av sykefraværet?</legend>
                     <Radio
-                        label={tekster['ja']}
+                        label="Ja"
                         name={Skjemafelt.FRILANSER_FORSIKRING}
                         value={JaEllerNei.JA}
                         radioRef={register as any}
                     />
                     <Radio
-                        label={tekster['nei']}
+                        label="Nei"
                         name={Skjemafelt.FRILANSER_FORSIKRING}
                         value={JaEllerNei.NEI}
                         radioRef={register as any}

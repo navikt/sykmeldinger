@@ -4,7 +4,6 @@ import React from 'react';
 
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 import EtikettMedTekst from '../../layout/EtikettMedTekst';
-import tekster from '../../Infopanel-tekster';
 import { Diagnose } from '../../../../../../types/sykmeldingTypes';
 
 interface DiagnoseSeksjonProps {
@@ -19,12 +18,12 @@ const DiagnoseSeksjon = ({ diagnose, bidiagnose }: DiagnoseSeksjonProps) => {
 
     const { tekst, kode, system } = diagnose;
 
-    const tittel = bidiagnose ? tekster['bidiagnose.tittel'] : tekster['diagnose.tittel'];
+    const tittel = bidiagnose ? 'Bidiagnose' : 'Diagnose';
 
     return (
         <div className="diagnose-container">
             <div className="diagnose-seksjon">
-                <EtikettMedTekst tittel={tittel} tekst={tekst} undertekst={tekster['diagnose.meta']} />
+                <EtikettMedTekst tittel={tittel} tekst={tekst} undertekst="Diagnosen vises ikke til arbeidsgiveren" />
             </div>
             <div className="diagnose-seksjon-kode">
                 <DiagnoseKodeSeksjon kode={kode} system={system} visHjelp={!bidiagnose} />

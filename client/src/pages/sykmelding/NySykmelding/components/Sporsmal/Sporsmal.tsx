@@ -14,7 +14,6 @@ import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
 import HjelpetekstWrapper from '../../../components/Hjelpetekst/HjelpetekstWrapper';
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
 import Vis from '../../../../../utils/vis';
-import tekster from './Sporsmal-tekster';
 import useFetch, { FetchStatus, isNotStarted } from '../../../../../hooks/useFetch';
 import { AlertStripeHjelper } from '../../../../../utils/alertstripe-utils';
 import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../../types/sporsmalTypes';
@@ -124,7 +123,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
             <AlertStripeHjelper
                 vis={formState.isSubmitted && !formState.isValid}
                 type="feil"
-                tekst={tekster['alertstripe.feil-i-utfyllingen.tekst']}
+                tekst="Vennligst svar på alle feltene i skjemaet"
             />
             <FormContext {...metoder}>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -137,15 +136,15 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                             }
                         >
                             <fieldset>
-                                <legend>{tekster['jaEllerNei.tittel']}</legend>
+                                <legend>Er opplysningene i sykmeldingen riktige?</legend>
                                 <Radio
-                                    label={tekster['ja']}
+                                    label="Ja"
                                     name={Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE}
                                     value={JaEllerNei.JA}
                                     radioRef={register as any}
                                 />
                                 <Radio
-                                    label={tekster['nei']}
+                                    label="Nei"
                                     name={Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE}
                                     value={JaEllerNei.NEI}
                                     radioRef={register as any}
@@ -179,8 +178,8 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                 <fieldset>
                                     <legend>
                                         <div style={{ display: 'flex' }}>
-                                            {tekster['sykmeldtFra.tittel']}
-                                            <HjelpetekstWrapper tekst={tekster['sykmeldtFra.hjelpetekst']} />
+                                            Jeg er sykmeldt fra
+                                            <HjelpetekstWrapper tekst="Er du sykmeldt fra flere arbeidssituasjoner må du ha én sykmelding per arbeidssituasjon. Trenger du flere sykmeldinger, må du kontakte den som har sykmeldt deg." />
                                         </div>
                                     </legend>
                                     {arbeidsgivere.map((arbeidsgiver, index) => (
@@ -198,31 +197,31 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                         ></Radio>
                                     ))}
                                     <Radio
-                                        label={tekster['sykmeldtFra.selvstending-naringsdrivende']}
+                                        label="Jobb som selvstendig næringsdrivende"
                                         name={Skjemafelt.SYKMELDT_FRA}
                                         value={Arbeidsforhold.SELSTENDIG_NARINGSDRIVENDE}
                                         radioRef={register as any}
                                     />
                                     <Radio
-                                        label={tekster['sykmeldtFra.frilanser']}
+                                        label="Jobb som frilanser"
                                         name={Skjemafelt.SYKMELDT_FRA}
                                         value={Arbeidsforhold.FRILANSER}
                                         radioRef={register as any}
                                     />
                                     <Radio
-                                        label={tekster['sykmeldtFra.annen-arbeidsgiver']}
+                                        label="Jobb hos en annen arbeidsgiver"
                                         name={Skjemafelt.SYKMELDT_FRA}
                                         value={Arbeidsforhold.ANNEN_ARBEIDSGIVER}
                                         radioRef={register as any}
                                     />
                                     <Radio
-                                        label={tekster['sykmeldtFra.arbeidsledig']}
+                                        label="Jeg er arbeidsledig"
                                         name={Skjemafelt.SYKMELDT_FRA}
                                         value={Arbeidsforhold.ARBEIDSLEDIG}
                                         radioRef={register as any}
                                     />
                                     <Radio
-                                        label={tekster['sykmeldtFra.ingenting-passer']}
+                                        label="Jeg finner ingenting som passer for meg"
                                         name={Skjemafelt.SYKMELDT_FRA}
                                         value={Arbeidsforhold.INGENTING_PASSER}
                                         radioRef={register as any}
@@ -231,9 +230,7 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                                 <AlertStripeHjelper
                                     vis={!!sykmelding.arbeidsgiver.navn}
                                     type="info"
-                                    tekst={getLedetekst(tekster['sykmeldtFra.sykmelders-svar'], {
-                                        '%ARBEIDSGIVER%': sykmelding.arbeidsgiver.navn,
-                                    })}
+                                    tekst={`Den som sykmeldte deg har oppgitt at du er sykmeldt fra ${sykmelding.arbeidsgiver.navn}`}
                                 />
                             </SkjemaGruppe>
                             {new RegExp(Arbeidsforhold.ARBEIDSGIVER).test(watchSykmeldtFra) && (

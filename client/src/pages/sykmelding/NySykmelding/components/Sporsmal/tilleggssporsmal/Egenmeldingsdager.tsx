@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
-import tekster from '../Sporsmal-tekster';
 import { Egenmeldingsperiode } from '../valideringsSkjema';
 import { locale } from '../../../../../../types/sporsmalTypes';
 
@@ -78,7 +77,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                 feil={errors.egenmeldingsperioder ? { feilmelding: errors.egenmeldingsperioder.message } : undefined}
             >
                 <fieldset>
-                    <legend>{tekster['egenmeldingsperioder.tittel']}</legend>
+                    <legend>Når hadde du egenmelding?</legend>
                     {perioder.map(periode => {
                         return (
                             <div className="periode" key={periode.id}>
@@ -109,7 +108,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                                             slettPeriode(periode.id);
                                         }}
                                     >
-                                        {tekster['egenmeldingsperioder.slett-periode']}
+                                        Slett periode
                                     </Lenke>
                                 )}
                             </div>
@@ -123,7 +122,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                         opprettNyPeriode();
                     }}
                 >
-                    {tekster['egenmeldingsperioder.legg-til-periode']}
+                    + Legg til en ekstra periode
                 </Lenke>
             </SkjemaGruppe>
         </>

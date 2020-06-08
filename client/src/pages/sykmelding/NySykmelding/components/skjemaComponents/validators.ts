@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 
-import tekster from '../SendingsSkjema-tekster';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -12,20 +11,19 @@ import {
     ValidatorSchemaType,
     ValidatorType,
 } from './skjemaTypes';
-import { getLedetekst } from '../../../../../utils/utils';
 import { hentValgtArbeidsgiverNaermesteLederNavn } from './skjemaUtils';
 
 export const validators: ValidatorSchemaType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: tekster['feilmelding.opplysningene-er-riktige'],
+            failText: 'Du må bekrefte om opplysningene er riktige',
         },
     ],
     [Skjemafelt.SYKMELDT_FRA]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: tekster['feilmelding.sykmeldt-fra'],
+            failText: 'Du må oppgi hvor du er sykmeldt fra',
             requiresOneOf: [
                 { name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.JA },
                 {
@@ -48,7 +46,7 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.FRILANSER_EGENMELDING]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: tekster['feilmelding.frilanser.egenmelding'],
+            failText: 'Du må svare på om du har brukt egenmeldingsdager under sykefraværet',
             requiresOneOf: [
                 {
                     name: Skjemafelt.SYKMELDT_FRA,
@@ -63,7 +61,7 @@ export const validators: ValidatorSchemaType = {
                 const perioder = value as string[][];
                 return perioder.every(periode => periode.length === 2);
             },
-            failText: tekster['feilmelding.egenmeldingsperioder.periode-mangler-utfylling'],
+            failText: 'Periode mangler utfylling',
             requiresOneOf: [
                 {
                     name: Skjemafelt.FRILANSER_EGENMELDING,
@@ -94,7 +92,7 @@ export const validators: ValidatorSchemaType = {
                 }
                 return true;
             },
-            failText: tekster['feilmelding.egenmeldingsperioder.overlapp'],
+            failText: 'Perioder kan ikke overlappe',
             requiresOneOf: [
                 {
                     name: Skjemafelt.FRILANSER_EGENMELDING,
@@ -106,7 +104,7 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.FRILANSER_FORSIKRING]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: tekster['feilmelding.frilanser.forsikring'],
+            failText: 'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet',
             requiresOneOf: [
                 {
                     name: Skjemafelt.SYKMELDT_FRA,
@@ -118,14 +116,17 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.OPPFOLGING]: [
         {
             test: (value?: string | string[] | string[][]): value is string => !!(value as string),
-            failText: tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'],
+            failText: 'Du må svare på om det er %ARBEIDSGIVER% som skal følge deg opp på jobben når du er syk',
             failTextReplacement: (
                 fieldValues: FieldValuesType,
                 failText: string,
                 { arbeidsgivere }: ValidationProps,
             ) => {
                 const arbeidsgivernavn = hentValgtArbeidsgiverNaermesteLederNavn(fieldValues, arbeidsgivere);
-                return getLedetekst(failText, { '%ARBEIDSGIVER%': arbeidsgivernavn });
+                if (arbeidsgivernavn) {
+                    return failText.replace('%ARBEIDSGIVER%', arbeidsgivernavn);
+                }
+                return ''; // TODO
             },
             requiresOneOf: [
                 {
@@ -138,7 +139,7 @@ export const validators: ValidatorSchemaType = {
     [Skjemafelt.FEIL_OPPLYSNINGER]: [
         {
             test: (value?: string | string[] | string[][]): value is string[] => (value as string[]).length > 0,
-            failText: tekster['opplysningeneErFeil.feilmelding'],
+            failText: 'Du må oppgi hvilke opplysninger som ikke er riktige',
             requiresOneOf: [{ name: Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE, requiredValue: JaEllerNei.NEI }],
         },
     ],

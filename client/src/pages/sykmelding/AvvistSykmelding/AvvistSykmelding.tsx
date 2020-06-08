@@ -13,7 +13,6 @@ import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/S
 import Tittel from '../components/Infopanel/layout/Tittel';
 import Veileder from '../components/Veileder/Veileder';
 import VeilederInnhold from './components/VeilederInnhold';
-import tekster from './AvvistSykmelding-tekster';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 
 interface SykmeldingProps {
@@ -51,7 +50,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
             <div style={{ textAlign: 'center' }}>
                 <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
                     <BekreftCheckboksPanel
-                        label={tekster['sykmelding.bekreft-lest']}
+                        label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
                         checked={bekreftet}
                         onChange={() => setBekreftet(!bekreftet)}
                     />

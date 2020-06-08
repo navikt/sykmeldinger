@@ -25,7 +25,6 @@ import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
 import person from '../../../svg/person.svg';
 import personHover from '../../../svg/personHover.svg';
-import tekster from './SendtSykmelding-tekster';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 
 interface SendtSykmeldingProps {
@@ -57,7 +56,7 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                 <Utvidbar
                     ikon={doktor}
                     ikonHover={doktorHover}
-                    tittel={tekster['sendt-sykmelding.flere-opplysninger.tittel']}
+                    tittel="Flere opplysninger fra den som har sykmeldt deg"
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
@@ -71,11 +70,7 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                         tiltakNAV={sykmelding.tiltakNAV}
                     />
                     <SeksjonMedTittel tittel="Annet">
-                        <ElementMedTekst
-                            margin
-                            tittel={tekster['sendt-sykmelding.lege.tittel']}
-                            tekst={sykmelding.behandler.tlf}
-                        />
+                        <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
                 </Utvidbar>
             </Utvidbar>

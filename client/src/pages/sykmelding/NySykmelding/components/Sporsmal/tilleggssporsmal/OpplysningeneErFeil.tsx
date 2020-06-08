@@ -2,7 +2,6 @@ import React from 'react';
 import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
-import tekster from '../Sporsmal-tekster';
 import { AlertStripeHjelper } from '../../../../../../utils/alertstripe-utils';
 import { Skjemafelt } from '../../../../../../types/sporsmalTypes';
 
@@ -31,30 +30,14 @@ const OpplysningeneErFeil = ({
                 feil={errors.opplysninger ? { feilmelding: errors.opplysninger.message } : undefined}
                 className="skjemagruppe--undersporsmal"
             >
-                <fieldset >
-                    <legend>{tekster['opplysningeneErFeil.tittel']}</legend>
+                <fieldset>
+                    <legend>Hvilke opplysninger er ikke riktige?</legend>
+                    <Checkbox label="Periode" name={Skjemafelt.PERIODE} checkboxRef={register as any} />
+                    <Checkbox label="Sykmeldingsgrad" name={Skjemafelt.SYKMELDINGSGRAD} checkboxRef={register as any} />
+                    <Checkbox label="Arbeidsgiver" name={Skjemafelt.ARBEIDSGIVER} checkboxRef={register as any} />
+                    <Checkbox label="Diagnose" name={Skjemafelt.DIAGNOSE} checkboxRef={register as any} />
                     <Checkbox
-                        label={tekster['opplysningeneErFeil.periode']}
-                        name={Skjemafelt.PERIODE}
-                        checkboxRef={register as any}
-                    />
-                    <Checkbox
-                        label={tekster['opplysningeneErFeil.sykmeldingsgrad']}
-                        name={Skjemafelt.SYKMELDINGSGRAD}
-                        checkboxRef={register as any}
-                    />
-                    <Checkbox
-                        label={tekster['opplysningeneErFeil.arbeidsgiver']}
-                        name={Skjemafelt.ARBEIDSGIVER}
-                        checkboxRef={register as any}
-                    />
-                    <Checkbox
-                        label={tekster['opplysningeneErFeil.diagnose']}
-                        name={Skjemafelt.DIAGNOSE}
-                        checkboxRef={register as any}
-                    />
-                    <Checkbox
-                        label={tekster['opplysningeneErFeil.andreOpplysninger']}
+                        label="Andre opplysninger"
                         name={Skjemafelt.ANDRE_OPPLYSNINGER}
                         checkboxRef={register as any}
                     />
@@ -63,20 +46,20 @@ const OpplysningeneErFeil = ({
             <AlertStripeHjelper
                 vis={visAlertstripeAvbryt}
                 type="advarsel"
-                tittel={tekster['alertstripe.du-trenger-ny-sykmelding.tittel']}
-                tekst={tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}
+                tittel="Du trenger ny sykmelding."
+                tekst='Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny. For å avbryte, velg "Jeg ønsker ikke å bruke denne sykmeldingen" nederst på siden'
             />
             <AlertStripeHjelper
                 vis={visAlertstripeBrukArbeidsgiver}
                 type="info"
-                tittel={tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}
-                tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.arbeidsgiver.tekst']}
+                tittel="Du kan bruke sykmeldingen din."
+                tekst="Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs! Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi beskjed til den som sykmelder deg om at det er lagt inn feil arbeidsgiver."
             />
             <AlertStripeHjelper
                 vis={visAlertstripeBruk}
                 type="info"
-                tittel={tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}
-                tekst={tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
+                tittel="Du kan bruke sykmeldingen din."
+                tekst="Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at den inneholder feil."
             />
         </>
     );

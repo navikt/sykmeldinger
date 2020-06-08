@@ -2,7 +2,6 @@ import React from 'react';
 
 import ElementMedTekst from '../layout/ElementMedTekst';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import tekster from '../Infopanel-tekster';
 
 interface ArbeidsevneProps {
     tiltakArbeidsplassen?: string;
@@ -15,14 +14,14 @@ const Arbeidsevne = ({ tiltakArbeidsplassen, tiltakNAV }: ArbeidsevneProps) => {
     }
 
     return (
-        <SeksjonMedTittel understrek tittel={tekster['arbeidsevne.tittel']}>
+        <SeksjonMedTittel understrek tittel="Hva skal til for å bedre arbeidsevnen?">
             <ElementMedTekst
-                tittel={tekster['arbeidsevne.tilrettelegging.tittel']}
+                tittel="Tilrettelegging/hensyn som bør tas på arbeidsplassen"
                 tekst={tiltakArbeidsplassen}
                 margin
                 vis={!!tiltakArbeidsplassen}
             />
-            <ElementMedTekst tittel={tekster['arbeidsevne.tiltak.tittel']} tekst={tiltakNAV} margin vis={!!tiltakNAV} />
+            <ElementMedTekst tittel="Tiltak i regi av NAV" tekst={tiltakNAV} margin vis={!!tiltakNAV} />
         </SeksjonMedTittel>
     );
 };

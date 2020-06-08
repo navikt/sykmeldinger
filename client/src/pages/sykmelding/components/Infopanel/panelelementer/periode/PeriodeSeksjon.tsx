@@ -3,7 +3,6 @@ import './PeriodeSeksjon.less';
 import React from 'react';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
-import tekster from '../../Infopanel-tekster';
 import { Periode } from '../../../../../../types/sykmeldingTypes';
 import { hentDagerMellomDatoer, tilLesbarPeriodeMedArstall } from '../../../../../../utils/datoUtils';
 
@@ -29,22 +28,16 @@ const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
                 <div style={{ display: 'flex' }}>
                     <Normaltekst>{periode.gradert.grad}% sykmeldt</Normaltekst>
                     {periode.gradert.reisetilskudd && periode.gradert.grad > 0 && periode.gradert.grad < 100 && (
-                        <Normaltekst>&nbsp;{tekster['periode.reisetilskudd']}</Normaltekst>
+                        <Normaltekst>&nbsp;med reisetilskudd</Normaltekst>
                     )}
                 </div>
             )}
-            {periode.behandlingsdager && (
-                <Normaltekst>
-                    {periode.behandlingsdager} {tekster['periode.behandlingsdager']}
-                </Normaltekst>
-            )}
-            {periode.reisetilskudd && !periode.gradert && (
-                <Normaltekst>{tekster['periode.reisetilskudd.tittel']}</Normaltekst>
-            )}
+            {periode.behandlingsdager && <Normaltekst>{periode.behandlingsdager} behandlingsdager</Normaltekst>}
+            {periode.reisetilskudd && !periode.gradert && <Normaltekst>Reisetilskudd</Normaltekst>}
             {periode.avventendeInnspillTilArbeidsgiver && (
                 <>
-                    <Normaltekst>{tekster['periode.avventende']}</Normaltekst>
-                    <EtikettLiten>{tekster['periode.avventende.innspill']}</EtikettLiten>
+                    <Normaltekst>Avventende sykmelding</Normaltekst>
+                    <EtikettLiten>Innspill til arbeidsgiver om tilrettelegging</EtikettLiten>
                     <Normaltekst>{periode.avventendeInnspillTilArbeidsgiver}</Normaltekst>
                 </>
             )}

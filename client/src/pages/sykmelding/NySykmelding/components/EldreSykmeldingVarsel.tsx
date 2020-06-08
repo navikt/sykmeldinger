@@ -3,7 +3,6 @@ import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 
 import Margin from '../../components/Infopanel/layout/Margin';
-import tekster from '../NySykmelding-tekster';
 
 const EldreSykmeldingVarsel = () => {
     // TODO: hvis brukeren har en eldre sykmelding som må behandles først
@@ -14,8 +13,8 @@ const EldreSykmeldingVarsel = () => {
     return (
         <Margin>
             <AlertStripe type="info">
-                {tekster['ny-sykmelding.eldre-sykmeldinger.tekst']}
-                <Lenke href="www.nav.no">{tekster['ny-sykmelding.eldre-sykmeldinger.lenke']}</Lenke>
+                Du har eldre sykmeldinger som du bør behandle før denne.
+                <Lenke href="www.nav.no">Gå til den eldste sykmeldingen.</Lenke>
             </AlertStripe>
         </Margin>
     );

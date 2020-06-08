@@ -3,7 +3,6 @@ import React from 'react';
 import ElementMedTekst from '../layout/ElementMedTekst';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import tekster from '../Infopanel-tekster';
 import { SporsmalSvar } from '../../../../../types/sykmeldingTypes';
 
 interface OpplysningsGruppeProps {
@@ -41,7 +40,7 @@ const UtdypendeOpplysninger = ({ opplysninger }: UtdypendeOpplysningerProps) => 
     ));
 
     return (
-        <SeksjonMedTittel understrek tittel={tekster['utdypende.tittel']}>
+        <SeksjonMedTittel understrek tittel="Utdypende opplysninger">
             {opplysningGrupper}
         </SeksjonMedTittel>
     );

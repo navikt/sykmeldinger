@@ -4,7 +4,6 @@ import React from 'react';
 import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import HjelpetekstWrapper from '../../../Hjelpetekst/HjelpetekstWrapper';
-import tekster from '../../Infopanel-tekster';
 
 interface DiagnoseKodeSeksjonProps {
     kode: string;
@@ -16,8 +15,10 @@ const DiagnoseKodeSeksjon = ({ kode, system, visHjelp }: DiagnoseKodeSeksjonProp
     return (
         <>
             <div className="diagnose-seksjon-kode-tittel-container">
-                <EtikettLiten>{tekster['diagnosekode.tittel']}</EtikettLiten>
-                {visHjelp && <HjelpetekstWrapper tekst={tekster['diagnosekode.hjelpetekst.tekst']} />}
+                <EtikettLiten>Diagnosen vises ikke til arbeidsgiveren</EtikettLiten>
+                {visHjelp && (
+                    <HjelpetekstWrapper tekst="Diagnosekoden henviser til de internasjonale kodeverkene som klassifiserer sykdom og symptomer. De ulike diagnosekodene brukes for å gi en mest mulig presis diagnose." />
+                )}
             </div>
 
             <Normaltekst>{kode}</Normaltekst>

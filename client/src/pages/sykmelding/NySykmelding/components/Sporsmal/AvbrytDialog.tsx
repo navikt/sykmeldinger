@@ -5,8 +5,6 @@ import React from 'react';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Fareknapp, Knapp } from 'nav-frontend-knapper';
 
-import tekster from '../SendingsSkjema-tekster';
-
 interface AvbrytDialogProps {
     vis: boolean;
     visSpinner: boolean;
@@ -21,8 +19,10 @@ const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytD
 
     return (
         <PanelBase className="avbrytdialog">
-            <Tekstomrade className="avbrytdialog--margin-bottom">{tekster['avbrytdialog.er-du-sikker']}</Tekstomrade>
-            <Tekstomrade className="avbrytdialog--margin-bottom">{tekster['avbrytdialog.kan-sende-papir']}</Tekstomrade>
+            <Tekstomrade className="avbrytdialog--margin-bottom">
+                Er du sikker på at du vil avbryte denne sykmeldingen?
+            </Tekstomrade>
+            <Tekstomrade className="avbrytdialog--margin-bottom">Du kan fortsatt levere den på papir.</Tekstomrade>
             <Fareknapp
                 htmlType="button"
                 className="avbrytdialog--margin-bottom"
@@ -32,7 +32,7 @@ const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytD
                     onAvbryt();
                 }}
             >
-                {tekster['avbrytdialog.avbryt-knapp']}
+                JA, JEG ER SIKKER
             </Fareknapp>
             <Knapp
                 onClick={e => {
@@ -40,7 +40,7 @@ const AvbrytDialog = ({ vis, visSpinner, onAvbryt, setVisAvbrytDialog }: AvbrytD
                     setVisAvbrytDialog(false);
                 }}
             >
-                {tekster['avbrytdialog.angre-knapp']}
+                Angre
             </Knapp>
         </PanelBase>
     );

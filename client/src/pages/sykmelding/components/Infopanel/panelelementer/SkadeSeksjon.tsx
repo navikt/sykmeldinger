@@ -1,7 +1,6 @@
 import React from 'react';
 
 import CheckboxMedDato from '../layout/Checkbox/CheckboxMedDato';
-import tekster from '../Infopanel-tekster';
 import { MedisinskVurdering } from '../../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
 
@@ -17,9 +16,9 @@ const SkadeSeksjon = ({ medisinskVurdering }: SkadeSeksjonProps) => {
 
     return (
         <CheckboxMedDato
-            checkboxTittel={tekster['skade.tittel']}
+            checkboxTittel="Sykdommen kan skyldes en skade/yrkessykdom"
             checked
-            tittel={tekster['skade.dato.tittel']}
+            tittel="Skadedato"
             tekst={tilLesbarDatoMedArstall(yrkesskadeDato)}
         />
     );

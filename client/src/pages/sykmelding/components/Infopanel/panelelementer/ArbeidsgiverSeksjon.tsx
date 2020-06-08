@@ -1,7 +1,6 @@
 import React from 'react';
 
 import EtikettMedTekst from '../layout/EtikettMedTekst';
-import tekster from '../Infopanel-tekster';
 import { Arbeidsgiver } from '../../../../../types/sykmeldingTypes';
 
 interface ArbeidsgiverSeksjonProps {
@@ -15,9 +14,9 @@ const ArbeidsgiverSeksjon = ({ arbeidsgiver }: ArbeidsgiverSeksjonProps) => {
 
     return (
         <EtikettMedTekst
-            tittel={tekster['arbeidsgiver.tittel']}
+            tittel="Arbeidsgiver som legen har skrevet inn"
             tekst={arbeidsgiver.navn}
-            undertekst={`${arbeidsgiver.stillingsprosent}${tekster['arbeidsgiver.stillingsprosent']}`}
+            undertekst={`${arbeidsgiver.stillingsprosent}% stilling`}
             margin
         />
     );

@@ -3,20 +3,20 @@ import React from 'react';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Innholdstittel } from 'nav-frontend-typografi';
 
-import tekster from '../SendingsSkjema-tekster';
-
 const SporsmalInfoheader = () => (
     <>
-        <Innholdstittel>{tekster['infoheader.bruk-sykmeldingen']}</Innholdstittel>
+        <Innholdstittel>Bruk sykmeldingen</Innholdstittel>
         <ul>
             <li>
-                <Tekstomrade>{tekster['infoheader.trygdeloven.del-en']}</Tekstomrade>
+                <Tekstomrade>
+                    melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i jobb
+                </Tekstomrade>
             </li>
             <li>
-                <Tekstomrade>{tekster['infoheader.trygdeloven.del-to']}</Tekstomrade>
+                <Tekstomrade>legge til rette for at du kan søke om sykepenger</Tekstomrade>
             </li>
         </ul>
-        <Lenke href="https://www.nav.no/personvern">{tekster['infoheader.personvern-lenke']}</Lenke>
+        <Lenke href="https://www.nav.no/personvern">Les mer om hvordan NAV behandler personopplysninger</Lenke>
     </>
 );
 

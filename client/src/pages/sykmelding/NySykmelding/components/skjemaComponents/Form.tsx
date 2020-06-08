@@ -8,7 +8,6 @@ import Arbeidsgiver from '../../../../../types/arbeidsgiverTypes';
 import Egenmeldingsdager from './Egenmeldingsdager';
 import SubmitKnapp from './SubmitKnapp';
 import Vis from '../../../../../utils/vis';
-import tekster from '../SendingsSkjema-tekster';
 import useAppStore from '../../../../../data/useAppStore';
 import {
     Arbeidsforhold,
@@ -25,7 +24,6 @@ import {
     hentArbeidsGiverRadios,
     hentValgtArbeidsgiverNaermesteLederNavn,
 } from './skjemaUtils';
-import { getLedetekst } from '../../../../../utils/utils';
 
 export type FormProps = {
     sykmelding: Sykmelding;
@@ -76,15 +74,15 @@ const Form = ({
             <Panel>
                 <RadioPanelGruppe
                     name={Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE}
-                    legend={tekster['jaEllerNei.tittel']}
+                    legend="Er opplysningene i sykmeldingen riktige?"
                     radios={[
                         {
-                            label: tekster['ja'],
+                            label: 'Ja',
                             value: JaEllerNei.JA,
                             id: `b-${Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE}`,
                         },
                         {
-                            label: tekster['nei'],
+                            label: 'Nei',
                             value: JaEllerNei.NEI,
                         },
                     ]}
@@ -98,17 +96,17 @@ const Form = ({
                 <Vis hvis={fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI}>
                     <br />
                     <CheckboksPanelGruppe
-                        legend={tekster['opplysningeneErFeil.tittel']}
+                        legend="Hvilke opplysninger er ikke riktige?"
                         checkboxes={[
                             {
-                                label: tekster['opplysningeneErFeil.periode'],
+                                label: 'Periode',
                                 value: FeilOpplysninger.PERIODE,
                                 id: `b-${Skjemafelt.FEIL_OPPLYSNINGER}`,
                                 checked:
                                     fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(FeilOpplysninger.PERIODE) !== -1,
                             },
                             {
-                                label: tekster['opplysningeneErFeil.sykmeldingsgrad'],
+                                label: 'Sykmeldingsgrad',
                                 value: FeilOpplysninger.SYKMELDINGSGRAD,
                                 checked:
                                     fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(
@@ -116,20 +114,20 @@ const Form = ({
                                     ) !== -1,
                             },
                             {
-                                label: tekster['opplysningeneErFeil.arbeidsgiver'],
+                                label: 'Arbeidsgiver',
                                 value: FeilOpplysninger.ARBEIDSGIVER,
                                 checked:
                                     fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(FeilOpplysninger.ARBEIDSGIVER) !==
                                     -1,
                             },
                             {
-                                label: tekster['opplysningeneErFeil.diagnose'],
+                                label: 'Diagnose',
                                 value: FeilOpplysninger.DIAGNOSE,
                                 checked:
                                     fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(FeilOpplysninger.DIAGNOSE) !== -1,
                             },
                             {
-                                label: tekster['opplysningeneErFeil.andreOpplysninger'],
+                                label: 'Andre opplysninger',
                                 value: FeilOpplysninger.ANDRE_OPPLYSNINGER,
                                 checked:
                                     fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(
@@ -144,27 +142,32 @@ const Form = ({
                     <Vis hvis={trengerNySykmelding}>
                         <br />
                         <AlertStripeAdvarsel>
-                            <strong>{tekster['alertstripe.du-trenger-ny-sykmelding.tittel']}</strong>
+                            <strong>Du trenger ny sykmelding.</strong>
                             <br />
-                            {tekster['alertstripe.du-trenger-ny-sykmelding.tekst']}
+                            Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny. For å
+                            avbryte, velg "Jeg ønsker ikke å bruke denne sykmeldingen" nederst på siden.
                         </AlertStripeAdvarsel>
                     </Vis>
 
                     <Vis hvis={!trengerNySykmelding && feilArbeidsgiver}>
                         <br />
                         <AlertStripeInfo>
-                            <strong>{tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}</strong>
+                            <strong>Du kan bruke sykmeldingen din.</strong>
                             <br />
-                            {tekster['alertstripe.du-kan-bruke-sykmeldingen.arbeidsgiver.tekst']}
+                            Du velger hvilken arbeidsgiver sykmeldingen skal sendes til i neste spørsmål. Obs!
+                            Arbeidsgiveren som står i sykmeldingen fra før endres ikke, og vil være synlig for
+                            arbeidsgiveren du sender sykmeldingen til. Får du flere sykmeldinger må du gi beskjed til
+                            den som sykmelder deg om at det er lagt inn feil arbeidsgiver.
                         </AlertStripeInfo>
                     </Vis>
 
                     <Vis hvis={trengerIkkeNySykmelding && !feilArbeidsgiver && !trengerNySykmelding}>
                         <br />
                         <AlertStripeInfo>
-                            <strong>{tekster['alertstripe.du-kan-bruke-sykmeldingen.tittel']}</strong>
+                            <strong>Du kan bruke sykmeldingen din.</strong>
                             <br />
-                            {tekster['alertstripe.du-kan-bruke-sykmeldingen.tekst']}
+                            Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at
+                            den inneholder feil.
                         </AlertStripeInfo>
                     </Vis>
                 </Vis>
@@ -187,27 +190,27 @@ const Form = ({
                 <Panel>
                     <RadioPanelGruppe
                         name={Skjemafelt.SYKMELDT_FRA}
-                        legend={tekster['sykmeldtFra.tittel']}
+                        legend="Jeg er sykmeldt fra"
                         radios={[
                             ...arbeidsGiverRadios,
                             {
-                                label: tekster['sykmeldtFra.selvstending-naringsdrivende'],
+                                label: 'Jobb som selvstendig næringsdrivende',
                                 value: Arbeidsforhold.SELVSTENDIG_NARINGSDRIVENDE,
                             },
                             {
-                                label: tekster['sykmeldtFra.frilanser'],
+                                label: 'Jobb som frilanser',
                                 value: Arbeidsforhold.FRILANSER,
                             },
                             {
-                                label: tekster['sykmeldtFra.annen-arbeidsgiver'],
+                                label: 'Jobb hos en annen arbeidsgiver',
                                 value: Arbeidsforhold.ANNEN_ARBEIDSGIVER,
                             },
                             {
-                                label: tekster['sykmeldtFra.arbeidsledig'],
+                                label: 'Jeg er arbeidsledig',
                                 value: Arbeidsforhold.ARBEIDSLEDIG,
                             },
                             {
-                                label: tekster['sykmeldtFra.ingenting-passer'],
+                                label: 'Jeg finner ingenting som passer for meg',
                                 value: Arbeidsforhold.INGENTING_PASSER,
                             },
                         ]}
@@ -220,19 +223,19 @@ const Form = ({
                     <Vis hvis={!!sykmelding.arbeidsgiver.navn}>
                         <br />
                         <AlertStripeInfo>
-                            {getLedetekst(tekster['sykmeldtFra.sykmelders-svar'], {
-                                '%ARBEIDSGIVER%': sykmelding.arbeidsgiver.navn,
-                            })}
+                            Den som sykmeldte deg har oppgitt at du er sykmeldt fra {sykmelding.arbeidsgiver.navn}
                         </AlertStripeInfo>
                     </Vis>
 
                     <Vis hvis={fieldValues[Skjemafelt.SYKMELDT_FRA] === Arbeidsforhold.ANNEN_ARBEIDSGIVER}>
                         <br />
                         <AlertStripeAdvarsel>
-                            {tekster['alertstripe.annen-arbeidsgiver']}
+                            Siden du ikke finner arbeidsgiveren din i denne listen, kan du ikke sende sykmeldingen
+                            digitalt. Du bør spørre arbeidsgiveren din om hvorfor de ikke har registrert deg som
+                            arbeidstaker i A-meldingen.
                             <br />
                             <br />
-                            <Knapp>{tekster['skriv-ut']}</Knapp>
+                            <Knapp>SKRIV UT</Knapp>
                         </AlertStripeAdvarsel>
                     </Vis>
 
@@ -240,17 +243,15 @@ const Form = ({
                         <br />
                         <RadioPanelGruppe
                             name={Skjemafelt.OPPFOLGING}
-                            legend={getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
-                                '%ARBEIDSGIVER%': valgtArbeidsgiverNaermesteLederNavn,
-                            })}
+                            legend={`Er det ${valgtArbeidsgiverNaermesteLederNavn} som skal følge deg opp på jobben når du er syk?`}
                             radios={[
                                 {
-                                    label: tekster['ja'],
+                                    label: 'Ja',
                                     value: JaEllerNei.JA,
                                     id: `b-${Skjemafelt.OPPFOLGING}`,
                                 },
                                 {
-                                    label: tekster['nei'],
+                                    label: 'Nei',
                                     value: JaEllerNei.NEI,
                                 },
                             ]}
@@ -262,13 +263,12 @@ const Form = ({
 
                         <Vis hvis={fieldValues[Skjemafelt.OPPFOLGING] === JaEllerNei.JA}>
                             <br />
-                            {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
-                                '%ARBEIDSGIVER%': valgtArbeidsgiverNaermesteLederNavn,
-                            })}
+                            Vi sender sykmeldingen til {valgtArbeidsgiverNaermesteLederNavn}, som finner den ved å logge
+                            inn på nav.no.
                         </Vis>
                         <Vis hvis={fieldValues[Skjemafelt.OPPFOLGING] === JaEllerNei.NEI}>
                             <br />
-                            {tekster['sykmeldtFra.arbeidsgiver.bekreft.nei']}
+                            Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
                         </Vis>
                     </Vis>
                     <Vis
@@ -282,9 +282,7 @@ const Form = ({
                         <br />
                         <RadioPanelGruppe
                             name={Skjemafelt.FRILANSER_EGENMELDING}
-                            legend={getLedetekst(tekster['frilanser.egenmelding.tittel'], {
-                                '%DATO%': new Date() /* // TODO: Riktig dato */,
-                            })}
+                            legend={`Vi har registrert at du ble sykmeldt ${new Date()}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`}
                             radios={[
                                 {
                                     label: 'Ja',
@@ -330,15 +328,15 @@ const Form = ({
                         <br />
                         <RadioPanelGruppe
                             name={Skjemafelt.FRILANSER_FORSIKRING}
-                            legend={tekster['frilanser.forsikring.tittel']}
+                            legend="Har du forsikring som gjelder de første 16 dagene av sykefraværet?"
                             radios={[
                                 {
-                                    label: tekster['ja'],
+                                    label: 'Ja',
                                     value: JaEllerNei.JA,
                                     id: `b-${Skjemafelt.FRILANSER_FORSIKRING}`,
                                 },
                                 {
-                                    label: tekster['nei'],
+                                    label: 'Nei',
                                     value: JaEllerNei.NEI,
                                 },
                             ]}
@@ -357,7 +355,7 @@ const Form = ({
                     <br />
                     <Feiloppsummering
                         innerRef={feiloppsummering}
-                        tittel={tekster['feilmelding.feiloppsummering.tittel']}
+                        tittel="For å gå videre må du rette opp følgende"
                         feil={errorMessages}
                     />
                 </>

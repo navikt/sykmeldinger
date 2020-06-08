@@ -4,7 +4,6 @@ import ElementMedTekst from '../layout/ElementMedTekst';
 import EnkelCheckbox from '../layout/Checkbox/EnkelCheckbox';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import tekster from '../Infopanel-tekster';
 import { Prognose } from '../../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
 
@@ -39,7 +38,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
             <Margin>
                 <Margin>
                     <EnkelCheckbox
-                        tittel={tekster['friskmelding.samme-arbeidsgiver']}
+                        tittel="Jeg antar at pasienten på sikt kan komme tilbake til samme arbeidsgiver"
                         bold
                         margin
                         checked={erIArbeid.egetArbeidPaSikt}
@@ -47,14 +46,14 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                     />
                     <ElementMedTekst
                         vis={erIArbeid.egetArbeidPaSikt && !!erIArbeid.arbeidFOM}
-                        tittel={tekster['friskmelding.arbeidfom']}
+                        tittel="Anslå når du tror dette kan skje"
                         tekst={tilLesbarDatoMedArstall(erIArbeid.arbeidFOM)}
                         innrykk
                     />
                 </Margin>
                 <Margin>
                     <EnkelCheckbox
-                        tittel={tekster['friskmelding.annen-arbeidsgiver']}
+                        tittel="Jeg antar at pasienten på sikt kan komme i arbeid hos annen arbeidsgiver"
                         bold
                         margin
                         checked={erIArbeid.annetArbeidPaSikt}
@@ -62,7 +61,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                     />
                     <ElementMedTekst
                         vis={erIArbeid.annetArbeidPaSikt && !!erIArbeid.vurderingsdato}
-                        tittel={tekster['friskmelding.vurderingsdato']}
+                        tittel="Når antar du å kunne gi tilbakemelding på dette?"
                         tekst={tilLesbarDatoMedArstall(erIArbeid.vurderingsdato)}
                         innrykk
                     />
@@ -79,7 +78,7 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
         return (
             <Margin>
                 <EnkelCheckbox
-                    tittel={tekster['friskmelding.ingen-arbeidsgiver']}
+                    tittel="Jeg antar at pasienten på sikt kan komme tilbake i arbeid"
                     bold
                     margin
                     checked={erIkkeIArbeid.arbeidsforPaSikt}
@@ -87,12 +86,12 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                 />
                 <ElementMedTekst
                     vis={!!erIkkeIArbeid.arbeidsforFOM}
-                    tittel={tekster['friskmelding.arbeidfom']}
+                    tittel="Anslå når du tror dette kan skje"
                     tekst={tilLesbarDatoMedArstall(erIkkeIArbeid.arbeidsforFOM)}
                 />
                 <ElementMedTekst
                     vis={!!erIkkeIArbeid.vurderingsdato}
-                    tittel={tekster['friskmelding.ingen-arbeidsgiver.vurdering']}
+                    tittel="Når antar du å kunne gi tilbakemelding på dette?"
                     tekst={tilLesbarDatoMedArstall(erIkkeIArbeid.vurderingsdato)}
                 />
             </Margin>
@@ -100,16 +99,16 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
     };
 
     return (
-        <SeksjonMedTittel understrek tittel={tekster['friskmelding.tittel']}>
+        <SeksjonMedTittel understrek tittel="Friskmelding/prognose">
             <EnkelCheckbox
-                tittel={tekster['friskmelding.arbeidsfor.tittel']}
+                tittel="Pasienten er 100 prosent arbeidsfør etter denne perioden"
                 checked={arbeidsforEtterPeriode}
                 margin
                 bold
                 vis={arbeidsforEtterPeriode}
             />
             <ElementMedTekst
-                tittel={tekster['friskmelding.hensyn']}
+                tittel="Beskriv eventuelle hensyn som må tas på arbeidsplassen"
                 tekst={hensynArbeidsplassen}
                 margin
                 vis={!!hensynArbeidsplassen}

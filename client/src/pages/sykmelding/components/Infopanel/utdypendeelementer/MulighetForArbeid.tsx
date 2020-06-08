@@ -4,7 +4,6 @@ import ElementMedTekst from '../layout/ElementMedTekst';
 import EnkelCheckbox from '../layout/Checkbox/EnkelCheckbox';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import tekster from '../Infopanel-tekster';
 
 // TODO: Koble opp til data i sykmelding
 const testSvar = 'andre årsaker til sykefravær';
@@ -15,28 +14,30 @@ const MulighetForArbeid = () => {
     }
 
     return (
-        <SeksjonMedTittel understrek tittel={tekster['muliget-for-arbeid.tittel']}>
+        <SeksjonMedTittel understrek tittel="Mulighet for arbeid">
             <Margin>
-                <ElementMedTekst tittel={tekster['muliget-for-arbeid.medisinske-arsaker.tittel']} />
-                <EnkelCheckbox tittel={tekster['muliget-for-arbeid.medisinske-arsaker']} margin checked vis />
+                <ElementMedTekst tittel="Pasienten kan ikke være i arbeid (100% sykmeldt)" />
+                <EnkelCheckbox
+                    tittel="Det er medisinske årsaker som hindrer arbeidsrelatert aktivitet"
+                    margin
+                    checked
+                    vis
+                />
             </Margin>
 
-            <ElementMedTekst
-                tittel={tekster['muliget-for-arbeid.medisinske-arsaker.beskriv']}
-                tekst={testSvar}
-                margin
-            />
+            <ElementMedTekst tittel="Beskriv nærmere" tekst={testSvar} margin />
 
             <Margin>
-                <ElementMedTekst tittel={tekster['muliget-for-arbeid.forhold-pa-arbeidsplassen.tittel']} />
-                <EnkelCheckbox tittel={tekster['muliget-for-arbeid.forhold-pa-arbeidsplassen']} margin checked vis />
+                <ElementMedTekst tittel="Pasienten kan ikke være i arbeid (100% sykmeldt)" />
+                <EnkelCheckbox
+                    tittel="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
+                    margin
+                    checked
+                    vis
+                />
             </Margin>
 
-            <ElementMedTekst
-                tittel={tekster['muliget-for-arbeid.forhold-pa-arbeidsplassen.angi']}
-                tekst={testSvar}
-                margin
-            />
+            <ElementMedTekst tittel="Angi hva som er årsaken" tekst={testSvar} margin />
         </SeksjonMedTittel>
     );
 };

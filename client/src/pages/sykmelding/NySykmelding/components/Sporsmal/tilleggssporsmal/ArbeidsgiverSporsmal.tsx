@@ -4,9 +4,7 @@ import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { useFormContext } from 'react-hook-form';
 
 import Arbeidsgiver from '../../../../../../types/arbeidsgiverTypes';
-import tekster from '../Sporsmal-tekster';
 import { JaEllerNei, Skjemafelt } from '../../../../../../types/sporsmalTypes';
-import { getLedetekst } from '../../../../../../utils/ledetekst-utils';
 
 interface ArbeidsgiverSporsmalProps {
     vis: boolean;
@@ -50,9 +48,7 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) 
             feil={
                 errors.oppfolging
                     ? {
-                          feilmelding: getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.feilmelding'], {
-                              '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
-                          }),
+                          feilmelding: `Du må svare på om det er ${arbeidsgiver.naermesteLeder.navn} som skal følge deg opp på jobben når du er syk`,
                       }
                     : undefined
             }
@@ -60,19 +56,17 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) 
         >
             <fieldset>
                 <legend>
-                    {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.tittel'], {
-                        '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
-                    })}
+                    {`Er det ${arbeidsgiver.naermesteLeder.navn} som skal følge deg opp på jobben når du er syk?`}
                 </legend>
                 <Radio
-                    label={tekster['ja']}
+                    label="Ja"
                     name={Skjemafelt.OPPFOLGING}
                     value={JaEllerNei.JA}
                     checked={harOppfolging === JaEllerNei.JA}
                     onChange={handterEndring}
                 />
                 <Radio
-                    label={tekster['nei']}
+                    label="Nei"
                     name={Skjemafelt.OPPFOLGING}
                     value={JaEllerNei.NEI}
                     checked={harOppfolging === JaEllerNei.NEI}
@@ -81,13 +75,11 @@ const ArbeidsgiverSporsmal = ({ vis, arbeidsgiver }: ArbeidsgiverSporsmalProps) 
             </fieldset>
             {watchOppfolging === JaEllerNei.JA && (
                 <Tekstomrade>
-                    {getLedetekst(tekster['sykmeldtFra.arbeidsgiver.bekreft.ja'], {
-                        '%ARBEIDSGIVER%': arbeidsgiver.naermesteLeder.navn,
-                    })}
+                    {`Vi sender sykmeldingen til ${arbeidsgiver.naermesteLeder.navn}, som finner den ved å logge inn på nav.no.`}
                 </Tekstomrade>
             )}
             {watchOppfolging === JaEllerNei.NEI && (
-                <Tekstomrade>{tekster['sykmeldtFra.arbeidsgiver.bekreft.nei']}</Tekstomrade>
+                <Tekstomrade>Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.</Tekstomrade>
             )}
         </SkjemaGruppe>
     );

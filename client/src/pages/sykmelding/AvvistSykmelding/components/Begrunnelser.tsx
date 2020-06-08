@@ -1,7 +1,6 @@
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 
-import tekster from '../AvvistSykmelding-tekster';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
 
 export enum Avvisningsregler {
@@ -44,7 +43,7 @@ const Begrunnelser = ({ sykmelding }: BegrunnelserProps) => {
     if (begrunnelser.length === 1) {
         return (
             <div>
-                <Element>{tekster['sykmelding.avvist.grunn']}</Element>
+                <Element>Grunnen til at sykmeldingen er avvist:</Element>
                 <p>{begrunnelser[0]}</p>
             </div>
         );
@@ -53,7 +52,7 @@ const Begrunnelser = ({ sykmelding }: BegrunnelserProps) => {
     if (begrunnelser.length > 1) {
         return (
             <div>
-                <Element>{tekster['sykmelding.avvist.grunn']}</Element>
+                <Element>Grunnen til at sykmeldingen er avvist:</Element>
                 <ul>
                     {begrunnelser.map((begrunnelse, index) => (
                         <li key={index.toString()}>{begrunnelse}</li>

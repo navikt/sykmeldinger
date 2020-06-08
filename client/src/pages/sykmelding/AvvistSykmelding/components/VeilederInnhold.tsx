@@ -4,9 +4,7 @@ import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 
 import Begrunnelser from './Begrunnelser';
-import tekster from '../AvvistSykmelding-tekster';
 import { Behandler, Sykmelding } from '../../../../types/sykmeldingTypes';
-import { getLedetekst } from '../../../../utils/utils';
 
 const byggLegeNavn = (behandler: Behandler) => {
     const { fornavn, mellomnavn, etternavn } = behandler;
@@ -51,18 +49,16 @@ const hentHandlingsstreng = (sykmelding: Sykmelding) => {
 
     const legenavn = byggLegeNavn(sykmelding.behandler);
 
-    return getLedetekst(tekster['sykmelding.avvist.handling.standard'], { '%LEGENAVN%': legenavn });
+    return `Når du har fått ny sykmelding fra %LEGENAVN%, får du en ny beskjed fra oss om å logge deg inn på nav.no slik at du kan sende inn sykmeldingen. Går det mange dager, bør du kontakte ${legenavn} som skal skrive den nye sykmeldingen.`;
 };
 
 const hentIntrotekst = (sykmelding: Sykmelding) => {
     const legenavn = byggLegeNavn(sykmelding.behandler);
-    const intro = tekster['sykmelding.avvist.intro'];
-    const standardtekst = `${intro} ${getLedetekst(tekster['sykmelding.avvist.intro.standard'], {
-        '%LEGENAVN%': legenavn,
-    })}`;
-    const brukerErOver70 = `${intro} ${tekster['sykmelding.avvist.intro.brukerErOver70']}`;
-    const ugyldigVersjon = `${intro} ${tekster['sykmelding.avvist.intro.ugyldigVersjon']}`;
-    const ingenAutorisasjonTekst = `${intro} ${tekster['sykmelding.avvist.intro.manglerAutorisasjon']}`;
+    const intro = 'Du trenger en ny sykmelding fordi';
+    const standardtekst = `${intro} det er gjort en feil i utfyllingen. Vi har gitt beskjed til ${legenavn} om hva som er feil, og at du må få en ny sykmelding.`;
+    const brukerErOver70 = `${intro} du er over 70 år.`;
+    const ugyldigVersjon = `${intro} det er brukt en ugyldig versjon av sykmeldingen.`;
+    const ingenAutorisasjonTekst = `${intro} den som skrev sykmeldingen manglet autorisasjon.`;
 
     //const regelnavnliste = hentRegelnavnListe(smSykmelding);
 
@@ -94,7 +90,7 @@ const VeilederInnhold = ({ sykmelding }: VeilederInnholdProps) => {
         <>
             <Systemtittel className="veilederinnhold-tittel">Sykmeldingen kan dessverre ikke brukes</Systemtittel>
             <div>
-                <p>{tekster['sykmelding.veileder.beklager']}</p>
+                <p>Beklager at vi må bry deg mens du er syk.</p>
                 <p>{introtekst}</p>
                 <p>{handling}</p>
             </div>

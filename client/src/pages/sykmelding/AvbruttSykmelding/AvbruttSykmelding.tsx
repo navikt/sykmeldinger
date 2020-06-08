@@ -24,7 +24,6 @@ import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
 import person from '../../../svg/person.svg';
 import personHover from '../../../svg/personHover.svg';
-import tekster from './AvbruttSykmelding-tekster';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 
 interface AvbruttSykmeldingProps {
@@ -56,7 +55,7 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
                 <Utvidbar
                     ikon={doktor}
                     ikonHover={doktorHover}
-                    tittel={tekster['avbrutt-sykmelding.flere-opplysninger.tittel']}
+                    tittel="Flere opplysninger fra den som har sykmeldt deg"
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}

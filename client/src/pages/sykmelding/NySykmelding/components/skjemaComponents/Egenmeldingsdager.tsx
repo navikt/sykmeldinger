@@ -8,7 +8,6 @@ import labelPlugin from 'flatpickr/dist/plugins/labelPlugin/labelPlugin';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Label } from 'nav-frontend-skjema';
 
-import tekster from '../SendingsSkjema-tekster';
 import { Skjemafelt } from './skjemaTypes';
 
 export const locale: CustomLocale = {
@@ -66,14 +65,14 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
     return (
         <>
             <>
-                <Label htmlFor="periodevelger">{tekster['egenmeldingsperioder.tittel']}</Label>
+                <Label htmlFor="periodevelger">Når hadde du egenmelding?</Label>
                 {perioder.map((periode, index) => (
                     <div className="periode" key={index.toString()}>
                         <Flatpickr
                             id={`b-${Skjemafelt.EGENMELDINGSPERIODER}`}
                             value={periode}
                             className="typo-normal flatpickr"
-                            placeholder={tekster['egenmeldingsperioder.placeholder']}
+                            placeholder="Trykk for å velge periode"
                             onChange={nyeDatoer => oppdaterPeriode(index, nyeDatoer)}
                             options={{
                                 position: 'below',
@@ -98,7 +97,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
                                     slettPeriode(index);
                                 }}
                             >
-                                {tekster['egenmeldingsperioder.slett-periode']}
+                                Slett periode
                             </Lenke>
                         )}
                     </div>
@@ -112,7 +111,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
                     opprettNyPeriode();
                 }}
             >
-                {tekster['egenmeldingsperioder.legg-til-periode']}
+                + Legg til en ekstra periode
             </Lenke>
         </>
     );

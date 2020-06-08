@@ -28,7 +28,6 @@ import Utvidbar from '../components/Utvidbar/Utvidbar';
 import Veileder from '../components/Veileder/Veileder';
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
-import tekster from './NySykmelding-tekster';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 
 interface SykmeldingProps {
@@ -54,7 +53,12 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
             <EldreSykmeldingVarsel />
             <Veileder
                 fargetema="info"
-                innhold={<Normaltekst>{tekster['ny-sykmelding.introtekst']}</Normaltekst>}
+                innhold={
+                    <Normaltekst>
+                        Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
+                        om? Du velger selv om du vil bruke sykmeldingen.
+                    </Normaltekst>
+                }
                 onClick={() => window.scrollTo({ top: utfyllingRef.current.offsetTop - 100, behavior: 'smooth' })}
                 knappTekst="Gå til utfyllingen"
             />
@@ -77,7 +81,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 <Utvidbar
                     ikon={doktor}
                     ikonHover={doktorHover}
-                    tittel={tekster['ny-sykmelding.flere-opplysninger.tittel']}
+                    tittel="Flere opplysninger fra den som har sykmeldt deg"
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
