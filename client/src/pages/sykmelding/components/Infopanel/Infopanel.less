@@ -1,0 +1,49 @@
+@import '../../../../App.less';
+
+.infopanel {
+    background-color: white;
+    margin-bottom: 2rem;
+}
+
+.infopanel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 0;
+    color: @navMorkGra;
+}
+
+.infopanel-info {
+    background-color: @navLysBlaLighten60;
+}
+
+.infopanel-feil {
+    background-color: @redErrorLighten60;
+}
+
+.infopanel-header-icon {
+    width: 30px;
+    flex: 0;
+}
+
+.infopanel-header-tekst {
+    margin-right: 30px;
+    flex: 1;
+    text-align: center;
+}
+
+.infopanel-content {
+    padding: 2.5rem;
+}
+
+.infopanel-content-header {
+    margin-bottom: 2rem;
+}
+
+@media (max-width: @screen-sm) {
+    .infopanel-content {
+        padding: 1.5rem 1rem 2.5rem 1rem;
+    }
+}

@@ -19,28 +19,28 @@ export interface FetchStateWithData<D = {}> extends FetchState<D> {
 
 export const isAnyNotStartedOrPending = (fetch: FetchState | FetchState[]): boolean => {
     if (Array.isArray(fetch)) {
-        return fetch.some(f => isNotStartedOrPending(f));
+        return fetch.some((f) => isNotStartedOrPending(f));
     }
     return isNotStartedOrPending(fetch);
 };
 
 export const isAnyPending = (fetch: FetchState | FetchState[]): boolean => {
     if (Array.isArray(fetch)) {
-        return fetch.some(f => isPending(f));
+        return fetch.some((f) => isPending(f));
     }
     return isPending(fetch);
 };
 
 export const hasAnyFailed = (fetch: FetchState | FetchState[]): boolean => {
     if (Array.isArray(fetch)) {
-        return fetch.some(f => hasFailed(f));
+        return fetch.some((f) => hasFailed(f));
     }
     return hasFailed(fetch);
 };
 
 export const hasAny401 = (fetch: FetchState | FetchState[]): boolean => {
     if (Array.isArray(fetch)) {
-        return fetch.some(f => has401(f));
+        return fetch.some((f) => has401(f));
     }
     return has401(fetch);
 };
@@ -106,7 +106,7 @@ const useFetch = <D = {}>(): Fetch<D> => {
         setFetchState(createPendingFetchState());
 
         fetch(url, request)
-            .then(async res => {
+            .then(async (res) => {
                 const httpCode = res.status;
                 let state: FetchState<D>;
 
@@ -124,10 +124,10 @@ const useFetch = <D = {}>(): Fetch<D> => {
                 return state;
             })
 
-            .catch(error => {
+            .catch((error) => {
                 return createFinishedFetchState(null, error, -1);
             })
-            .then(state => {
+            .then((state) => {
                 if (onFinished) {
                     onFinished(state);
                 }

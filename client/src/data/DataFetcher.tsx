@@ -46,7 +46,7 @@ const DataFetcher = (props: { children?: any }) => {
                             (fetchState: FetchState<Arbeidsgiver[]>) => {
                                 if (hasData(fetchState)) {
                                     const { data } = fetchState;
-                                    const arbeidsgivere = data.map(ag => new Arbeidsgiver(ag));
+                                    const arbeidsgivere = data.map((ag) => new Arbeidsgiver(ag));
                                     setArbeidsgivere(arbeidsgivere);
                                 }
                             },

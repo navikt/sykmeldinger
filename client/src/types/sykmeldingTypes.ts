@@ -345,9 +345,9 @@ export class Sykmelding {
         });
         this.prognose = sykmelding.prognose ? new Prognose(sykmelding.prognose) : undefined;
         this.utdypendeOpplysninger = new Map<string, Map<string, SporsmalSvar>>();
-        Object.keys(sykmelding.utdypendeOpplysninger).forEach(key => {
+        Object.keys(sykmelding.utdypendeOpplysninger).forEach((key) => {
             const opplysning = new Map<string, SporsmalSvar>();
-            Object.keys(sykmelding.utdypendeOpplysninger[key]).forEach(key2 => {
+            Object.keys(sykmelding.utdypendeOpplysninger[key]).forEach((key2) => {
                 opplysning.set(key2, new SporsmalSvar(sykmelding.utdypendeOpplysninger[key][key2]));
             });
             this.utdypendeOpplysninger.set(key, opplysning);
