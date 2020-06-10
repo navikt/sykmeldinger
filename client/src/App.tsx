@@ -13,7 +13,7 @@ const App = () => {
         <useAppStore.Provider>
             <BrowserRouter>
                 <Switch>
-                    <Route path="/sykmeldinger" exact component={SykmeldingerPage} />
+                    <Route path=`${process.env.REACT_APP_SYKEFRAVAER_ROOT}/sykmeldinger` exact component={SykmeldingerPage} />
                     <Route
                         path={`${process.env.REACT_APP_SYKMELDING_ROOT}/sykmeldinger/:sykmeldingId`}
                         component={SykmeldingSide}
