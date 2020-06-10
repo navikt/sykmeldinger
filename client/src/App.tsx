@@ -15,7 +15,7 @@ const App = () => {
                 <Switch>
                     <Route path=`${process.env.REACT_APP_SYKEFRAVAER_ROOT}/sykmeldinger` exact component={SykmeldingerPage} />
                     <Route
-                        path={`${process.env.REACT_APP_SYKMELDING_ROOT}/sykmeldinger/:sykmeldingId`}
+                        path={`${process.env.REACT_APP_SYKEFRAVAER_ROOT}/sykmeldinger/:sykmeldingId`}
                         component={SykmeldingSide}
                     />
                     <Route path="/sykmeldinger/:sykmeldingId" component={SykmeldingSide} />
