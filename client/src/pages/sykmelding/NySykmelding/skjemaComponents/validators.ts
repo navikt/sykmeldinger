@@ -59,7 +59,7 @@ export const validators: ValidatorSchemaType = {
         {
             test: (value?: string | string[] | string[][]): value is string[][] => {
                 const perioder = value as string[][];
-                return perioder.every(periode => periode.length === 2);
+                return perioder.every((periode) => periode.length === 2);
             },
             failText: 'Periode mangler utfylling',
             requiresOneOf: [
@@ -158,10 +158,10 @@ export const validateField = (name: Skjemafelt, validators: ValidatorSchemaType,
                 const fieldValue = fieldValues[name];
 
                 if (fieldValue instanceof Array) {
-                    return !values.some(value => fieldValue.flat().includes(value));
+                    return !values.some((value) => fieldValue.flat().includes(value));
                 }
 
-                return !values.some(value => fieldValue === value);
+                return !values.some((value) => fieldValue === value);
             });
 
             if (!anyRequiredEmptyFieldsDefined) {
@@ -180,7 +180,7 @@ export const validateField = (name: Skjemafelt, validators: ValidatorSchemaType,
                         }
 
                         if (requiredValues) {
-                            return requiredValues.some(value => fieldValue.flat().includes(value));
+                            return requiredValues.some((value) => fieldValue.flat().includes(value));
                         }
                     } else {
                         if (startsWith) {
@@ -192,7 +192,7 @@ export const validateField = (name: Skjemafelt, validators: ValidatorSchemaType,
                         }
 
                         if (requiredValues) {
-                            return requiredValues.some(value => fieldValue === value);
+                            return requiredValues.some((value) => fieldValue === value);
                         }
                     }
 

@@ -52,7 +52,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
         perioderCopy.splice(
             index,
             1,
-            datoer.map(dato => dato.toISOString()),
+            datoer.map((dato) => dato.toISOString()),
         );
         handleChange(perioderCopy, name);
     };
@@ -92,7 +92,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
                             <Lenke
                                 href="#"
                                 className="periode__slett"
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     slettPeriode(index);
                                 }}
@@ -106,7 +106,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }
 
             <Lenke
                 href="#"
-                onClick={e => {
+                onClick={(e) => {
                     e.preventDefault();
                     opprettNyPeriode();
                 }}

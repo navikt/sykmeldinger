@@ -33,7 +33,7 @@ const FormSubmitKnapp = ({
                 <Fareknapp
                     spinner={visAvbrytSpinner}
                     data-testid="knapp-submit"
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
                         onAvbryt();
                     }}
@@ -54,9 +54,9 @@ const FormSubmitKnapp = ({
             <div className="knapp--sentrer" ref={avbrytdialogRef}>
                 <Lenke
                     href="#"
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
-                        setVisAvbrytdialog(vises => !vises);
+                        setVisAvbrytdialog((vises) => !vises);
                         setTimeout(
                             () => window.scrollTo({ top: avbrytdialogRef.current.offsetTop, behavior: 'smooth' }),
                             300,

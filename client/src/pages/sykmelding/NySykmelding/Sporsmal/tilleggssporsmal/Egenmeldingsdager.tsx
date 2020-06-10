@@ -38,7 +38,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
     };
 
     const slettPeriode = (id: number): void => {
-        const nyPerioder = perioder.filter(periode => periode.id !== id);
+        const nyPerioder = perioder.filter((periode) => periode.id !== id);
         setPerioder(nyPerioder);
         setValue(name, nyPerioder);
         if (isSubmitted) {
@@ -47,8 +47,8 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
     };
 
     const oppdaterPeriode = (id: number, datoer: Date[]): void => {
-        setPerioder(perioder => {
-            return perioder.map(periode => {
+        setPerioder((perioder) => {
+            return perioder.map((periode) => {
                 if (periode.id === id) {
                     return { ...periode, datoer };
                 } else {
@@ -58,7 +58,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
         });
         setValue(
             name,
-            perioder.map(periode => {
+            perioder.map((periode) => {
                 if (periode.id === id) {
                     const nyPeriode: Egenmeldingsperiode = { ...periode, datoer };
                     return nyPeriode;
@@ -85,7 +85,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                                     value={periode.datoer}
                                     className="typo-normal flatpickr"
                                     placeholder="Trykk for å velge periode"
-                                    onChange={datoer => oppdaterPeriode(periode.id, datoer)}
+                                    onChange={(datoer) => oppdaterPeriode(periode.id, datoer)}
                                     options={{
                                         position: 'below',
                                         minDate: new Date('10.02.2019'),
@@ -103,7 +103,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                                     <Lenke
                                         className="periode__slett"
                                         href="#"
-                                        onClick={e => {
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             slettPeriode(periode.id);
                                         }}
@@ -117,7 +117,7 @@ const Egenmeldingsdager = ({ name, sykmeldingStartdato }: EgenmeldingsdagerProps
                 </fieldset>
                 <Lenke
                     href="#"
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
                         opprettNyPeriode();
                     }}

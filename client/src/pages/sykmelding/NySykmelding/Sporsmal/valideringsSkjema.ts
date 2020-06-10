@@ -5,10 +5,7 @@ import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsm
 
 const egenmeldingsperiodeValidering = yup.object({
     id: yup.number(),
-    datoer: yup
-        .array()
-        .of(yup.date())
-        .notRequired(),
+    datoer: yup.array().of(yup.date()).notRequired(),
 });
 
 export type Egenmeldingsperiode = yup.InferType<typeof egenmeldingsperiodeValidering>;
@@ -31,10 +28,7 @@ const skjemaShape = yup.object({
             then: yup.string().required('Du må oppgi hvor du er sykmeldt fra'), // Dette skaper problemer når formState === 'dirty'
             otherwise: yup.string().notRequired(),
         }),
-    oppfolging: yup
-        .string()
-        .oneOf([JaEllerNei.JA, JaEllerNei.NEI])
-        .notRequired(),
+    oppfolging: yup.string().oneOf([JaEllerNei.JA, JaEllerNei.NEI]).notRequired(),
     frilanserEgenmelding: yup
         .string()
         .oneOf([JaEllerNei.JA, JaEllerNei.NEI], 'Du må svare på om du har brukt egenmeldingsdager under sykefraværet')

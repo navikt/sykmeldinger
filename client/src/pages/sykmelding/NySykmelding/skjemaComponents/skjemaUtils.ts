@@ -77,7 +77,7 @@ export const clearDependentValues = (name: Skjemafelt, errors: ErrorsSchemaType,
 export const hentValgtArbeidsgiver = (fieldValues: FieldValuesType, arbeidsgivere: Arbeidsgiver[]) => {
     if (fieldValues[Skjemafelt.SYKMELDT_FRA]?.startsWith(Arbeidsforhold.ARBEIDSGIVER)) {
         const orgnummer = fieldValues[Skjemafelt.SYKMELDT_FRA]?.split('-')[1];
-        return arbeidsgivere.find(arbeidsgiver => arbeidsgiver.orgnummer === orgnummer);
+        return arbeidsgivere.find((arbeidsgiver) => arbeidsgiver.orgnummer === orgnummer);
     }
 
     return null;
@@ -116,7 +116,7 @@ export const hentArbeidsGiverRadios = (arbeidsgivere: Arbeidsgiver[] | null) => 
 export const brukerTrengerNySykmelding = (fieldValues: FieldValuesType) => {
     if (
         fieldValues[Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE] === JaEllerNei.NEI &&
-        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some(feil =>
+        fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].some((feil) =>
             [FeilOpplysninger.PERIODE, FeilOpplysninger.SYKMELDINGSGRAD].includes(feil as FeilOpplysninger),
         )
     ) {
