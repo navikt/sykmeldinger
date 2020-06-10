@@ -53,6 +53,8 @@ const visSend = (fieldValues: FieldValuesType, skalViseAvbryt: boolean) => {
 
 const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
+    // TODO:
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitAttempt, setSubmitAttempt] = useState(false);
     const [submitting, setSubmitting] = useState(false);
