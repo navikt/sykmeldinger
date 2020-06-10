@@ -20,7 +20,7 @@ import env from './utils/environment';
 
 dayjs.locale('nb');
 
-const init = async () => {
+const init = () => {
     if (process.env.NODE_ENV === 'development') {
         document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_HEADING}}}', withMenu);
         document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_FOOTER}}}', footer);
