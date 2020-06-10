@@ -15,11 +15,7 @@ export interface Brodsmule {
 }
 
 const BrodsmuleBit = ({ sti, tittel, sisteSmule, erKlikkbar }: Brodsmule) => {
-    const soloMode = !!process.env.REACT_APP_SOLO;
-
-    const link = !soloMode ? (
-        <Lenke href={`${process.env.REACT_APP_SYKEFRAVAER_URL}${sti}`}>{tittel}</Lenke>
-    ) : sti ? (
+    const link = sti ? (
         <Link to={sti} className="lenke">
             {tittel}
         </Link>

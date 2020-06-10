@@ -1,7 +1,6 @@
 import React from 'react';
 
 import App from '../App';
-import { StatusTyper } from '../types/sykmeldingTypes';
 
 /*
 Denne komponenten vises kun i dev-modus, og lar deg skifte mellom ulike sykmeldinger.
@@ -63,7 +62,7 @@ const DemoWrapper = () => {
                     <option key="init" value="">
                         -- Velg sykmelding --
                     </option>
-                    {Object.keys(StatusTyper).map((key, index) => (
+                    {Object.keys(demoSykmeldinger).map((key, index) => (
                         <option key={index} value={`${process.env.REACT_APP_SYKMELDING_ROOT}/${key}`}>
                             {key}
                         </option>

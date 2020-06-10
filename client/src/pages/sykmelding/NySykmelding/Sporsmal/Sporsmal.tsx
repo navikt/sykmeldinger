@@ -14,7 +14,6 @@ import FrilanserSporsmal from './tilleggssporsmal/FrilanserSporsmal';
 import HjelpetekstWrapper from '../../components/Hjelpetekst/HjelpetekstWrapper';
 import OpplysningeneErFeil from './tilleggssporsmal/OpplysningeneErFeil';
 import Vis from '../../../../utils/vis';
-import useFetch, { FetchStatus, isNotStarted } from '../../../../hooks/useFetch';
 import { AlertStripeHjelper } from '../../../../utils/alertstripe-utils';
 import { Arbeidsforhold, JaEllerNei, Skjemafelt } from '../../../../types/sporsmalTypes';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
@@ -33,10 +32,6 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
     });
     const { register, handleSubmit, watch, errors, formState } = metoder;
 
-    const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
-    const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
-    const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
-
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
@@ -54,67 +49,17 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
         const skalSende = skjemaData.sykmeldtFra.includes(Arbeidsforhold.ARBEIDSGIVER);
 
         if (skalSende) {
-            if (isNotStarted(sendSykmelding)) {
-                sendSykmelding.fetch(
-                    `${process.env.REACT_APP_API_URL}/sykmelding/send/`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ id: sykmelding.id, skjemaData }),
-                    },
-                    () => {
-                        // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                        if (process.env.REACT_APP_SOLO) {
-                            window.location.reload();
-                        } else {
-                            window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                        }
-                    },
-                );
-            }
+            // TODO: Send sykmelding. Create re-usable function as sending is done from multiple components
+            console.log('Send sykmelding TODO');
         } else {
-            if (isNotStarted(bekreftSykmelding)) {
-                sendSykmelding.fetch(
-                    `${process.env.REACT_APP_API_URL}/sykmelding/bekreft/`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ id: sykmelding.id, skjemaData }),
-                    },
-                    () => {
-                        // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                        if (process.env.REACT_APP_SOLO) {
-                            window.location.reload();
-                        } else {
-                            window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                        }
-                    },
-                );
-            }
+            // TODO: Bekreft sykmelding. Create re-usable function as bekrefting is done from multiple components
+            console.log('Bekreft sykmelding TODO');
         }
     };
 
     const onAvbryt = () => {
-        if (isNotStarted(avbrytSykmelding)) {
-            avbrytSykmelding.fetch(
-                `${process.env.REACT_APP_API_URL}/sykmelding/avbryt/${sykmelding.id}`,
-                {
-                    method: 'POST',
-                },
-                () => {
-                    // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                    if (process.env.REACT_APP_SOLO) {
-                        window.location.reload();
-                    } else {
-                        window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                    }
-                },
-            );
-        }
+        // TODO: Avbryt sykmelding.
+        console.log('Avbryt sykmelding TODO');
     };
 
     return (
@@ -258,17 +203,14 @@ const Sporsmal = ({ sykmelding, arbeidsgivere, sykmeldingUtenforVentetid }: Spor
                         onAvbryt={onAvbryt}
                         avbrytdialogRef={avbrytdialogRef}
                         setVisAvbrytdialog={setVisAvbrytDialog}
-                        visSubmitSpinner={
-                            sendSykmelding.status === FetchStatus.PENDING ||
-                            bekreftSykmelding.status === FetchStatus.PENDING
-                        }
-                        visAvbrytSpinner={avbrytSykmelding.status === FetchStatus.PENDING}
+                        visSubmitSpinner={false}
+                        visAvbrytSpinner={false}
                     />
                 </form>
 
                 <AvbrytDialog
                     vis={visAvbrytDialog}
-                    visSpinner={avbrytSykmelding.status === FetchStatus.PENDING}
+                    visSpinner={false}
                     onAvbryt={onAvbryt}
                     setVisAvbrytDialog={setVisAvbrytDialog}
                 />

@@ -8,7 +8,6 @@ import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import Egenmeldingsdager from './Egenmeldingsdager';
 import SubmitKnapp from './SubmitKnapp';
 import Vis from '../../../../utils/vis';
-import useAppStore from '../../../../data/useAppStore';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -53,9 +52,8 @@ const Form = ({
     skalViseSend,
     skalViseAvbryt,
     setVisAvbrytDialog,
+    arbeidsgivere,
 }: FormProps) => {
-    const { arbeidsgivere } = useAppStore();
-
     const avbrytdialogRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     const trengerNySykmelding = brukerTrengerNySykmelding(fieldValues);
