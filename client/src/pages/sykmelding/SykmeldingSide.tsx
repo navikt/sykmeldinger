@@ -22,8 +22,13 @@ const getBrodsmuler = (fravaerId?: string) => {
             erKlikkbar: true,
         },
         {
+            tittel: 'Sykmeldinger',
+            sti: '/sykefravaer/sykmeldinger',
+            erKlikkbar: true,
+        },
+        {
             tittel: 'Sykmelding',
-            sti: '/sykmeldinger/:id',
+            sti: '/sykefravaer/sykmeldinger/:id',
             erKlikkbar: false,
         },
     ];
