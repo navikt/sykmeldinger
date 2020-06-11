@@ -61,8 +61,8 @@ export const sykmeldingNy = {
                 reisetilskudd: false,
             },
             {
-                fom: '2018-10-18',
-                tom: '2018-11-12',
+                fom: '2018-11-12',
+                tom: '2018-11-15',
                 aktivitetIkkeMulig: {
                     medisinskArsak: {
                         beskrivelse: 'dette er en beskrivelse',

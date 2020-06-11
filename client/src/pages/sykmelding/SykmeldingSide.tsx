@@ -11,6 +11,7 @@ import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import { StatusTyper, Sykmelding } from '../../types/sykmeldingTypes';
 import Arbeidsgiver from '../../types/arbeidsgiverTypes';
 import { ReceivedSykmelding } from '../../types/receivedSykmeldingTypes';
+import { getSykmeldingPeriod } from './NySykmelding/sykmeldingUtils';
 
 const getBrodsmuler = (fravaerId?: string) => {
     // TODO: Oppdatere brødsmuler når vi vet hvordan routing mellom apper skal fungere
@@ -106,9 +107,11 @@ const SykmeldingSide = () => {
 
     const brodsmuler = getBrodsmuler(sykmeldingId);
 
+    const periodString = getSykmeldingPeriod(sykmelding);
+
     return (
         <>
-            <Header location="Sykmelding" />
+            <Header title="Sykmelding" subtitle={`for ${periodString}`} />
             <div className="limit">
                 <Brodsmuler brodsmuler={brodsmuler} />
                 {SykmeldingComponent}
