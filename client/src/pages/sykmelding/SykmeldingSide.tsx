@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
 import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
-import Brodsmuler from '../commonComponents/Brodsmuler/Brodsmuler';
+import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
 import Header from '../commonComponents/Header/Header';
 import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
@@ -12,27 +12,6 @@ import { StatusTyper, Sykmelding } from '../../types/sykmeldingTypes';
 import Arbeidsgiver from '../../types/arbeidsgiverTypes';
 import { ReceivedSykmelding } from '../../types/receivedSykmeldingTypes';
 import { getSykmeldingPeriod } from './NySykmelding/sykmeldingUtils';
-
-const getBrodsmuler = (fravaerId?: string) => {
-    // TODO: Oppdatere brødsmuler når vi vet hvordan routing mellom apper skal fungere
-    return [
-        {
-            tittel: 'Sykefravær',
-            sti: '/sykefravaer',
-            erKlikkbar: true,
-        },
-        {
-            tittel: 'Sykmeldinger',
-            sti: '/sykefravaer/sykmeldinger',
-            erKlikkbar: true,
-        },
-        {
-            tittel: 'Sykmelding',
-            sti: '/sykefravaer/sykmeldinger/:id',
-            erKlikkbar: false,
-        },
-    ];
-};
 
 const SykmeldingSide = () => {
     const { sykmeldingId } = useParams();
@@ -110,15 +89,27 @@ const SykmeldingSide = () => {
         return null;
     }
 
-    const brodsmuler = getBrodsmuler(sykmeldingId);
-
     const periodString = getSykmeldingPeriod(sykmelding);
 
     return (
         <>
             <Header title="Sykmelding" subtitle={`for ${periodString}`} />
             <div className="limit">
-                <Brodsmuler brodsmuler={brodsmuler} />
+                <Brodsmuler
+                    breadcrumbs={[
+                        {
+                            title: 'Sykefravær',
+                            path: '/sykefravaer',
+                        },
+                        {
+                            title: 'Sykmeldinger',
+                            path: '/sykefravaer/sykmeldinger',
+                        },
+                        {
+                            title: 'Sykmelding',
+                        },
+                    ]}
+                />
                 {SykmeldingComponent}
             </div>
         </>
