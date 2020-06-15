@@ -6,12 +6,12 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import person from './person.svg';
 
-export type Breadcrumb = {
+export interface Breadcrumb {
     path?: string;
     title: string;
-};
+}
 
-const Breadcrumb = ({ crumb: { path, title } }: { crumb: Breadcrumb }) => {
+const Breadcrumb = ({ path, title }: Breadcrumb) => {
     if (path) {
         return (
             <li className="breadcrumbs__crumb">
@@ -34,9 +34,9 @@ const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: Breadcrumb[] }) => {
         <nav className="breadcrumbs" aria-label="Du er her: ">
             <img src={person} alt="Du" className="breadcrumbs__icon" />
             <Normaltekst tag="ul" className="breadcrumbs__crumbs">
-                <Breadcrumb crumb={{ path: '/dittnav', title: 'Ditt NAV' }} />
-                {breadcrumbs.map((crumb, index) => {
-                    return <Breadcrumb key={index} crumb={crumb} />;
+                <Breadcrumb path="/dittnav" title="Ditt NAV" />
+                {breadcrumbs.map(({ path, title }, index) => {
+                    return <Breadcrumb key={index} path={path} title={title} />;
                 })}
             </Normaltekst>
         </nav>
