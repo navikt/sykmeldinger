@@ -53,6 +53,7 @@ export const tilLesbarDatoUtenAarstall = (datoArg: Date) => {
     return null;
 };
 
+// TODO: Inaccurate, returns wrong number of days.
 export function hentDagerMellomDatoer(fra: Date, til: Date) {
     const f = dayjs(fra);
     const t = dayjs(til);

@@ -1,12 +1,13 @@
 import './Header.less';
 
 import React from 'react';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Sidetittel, Undertittel } from 'nav-frontend-typografi';
 
-const Header = ({ location }: { location: string }) => {
+const Header = ({ title, subtitle }: { title: string; subtitle?: string }) => {
     return (
         <div className="location-header">
-            <Systemtittel>{location}</Systemtittel>
+            <Sidetittel>{title}</Sidetittel>
+            <Undertittel>{subtitle}</Undertittel>
         </div>
     );
 };
