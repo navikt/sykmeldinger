@@ -3,7 +3,6 @@ import React, { SyntheticEvent, useRef, useState } from 'react';
 import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import AvbrytDialog from './skjemaComponents/AvbrytDialog';
 import Form from './skjemaComponents/Form';
-import useFetch, { isNotStarted } from '../../../hooks/useFetch';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -54,16 +53,14 @@ const visSend = (fieldValues: FieldValuesType, skalViseAvbryt: boolean) => {
 
 const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
+    // TODO:
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitAttempt, setSubmitAttempt] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [errors, setErrors] = useState(errorSchema);
     const [fieldValues, setFieldValues] = useState(fieldValuesSchema);
     const feiloppsummering = useRef<HTMLDivElement>(null);
-
-    const sendSykmelding = useFetch<any>(); // TODO: Oppdater return type
-    const bekreftSykmelding = useFetch<any>(); // TODO: Oppdater return type
-    const avbrytSykmelding = useFetch<any>(); // TODO: Oppdater return type
 
     const skalViseAvbryt = brukerTrengerNySykmelding(fieldValues);
 
@@ -84,74 +81,18 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
             setSubmitting(true);
 
             if (skalViseSend) {
-                if (isNotStarted(sendSykmelding)) {
-                    sendSykmelding.fetch(
-                        `${process.env.REACT_APP_API_URL}/sykmelding/send/`,
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ id: sykmelding.id, fieldValues }),
-                        },
-                        () => {
-                            setSubmitSuccess(true);
-                            setSubmitting(false);
-                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                            if (process.env.REACT_APP_SOLO) {
-                                window.location.reload();
-                            } else {
-                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                            }
-                        },
-                    );
-                }
+                // TODO: Send sykmelding. Create re-usable function as sending is done from multiple components
+                console.log('Send sykmelding TODO');
             } else {
-                if (isNotStarted(bekreftSykmelding)) {
-                    sendSykmelding.fetch(
-                        `${process.env.REACT_APP_API_URL}/sykmelding/bekreft/`,
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ id: sykmelding.id, fieldValues }),
-                        },
-                        () => {
-                            setSubmitSuccess(true);
-                            setSubmitting(false);
-                            // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                            if (process.env.REACT_APP_SOLO) {
-                                window.location.reload();
-                            } else {
-                                window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                            }
-                        },
-                    );
-                }
+                // TODO: Bekreft sykmelding. Create re-usable function as bekrefting is done from multiple components
+                console.log('Bekreft sykmelding TODO');
             }
         }
     };
 
     const onAvbryt = () => {
-        if (isNotStarted(avbrytSykmelding)) {
-            avbrytSykmelding.fetch(
-                `${process.env.REACT_APP_API_URL}/sykmelding/avbryt/${sykmelding.id}`,
-                {
-                    method: 'POST',
-                },
-                () => {
-                    setSubmitSuccess(true);
-                    setSubmitting(false);
-                    // Hvis appen kjører i solo modus, skal vi ikke redirecte til annen app
-                    if (process.env.REACT_APP_SOLO) {
-                        window.location.reload();
-                    } else {
-                        window.location.assign(`${process.env.REACT_APP_SYKEFRAVAER_URL}`);
-                    }
-                },
-            );
-        }
+        // TODO: Avbryt sykmelding.
+        console.log('Avbryt sykmelding TODO');
     };
 
     const handleChange = (value: string | string[] | string[][], name: Skjemafelt) => {

@@ -1,12 +1,6 @@
 import dayjs from 'dayjs';
 
-export enum StatusTyper {
-    NY = 'NY',
-    AVVIST = 'AVVIST',
-    AVBRUTT = 'AVBRUTT',
-    SENDT = 'SENDT',
-    BEKREFTET = 'BEKREFTET',
-}
+export type StatusTyper = 'NY' | 'AVVIST' | 'AVBRUTT' | 'SENDT' | 'BEKREFTET';
 
 export class Status {
     status: StatusTyper;

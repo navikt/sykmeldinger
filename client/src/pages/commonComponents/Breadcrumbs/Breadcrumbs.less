@@ -1,17 +1,17 @@
-.brodsmuler {
+.breadcrumbs {
     margin-bottom: 2em;
     line-height: 2em;
     display: flex;
     align-items: center;
 
-    .brodsmuler__smuler {
+    .breadcrumbs__crumbs {
         list-style: none;
         padding: 0;
         display: inline-flex;
         flex-wrap: wrap;
     }
 
-    .smule {
+    .breadcrumbs__crumb {
         white-space: nowrap;
         padding-right: 0.5rem;
 
@@ -25,28 +25,17 @@
         }
     }
 
-    .brodsmuler__ikon {
+    .breadcrumbs__icon {
         display: none;
-    }
-
-    .brodsmuler__duErHer {
-        position: absolute;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        width: 1px;
-        margin: -1px;
-        padding: 0;
-        border: 0;
     }
 }
 
 @media (min-width: 24em) {
-    .brodsmuler {
+    .breadcrumbs {
         display: flex;
         position: relative;
 
-        .brodsmuler__ikon {
+        .breadcrumbs__icon {
             width: 2em;
             height: 2em;
             display: inline-block;
@@ -56,7 +45,7 @@
 }
 
 @media print {
-    .brodsmuler {
+    .breadcrumbs {
         display: none;
     }
 }
