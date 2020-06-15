@@ -6,12 +6,12 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import person from './person.svg';
 
-export interface Breadcrumb {
+export interface BreadcrumbProps {
     path?: string;
     title: string;
 }
 
-const Breadcrumb = ({ path, title }: Breadcrumb) => {
+const Breadcrumb = ({ path, title }: BreadcrumbProps) => {
     if (path) {
         return (
             <li className="breadcrumbs__crumb">
@@ -29,7 +29,11 @@ const Breadcrumb = ({ path, title }: Breadcrumb) => {
     );
 };
 
-const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: Breadcrumb[] }) => {
+interface BreadcrumbsProps {
+    breadcrumbs: BreadcrumbProps[];
+}
+
+const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
     return (
         <nav className="breadcrumbs" aria-label="Du er her: ">
             <img src={person} alt="Du" className="breadcrumbs__icon" />
