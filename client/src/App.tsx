@@ -7,19 +7,10 @@ import SykmeldingSide from './pages/sykmelding/SykmeldingSide';
 import SykmeldingerPage from './pages/sykmeldinger/SykmeldingerPage';
 
 const App = () => {
-    // Endepunkter for å støtte både https://tjenester.nav.no/sykmmleding og https://sykmelding.nais.adeo.no
     return (
         <BrowserRouter>
             <Switch>
-                <Route
-                    path={`${process.env.REACT_APP_SYKEFRAVAER_ROOT}/sykmeldinger`}
-                    exact
-                    component={SykmeldingerPage}
-                />
-                <Route
-                    path={`${process.env.REACT_APP_SYKEFRAVAER_ROOT}/sykmeldinger/:sykmeldingId`}
-                    component={SykmeldingSide}
-                />
+                <Route path="/sykmeldinger" exact component={SykmeldingerPage} />
                 <Route path="/sykmeldinger/:sykmeldingId" component={SykmeldingSide} />
             </Switch>
         </BrowserRouter>
