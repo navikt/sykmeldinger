@@ -3,7 +3,6 @@ import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import ArbeidsgiverSeksjon from '../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
-import AvvistStatuspanel from '../components/Statuspanel/AvvistStatuspanel';
 import DiagnoseSeksjon from '../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
 import Infopanel from '../components/Infopanel/Infopanel';
 import LegeSeksjon from '../components/Infopanel/panelelementer/LegeSeksjon';
@@ -11,9 +10,9 @@ import NoytralMann from '../../../svg/NoytralMann.svg';
 import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Infopanel/layout/Tittel';
-import Veileder from '../components/Veileder/Veileder';
-import VeilederInnhold from './VeilederInnhold';
+import VeilederContent from './VeilederContent';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
+import Veilederpanel from 'nav-frontend-veilederpanel';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -26,15 +25,9 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
 
-            <AvvistStatuspanel sykmelding={sykmelding} />
-
-            <Veileder
-                type="plakat"
-                kompakt
-                fargetema="feilmelding"
-                svg={NoytralMann}
-                innhold={<VeilederInnhold sykmelding={sykmelding} />}
-            />
+            <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<img src={NoytralMann} alt="NAV Veileder" />}>
+                <VeilederContent sykmelding={sykmelding} />
+            </Veilederpanel>
 
             <Infopanel fargetema="feil" tittel="Avvist sykmelding">
                 <Tittel tekst="Sykmelding" />
