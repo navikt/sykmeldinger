@@ -16,6 +16,8 @@ import { getSykmeldingPeriod } from './NySykmelding/sykmeldingUtils';
 const SykmeldingSide = () => {
     const { sykmeldingId } = useParams();
 
+    document.title = 'Sykmelding - www.nav.no';
+
     const [sykmelding, setSykmelding] = useState<Sykmelding | null>(null);
     const [status, setStatus] = useState<StatusTyper | null>(null);
     const [arbeidsgivere, setArbeidsgivere] = useState<Arbeidsgiver[] | null>(null);
