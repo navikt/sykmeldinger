@@ -8,7 +8,6 @@ import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykme
 import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
 import NoytralMann from '../../../svg/NoytralMann.svg';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import VeilederContent from './VeilederContent';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Veilederpanel from 'nav-frontend-veilederpanel';
@@ -34,7 +33,6 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
             </div>
 
             <Sykmeldingsopplysninger>
-                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
