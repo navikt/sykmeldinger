@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import ArbeidsgiverSeksjon from '../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
-import DiagnoseSeksjon from '../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
-import Infopanel from '../components/Infopanel/Infopanel';
-import LegeSeksjon from '../components/Infopanel/panelelementer/LegeSeksjon';
+import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
+import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
 import NoytralMann from '../../../svg/NoytralMann.svg';
-import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
-import Tittel from '../components/Infopanel/layout/Tittel';
+import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import VeilederContent from './VeilederContent';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Veilederpanel from 'nav-frontend-veilederpanel';
@@ -26,7 +26,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 <VeilederContent sykmelding={sykmelding} />
             </Veilederpanel>
 
-            <Infopanel fargetema="feil" tittel="Avvist sykmelding">
+            <Sykmeldingsopplysninger>
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
@@ -35,7 +35,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 ))}
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
-            </Infopanel>
+            </Sykmeldingsopplysninger>
 
             <div style={{ textAlign: 'center' }}>
                 <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>

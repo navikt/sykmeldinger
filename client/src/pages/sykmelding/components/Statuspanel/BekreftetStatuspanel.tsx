@@ -3,8 +3,8 @@ import './Statuspanel.less';
 import React from 'react';
 import Panel from 'nav-frontend-paneler';
 
-import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
-import Margin from '../Infopanel/layout/Margin';
+import EtikettMedTekst from '../Sykmeldingsopplysninger/layout/EtikettMedTekst';
+import Margin from '../Sykmeldingsopplysninger/layout/Margin';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 
@@ -25,16 +25,10 @@ const BekreftetStatuspanel = ({ sykmelding }: BekreftetStatuspanelProps) => {
         <Margin>
             <Panel border className="statuspanel">
                 <div className="statuspanel__element">
-                    <EtikettMedTekst
-                        tittel="Status"
-                        tekst="Bekreftet av deg"
-                    />
+                    <EtikettMedTekst tittel="Status" tekst="Bekreftet av deg" />
                 </div>
                 <div className="statuspanel__element">
-                    <EtikettMedTekst
-                        tittel="Dato bekreftet"
-                        tekst={tilLesbarDatoMedArstall(new Date())}
-                    />
+                    <EtikettMedTekst tittel="Dato bekreftet" tekst={tilLesbarDatoMedArstall(new Date())} />
                 </div>
                 <div className="statuspanel__element">
                     <EtikettMedTekst tittel="Jeg er sykmeldt fra" tekst="TODO: Sykmeldt fra" />

@@ -3,8 +3,8 @@ import './Statuspanel.less';
 import React from 'react';
 import Panel from 'nav-frontend-paneler';
 
-import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
-import Margin from '../Infopanel/layout/Margin';
+import EtikettMedTekst from '../Sykmeldingsopplysninger/layout/EtikettMedTekst';
+import Margin from '../Sykmeldingsopplysninger/layout/Margin';
 import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 
@@ -28,30 +28,18 @@ const SendtStatuspanel = ({ sykmelding }: SendtStatuspanelProps) => {
                 <div className="statuspanel">
                     <div className="statuspanel__kolonne">
                         <div className="statuspanel__element">
-                            <EtikettMedTekst
-                                tittel="Status"
-                                tekst="Sendt til arbeidsgiver"
-                            />
+                            <EtikettMedTekst tittel="Status" tekst="Sendt til arbeidsgiver" />
                         </div>
                         <div className="statuspanel__element">
-                            <EtikettMedTekst
-                                tittel="Arbeidsgiver"
-                                tekst={sykmelding.arbeidsgiver.navn}
-                            />
+                            <EtikettMedTekst tittel="Arbeidsgiver" tekst={sykmelding.arbeidsgiver.navn} />
                         </div>
                     </div>
                     <div className="statuspanel__kolonne">
                         <div className="statuspanel__element">
-                            <EtikettMedTekst
-                                tittel="Dato sendt"
-                                tekst={tilLesbarDatoMedArstall(new Date())}
-                            />
+                            <EtikettMedTekst tittel="Dato sendt" tekst={tilLesbarDatoMedArstall(new Date())} />
                         </div>
                         <div className="statuspanel__element">
-                            <EtikettMedTekst
-                                tittel="Organisasjonsnummer"
-                                tekst="TODO: Organisasjonsnummer"
-                            />
+                            <EtikettMedTekst tittel="Organisasjonsnummer" tekst="TODO: Organisasjonsnummer" />
                         </div>
                     </div>
                 </div>

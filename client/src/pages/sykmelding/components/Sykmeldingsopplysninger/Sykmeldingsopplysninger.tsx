@@ -1,23 +1,21 @@
-import './Infopanel.less';
+import './Sykmeldingsopplysninger.less';
 
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 
 import plaster from './plaster.svg';
 
-interface InfopanelProps {
-    fargetema: string;
-    tittel: string;
+interface SykmeldingsopplysningerProps {
     children: any | any[];
 }
 
-const Infopanel = ({ fargetema, tittel, children }: InfopanelProps) => {
+const Sykmeldingsopplysninger = ({ children }: SykmeldingsopplysningerProps) => {
     return (
         <article className="infopanel">
-            <header className={`infopanel-header infopanel-${fargetema}`}>
+            <header className="infopanel-header">
                 <img className="infopanel-header-icon" src={plaster} alt="plasterikon" />{' '}
                 <span className="infopanel-header-tekst">
-                    <Element>{tittel}</Element>
+                    <Element>Opplysninger fra sykmeldingen</Element>
                 </span>
             </header>
             <div className="infopanel-content">{children}</div>
@@ -25,4 +23,4 @@ const Infopanel = ({ fargetema, tittel, children }: InfopanelProps) => {
     );
 };
 
-export default Infopanel;
+export default Sykmeldingsopplysninger;
