@@ -7,7 +7,6 @@ import DiagnoseSeksjon from '../components/Infopanel/panelelementer/diagnose/Dia
 import Infopanel from '../components/Infopanel/Infopanel';
 import LegeSeksjon from '../components/Infopanel/panelelementer/LegeSeksjon';
 import NoytralMann from '../../../svg/NoytralMann.svg';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Infopanel/layout/Tittel';
 import VeilederContent from './VeilederContent';
@@ -23,8 +22,6 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
     console.log(sykmelding);
     return (
         <div className="sykmelding-container">
-            <Sidetopp tekst="Sykmelding" />
-
             <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<img src={NoytralMann} alt="NAV Veileder" />}>
                 <VeilederContent sykmelding={sykmelding} />
             </Veilederpanel>
