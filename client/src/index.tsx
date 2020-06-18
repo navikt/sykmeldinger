@@ -15,7 +15,6 @@ import scripts from './mock/decorator/decorator-scripts';
 import skiplinks from './mock/decorator/decorator-skiplinks';
 import styles from './mock/decorator/decorator-styles';
 
-import DemoWrapper from './mock/DemoWrapper';
 import env from './utils/environment';
 
 dayjs.locale('nb');
@@ -44,20 +43,14 @@ const init = () => {
 
     if (env.isDevelopment || env.isRunningOnHeroku) {
         require('./mock/mock');
-        ReactDOM.render(
-            <React.StrictMode>
-                <DemoWrapper />
-            </React.StrictMode>,
-            document.getElementById('app'),
-        );
-    } else {
-        ReactDOM.render(
-            <React.StrictMode>
-                <App />
-            </React.StrictMode>,
-            document.getElementById('app'),
-        );
     }
+
+    ReactDOM.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>,
+        document.getElementById('app'),
+    );
 
     serviceWorker.unregister();
 };
