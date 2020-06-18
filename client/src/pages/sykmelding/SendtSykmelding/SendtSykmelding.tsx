@@ -12,8 +12,6 @@ import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/Le
 import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
 import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import SendtStatuspanel from '../components/Statuspanel/SendtStatuspanel';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
@@ -34,10 +32,7 @@ interface SendtSykmeldingProps {
 const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
-            <Sidetopp tekst="Sykmelding" />
-
-            <SendtStatuspanel sykmelding={sykmelding} />
-
+            %KVITTERING% - Sendt, inaktiv søknad - Sendt, aktiv søknad - Sendt, ferdig (?)
             <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
@@ -74,7 +69,6 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                     </SeksjonMedTittel>
                 </Utvidbar>
             </Utvidbar>
-
             <VisningArbeidsgiver sykmelding={sykmelding} />
         </div>
     );
