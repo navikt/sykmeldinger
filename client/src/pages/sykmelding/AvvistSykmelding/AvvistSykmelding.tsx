@@ -22,9 +22,16 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
     console.log(sykmelding);
     return (
         <div className="sykmelding-container">
-            <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<img src={NoytralMann} alt="NAV Veileder" />}>
-                <VeilederContent sykmelding={sykmelding} />
-            </Veilederpanel>
+            <div style={{ marginTop: '80px', marginBottom: '20px' }}>
+                <Veilederpanel
+                    type="plakat"
+                    kompakt
+                    fargetema="normal"
+                    svg={<img src={NoytralMann} alt="NAV Veileder" />}
+                >
+                    <VeilederContent sykmelding={sykmelding} />
+                </Veilederpanel>
+            </div>
 
             <Sykmeldingsopplysninger>
                 <Tittel tekst="Sykmelding" />

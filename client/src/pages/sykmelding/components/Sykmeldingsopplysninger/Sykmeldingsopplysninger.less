@@ -1,49 +1,41 @@
 @import '../../../../App.less';
 
-.infopanel {
+.sykmeldingsopplysninger {
     background-color: white;
     margin-bottom: 2rem;
+    border: 1px solid #78706a;
+    box-sizing: border-box;
+    border-radius: 4px;
 }
 
-.infopanel-header {
+.sykmeldingsopplysninger__header {
     display: flex;
-    justify-content: space-between;
+    background: #ccdee6;
+    border: 1px solid #78706a;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 65px;
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+}
+
+.sykmeldingsopplysninger__icon {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.sykmeldingsopplysninger__text {
     align-items: center;
-    width: 100%;
-    padding: 0.7rem 1rem;
-    border: 0;
-    color: @navMorkGra;
+    display: flex;
 }
 
-.infopanel-info {
-    background-color: @navLysBlaLighten60;
-}
-
-.infopanel-feil {
-    background-color: @redErrorLighten60;
-}
-
-.infopanel-header-icon {
-    width: 30px;
-    flex: 0;
-}
-
-.infopanel-header-tekst {
-    margin-right: 30px;
-    flex: 1;
-    text-align: center;
-}
-
-.infopanel-content {
+.sykmeldingsopplysninger__content {
     padding: 2.5rem;
 }
 
-.infopanel-content-header {
-    margin-bottom: 2rem;
-}
-
 @media (max-width: @screen-sm) {
-    .infopanel-content {
+    .sykmeldingsopplysninger__content {
         padding: 1.5rem 1rem 2.5rem 1rem;
     }
 }
