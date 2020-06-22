@@ -11,6 +11,8 @@ import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/paneleleme
 import VeilederContent from './VeilederContent';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Veilederpanel from 'nav-frontend-veilederpanel';
+import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
+import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -32,7 +34,11 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 </Veilederpanel>
             </div>
 
-            <Sykmeldingsopplysninger>
+            <Sykmeldingsopplysninger
+                title="Opplysninger fra sykmeldingen"
+                iconNormal={plaster}
+                iconHover={plasterHover}
+            >
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (

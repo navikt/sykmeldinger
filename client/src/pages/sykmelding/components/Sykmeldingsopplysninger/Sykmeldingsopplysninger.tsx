@@ -7,28 +7,43 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import plaster from './plaster.svg';
 
 interface SykmeldingsopplysningerProps {
-    children: any | any[];
+    title: string;
     expandable?: boolean;
     expandedDefault?: boolean;
+    iconNormal: string;
+    iconHover: string;
+    type?: 'arbeidsgiver' | '';
+    children: any | any[];
 }
 
-const Sykmeldingsopplysninger = ({ children, expandable, expandedDefault = true }: SykmeldingsopplysningerProps) => {
+const Sykmeldingsopplysninger = ({
+    title,
+    children,
+    expandable,
+    expandedDefault = true,
+    iconNormal,
+    iconHover,
+    type = '',
+}: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
+    const [icon, setIcon] = useState(iconNormal);
 
-    console.log(expandable);
+    const typeClassname = type ? `-${type}` : '';
+    const hiddenClassname = expanded ? '' : '-hidden';
+    const imgAlt = 'Opplysningsikon';
 
     if (expandable) {
         return (
             <article className="sykmeldingsopplysninger">
                 <button
+                    onMouseEnter={() => setIcon(iconHover)}
+                    onMouseLeave={() => setIcon(iconNormal)}
                     onClick={() => setExpanded(!expanded)}
-                    className={`sykmeldingsopplysninger__header${
-                        expanded ? '' : '-hidden'
-                    } sykmeldingsopplysninger-expandable`}
+                    className={`sykmeldingsopplysninger__header${typeClassname}${hiddenClassname} sykmeldingsopplysninger-expandable`}
                 >
-                    <img className="sykmeldingsopplysninger__icon" width={30} src={plaster} alt="plasterikon" />
+                    <img className="sykmeldingsopplysninger__icon" width={30} src={icon} alt={imgAlt} />
                     <span className="sykmeldingsopplysninger__text">
-                        <Undertittel tag="h2">Opplysninger fra sykmeldingen</Undertittel>
+                        <Undertittel tag="h2">{title}</Undertittel>
                     </span>
                     <div className="sykmeldingsopplysninger__expand">
                         <Normaltekst className="sykmeldingsopplysninger__expand__text" tag="em">
@@ -44,10 +59,10 @@ const Sykmeldingsopplysninger = ({ children, expandable, expandedDefault = true 
 
     return (
         <article className="sykmeldingsopplysninger">
-            <header className="sykmeldingsopplysninger__header">
-                <img className="sykmeldingsopplysninger__icon" width={30} src={plaster} alt="plasterikon" />
+            <header className={`sykmeldingsopplysninger__header${typeClassname}`}>
+                <img className="sykmeldingsopplysninger__icon" width={30} src={plaster} alt={imgAlt} />
                 <span className="sykmeldingsopplysninger__text">
-                    <Undertittel tag="h2">Opplysninger fra sykmeldingen</Undertittel>
+                    <Undertittel tag="h2">{title}</Undertittel>
                 </span>
             </header>
             <div className="sykmeldingsopplysninger__content">{children}</div>

@@ -22,12 +22,22 @@
     align-items: center;
 }
 
+.sykmeldingsopplysninger__header-arbeidsgiver {
+    &:extend(.sykmeldingsopplysninger__header);
+    background: @navLillaLighten80;
+}
+
 .sykmeldingsopplysninger-expandable {
     cursor: pointer;
 }
 
 .sykmeldingsopplysninger__header-hidden {
     &:extend(.sykmeldingsopplysninger__header);
+    border-bottom: 0px;
+}
+
+.sykmeldingsopplysninger__header-arbeidsgiver-hidden {
+    &:extend(.sykmeldingsopplysninger__header-arbeidsgiver);
     border-bottom: 0px;
 }
 

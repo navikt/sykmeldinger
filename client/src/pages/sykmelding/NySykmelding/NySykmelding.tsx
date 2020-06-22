@@ -29,6 +29,8 @@ import Veileder from '../components/Veileder/Veileder';
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
+import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
+import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -63,7 +65,11 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 knappTekst="Gå til utfyllingen"
             />
 
-            <Sykmeldingsopplysninger>
+            <Sykmeldingsopplysninger
+                title="Opplysninger fra sykmeldingen"
+                iconNormal={plaster}
+                iconHover={plasterHover}
+            >
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />

@@ -15,15 +15,19 @@ import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/Seksj
 import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 import Utvidbar from '../components/Utvidbar/Utvidbar';
-import VisningArbeidsgiver from './VisningArbeidsgiver';
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
-import person from '../../../svg/person.svg';
-import personHover from '../../../svg/personHover.svg';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
+import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import EtikettMedTekst from '../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
+import sladd from './sladd.svg';
+import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
+import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
+import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
+import arbeidsgiver from './arbeidsgiver.svg';
+import arbeidsgiverHover from './arbeidsgiverHover.svg';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -33,8 +37,13 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             %KVITTERING% - Sendt, inaktiv søknad - Sendt, aktiv søknad - Sendt, ferdig (?)
-            <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
-                <Tittel tekst="Sykmelding" />
+            <Sykmeldingsopplysninger
+                title="Opplysninger fra sykmeldingen"
+                expandable
+                expandedDefault
+                iconNormal={plaster}
+                iconHover={plasterHover}
+            >
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
@@ -68,8 +77,41 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
                 </Utvidbar>
-            </Utvidbar>
-            <VisningArbeidsgiver sykmelding={sykmelding} />
+            </Sykmeldingsopplysninger>
+            <Sykmeldingsopplysninger
+                title="Slik ser sykmeldingen ut for arbeidsgiveren din"
+                expandable
+                expandedDefault={false}
+                iconNormal={arbeidsgiver}
+                iconHover={arbeidsgiverHover}
+                type="arbeidsgiver"
+            >
+                <div className="panel-content-header">
+                    <Sidetittel>TODO: Pasientens navn</Sidetittel>
+                    <Undertekst>TODO: Pasientens personnummer</Undertekst>
+                </div>
+                <SykmeldingPerioder perioder={sykmelding.perioder} />
+                <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} alt="skjult diagnose" />} />
+
+                <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
+                <PrognoseSeksjon prognose={sykmelding.prognose} />
+                <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
+                <LegeSeksjon navn={sykmelding.navnFastlege} />
+
+                <hr style={{ marginBottom: '2rem' }} />
+
+                <BehandlingsDatoer
+                    behandletTidspunkt={sykmelding.behandletTidspunkt}
+                    syketilfelleStartDato={sykmelding.syketilfelleStartDato}
+                />
+                <MulighetForArbeid />
+                <Friskmelding prognose={sykmelding.prognose} />
+                <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
+                <Arbeidsevne tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} tiltakNAV={sykmelding.tiltakNAV} />
+                <SeksjonMedTittel tittel="Annet">
+                    <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
+                </SeksjonMedTittel>
+            </Sykmeldingsopplysninger>
         </div>
     );
 };
