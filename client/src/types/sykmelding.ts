@@ -5,7 +5,7 @@
 
 // ------ BEHANDLIGGSUTFALL
 
-type RegelStatus = 'OK' | 'MANUAL_PROCESSING' | 'INVALID';
+export type RegelStatus = 'OK' | 'MANUAL_PROCESSING' | 'INVALID';
 
 interface RegelInfo {
     messageForSender: string;
@@ -21,7 +21,7 @@ interface Behandlingsutfall {
 
 // ------
 
-interface Arbeidsgiver {
+export interface Arbeidsgiver {
     navn: string;
     stillingsprosent: number;
 }
@@ -81,7 +81,7 @@ interface Gradert {
 
 type Periodetype = 'AKTIVITET_IKKE_MULIG' | 'AVVENTENDE' | 'BEHANDLINGSDAGER' | 'GRADERT' | 'REISETILSKUDD';
 
-class Periode {
+export class Periode {
     fom: Date;
     tom: Date;
     aktivitetIkkeMulig?: AktivitetIkkeMulig;
@@ -91,8 +91,8 @@ class Periode {
     type: Periodetype;
 
     constructor(periode: any) {
-        this.fom = periode.fom;
-        this.tom = periode.tom;
+        this.fom = new Date(periode.fom);
+        this.tom = new Date(periode.tom);
         this.aktivitetIkkeMulig = periode.aktivitetIkkeMulig
             ? new AktivitetIkkeMulig(periode.aktivitetIkkeMulig)
             : undefined;
@@ -104,7 +104,7 @@ class Periode {
 
 // ------ STATUS
 
-type StatusEvent = 'SENDT' | 'APEN' | 'AVBRUTT' | 'UTGATT' | 'BEKREFTET ';
+export type StatusEvent = 'SENDT' | 'APEN' | 'AVBRUTT' | 'UTGATT' | 'BEKREFTET';
 
 interface ArbeidsgiverStatus {
     orgnummer: string;
@@ -143,7 +143,7 @@ class SykmeldingStatus {
 
 // ------ MEDISINSK_VURDERING
 
-interface Diagnose {
+export interface Diagnose {
     kode: string;
     system: string;
     tekst: string;
@@ -174,7 +174,7 @@ export class AnnenFraversArsak {
     }
 }
 
-class MedisinskVurdering {
+export class MedisinskVurdering {
     hovedDiagnose?: Diagnose;
     biDiagnoser: Diagnose[];
     svangerskap?: boolean;
@@ -220,7 +220,7 @@ class ErIkkeIArbeid {
     }
 }
 
-class Prognose {
+export class Prognose {
     arbeidsforEtterPeriode: boolean;
     hensynArbeidsplassen?: string;
     erIArbeid?: ErIArbeid;
@@ -238,7 +238,7 @@ class Prognose {
 
 type Restriksjoner = 'SKJERMET_FOR_ARBEIDSGIVER' | 'SKJERMET_FOR_NAV';
 
-interface UtdypendeOpplysning {
+export interface UtdypendeOpplysning {
     sporsmal: string;
     svar: string;
     restriksjoner: Restriksjoner[];
@@ -273,7 +273,7 @@ interface Adresse {
     land?: string;
 }
 
-interface Behandler {
+export interface Behandler {
     fornavn: string;
     mellomnavn: string;
     etternavn: string;
@@ -328,7 +328,7 @@ export class Sykmelding {
         this.legekontorOrgnummer = sykmelding.legekontorOrgnummer;
         this.arbeidsgiver = sykmelding.arbeidsgiver;
         this.sykmeldingsperioder = sykmelding.sykmeldingsperioder.map((periode: any) => new Periode(periode));
-        this.sykmeldingStatus = sykmelding.sykmeldingStatus;
+        this.sykmeldingStatus = new SykmeldingStatus(sykmelding.sykmeldingStatus);
         this.medisinskVurdering = sykmelding.medisinskVurdering
             ? new MedisinskVurdering(sykmelding.medisinskVurdering)
             : undefined;

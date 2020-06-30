@@ -4,7 +4,6 @@ import { CheckboksPanelGruppe, Feiloppsummering, RadioPanelGruppe, SkjemaGruppe 
 import { Knapp } from 'nav-frontend-knapper';
 import Panel from 'nav-frontend-paneler';
 
-import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import Egenmeldingsdager from './Egenmeldingsdager';
 import SubmitKnapp from './SubmitKnapp';
 import Vis from '../../../../utils/vis';
@@ -16,13 +15,14 @@ import {
     JaEllerNei,
     Skjemafelt,
 } from './skjemaTypes';
-import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import {
     brukerTrengerNySykmelding,
     getErrorMessages,
     hentArbeidsGiverRadios,
     hentValgtArbeidsgiverNaermesteLederNavn,
 } from './skjemaUtils';
+import { Arbeidsgiver } from '../../../../types/arbeidsgiver';
+import { Sykmelding } from '../../../../types/sykmelding';
 
 export type FormProps = {
     sykmelding: Sykmelding;
@@ -218,10 +218,10 @@ const Form = ({
                         feil={errors[Skjemafelt.SYKMELDT_FRA] ? errors[Skjemafelt.SYKMELDT_FRA] : null}
                     />
 
-                    <Vis hvis={!!sykmelding.arbeidsgiver.navn}>
+                    <Vis hvis={!!sykmelding.arbeidsgiver?.navn}>
                         <br />
                         <AlertStripeInfo>
-                            Den som sykmeldte deg har oppgitt at du er sykmeldt fra {sykmelding.arbeidsgiver.navn}
+                            Den som sykmeldte deg har oppgitt at du er sykmeldt fra {sykmelding.arbeidsgiver?.navn}
                         </AlertStripeInfo>
                     </Vis>
 

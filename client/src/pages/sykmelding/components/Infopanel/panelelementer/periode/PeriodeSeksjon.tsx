@@ -3,14 +3,15 @@ import './PeriodeSeksjon.less';
 import React from 'react';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
-import { Periode } from '../../../../../../types/sykmeldingTypes';
 import { hentDagerMellomDatoer, tilLesbarPeriodeMedArstall } from '../../../../../../utils/datoUtils';
+import { Periode } from '../../../../../../types/sykmelding';
 
 interface PeriodeSeksjonProps {
     periode: Periode;
     understrek: boolean;
 }
 
+// TODO: needs refactor
 const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
     const antallDager = hentDagerMellomDatoer(periode.fom, periode.tom);
     return (
@@ -33,12 +34,12 @@ const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
                 </div>
             )}
             {periode.behandlingsdager && <Normaltekst>{periode.behandlingsdager} behandlingsdager</Normaltekst>}
-            {periode.reisetilskudd && !periode.gradert && <Normaltekst>Reisetilskudd</Normaltekst>}
-            {periode.avventendeInnspillTilArbeidsgiver && (
+            {periode.type === 'REISETILSKUDD' && !periode.gradert && <Normaltekst>Reisetilskudd</Normaltekst>}
+            {periode.innspillTilArbeidsgiver && (
                 <>
                     <Normaltekst>Avventende sykmelding</Normaltekst>
                     <EtikettLiten>Innspill til arbeidsgiver om tilrettelegging</EtikettLiten>
-                    <Normaltekst>{periode.avventendeInnspillTilArbeidsgiver}</Normaltekst>
+                    <Normaltekst>{periode.innspillTilArbeidsgiver}</Normaltekst>
                 </>
             )}
             {understrek && <hr />}

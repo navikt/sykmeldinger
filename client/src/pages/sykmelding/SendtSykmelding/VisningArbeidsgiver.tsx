@@ -18,7 +18,8 @@ import Utvidbar from '../components/Utvidbar/Utvidbar';
 import arbeidsgiver from './arbeidsgiver.svg';
 import arbeidsgiverHover from './arbeidsgiverHover.svg';
 import sladd from './sladd.svg';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../types/sykmelding';
+
 
 interface VisningArbeidsgiverProps {
     sykmelding: Sykmelding;
@@ -36,7 +37,7 @@ const VisningArbeidsgiver = ({ sykmelding }: VisningArbeidsgiverProps) => {
                 <Sidetittel>TODO: Pasientens navn</Sidetittel>
                 <Undertekst>TODO: Pasientens personnummer</Undertekst>
             </div>
-            <SykmeldingPerioder perioder={sykmelding.perioder} />
+            <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
             <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} alt="skjult diagnose" />} />
 
             <ArbeidsuforSeksjon prognose={sykmelding.prognose} />

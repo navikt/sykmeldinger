@@ -13,7 +13,7 @@ import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/S
 import Tittel from '../components/Infopanel/layout/Tittel';
 import Veileder from '../components/Veileder/Veileder';
 import VeilederInnhold from './VeilederInnhold';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../types/sykmelding';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -38,9 +38,9 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
 
             <Infopanel fargetema="feil" tittel="Avvist sykmelding">
                 <Tittel tekst="Sykmelding" />
-                <SykmeldingPerioder perioder={sykmelding.perioder} />
-                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
-                {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
+                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
+                {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />

@@ -8,42 +8,38 @@ import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
 import Header from '../commonComponents/Header/Header';
 import NySykmelding from './NySykmelding/NySykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
-import { StatusTyper, Sykmelding } from '../../types/sykmeldingTypes';
-import Arbeidsgiver from '../../types/arbeidsgiverTypes';
-import { ReceivedSykmelding } from '../../types/receivedSykmeldingTypes';
 import { getSykmeldingPeriod } from './NySykmelding/sykmeldingUtils';
+import { Arbeidsgiver } from '../../types/arbeidsgiver';
+import { Sykmelding } from '../../types/sykmelding';
 
 const SykmeldingSide = () => {
     const { sykmeldingId } = useParams();
 
     const [sykmelding, setSykmelding] = useState<Sykmelding | null>(null);
-    const [status, setStatus] = useState<StatusTyper | null>(null);
     const [arbeidsgivere, setArbeidsgivere] = useState<Arbeidsgiver[] | null>(null);
 
+    console.log(sykmelding);
+    
     useEffect(() => {
         console.log('Fetching sykmeldingdata for id: ' + sykmeldingId);
-
         fetch(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`)
             .then((response) => response.json())
-            .then((data: ReceivedSykmelding) => {
-                const { status, sykmelding } = data;
-                setStatus(status);
-                setSykmelding(new Sykmelding(sykmelding));
+            .then((data: any) => {
+                setSykmelding(new Sykmelding(data));
             });
     }, [sykmeldingId]);
 
     useEffect(() => {
-        console.log('Fetching arbeidsgivere for id: ' + sykmeldingId);
-
-        fetch(`${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere/${sykmeldingId}`)
+        fetch(`${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere`)
             .then((response) => response.json())
-            .then((data: Arbeidsgiver[]) => {
+            .then((data: any[]) => {
                 const mappedArbeidsgivere = data.map((arbeidsgiver) => new Arbeidsgiver(arbeidsgiver));
                 setArbeidsgivere(mappedArbeidsgivere);
             });
-    }, [sykmeldingId]);
+    }, []);
 
     // TODO: Reimplement this. Previously it was collected by calling an endpoint after the sykmelding was fetched if the sykmelding had status "NY". Should be fetched together with the sykmelding.
+    // Try to get this into the sykmelding as a property
     const sykmeldingUtenforVentetid = false;
 
     if (!sykmelding || arbeidsgivere === null) {
@@ -52,7 +48,14 @@ const SykmeldingSide = () => {
     }
 
     const SykmeldingComponent = (() => {
-        if (status === 'NY') {
+        const erAvvist = sykmelding.behandlingsutfall.status === 'INVALID';
+        const status = sykmelding.sykmeldingStatus.statusEvent;
+
+        if (erAvvist) {
+            return <AvvistSykmelding sykmelding={sykmelding} />;
+        }
+
+        if (status === 'APEN') {
             if (sykmeldingUtenforVentetid === null) {
                 // TODO: Error-melding, ingen sykmelding funnet
                 return null;
@@ -65,10 +68,6 @@ const SykmeldingSide = () => {
                     sykmeldingUtenforVentetid={sykmeldingUtenforVentetid}
                 />
             );
-        }
-
-        if (status === 'AVVIST') {
-            return <AvvistSykmelding sykmelding={sykmelding} />;
         }
 
         if (status === 'AVBRUTT') {
@@ -89,7 +88,7 @@ const SykmeldingSide = () => {
         return null;
     }
 
-    const periodString = getSykmeldingPeriod(sykmelding);
+    const periodString = getSykmeldingPeriod(sykmelding.sykmeldingsperioder);
 
     return (
         <>

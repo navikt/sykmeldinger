@@ -25,7 +25,7 @@ import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
 import person from '../../../svg/person.svg';
 import personHover from '../../../svg/personHover.svg';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../types/sykmelding';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -40,13 +40,13 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
 
             <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
                 <Tittel tekst="Sykmelding" />
-                <SykmeldingPerioder perioder={sykmelding.perioder} />
-                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
-                {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
+                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
+                {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
-                <FraverSeksjon fraver={sykmelding.medisinskVurdering.annenFraversArsak} />
-                <SvangerskapSeksjon svangerskap={sykmelding.medisinskVurdering.svangerskap} />
+                <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
+                <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
                 <SkadeSeksjon medisinskVurdering={sykmelding.medisinskVurdering} />
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
                 <PrognoseSeksjon prognose={sykmelding.prognose} />

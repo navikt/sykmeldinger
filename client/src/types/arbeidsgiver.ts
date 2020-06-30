@@ -1,4 +1,6 @@
-export default class NaermesteLeder {
+// Made as class because dates need parsing
+
+export class NaermesteLeder {
     aktivTom?: Date;
     aktoerId: string;
     arbeidsgiverForskuttererLoenn?: boolean;
@@ -9,7 +11,7 @@ export default class NaermesteLeder {
     orgnummer: string;
 
     constructor(data: any) {
-        this.aktivTom = data.aktivTom;
+        this.aktivTom = new Date(data.aktivTom);
         this.aktoerId = data.aktoerId;
         this.arbeidsgiverForskuttererLoenn = data.arbeidsgiverForskuttererLoenn;
         this.epost = data.epost;
@@ -17,5 +19,18 @@ export default class NaermesteLeder {
         this.navn = data.navn;
         this.organisasjonsnavn = data.organisasjonsnavn;
         this.orgnummer = data.orgnummer;
+    }
+}
+
+export class Arbeidsgiver {
+    naermesteLeder: NaermesteLeder;
+    navn: string;
+    orgnummer: string;
+    stilling: string;
+    constructor(data: any) {
+        this.naermesteLeder = new NaermesteLeder(data.naermesteLeder);
+        this.navn = data.navn;
+        this.orgnummer = data.orgnummer;
+        this.stilling = data.stilling;
     }
 }

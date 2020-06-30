@@ -5,8 +5,8 @@ import Panel from 'nav-frontend-paneler';
 
 import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
 import Margin from '../Infopanel/layout/Margin';
-import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
+import { Sykmelding } from '../../../../types/sykmelding';
 
 interface BekreftetStatuspanelProps {
     sykmelding: Sykmelding;
