@@ -46,7 +46,7 @@ const VeilederContent = ({ sykmelding }: VeilederContentProps) => {
     return (
         <>
             <Systemtittel className="veiledercontent__title">Sykmeldingen kan dessverre ikke brukes</Systemtittel>
-            <hr className="veiledercontent__border" />
+            <hr className="veiledercontent__underline" />
             <>
                 <Normaltekst>Beklager at vi må bry deg mens du er syk.</Normaltekst>
                 <br />
