@@ -2,18 +2,17 @@ import React, { useState } from 'react';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import ArbeidsgiverSeksjon from '../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
-import AvvistStatuspanel from '../components/Statuspanel/AvvistStatuspanel';
-import DiagnoseSeksjon from '../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
-import Infopanel from '../components/Infopanel/Infopanel';
-import LegeSeksjon from '../components/Infopanel/panelelementer/LegeSeksjon';
+import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
+import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
 import NoytralMann from '../../../svg/NoytralMann.svg';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
-import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
-import Tittel from '../components/Infopanel/layout/Tittel';
-import Veileder from '../components/Veileder/Veileder';
-import VeilederInnhold from './VeilederInnhold';
+import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import VeilederContent from './VeilederContent';
 import { Sykmelding } from '../../../types/sykmeldingTypes';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
+import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -24,20 +23,22 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
     console.log(sykmelding);
     return (
         <div className="sykmelding-container">
-            <Sidetopp tekst="Sykmelding" />
+            <div style={{ marginTop: '80px', marginBottom: '20px' }}>
+                <Veilederpanel
+                    type="plakat"
+                    kompakt
+                    fargetema="normal"
+                    svg={<img src={NoytralMann} alt="NAV Veileder" />}
+                >
+                    <VeilederContent sykmelding={sykmelding} />
+                </Veilederpanel>
+            </div>
 
-            <AvvistStatuspanel sykmelding={sykmelding} />
-
-            <Veileder
-                type="plakat"
-                kompakt
-                fargetema="feilmelding"
-                svg={NoytralMann}
-                innhold={<VeilederInnhold sykmelding={sykmelding} />}
-            />
-
-            <Infopanel fargetema="feil" tittel="Avvist sykmelding">
-                <Tittel tekst="Sykmelding" />
+            <Sykmeldingsopplysninger
+                title="Opplysninger fra sykmeldingen"
+                iconNormal={plaster}
+                iconHover={plasterHover}
+            >
                 <SykmeldingPerioder perioder={sykmelding.perioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
                 {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
@@ -45,7 +46,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 ))}
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
-            </Infopanel>
+            </Sykmeldingsopplysninger>
 
             <div style={{ textAlign: 'center' }}>
                 <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>

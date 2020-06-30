@@ -16,6 +16,8 @@ import { getSykmeldingPeriod } from './NySykmelding/sykmeldingUtils';
 const SykmeldingSide = () => {
     const { sykmeldingId } = useParams();
 
+    document.title = 'Sykmelding - www.nav.no';
+
     const [sykmelding, setSykmelding] = useState<Sykmelding | null>(null);
     const [status, setStatus] = useState<StatusTyper | null>(null);
     const [arbeidsgivere, setArbeidsgivere] = useState<Arbeidsgiver[] | null>(null);
@@ -29,7 +31,8 @@ const SykmeldingSide = () => {
                 const { status, sykmelding } = data;
                 setStatus(status);
                 setSykmelding(new Sykmelding(sykmelding));
-            });
+            })
+            .catch((error) => console.log(error));
     }, [sykmeldingId]);
 
     useEffect(() => {
@@ -40,7 +43,8 @@ const SykmeldingSide = () => {
             .then((data: Arbeidsgiver[]) => {
                 const mappedArbeidsgivere = data.map((arbeidsgiver) => new Arbeidsgiver(arbeidsgiver));
                 setArbeidsgivere(mappedArbeidsgivere);
-            });
+            })
+            .catch((error) => console.log(error));
     }, [sykmeldingId]);
 
     // TODO: Reimplement this. Previously it was collected by calling an endpoint after the sykmelding was fetched if the sykmelding had status "NY". Should be fetched together with the sykmelding.
