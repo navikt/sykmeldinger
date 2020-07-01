@@ -2,7 +2,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 
-import Margin from '../components/Infopanel/layout/Margin';
+import Margin from '../components/Sykmeldingsopplysninger/layout/Margin';
 
 const EldreSykmeldingVarsel = () => {
     // TODO: hvis brukeren har en eldre sykmelding som må behandles først

@@ -4,8 +4,8 @@ import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import Panel from 'nav-frontend-paneler';
 
-import EtikettMedTekst from '../Infopanel/layout/EtikettMedTekst';
-import Margin from '../Infopanel/layout/Margin';
+import EtikettMedTekst from '../Sykmeldingsopplysninger/layout/EtikettMedTekst';
+import Margin from '../Sykmeldingsopplysninger/layout/Margin';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
 import { Sykmelding } from '../../../../types/sykmelding';
 

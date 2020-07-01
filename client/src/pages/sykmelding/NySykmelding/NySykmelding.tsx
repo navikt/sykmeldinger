@@ -1,34 +1,36 @@
 import React, { useEffect, useRef } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Arbeidsevne from '../components/Infopanel/utdypendeelementer/Arbeidsevne';
-import ArbeidsgiverSeksjon from '../components/Infopanel/panelelementer/ArbeidsgiverSeksjon';
-import ArbeidsuforSeksjon from '../components/Infopanel/panelelementer/ArbeidsuforSeksjon';
-import BehandlingsDatoer from '../components/Infopanel/utdypendeelementer/BehandlingsDatoer';
-import DiagnoseSeksjon from '../components/Infopanel/panelelementer/diagnose/DiagnoseSeksjon';
+import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
+import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
+import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
+import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
 import EldreSykmeldingVarsel from './EldreSykmeldingVarsel';
-import ElementMedTekst from '../components/Infopanel/layout/ElementMedTekst';
-import FraverSeksjon from '../components/Infopanel/panelelementer/FraverSeksjon';
-import Friskmelding from '../components/Infopanel/utdypendeelementer/Friskmelding';
-import Infopanel from '../components/Infopanel/Infopanel';
-import LegeSeksjon from '../components/Infopanel/panelelementer/LegeSeksjon';
-import MulighetForArbeid from '../components/Infopanel/utdypendeelementer/MulighetForArbeid';
-import PrognoseSeksjon from '../components/Infopanel/panelelementer/PrognoseSeksjon';
-import SeksjonMedTittel from '../components/Infopanel/layout/SeksjonMedTittel';
+import ElementMedTekst from '../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
+import FraverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/FraverSeksjon';
+import Friskmelding from '../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
+import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
+import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
+import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
+import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
 import SendingsSkjema from './SendingsSkjema';
 import Sidetopp from '../components/Sidetopp/Sidetopp';
-import SkadeSeksjon from '../components/Infopanel/panelelementer/SkadeSeksjon';
+import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SporsmalInfoheader from './SporsmalInfoheader';
-import SvangerskapSeksjon from '../components/Infopanel/panelelementer/SvangerskapSeksjon';
-import SykmeldingPerioder from '../components/Infopanel/panelelementer/periode/SykmeldingPerioder';
-import Tittel from '../components/Infopanel/layout/Tittel';
-import UtdypendeOpplysninger from '../components/Infopanel/utdypendeelementer/UtdypendeOpplysninger';
+import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
+import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
+import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 import Utvidbar from '../components/Utvidbar/Utvidbar';
 import Veileder from '../components/Veileder/Veileder';
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
+import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
+import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -63,7 +65,11 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 knappTekst="Gå til utfyllingen"
             />
 
-            <Infopanel tittel="Din sykmelding" fargetema="info">
+            <Sykmeldingsopplysninger
+                title="Opplysninger fra sykmeldingen"
+                iconNormal={plaster}
+                iconHover={plasterHover}
+            >
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
@@ -98,7 +104,7 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
                 </Utvidbar>
-            </Infopanel>
+            </Sykmeldingsopplysninger>
 
             {/* TODO: Bestemme om denne skal være i Sporsmal-komponent eller som egen komponent */}
             <div ref={utfyllingRef} style={{ marginTop: '2rem', marginBottom: '2rem' }}>

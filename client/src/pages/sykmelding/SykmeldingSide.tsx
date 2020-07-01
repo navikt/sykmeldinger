@@ -15,6 +15,8 @@ import { Sykmelding } from '../../types/sykmelding';
 const SykmeldingSide = () => {
     const { sykmeldingId } = useParams();
 
+    document.title = 'Sykmelding - www.nav.no';
+
     const [sykmelding, setSykmelding] = useState<Sykmelding | null>(null);
     const [arbeidsgivere, setArbeidsgivere] = useState<Arbeidsgiver[] | null>(null);
 
