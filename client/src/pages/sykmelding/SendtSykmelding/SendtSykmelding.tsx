@@ -19,7 +19,7 @@ import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypen
 import Utvidbar from '../components/Utvidbar/Utvidbar';
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../types/sykmelding';
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import EtikettMedTekst from '../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
 import sladd from './sladd.svg';
@@ -44,13 +44,13 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                 iconNormal={plaster}
                 iconHover={plasterHover}
             >
-                <SykmeldingPerioder perioder={sykmelding.perioder} />
-                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
-                {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
+                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
+                {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
-                <FraverSeksjon fraver={sykmelding.medisinskVurdering.annenFraversArsak} />
-                <SvangerskapSeksjon svangerskap={sykmelding.medisinskVurdering.svangerskap} />
+                <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
+                <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
                 <SkadeSeksjon medisinskVurdering={sykmelding.medisinskVurdering} />
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
                 <PrognoseSeksjon prognose={sykmelding.prognose} />
@@ -90,7 +90,7 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
                     <Sidetittel>TODO: Pasientens navn</Sidetittel>
                     <Undertekst>TODO: Pasientens personnummer</Undertekst>
                 </div>
-                <SykmeldingPerioder perioder={sykmelding.perioder} />
+                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} alt="skjult diagnose" />} />
 
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />

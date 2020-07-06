@@ -6,8 +6,8 @@ import Panel from 'nav-frontend-paneler';
 
 import EtikettMedTekst from '../Sykmeldingsopplysninger/layout/EtikettMedTekst';
 import Margin from '../Sykmeldingsopplysninger/layout/Margin';
-import { Sykmelding } from '../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../utils/datoUtils';
+import { Sykmelding } from '../../../../types/sykmelding';
 
 interface AvbruttStatuspanelProps {
     sykmelding: Sykmelding;

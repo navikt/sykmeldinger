@@ -7,9 +7,9 @@ import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelemente
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
 import NoytralMann from '../../../svg/NoytralMann.svg';
+import { Sykmelding } from '../../../types/sykmelding';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import VeilederContent from './VeilederContent';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
 import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
@@ -39,9 +39,9 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 iconNormal={plaster}
                 iconHover={plasterHover}
             >
-                <SykmeldingPerioder perioder={sykmelding.perioder} />
-                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
-                {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
+                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
+                {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />

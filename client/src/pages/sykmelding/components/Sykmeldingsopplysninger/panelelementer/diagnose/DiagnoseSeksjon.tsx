@@ -4,7 +4,7 @@ import React from 'react';
 
 import DiagnoseKodeSeksjon from './DiagnoseKodeSeksjon';
 import EtikettMedTekst from '../../layout/EtikettMedTekst';
-import { Diagnose } from '../../../../../../types/sykmeldingTypes';
+import { Diagnose } from '../../../../../../types/sykmelding';
 
 interface DiagnoseSeksjonProps {
     diagnose?: Diagnose;

@@ -1,14 +1,14 @@
 import React from 'react';
 
 import EtikettMedTekst from '../layout/EtikettMedTekst';
-import { Arbeidsgiver } from '../../../../../types/sykmeldingTypes';
+import { Arbeidsgiver } from '../../../../../types/sykmelding';
 
 interface ArbeidsgiverSeksjonProps {
-    arbeidsgiver: Arbeidsgiver;
+    arbeidsgiver?: Arbeidsgiver;
 }
 
 const ArbeidsgiverSeksjon = ({ arbeidsgiver }: ArbeidsgiverSeksjonProps) => {
-    if (!arbeidsgiver.harArbeidsgiver) {
+    if (!arbeidsgiver) {
         return null;
     }
 

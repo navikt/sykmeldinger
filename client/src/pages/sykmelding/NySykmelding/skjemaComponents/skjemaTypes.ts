@@ -1,4 +1,4 @@
-import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
+import { Arbeidsgiver } from "../../../../types/arbeidsgiver";
 
 export type RequiresOneOf = {
     name: Skjemafelt;

@@ -1,11 +1,11 @@
-import { Sykmelding } from '../../../types/sykmeldingTypes';
 import dayjs from 'dayjs';
 import { tilLesbarPeriodeMedArstall } from '../../../utils/datoUtils';
+import { Periode } from '../../../types/sykmelding';
 
-export const getSykmeldingPeriod = (sykmelding: Sykmelding) => {
-    const periods = sykmelding.perioder;
 
-    const earliestFomPeriod = periods.reduce((acc, value) => {
+export const getSykmeldingPeriod = (sykmeldingsperioder: Periode[]) => {
+
+    const earliestFomPeriod = sykmeldingsperioder.reduce((acc, value) => {
         if (dayjs(value.fom).isBefore(dayjs(acc.fom))) {
             return value;
         }
@@ -13,7 +13,7 @@ export const getSykmeldingPeriod = (sykmelding: Sykmelding) => {
         return acc;
     });
 
-    const latestTomPeriod = periods.reduce((acc, value) => {
+    const latestTomPeriod = sykmeldingsperioder.reduce((acc, value) => {
         if (dayjs(value.fom).isAfter(dayjs(acc.fom))) {
             return value;
         }

@@ -4,8 +4,8 @@ import ElementMedTekst from '../layout/ElementMedTekst';
 import EnkelCheckbox from '../layout/Checkbox/EnkelCheckbox';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import { Prognose } from '../../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
+import { Prognose } from '../../../../../types/sykmelding';
 
 interface FriskmeldingProps {
     prognose?: Prognose;

@@ -1,6 +1,5 @@
 import { FeiloppsummeringFeil, RadioPanelProps } from 'nav-frontend-skjema';
 
-import Arbeidsgiver from '../../../../types/arbeidsgiverTypes';
 import {
     Arbeidsforhold,
     ErrorsSchemaType,
@@ -9,6 +8,7 @@ import {
     JaEllerNei,
     Skjemafelt,
 } from './skjemaTypes';
+import { Arbeidsgiver } from '../../../../types/arbeidsgiver';
 
 export const getErrorMessages = (errors: ErrorsSchemaType) => {
     const definedErrors = Object.entries(errors).filter(([_key, value]) => !!value);

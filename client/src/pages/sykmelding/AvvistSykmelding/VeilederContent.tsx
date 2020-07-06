@@ -4,7 +4,7 @@ import React from 'react';
 import { Systemtittel, Element, Normaltekst } from 'nav-frontend-typografi';
 
 import Begrunnelser from './Begrunnelser';
-import { Behandler, Sykmelding } from '../../../types/sykmeldingTypes';
+import { Behandler, Sykmelding } from '../../../types/sykmelding';
 
 const createLegenavn = (behandler: Behandler) => {
     const { fornavn, mellomnavn, etternavn } = behandler;

@@ -3,10 +3,10 @@ import React from 'react';
 import ElementMedTekst from '../layout/ElementMedTekst';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import { SporsmalSvar } from '../../../../../types/sykmeldingTypes';
+import { UtdypendeOpplysning } from '../../../../../types/sykmelding';
 
 interface OpplysningsGruppeProps {
-    opplysningGruppe: Map<string, SporsmalSvar>;
+    opplysningGruppe: Map<string, UtdypendeOpplysning>;
 }
 
 const OpplysningsGruppe = ({ opplysningGruppe }: OpplysningsGruppeProps) => {
@@ -17,7 +17,7 @@ const OpplysningsGruppe = ({ opplysningGruppe }: OpplysningsGruppeProps) => {
 };
 
 interface UtdypendeOpplysningerProps {
-    opplysninger: Map<string, Map<string, SporsmalSvar>>;
+    opplysninger: Map<string, Map<string, UtdypendeOpplysning>>;
 }
 
 const UtdypendeOpplysninger = ({ opplysninger }: UtdypendeOpplysningerProps) => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
-
-import { Sykmelding } from '../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../types/sykmelding';
 
 export enum Avvisningsregler {
     PASIENT_ELDRE_ENN_70 = 'PASIENT_ELDRE_ENN_70',

@@ -1,6 +1,5 @@
 import React, { SyntheticEvent, useRef, useState } from 'react';
 
-import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import AvbrytDialog from './skjemaComponents/AvbrytDialog';
 import Form from './skjemaComponents/Form';
 import {
@@ -10,9 +9,10 @@ import {
     FieldValuesType,
     Skjemafelt,
 } from './skjemaComponents/skjemaTypes';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
 import { brukerTrengerNySykmelding, clearDependentValues } from './skjemaComponents/skjemaUtils';
 import { getFailText, validateAll, validateField, validators } from './skjemaComponents/validators';
+import { Sykmelding } from '../../../types/sykmelding';
+import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 
 export const fieldValuesSchema: FieldValuesType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: undefined,

@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
-import Arbeidsgiver from '../../../types/arbeidsgiverTypes';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
 import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
 import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
@@ -28,7 +27,8 @@ import Utvidbar from '../components/Utvidbar/Utvidbar';
 import Veileder from '../components/Veileder/Veileder';
 import doktor from '../../../svg/doktor.svg';
 import doktorHover from '../../../svg/doktorHover.svg';
-import { Sykmelding } from '../../../types/sykmeldingTypes';
+import { Sykmelding } from '../../../types/sykmelding';
+import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
 import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 
@@ -71,13 +71,13 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
                 iconHover={plasterHover}
             >
                 <Tittel tekst="Sykmelding" />
-                <SykmeldingPerioder perioder={sykmelding.perioder} />
-                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering.hovedDiagnose} />
-                {sykmelding.medisinskVurdering.biDiagnoser.map((diagnose, index) => (
+                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
+                {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
                 ))}
-                <FraverSeksjon fraver={sykmelding.medisinskVurdering.annenFraversArsak} />
-                <SvangerskapSeksjon svangerskap={sykmelding.medisinskVurdering.svangerskap} />
+                <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
+                <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
                 <SkadeSeksjon medisinskVurdering={sykmelding.medisinskVurdering} />
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
                 <PrognoseSeksjon prognose={sykmelding.prognose} />

@@ -1,16 +1,15 @@
 import React from 'react';
 
 import CheckboxMedDato from '../layout/Checkbox/CheckboxMedDato';
-import { MedisinskVurdering } from '../../../../../types/sykmeldingTypes';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
+import { MedisinskVurdering } from '../../../../../types/sykmelding';
 
 interface SkadeSeksjonProps {
-    medisinskVurdering: MedisinskVurdering;
+    medisinskVurdering?: MedisinskVurdering;
 }
 
 const SkadeSeksjon = ({ medisinskVurdering }: SkadeSeksjonProps) => {
-    const { yrkesskadeDato, yrkesskade } = medisinskVurdering;
-    if (!yrkesskade) {
+    if (!medisinskVurdering?.yrkesskade) {
         return null;
     }
 
@@ -19,7 +18,7 @@ const SkadeSeksjon = ({ medisinskVurdering }: SkadeSeksjonProps) => {
             checkboxTittel="Sykdommen kan skyldes en skade/yrkessykdom"
             checked
             tittel="Skadedato"
-            tekst={tilLesbarDatoMedArstall(yrkesskadeDato)}
+            tekst={tilLesbarDatoMedArstall(medisinskVurdering.yrkesskadeDato)}
         />
     );
 };
