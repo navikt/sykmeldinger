@@ -28,6 +28,7 @@ import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
 import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 import arbeidsgiver from './arbeidsgiver.svg';
 import arbeidsgiverHover from './arbeidsgiverHover.svg';
+import Statuspanel from '../components/Statuspanel/Statuspanel';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -36,7 +37,11 @@ interface SendtSykmeldingProps {
 const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
-            %KVITTERING% - Sendt, inaktiv søknad - Sendt, aktiv søknad - Sendt, ferdig (?)
+            <Statuspanel
+                sykmeldingstatus={sykmelding.sykmeldingStatus.statusEvent}
+                sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
+                soknadstype="SOK_NA"
+            />
             <Sykmeldingsopplysninger
                 title="Opplysninger fra sykmeldingen"
                 expandable
