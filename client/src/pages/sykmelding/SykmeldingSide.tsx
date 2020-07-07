@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
@@ -6,111 +6,130 @@ import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
 import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
 import Header from '../commonComponents/Header/Header';
-import NySykmelding from './NySykmelding/NySykmelding';
+import ApenSykmelding from './ApenSykmelding/ApenSykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
-import { getSykmeldingPeriod } from './NySykmelding/sykmeldingUtils';
 import { Arbeidsgiver } from '../../types/arbeidsgiver';
 import { Sykmelding } from '../../types/sykmelding';
+import useFetch, { areAnyNotStartetOrPending } from '../../hooks/useFetch';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Undertittel } from 'nav-frontend-typografi';
 
 const SykmeldingSide = () => {
+    document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams();
 
-    document.title = 'Sykmelding - www.nav.no';
+    // Initialize fetchers
+    const {
+        status: sykmeldingFetcherStatus,
+        data: sykmelding,
+        error: sykmeldingFetcherError,
+        fetch: fetchSykmelding,
+    } = useFetch<Sykmelding>(
+        `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`,
+        (sykmelding) => new Sykmelding(sykmelding),
+    );
+    const {
+        status: arbeidsgivereFetcherStatus,
+        data: arbeidsgivere,
+        error: arbeidsgivereFetcherError,
+        fetch: fetchArbeidsgivere,
+    } = useFetch<Arbeidsgiver[]>(`${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere`, (arbeidsgivere) =>
+        arbeidsgivere.map((arbeidsgiver: any) => new Arbeidsgiver(arbeidsgiver)),
+    );
+    const {
+        status: erUtenforVentetidFetcherStatus,
+        data: erUtenforVentetid,
+        error: erUtenforVentetidError,
+        fetch: fetchErUtenforVentetid,
+    } = useFetch<boolean>(
+        `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/erUtenforVentetid`,
+        (data) => data.erUtenforVentetid,
+    );
 
-    const [sykmelding, setSykmelding] = useState<Sykmelding | null>(null);
-    const [arbeidsgivere, setArbeidsgivere] = useState<Arbeidsgiver[] | null>(null);
-
-    console.log(sykmelding);
-    
     useEffect(() => {
-        console.log('Fetching sykmeldingdata for id: ' + sykmeldingId);
-        fetch(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`)
-            .then((response) => response.json())
-            .then((data: any) => {
-                setSykmelding(new Sykmelding(data));
-            });
-    }, [sykmeldingId]);
+        fetchSykmelding();
+        fetchArbeidsgivere();
+        fetchErUtenforVentetid();
+    }, [fetchSykmelding, fetchArbeidsgivere, fetchErUtenforVentetid]);
 
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere`)
-            .then((response) => response.json())
-            .then((data: any[]) => {
-                const mappedArbeidsgivere = data.map((arbeidsgiver) => new Arbeidsgiver(arbeidsgiver));
-                setArbeidsgivere(mappedArbeidsgivere);
-            });
-    }, []);
+    // TODO: Refactor to proper errormessage
+    if (sykmeldingFetcherError || arbeidsgivereFetcherError || erUtenforVentetidError) {
+        return <div>Feil med baksystemet</div>;
+    }
 
-    // TODO: Reimplement this. Previously it was collected by calling an endpoint after the sykmelding was fetched if the sykmelding had status "NY". Should be fetched together with the sykmelding.
-    // Try to get this into the sykmelding as a property
-    const sykmeldingUtenforVentetid = false;
+    // TODO: Refactor
+    if (
+        areAnyNotStartetOrPending([sykmeldingFetcherStatus, arbeidsgivereFetcherStatus, erUtenforVentetidFetcherStatus])
+    ) {
+        return (
+            <div style={{ marginTop: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Undertittel style={{ marginBottom: '15px' }}>Laster sykmelding</Undertittel>
+                <NavFrontendSpinner />
+            </div>
+        );
+    }
 
-    if (!sykmelding || arbeidsgivere === null) {
+    // TODO: Find out if this check can be infered automaticatlly
+    if (sykmelding === undefined || arbeidsgivere === undefined || erUtenforVentetid === undefined) {
         // TODO: Error-melding, ingen sykmelding funnet
         return null;
     }
 
     const SykmeldingComponent = (() => {
         const erAvvist = sykmelding.behandlingsutfall.status === 'INVALID';
+        const erEgenmeldt = sykmelding.egenmeldt;
         const status = sykmelding.sykmeldingStatus.statusEvent;
 
+        // erAvvist and erEgenmeldt needs to be checkt first because these flags are not part of the status
         if (erAvvist) {
             return <AvvistSykmelding sykmelding={sykmelding} />;
         }
-
-        if (status === 'APEN') {
-            if (sykmeldingUtenforVentetid === null) {
-                // TODO: Error-melding, ingen sykmelding funnet
-                return null;
-            }
-
-            return (
-                <NySykmelding
-                    sykmelding={sykmelding}
-                    arbeidsgivere={arbeidsgivere}
-                    sykmeldingUtenforVentetid={sykmeldingUtenforVentetid}
-                />
-            );
+        if (erEgenmeldt) {
+            // TODO: Egenmeldt component
         }
 
-        if (status === 'AVBRUTT') {
-            return <AvbruttSykmelding sykmelding={sykmelding} />;
-        }
-
-        if (status === 'SENDT') {
-            return <SendtSykmelding sykmelding={sykmelding} />;
-        }
-
-        if (status === 'BEKREFTET') {
-            return <BekreftetSykmelding sykmelding={sykmelding} />;
+        switch (status) {
+            case 'APEN':
+                return (
+                    <ApenSykmelding
+                        sykmelding={sykmelding}
+                        arbeidsgivere={arbeidsgivere}
+                        sykmeldingUtenforVentetid={erUtenforVentetid}
+                    />
+                );
+            case 'AVBRUTT':
+                return <AvbruttSykmelding sykmelding={sykmelding} />;
+            case 'SENDT':
+                return <SendtSykmelding sykmelding={sykmelding} />;
+            case 'BEKREFTET':
+                return <BekreftetSykmelding sykmelding={sykmelding} />;
+            default:
+                // TODO: Errorcomponent - status not found
+                break;
         }
     })();
 
-    if (!SykmeldingComponent) {
-        // TODO: Error-melding, ingen gyldig sykemeldingstype definert
-        return null;
-    }
-
-    const periodString = getSykmeldingPeriod(sykmelding.sykmeldingsperioder);
-
     return (
         <>
-            <Header title="Sykmelding" subtitle={`for ${periodString}`} />
+            <Header title="Sykmelding" sykmeldingPerioder={sykmelding.sykmeldingsperioder} />
             <div className="limit">
                 <Brodsmuler
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: '/sykefravaer',
+                            path: '/',
                         },
                         {
                             title: 'Sykmeldinger',
-                            path: '/sykefravaer/sykmeldinger',
+                            path: '/sykmeldinger',
                         },
                         {
                             title: 'Sykmelding',
                         },
                     ]}
                 />
+
+                <button onClick={() => fetchSykmelding()}>refetch sykmelding</button>
                 {SykmeldingComponent}
             </div>
         </>
