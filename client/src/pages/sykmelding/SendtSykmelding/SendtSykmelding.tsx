@@ -30,19 +30,32 @@ import arbeidsgiver from './arbeidsgiver.svg';
 import arbeidsgiverHover from './arbeidsgiverHover.svg';
 import Statuspanel from '../components/Statuspanel/Statuspanel';
 import { Soknad } from '../../../types/soknad';
+import { Arbeidsgiver } from '../../../types/arbeidsgiver';
+import { getSoknadstype, getArbeidsgiverForskutterer } from '../../../utils/statuspanel-utils';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
+    arbeidsgivere: Arbeidsgiver[];
     soknader: Soknad[];
 }
 
-const SendtSykmelding = ({ sykmelding, soknader }: SendtSykmeldingProps) => {
+const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel
                 sykmeldingstatus={sykmelding.sykmeldingStatus.statusEvent}
+                erEgenmeldt={sykmelding.egenmeldt}
+                arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
                 sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
-                soknadstype="SOK_NA"
+                soknadstype={getSoknadstype(soknader)}
+                avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
+                arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
+                skalViseReisetilskuddInfo={sykmelding.sykmeldingsperioder.some(
+                    (periode) => periode.type === 'REISETILSKUDD',
+                )}
+                skalViseBehandlingsdagerInfo={sykmelding.sykmeldingsperioder.some(
+                    (periode) => periode.type === 'BEHANDLINGSDAGER',
+                )}
             />
             <Sykmeldingsopplysninger
                 title="Opplysninger fra sykmeldingen"
