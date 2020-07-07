@@ -7,6 +7,7 @@ import { sykmeldingNy } from './data/sykmelding-ny';
 import { sykmeldingSendt } from './data/sykmelding-sendt';
 import { sykmeldingAvvist } from './data/sykmelding-avvist';
 import { sykmeldingAvbrutt } from './data/sykmelding-avbrutt';
+import { soknadNy, soknadFremtidig } from './data/soknader';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -65,3 +66,9 @@ mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?s
     soknaderOpprettet: 0,
     erBehandlet: false,
 });
+
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/SENDT`, [soknadNy, soknadFremtidig]);
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/BEKREFTET`, [soknadNy, soknadFremtidig]);
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/APEN`, []);
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/AVBRUTT`, []);
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/AVVIST`, []);

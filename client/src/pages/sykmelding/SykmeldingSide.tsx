@@ -13,6 +13,7 @@ import { Sykmelding } from '../../types/sykmelding';
 import useFetch, { areAnyNotStartetOrPending } from '../../hooks/useFetch';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel } from 'nav-frontend-typografi';
+import { Soknad } from '../../types/soknad';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -45,21 +46,35 @@ const SykmeldingSide = () => {
         `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/erUtenforVentetid`,
         (data) => data.erUtenforVentetid,
     );
+    const {
+        status: soknaderFetcherStatus,
+        data: soknader,
+        error: soknaderFetcherError,
+        fetch: fetchSoknader,
+    } = useFetch<Soknad[]>(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/${sykmeldingId}`, (soknader) =>
+        soknader.map((soknad: any) => new Soknad(soknad)),
+    );
 
     useEffect(() => {
         fetchSykmelding();
         fetchArbeidsgivere();
         fetchErUtenforVentetid();
-    }, [fetchSykmelding, fetchArbeidsgivere, fetchErUtenforVentetid]);
+        fetchSoknader();
+    }, [fetchSykmelding, fetchArbeidsgivere, fetchErUtenforVentetid, fetchSoknader]);
 
     // TODO: Refactor to proper errormessage
-    if (sykmeldingFetcherError || arbeidsgivereFetcherError || erUtenforVentetidError) {
+    if (sykmeldingFetcherError || arbeidsgivereFetcherError || erUtenforVentetidError || soknaderFetcherError) {
         return <div>Feil med baksystemet</div>;
     }
 
     // TODO: Refactor
     if (
-        areAnyNotStartetOrPending([sykmeldingFetcherStatus, arbeidsgivereFetcherStatus, erUtenforVentetidFetcherStatus])
+        areAnyNotStartetOrPending([
+            sykmeldingFetcherStatus,
+            arbeidsgivereFetcherStatus,
+            erUtenforVentetidFetcherStatus,
+            soknaderFetcherStatus,
+        ])
     ) {
         return (
             <div style={{ marginTop: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -70,7 +85,12 @@ const SykmeldingSide = () => {
     }
 
     // TODO: Find out if this check can be infered automaticatlly
-    if (sykmelding === undefined || arbeidsgivere === undefined || erUtenforVentetid === undefined) {
+    if (
+        sykmelding === undefined ||
+        arbeidsgivere === undefined ||
+        erUtenforVentetid === undefined ||
+        soknader === undefined
+    ) {
         // TODO: Error-melding, ingen sykmelding funnet
         return null;
     }
@@ -100,9 +120,9 @@ const SykmeldingSide = () => {
             case 'AVBRUTT':
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
             case 'SENDT':
-                return <SendtSykmelding sykmelding={sykmelding} />;
+                return <SendtSykmelding sykmelding={sykmelding} soknader={soknader} />;
             case 'BEKREFTET':
-                return <BekreftetSykmelding sykmelding={sykmelding} />;
+                return <BekreftetSykmelding sykmelding={sykmelding} soknader={soknader} />;
             default:
                 // TODO: Errorcomponent - status not found
                 break;
