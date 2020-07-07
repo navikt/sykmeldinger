@@ -32,17 +32,17 @@ import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
 import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 
-interface SykmeldingProps {
+interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
     sykmeldingUtenforVentetid: boolean;
 }
 
-const NySykmelding: React.FC<SykmeldingProps> = ({
+const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
     sykmelding,
     arbeidsgivere,
     sykmeldingUtenforVentetid,
-}: SykmeldingProps) => {
+}: ApenSykmeldingProps) => {
     const utfyllingRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     useEffect(() => {
@@ -116,4 +116,4 @@ const NySykmelding: React.FC<SykmeldingProps> = ({
     );
 };
 
-export default NySykmelding;
+export default ApenSykmelding;

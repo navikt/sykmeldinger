@@ -13,6 +13,8 @@ import { brukerTrengerNySykmelding, clearDependentValues } from './skjemaCompone
 import { getFailText, validateAll, validateField, validators } from './skjemaComponents/validators';
 import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
+import useFetch from '../../../hooks/useFetch';
+import { SoknadBehandlet } from '../../../types/soknadBehandlet';
 
 export const fieldValuesSchema: FieldValuesType = {
     [Skjemafelt.OPPLYSNINGENE_ER_RIKTIGE]: undefined,
@@ -52,19 +54,34 @@ const visSend = (fieldValues: FieldValuesType, skalViseAvbryt: boolean) => {
 };
 
 const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const soknadBehandletFetcher = useFetch<SoknadBehandlet>(
+        `${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=${sykmelding.id}`,
+    );
+    const bekreftFetcher = useFetch(
+        `${process.env.REACT_APP_SYFOREST_ROOT}/v1/actions/bekreft?sykmeldingId=${sykmelding.id}`,
+        undefined,
+    );
+    const sendFetcher = useFetch(
+        `${process.env.REACT_APP_SYFOREST_ROOT}/v1/actions/send?sykmeldingId=${sykmelding.id}`,
+        undefined,
+    );
+    const avbrytFetcher = useFetch(
+        `${process.env.REACT_APP_SYFOREST_ROOT}/v1/actions/avbryt?sykmeldingId=${sykmelding.id}`,
+        undefined,
+    );
+
     const [visAvbrytDialog, setVisAvbrytDialog] = useState(false);
-    // TODO:
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitAttempt, setSubmitAttempt] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
     const [errors, setErrors] = useState(errorSchema);
     const [fieldValues, setFieldValues] = useState(fieldValuesSchema);
     const feiloppsummering = useRef<HTMLDivElement>(null);
 
     const skalViseAvbryt = brukerTrengerNySykmelding(fieldValues);
 
-    const skalViseSend = visSend(fieldValues, skalViseAvbryt);
+    const skalViseSend = visSend(fieldValues, skalViseAvbryt); // TODO: Needs refactor
 
     const submit = (event: SyntheticEvent) => {
         event.preventDefault();
@@ -78,41 +95,32 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
             feiloppsummering.current?.focus();
         } else {
             setSubmitAttempt(false);
-            setSubmitting(true);
-
             if (skalViseSend) {
-                // TODO: Send sykmelding. Create re-usable function as sending is done from multiple components
-                console.log('Send sykmelding TODO');
+                sendFetcher.fetch({ method: 'POST', body: JSON.stringify(fieldValues) });
+                // TODO: Poll soknadBehandletFetcher until soknadBehandletFetcher.data.erBehandlet returns true
             } else {
-                // TODO: Bekreft sykmelding. Create re-usable function as bekrefting is done from multiple components
-                console.log('Bekreft sykmelding TODO');
+                bekreftFetcher.fetch({ method: 'POST', body: JSON.stringify(fieldValues) });
             }
         }
     };
 
     const onAvbryt = () => {
-        // TODO: Avbryt sykmelding.
-        console.log('Avbryt sykmelding TODO');
+        avbrytFetcher.fetch();
     };
 
     const handleChange = (value: string | string[] | string[][], name: Skjemafelt) => {
         if (visAvbrytDialog) {
             setVisAvbrytDialog(false);
         }
-
         const { updatedFieldValues, updatedErrors } = clearDependentValues(name, errors, fieldValues);
-
         const getValue = () => {
             if (name === Skjemafelt.FEIL_OPPLYSNINGER) {
                 const index = fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].indexOf(value as FeilOpplysninger);
-
                 if (index === -1) {
                     return [...fieldValues[Skjemafelt.FEIL_OPPLYSNINGER], value];
                 }
-
                 return fieldValues[Skjemafelt.FEIL_OPPLYSNINGER].filter((_key, oIndex) => oIndex !== index);
             }
-
             return value;
         };
 
@@ -125,11 +133,8 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
                 ...updatedErrors,
                 [name]: invalid ? getFailText(fieldValues, invalid, { arbeidsgivere }) : null,
             };
-
             setErrors(newErrors);
-
             const hasErrors = validateAll(updatedValues, errorSchema, { arbeidsgivere });
-
             if (!hasErrors) {
                 setSubmitAttempt(false);
             }
@@ -150,7 +155,7 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
                         onAvbryt={onAvbryt}
                         handleChange={handleChange}
                         feiloppsummering={feiloppsummering}
-                        submitting={submitting}
+                        submitting={bekreftFetcher.status === 'PENDING' || sendFetcher.status === 'PENDING'}
                         skalViseSend={skalViseSend}
                         skalViseAvbryt={skalViseAvbryt}
                         arbeidsgivere={arbeidsgivere}
@@ -161,7 +166,7 @@ const SendingsSkjema = ({ sykmelding, arbeidsgivere }: SendingsSkjemaProps) => {
                     vis={visAvbrytDialog}
                     setVisAvbrytDialog={setVisAvbrytDialog}
                     onAvbryt={onAvbryt}
-                    visSpinner={submitting}
+                    visSpinner={avbrytFetcher.status === 'PENDING'}
                 />
             </div>
         </div>
