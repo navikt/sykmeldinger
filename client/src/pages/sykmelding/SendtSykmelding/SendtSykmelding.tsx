@@ -29,12 +29,14 @@ import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg
 import arbeidsgiver from './arbeidsgiver.svg';
 import arbeidsgiverHover from './arbeidsgiverHover.svg';
 import Statuspanel from '../components/Statuspanel/Statuspanel';
+import { Soknad } from '../../../types/soknad';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
+    soknader: Soknad[];
 }
 
-const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
+const SendtSykmelding = ({ sykmelding, soknader }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel

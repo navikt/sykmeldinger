@@ -25,12 +25,14 @@ import doktorHover from '../../../svg/doktorHover.svg';
 import person from '../../../svg/person.svg';
 import personHover from '../../../svg/personHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
+import { Soknad } from '../../../types/soknad';
 
 interface BekreftetSykmeldingProps {
     sykmelding: Sykmelding;
+    soknader: Soknad[];
 }
 
-const BekreftetSykmelding = ({ sykmelding }: BekreftetSykmeldingProps) => {
+const BekreftetSykmelding = ({ sykmelding, soknader }: BekreftetSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
