@@ -13,10 +13,55 @@ const mock = FetchMock.configure({
     middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware()),
 });
 
-mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/NY`, sykmeldingNy);
+mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmeldinger`, [
+    sykmeldingNy,
+    sykmeldingSendt,
+    sykmeldingBekreftet,
+    sykmeldingAvvist,
+    sykmeldingAvbrutt,
+]);
+
+mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/APEN`, sykmeldingNy);
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/BEKREFTET`, sykmeldingBekreftet);
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/SENDT`, sykmeldingSendt);
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/AVVIST`, sykmeldingAvvist);
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/AVBRUTT`, sykmeldingAvbrutt);
 
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere`, arbeidsgivereMock);
+
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/APEN/actions/erUtenforVentetid`, {
+    erUtenforVentetid: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/BEKREFTET/actions/erUtenforVentetid`, {
+    erUtenforVentetid: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/SENDT/actions/erUtenforVentetid`, {
+    erUtenforVentetid: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/AVVIST/actions/erUtenforVentetid`, {
+    erUtenforVentetid: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/AVBRUTT/actions/erUtenforVentetid`, {
+    erUtenforVentetid: false,
+});
+
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=APEN`, {
+    soknaderOpprettet: 0,
+    erBehandlet: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=SENDT`, {
+    soknaderOpprettet: 0,
+    erBehandlet: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=BEKREFTET`, {
+    soknaderOpprettet: 0,
+    erBehandlet: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=AVVIST`, {
+    soknaderOpprettet: 0,
+    erBehandlet: false,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=AVBRUTT`, {
+    soknaderOpprettet: 0,
+    erBehandlet: false,
+});

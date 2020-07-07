@@ -3,7 +3,7 @@ import { tilLesbarPeriodeMedArstall } from '../../../utils/datoUtils';
 import { Periode } from '../../../types/sykmelding';
 
 
-export const getSykmeldingPeriod = (sykmeldingsperioder: Periode[]) => {
+export const getTotalSykmeldingLenghtReadableString = (sykmeldingsperioder: Periode[]) => {
 
     const earliestFomPeriod = sykmeldingsperioder.reduce((acc, value) => {
         if (dayjs(value.fom).isBefore(dayjs(acc.fom))) {
