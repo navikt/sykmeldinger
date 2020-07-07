@@ -28,12 +28,14 @@ import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
 import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 import arbeidsgiver from './arbeidsgiver.svg';
 import arbeidsgiverHover from './arbeidsgiverHover.svg';
+import { Soknad } from '../../../types/soknad';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
+    soknader: Soknad[];
 }
 
-const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
+const SendtSykmelding = ({ sykmelding, soknader }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             %KVITTERING% - Sendt, inaktiv søknad - Sendt, aktiv søknad - Sendt, ferdig (?)
