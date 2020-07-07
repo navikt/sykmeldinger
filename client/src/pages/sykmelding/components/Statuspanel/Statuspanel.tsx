@@ -28,7 +28,7 @@ interface StatuspanelProps {
     arbeidsgiverForskutterLonn?: boolean;
     skalViseInnteksmeldingInfo?: boolean; // TOOD: When does this apply?
     skalViseReisetilskuddInfo?: boolean;
-    skalViseBehandlingsdagerInfo?: boolean;
+    skalViseBehandlingsdagerInfo?: boolean; // TODO: Do we need this information?
 }
 
 // TODO: Refactor
