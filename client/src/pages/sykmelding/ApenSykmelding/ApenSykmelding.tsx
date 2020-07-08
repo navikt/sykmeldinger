@@ -16,7 +16,6 @@ import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeel
 import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
 import SendingsSkjema from './SendingsSkjema';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SporsmalInfoheader from './SporsmalInfoheader';
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
@@ -51,7 +50,6 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
 
     return (
         <div className="sykmelding-container">
-            <Sidetopp tekst="Sykmelding" />
             <EldreSykmeldingVarsel />
             <Veileder
                 fargetema="info"

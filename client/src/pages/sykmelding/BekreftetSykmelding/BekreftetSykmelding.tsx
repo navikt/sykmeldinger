@@ -13,7 +13,6 @@ import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/Le
 import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
 import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
@@ -35,8 +34,6 @@ interface BekreftetSykmeldingProps {
 const BekreftetSykmelding = ({ sykmelding, soknader }: BekreftetSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
-            <Sidetopp tekst="Sykmelding" />
-
             <BekreftetStatuspanel sykmelding={sykmelding} />
 
             <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
