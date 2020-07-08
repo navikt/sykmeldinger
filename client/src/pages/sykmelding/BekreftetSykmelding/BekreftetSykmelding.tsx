@@ -26,7 +26,7 @@ import { Sykmelding } from '../../../types/sykmelding';
 import { Soknad } from '../../../types/soknad';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import Statuspanel from '../components/Statuspanel/Statuspanel';
-import { getSoknadstype, getArbeidsgiverForskutterer } from '../../../utils/statuspanel-utils';
+import { getSoknadstype, getArbeidsgiverForskutterer, getSoknadFomDato } from '../../../utils/statuspanel-utils';
 
 interface BekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -41,6 +41,7 @@ const BekreftetSykmelding = ({ sykmelding, arbeidsgivere, soknader }: BekreftetS
                 sykmeldingstatus={sykmelding.sykmeldingStatus.statusEvent}
                 sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
                 soknadstype={getSoknadstype(soknader)}
+                soknadFomDato={getSoknadFomDato(soknader)}
                 avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
                 arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
                 skalViseReisetilskuddInfo={sykmelding.sykmeldingsperioder.some(

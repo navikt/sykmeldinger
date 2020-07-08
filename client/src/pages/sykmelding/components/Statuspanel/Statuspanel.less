@@ -1,11 +1,11 @@
 @import '../../../../App.less';
 
-.statuspanel {
+#statuspanel {
     border: 1px solid #78706a;
     border-radius: 4px;
     margin-bottom: 25px;
 
-    .statuspanel__header {
+    #statuspanel__header {
         // For positioning statusHeader on top of container border
         position: relative;
         top: -1px;
@@ -24,7 +24,7 @@
         }
     }
 
-    .statuspanel__content {
+    #statuspanel__content {
         padding: 20px;
         display: flex;
         align-items: flex-start;
@@ -33,8 +33,12 @@
             margin-right: 15px;
         }
 
-        .statuspanel__sections {
-            section {
+        #statuspanel__sections {
+            .statuspanel__section {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
                 .statuspanel__section-title {
                     margin-bottom: 5px;
                 }
@@ -43,9 +47,16 @@
                 border-bottom: 0.5px solid #666666;
             }
 
-            section:last-child {
+            .statuspanel__section:last-child {
                 border-bottom: 0;
             }
         }
+    }
+
+    .statuspanel--margin-top {
+        margin-top: 15px;
+    }
+    .statuspanel--margin-bottom {
+        margin-bottom: 15px;
     }
 }

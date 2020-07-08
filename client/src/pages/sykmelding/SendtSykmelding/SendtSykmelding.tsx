@@ -31,7 +31,7 @@ import arbeidsgiverHover from './arbeidsgiverHover.svg';
 import Statuspanel from '../components/Statuspanel/Statuspanel';
 import { Soknad } from '../../../types/soknad';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
-import { getSoknadstype, getArbeidsgiverForskutterer } from '../../../utils/statuspanel-utils';
+import { getSoknadstype, getArbeidsgiverForskutterer, getSoknadFomDato } from '../../../utils/statuspanel-utils';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -48,6 +48,7 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                 arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
                 sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
                 soknadstype={getSoknadstype(soknader)}
+                soknadFomDato={getSoknadFomDato(soknader)}
                 avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
                 arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
                 skalViseReisetilskuddInfo={sykmelding.sykmeldingsperioder.some(
