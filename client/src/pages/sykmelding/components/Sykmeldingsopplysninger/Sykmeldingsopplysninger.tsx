@@ -12,14 +12,14 @@ interface SykmeldingsopplysningerProps {
     title: string;
     expandedDefault?: boolean;
     type?: 'NORMAL' | 'ARBEIDSGIVER';
-    children: any | any[];
+    children: React.ReactNode | React.ReactChild | React.ReactChildren;
 }
 
 const Sykmeldingsopplysninger = ({
     title,
-    children,
     expandedDefault = true,
     type = 'NORMAL',
+    children,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
 
@@ -27,29 +27,34 @@ const Sykmeldingsopplysninger = ({
     const iconHover = type === 'ARBEIDSGIVER' ? arbeidsgiverHover : plasterHover;
     const [icon, setIcon] = useState(iconNormal);
 
-    const typeClassname = type === 'ARBEIDSGIVER' ? `-${type}` : '';
-    const hiddenClassname = expanded ? '' : '-hidden';
-
     return (
         <article className="sykmeldingsopplysninger">
             <button
                 onMouseEnter={() => setIcon(iconHover)}
                 onMouseLeave={() => setIcon(iconNormal)}
                 onClick={() => setExpanded(!expanded)}
-                className={`sykmeldingsopplysninger__header${typeClassname}${hiddenClassname} sykmeldingsopplysninger-expandable`}
+                className={`sykmeldingsopplysninger__header ${
+                    type === 'ARBEIDSGIVER' ? 'sykmeldingsopplysninger__header--ARBEIDSGIVER' : ''
+                }`}
             >
-                <img className="sykmeldingsopplysninger__icon" width={30} src={icon} alt="Opplysniger" />
-                <span className="sykmeldingsopplysninger__text">
-                    <Undertittel tag="h2">{title}</Undertittel>
-                </span>
+                <img className="sykmeldingsopplysninger__icon" src={icon} alt="Opplysniger" />
+                <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
+                    {title}
+                </Undertittel>
                 <div className="sykmeldingsopplysninger__expand">
-                    <Normaltekst className="sykmeldingsopplysninger__expand__text" tag="em">
+                    <Normaltekst className="sykmeldingsopplysninger__expand-text">
                         {expanded ? 'Lukk' : 'Åpne'}
                     </Normaltekst>
                     <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
                 </div>
             </button>
-            <div className={`sykmeldingsopplysninger__content${expanded ? '' : '-hidden'}`}>{children}</div>
+            <div
+                className={`sykmeldingsopplysninger__content ${
+                    expanded ? '' : 'sykmeldingsopplysninger__content--hidden'
+                }`}
+            >
+                {children}
+            </div>
         </article>
     );
 };
