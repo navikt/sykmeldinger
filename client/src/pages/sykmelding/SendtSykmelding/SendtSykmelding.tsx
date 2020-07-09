@@ -24,10 +24,6 @@ import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykme
 import EtikettMedTekst from '../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
 import sladd from './sladd.svg';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
-import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
-import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
-import arbeidsgiver from './arbeidsgiver.svg';
-import arbeidsgiverHover from './arbeidsgiverHover.svg';
 import { Soknad } from '../../../types/soknad';
 
 interface SendtSykmeldingProps {
@@ -39,13 +35,7 @@ const SendtSykmelding = ({ sykmelding, soknader }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             %KVITTERING% - Sendt, inaktiv søknad - Sendt, aktiv søknad - Sendt, ferdig (?)
-            <Sykmeldingsopplysninger
-                title="Opplysninger fra sykmeldingen"
-                expandable
-                expandedDefault
-                iconNormal={plaster}
-                iconHover={plasterHover}
-            >
+            <Sykmeldingsopplysninger title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
@@ -82,11 +72,8 @@ const SendtSykmelding = ({ sykmelding, soknader }: SendtSykmeldingProps) => {
             </Sykmeldingsopplysninger>
             <Sykmeldingsopplysninger
                 title="Slik ser sykmeldingen ut for arbeidsgiveren din"
-                expandable
                 expandedDefault={false}
-                iconNormal={arbeidsgiver}
-                iconHover={arbeidsgiverHover}
-                type="arbeidsgiver"
+                type="ARBEIDSGIVER"
             >
                 <div className="panel-content-header">
                     <Sidetittel>TODO: Pasientens navn</Sidetittel>
