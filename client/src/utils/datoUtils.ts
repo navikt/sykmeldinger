@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { Periode } from '../types/sykmelding';
 
 const maaneder = [
     'januar',
@@ -15,6 +16,24 @@ const maaneder = [
     'desember',
 ];
 const SKILLETEGN_PERIODE = '–';
+
+// TODO: refactor to make year only show if different
+export const toReadableTotalPeriodLength = (perioder: Periode[]): string => {
+    const earliestFom: Date = perioder.reduce((earlist, current) => {
+        if (dayjs(current.fom).isBefore(dayjs(earlist.fom))) {
+            return current;
+        }
+        return earlist;
+    }).fom;
+    const latestTom: Date = perioder.reduce((latest, current) => {
+        if (dayjs(current.tom).isAfter(latest.tom)) {
+            return current;
+        }
+        return latest;
+    }).tom;
+
+    return `${dayjs(earliestFom).format('DD. MMMM YYYY')} - ${dayjs(latestTom).format('DD. MMMM YYYY')}`;
+};
 
 export const tilLesbarPeriodeMedArstall = (fom: Date, tom: Date): string => {
     const erSammeAar = fom.getFullYear() === tom.getFullYear();
