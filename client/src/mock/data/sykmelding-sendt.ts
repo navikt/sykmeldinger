@@ -21,7 +21,7 @@ export const sykmeldingSendt = {
         timestamp: '01-01-2020',
         statusEvent: 'SENDT',
         arbeidsgiver: {
-            orgnummer: '12345',
+            orgnummer: '123456',
             orgNavn: 'Posten AS',
         },
     },
