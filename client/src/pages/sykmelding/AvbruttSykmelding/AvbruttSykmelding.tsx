@@ -3,7 +3,6 @@ import React from 'react';
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
 import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
-import AvbruttStatuspanel from '../components/Statuspanel/AvbruttStatuspanel';
 import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
 import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
 import ElementMedTekst from '../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
@@ -34,8 +33,6 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
-
-            <AvbruttStatuspanel sykmelding={sykmelding} />
 
             <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
                 <Tittel tekst="Sykmelding" />
