@@ -32,7 +32,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 </Veilederpanel>
             </div>
 
-            <Sykmeldingsopplysninger title="Opplysninger fra sykmeldingen">
+            <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (

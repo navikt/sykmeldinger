@@ -1,46 +1,82 @@
 import './Sykmeldingsopplysninger.less';
 
-import React, { useState } from 'react';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import React, { useState, useRef } from 'react';
+import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import plaster from './plaster.svg';
-import plasterHover from './plasterHover.svg';
-import arbeidsgiver from './arbeidsgiver.svg';
-import arbeidsgiverHover from './arbeidsgiverHover.svg';
+import plaster from './svg/plaster.svg';
+import plasterHover from './svg/plasterHover.svg';
+import arbeidsgiver from './svg/arbeidsgiver.svg';
+import arbeidsgiverHover from './svg/arbeidsgiverHover.svg';
+import doktor from './svg/doktor.svg';
+import doktorHover from './svg/doktorHover.svg';
 
 interface SykmeldingsopplysningerProps {
+    id: string;
     title: string;
     expandedDefault?: boolean;
-    type?: 'NORMAL' | 'ARBEIDSGIVER';
+    type?: 'NORMAL' | 'ARBEIDSGIVER' | 'FLERE_OPPLYSNINGER';
     children: React.ReactNode | React.ReactChild | React.ReactChildren;
 }
 
 const Sykmeldingsopplysninger = ({
+    id,
     title,
     expandedDefault = true,
     type = 'NORMAL',
     children,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
+    const elementRef = useRef(document.createElement('article'));
 
-    const iconNormal = type === 'ARBEIDSGIVER' ? arbeidsgiver : plaster;
-    const iconHover = type === 'ARBEIDSGIVER' ? arbeidsgiverHover : plasterHover;
-    const [icon, setIcon] = useState(iconNormal);
+    const icons: { iconNormal: string; iconHover: string } = (() => {
+        switch (type) {
+            case 'ARBEIDSGIVER':
+                return { iconNormal: arbeidsgiver, iconHover: arbeidsgiverHover };
+            case 'NORMAL':
+                return { iconNormal: plaster, iconHover: plasterHover };
+            case 'FLERE_OPPLYSNINGER':
+                return { iconNormal: doktor, iconHover: doktorHover };
+        }
+    })();
+    const [icon, setIcon] = useState(icons.iconNormal);
+
+    const classStyleModifier: string = (() => {
+        switch (type) {
+            case 'ARBEIDSGIVER':
+                return 'sykmeldingsopplysninger__header--bg-violet';
+            case 'FLERE_OPPLYSNINGER':
+                return 'sykmeldingsopplysninger__header--bg-white';
+            case 'NORMAL':
+                return '';
+        }
+    })();
 
     return (
-        <article className="sykmeldingsopplysninger">
+        <article id={id} ref={elementRef} className="sykmeldingsopplysninger">
             <button
-                onMouseEnter={() => setIcon(iconHover)}
-                onMouseLeave={() => setIcon(iconNormal)}
-                onClick={() => setExpanded(!expanded)}
-                className={`sykmeldingsopplysninger__header ${
-                    type === 'ARBEIDSGIVER' ? 'sykmeldingsopplysninger__header--ARBEIDSGIVER' : ''
-                }`}
+                aria-expanded={expanded}
+                onMouseEnter={() => setIcon(icons.iconHover)}
+                onMouseLeave={() => setIcon(icons.iconNormal)}
+                onClick={() => {
+                    if (!expanded) {
+                        setTimeout(() => {
+                            elementRef.current.scrollIntoView({ behavior: 'smooth' });
+                        }, 200);
+                    }
+                    setExpanded(!expanded);
+                }}
+                className={`sykmeldingsopplysninger__header ${classStyleModifier}`}
             >
-                <img className="sykmeldingsopplysninger__icon" src={icon} alt="Opplysniger" />
-                <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
-                    {title}
-                </Undertittel>
+                <img aria-hidden="true" className="sykmeldingsopplysninger__icon" src={icon} alt="Opplysniger" />
+                {type === 'FLERE_OPPLYSNINGER' ? (
+                    <Element className="sykmeldingsopplysninger__text" tag="h3">
+                        {title}
+                    </Element>
+                ) : (
+                    <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
+                        {title}
+                    </Undertittel>
+                )}
                 <div className="sykmeldingsopplysninger__expand">
                     <Normaltekst className="sykmeldingsopplysninger__expand-text">
                         {expanded ? 'Lukk' : 'Åpne'}

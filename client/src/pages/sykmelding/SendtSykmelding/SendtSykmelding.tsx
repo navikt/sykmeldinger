@@ -16,9 +16,6 @@ import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/S
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../components/Utvidbar/Utvidbar';
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import EtikettMedTekst from '../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
@@ -54,7 +51,7 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                     (periode) => periode.type === 'BEHANDLINGSDAGER',
                 )}
             />
-            <Sykmeldingsopplysninger title="Opplysninger fra sykmeldingen">
+            <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
@@ -68,10 +65,11 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Utvidbar
-                    ikon={doktor}
-                    ikonHover={doktorHover}
-                    tittel="Flere opplysninger fra den som har sykmeldt deg"
+                <Sykmeldingsopplysninger
+                    id="flere-sykmeldingsopplysnigner"
+                    title="Flere opplysniger fra den som sykmeldte deg"
+                    type="FLERE_OPPLYSNINGER"
+                    expandedDefault={false}
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
@@ -87,9 +85,10 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                     <SeksjonMedTittel tittel="Annet">
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
-                </Utvidbar>
+                </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
             <Sykmeldingsopplysninger
+                id="arbeidsgivers-sykmelding"
                 title="Slik ser sykmeldingen ut for arbeidsgiveren din"
                 expandedDefault={false}
                 type="ARBEIDSGIVER"

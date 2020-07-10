@@ -23,10 +23,7 @@ import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/paneleleme
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../components/Utvidbar/Utvidbar';
 import Veileder from '../components/Veileder/Veileder';
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 
@@ -63,7 +60,7 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                 knappTekst="Gå til utfyllingen"
             />
 
-            <Sykmeldingsopplysninger title="Opplysninger fra sykmeldingen">
+            <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
@@ -78,10 +75,11 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Utvidbar
-                    ikon={doktor}
-                    ikonHover={doktorHover}
-                    tittel="Flere opplysninger fra den som har sykmeldt deg"
+                <Sykmeldingsopplysninger
+                    id="flere-sykmeldingsopplysnigner"
+                    title="Flere opplysniger fra den som sykmeldte deg"
+                    type="FLERE_OPPLYSNINGER"
+                    expandedDefault={false}
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
@@ -97,7 +95,7 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                     <SeksjonMedTittel tittel="Annet">
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
-                </Utvidbar>
+                </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
 
             {/* TODO: Bestemme om denne skal være i Sporsmal-komponent eller som egen komponent */}
