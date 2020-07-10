@@ -4,7 +4,6 @@ import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelemente
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
 import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
 import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
-import BekreftetStatuspanel from '../components/Statuspanel/BekreftetStatuspanel';
 import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
 import ElementMedTekst from '../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
 import FraverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/FraverSeksjon';
@@ -18,30 +17,43 @@ import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/paneleleme
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../components/Utvidbar/Utvidbar';
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
-import person from '../../../svg/person.svg';
-import personHover from '../../../svg/personHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
 import { Soknad } from '../../../types/soknad';
+import { Arbeidsgiver } from '../../../types/arbeidsgiver';
+import Statuspanel from '../components/Statuspanel/Statuspanel';
+import { getSoknadstype, getArbeidsgiverForskutterer, getSoknadFomDato } from '../../../utils/statuspanel-utils';
+import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 
 interface BekreftetSykmeldingProps {
     sykmelding: Sykmelding;
+    arbeidsgivere: Arbeidsgiver[];
     soknader: Soknad[];
 }
 
-const BekreftetSykmelding = ({ sykmelding, soknader }: BekreftetSykmeldingProps) => {
+const BekreftetSykmelding = ({ sykmelding, arbeidsgivere, soknader }: BekreftetSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
-            <BekreftetStatuspanel sykmelding={sykmelding} />
+            <Statuspanel
+                sykmeldingstatus={sykmelding.sykmeldingStatus.statusEvent}
+                sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
+                soknadstype={getSoknadstype(soknader)}
+                soknadFomDato={getSoknadFomDato(soknader)}
+                avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
+                arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
+                skalViseReisetilskuddInfo={sykmelding.sykmeldingsperioder.some(
+                    (periode) => periode.type === 'REISETILSKUDD',
+                )}
+                skalViseBehandlingsdagerInfo={sykmelding.sykmeldingsperioder.some(
+                    (periode) => periode.type === 'BEHANDLINGSDAGER',
+                )}
+            />
 
-            <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
+            <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
-                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
+                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
                 ))}
                 <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
                 <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
@@ -51,10 +63,11 @@ const BekreftetSykmelding = ({ sykmelding, soknader }: BekreftetSykmeldingProps)
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Utvidbar
-                    ikon={doktor}
-                    ikonHover={doktorHover}
-                    tittel="Flere opplysninger fra den som har sykmeldt deg"
+                <Sykmeldingsopplysninger
+                    id="flere-sykmeldingsopplysnigner"
+                    title="Flere opplysniger fra den som sykmeldte deg"
+                    type="FLERE_OPPLYSNINGER"
+                    expandedDefault={false}
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
@@ -70,8 +83,8 @@ const BekreftetSykmelding = ({ sykmelding, soknader }: BekreftetSykmeldingProps)
                     <SeksjonMedTittel tittel="Annet">
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
-                </Utvidbar>
-            </Utvidbar>
+                </Sykmeldingsopplysninger>
+            </Sykmeldingsopplysninger>
         </div>
     );
 };

@@ -20,21 +20,25 @@ export const sykmeldingSendt = {
     sykmeldingStatus: {
         timestamp: '01-01-2020',
         statusEvent: 'SENDT',
+        arbeidsgiver: {
+            orgnummer: '123456',
+            orgNavn: 'Posten AS',
+        },
     },
     medisinskVurdering: {
         hovedDiagnose: {
             system: '2.16.578.1.12.4.1.1.7170',
             kode: 'K24',
-            tekst: 'Rar sykdom',
+            tekst: 'Vondt i magen',
         },
         biDiagnoser: [
             {
                 system: '2.16.578.1.12.4.1.1.7170',
                 kode: '-57',
-                tekst: 'Rar sykdom',
+                tekst: 'Vondt i magen',
             },
             {
-                system: '3.16.578.1.12.4.1.1.7170',
+                system: '2.16.578.1.12.4.1.1.7170',
                 kode: '-59',
                 tekst: 'Sykdom0',
             },

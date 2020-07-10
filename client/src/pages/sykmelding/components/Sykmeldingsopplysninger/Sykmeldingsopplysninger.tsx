@@ -1,71 +1,96 @@
 import './Sykmeldingsopplysninger.less';
 
-import React, { useState } from 'react';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import React, { useState, useRef } from 'react';
+import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
-
-import plaster from './plaster.svg';
+import plaster from './svg/plaster.svg';
+import plasterHover from './svg/plasterHover.svg';
+import arbeidsgiver from './svg/arbeidsgiver.svg';
+import arbeidsgiverHover from './svg/arbeidsgiverHover.svg';
+import doktor from './svg/doktor.svg';
+import doktorHover from './svg/doktorHover.svg';
 
 interface SykmeldingsopplysningerProps {
+    id: string;
     title: string;
-    expandable?: boolean;
     expandedDefault?: boolean;
-    iconNormal: string;
-    iconHover: string;
-    type?: 'arbeidsgiver' | '';
-    children: any | any[];
+    type?: 'NORMAL' | 'ARBEIDSGIVER' | 'FLERE_OPPLYSNINGER';
+    children: React.ReactNode | React.ReactChild | React.ReactChildren;
 }
 
 const Sykmeldingsopplysninger = ({
+    id,
     title,
-    children,
-    expandable,
     expandedDefault = true,
-    iconNormal,
-    iconHover,
-    type = '',
+    type = 'NORMAL',
+    children,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
-    const [icon, setIcon] = useState(iconNormal);
+    const elementRef = useRef(document.createElement('article'));
 
-    const typeClassname = type ? `-${type}` : '';
-    const hiddenClassname = expanded ? '' : '-hidden';
-    const imgAlt = 'Opplysningsikon';
+    const icons: { iconNormal: string; iconHover: string } = (() => {
+        switch (type) {
+            case 'ARBEIDSGIVER':
+                return { iconNormal: arbeidsgiver, iconHover: arbeidsgiverHover };
+            case 'NORMAL':
+                return { iconNormal: plaster, iconHover: plasterHover };
+            case 'FLERE_OPPLYSNINGER':
+                return { iconNormal: doktor, iconHover: doktorHover };
+        }
+    })();
+    const [icon, setIcon] = useState(icons.iconNormal);
 
-    if (expandable) {
-        return (
-            <article className="sykmeldingsopplysninger">
-                <button
-                    onMouseEnter={() => setIcon(iconHover)}
-                    onMouseLeave={() => setIcon(iconNormal)}
-                    onClick={() => setExpanded(!expanded)}
-                    className={`sykmeldingsopplysninger__header${typeClassname}${hiddenClassname} sykmeldingsopplysninger-expandable`}
-                >
-                    <img className="sykmeldingsopplysninger__icon" width={30} src={icon} alt={imgAlt} />
-                    <span className="sykmeldingsopplysninger__text">
-                        <Undertittel tag="h2">{title}</Undertittel>
-                    </span>
-                    <div className="sykmeldingsopplysninger__expand">
-                        <Normaltekst className="sykmeldingsopplysninger__expand__text" tag="em">
-                            {expanded ? 'Lukk' : 'Åpne'}
-                        </Normaltekst>
-                        <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
-                    </div>
-                </button>
-                <div className={`sykmeldingsopplysninger__content${expanded ? '' : '-hidden'}`}>{children}</div>
-            </article>
-        );
-    }
+    const classStyleModifier: string = (() => {
+        switch (type) {
+            case 'ARBEIDSGIVER':
+                return 'sykmeldingsopplysninger__header--bg-violet';
+            case 'FLERE_OPPLYSNINGER':
+                return 'sykmeldingsopplysninger__header--bg-white';
+            case 'NORMAL':
+                return '';
+        }
+    })();
 
     return (
-        <article className="sykmeldingsopplysninger">
-            <header className={`sykmeldingsopplysninger__header${typeClassname}`}>
-                <img className="sykmeldingsopplysninger__icon" width={30} src={plaster} alt={imgAlt} />
-                <span className="sykmeldingsopplysninger__text">
-                    <Undertittel tag="h2">{title}</Undertittel>
-                </span>
-            </header>
-            <div className="sykmeldingsopplysninger__content">{children}</div>
+        <article id={id} ref={elementRef} className="sykmeldingsopplysninger">
+            <button
+                aria-expanded={expanded}
+                onMouseEnter={() => setIcon(icons.iconHover)}
+                onMouseLeave={() => setIcon(icons.iconNormal)}
+                onClick={() => {
+                    if (!expanded) {
+                        setTimeout(() => {
+                            elementRef.current.scrollIntoView({ behavior: 'smooth' });
+                        }, 200);
+                    }
+                    setExpanded(!expanded);
+                }}
+                className={`sykmeldingsopplysninger__header ${classStyleModifier}`}
+            >
+                <img aria-hidden="true" className="sykmeldingsopplysninger__icon" src={icon} alt="Opplysniger" />
+                {type === 'FLERE_OPPLYSNINGER' ? (
+                    <Element className="sykmeldingsopplysninger__text" tag="h3">
+                        {title}
+                    </Element>
+                ) : (
+                    <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
+                        {title}
+                    </Undertittel>
+                )}
+                <div className="sykmeldingsopplysninger__expand">
+                    <Normaltekst className="sykmeldingsopplysninger__expand-text">
+                        {expanded ? 'Lukk' : 'Åpne'}
+                    </Normaltekst>
+                    <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
+                </div>
+            </button>
+            <div
+                className={`sykmeldingsopplysninger__content ${
+                    expanded ? '' : 'sykmeldingsopplysninger__content--hidden'
+                }`}
+            >
+                {children}
+            </div>
         </article>
     );
 };

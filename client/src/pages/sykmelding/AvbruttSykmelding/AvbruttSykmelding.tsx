@@ -3,7 +3,6 @@ import React from 'react';
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
 import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
-import AvbruttStatuspanel from '../components/Statuspanel/AvbruttStatuspanel';
 import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
 import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
 import ElementMedTekst from '../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
@@ -18,12 +17,8 @@ import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/paneleleme
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../components/Utvidbar/Utvidbar';
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
-import person from '../../../svg/person.svg';
-import personHover from '../../../svg/personHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
+import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
@@ -32,14 +27,12 @@ interface AvbruttSykmeldingProps {
 const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
-            <AvbruttStatuspanel sykmelding={sykmelding} />
-
-            <Utvidbar apen tittel="Dine opplysninger" fargetema="info" ikon={person} ikonHover={personHover}>
+            <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
-                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
+                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
                 ))}
                 <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
                 <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
@@ -49,10 +42,11 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Utvidbar
-                    ikon={doktor}
-                    ikonHover={doktorHover}
-                    tittel="Flere opplysninger fra den som har sykmeldt deg"
+                <Sykmeldingsopplysninger
+                    id="flere-sykmeldingsopplysnigner"
+                    title="Flere opplysniger fra den som sykmeldte deg"
+                    type="FLERE_OPPLYSNINGER"
+                    expandedDefault={false}
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
@@ -68,8 +62,8 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
                     <SeksjonMedTittel tittel="Annet">
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
-                </Utvidbar>
-            </Utvidbar>
+                </Sykmeldingsopplysninger>
+            </Sykmeldingsopplysninger>
         </div>
     );
 };

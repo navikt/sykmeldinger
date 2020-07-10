@@ -120,9 +120,11 @@ const SykmeldingSide = () => {
             case 'AVBRUTT':
                 return <AvbruttSykmelding sykmelding={sykmelding} />;
             case 'SENDT':
-                return <SendtSykmelding sykmelding={sykmelding} soknader={soknader} />;
+                return <SendtSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />;
             case 'BEKREFTET':
-                return <BekreftetSykmelding sykmelding={sykmelding} soknader={soknader} />;
+                return (
+                    <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />
+                );
             default:
                 // TODO: Errorcomponent - status not found
                 break;
@@ -148,8 +150,6 @@ const SykmeldingSide = () => {
                         },
                     ]}
                 />
-
-                <button onClick={() => fetchSykmelding()}>refetch sykmelding</button>
                 {SykmeldingComponent}
             </div>
         </>

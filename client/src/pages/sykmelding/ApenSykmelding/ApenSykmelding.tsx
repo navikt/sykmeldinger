@@ -22,14 +22,9 @@ import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/paneleleme
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../components/Utvidbar/Utvidbar';
 import Veileder from '../components/Veileder/Veileder';
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
-import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
-import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
 
 interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -63,16 +58,12 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                 knappTekst="Gå til utfyllingen"
             />
 
-            <Sykmeldingsopplysninger
-                title="Opplysninger fra sykmeldingen"
-                iconNormal={plaster}
-                iconHover={plasterHover}
-            >
+            <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
                 <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
-                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
+                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
                 ))}
                 <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
                 <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
@@ -82,10 +73,11 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Utvidbar
-                    ikon={doktor}
-                    ikonHover={doktorHover}
-                    tittel="Flere opplysninger fra den som har sykmeldt deg"
+                <Sykmeldingsopplysninger
+                    id="flere-sykmeldingsopplysnigner"
+                    title="Flere opplysniger fra den som sykmeldte deg"
+                    type="FLERE_OPPLYSNINGER"
+                    expandedDefault={false}
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
@@ -101,7 +93,7 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                     <SeksjonMedTittel tittel="Annet">
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
-                </Utvidbar>
+                </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
 
             {/* TODO: Bestemme om denne skal være i Sporsmal-komponent eller som egen komponent */}

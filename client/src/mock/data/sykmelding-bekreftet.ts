@@ -11,8 +11,8 @@ export const sykmeldingBekreftet = {
     },
     sykmeldingsperioder: [
         {
-            fom: '02-10-2020',
-            tom: '02-11-2020',
+            fom: '02-20-2020',
+            tom: '02-21-2020',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
         },
@@ -34,7 +34,7 @@ export const sykmeldingBekreftet = {
                 tekst: 'Rar sykdom',
             },
             {
-                system: '3.16.578.1.12.4.1.1.7170',
+                system: '2.16.578.1.12.4.1.1.7170',
                 kode: '-59',
                 tekst: 'Sykdom0',
             },

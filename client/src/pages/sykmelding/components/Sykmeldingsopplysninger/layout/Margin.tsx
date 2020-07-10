@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface MarginProps {
-    children: any | any[];
+    children: React.ReactNode | React.ReactChild | React.ReactChildren;
     liten?: boolean;
     stor?: boolean;
 }
