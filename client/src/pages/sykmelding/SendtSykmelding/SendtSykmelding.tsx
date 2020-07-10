@@ -16,18 +16,11 @@ import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/S
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Utvidbar from '../components/Utvidbar/Utvidbar';
-import doktor from '../../../svg/doktor.svg';
-import doktorHover from '../../../svg/doktorHover.svg';
 import { Sykmelding } from '../../../types/sykmelding';
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import EtikettMedTekst from '../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
 import sladd from './sladd.svg';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
-import plaster from '../components/Sykmeldingsopplysninger/plaster.svg';
-import plasterHover from '../components/Sykmeldingsopplysninger/plasterHover.svg';
-import arbeidsgiver from './arbeidsgiver.svg';
-import arbeidsgiverHover from './arbeidsgiverHover.svg';
 import Statuspanel from '../components/Statuspanel/Statuspanel';
 import { Soknad } from '../../../types/soknad';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
@@ -58,17 +51,11 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                     (periode) => periode.type === 'BEHANDLINGSDAGER',
                 )}
             />
-            <Sykmeldingsopplysninger
-                title="Opplysninger fra sykmeldingen"
-                expandable
-                expandedDefault
-                iconNormal={plaster}
-                iconHover={plasterHover}
-            >
+            <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
-                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
+                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
                 ))}
                 <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
                 <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
@@ -78,10 +65,11 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
 
-                <Utvidbar
-                    ikon={doktor}
-                    ikonHover={doktorHover}
-                    tittel="Flere opplysninger fra den som har sykmeldt deg"
+                <Sykmeldingsopplysninger
+                    id="flere-sykmeldingsopplysnigner"
+                    title="Flere opplysniger fra den som sykmeldte deg"
+                    type="FLERE_OPPLYSNINGER"
+                    expandedDefault={false}
                 >
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}
@@ -97,15 +85,13 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                     <SeksjonMedTittel tittel="Annet">
                         <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
                     </SeksjonMedTittel>
-                </Utvidbar>
+                </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
             <Sykmeldingsopplysninger
+                id="arbeidsgivers-sykmelding"
                 title="Slik ser sykmeldingen ut for arbeidsgiveren din"
-                expandable
                 expandedDefault={false}
-                iconNormal={arbeidsgiver}
-                iconHover={arbeidsgiverHover}
-                type="arbeidsgiver"
+                type="ARBEIDSGIVER"
             >
                 <div className="panel-content-header">
                     <Sidetittel>TODO: Pasientens navn</Sidetittel>

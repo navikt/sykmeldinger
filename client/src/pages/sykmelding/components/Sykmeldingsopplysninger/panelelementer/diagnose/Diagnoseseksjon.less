@@ -1,21 +1,22 @@
-.diagnose-container {
+@import '../../../../../../App.less';
+
+.diagnose-section {
     display: flex;
     flex-wrap: wrap;
+
+    .diagnose-section__element {
+        flex: 1 1 auto;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        width: 50%;
+    }
 }
 
-.diagnose-seksjon {
-    flex: 1 1 auto;
-    margin-bottom: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.diagnose-seksjon-kode {
-    &:extend(.diagnose-seksjon);
-    display: flex;
-    flex-direction: column;
-}
-
-.diagnose-seksjon-kode-tittel-container {
-    display: flex;
+@media (max-width: @screen-sm) {
+    .diagnose-section {
+        .diagnose-section__element {
+            width: 100%;
+        }
+    }
 }

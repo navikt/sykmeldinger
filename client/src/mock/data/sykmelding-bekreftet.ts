@@ -34,7 +34,7 @@ export const sykmeldingBekreftet = {
                 tekst: 'Rar sykdom',
             },
             {
-                system: '3.16.578.1.12.4.1.1.7170',
+                system: '2.16.578.1.12.4.1.1.7170',
                 kode: '-59',
                 tekst: 'Sykdom0',
             },
