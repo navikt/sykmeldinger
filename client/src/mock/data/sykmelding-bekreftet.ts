@@ -11,8 +11,8 @@ export const sykmeldingBekreftet = {
     },
     sykmeldingsperioder: [
         {
-            fom: '02-10-2020',
-            tom: '02-11-2020',
+            fom: '02-20-2020',
+            tom: '02-21-2020',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
         },

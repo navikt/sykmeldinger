@@ -20,6 +20,10 @@ export const sykmeldingSendt = {
     sykmeldingStatus: {
         timestamp: '01-01-2020',
         statusEvent: 'SENDT',
+        arbeidsgiver: {
+            orgnummer: '123456',
+            orgNavn: 'Posten AS',
+        },
     },
     medisinskVurdering: {
         hovedDiagnose: {
