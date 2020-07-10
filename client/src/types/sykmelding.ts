@@ -143,10 +143,20 @@ class SykmeldingStatus {
 
 // ------ MEDISINSK_VURDERING
 
-export interface Diagnose {
+export enum DiagnosekodeSystem {
+    '2.16.578.1.12.4.1.1.7110' = 'ICD-10',
+    '2.16.578.1.12.4.1.1.7170' = 'ICPC-2',
+}
+export class Diagnose {
     kode: string;
-    system: string;
+    system: DiagnosekodeSystem;
     tekst: string;
+
+    constructor(diagnose: any) {
+        this.kode = diagnose.kode;
+        this.system = DiagnosekodeSystem[diagnose.system as keyof typeof DiagnosekodeSystem];
+        this.tekst = diagnose.tekst;
+    }
 }
 
 export enum AnnenFraverGrunn {
@@ -183,8 +193,8 @@ export class MedisinskVurdering {
     annenFraversArsak?: AnnenFraversArsak;
 
     constructor(medisinskVurdering: any) {
-        this.hovedDiagnose = medisinskVurdering.hovedDiagnose;
-        this.biDiagnoser = medisinskVurdering.biDiagnoser;
+        this.hovedDiagnose = new Diagnose(medisinskVurdering.hovedDiagnose);
+        this.biDiagnoser = medisinskVurdering.biDiagnoser.map((biDiagnose: any) => new Diagnose(biDiagnose));
         this.svangerskap = medisinskVurdering.svangerskap;
         this.yrkesskade = medisinskVurdering.yrkesskade;
         this.yrkesskadeDato = new Date(medisinskVurdering.yrkesskadeDato);

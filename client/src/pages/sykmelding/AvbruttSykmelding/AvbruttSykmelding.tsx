@@ -39,7 +39,7 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
-                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} bidiagnose />
+                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
                 ))}
                 <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
                 <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
