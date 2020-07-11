@@ -6,7 +6,6 @@ import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelem
 import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
 import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
 import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
-import EldreSykmeldingVarsel from './EldreSykmeldingVarsel';
 import ElementMedTekst from '../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
 import FraverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/FraverSeksjon';
 import Friskmelding from '../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
@@ -45,7 +44,6 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
 
     return (
         <div className="sykmelding-container">
-            <EldreSykmeldingVarsel />
             <Veileder
                 fargetema="info"
                 innhold={
