@@ -49,7 +49,7 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
         <div className="sykmelding-container">
             <Sidetopp tekst="Sykmelding" />
             <EldreSykmeldingVarsel />
-            <div className="container--margin-bottom">
+            <div className="margin-bottom--4">
                 <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
                     Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
                     Du velger selv om du vil bruke sykmeldingen.

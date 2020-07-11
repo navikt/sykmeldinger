@@ -68,7 +68,7 @@ const SykmeldingerPage = () => {
                         },
                     ]}
                 />
-                <div className="container--margin-bottom">
+                <div className="margin-bottom--4">
                     <Veilederpanel kompakt fargetema="info" svg={<VeilederFemaleSvg />}>
                         NAV mottar alle sykmeldinger. Ser du den ikke her? Det betyr at den som har sykmeldt deg ikke
                         sender den digitalt til NAV. Da bruker du papirsykmeldingen i stedet.

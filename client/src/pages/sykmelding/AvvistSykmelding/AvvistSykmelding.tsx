@@ -21,7 +21,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
 
     return (
         <div className="sykmelding-container">
-            <div className="container--margin-bottom">
+            <div className="margin-bottom--4">
                 <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
                     <VeilederContent sykmelding={sykmelding} />
                 </Veilederpanel>

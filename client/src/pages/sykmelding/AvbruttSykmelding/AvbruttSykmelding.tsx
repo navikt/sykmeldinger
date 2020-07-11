@@ -12,26 +12,36 @@ import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/Le
 import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
 import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 import { Sykmelding } from '../../../types/sykmelding';
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
+import dayjs from 'dayjs';
+import { Knapp } from 'nav-frontend-knapper';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
+    // TODO: useFetch for gjenåpne sykmelding
+
     return (
         <div className="sykmelding-container">
-            <Sidetopp tekst="Sykmelding" />
-
+            <header className="margin-bottom--4">
+                <AlertStripe className="margin-bottom--1" type="feil">
+                    <Undertittel tag="h2">Sykmeldingen ble avbrutt av deg</Undertittel>
+                    <EtikettLiten>
+                        Dato avbrutt: {dayjs(sykmelding.sykmeldingStatus.timestamp).format('dddd D. MMMM, kl. HH:mm')}
+                    </EtikettLiten>
+                </AlertStripe>
+                <Knapp>Bruk sykmeldingen</Knapp>
+            </header>
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
-                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
