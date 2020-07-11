@@ -13,7 +13,7 @@ import { brukerTrengerNySykmelding, clearDependentValues } from './skjemaCompone
 import { getFailText, validateAll, validateField, validators } from './skjemaComponents/validators';
 import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
-import useFetch from '../../../hooks/useFetch';
+import useFetch from '../../commonComponents/hooks/useFetch';
 import { SoknadBehandlet } from '../../../types/soknadBehandlet';
 
 export const fieldValuesSchema: FieldValuesType = {

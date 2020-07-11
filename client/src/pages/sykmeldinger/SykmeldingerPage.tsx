@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useFetch, { areAnyNotStartetOrPending } from '../../hooks/useFetch';
+import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/useFetch';
 import { Sykmelding } from '../../types/sykmelding';
 import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
