@@ -126,7 +126,7 @@ const SykmeldingSide = () => {
                     <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />
                 );
             default:
-                // TODO: Errorcomponent - status not found
+                // TODO: Errorcomponent -  not found
                 break;
         }
     })();

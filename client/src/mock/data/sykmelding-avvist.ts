@@ -3,7 +3,13 @@ export const sykmeldingAvvist = {
     mottattTidspunkt: '01-10-2020',
     behandlingsutfall: {
         status: 'INVALID',
-        ruleHits: [],
+        ruleHits: [
+            {
+                messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
+                messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
+                ruleName: 'tilbakedatering',
+            },
+        ],
     },
     arbeidsgiver: {
         navn: 'Navn Navnesen',
