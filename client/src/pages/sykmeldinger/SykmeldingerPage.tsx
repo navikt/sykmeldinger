@@ -6,6 +6,8 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import Header from '../commonComponents/Header/Header';
 import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
 import LenkepanelContainer from './LenkepanelContainer';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import VeilederFemaleSvg from '../commonComponents/Veileder/svg/VeilederFemaleSvg';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -66,6 +68,12 @@ const SykmeldingerPage = () => {
                         },
                     ]}
                 />
+                <div className="container--margin-bottom">
+                    <Veilederpanel kompakt fargetema="info" svg={<VeilederFemaleSvg />}>
+                        NAV mottar alle sykmeldinger. Ser du den ikke her? Det betyr at den som har sykmeldt deg ikke
+                        sender den digitalt til NAV. Da bruker du papirsykmeldingen i stedet.
+                    </Veilederpanel>
+                </div>
                 <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenAndAvvistSykemdinger} />
                 <LenkepanelContainer title="Tidligere sykmeldinger" sykmeldinger={pastSykmeldinger} showSortBy />
             </div>
