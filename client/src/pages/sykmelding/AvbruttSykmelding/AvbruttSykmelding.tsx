@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
@@ -12,26 +12,50 @@ import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/Le
 import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
 import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import Sidetopp from '../components/Sidetopp/Sidetopp';
 import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 import { Sykmelding } from '../../../types/sykmelding';
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
+import dayjs from 'dayjs';
+import { Knapp } from 'nav-frontend-knapper';
+import useFetch from '../../../hooks/useFetch';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
+    fetchSykmelding: (request?: RequestInit | undefined) => void;
 }
 
-const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
+const AvbruttSykmelding = ({ sykmelding, fetchSykmelding }: AvbruttSykmeldingProps) => {
+    const { status: avbrytStatus, error: avbrytError, fetch: fetchAvbryt } = useFetch<any>(
+        `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/actions/gjenapne/${sykmelding.id}`,
+    );
+
+    useEffect(() => {
+        if (avbrytStatus === 'FINISHED' && !avbrytError) {
+            // Reopening of sykmelding successful
+            // Triggering fetchSykmelding will retrieve the same sykmelding with status APEN
+            fetchSykmelding();
+        }
+    }, [avbrytStatus, avbrytError, fetchSykmelding]);
+
     return (
         <div className="sykmelding-container">
-            <Sidetopp tekst="Sykmelding" />
-
+            <div className="margin-bottom--4">
+                <AlertStripe className="margin-bottom--1" type="feil">
+                    <Undertittel tag="h2">Sykmeldingen ble avbrutt av deg</Undertittel>
+                    <EtikettLiten>
+                        Dato avbrutt: {dayjs(sykmelding.sykmeldingStatus.timestamp).format('dddd D. MMMM, kl. HH:mm')}
+                    </EtikettLiten>
+                </AlertStripe>
+                <Knapp spinner={avbrytStatus === 'PENDING'} onClick={() => fetchAvbryt()}>
+                    Bruk sykmeldingen
+                </Knapp>
+            </div>
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
-                <Tittel tekst="Sykmelding" />
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (

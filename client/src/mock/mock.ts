@@ -11,7 +11,7 @@ import { soknadNy, soknadFremtidig } from './data/soknader';
 
 const mock = FetchMock.configure({
     enableFallback: true,
-    middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware()),
+    middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(1000), MiddlewareUtils.loggingMiddleware()),
 });
 
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmeldinger`, [
@@ -72,3 +72,5 @@ mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/BEKREFTET
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/APEN`, []);
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/AVBRUTT`, []);
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/AVVIST`, []);
+
+mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/actions/gjenapne/AVBRUTT`, {});
