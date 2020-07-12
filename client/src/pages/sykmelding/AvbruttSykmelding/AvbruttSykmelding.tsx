@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
@@ -22,13 +22,25 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
+import useFetch from '../../../hooks/useFetch';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
+    fetchSykmelding: (request?: RequestInit | undefined) => void;
 }
 
-const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
-    // TODO: useFetch for gjenåpne sykmelding
+const AvbruttSykmelding = ({ sykmelding, fetchSykmelding }: AvbruttSykmeldingProps) => {
+    const { status: avbrytStatus, error: avbrytError, fetch: fetchAvbryt } = useFetch<any>(
+        `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/actions/gjenapne/${sykmelding.id}`,
+    );
+
+    useEffect(() => {
+        if (avbrytStatus === 'FINISHED' && !avbrytError) {
+            // Reopening of sykmelding successful
+            // Triggering fetchSykmelding will retrieve the same sykmelding with status APEN
+            fetchSykmelding();
+        }
+    }, [avbrytStatus, avbrytError, fetchSykmelding]);
 
     return (
         <div className="sykmelding-container">
@@ -39,7 +51,9 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
                         Dato avbrutt: {dayjs(sykmelding.sykmeldingStatus.timestamp).format('dddd D. MMMM, kl. HH:mm')}
                     </EtikettLiten>
                 </AlertStripe>
-                <Knapp>Bruk sykmeldingen</Knapp>
+                <Knapp spinner={avbrytStatus === 'PENDING'} onClick={() => fetchAvbryt()}>
+                    Bruk sykmeldingen
+                </Knapp>
             </header>
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
