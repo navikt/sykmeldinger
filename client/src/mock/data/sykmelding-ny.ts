@@ -1,5 +1,5 @@
-export const sykmeldingNy = {
-    id: 'NY',
+export const sykmeldingApen = {
+    id: 'APEN',
     mottattTidspunkt: '01-10-2020',
     behandlingsutfall: {
         status: 'OK',
