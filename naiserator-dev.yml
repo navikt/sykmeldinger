@@ -35,5 +35,5 @@ spec:
       memory: 128Mi
   webproxy: false
   ingresses:
-    - "https://tjenester-q1.nav.no/sykmelding"
-    - "https://sykmelding.nais.oera-q.local/"
+    - "https://tjenester-q1.nav.no/sykefravaer/sykmeldinger"
+    - "https://sykmeldinger.nais.oera-q.local/"

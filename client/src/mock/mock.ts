@@ -3,7 +3,7 @@ import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import arbeidsgivereMock from './data/arbeidsgivereMock';
 import { sykmeldingBekreftet } from './data/sykmelding-bekreftet';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { sykmeldingNy } from './data/sykmelding-ny';
+import { sykmeldingApen } from './data/sykmelding-ny';
 import { sykmeldingSendt } from './data/sykmelding-sendt';
 import { sykmeldingAvvist } from './data/sykmelding-avvist';
 import { sykmeldingAvbrutt } from './data/sykmelding-avbrutt';
@@ -15,14 +15,14 @@ const mock = FetchMock.configure({
 });
 
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmeldinger`, [
-    sykmeldingNy,
+    sykmeldingApen,
     sykmeldingSendt,
     sykmeldingBekreftet,
     sykmeldingAvvist,
     sykmeldingAvbrutt,
 ]);
 
-mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/APEN`, sykmeldingNy);
+mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/APEN`, sykmeldingApen);
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/BEKREFTET`, sykmeldingBekreftet);
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/SENDT`, sykmeldingSendt);
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/AVVIST`, sykmeldingAvvist);

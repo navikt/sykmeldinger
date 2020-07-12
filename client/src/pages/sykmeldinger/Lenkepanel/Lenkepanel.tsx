@@ -12,6 +12,7 @@ import plasterAvvistHover from './svg/plasterAvvistHover.svg';
 import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './Lenkepanel.less';
 import { toReadableTotalPeriodLength } from '../../../utils/datoUtils';
+import { useHistory } from 'react-router-dom';
 
 // TODO: Get all icons
 const getIcons = (status: StatusEvent | RegelStatus): { iconNormal: string; iconHover: string } => {
@@ -59,11 +60,18 @@ const Lenkepanel = ({ sykmeldingId, sykmeldingsstatus, sykmeldingsperioder, arbe
     const statusText = getStatusText(sykmeldingsstatus);
     const periodeString = toReadableTotalPeriodLength(sykmeldingsperioder);
 
+    const history = useHistory();
+
     return (
         <LenkepanelBase
             onMouseEnter={() => setActiveIcon(iconSet.iconHover)}
             onMouseLeave={() => setActiveIcon(iconSet.iconNormal)}
             href={`/sykmeldinger/${sykmeldingId}`}
+            onClick={(event) => {
+                event.preventDefault();
+                history.push(`/sykmeldinger/${sykmeldingId}`);
+                window.scrollTo(0, 0);
+            }}
             className={sykmeldingsstatus === 'APEN' || sykmeldingsstatus === 'INVALID' ? 'lenkepanel--alert' : ''}
             border
         >

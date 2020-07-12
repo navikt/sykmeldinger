@@ -22,7 +22,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
-import useFetch from '../../../hooks/useFetch';
+import useFetch from '../../commonComponents/hooks/useFetch';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;

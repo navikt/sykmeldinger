@@ -10,7 +10,7 @@ import ApenSykmelding from './ApenSykmelding/ApenSykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import { Arbeidsgiver } from '../../types/arbeidsgiver';
 import { Sykmelding } from '../../types/sykmelding';
-import useFetch, { areAnyNotStartetOrPending } from '../../hooks/useFetch';
+import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/useFetch';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Soknad } from '../../types/soknad';
