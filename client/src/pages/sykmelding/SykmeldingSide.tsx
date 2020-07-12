@@ -118,7 +118,7 @@ const SykmeldingSide = () => {
                     />
                 );
             case 'AVBRUTT':
-                return <AvbruttSykmelding sykmelding={sykmelding} />;
+                return <AvbruttSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />;
             case 'SENDT':
                 return <SendtSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />;
             case 'BEKREFTET':
@@ -126,7 +126,7 @@ const SykmeldingSide = () => {
                     <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />
                 );
             default:
-                // TODO: Errorcomponent - status not found
+                // TODO: Errorcomponent -  not found
                 break;
         }
     })();

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
@@ -21,9 +20,11 @@ import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/paneleleme
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import Tittel from '../components/Sykmeldingsopplysninger/layout/Tittel';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Veileder from '../components/Veileder/Veileder';
+
 import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import VeilederMaleSvg from '../../commonComponents/Veileder/svg/VeilederMaleSvg';
 
 interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -44,17 +45,12 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
 
     return (
         <div className="sykmelding-container">
-            <Veileder
-                fargetema="info"
-                innhold={
-                    <Normaltekst>
-                        Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
-                        om? Du velger selv om du vil bruke sykmeldingen.
-                    </Normaltekst>
-                }
-                onClick={() => window.scrollTo({ top: utfyllingRef.current.offsetTop - 100, behavior: 'smooth' })}
-                knappTekst="Gå til utfyllingen"
-            />
+            <div className="margin-bottom--4">
+                <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
+                    Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
+                    Du velger selv om du vil bruke sykmeldingen.
+                </Veilederpanel>
+            </div>
 
             <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
                 <Tittel tekst="Sykmelding" />
