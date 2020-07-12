@@ -44,7 +44,7 @@ const AvbruttSykmelding = ({ sykmelding, fetchSykmelding }: AvbruttSykmeldingPro
 
     return (
         <div className="sykmelding-container">
-            <header className="margin-bottom--4">
+            <div className="margin-bottom--4">
                 <AlertStripe className="margin-bottom--1" type="feil">
                     <Undertittel tag="h2">Sykmeldingen ble avbrutt av deg</Undertittel>
                     <EtikettLiten>
@@ -54,7 +54,7 @@ const AvbruttSykmelding = ({ sykmelding, fetchSykmelding }: AvbruttSykmeldingPro
                 <Knapp spinner={avbrytStatus === 'PENDING'} onClick={() => fetchAvbryt()}>
                     Bruk sykmeldingen
                 </Knapp>
-            </header>
+            </div>
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
