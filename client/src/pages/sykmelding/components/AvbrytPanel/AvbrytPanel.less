@@ -1,0 +1,21 @@
+@import '../../../../App.less';
+
+.avbryt-panel {
+    background-color: @navLysGra;
+    border-radius: 4px;
+    padding: 3rem 4rem;
+    text-align: center;
+    position: relative;
+
+    .avbryt-panel__cross {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+}
+
+@media (max-width: @screen-sm) {
+    .avbryt-panel {
+        padding: 2rem 3rem;
+    }
+}

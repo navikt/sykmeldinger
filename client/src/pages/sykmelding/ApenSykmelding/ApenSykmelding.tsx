@@ -29,7 +29,7 @@ interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
     sykmeldingUtenforVentetid: boolean;
-}   
+}
 
 const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
     sykmelding,
@@ -88,6 +88,7 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
             <div ref={utfyllingRef} style={{ marginTop: '2rem', marginBottom: '2rem' }}>
                 <SporsmalInfoheader />
             </div>
+            
             <Form sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} erUtenforVentetid={sykmeldingUtenforVentetid} />
         </div>
     );
