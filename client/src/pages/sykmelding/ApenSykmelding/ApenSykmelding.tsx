@@ -25,11 +25,44 @@ import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../commonComponents/Veileder/svg/VeilederMaleSvg';
 
+import useForm, { ValidationFunctions } from '../../commonComponents/hooks/useForm';
+import { Feiloppsummering } from 'nav-frontend-skjema';
+
 interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
     sykmeldingUtenforVentetid: boolean;
 }
+
+interface Form {
+    prop1: string;
+    prop2: number;
+    prop3?: string;
+    prop4: Date;
+}
+
+const validationFns: ValidationFunctions<Form> = {
+    prop1: (value) => {
+        if (!value.prop1) {
+            return 'Prop 1 is required';
+        }
+    },
+    prop2: (value) => {
+        if (!value.prop2) {
+            return 'Prop 2 is required';
+        }
+    },
+    prop3: (value) => {
+        if (!value.prop2) {
+            return 'This is requires';
+        }
+    },
+    prop4: (value) => {
+        if (!value.prop2) {
+            return 'This is requires';
+        }
+    },
+};
 
 const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
     sykmelding,
@@ -38,8 +71,44 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
 }: ApenSykmeldingProps) => {
     const utfyllingRef = useRef<HTMLDivElement>(document.createElement('div'));
 
+    const { formState, errors, setFormState, handleSubmit } = useForm<Form>({
+        validationFunctions: validationFns,
+        defaultValues: { prop1: undefined },
+    });
+
+    console.log(formState);
+    console.log(errors);
+
     return (
         <div className="sykmelding-container">
+            <button
+                id="prop1"
+                onClick={() => {
+                    setFormState((state) => ({ ...state, prop1: 'this is a value' }));
+                }}
+            >
+                Set prop1
+            </button>
+            <button
+                id="prop2"
+                onClick={() => {
+                    setFormState((state) => ({ ...state, prop2: 2 }));
+                }}
+            >
+                Set prop2
+            </button>
+            <button
+                onClick={() => {
+                    handleSubmit((state) => {
+                        console.log('Submitting!');
+                        // state may still be of Partial<Form> if the validation functions are not written properly
+                        console.log(state);
+                    });
+                }}
+            >
+                submit
+            </button>
+            {!!errors && <Feiloppsummering tittel="feil" feil={errors} />}
             <div className="margin-bottom--4">
                 <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
                     Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
