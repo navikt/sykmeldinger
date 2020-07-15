@@ -9,7 +9,7 @@ export type ValidationFunctions<T> = { [key in keyof T]: (value: Partial<T>) => 
 
 interface FormConfig<T> {
     validationFunctions: ValidationFunctions<T>;
-    defaultValues: Partial<T>;
+    defaultValues?: Partial<T>;
 }
 
 interface Form<T> {
