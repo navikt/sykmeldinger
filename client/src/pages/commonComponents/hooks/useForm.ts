@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 
 // helper function for infering types with Object.entries
@@ -7,37 +7,43 @@ export const getEntries = <T extends {}>(object: T): Array<[keyof T, T[keyof T]]
 
 export type ValidationFunctions<T> = { [key in keyof T]: (value: Partial<T>) => string | undefined };
 
-interface Form<T> {
-    formState: Partial<T>;
-    errors: FeiloppsummeringFeil[] | null;
-    setFormState: React.Dispatch<React.SetStateAction<Partial<T>>>;
-    handleSubmit: (onSubmit: (state: T) => void) => void;
-}
-
 interface FormConfig<T> {
     validationFunctions: ValidationFunctions<T>;
     defaultValues: Partial<T>;
 }
 
+interface Form<T> {
+    formState: Partial<T>;
+    errors: FeiloppsummeringFeil[] | null | undefined;
+    setFormState: React.Dispatch<React.SetStateAction<Partial<T>>>;
+    handleSubmit: (onSubmit: (state: T) => void) => void;
+}
+
 const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>): Form<T> => {
     const [state, setState] = useState<Partial<T>>(defaultValues);
-    const [errors, setErrors] = useState<FeiloppsummeringFeil[] | null>(null);
+    const [errors, setErrors] = useState<FeiloppsummeringFeil[] | null | undefined>(undefined);
     const [isFirstSubmit, setIsFirstSubmit] = useState<boolean>(true);
 
-    const getErrors = useCallback(() => {
+    const errorsMemo: FeiloppsummeringFeil[] | null = useMemo(() => {
         const errors: FeiloppsummeringFeil[] = [];
         getEntries(validationFunctions).forEach(([key, validationFunction]) => {
             const maybeError = validationFunction(state);
             if (maybeError) {
-                errors.push({ feilmelding: maybeError, skjemaelementId: key as string });
+                errors.push({ feilmelding: maybeError, skjemaelementId: String(key) });
             }
         });
         return errors.length ? errors : null;
     }, [state, validationFunctions]);
 
+    useEffect(() => {
+        if (isFirstSubmit === false) {
+            setErrors(errorsMemo);
+        }
+    }, [isFirstSubmit, setErrors, errorsMemo]);
+
     // Type guard ensuring that state conforms to T is list of errors is empty
-    const isValid = <T>(state: any): state is T => {
-        if (getErrors()) {
+    const isValidForm = <T>(state: any): state is T => {
+        if (errorsMemo) {
             return false;
         }
         return true;
@@ -47,16 +53,10 @@ const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>):
         if (isFirstSubmit) {
             setIsFirstSubmit(false);
         }
-        if (isValid<T>(state)) {
+        if (isValidForm<T>(state)) {
             onSubmit(state);
         }
     };
-
-    useEffect(() => {
-        if (!isFirstSubmit) {
-            setErrors(getErrors());
-        }
-    }, [isFirstSubmit, getErrors]);
 
     return { formState: state, errors, setFormState: setState, handleSubmit };
 };

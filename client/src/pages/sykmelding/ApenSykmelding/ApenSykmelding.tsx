@@ -41,7 +41,7 @@ interface Form {
     prop4: Date;
 }
 
-const validationFns: ValidationFunctions<Form> = {
+const validationFunctions: ValidationFunctions<Form> = {
     prop1: (value) => {
         if (!value.prop1) {
             return 'Prop 1 is required';
@@ -72,8 +72,8 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
     const utfyllingRef = useRef<HTMLDivElement>(document.createElement('div'));
 
     const { formState, errors, setFormState, handleSubmit } = useForm<Form>({
-        validationFunctions: validationFns,
-        defaultValues: { prop1: undefined },
+        validationFunctions,
+        defaultValues: { prop1: undefined, prop2: undefined },
     });
 
     console.log(formState);
