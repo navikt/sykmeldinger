@@ -14,25 +14,27 @@ interface FormConfig<T> {
 
 interface Form<T> {
     formState: Partial<T>;
-    errors: FeiloppsummeringFeil[] | null | undefined;
+    errors: Map<keyof T, FeiloppsummeringFeil>;
     setFormState: React.Dispatch<React.SetStateAction<Partial<T>>>;
     handleSubmit: (onSubmit: (state: T) => void) => void;
 }
 
 const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>): Form<T> => {
     const [state, setState] = useState<Partial<T>>(defaultValues);
-    const [errors, setErrors] = useState<FeiloppsummeringFeil[] | null | undefined>(undefined);
+    const [errors, setErrors] = useState<Map<keyof T, FeiloppsummeringFeil>>(new Map<keyof T, FeiloppsummeringFeil>());
     const [isFirstSubmit, setIsFirstSubmit] = useState<boolean>(true);
 
-    const errorsMemo: FeiloppsummeringFeil[] | null = useMemo(() => {
-        const errors: FeiloppsummeringFeil[] = [];
+    const errorsMemo: Map<keyof T, FeiloppsummeringFeil> = useMemo(() => {
+        const errorMap = new Map<keyof T, FeiloppsummeringFeil>();
         getEntries(validationFunctions).forEach(([key, validationFunction]) => {
             const maybeError = validationFunction(state);
             if (maybeError) {
-                errors.push({ feilmelding: maybeError, skjemaelementId: String(key) });
+                errorMap.set(key, { feilmelding: maybeError, skjemaelementId: String(key) });
+            } else {
+                errorMap.delete(key);
             }
         });
-        return errors.length ? errors : null;
+        return errorMap;
     }, [state, validationFunctions]);
 
     useEffect(() => {
@@ -43,7 +45,7 @@ const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>):
 
     // Type guard ensuring that state conforms to T is list of errors is empty
     const isValidForm = <T>(state: any): state is T => {
-        if (errorsMemo) {
+        if (errorsMemo.size) {
             return false;
         }
         return true;
