@@ -5,7 +5,7 @@ import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
 export const getEntries = <T extends {}>(object: T): Array<[keyof T, T[keyof T]]> =>
     Object.entries(object) as Array<[keyof T, T[keyof T]]>;
 
-export type ValidationFunctions<T> = { [key in keyof T]: (value: Partial<T>) => string | undefined };
+export type ValidationFunctions<T> = { [key in Required<keyof T>]: (value: Partial<T>) => string | undefined };
 
 interface FormConfig<T> {
     validationFunctions: ValidationFunctions<T>;
@@ -23,6 +23,7 @@ const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>):
     const [state, setState] = useState<Partial<T>>(defaultValues);
     const [errors, setErrors] = useState<Map<keyof T, FeiloppsummeringFeil>>(new Map<keyof T, FeiloppsummeringFeil>());
     const [isFirstSubmit, setIsFirstSubmit] = useState<boolean>(true);
+    console.log(state);
 
     const errorsMemo: Map<keyof T, FeiloppsummeringFeil> = useMemo(() => {
         const errorMap = new Map<keyof T, FeiloppsummeringFeil>();
