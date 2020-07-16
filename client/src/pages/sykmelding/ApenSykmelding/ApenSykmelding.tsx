@@ -29,7 +29,7 @@ interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
     sykmeldingUtenforVentetid: boolean;
-}
+}   
 
 const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
     sykmelding,

@@ -1,7 +1,7 @@
 import { ValidationFunctions } from '../../commonComponents/hooks/useForm';
-import { Form } from './Form';
+import { FormInputs } from './Form';
 
-const validationFunctions: ValidationFunctions<Form> = {
+const validationFunctions: ValidationFunctions<FormInputs> = {
     opplysningeneErRiktige: (state) => {
         if (state.opplysningeneErRiktige === undefined) {
             return 'Du må svare på om opplysnigene er riktige';

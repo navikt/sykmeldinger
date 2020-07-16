@@ -8,6 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { getArbeidsgiverRadios, skalViseFrilansersporsmal } from '../../../utils/formUtils';
 import validationFunctions from './formValidation';
+import Egenmeldingsdager from './skjemaComponents/Egenmeldingsdager';
 
 enum FeilaktigeOpplysninger {
     PERIODE = 'Periode',
@@ -26,7 +27,7 @@ export enum Arbeidssituasjoner {
     ANNEN_ARBEIDSGIVER = 'ANNEN_ARBEIDSGIVER',
     ANNET = 'ANNET',
 }
-export interface Form {
+export interface FormInputs {
     opplysningeneErRiktige: boolean;
     feilaktigeOpplysninger: (keyof typeof FeilaktigeOpplysninger)[] | undefined;
     valgtArbeidssituasjon: string | undefined;
@@ -44,7 +45,7 @@ interface FormProps {
 }
 
 const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
-    const { formState, errors, setFormState, handleSubmit } = useForm<Form>({ validationFunctions });
+    const { formState, errors, setFormState, handleSubmit } = useForm<FormInputs>({ validationFunctions });
 
     const skalAvbrytes = formState.feilaktigeOpplysninger?.some(
         (opplysning) => opplysning === 'PERIODE' || opplysning === 'SYKMELDINGSGRAD_LAV',
@@ -72,7 +73,10 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                 }
                 onChange={(_event, value) => {
                     setFormState(
-                        (state): Partial<Form> => ({ ...state, opplysningeneErRiktige: value === 'Ja' ? true : false }),
+                        (state): Partial<FormInputs> => ({
+                            ...state,
+                            opplysningeneErRiktige: value === 'Ja' ? true : false,
+                        }),
                     );
                 }}
                 radios={[
@@ -129,7 +133,9 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                         } else {
                             updatedArray.push(value);
                         }
-                        setFormState((state): Partial<Form> => ({ ...state, feilaktigeOpplysninger: updatedArray }));
+                        setFormState(
+                            (state): Partial<FormInputs> => ({ ...state, feilaktigeOpplysninger: updatedArray }),
+                        );
                     }}
                 />
             )}
@@ -188,7 +194,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                             value.includes(arbeidsgiver.orgnummer),
                         );
                         setFormState(
-                            (state): Partial<Form> => ({
+                            (state): Partial<FormInputs> => ({
                                 ...state,
                                 valgtArbeidssituasjon: value,
                                 valgtArbeidsgiver: arbeidsgiver ? arbeidsgiver : undefined,
@@ -214,7 +220,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                     }
                     onChange={(_event, value) => {
                         setFormState(
-                            (state): Partial<Form> => ({
+                            (state): Partial<FormInputs> => ({
                                 ...state,
                                 beOmNyNaermesteLeder: value === 'Nei' ? true : false,
                             }),
@@ -258,9 +264,10 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                         }
                         onChange={(_event, value) => {
                             setFormState(
-                                (state): Partial<Form> => ({
+                                (state): Partial<FormInputs> => ({
                                     ...state,
                                     harAnnetFravaer: value === 'Ja' ? true : false,
+                                    fravaersperioder: undefined,
                                 }),
                             );
                         }}
@@ -271,7 +278,12 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                     />
 
                     {formState.harAnnetFravaer && (
-                        <Normaltekst className="margin-bottom--2">Placeholder for datovelger</Normaltekst>
+                        <Egenmeldingsdager
+                            formState={formState}
+                            setFormState={setFormState}
+                            sykmeldingStartdato={sykmelding.syketilfelleStartDato}
+                            feil={errors.get('fravaersperioder')?.feilmelding}
+                        />
                     )}
 
                     <RadioPanelGruppe
@@ -282,7 +294,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                         checked={formState.harForsikring ? 'Ja' : formState.harForsikring === false ? 'Nei' : undefined}
                         onChange={(_event, value) => {
                             setFormState(
-                                (state): Partial<Form> => ({
+                                (state): Partial<FormInputs> => ({
                                     ...state,
                                     harForsikring: value === 'Ja' ? true : false,
                                 }),

@@ -3,12 +3,12 @@ import './Egenmeldingsdager.less';
 
 import Flatpickr from 'react-flatpickr';
 import Lenke from 'nav-frontend-lenker';
-import React from 'react';
+import React, { useState } from 'react';
 import labelPlugin from 'flatpickr/dist/plugins/labelPlugin/labelPlugin';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Label } from 'nav-frontend-skjema';
-
-import { Skjemafelt } from './skjemaTypes';
+import { FormInputs } from '../Form';
+import { Knapp } from 'nav-frontend-knapper';
 
 export const locale: CustomLocale = {
     rangeSeparator: ' til ',
@@ -37,83 +37,93 @@ export const locale: CustomLocale = {
 };
 
 interface EgenmeldingsdagerProps {
-    name: Skjemafelt;
+    formState: Partial<FormInputs>;
+    setFormState: React.Dispatch<React.SetStateAction<Partial<FormInputs>>>;
     sykmeldingStartdato: Date;
-    handleChange: (value: string | string[] | string[][], name: Skjemafelt) => void;
-    perioder: string[][];
+    feil?: string;
 }
 
-const Egenmeldingsdager = ({ name, sykmeldingStartdato, handleChange, perioder }: EgenmeldingsdagerProps) => {
+const Egenmeldingsdager = ({ formState, setFormState, sykmeldingStartdato, feil }: EgenmeldingsdagerProps) => {
+    const [perioder, setPerioder] = useState(formState.fravaersperioder?.map(({ fom, tom }) => [fom, tom]) || [[]]);
+
     const opprettNyPeriode = () => {
-        handleChange([...perioder, []], name);
+        setPerioder((perioder) => [...perioder, []]);
     };
     const oppdaterPeriode = (index: number, datoer: Date[]) => {
         const perioderCopy = [...perioder];
-        perioderCopy.splice(
-            index,
-            1,
-            datoer.map((dato) => dato.toISOString()),
-        );
-        handleChange(perioderCopy, name);
+        perioderCopy.splice(index, 1, datoer);
+        setPerioder(perioderCopy);
+        setFormState((state) => ({
+            ...state,
+            fravaersperioder: perioderCopy.map((dates) => ({ fom: dates[0], tom: dates[1] })),
+        }));
     };
     const slettPeriode = (index: number) => {
         const perioderCopy = [...perioder];
         perioderCopy.splice(index, 1);
-        handleChange(perioderCopy, name);
+        setPerioder(perioderCopy);
+        setFormState((state) => ({
+            ...state,
+            fravaersperioder: perioderCopy.map((dates) => ({ fom: dates[0], tom: dates[1] })),
+        }));
     };
 
     return (
-        <>
-            <>
-                <Label htmlFor="periodevelger">Når hadde du egenmelding?</Label>
-                {perioder.map((periode, index) => (
-                    <div className="periode" key={index.toString()}>
-                        <Flatpickr
-                            id={`b-${Skjemafelt.EGENMELDINGSPERIODER}`}
-                            value={periode}
-                            className="typo-normal flatpickr"
-                            placeholder="Trykk for å velge periode"
-                            onChange={nyeDatoer => oppdaterPeriode(index, nyeDatoer)}
-                            options={{
-                                position: 'below',
-                                maxDate: sykmeldingStartdato,
-                                mode: 'range',
-                                enableTime: false,
-                                dateFormat: 'd-m-y',
-                                altInput: true,
-                                altFormat: 'j. M, Y',
-                                locale,
-                                // Denne pluginen flytter "id" fra input til altInput når altInput er satt til true.
-                                // Dette gjør at vi kan lenke til feltet fra feilmeldingskjema.
-                                plugins: [new (labelPlugin as any)()],
+        <fieldset className="skjemagruppe margin-bottom--2">
+            <Label htmlFor="fravaersperioder">Når hadde du egenmelding?</Label>
+            {perioder.map((periode, index) => (
+                <div className="margin-bottom--1" key={index.toString()}>
+                    <Flatpickr
+                        id="fravaersperioder"
+                        value={periode}
+                        className="typo-normal flatpickr"
+                        placeholder="Trykk for å velge periode"
+                        onChange={(nyeDatoer) => oppdaterPeriode(index, nyeDatoer)}
+                        options={{
+                            position: 'auto',
+                            maxDate: sykmeldingStartdato,
+                            mode: 'range',
+                            enableTime: false,
+                            dateFormat: 'd-m-y',
+                            altInput: true,
+                            altFormat: 'j. M. Y',
+                            locale,
+                            // Denne pluginen flytter "id" fra input til altInput når altInput er satt til true.
+                            // Dette gjør at vi kan lenke til feltet fra feilmeldingskjema.
+                            plugins: [new (labelPlugin as any)()],
+                        }}
+                    />
+                    {index > 0 && (
+                        <Lenke
+                            href="#"
+                            className="periode__slett"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                slettPeriode(index);
                             }}
-                        />
-                        {index > 0 && (
-                            <Lenke
-                                href="#"
-                                className="periode__slett"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    slettPeriode(index);
-                                }}
-                            >
-                                Slett periode
-                            </Lenke>
-                        )}
-                    </div>
-                ))}
-            </>
+                        >
+                            Slett periode
+                        </Lenke>
+                    )}
+                </div>
+            ))}
 
-            <Lenke
-                href="#"
+            {feil && (
+                <div className="skjemaelement__feilmelding">
+                    <p className="typo-feilmelding">{feil}</p>
+                </div>
+            )}
+
+            <Knapp
+                mini
                 onClick={(e) => {
                     e.preventDefault();
                     opprettNyPeriode();
                 }}
             >
                 + Legg til en ekstra periode
-            </Lenke>
-        </>
+            </Knapp>
+        </fieldset>
     );
 };
 

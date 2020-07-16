@@ -311,7 +311,7 @@ const Form = ({
                                         : null
                                 }
                             >
-                                <Egenmeldingsdager
+                                {/* <Egenmeldingsdager
                                     name={Skjemafelt.EGENMELDINGSPERIODER}
                                     handleChange={handleChange}
                                     perioder={fieldValues[Skjemafelt.EGENMELDINGSPERIODER]}
@@ -319,8 +319,9 @@ const Form = ({
                                         new Date(
                                             Date.now() - 5 * 24 * 60 * 60 * 1000,
                                         ) /* // TODO: Erstatt med faktisk startdato */
-                                    }
-                                />
+                                /*
+                                    //}
+                                    /> */}
                             </SkjemaGruppe>
                         </Vis>
                         <br />
