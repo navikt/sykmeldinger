@@ -1,4 +1,4 @@
-import { ValidationFunctions } from '../../commonComponents/hooks/useForm';
+import { ValidationFunctions } from '../../../commonComponents/hooks/useForm';
 import { FormInputs } from './Form';
 
 const validationFunctions: ValidationFunctions<FormInputs> = {

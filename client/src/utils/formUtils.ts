@@ -1,6 +1,6 @@
 import { Arbeidsgiver } from "../types/arbeidsgiver";
 import { RadioPanelProps } from "nav-frontend-skjema";
-import { Arbeidssituasjoner } from "../pages/sykmelding/ApenSykmelding/Form";
+import { Arbeidssituasjoner } from "../pages/sykmelding/ApenSykmelding/Form/Form";
 import { Periode } from "../types/sykmelding";
 
 export const getArbeidsgiverRadios = (arbeidsgivere: Arbeidsgiver[]): RadioPanelProps[] => {

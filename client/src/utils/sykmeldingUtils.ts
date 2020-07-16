@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { tilLesbarPeriodeMedArstall } from '../../../utils/datoUtils';
-import { Periode } from '../../../types/sykmelding';
+import { tilLesbarPeriodeMedArstall } from './datoUtils';
+import { Periode } from '../types/sykmelding';
 
 
 export const getTotalSykmeldingLenghtReadableString = (sykmeldingsperioder: Periode[]) => {

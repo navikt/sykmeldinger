@@ -1,14 +1,14 @@
 import React from 'react';
-import useForm from '../../commonComponents/hooks/useForm';
+import useForm from '../../../commonComponents/hooks/useForm';
 import { Feiloppsummering, RadioPanelGruppe, CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import { Sykmelding } from '../../../types/sykmelding';
-import { Arbeidsgiver } from '../../../types/arbeidsgiver';
+import { Sykmelding } from '../../../../types/sykmelding';
+import { Arbeidsgiver } from '../../../../types/arbeidsgiver';
 import { Normaltekst } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
-import { getArbeidsgiverRadios, skalViseFrilansersporsmal } from '../../../utils/formUtils';
+import { getArbeidsgiverRadios, skalViseFrilansersporsmal } from '../../../../utils/formUtils';
 import validationFunctions from './formValidation';
-import Egenmeldingsdager from './skjemaComponents/Egenmeldingsdager';
+import Egenmeldingsdager from './Egenmeldingsdager';
 
 enum FeilaktigeOpplysninger {
     PERIODE = 'Periode',

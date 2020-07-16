@@ -23,7 +23,7 @@ import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../commonComponents/Veileder/svg/VeilederMaleSvg';
-import Form from './Form';
+import Form from './Form/Form';
 
 interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
