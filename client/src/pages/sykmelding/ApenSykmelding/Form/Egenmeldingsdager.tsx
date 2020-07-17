@@ -7,8 +7,8 @@ import React, { useState } from 'react';
 import labelPlugin from 'flatpickr/dist/plugins/labelPlugin/labelPlugin';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Label } from 'nav-frontend-skjema';
-import { FormInputs } from './Form';
 import { Knapp } from 'nav-frontend-knapper';
+import { FormInputs } from '../../../../types/form';
 
 export const locale: CustomLocale = {
     rangeSeparator: ' til ',
@@ -80,7 +80,7 @@ const Egenmeldingsdager = ({ formState, setFormState, sykmeldingStartdato, feil 
                         placeholder="Trykk for å velge periode"
                         onChange={(nyeDatoer) => oppdaterPeriode(index, nyeDatoer)}
                         options={{
-                            position: 'auto',
+                            position: 'below',
                             maxDate: sykmeldingStartdato,
                             mode: 'range',
                             enableTime: false,
