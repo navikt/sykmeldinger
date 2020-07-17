@@ -46,17 +46,20 @@ interface EgenmeldingsdagerProps {
 const Egenmeldingsdager = ({ formState, setFormState, sykmeldingStartdato, feil }: EgenmeldingsdagerProps) => {
     const [perioder, setPerioder] = useState(formState.fravaersperioder?.map(({ fom, tom }) => [fom, tom]) || [[]]);
 
+    console.log(perioder);
     const opprettNyPeriode = () => {
         setPerioder((perioder) => [...perioder, []]);
     };
     const oppdaterPeriode = (index: number, datoer: Date[]) => {
-        const perioderCopy = [...perioder];
-        perioderCopy.splice(index, 1, datoer);
-        setPerioder(perioderCopy);
-        setFormState((state) => ({
-            ...state,
-            fravaersperioder: perioderCopy.map((dates) => ({ fom: dates[0], tom: dates[1] })),
-        }));
+        if (datoer.length === 2) {
+            const perioderCopy = [...perioder];
+            perioderCopy.splice(index, 1, datoer);
+            setPerioder(perioderCopy);
+            setFormState((state) => ({
+                ...state,
+                fravaersperioder: perioderCopy.map((dates) => ({ fom: dates[0], tom: dates[1] })),
+            }));
+        }
     };
     const slettPeriode = (index: number) => {
         const perioderCopy = [...perioder];
@@ -72,16 +75,19 @@ const Egenmeldingsdager = ({ formState, setFormState, sykmeldingStartdato, feil 
         <fieldset className="skjemagruppe margin-bottom--2">
             <Label htmlFor="fravaersperioder">Når hadde du egenmelding?</Label>
             {perioder.map((periode, index) => (
-                <div className="margin-bottom--1" key={index.toString()}>
+                <div className="margin-bottom--1" key={periode.toString()}>
                     <Flatpickr
                         id="fravaersperioder"
-                        value={periode}
                         className="typo-normal flatpickr"
-                        placeholder="Trykk for å velge periode"
+                        placeholder="Trykk for å velge datoer"
                         onChange={(nyeDatoer) => oppdaterPeriode(index, nyeDatoer)}
                         options={{
                             position: 'below',
                             maxDate: sykmeldingStartdato,
+                            defaultDate: periode,
+                            disable: perioder
+                                .filter((_periode, indx) => indx !== index)
+                                .map((periode) => ({ from: periode[0], to: periode[1] })),
                             mode: 'range',
                             enableTime: false,
                             dateFormat: 'd-m-y',
@@ -109,7 +115,7 @@ const Egenmeldingsdager = ({ formState, setFormState, sykmeldingStartdato, feil 
             ))}
 
             {feil && (
-                <div className="skjemaelement__feilmelding">
+                <div className="skjemaelement__feilmelding margin-bottom--1">
                     <p className="typo-feilmelding">{feil}</p>
                 </div>
             )}

@@ -1,28 +1,66 @@
 import { ValidationFunctions } from '../../../commonComponents/hooks/useForm';
-import { FormInputs } from '../../../../types/form';
+import { FormInputs, Arbeidssituasjoner } from '../../../../types/form';
 
 const validationFunctions: ValidationFunctions<FormInputs> = {
     opplysningeneErRiktige: (state) => {
         if (state.opplysningeneErRiktige === undefined) {
-            return 'Du må svare på om opplysnigene er riktige';
+            return 'Du må svare på om opplysnigene er riktige.';
         }
     },
     feilaktigeOpplysninger: (state) => {
-        if (!state.opplysningeneErRiktige) {
+        if (state.opplysningeneErRiktige === false) {
             if (!state.feilaktigeOpplysninger || !state.feilaktigeOpplysninger?.length) {
-                return 'Du må velge minst ett av alternativene';
+                return 'Du må velge minst ett av alternativene.';
             }
         }
     },
     valgtArbeidssituasjon: (state) => {
-        if (!state.valgtArbeidssituasjon) {
-            return 'Du må svare på hvor du er sykmeldt fra';
+        if (
+            !state.feilaktigeOpplysninger?.includes('PERIODE') &&
+            !state.feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_LAV')
+        ) {
+            if (!state.valgtArbeidssituasjon) {
+                return 'Du må svare på hvor du er sykmeldt fra.';
+            }
         }
     },
     valgtArbeidsgiver: (state) => undefined,
-    beOmNyNaermesteLeder: (state) => undefined,
-    harAnnetFravaer: (state) => undefined,
-    fravaersperioder: (state) => undefined,
-    harForsikring: (state) => undefined,
+    beOmNyNaermesteLeder: (state) => {
+        if (state.valgtArbeidsgiver) {
+            if (state.beOmNyNaermesteLeder === undefined) {
+                return 'Du må svare på dette er personen som skal følge deg opp når du er syk.';
+            }
+        }
+    },
+    harAnnetFravaer: (state) => {
+        if (
+            state.valgtArbeidssituasjon?.includes(Arbeidssituasjoner.FRILANSER) ||
+            state.valgtArbeidssituasjon?.includes(Arbeidssituasjoner.NAERINGSDRIVENDE)
+        ) {
+            if (state.harAnnetFravaer === undefined) {
+                return 'Du må svare på om du har brukt egenmelding før du ble syk.';
+            }
+        }
+    },
+    fravaersperioder: (state) => {
+        if (state.harAnnetFravaer) {
+            if (state.fravaersperioder === undefined || state.fravaersperioder.length === 0) {
+                return 'Siden du har sagt at du brukte egenmelding før du ble syk må du fylle ut minst en egenmeldingsperiode.';
+            }
+            if (state.fravaersperioder.some((periode) => periode.fom === undefined)) {
+                return 'Én eller flere av periodene er tomme';
+            }
+        }
+    },
+    harForsikring: (state) => {
+        if (
+            state.valgtArbeidssituasjon?.includes(Arbeidssituasjoner.FRILANSER) ||
+            state.valgtArbeidssituasjon?.includes(Arbeidssituasjoner.NAERINGSDRIVENDE)
+        ) {
+            if (state.harForsikring === undefined) {
+                return 'Du må svare på om du har forsikring som gjelder de første 16 dagene av sykefraværet.';
+            }
+        }
+    },
 };
 export default validationFunctions;
