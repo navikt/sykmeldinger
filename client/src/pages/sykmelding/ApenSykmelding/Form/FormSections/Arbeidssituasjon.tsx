@@ -4,7 +4,7 @@ import { FeiloppsummeringFeil, RadioPanelGruppe } from 'nav-frontend-skjema';
 import { getArbeidsgiverRadios, skalViseFrilansersporsmal } from '../../../../../utils/formUtils';
 import { Systemtittel } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
-import Egenmeldingsdager from '../Egenmeldingsdager';
+import Egenmeldingsdager from './Egenmeldingsdager';
 import { Arbeidsgiver } from '../../../../../types/arbeidsgiver';
 import { Sykmelding } from '../../../../../types/sykmelding';
 import './FormSections.less';
