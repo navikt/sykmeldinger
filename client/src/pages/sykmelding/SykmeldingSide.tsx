@@ -14,6 +14,7 @@ import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/u
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Soknad } from '../../types/soknad';
+import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -125,6 +126,8 @@ const SykmeldingSide = () => {
                 return (
                     <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />
                 );
+            case 'UTGATT':
+                return <UtgattSykmelding sykmelding={sykmelding} />;
             default:
                 // TODO: Errorcomponent -  not found
                 break;
