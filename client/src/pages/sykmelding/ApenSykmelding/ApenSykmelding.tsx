@@ -13,7 +13,6 @@ import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/Le
 import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
 import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
 import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import SendingsSkjema from './SendingsSkjema';
 import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
 import SporsmalInfoheader from './SporsmalInfoheader';
 import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
@@ -24,6 +23,7 @@ import { Sykmelding } from '../../../types/sykmelding';
 import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../commonComponents/Veileder/svg/VeilederMaleSvg';
+import Form from './Form/Form';
 
 interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -88,8 +88,8 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
             <div ref={utfyllingRef} style={{ marginTop: '2rem', marginBottom: '2rem' }}>
                 <SporsmalInfoheader />
             </div>
-
-            <SendingsSkjema sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} />
+            
+            <Form sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} erUtenforVentetid={sykmeldingUtenforVentetid} />
         </div>
     );
 };

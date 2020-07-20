@@ -3,7 +3,7 @@ import './Header.less';
 import React from 'react';
 import { Sidetittel, Undertittel } from 'nav-frontend-typografi';
 import { Periode } from '../../../types/sykmelding';
-import { getTotalSykmeldingLenghtReadableString } from '../../sykmelding/ApenSykmelding/sykmeldingUtils';
+import { getTotalSykmeldingLenghtReadableString } from '../../../utils/sykmeldingUtils';
 
 interface HeaderProps {
     title: string;
