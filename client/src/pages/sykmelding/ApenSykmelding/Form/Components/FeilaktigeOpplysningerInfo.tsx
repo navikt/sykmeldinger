@@ -7,8 +7,43 @@ interface FeilaktigeOpplysningerInfoProps {
     feilaktigeOpplysninger?: (keyof typeof FeilaktigeOpplysninger)[];
 }
 
+/**
+ * Represents a book.
+ * @param {FeilaktigeOpplysninger[] | undefined} title - List of feilaktigeOpplysninger thats checked off in the ApenSykmelding form.
+ * @return {JSX.Element | null} JSX element cointaining information about actions the use must take based on the faults present in the sykmelding.
+ */
 const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplysningerInfoProps) => {
-    if (feilaktigeOpplysninger?.includes('PERIODE') || feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_LAV')) {
+    const trengerNySykmelding =
+        feilaktigeOpplysninger?.includes('PERIODE') || feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_LAV');
+
+    const kanBrukeSykmeldingen_sykmeldingsgradHoyArbeidsgiverDiagnoseAndre =
+        feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_HOY') &&
+        feilaktigeOpplysninger?.includes('ARBEIDSGIVER') &&
+        feilaktigeOpplysninger?.includes('DIAGNOSE');
+
+    const kanBrukeSykmeldingen_arbeidsgiverDiagnoseAndre =
+        feilaktigeOpplysninger?.includes('ARBEIDSGIVER') &&
+        feilaktigeOpplysninger.includes('DIAGNOSE') &&
+        feilaktigeOpplysninger.includes('ANNET');
+
+    const kanBrukeSykmeldingen_sykmeldingsgradHoyArbeidsgiver =
+        feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_HOY') && feilaktigeOpplysninger.includes('ARBEIDSGIVER');
+
+    const kanBrukeSykmeldingen_arbeidsgiverDiagnose =
+        feilaktigeOpplysninger?.includes('ARBEIDSGIVER') && feilaktigeOpplysninger.includes('DIAGNOSE');
+
+    const kanBrukeSykmeldingen_diagnoseAnnet =
+        feilaktigeOpplysninger?.includes('DIAGNOSE') && feilaktigeOpplysninger.includes('ANNET');
+
+    const kanBrukeSykmeldingen_sykmeldingsgradHoy = feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_HOY');
+
+    const kanBrukeSykmeldingen_arbeidsgiver = feilaktigeOpplysninger?.includes('ARBEIDSGIVER');
+
+    const kanBrukeSykmeldingen_diagnose = feilaktigeOpplysninger?.includes('DIAGNOSE');
+
+    const kanBrukeSykmeldingen_annet = feilaktigeOpplysninger?.includes('ANNET');
+
+    if (trengerNySykmelding) {
         return (
             <AlertStripeAdvarsel className="margin-bottom--2">
                 <Element>Du trenger ny sykmelding</Element>
@@ -16,11 +51,8 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
             </AlertStripeAdvarsel>
         );
-    } else if (
-        feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_HOY') &&
-        feilaktigeOpplysninger?.includes('ARBEIDSGIVER') &&
-        feilaktigeOpplysninger?.includes('DIAGNOSE')
-    ) {
+    }
+    if (kanBrukeSykmeldingen_sykmeldingsgradHoyArbeidsgiverDiagnoseAndre) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -35,11 +67,8 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (
-        feilaktigeOpplysninger?.includes('ARBEIDSGIVER') &&
-        feilaktigeOpplysninger.includes('DIAGNOSE') &&
-        feilaktigeOpplysninger.includes('ANNET')
-    ) {
+    }
+    if (kanBrukeSykmeldingen_arbeidsgiverDiagnoseAndre) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -52,10 +81,8 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (
-        feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_HOY') &&
-        feilaktigeOpplysninger.includes('ARBEIDSGIVER')
-    ) {
+    }
+    if (kanBrukeSykmeldingen_sykmeldingsgradHoyArbeidsgiver) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -70,7 +97,7 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (feilaktigeOpplysninger?.includes('ARBEIDSGIVER') && feilaktigeOpplysninger.includes('DIAGNOSE')) {
+    } else if (kanBrukeSykmeldingen_arbeidsgiverDiagnose) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -83,7 +110,8 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (feilaktigeOpplysninger?.includes('DIAGNOSE') && feilaktigeOpplysninger.includes('ANNET')) {
+    }
+    if (kanBrukeSykmeldingen_diagnoseAnnet) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -94,7 +122,8 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_HOY')) {
+    }
+    if (kanBrukeSykmeldingen_sykmeldingsgradHoy) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -104,7 +133,7 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (feilaktigeOpplysninger?.includes('ARBEIDSGIVER')) {
+    } else if (kanBrukeSykmeldingen_arbeidsgiver) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -115,7 +144,7 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (feilaktigeOpplysninger?.includes('DIAGNOSE')) {
+    } else if (kanBrukeSykmeldingen_diagnose) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
@@ -126,7 +155,8 @@ const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplys
                 </Normaltekst>
             </AlertStripeInfo>
         );
-    } else if (feilaktigeOpplysninger?.includes('ANNET')) {
+    }
+    if (kanBrukeSykmeldingen_annet) {
         return (
             <AlertStripeInfo className="margin-bottom--2">
                 <Element>Du kan likevel bruke denne sykmeldingen</Element>
