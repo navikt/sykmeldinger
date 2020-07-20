@@ -4,7 +4,7 @@ import { FormInputs, Arbeidssituasjoner } from '../../../../types/form';
 const validationFunctions: ValidationFunctions<FormInputs> = {
     opplysningeneErRiktige: (state) => {
         if (state.opplysningeneErRiktige === undefined) {
-            return 'Du må svare på om opplysnigene er riktige.';
+            return 'Du må svare på om opplysningene er riktige.';
         }
     },
     feilaktigeOpplysninger: (state) => {
