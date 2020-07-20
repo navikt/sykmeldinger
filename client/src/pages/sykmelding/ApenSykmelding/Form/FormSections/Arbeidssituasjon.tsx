@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormInputs, Arbeidssituasjoner } from '../../../../../types/form';
 import { FeiloppsummeringFeil, RadioPanelGruppe } from 'nav-frontend-skjema';
-import { getArbeidsgiverRadios, skalViseFrilansersporsmal } from '../../../../../utils/formUtils';
+import { getArbeidsgiverRadios, skalViseFrilansersporsmal, getArbeidssituasjon } from '../../../../../utils/formUtils';
 import { Systemtittel } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import Egenmeldingsdager from './Egenmeldingsdager';
@@ -42,25 +42,7 @@ const Arbeidssituasjon = ({
                 name="valgtArbeidssituasjon"
                 className="panelgruppe"
                 feil={errors.get('valgtArbeidssituasjon')?.feilmelding}
-                checked={(() => {
-                    if (formState.valgtArbeidssituasjon?.includes(Arbeidssituasjoner.ARBEIDSTAKER)) {
-                        const arbeidsgiver = arbeidsgivere.find((arbeidsgiver) =>
-                            formState.valgtArbeidssituasjon?.includes(arbeidsgiver.orgnummer),
-                        );
-                        return `${Arbeidssituasjoner.ARBEIDSTAKER}-${arbeidsgiver?.orgnummer}`;
-                    } else if (formState.valgtArbeidssituasjon === Arbeidssituasjoner.FRILANSER) {
-                        return Arbeidssituasjoner.FRILANSER;
-                    } else if (formState.valgtArbeidssituasjon === Arbeidssituasjoner.NAERINGSDRIVENDE) {
-                        return Arbeidssituasjoner.NAERINGSDRIVENDE;
-                    } else if (formState.valgtArbeidssituasjon === Arbeidssituasjoner.ANNEN_ARBEIDSGIVER) {
-                        return Arbeidssituasjoner.ANNEN_ARBEIDSGIVER;
-                    } else if (formState.valgtArbeidssituasjon === Arbeidssituasjoner.ARBEIDSLEDIG) {
-                        return Arbeidssituasjoner.ARBEIDSLEDIG;
-                    } else if (formState.valgtArbeidssituasjon === Arbeidssituasjoner.ANNET) {
-                        return Arbeidssituasjoner.ANNET;
-                    }
-                    return undefined;
-                })()}
+                checked={(() => getArbeidssituasjon(formState.valgtArbeidssituasjon, arbeidsgivere))()}
                 radios={[
                     ...getArbeidsgiverRadios(arbeidsgivere),
                     {

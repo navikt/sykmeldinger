@@ -7,6 +7,31 @@ import { Arbeidssituasjoner } from '../types/form';
 export const getEntries = <T extends {}>(object: T): Array<[keyof T, T[keyof T]]> =>
     Object.entries(object) as Array<[keyof T, T[keyof T]]>;
 
+export const getArbeidssituasjon = (valgtArbeidssituasjon: string | undefined, arbeidsgivere: Arbeidsgiver[]) => {
+    if (valgtArbeidssituasjon?.includes(Arbeidssituasjoner.ARBEIDSTAKER)) {
+        const arbeidsgiver = arbeidsgivere.find((arbeidsgiver) =>
+            valgtArbeidssituasjon?.includes(arbeidsgiver.orgnummer),
+        );
+        return `${Arbeidssituasjoner.ARBEIDSTAKER}-${arbeidsgiver?.orgnummer}`;
+    }
+    if (valgtArbeidssituasjon === Arbeidssituasjoner.FRILANSER) {
+        return Arbeidssituasjoner.FRILANSER;
+    }
+    if (valgtArbeidssituasjon === Arbeidssituasjoner.NAERINGSDRIVENDE) {
+        return Arbeidssituasjoner.NAERINGSDRIVENDE;
+    }
+    if (valgtArbeidssituasjon === Arbeidssituasjoner.ANNEN_ARBEIDSGIVER) {
+        return Arbeidssituasjoner.ANNEN_ARBEIDSGIVER;
+    }
+    if (valgtArbeidssituasjon === Arbeidssituasjoner.ARBEIDSLEDIG) {
+        return Arbeidssituasjoner.ARBEIDSLEDIG;
+    }
+    if (valgtArbeidssituasjon === Arbeidssituasjoner.ANNET) {
+        return Arbeidssituasjoner.ANNET;
+    }
+    return undefined;
+};
+
 export const getArbeidsgiverRadios = (arbeidsgivere: Arbeidsgiver[]): RadioPanelProps[] => {
     return arbeidsgivere.map((arbeidsgiver) => ({
         label: arbeidsgiver.navn,
