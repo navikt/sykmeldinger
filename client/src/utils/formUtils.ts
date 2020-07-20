@@ -1,11 +1,26 @@
 import { Arbeidsgiver } from '../types/arbeidsgiver';
 import { RadioPanelProps } from 'nav-frontend-skjema';
 import { Periode } from '../types/sykmelding';
-import { Arbeidssituasjoner } from '../types/form';
+import { Arbeidssituasjoner, FeilaktigeOpplysninger } from '../types/form';
 
 // helper function for infering types with Object.entries
 export const getEntries = <T extends {}>(object: T): Array<[keyof T, T[keyof T]]> =>
     Object.entries(object) as Array<[keyof T, T[keyof T]]>;
+
+export const getUpdatedFeilaktigeOpplysninger = (
+    value: keyof typeof FeilaktigeOpplysninger,
+    feilaktigeOpplysninger: (keyof typeof FeilaktigeOpplysninger)[] | undefined,
+): (keyof typeof FeilaktigeOpplysninger)[] => {
+    if (!feilaktigeOpplysninger) {
+        return [value];
+    }
+
+    if (feilaktigeOpplysninger.includes(value)) {
+        return feilaktigeOpplysninger.filter((opplysning) => opplysning !== value);
+    }
+
+    return [...feilaktigeOpplysninger, value];
+};
 
 export const getArbeidssituasjon = (valgtArbeidssituasjon: string | undefined, arbeidsgivere: Arbeidsgiver[]) => {
     if (valgtArbeidssituasjon?.includes(Arbeidssituasjoner.ARBEIDSTAKER)) {

@@ -5,6 +5,7 @@ import './FormSections.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import FormInfoMessage from '../Components/FormInfoMessage';
 import FeilaktigeOpplysningerInfo from '../Components/FeilaktigeOpplysningerInfo';
+import { getUpdatedFeilaktigeOpplysninger } from '../../../../../utils/formUtils';
 
 interface BekreftOpplysningerProps {
     formState: Partial<FormInputs>;
@@ -85,20 +86,13 @@ const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysn
                             },
                         ]}
                         onChange={(_event, value) => {
-                            let feilaktigeOpplysningerCopy = formState.feilaktigeOpplysninger
-                                ? [...formState.feilaktigeOpplysninger]
-                                : [];
-                            if (feilaktigeOpplysningerCopy.includes(value)) {
-                                feilaktigeOpplysningerCopy = feilaktigeOpplysningerCopy.filter(
-                                    (opplysning) => opplysning !== value,
-                                );
-                            } else {
-                                feilaktigeOpplysningerCopy = [...feilaktigeOpplysningerCopy, value];
-                            }
                             setFormState(
                                 (state): Partial<FormInputs> => ({
                                     ...state,
-                                    feilaktigeOpplysninger: feilaktigeOpplysningerCopy,
+                                    feilaktigeOpplysninger: getUpdatedFeilaktigeOpplysninger(
+                                        value,
+                                        formState.feilaktigeOpplysninger,
+                                    ),
                                 }),
                             );
                         }}
