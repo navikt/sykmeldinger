@@ -7,7 +7,6 @@ interface FeilaktigeOpplysningerInfoProps {
     feilaktigeOpplysninger?: (keyof typeof FeilaktigeOpplysninger)[];
 }
 
-//
 const FeilaktigeOpplysningerInfo = ({ feilaktigeOpplysninger }: FeilaktigeOpplysningerInfoProps) => {
     if (feilaktigeOpplysninger?.includes('PERIODE') || feilaktigeOpplysninger?.includes('SYKMELDINGSGRAD_LAV')) {
         return (
