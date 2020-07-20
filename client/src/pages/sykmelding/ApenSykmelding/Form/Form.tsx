@@ -9,7 +9,23 @@ import { FormInputs } from '../../../../types/form';
 import BekreftOpplysninger from './FormSections/BekreftOpplysninger';
 import Arbeidssituasjon from './FormSections/Arbeidssituasjon';
 import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import ArbeidsuforSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
+import PrognoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
+import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
+import BehandlingsDatoer from '../../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
+import MulighetForArbeid from '../../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
+import Friskmelding from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
+import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
+import Arbeidsevne from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
+import SeksjonMedTittel from '../../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
+import ElementMedTekst from '../../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
+import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
+import EtikettMedTekst from '../../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
 
+import sladd from '../../SendtSykmelding/sladd.svg';
 interface FormProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
@@ -43,6 +59,41 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                 errors={errors}
                 skalAvbrytes={skalAvbrytes}
             />
+
+            {skalSendes && (
+                <Sykmeldingsopplysninger
+                    id="arbeidsgivers-sykmelding"
+                    title="Slik ser sykmeldingen ut for arbeidsgiveren din"
+                    expandedDefault={false}
+                    type="ARBEIDSGIVER"
+                >
+                    <div className="panel-content-header">
+                        <Sidetittel>TODO: Pasientens navn</Sidetittel>
+                        <Undertekst>TODO: Pasientens personnummer</Undertekst>
+                    </div>
+                    <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                    <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} alt="skjult diagnose" />} />
+                    <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
+                    <PrognoseSeksjon prognose={sykmelding.prognose} />
+                    <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
+                    <LegeSeksjon navn={sykmelding.navnFastlege} />
+                    <hr className="margin-bottom--2" />
+                    <BehandlingsDatoer
+                        behandletTidspunkt={sykmelding.behandletTidspunkt}
+                        syketilfelleStartDato={sykmelding.syketilfelleStartDato}
+                    />
+                    <MulighetForArbeid />
+                    <Friskmelding prognose={sykmelding.prognose} />
+                    <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
+                    <Arbeidsevne
+                        tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
+                        tiltakNAV={sykmelding.tiltakNAV}
+                    />
+                    <SeksjonMedTittel tittel="Annet">
+                        <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
+                    </SeksjonMedTittel>
+                </Sykmeldingsopplysninger>
+            )}
 
             {!!errors.size && (
                 <Feiloppsummering
