@@ -85,17 +85,21 @@ const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysn
                             },
                         ]}
                         onChange={(_event, value) => {
-                            let updatedArray = formState.feilaktigeOpplysninger
+                            let feilaktigeOpplysningerCopy = formState.feilaktigeOpplysninger
                                 ? [...formState.feilaktigeOpplysninger]
                                 : [];
-                            const shouldRemoveValue = updatedArray.includes(value);
-                            if (shouldRemoveValue) {
-                                updatedArray = updatedArray.filter((opplysning) => opplysning !== value);
+                            if (feilaktigeOpplysningerCopy.includes(value)) {
+                                feilaktigeOpplysningerCopy = feilaktigeOpplysningerCopy.filter(
+                                    (opplysning) => opplysning !== value,
+                                );
                             } else {
-                                updatedArray.push(value);
+                                feilaktigeOpplysningerCopy = [...feilaktigeOpplysningerCopy, value];
                             }
                             setFormState(
-                                (state): Partial<FormInputs> => ({ ...state, feilaktigeOpplysninger: updatedArray }),
+                                (state): Partial<FormInputs> => ({
+                                    ...state,
+                                    feilaktigeOpplysninger: feilaktigeOpplysningerCopy,
+                                }),
                             );
                         }}
                     />
