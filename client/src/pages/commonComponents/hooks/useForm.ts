@@ -1,9 +1,6 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FeiloppsummeringFeil } from 'nav-frontend-skjema';
-
-// helper function for infering types with Object.entries
-export const getEntries = <T extends {}>(object: T): Array<[keyof T, T[keyof T]]> =>
-    Object.entries(object) as Array<[keyof T, T[keyof T]]>;
+import { getEntries } from '../../../utils/formUtils';
 
 export type ValidationFunctions<T> = { [key in Required<keyof T>]: (value: Partial<T>) => string | undefined };
 
@@ -23,9 +20,9 @@ const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>):
     const [state, setState] = useState<Partial<T>>(defaultValues);
     const [errors, setErrors] = useState<Map<keyof T, FeiloppsummeringFeil>>(new Map<keyof T, FeiloppsummeringFeil>());
     const [isFirstSubmit, setIsFirstSubmit] = useState<boolean>(true);
-    console.log(state);
+    console.log(errors);
 
-    const errorsMemo: Map<keyof T, FeiloppsummeringFeil> = useMemo(() => {
+    const getErrors = useCallback((): Map<keyof T, FeiloppsummeringFeil> => {
         const errorMap = new Map<keyof T, FeiloppsummeringFeil>();
         getEntries(validationFunctions).forEach(([key, validationFunction]) => {
             const maybeError = validationFunction(state);
@@ -40,13 +37,13 @@ const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>):
 
     useEffect(() => {
         if (isFirstSubmit === false) {
-            setErrors(errorsMemo);
+            setErrors(getErrors());
         }
-    }, [isFirstSubmit, setErrors, errorsMemo]);
+    }, [isFirstSubmit, setErrors, getErrors, state]);
 
     // Type guard ensuring that state conforms to T is list of errors is empty
     const isValidForm = <T>(state: any): state is T => {
-        if (errorsMemo.size) {
+        if (getErrors().size) {
             return false;
         }
         return true;
