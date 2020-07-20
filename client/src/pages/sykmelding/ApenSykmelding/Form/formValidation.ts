@@ -28,7 +28,7 @@ const validationFunctions: ValidationFunctions<FormInputs> = {
     beOmNyNaermesteLeder: (state) => {
         if (state.valgtArbeidsgiver) {
             if (state.beOmNyNaermesteLeder === undefined) {
-                return 'Du må svare på dette er personen som skal følge deg opp når du er syk.';
+                return 'Du må svare på om dette er personen som skal følge deg opp når du er syk.';
             }
         }
     },
