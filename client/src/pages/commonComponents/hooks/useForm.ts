@@ -20,7 +20,6 @@ const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>):
     const [state, setState] = useState<Partial<T>>(defaultValues);
     const [errors, setErrors] = useState<Map<keyof T, FeiloppsummeringFeil>>(new Map<keyof T, FeiloppsummeringFeil>());
     const [isFirstSubmit, setIsFirstSubmit] = useState<boolean>(true);
-    console.log(errors);
 
     const getErrors = useCallback((): Map<keyof T, FeiloppsummeringFeil> => {
         const errorMap = new Map<keyof T, FeiloppsummeringFeil>();
