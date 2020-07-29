@@ -25,20 +25,9 @@ export const sykmeldingEgenmeldt = {
         hovedDiagnose: {
             system: '2.16.578.1.12.4.1.1.7170',
             kode: 'K24',
-            tekst: 'Vondt i magen',
+            tekst: 'COVID-19',
         },
-        biDiagnoser: [
-            {
-                system: '2.16.578.1.12.4.1.1.7170',
-                kode: '-57',
-                tekst: 'Vondt i magen',
-            },
-            {
-                system: '2.16.578.1.12.4.1.1.7170',
-                kode: '-59',
-                tekst: 'Sykdom0',
-            },
-        ],
+        biDiagnoser: [],
         svangerskap: true,
         yrkesskade: true,
         yrkesskadeDato: '2018-10-18',
