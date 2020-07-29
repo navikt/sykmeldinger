@@ -15,7 +15,7 @@ interface BekreftOpplysningerProps {
 
 const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysningerProps) => {
     return (
-        <div className="form-section">
+        <div className="form-section form-section--border">
             <Systemtittel className="margin-bottom--1">Bekreft Opplysninger</Systemtittel>
 
             <RadioPanelGruppe
@@ -36,6 +36,11 @@ const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysn
                             ...state,
                             opplysningeneErRiktige: value === 'Ja' ? true : false,
                             feilaktigeOpplysninger: undefined,
+                            valgtArbeidsgiver: undefined,
+                            beOmNyNaermesteLeder: undefined,
+                            harAnnetFravaer: undefined,
+                            fravaersperioder: undefined,
+                            harForsikring: undefined,
                         }),
                     );
                 }}
@@ -87,13 +92,36 @@ const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysn
                         ]}
                         onChange={(_event, value) => {
                             setFormState(
-                                (state): Partial<FormInputs> => ({
-                                    ...state,
-                                    feilaktigeOpplysninger: getUpdatedFeilaktigeOpplysninger(
+                                (state): Partial<FormInputs> => {
+                                    const updatedFeilaktigeOpplysninger = getUpdatedFeilaktigeOpplysninger(
                                         value,
                                         formState.feilaktigeOpplysninger,
-                                    ),
-                                }),
+                                    );
+
+                                    // Reset forminputs if user changes feilaktige opplysninger to include PERIODE or SYKMELDINGSGRAD_LAV
+                                    if (
+                                        updatedFeilaktigeOpplysninger.includes('PERIODE') ||
+                                        updatedFeilaktigeOpplysninger.includes('SYKMELDINGSGRAD_LAV')
+                                    ) {
+                                        return {
+                                            ...state,
+                                            feilaktigeOpplysninger: updatedFeilaktigeOpplysninger,
+                                            valgtArbeidsgiver: undefined,
+                                            beOmNyNaermesteLeder: undefined,
+                                            harAnnetFravaer: undefined,
+                                            fravaersperioder: undefined,
+                                            harForsikring: undefined,
+                                        };
+                                    }
+
+                                    return {
+                                        ...state,
+                                        feilaktigeOpplysninger: getUpdatedFeilaktigeOpplysninger(
+                                            value,
+                                            formState.feilaktigeOpplysninger,
+                                        ),
+                                    };
+                                },
                             );
                         }}
                     />

@@ -54,6 +54,7 @@ const Sykmeldingsopplysninger = ({
     return (
         <article id={id} ref={elementRef} className="sykmeldingsopplysninger">
             <button
+                type="button"
                 aria-expanded={expanded}
                 onMouseEnter={() => setIcon(icons.iconHover)}
                 onMouseLeave={() => setIcon(icons.iconNormal)}

@@ -40,7 +40,7 @@ const useForm = <T>({ validationFunctions, defaultValues = {} }: FormConfig<T>):
         }
     }, [isFirstSubmit, setErrors, getErrors, state]);
 
-    // Type guard ensuring that state conforms to T is list of errors is empty
+    // Type guard ensuring that state conforms to T if list of errors is empty
     const isValidForm = <T>(state: any): state is T => {
         if (getErrors().size) {
             return false;

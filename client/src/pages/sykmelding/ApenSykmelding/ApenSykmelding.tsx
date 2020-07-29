@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
@@ -36,8 +36,6 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
     arbeidsgivere,
     sykmeldingUtenforVentetid,
 }: ApenSykmeldingProps) => {
-    const utfyllingRef = useRef<HTMLDivElement>(document.createElement('div'));
-
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--4">
@@ -45,6 +43,10 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                     Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
                     Du velger selv om du vil bruke sykmeldingen.
                 </Veilederpanel>
+            </div>
+
+            <div className="margin-bottom--2">
+                <SporsmalInfoheader />
             </div>
 
             <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
@@ -84,11 +86,6 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                 </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
 
-            {/* TODO: Bestemme om denne skal være i Sporsmal-komponent eller som egen komponent */}
-            <div ref={utfyllingRef} style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-                <SporsmalInfoheader />
-            </div>
-            
             <Form sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} erUtenforVentetid={sykmeldingUtenforVentetid} />
         </div>
     );
