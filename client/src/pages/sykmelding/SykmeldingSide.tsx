@@ -15,6 +15,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Soknad } from '../../types/soknad';
 import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
+import EgenmeldtSykmelding from './EgenmeldtSykmelding/EgenmeldtSykmelding';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -106,7 +107,7 @@ const SykmeldingSide = () => {
             return <AvvistSykmelding sykmelding={sykmelding} />;
         }
         if (erEgenmeldt) {
-            // TODO: Egenmeldt component
+            return <EgenmeldtSykmelding sykmelding={sykmelding} />;
         }
 
         switch (status) {
@@ -136,7 +137,10 @@ const SykmeldingSide = () => {
 
     return (
         <>
-            <Header title="Sykmelding" sykmeldingPerioder={sykmelding.sykmeldingsperioder} />
+            <Header
+                title={sykmelding.egenmeldt ? 'Egenmelding' : 'Sykmelding'}
+                sykmeldingPerioder={sykmelding.sykmeldingsperioder}
+            />
             <div className="limit">
                 <Brodsmuler
                     breadcrumbs={[

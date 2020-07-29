@@ -51,9 +51,16 @@ interface LenkepanelProps {
     sykmeldingsstatus: StatusEvent | RegelStatus; // Needs to be a union of SatusEvent and RegelStatus becuase AVVIST is not part of StatusEvent.
     sykmeldingsperioder: Periode[];
     arbeidsgiverNavn?: string;
+    erEgenmeldt?: boolean;
 }
 
-const Lenkepanel = ({ sykmeldingId, sykmeldingsstatus, sykmeldingsperioder, arbeidsgiverNavn }: LenkepanelProps) => {
+const Lenkepanel = ({
+    sykmeldingId,
+    sykmeldingsstatus,
+    sykmeldingsperioder,
+    arbeidsgiverNavn,
+    erEgenmeldt,
+}: LenkepanelProps) => {
     const iconSet = getIcons(sykmeldingsstatus);
     const [activeIcon, setActiveIcon] = useState<string>(iconSet.iconNormal);
 
@@ -79,7 +86,7 @@ const Lenkepanel = ({ sykmeldingId, sykmeldingsstatus, sykmeldingsperioder, arbe
                 <img src={activeIcon} alt="" />
                 <div className="lenkepanel-content__main-content">
                     <Normaltekst>{periodeString}</Normaltekst>
-                    <Undertittel>Sykmelding</Undertittel>
+                    <Undertittel>{erEgenmeldt ? 'Egenmelding' : 'Sykmelding'}</Undertittel>
                     <Normaltekst>{`100% sykmeldt ${arbeidsgiverNavn ? 'fra ' + arbeidsgiverNavn : ''}`}</Normaltekst>
                 </div>
                 <div className="lenkepanel-content__status-text">
