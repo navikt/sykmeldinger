@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/useFetch';
 import { Sykmelding } from '../../types/sykmelding';
-import { Undertittel } from 'nav-frontend-typografi';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Header from '../commonComponents/Header/Header';
 import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
 import LenkepanelContainer from './LenkepanelContainer';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederFemaleSvg from '../commonComponents/Veileder/svg/VeilederFemaleSvg';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Spinner from '../commonComponents/Spinner/Spinner';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -25,26 +26,36 @@ const SykmeldingerPage = () => {
         fetchSykmeldinger();
     }, [fetchSykmeldinger]);
 
-    // TODO: Refactor
-    if (sykmeldingerFetcherError) {
-        return <div>Feil med baksystemet</div>;
+    if (areAnyNotStartetOrPending([sykmeldingerFetcherStatus])) {
+        return <Spinner headline="Henter dine sykmeldinger" />;
     }
 
-    if (areAnyNotStartetOrPending([sykmeldingerFetcherStatus])) {
+    if (sykmeldingerFetcherError || sykmeldinger === undefined) {
         return (
-            <div style={{ marginTop: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Undertittel style={{ marginBottom: '15px' }}>Laster sykmelding</Undertittel>
-                <NavFrontendSpinner />
-            </div>
+            <>
+                <Header title="Dine sykmeldinger" />
+                <div className="limit">
+                    <Brodsmuler
+                        breadcrumbs={[
+                            {
+                                title: 'Sykefravær',
+                                path: '/',
+                            },
+                            {
+                                title: 'Sykmeldinger',
+                            },
+                        ]}
+                    />
+                    <AlertStripeAdvarsel>
+                        <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
+                        <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
+                    </AlertStripeAdvarsel>
+                </div>
+            </>
         );
     }
 
-    if (!sykmeldinger?.length) {
-        // TODO: Return veileder telling that you might have gotten the sykmelding in paper
-        return null;
-    }
-
-    const apenAndAvvistSykemdinger = sykmeldinger.filter(
+    const apenAndAvvistSykmeldinger = sykmeldinger.filter(
         (sykmelding) =>
             sykmelding.sykmeldingStatus.statusEvent === 'APEN' || sykmelding.behandlingsutfall.status === 'INVALID',
     );
@@ -52,7 +63,7 @@ const SykmeldingerPage = () => {
         (sykmelding) =>
             sykmelding.sykmeldingStatus.statusEvent !== 'APEN' && sykmelding.behandlingsutfall.status !== 'INVALID',
     );
-    // TODO: Refactor to proper component
+
     return (
         <>
             <Header title="Dine sykmeldinger" />
@@ -74,7 +85,7 @@ const SykmeldingerPage = () => {
                         sender den digitalt til NAV. Da bruker du papirsykmeldingen i stedet.
                     </Veilederpanel>
                 </div>
-                <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenAndAvvistSykemdinger} />
+                <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenAndAvvistSykmeldinger} />
                 <LenkepanelContainer title="Tidligere sykmeldinger" sykmeldinger={pastSykmeldinger} showSortBy />
             </div>
         </>
