@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Sykmelding } from '../../types/sykmelding';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 import './LenkepanelContainer.less';
 import Lenkepanel from './Lenkepanel/Lenkepanel';
-import { sortSykmeldingerNewestFirst, sortSykmeldingerArbeidsgiver } from '../../utils/sorterSykemeldingUtils';
+import { Sykmelding } from '../../../types/sykmelding';
+import { sortSykmeldingerNewestFirst, sortSykmeldingerArbeidsgiver } from '../../../utils/sorterSykemeldingUtils';
 
 export enum SortBy {
     DATE = 'DATE',

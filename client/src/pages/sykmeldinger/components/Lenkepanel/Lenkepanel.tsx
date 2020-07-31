@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusEvent, RegelStatus, Periode } from '../../../types/sykmelding';
+import { StatusEvent, RegelStatus, Periode } from '../../../../types/sykmelding';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import plaster from './svg/plaster.svg';
 import plasterHover from './svg/plasterHover.svg';
@@ -11,7 +11,7 @@ import plasterAvvist from './svg/plasterAvvist.svg';
 import plasterAvvistHover from './svg/plasterAvvistHover.svg';
 import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './Lenkepanel.less';
-import { toReadableTotalPeriodLength } from '../../../utils/datoUtils';
+import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
 
 // TODO: Get all icons

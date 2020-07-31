@@ -4,11 +4,11 @@ import { Sykmelding } from '../../types/sykmelding';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Header from '../commonComponents/Header/Header';
 import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
-import LenkepanelContainer from './LenkepanelContainer';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederFemaleSvg from '../commonComponents/Veileder/svg/VeilederFemaleSvg';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
+import LenkepanelContainer from './components/LenkepanelContainer';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
