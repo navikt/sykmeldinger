@@ -51,13 +51,13 @@ const PapirInfoheader = () => {
                         sykefraværet. Papirsykmeldingen kan du legge bort. Det du gjør her erstatter papiret.
                     </Normaltekst>
 
-                    <Element>Hvis du får ja fra arbeidsgiveren din:</Element>
-                    <a href="#apen-sykmelding-form" className="knapp margin-bottom--1">
+                    <Element className="margin-bottom--1">Hvis du får ja fra arbeidsgiveren din:</Element>
+                    <a href="#apen-sykmelding-form" className="knapp margin-bottom--2">
                         Gå til utfyllingen
                     </a>
 
-                    <Element>Hvis du i stedet skal fortsette med papiret:</Element>
-                    <Knapp className="margin-bottom--1" onClick={() => setSkalAvbrytes(true)}>
+                    <Element className="margin-bottom--1">Hvis du i stedet skal fortsette med papiret:</Element>
+                    <Knapp className="margin-bottom--2" onClick={() => setSkalAvbrytes(true)}>
                         Avbryt den digitale sykmeldingen
                     </Knapp>
                 </>
