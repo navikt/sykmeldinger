@@ -2,9 +2,9 @@ import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './Statuspanel.less';
 import { Soknadstype } from './Statuspanel';
-import Lenke from 'nav-frontend-lenker';
 import { Knapp } from 'nav-frontend-knapper';
 import dayjs from 'dayjs';
+import ExpandableChevron from './ExpandableChevron';
 
 interface SoknadSectionProps {
     soknadstype: Soknadstype;
@@ -38,7 +38,11 @@ const SoknadSection = ({ soknadstype, soknadFomDato }: SoknadSectionProps) => {
                         <Normaltekst className="statuspanel--margin-bottom">
                             I søknaden svarer du på noen spørsmål. Svarene dine brukes til å beregne sykepengene.
                         </Normaltekst>
-                        <Lenke href="#">Hvorfor må jeg søke?</Lenke>
+                        <ExpandableChevron buttonText="Hvorfor må jeg søke?">
+                            For å utbetale riktig trenger vi å vite hva som skjedde i løpet av sykefraværet, for
+                            eksempel om du jobbet mer enn sykmeldingen sier, eller om du gjorde noe annet som har
+                            betydning for sykepengene dine.
+                        </ExpandableChevron>
                         <Knapp className="statuspanel--margin-top">Gå til søknaden</Knapp>
                     </>
                 );
@@ -52,7 +56,11 @@ const SoknadSection = ({ soknadstype, soknadFomDato }: SoknadSectionProps) => {
                         <Normaltekst className="statuspanel--margin-bottom">
                             Søknaden kan fylles ut fra {dayjs(soknadFomDato).format('dddd D. MMMM YYYY')}
                         </Normaltekst>
-                        <Lenke href="#">Hvorfor må jeg vente med å søke?</Lenke>
+                        <ExpandableChevron buttonText="Hvorfor må jeg vente med å søke?">
+                            For å utbetale riktig trenger vi å vite hva som skjedde i løpet av sykefraværet, for
+                            eksempel om du jobbet mer enn sykmeldingen sier, eller om du gjorde noe annet som har
+                            betydning for sykepengene dine. Du får en melding når søknaden er klar til å fylles ut.
+                        </ExpandableChevron>
                     </>
                 );
             case 'SOK_SENERE_LANG_SYKMELDING':
@@ -65,7 +73,11 @@ const SoknadSection = ({ soknadstype, soknadFomDato }: SoknadSectionProps) => {
                         <Normaltekst className="statuspanel--margin-bottom">
                             Søknaden kan fylles ut fra {dayjs(soknadFomDato).format('dddd D. MMMM YYYY')}
                         </Normaltekst>
-                        <Lenke href="#">Hvorfor må jeg vente med å søke?</Lenke>
+                        <ExpandableChevron buttonText="Hvorfor må jeg vente med å søke?">
+                            For å utbetale riktig trenger vi å vite hva som skjedde i løpet av sykefraværet, for
+                            eksempel om du jobbet mer enn sykmeldingen sier, eller om du gjorde noe annet som har
+                            betydning for sykepengene dine. Du får en melding når søknaden er klar til å fylles ut.
+                        </ExpandableChevron>
                     </>
                 );
             case 'SOK_PAPIR':
