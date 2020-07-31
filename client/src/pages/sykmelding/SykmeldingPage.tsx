@@ -17,6 +17,7 @@ import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
 import EgenmeldtSykmelding from './EgenmeldtSykmelding/EgenmeldtSykmelding';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
+import ApenPapirsykmelding from './ApenSykmelding/ApenPapirsykmelding';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -117,6 +118,7 @@ const SykmeldingSide = () => {
     const SykmeldingComponent = (() => {
         const erAvvist = sykmelding.behandlingsutfall.status === 'INVALID';
         const erEgenmeldt = sykmelding.egenmeldt;
+        const erPapir = sykmelding.papirsykmelding;
         const status = sykmelding.sykmeldingStatus.statusEvent;
 
         // erAvvist and erEgenmeldt needs to be checkt first because these flags are not part of the status
@@ -129,6 +131,15 @@ const SykmeldingSide = () => {
 
         switch (status) {
             case 'APEN':
+                if (erPapir) {
+                    return (
+                        <ApenPapirsykmelding
+                            sykmelding={sykmelding}
+                            arbeidsgivere={arbeidsgivere}
+                            sykmeldingUtenforVentetid={erUtenforVentetid}
+                        />
+                    );
+                }
                 return (
                     <ApenSykmelding
                         sykmelding={sykmelding}
