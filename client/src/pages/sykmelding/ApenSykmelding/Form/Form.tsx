@@ -44,6 +44,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
 
     return (
         <form
+            id="apen-sykmelding-form"
             onSubmit={(event) => {
                 event.preventDefault();
                 handleSubmit((state) => console.log(state));
