@@ -11,11 +11,12 @@ import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import { Arbeidsgiver } from '../../types/arbeidsgiver';
 import { Sykmelding } from '../../types/sykmelding';
 import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/useFetch';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Soknad } from '../../types/soknad';
 import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
 import EgenmeldtSykmelding from './EgenmeldtSykmelding/EgenmeldtSykmelding';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Spinner from '../commonComponents/Spinner/Spinner';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -64,12 +65,6 @@ const SykmeldingSide = () => {
         fetchSoknader();
     }, [fetchSykmelding, fetchArbeidsgivere, fetchErUtenforVentetid, fetchSoknader]);
 
-    // TODO: Refactor to proper errormessage
-    if (sykmeldingFetcherError || arbeidsgivereFetcherError || erUtenforVentetidError || soknaderFetcherError) {
-        return <div>Feil med baksystemet</div>;
-    }
-
-    // TODO: Refactor
     if (
         areAnyNotStartetOrPending([
             sykmeldingFetcherStatus,
@@ -78,23 +73,45 @@ const SykmeldingSide = () => {
             soknaderFetcherStatus,
         ])
     ) {
-        return (
-            <div style={{ marginTop: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Undertittel style={{ marginBottom: '15px' }}>Laster sykmelding</Undertittel>
-                <NavFrontendSpinner />
-            </div>
-        );
+        return <Spinner headline="Henter sykmelding" />;
     }
 
-    // TODO: Find out if this check can be infered automaticatlly
     if (
+        sykmeldingFetcherError ||
         sykmelding === undefined ||
+        arbeidsgivereFetcherError ||
         arbeidsgivere === undefined ||
+        erUtenforVentetidError ||
         erUtenforVentetid === undefined ||
+        soknaderFetcherError ||
         soknader === undefined
     ) {
-        // TODO: Error-melding, ingen sykmelding funnet
-        return null;
+        return (
+            <>
+                <Header title="Sykmelding" />
+                <div className="limit">
+                    <Brodsmuler
+                        breadcrumbs={[
+                            {
+                                title: 'Sykefravær',
+                                path: '/',
+                            },
+                            {
+                                title: 'Sykmeldinger',
+                                path: '/sykmeldinger',
+                            },
+                            {
+                                title: 'Sykmelding',
+                            },
+                        ]}
+                    />
+                    <AlertStripeAdvarsel>
+                        <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
+                        <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
+                    </AlertStripeAdvarsel>
+                </div>
+            </>
+        );
     }
 
     const SykmeldingComponent = (() => {
