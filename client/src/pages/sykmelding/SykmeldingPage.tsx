@@ -137,6 +137,7 @@ const SykmeldingSide = () => {
                             sykmelding={sykmelding}
                             arbeidsgivere={arbeidsgivere}
                             sykmeldingUtenforVentetid={erUtenforVentetid}
+                            fetchSykmelding={fetchSykmelding}
                         />
                     );
                 }
@@ -145,6 +146,7 @@ const SykmeldingSide = () => {
                         sykmelding={sykmelding}
                         arbeidsgivere={arbeidsgivere}
                         sykmeldingUtenforVentetid={erUtenforVentetid}
+                        fetchSykmelding={fetchSykmelding}
                     />
                 );
             case 'AVBRUTT':

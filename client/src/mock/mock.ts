@@ -107,3 +107,19 @@ mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/UTGATT`, 
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/EGENMELDT`, []);
 
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/actions/gjenapne/AVBRUTT`, {});
+
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/bekreft`, {});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions/bekreft`, {});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/send`, {});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions/send`, {});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/avbryt`, {});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions/avbryt`, {});
+
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/behandlet`, {
+    soknaderOpprettet: 1,
+    erBehandlet: true,
+});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions/behandlet`, {
+    soknaderOpprettet: 1,
+    erBehandlet: false,
+});
