@@ -124,6 +124,7 @@ mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/actions/gjenapn
 
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/bekreft`, {});
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions/bekreft`, {});
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/AVVIST/actions/bekreft`, {});
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/send`, {});
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions/send`, {});
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/avbryt`, {});

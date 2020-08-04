@@ -125,7 +125,7 @@ const SykmeldingSide = () => {
         switch (status) {
             case 'APEN':
                 if (erAvvist) {
-                    return <AvvistSykmelding sykmelding={sykmelding} />;
+                    return <AvvistSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />;
                 }
                 if (erPapir) {
                     return (
