@@ -14,7 +14,7 @@ import styles from './mock/decorator/decorator-styles';
 
 dayjs.locale('nb');
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_GCP_LABS === 'true') {
     document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_HEADING}}}', withMenu);
     document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_FOOTER}}}', footer);
     document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_STYLES}}}', styles);
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'development') {
     document.body.appendChild(script);
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_GCP_LABS === 'true') {
     require('./mock/mock');
 }
 

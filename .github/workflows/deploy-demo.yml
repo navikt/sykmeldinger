@@ -38,6 +38,7 @@ jobs:
               working-directory: ./server
             - name: Build client
               env:
+                REACT_APP_IS_GCP_LABS: "true"
                 REACT_APP_SYKMELDING_ROOT: "/sykmelding"
                 REACT_APP_LOGINSERVICE_URL: "https://loginservice-q.nav.no/login"
                 REACT_APP_SM_REGISTER_URL: "https://syfosmregisterproxy-q.nav.no"
