@@ -18,6 +18,7 @@ import EgenmeldtSykmelding from './EgenmeldtSykmelding/EgenmeldtSykmelding';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import ApenPapirsykmelding from './ApenSykmelding/ApenPapirsykmelding';
+import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -121,16 +122,11 @@ const SykmeldingSide = () => {
         const erPapir = sykmelding.papirsykmelding;
         const status = sykmelding.sykmeldingStatus.statusEvent;
 
-        // erAvvist and erEgenmeldt needs to be checkt first because these flags are not part of the status
-        if (erAvvist) {
-            return <AvvistSykmelding sykmelding={sykmelding} />;
-        }
-        if (erEgenmeldt) {
-            return <EgenmeldtSykmelding sykmelding={sykmelding} />;
-        }
-
         switch (status) {
             case 'APEN':
+                if (erAvvist) {
+                    return <AvvistSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />;
+                }
                 if (erPapir) {
                     return (
                         <ApenPapirsykmelding
@@ -156,6 +152,12 @@ const SykmeldingSide = () => {
             case 'SENDT':
                 return <SendtSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />;
             case 'BEKREFTET':
+                if (erAvvist) {
+                    return <AvvistBekreftetSykmelding sykmelding={sykmelding} />;
+                }
+                if (erEgenmeldt) {
+                    return <EgenmeldtSykmelding sykmelding={sykmelding} />;
+                }
                 return (
                     <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />
                 );

@@ -11,13 +11,27 @@ import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/paneleleme
 import VeilederContent from './VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
+import { useParams } from 'react-router-dom';
+import useFetch from '../../commonComponents/hooks/useFetch';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
+    fetchSykmelding: (request?: RequestInit | undefined) => void;
 }
 
-const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
+const AvvistSykmelding = ({ sykmelding, fetchSykmelding }: SykmeldingProps) => {
     const [bekreftet, setBekreftet] = useState(false);
+
+    const { sykmeldingId } = useParams();
+
+    const { status: sykmeldingBekreftStatus, error: sykmeldingBekreftError, fetch: fetchSykmeldingBekreft } = useFetch(
+        `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/bekreft`,
+        undefined,
+        () => {
+            fetchSykmelding({ credentials: 'include' });
+        },
+    );
 
     return (
         <div className="sykmelding-container">
@@ -37,7 +51,14 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
             </Sykmeldingsopplysninger>
 
-            <div style={{ textAlign: 'center' }}>
+            {sykmeldingBekreftError && (
+                <AlertStripeAdvarsel className="margin-bottom--1">
+                    Kunne ikke bekrefte at sykmeldingen er avvist på grunn av en feil med baksystemene våre. Vennligst
+                    prøv igjen senere.
+                </AlertStripeAdvarsel>
+            )}
+
+            <div className="text--center">
                 <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
                     <BekreftCheckboksPanel
                         label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
@@ -45,7 +66,11 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                         onChange={() => setBekreftet(!bekreftet)}
                     />
                 </div>
-                <Hovedknapp disabled={!bekreftet} onClick={() => console.log('bekreft')}>
+                <Hovedknapp
+                    disabled={!bekreftet}
+                    spinner={sykmeldingBekreftStatus === 'PENDING'}
+                    onClick={() => fetchSykmeldingBekreft({ credentials: 'include' })}
+                >
                     Bekreft
                 </Hovedknapp>
             </div>
