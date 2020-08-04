@@ -55,14 +55,8 @@ const SykmeldingerPage = () => {
         );
     }
 
-    const apenAndAvvistSykmeldinger = sykmeldinger.filter(
-        (sykmelding) =>
-            sykmelding.sykmeldingStatus.statusEvent === 'APEN' || sykmelding.behandlingsutfall.status === 'INVALID',
-    );
-    const pastSykmeldinger = sykmeldinger.filter(
-        (sykmelding) =>
-            sykmelding.sykmeldingStatus.statusEvent !== 'APEN' && sykmelding.behandlingsutfall.status !== 'INVALID',
-    );
+    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => sykmelding.sykmeldingStatus.statusEvent === 'APEN');
+    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => sykmelding.sykmeldingStatus.statusEvent !== 'APEN');
 
     return (
         <>
@@ -85,7 +79,7 @@ const SykmeldingerPage = () => {
                         sender den digitalt til NAV. Da bruker du papirsykmeldingen i stedet.
                     </Veilederpanel>
                 </div>
-                <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenAndAvvistSykmeldinger} />
+                <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenSykmeldinger} />
                 <LenkepanelContainer title="Tidligere sykmeldinger" sykmeldinger={pastSykmeldinger} showSortBy />
             </div>
         </>

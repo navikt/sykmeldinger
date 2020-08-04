@@ -15,40 +15,46 @@ import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
 
 // TODO: Get all icons
-const getIcons = (status: StatusEvent | RegelStatus): { iconNormal: string; iconHover: string } => {
-    // Only UTGATT INVALID and AVBRUTT have custom icons.
+const getIcons = (status: StatusEvent, behandlingsutfall: RegelStatus): { iconNormal: string; iconHover: string } => {
+    // Only UTGATT, INVALID and AVBRUTT have custom icons.
     switch (status) {
         case 'UTGATT':
             return { iconNormal: plasterInfo, iconHover: plasterInfoHover };
-        case 'INVALID':
-            return { iconNormal: plasterAvvist, iconHover: plasterAvvistHover };
         case 'AVBRUTT':
             return { iconNormal: plasterAvbrutt, iconHover: plasterAvbruttHover };
         default:
+            if (behandlingsutfall === 'INVALID') {
+                return { iconNormal: plasterAvvist, iconHover: plasterAvvistHover };
+            }
             return { iconNormal: plaster, iconHover: plasterHover };
     }
 };
 
-const getStatusText = (status: StatusEvent | RegelStatus): string => {
+const getStatusText = (status: StatusEvent, behandlingsutfall: RegelStatus): string => {
     switch (status) {
         case 'AVBRUTT':
             return 'Avbrutt av deg';
-        case 'INVALID':
-            return 'Avvist av NAV';
         case 'SENDT':
             return 'Sendt til arbeidsgiver';
         case 'UTGATT':
             return 'Utgått';
         case 'BEKREFTET':
+            if (behandlingsutfall === 'INVALID') {
+                return 'Bekreftet avvist';
+            }
             return 'Sendt til NAV';
         default:
+            if (behandlingsutfall === 'INVALID') {
+                return 'Avvist av NAV';
+            }
             return '';
     }
 };
 
 interface LenkepanelProps {
     sykmeldingId: string;
-    sykmeldingsstatus: StatusEvent | RegelStatus; // Needs to be a union of SatusEvent and RegelStatus becuase AVVIST is not part of StatusEvent.
+    sykmeldingsstatus: StatusEvent;
+    sykmeldingBehandlingsutvall: RegelStatus;
     sykmeldingsperioder: Periode[];
     arbeidsgiverNavn?: string;
     erEgenmeldt?: boolean;
@@ -57,18 +63,20 @@ interface LenkepanelProps {
 const Lenkepanel = ({
     sykmeldingId,
     sykmeldingsstatus,
+    sykmeldingBehandlingsutvall,
     sykmeldingsperioder,
     arbeidsgiverNavn,
     erEgenmeldt,
 }: LenkepanelProps) => {
-    const iconSet = getIcons(sykmeldingsstatus);
+    const iconSet = getIcons(sykmeldingsstatus, sykmeldingBehandlingsutvall);
     const [activeIcon, setActiveIcon] = useState<string>(iconSet.iconNormal);
 
-    const statusText = getStatusText(sykmeldingsstatus);
+    const statusText = getStatusText(sykmeldingsstatus, sykmeldingBehandlingsutvall);
     const periodeString = toReadableTotalPeriodLength(sykmeldingsperioder);
 
     const history = useHistory();
 
+    // TODO: Change hardcoded sykmeldingsgrad
     return (
         <LenkepanelBase
             onMouseEnter={() => setActiveIcon(iconSet.iconHover)}
@@ -79,7 +87,7 @@ const Lenkepanel = ({
                 history.push(`/sykmeldinger/${sykmeldingId}`);
                 window.scrollTo(0, 0);
             }}
-            className={sykmeldingsstatus === 'APEN' || sykmeldingsstatus === 'INVALID' ? 'lenkepanel--alert' : ''}
+            className={sykmeldingsstatus === 'APEN' ? 'lenkepanel--alert' : ''}
             border
         >
             <div className="lenkepanel-content">
