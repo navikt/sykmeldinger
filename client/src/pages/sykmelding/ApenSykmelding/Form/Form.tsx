@@ -177,7 +177,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
             {(sykmeldingBehandletError || limitReached) && (
                 <div className="margin-bottom--1">
                     <AlertStripeAdvarsel>
-                        Sykmelidngen ble {skalSendes ? 'sendt' : 'bekreftet'}, men på grunn av en feil med baksystemene
+                        Sykmeldingen ble {skalSendes ? 'sendt' : 'bekreftet'}, men på grunn av en feil med baksystemene
                         klarte vi ikke å hente informasjon knyttet til søknad om sykepenger.
                     </AlertStripeAdvarsel>
                 </div>
