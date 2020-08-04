@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 
-type FetchStatus = 'NOT_STARTET' | 'PENDING' | 'FINISHED';
+type FetchStatus = 'NOT_STARTET' | 'PENDING' | 'FINISHED' | 'ERROR';
 
 interface FetchState<D> {
     status: FetchStatus;
@@ -19,6 +19,13 @@ const getInitialFetchState = (): FetchState<any> => ({
 export const areAnyNotStartetOrPending = (statuses: FetchStatus[]): boolean =>
     statuses.some((status) => status === 'NOT_STARTET' || status === 'PENDING');
 
+export const areAnyPendingOrFinished = (statuses: FetchStatus[]): boolean =>
+    statuses.some((status) => status === 'FINISHED' || status === 'PENDING');
+
+export const areAnyPending = (statuses: FetchStatus[]): boolean => statuses.some((status) => status === 'PENDING');
+
+export const areAnyError = (statuses: FetchStatus[]): boolean => statuses.some((status) => status === 'ERROR');
+
 /**
  * Custom hook for containing state when fetching from an api.
  *
@@ -26,7 +33,11 @@ export const areAnyNotStartetOrPending = (statuses: FetchStatus[]): boolean =>
  * @param {(data: any) => D} transformDataOnFinish If the raw data needs to be transformed before being put into state.
  * @return {Fetch<D>} Fetch object conatining status, data, error and fetch.
  */
-const useFetch = <D extends {}>(url: string, transformDataOnFinish?: (data: any) => D): Fetch<D> => {
+const useFetch = <D extends {}>(
+    url: string,
+    transformDataOnFinish?: (data: any) => D,
+    onSuccess?: (data: D) => any,
+): Fetch<D> => {
     const [fetchState, setFetchState] = useState<FetchState<D>>(getInitialFetchState());
 
     const apiFetch = (request?: RequestInit) => {
@@ -40,10 +51,16 @@ const useFetch = <D extends {}>(url: string, transformDataOnFinish?: (data: any)
                     return res.json();
                 }
             })
-            .then((data: any) =>
-                setFetchState({ status: 'FINISHED', data: transformDataOnFinish ? transformDataOnFinish(data) : data }),
-            )
-            .catch((error) => setFetchState({ status: 'FINISHED', error }));
+            .then((data: any) => {
+                setFetchState({
+                    status: 'FINISHED',
+                    data: transformDataOnFinish ? transformDataOnFinish(data) : data,
+                });
+                if (onSuccess) {
+                    onSuccess(data);
+                }
+            })
+            .catch((error) => setFetchState({ status: 'ERROR', error }));
     };
 
     const apiFetchCallback = useCallback(apiFetch, []);
