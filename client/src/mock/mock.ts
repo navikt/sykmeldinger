@@ -14,7 +14,7 @@ import { sykmeldingApenPapir } from './data/sykmelding-apen-papir';
 
 const mock = FetchMock.configure({
     enableFallback: true,
-    middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(1000), MiddlewareUtils.loggingMiddleware()),
+    middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware()),
 });
 
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmeldinger`, [
@@ -117,7 +117,7 @@ mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions
 
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN/actions/behandlet`, {
     soknaderOpprettet: 1,
-    erBehandlet: true,
+    erBehandlet: false,
 });
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/APEN_PAPIR/actions/behandlet`, {
     soknaderOpprettet: 1,

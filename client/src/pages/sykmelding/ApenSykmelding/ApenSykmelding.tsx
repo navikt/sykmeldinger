@@ -30,6 +30,7 @@ interface ApenSykmeldingProps {
     arbeidsgivere: Arbeidsgiver[];
     sykmeldingUtenforVentetid: boolean;
     fetchSykmelding: (request?: RequestInit | undefined) => void;
+    fetchSoknader: (request?: RequestInit | undefined) => void;
 }
 
 const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
@@ -37,6 +38,7 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
     arbeidsgivere,
     sykmeldingUtenforVentetid,
     fetchSykmelding,
+    fetchSoknader,
 }: ApenSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
@@ -88,7 +90,13 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({
                 </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
 
-            <Form sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} erUtenforVentetid={sykmeldingUtenforVentetid} fetchSykmelding={fetchSykmelding} />
+            <Form
+                sykmelding={sykmelding}
+                arbeidsgivere={arbeidsgivere}
+                erUtenforVentetid={sykmeldingUtenforVentetid}
+                fetchSykmelding={fetchSykmelding}
+                fetchSoknader={fetchSoknader}
+            />
         </div>
     );
 };
