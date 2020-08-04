@@ -16,7 +16,7 @@ interface BekreftOpplysningerProps {
 const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysningerProps) => {
     return (
         <div className="form-section form-section--border">
-            <Systemtittel className="margin-bottom--1">Bekreft Opplysninger</Systemtittel>
+            <Systemtittel className="margin-bottom--1">Bekreft opplysninger</Systemtittel>
 
             <RadioPanelGruppe
                 name="opplysningeneErRiktige"
