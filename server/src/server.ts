@@ -1,6 +1,6 @@
-require('dotenv').config();
-import express from 'express';
 import path from 'path';
+require('dotenv').config({ path: path.join(__dirname, '../src/.env') });
+import express from 'express';
 import cors, { CorsOptions } from 'cors';
 import morganBody from 'morgan-body';
 import mustacheExpress from 'mustache-express';
@@ -13,8 +13,6 @@ const BUILD_PATH = path.join(__dirname, '../../client/build');
 server.set('views', BUILD_PATH);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
-
-console.log(process.env['DECORATOR_URL']);
 
 const corsOptions: CorsOptions = {
     origin: '*',
@@ -42,10 +40,6 @@ try {
                 console.error(error);
                 res.status(500).send(error);
             });
-    });
-
-    server.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../../client/build/index.html'));
     });
 
     server.listen(PORT, () => {

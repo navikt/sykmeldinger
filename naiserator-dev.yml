@@ -12,6 +12,9 @@ spec:
     max: 1
     cpuThresholdPercentage: 90
   port: 3000
+  env:
+    - name: DECORATOR_URL
+      value: https://wwww-q1.nav.no/dekoratoren
   liveness:
     path: /is_alive
     initialDelay: 10

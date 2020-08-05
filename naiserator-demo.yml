@@ -8,6 +8,9 @@ metadata:
 spec:
   image: {{ image }}
   port: 3000
+  env:
+    - name: DECORATOR_URL
+      value: https://nav.no/dekoratoren
   ingresses:
     - "https://sykmeldinger.labs.nais.io/"
   liveness:
