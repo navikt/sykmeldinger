@@ -10,7 +10,7 @@ spec:
   port: 3000
   env:
     - name: DECORATOR_URL
-      value: https://nav.no/dekoratoren
+      value: https://www.nav.no/dekoratoren
   ingresses:
     - "https://sykmeldinger.labs.nais.io/"
   liveness:
