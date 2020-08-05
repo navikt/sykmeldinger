@@ -39,7 +39,7 @@ const SykmeldingerPage = () => {
                         breadcrumbs={[
                             {
                                 title: 'Sykefravær',
-                                path: '/',
+                                path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
                             },
                             {
                                 title: 'Sykmeldinger',
@@ -66,7 +66,7 @@ const SykmeldingerPage = () => {
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: '/',
+                            path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
                         },
                         {
                             title: 'Sykmeldinger',

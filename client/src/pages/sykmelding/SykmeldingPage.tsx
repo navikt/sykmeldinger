@@ -96,11 +96,11 @@ const SykmeldingSide = () => {
                         breadcrumbs={[
                             {
                                 title: 'Sykefravær',
-                                path: '/',
+                                path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
                             },
                             {
                                 title: 'Sykmeldinger',
-                                path: '/sykmeldinger',
+                                path: `${process.env.REACT_APP_SYKMELDINGER_ROOT}`,
                             },
                             {
                                 title: 'Sykmelding',
@@ -180,11 +180,11 @@ const SykmeldingSide = () => {
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: '/',
+                            path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
                         },
                         {
                             title: 'Sykmeldinger',
-                            path: '/sykmeldinger',
+                            path: `${process.env.REACT_APP_SYKMELDINGER_ROOT}`,
                         },
                         {
                             title: 'Sykmelding',
