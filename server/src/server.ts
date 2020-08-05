@@ -27,10 +27,8 @@ try {
     server.get('/is_alive', (_req, res) => res.status(200).send('alive'));
     server.get('/is_ready', (_req, res) => res.status(200).send('ready'));
 
-    server.use(express.static(BUILD_PATH, { etag: false })); // etag for turning off caching. not sure if this is the best way to deal with caching
-
     // match all routes that are not in the static folder
-    server.use(/index.html/, (_, res) => {
+    server.use(/^(?!.*\/static\/).*$/, (_, res) => {
         getDecorator()
             .then((decoratorFragments) => {
                 res.render('index.html', decoratorFragments);
@@ -40,6 +38,12 @@ try {
                 logger.error(error);
                 res.status(500).send(error);
             });
+    });
+
+    server.use(express.static(BUILD_PATH, { etag: false })); // etag for turning off caching. not sure if this is the best way to deal with caching
+
+    server.get('*', (_, res) => {
+        res.sendFile(path.join(__dirname, '../../client/build/index.html'));
     });
 
     server.listen(PORT, () => {

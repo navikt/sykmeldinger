@@ -180,11 +180,11 @@ const SykmeldingSide = () => {
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: '/',
+                            path: 'https://nav.no/sykefravaer',
                         },
                         {
                             title: 'Sykmeldinger',
-                            path: '/sykmeldinger',
+                            path: '/',
                         },
                         {
                             title: 'Sykmelding',

@@ -66,7 +66,7 @@ const SykmeldingerPage = () => {
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: '/',
+                            path: 'https://www.nav.no/sykefravaer',
                         },
                         {
                             title: 'Sykmeldinger',
