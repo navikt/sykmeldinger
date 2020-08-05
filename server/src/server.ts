@@ -30,7 +30,7 @@ try {
     server.use(express.static(BUILD_PATH, { etag: false })); // etag for turning off caching. not sure if this is the best way to deal with caching
 
     // match all routes that are not in the static folder
-    server.use(/^(?!.*\/static\/).*$/, (req, res) => {
+    server.use(/index.html/, (_, res) => {
         getDecorator()
             .then((decoratorFragments) => {
                 res.render('index.html', decoratorFragments);
