@@ -10,8 +10,13 @@ const App = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact component={SykmeldingerPage} />
-                <Route path="/:sykmeldingId" component={SykmeldingSide} />
+                <Route path={`${process.env.REACT_APP_SYKMELDINGER_ROOT}`} exact component={SykmeldingerPage} />
+                <Route
+                    path={`${process.env.REACT_APP_SYKMELDINGER_ROOT}:sykmeldingId`}
+                    exact
+                    component={SykmeldingSide}
+                />
+                <Route component={() => <h1>404 Page not found</h1>} />
             </Switch>
         </BrowserRouter>
     );
