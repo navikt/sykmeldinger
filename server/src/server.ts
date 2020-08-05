@@ -28,6 +28,7 @@ try {
     server.get('/is_ready', (_req, res) => res.status(200).send('ready'));
 
     server.use(express.static(BUILD_PATH, { etag: false })); // etag for turning off caching. not sure if this is the best way to deal with caching
+
     // match all routes that are not in the static folder
     server.use(/^(?!.*\/static\/).*$/, (req, res) => {
         getDecorator()
@@ -41,6 +42,7 @@ try {
             });
     });
 
+    // needs to have a wildcard endpoint serving the index.html because
     server.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, '../../client/build/index.html'));
     });
