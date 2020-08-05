@@ -10,9 +10,8 @@ const App = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/sykmeldinger" exact component={SykmeldingerPage} />
-                <Route path="/sykmeldinger/:sykmeldingId" component={SykmeldingSide} />
-                <Route path="/" component={() => <h1>404 not found</h1>} />
+                <Route path="/" exact component={SykmeldingerPage} />
+                <Route path="/:sykmeldingId" component={SykmeldingSide} />
             </Switch>
         </BrowserRouter>
     );
