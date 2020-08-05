@@ -81,10 +81,10 @@ const Lenkepanel = ({
         <LenkepanelBase
             onMouseEnter={() => setActiveIcon(iconSet.iconHover)}
             onMouseLeave={() => setActiveIcon(iconSet.iconNormal)}
-            href={`/${sykmeldingId}`}
+            href={`${process.env.REACT_APP_SYKMELDINGER_ROOT + sykmeldingId}`}
             onClick={(event) => {
                 event.preventDefault();
-                history.push(`/${sykmeldingId}`);
+                history.push(`${process.env.REACT_APP_SYKMELDINGER_ROOT + sykmeldingId}`);
                 window.scrollTo(0, 0);
             }}
             className={sykmeldingsstatus === 'APEN' ? 'lenkepanel--alert' : ''}
