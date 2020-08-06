@@ -9,6 +9,7 @@ import VeilederFemaleSvg from '../commonComponents/Veileder/svg/VeilederFemaleSv
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import LenkepanelContainer from './components/LenkepanelContainer';
+import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -50,6 +51,7 @@ const SykmeldingerPage = () => {
                         <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
                         <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
                     </AlertStripeAdvarsel>
+                    <TilHovedsiden />
                 </div>
             </>
         );
@@ -81,6 +83,7 @@ const SykmeldingerPage = () => {
                 </div>
                 <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenSykmeldinger} />
                 <LenkepanelContainer title="Tidligere sykmeldinger" sykmeldinger={pastSykmeldinger} showSortBy />
+                <TilHovedsiden />
             </div>
         </>
     );
