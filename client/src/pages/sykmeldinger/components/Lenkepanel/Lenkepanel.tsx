@@ -2,33 +2,27 @@ import React, { useState } from 'react';
 import { StatusEvent, RegelStatus, Periode } from '../../../../types/sykmelding';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { EtikettAdvarsel, EtikettSuksess, EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
-import plaster from './svg/plaster.svg';
-import plasterHover from './svg/plasterHover.svg';
-import plasterInfo from './svg/plasterInfo.svg';
-import plasterInfoHover from './svg/plasterInfoHover.svg';
-import plasterAvbrutt from './svg/plasterAvbrutt.svg';
-import plasterAvbruttHover from './svg/plasterAvbruttHover.svg';
-import plasterAvvist from './svg/plasterAvvist.svg';
-import plasterAvvistHover from './svg/plasterAvvistHover.svg';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import stethoscope from './svg/stethoscope.svg';
+import stethoscopeHover from './svg/stethoscopeHover.svg';
+import papersykmelding from './svg/papersykmelding.svg';
+import papersykmeldingHover from './svg/papersykmeldingHover.svg';
+import declined from './svg/declined.svg';
+import declinedHover from './svg/declinedHover.svg';
 import './Lenkepanel.less';
 import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
 
 // TODO: Get all icons
-const getIcons = (status: StatusEvent, behandlingsutfall: RegelStatus): { iconNormal: string; iconHover: string } => {
+const getIcons = (behandlingsutfall: RegelStatus, erPapir: boolean): { iconNormal: string; iconHover: string } => {
     // Only UTGATT, INVALID and AVBRUTT have custom icons.
-    switch (status) {
-        case 'UTGATT':
-            return { iconNormal: plasterInfo, iconHover: plasterInfoHover };
-        case 'AVBRUTT':
-            return { iconNormal: plasterAvbrutt, iconHover: plasterAvbruttHover };
-        default:
-            if (behandlingsutfall === 'INVALID') {
-                return { iconNormal: plasterAvvist, iconHover: plasterAvvistHover };
-            }
-            return { iconNormal: plaster, iconHover: plasterHover };
+    if (behandlingsutfall === 'INVALID') {
+        return { iconNormal: declined, iconHover: declinedHover };
     }
+    if (erPapir) {
+        return { iconNormal: papersykmelding, iconHover: papersykmeldingHover };
+    }
+    return { iconNormal: stethoscope, iconHover: stethoscopeHover };
 };
 
 const getEtikett = (status: StatusEvent, behandlingsutfall: RegelStatus): JSX.Element | null => {
@@ -68,8 +62,8 @@ interface LenkepanelProps {
     sykmeldingBehandlingsutfall: RegelStatus;
     sykmeldingsperioder: Periode[];
     arbeidsgiverNavn?: string;
-    erEgenmeldt?: boolean;
-    erPapir?: boolean;
+    erEgenmeldt: boolean;
+    erPapir: boolean;
 }
 
 const Lenkepanel = ({
@@ -81,7 +75,7 @@ const Lenkepanel = ({
     erEgenmeldt,
     erPapir,
 }: LenkepanelProps) => {
-    const iconSet = getIcons(sykmeldingsstatus, sykmeldingBehandlingsutfall);
+    const iconSet = getIcons(sykmeldingBehandlingsutfall, erPapir);
     const [activeIcon, setActiveIcon] = useState<string>(iconSet.iconNormal);
 
     const etikett = getEtikett(sykmeldingsstatus, sykmeldingBehandlingsutfall);
