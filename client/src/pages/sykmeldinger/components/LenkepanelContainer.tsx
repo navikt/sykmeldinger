@@ -56,7 +56,7 @@ const LenkepanelContainer = ({ title, sykmeldinger, showSortBy = false }: Lenkep
                         <Lenkepanel
                             sykmeldingId={sykmelding.id}
                             sykmeldingsstatus={sykmelding.sykmeldingStatus.statusEvent}
-                            sykmeldingBehandlingsutvall={sykmelding.behandlingsutfall.status}
+                            sykmeldingBehandlingsutfall={sykmelding.behandlingsutfall.status}
                             sykmeldingsperioder={sykmelding.sykmeldingsperioder}
                             arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
                             erEgenmeldt={!!sykmelding.egenmeldt}
