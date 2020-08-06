@@ -1,11 +1,11 @@
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 
 const SporsmalInfoheader = () => (
     <>
-        <Innholdstittel>Bruk sykmeldingen</Innholdstittel>
+        <Systemtittel>Bruk sykmeldingen</Systemtittel>
         <ul>
             <li>
                 <Tekstomrade>

@@ -1,7 +1,7 @@
 import './Header.less';
 
 import React from 'react';
-import { Sidetittel, Undertittel } from 'nav-frontend-typografi';
+import { Undertittel, Innholdstittel } from 'nav-frontend-typografi';
 import { Periode } from '../../../types/sykmelding';
 import { getTotalSykmeldingLenghtReadableString } from '../../../utils/sykmeldingUtils';
 
@@ -18,7 +18,7 @@ const Header = ({ title, subtitle, sykmeldingPerioder }: HeaderProps) => {
 
     return (
         <div className="location-header">
-            <Sidetittel>{title}</Sidetittel>
+            <Innholdstittel>{title}</Innholdstittel>
             {subtitle ? <Undertittel>{subtitle}</Undertittel> : null}
             {totalPeriodString ? <Undertittel>{totalPeriodString}</Undertittel> : null}
         </div>
