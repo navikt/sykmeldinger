@@ -51,13 +51,13 @@ const useFetch = <D extends {}>(
                     return res.json();
                 }
             })
-            .then((data: any) => {
+            .then(({ body }) => {
                 setFetchState({
                     status: 'FINISHED',
-                    data: transformDataOnFinish ? transformDataOnFinish(data) : data,
+                    data: transformDataOnFinish ? transformDataOnFinish(body) : body,
                 });
                 if (onSuccess) {
-                    onSuccess(data);
+                    onSuccess(body);
                 }
             })
             .catch((error) => setFetchState({ status: 'ERROR', error }));
