@@ -9,6 +9,7 @@ import Spinner from '../commonComponents/Spinner/Spinner';
 import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
+import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -50,6 +51,7 @@ const SykmeldingerPage = () => {
                         <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
                         <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
                     </AlertStripeAdvarsel>
+                    <TilHovedsiden />
                 </div>
             </>
         );
@@ -84,6 +86,7 @@ const SykmeldingerPage = () => {
                     </Lenke>
                 </Ekspanderbartpanel>
                 <LenkepanelContainer type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
+                <TilHovedsiden />
             </div>
         </>
     );
