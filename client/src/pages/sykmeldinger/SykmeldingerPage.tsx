@@ -73,16 +73,17 @@ const SykmeldingerPage = () => {
                         },
                     ]}
                 />
-                <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenSykmeldinger} />
+                <LenkepanelContainer type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
                 <Ekspanderbartpanel tittel="Ser du ikke sykmeldingen din her?">
-                    Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
-                    papirsykmeldingen i stedet.
-                    <br />
+                    <Normaltekst className="margin-bottom--1">
+                        Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
+                        papirsykmeldingen i stedet.
+                    </Normaltekst>
                     <Lenke href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
                         Mer informasjon om papirsykmelding finner du her.
                     </Lenke>
                 </Ekspanderbartpanel>
-                <LenkepanelContainer title="Tidligere sykmeldinger" sykmeldinger={pastSykmeldinger} showSortBy />
+                <LenkepanelContainer type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
             </div>
         </>
     );
