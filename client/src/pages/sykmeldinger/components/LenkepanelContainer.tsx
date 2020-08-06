@@ -60,6 +60,7 @@ const LenkepanelContainer = ({ title, sykmeldinger, showSortBy = false }: Lenkep
                             sykmeldingsperioder={sykmelding.sykmeldingsperioder}
                             arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
                             erEgenmeldt={!!sykmelding.egenmeldt}
+                            erPapir={!!sykmelding.papirsykmelding}
                         />
                     </li>
                 ))}

@@ -4,11 +4,10 @@ import { Sykmelding } from '../../types/sykmelding';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Header from '../commonComponents/Header/Header';
 import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
-import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederFemaleSvg from '../commonComponents/Veileder/svg/VeilederFemaleSvg';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import LenkepanelContainer from './components/LenkepanelContainer';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -73,13 +72,11 @@ const SykmeldingerPage = () => {
                         },
                     ]}
                 />
-                <div className="margin-bottom--4">
-                    <Veilederpanel kompakt fargetema="info" svg={<VeilederFemaleSvg />}>
-                        NAV mottar alle sykmeldinger. Ser du den ikke her? Det betyr at den som har sykmeldt deg ikke
-                        sender den digitalt til NAV. Da bruker du papirsykmeldingen i stedet.
-                    </Veilederpanel>
-                </div>
                 <LenkepanelContainer title="Nye sykmeldinger" sykmeldinger={apenSykmeldinger} />
+                <Ekspanderbartpanel tittel="Ser du ikke sykmeldingen din her?">
+                    NAV mottar alle sykmeldinger. Ser du den ikke her? Det betyr at den som har sykmeldt deg ikke sender
+                    den digitalt til NAV. Da bruker du papirsykmeldingen i stedet.
+                </Ekspanderbartpanel>
                 <LenkepanelContainer title="Tidligere sykmeldinger" sykmeldinger={pastSykmeldinger} showSortBy />
             </div>
         </>

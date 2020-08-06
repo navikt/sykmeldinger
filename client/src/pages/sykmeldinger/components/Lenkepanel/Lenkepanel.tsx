@@ -51,6 +51,16 @@ const getStatusText = (status: StatusEvent, behandlingsutfall: RegelStatus): str
     }
 };
 
+const getMainTitle = (erEgenmeldt?: boolean, erPapir?: boolean): string => {
+    if (erEgenmeldt) {
+        return 'Egenmelding';
+    }
+    if (erPapir) {
+        return 'Papirsykmelding';
+    }
+    return 'Sykmelding';
+};
+
 interface LenkepanelProps {
     sykmeldingId: string;
     sykmeldingsstatus: StatusEvent;
@@ -58,6 +68,7 @@ interface LenkepanelProps {
     sykmeldingsperioder: Periode[];
     arbeidsgiverNavn?: string;
     erEgenmeldt?: boolean;
+    erPapir?: boolean;
 }
 
 const Lenkepanel = ({
@@ -67,6 +78,7 @@ const Lenkepanel = ({
     sykmeldingsperioder,
     arbeidsgiverNavn,
     erEgenmeldt,
+    erPapir,
 }: LenkepanelProps) => {
     const iconSet = getIcons(sykmeldingsstatus, sykmeldingBehandlingsutvall);
     const [activeIcon, setActiveIcon] = useState<string>(iconSet.iconNormal);
@@ -94,7 +106,7 @@ const Lenkepanel = ({
                 <img src={activeIcon} alt="" />
                 <div className="lenkepanel-content__main-content">
                     <Normaltekst>{periodeString}</Normaltekst>
-                    <Undertittel>{erEgenmeldt ? 'Egenmelding' : 'Sykmelding'}</Undertittel>
+                    <Undertittel>{getMainTitle(erEgenmeldt, erPapir)}</Undertittel>
                     <Normaltekst>{`100% sykmeldt ${arbeidsgiverNavn ? 'fra ' + arbeidsgiverNavn : ''}`}</Normaltekst>
                 </div>
                 <div className="lenkepanel-content__status-text">
