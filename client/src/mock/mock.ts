@@ -113,12 +113,16 @@ mock.get(
             }),
         ),
 );
-mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/AVVIST/actions/erUtenforVentetid`, () =>
-    Promise.resolve({
-        body: {
-            erUtenforVentetid: false,
-        },
-    }),
+mock.get(
+    `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/AVVIST/actions/erUtenforVentetid`,
+    (_, res, ctx) =>
+        res(
+            ctx.json({
+                body: {
+                    erUtenforVentetid: false,
+                },
+            }),
+        ),
 );
 mock.get(
     `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/AVVIST_BEKREFTET/actions/erUtenforVentetid`,
