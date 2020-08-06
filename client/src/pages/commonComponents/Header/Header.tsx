@@ -18,9 +18,9 @@ const Header = ({ title, subtitle, sykmeldingPerioder }: HeaderProps) => {
 
     return (
         <div className="location-header">
-            <Innholdstittel>{title}</Innholdstittel>
-            {subtitle ? <Undertittel>{subtitle}</Undertittel> : null}
-            {totalPeriodString ? <Undertittel>{totalPeriodString}</Undertittel> : null}
+            <Innholdstittel tag="h1">{title}</Innholdstittel>
+            {subtitle ? <Undertittel tag="h2">{subtitle}</Undertittel> : null}
+            {totalPeriodString ? <Undertittel tag="h2">{totalPeriodString}</Undertittel> : null}
         </div>
     );
 };
