@@ -19,6 +19,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import ApenPapirsykmelding from './ApenSykmelding/ApenPapirsykmelding';
 import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
+import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -112,6 +113,7 @@ const SykmeldingSide = () => {
                         <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
                     </AlertStripeAdvarsel>
                 </div>
+                <TilHovedsiden />
             </>
         );
     }
@@ -192,6 +194,7 @@ const SykmeldingSide = () => {
                     ]}
                 />
                 {SykmeldingComponent}
+                <TilHovedsiden />
             </div>
         </>
     );
