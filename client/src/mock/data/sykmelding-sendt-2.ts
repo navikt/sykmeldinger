@@ -1,6 +1,6 @@
-export const sykmeldingSendt = {
-    id: 'SENDT',
-    mottattTidspunkt: '2020-02-01',
+export const sykmeldingSendt2 = {
+    id: 'SENDT-2',
+    mottattTidspunkt: '2020-03-01',
     behandlingsutfall: {
         status: 'OK',
         ruleHits: [],
@@ -22,7 +22,7 @@ export const sykmeldingSendt = {
         statusEvent: 'SENDT',
         arbeidsgiver: {
             orgnummer: '123456',
-            orgNavn: 'Posten AS',
+            orgNavn: 'NAV',
         },
     },
     medisinskVurdering: {

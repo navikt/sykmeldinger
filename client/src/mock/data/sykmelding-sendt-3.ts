@@ -1,6 +1,6 @@
-export const sykmeldingSendt = {
-    id: 'SENDT',
-    mottattTidspunkt: '2020-02-01',
+export const sykmeldingSendt3 = {
+    id: 'SENDT-3',
+    mottattTidspunkt: '2020-03-06',
     behandlingsutfall: {
         status: 'OK',
         ruleHits: [],
@@ -11,8 +11,8 @@ export const sykmeldingSendt = {
     },
     sykmeldingsperioder: [
         {
-            fom: '2020-02-10',
-            tom: '2020-02-11',
+            fom: '2020-03-10',
+            tom: '2020-04-11',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
         },

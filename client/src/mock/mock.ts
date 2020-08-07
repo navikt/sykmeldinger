@@ -12,6 +12,8 @@ import { sykmeldingUtgatt } from './data/sykmelding-utgatt';
 import { sykmeldingEgenmeldt } from './data/sykmelding-egenmeldt';
 import { sykmeldingApenPapir } from './data/sykmelding-apen-papir';
 import { sykmeldingAvvistBekreftet } from './data/sykmelding-avvist-bekreftet';
+import { sykmeldingSendt2 } from './data/sykmelding-sendt-2';
+import { sykmeldingSendt3 } from './data/sykmelding-sendt-3';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -26,6 +28,8 @@ mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmeldinger`, (_, res, ct
                 sykmeldingApen,
                 sykmeldingApenPapir,
                 sykmeldingSendt,
+                sykmeldingSendt2,
+                sykmeldingSendt3,
                 sykmeldingBekreftet,
                 sykmeldingAvvist,
                 sykmeldingAvvistBekreftet,
@@ -48,6 +52,12 @@ mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/BEKREFTET`, (_,
 );
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/SENDT`, (_, res, ctx) =>
     res(ctx.json({ body: sykmeldingSendt })),
+);
+mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/SENDT-2`, (_, res, ctx) =>
+    res(ctx.json({ body: sykmeldingSendt2 })),
+);
+mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/SENDT-3`, (_, res, ctx) =>
+    res(ctx.json({ body: sykmeldingSendt3 })),
 );
 mock.get(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/AVVIST`, (_, res, ctx) =>
     res(ctx.json({ body: sykmeldingAvvist })),
@@ -104,6 +114,28 @@ mock.get(
 );
 mock.get(
     `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/SENDT/actions/erUtenforVentetid`,
+    (_, res, ctx) =>
+        res(
+            ctx.json({
+                body: {
+                    erUtenforVentetid: false,
+                },
+            }),
+        ),
+);
+mock.get(
+    `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/SENDT-2/actions/erUtenforVentetid`,
+    (_, res, ctx) =>
+        res(
+            ctx.json({
+                body: {
+                    erUtenforVentetid: false,
+                },
+            }),
+        ),
+);
+mock.get(
+    `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/SENDT-3/actions/erUtenforVentetid`,
     (_, res, ctx) =>
         res(
             ctx.json({
@@ -201,6 +233,26 @@ mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?s
         }),
     ),
 );
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=SENDT-2`, (_, res, ctx) =>
+    res(
+        ctx.json({
+            body: {
+                soknaderOpprettet: 0,
+                erBehandlet: false,
+            },
+        }),
+    ),
+);
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=SENDT-3`, (_, res, ctx) =>
+    res(
+        ctx.json({
+            body: {
+                soknaderOpprettet: 0,
+                erBehandlet: false,
+            },
+        }),
+    ),
+);
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?sykmeldingId=BEKREFTET`, (_, res, ctx) =>
     res(
         ctx.json({
@@ -265,6 +317,12 @@ mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/soknader/sykmelding-behandlet?s
 );
 
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/SENDT`, (_, res, ctx) =>
+    res(ctx.json({ body: [soknadNy, soknadFremtidig] })),
+);
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/SENDT-2`, (_, res, ctx) =>
+    res(ctx.json({ body: [soknadNy, soknadFremtidig] })),
+);
+mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/SENDT-3`, (_, res, ctx) =>
     res(ctx.json({ body: [soknadNy, soknadFremtidig] })),
 );
 mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/BEKREFTET`, (_, res, ctx) =>

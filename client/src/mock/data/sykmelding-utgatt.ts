@@ -1,6 +1,6 @@
 export const sykmeldingUtgatt = {
     id: 'UTGATT',
-    mottattTidspunkt: '01-10-2020',
+    mottattTidspunkt: '2020-01-01',
     behandlingsutfall: {
         status: 'OK',
         ruleHits: [],
@@ -11,14 +11,14 @@ export const sykmeldingUtgatt = {
     },
     sykmeldingsperioder: [
         {
-            fom: '02-10-2020',
-            tom: '02-11-2020',
+            fom: '2020-02-10',
+            tom: '2020-02-11',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
         },
     ],
     sykmeldingStatus: {
-        timestamp: '01-01-2020',
+        timestamp: '2020-01-01',
         statusEvent: 'UTGATT',
         arbeidsgiver: {
             orgnummer: '123456',
@@ -63,7 +63,7 @@ export const sykmeldingUtgatt = {
         },
     },
     kontaktMedPasient: {},
-    behandletTidspunkt: '01-01-2020',
+    behandletTidspunkt: '2020-01-01',
     behandler: {
         fornavn: 'Fornavn',
         mellomnavn: null,

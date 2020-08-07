@@ -24,7 +24,6 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
     const handleSortChange = (sortBy: SortBy): void => {
-        setSortBy(sortBy);
         switch (sortBy) {
             case 'DATE':
                 setSykmeldingerSorted(sortSykmeldingerNewestFirst(sykmeldinger));
@@ -33,6 +32,7 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
                 setSykmeldingerSorted(sortSykmeldingerArbeidsgiver(sykmeldinger));
                 break;
         }
+        setSortBy(sortBy);
     };
 
     if (type === 'TIDLIGERE_SYKMELDINGER' && sykmeldinger.length === 0) {
@@ -54,7 +54,7 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
                     </Select>
                 ) : null}
             </header>
-            {sykmeldinger.length ? (
+            {sykmeldingerSorted.length ? (
                 <ol className="lenkepanel-container__sykmeldinger">
                     {sykmeldingerSorted.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">
