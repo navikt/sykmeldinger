@@ -1,77 +1,84 @@
 import React, { useState } from 'react';
 import { StatusEvent, RegelStatus, Periode } from '../../../../types/sykmelding';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
-import plaster from './svg/plaster.svg';
-import plasterHover from './svg/plasterHover.svg';
-import plasterInfo from './svg/plasterInfo.svg';
-import plasterInfoHover from './svg/plasterInfoHover.svg';
-import plasterAvbrutt from './svg/plasterAvbrutt.svg';
-import plasterAvbruttHover from './svg/plasterAvbruttHover.svg';
-import plasterAvvist from './svg/plasterAvvist.svg';
-import plasterAvvistHover from './svg/plasterAvvistHover.svg';
-import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { EtikettAdvarsel, EtikettSuksess, EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import stethoscope from './svg/stethoscope.svg';
+import stethoscopeHover from './svg/stethoscopeHover.svg';
+import papersykmelding from './svg/papersykmelding.svg';
+import papersykmeldingHover from './svg/papersykmeldingHover.svg';
+import declined from './svg/declined.svg';
+import declinedHover from './svg/declinedHover.svg';
 import './Lenkepanel.less';
 import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
 
 // TODO: Get all icons
-const getIcons = (status: StatusEvent, behandlingsutfall: RegelStatus): { iconNormal: string; iconHover: string } => {
+const getIcons = (behandlingsutfall: RegelStatus, erPapir: boolean): { iconNormal: string; iconHover: string } => {
     // Only UTGATT, INVALID and AVBRUTT have custom icons.
+    if (behandlingsutfall === 'INVALID') {
+        return { iconNormal: declined, iconHover: declinedHover };
+    }
+    if (erPapir) {
+        return { iconNormal: papersykmelding, iconHover: papersykmeldingHover };
+    }
+    return { iconNormal: stethoscope, iconHover: stethoscopeHover };
+};
+
+const getEtikett = (status: StatusEvent, behandlingsutfall: RegelStatus): JSX.Element | null => {
     switch (status) {
-        case 'UTGATT':
-            return { iconNormal: plasterInfo, iconHover: plasterInfoHover };
         case 'AVBRUTT':
-            return { iconNormal: plasterAvbrutt, iconHover: plasterAvbruttHover };
+            return <EtikettAdvarsel mini>Avbrutt av deg</EtikettAdvarsel>;
+        case 'SENDT':
+            return <EtikettSuksess mini>Sendt til arbeidsgiver</EtikettSuksess>;
+        case 'UTGATT':
+            return <EtikettInfo mini>Utgått</EtikettInfo>;
+        case 'BEKREFTET':
+            if (behandlingsutfall === 'INVALID') {
+                return <EtikettFokus mini>Bekreftet avvist</EtikettFokus>;
+            }
+            return <EtikettSuksess mini>Sendt til NAV</EtikettSuksess>;
         default:
             if (behandlingsutfall === 'INVALID') {
-                return { iconNormal: plasterAvvist, iconHover: plasterAvvistHover };
+                return <EtikettFokus mini>Avvist av NAV</EtikettFokus>;
             }
-            return { iconNormal: plaster, iconHover: plasterHover };
+            return null;
     }
 };
 
-const getStatusText = (status: StatusEvent, behandlingsutfall: RegelStatus): string => {
-    switch (status) {
-        case 'AVBRUTT':
-            return 'Avbrutt av deg';
-        case 'SENDT':
-            return 'Sendt til arbeidsgiver';
-        case 'UTGATT':
-            return 'Utgått';
-        case 'BEKREFTET':
-            if (behandlingsutfall === 'INVALID') {
-                return 'Bekreftet avvist';
-            }
-            return 'Sendt til NAV';
-        default:
-            if (behandlingsutfall === 'INVALID') {
-                return 'Avvist av NAV';
-            }
-            return '';
+const getMainTitle = (erEgenmeldt?: boolean, erPapir?: boolean): string => {
+    if (erEgenmeldt) {
+        return 'Egenmelding';
     }
+    if (erPapir) {
+        return 'Papirsykmelding';
+    }
+    return 'Sykmelding';
 };
 
 interface LenkepanelProps {
     sykmeldingId: string;
     sykmeldingsstatus: StatusEvent;
-    sykmeldingBehandlingsutvall: RegelStatus;
+    sykmeldingBehandlingsutfall: RegelStatus;
     sykmeldingsperioder: Periode[];
     arbeidsgiverNavn?: string;
-    erEgenmeldt?: boolean;
+    erEgenmeldt: boolean;
+    erPapir: boolean;
 }
 
 const Lenkepanel = ({
     sykmeldingId,
     sykmeldingsstatus,
-    sykmeldingBehandlingsutvall,
+    sykmeldingBehandlingsutfall,
     sykmeldingsperioder,
     arbeidsgiverNavn,
     erEgenmeldt,
+    erPapir,
 }: LenkepanelProps) => {
-    const iconSet = getIcons(sykmeldingsstatus, sykmeldingBehandlingsutvall);
+    const iconSet = getIcons(sykmeldingBehandlingsutfall, erPapir);
     const [activeIcon, setActiveIcon] = useState<string>(iconSet.iconNormal);
 
-    const statusText = getStatusText(sykmeldingsstatus, sykmeldingBehandlingsutvall);
+    const etikett = getEtikett(sykmeldingsstatus, sykmeldingBehandlingsutfall);
     const periodeString = toReadableTotalPeriodLength(sykmeldingsperioder);
 
     const history = useHistory();
@@ -94,12 +101,10 @@ const Lenkepanel = ({
                 <img src={activeIcon} alt="" />
                 <div className="lenkepanel-content__main-content">
                     <Normaltekst>{periodeString}</Normaltekst>
-                    <Undertittel>{erEgenmeldt ? 'Egenmelding' : 'Sykmelding'}</Undertittel>
+                    <Undertittel>{getMainTitle(erEgenmeldt, erPapir)}</Undertittel>
                     <Normaltekst>{`100% sykmeldt ${arbeidsgiverNavn ? 'fra ' + arbeidsgiverNavn : ''}`}</Normaltekst>
                 </div>
-                <div className="lenkepanel-content__status-text">
-                    <EtikettLiten>{statusText}</EtikettLiten>
-                </div>
+                {etikett && <div className="lenkepanel-content__status-text">{etikett}</div>}
             </div>
         </LenkepanelBase>
     );
