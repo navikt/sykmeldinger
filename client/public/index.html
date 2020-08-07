@@ -9,6 +9,16 @@
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
         <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
         <link rel="stylesheet" href="%PUBLIC_URL%/index.css" />
+        <script type="application/javascript">
+            window.frontendlogger = {
+                info: function () {},
+                warn: function () {},
+                error: function () {},
+                event: function () {},
+            };
+            window.frontendlogger.appname = 'sykmeldinger';
+        </script>
+        <script type="application/javascript" src="/frontendlogger/logger.js"></script>
         {{{NAV_SCRIPTS}}} {{{NAV_STYLES}}} {{{MEGAMENU_RESOURCES}}}
         <title>Sykmeldinger - www.nav.no</title>
     </head>
