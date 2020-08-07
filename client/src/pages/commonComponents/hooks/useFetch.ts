@@ -31,6 +31,7 @@ export const areAnyError = (statuses: FetchStatus[]): boolean => statuses.some((
  *
  * @param {string} url Url to call the api with.
  * @param {(data: any) => D} transformDataOnFinish If the raw data needs to be transformed before being put into state.
+ * @param {(data: D) => any} unSuccess If you need to run a specific function when the fetcher succeeds
  * @return {Fetch<D>} Fetch object conatining status, data, error and fetch.
  */
 const useFetch = <D extends {}>(
@@ -60,7 +61,10 @@ const useFetch = <D extends {}>(
                     onSuccess(body);
                 }
             })
-            .catch((error) => setFetchState({ status: 'ERROR', error }));
+            .catch((error) => {
+                console.error(error); // Automatically picked up by frontendlogger
+                setFetchState({ status: 'ERROR', error });
+            });
     };
 
     const apiFetchCallback = useCallback(apiFetch, []);
