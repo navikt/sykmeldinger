@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 import './LenkepanelContainer.less';
@@ -23,16 +23,24 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
     );
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
+    //console.log(sortSykmeldingerNewestFirst(sykmeldinger));
+    //console.log(sortSykmeldingerArbeidsgiver(sykmeldinger));
+    useEffect(() => {
+        //console.log(sykmeldingerSorted);
+    }, [sykmeldingerSorted]);
+
     const handleSortChange = (sortBy: SortBy): void => {
-        setSortBy(sortBy);
         switch (sortBy) {
             case 'DATE':
+                console.log(sortSykmeldingerNewestFirst(sykmeldinger));
                 setSykmeldingerSorted(sortSykmeldingerNewestFirst(sykmeldinger));
                 break;
             case 'ARBEIDSGIVER':
+                console.log(sortSykmeldingerArbeidsgiver(sykmeldinger));
                 setSykmeldingerSorted(sortSykmeldingerArbeidsgiver(sykmeldinger));
                 break;
         }
+        setSortBy(sortBy);
     };
 
     if (type === 'TIDLIGERE_SYKMELDINGER' && sykmeldinger.length === 0) {
@@ -54,7 +62,7 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
                     </Select>
                 ) : null}
             </header>
-            {sykmeldinger.length ? (
+            {sykmeldingerSorted.length ? (
                 <ol className="lenkepanel-container__sykmeldinger">
                     {sykmeldingerSorted.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">

@@ -1,6 +1,6 @@
 export const sykmeldingBekreftet = {
     id: 'BEKREFTET',
-    mottattTidspunkt: '01-10-2020',
+    mottattTidspunkt: '2020-03-05',
     behandlingsutfall: {
         status: 'OK',
         ruleHits: [],
@@ -11,14 +11,14 @@ export const sykmeldingBekreftet = {
     },
     sykmeldingsperioder: [
         {
-            fom: '02-20-2020',
-            tom: '02-21-2020',
+            fom: '2020-02-20',
+            tom: '2020-02-21',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
         },
     ],
     sykmeldingStatus: {
-        timestamp: '01-01-2020',
+        timestamp: '2020-01-01',
         statusEvent: 'BEKREFTET',
     },
     medisinskVurdering: {
@@ -59,7 +59,7 @@ export const sykmeldingBekreftet = {
         },
     },
     kontaktMedPasient: {},
-    behandletTidspunkt: '01-01-2020',
+    behandletTidspunkt: '2020-01-01',
     behandler: {
         fornavn: 'Fornavn',
         mellomnavn: null,
