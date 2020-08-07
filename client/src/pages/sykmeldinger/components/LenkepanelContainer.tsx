@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 import './LenkepanelContainer.less';
@@ -23,20 +23,12 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
     );
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
-    //console.log(sortSykmeldingerNewestFirst(sykmeldinger));
-    //console.log(sortSykmeldingerArbeidsgiver(sykmeldinger));
-    useEffect(() => {
-        //console.log(sykmeldingerSorted);
-    }, [sykmeldingerSorted]);
-
     const handleSortChange = (sortBy: SortBy): void => {
         switch (sortBy) {
             case 'DATE':
-                console.log(sortSykmeldingerNewestFirst(sykmeldinger));
                 setSykmeldingerSorted(sortSykmeldingerNewestFirst(sykmeldinger));
                 break;
             case 'ARBEIDSGIVER':
-                console.log(sortSykmeldingerArbeidsgiver(sykmeldinger));
                 setSykmeldingerSorted(sortSykmeldingerArbeidsgiver(sykmeldinger));
                 break;
         }
