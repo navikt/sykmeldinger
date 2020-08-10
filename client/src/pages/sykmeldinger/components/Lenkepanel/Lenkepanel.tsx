@@ -13,9 +13,7 @@ import './Lenkepanel.less';
 import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
 
-// TODO: Get all icons
 const getIcons = (behandlingsutfall: RegelStatus, erPapir: boolean): { iconNormal: string; iconHover: string } => {
-    // Only UTGATT, INVALID and AVBRUTT have custom icons.
     if (behandlingsutfall === 'INVALID') {
         return { iconNormal: declined, iconHover: declinedHover };
     }
