@@ -97,6 +97,7 @@ export class Periode {
             ? new AktivitetIkkeMulig(periode.aktivitetIkkeMulig)
             : undefined;
         this.gradert = periode.gradert;
+        this.behandlingsdager = periode.behandlingsdager;
         this.innspillTilArbeidsgiver = periode.innspillTilArbeidsgiver;
         this.type = periode.type;
     }
