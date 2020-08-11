@@ -8,7 +8,7 @@ const getPeriodLength = (periode: Periode): number => {
 export const getPeriodDescriptionStrings = (perioder: Periode[], arbeidsgiverNavn?: string): string[] => {
     return perioder.map((periode) => {
         const periodLength = getPeriodLength(periode);
-        console.log(periode);
+
         switch (periode.type) {
             case 'AKTIVITET_IKKE_MULIG':
                 return `100% sykmeldt${arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''} i ${periodLength} dag${
