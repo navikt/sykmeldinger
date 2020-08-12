@@ -59,8 +59,8 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
     } = useFetch<boolean>(
         `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/behandlet`,
         undefined,
-        (data) => {
-            if (data === true) {
+        (sykmeldingBehandlet) => {
+            if (sykmeldingBehandlet === true) {
                 fetchSykmelding();
                 fetchSoknader();
                 window.scrollTo(0, 0);
