@@ -20,6 +20,7 @@ import Spinner from '../commonComponents/Spinner/Spinner';
 import ApenPapirsykmelding from './ApenSykmelding/ApenPapirsykmelding';
 import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
 import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
+import { getEnvSykmeldingerRoot, getEnvSykefravaerRoot } from '../../utils/getEnv';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -97,11 +98,11 @@ const SykmeldingSide = () => {
                         breadcrumbs={[
                             {
                                 title: 'Sykefravær',
-                                path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
+                                path: `${getEnvSykmeldingerRoot()}`,
                             },
                             {
                                 title: 'Sykmeldinger',
-                                path: `${process.env.REACT_APP_SYKMELDINGER_ROOT}`,
+                                path: `${getEnvSykmeldingerRoot()}`,
                             },
                             {
                                 title: 'Sykmelding',
@@ -182,11 +183,11 @@ const SykmeldingSide = () => {
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
+                            path: `${getEnvSykefravaerRoot()}`,
                         },
                         {
                             title: 'Sykmeldinger',
-                            path: `${process.env.REACT_APP_SYKMELDINGER_ROOT}`,
+                            path: `${getEnvSykmeldingerRoot()}`,
                         },
                         {
                             title: 'Sykmelding',

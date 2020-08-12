@@ -10,6 +10,7 @@ import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
+import { getEnvSykefravaerRoot } from '../../utils/getEnv';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -40,7 +41,7 @@ const SykmeldingerPage = () => {
                         breadcrumbs={[
                             {
                                 title: 'Sykefravær',
-                                path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
+                                path: `${getEnvSykefravaerRoot()}`,
                             },
                             {
                                 title: 'Sykmeldinger',
@@ -68,7 +69,7 @@ const SykmeldingerPage = () => {
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
+                            path: `${getEnvSykefravaerRoot()}`,
                         },
                         {
                             title: 'Sykmeldinger',

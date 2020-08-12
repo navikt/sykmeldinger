@@ -12,6 +12,7 @@ import declinedHover from './svg/declinedHover.svg';
 import './Lenkepanel.less';
 import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
+import { getEnvSykmeldingerRoot } from '../../../../utils/getEnv';
 
 const getIcons = (behandlingsutfall: RegelStatus, erPapir: boolean): { iconNormal: string; iconHover: string } => {
     if (behandlingsutfall === 'INVALID') {
@@ -86,10 +87,10 @@ const Lenkepanel = ({
         <LenkepanelBase
             onMouseEnter={() => setActiveIcon(iconSet.iconHover)}
             onMouseLeave={() => setActiveIcon(iconSet.iconNormal)}
-            href={process.env.REACT_APP_SYKMELDINGER_ROOT + sykmeldingId}
+            href={getEnvSykmeldingerRoot() + sykmeldingId}
             onClick={(event) => {
                 event.preventDefault();
-                history.push(process.env.REACT_APP_SYKMELDINGER_ROOT + sykmeldingId);
+                history.push(getEnvSykmeldingerRoot() + sykmeldingId);
                 window.scrollTo(0, 0);
             }}
             className={sykmeldingsstatus === 'APEN' ? 'lenkepanel--alert' : ''}
