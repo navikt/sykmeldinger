@@ -56,11 +56,11 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
         data: sykmeldingBehandlet,
         error: sykmeldingBehandletError,
         fetch: fetchSykmeldingBehandlet,
-    } = useFetch<{ soknaderOpprettet: number; erBehandlet: boolean }>(
+    } = useFetch<boolean>(
         `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/behandlet`,
         undefined,
         (data) => {
-            if (data.erBehandlet) {
+            if (data === true) {
                 fetchSykmelding();
                 fetchSoknader();
                 window.scrollTo(0, 0);
@@ -69,7 +69,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
     );
     const { startInterval, limitReached } = usePoll(
         () => fetchSykmeldingBehandlet({ credentials: 'include' }),
-        !!sykmeldingBehandlet?.erBehandlet,
+        sykmeldingBehandlet === true,
         1000,
         10000,
     );
