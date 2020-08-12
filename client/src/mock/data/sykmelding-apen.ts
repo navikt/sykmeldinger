@@ -12,9 +12,18 @@ export const sykmeldingApen = {
     sykmeldingsperioder: [
         {
             fom: '2020-02-10',
-            tom: '2020-02-11',
+            tom: '2020-02-15',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
+        },
+        {
+            fom: '2020-02-16',
+            tom: '2020-02-20',
+            type: 'GRADERT',
+            gradert: {
+                grad: 20,
+                reisetilskudd: false,
+            },
         },
     ],
     sykmeldingStatus: {

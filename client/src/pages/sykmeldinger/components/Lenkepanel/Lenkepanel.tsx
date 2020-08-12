@@ -12,6 +12,7 @@ import declinedHover from './svg/declinedHover.svg';
 import './Lenkepanel.less';
 import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
+import { getPeriodDescriptionStrings } from '../../../../utils/periodeUtils';
 
 const getIcons = (behandlingsutfall: RegelStatus, erPapir: boolean): { iconNormal: string; iconHover: string } => {
     if (behandlingsutfall === 'INVALID') {
@@ -81,7 +82,6 @@ const Lenkepanel = ({
 
     const history = useHistory();
 
-    // TODO: Change hardcoded sykmeldingsgrad
     return (
         <LenkepanelBase
             onMouseEnter={() => setActiveIcon(iconSet.iconHover)}
@@ -98,9 +98,17 @@ const Lenkepanel = ({
             <div className="lenkepanel-content">
                 <img src={activeIcon} alt="" />
                 <div className="lenkepanel-content__main-content">
-                    <Normaltekst>{periodeString}</Normaltekst>
-                    <Undertittel>{getMainTitle(erEgenmeldt, erPapir)}</Undertittel>
-                    <Normaltekst>{`100% sykmeldt ${arbeidsgiverNavn ? 'fra ' + arbeidsgiverNavn : ''}`}</Normaltekst>
+                    <Normaltekst tag="p">{periodeString}</Normaltekst>
+                    <Undertittel tag="h3">{getMainTitle(erEgenmeldt, erPapir)}</Undertittel>
+                    <ul>
+                        {getPeriodDescriptionStrings(sykmeldingsperioder, arbeidsgiverNavn).map(
+                            (periodString, index) => (
+                                <li key={index}>
+                                    <Normaltekst>{periodString}</Normaltekst>
+                                </li>
+                            ),
+                        )}
+                    </ul>
                 </div>
                 {etikett && <div className="lenkepanel-content__status-text">{etikett}</div>}
             </div>

@@ -16,6 +16,21 @@ export const sykmeldingSendt = {
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
         },
+        {
+            fom: '2020-02-12',
+            tom: '2020-02-15',
+            type: 'AKTIVITET_IKKE_MULIG',
+            aktivitetIkkeMulig: {
+                medisinskArsak: {
+                    beskrivelse: 'Han er veldig syk',
+                    arsak: ['TILSTAND_HINDRER_AKTIVITET'],
+                },
+                arbeidsrelatertArsak: {
+                    beskrivelse: 'Kan ikke jobbe fordi han ikke har hev-/senk-bord',
+                    arsak: ['MANGLENDE_TILRETTELEGGING'],
+                },
+            },
+        },
     ],
     sykmeldingStatus: {
         timestamp: '2020-01-01',

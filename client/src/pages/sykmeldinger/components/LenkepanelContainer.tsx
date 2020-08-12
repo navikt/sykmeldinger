@@ -42,7 +42,7 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
     return (
         <div className="lenkepanel-container">
             <header className="lenkepanel-container__header">
-                <Undertittel>{title}</Undertittel>
+                <Undertittel tag="h2">{title}</Undertittel>
                 {type === 'TIDLIGERE_SYKMELDINGER' ? (
                     <Select
                         value={sortBy}
