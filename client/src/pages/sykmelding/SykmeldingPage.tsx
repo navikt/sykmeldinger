@@ -20,21 +20,14 @@ import Spinner from '../commonComponents/Spinner/Spinner';
 import ApenPapirsykmelding from './ApenSykmelding/ApenPapirsykmelding';
 import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
 import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
+import useSykmelding from '../../hooks/useSykmelding';
 
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams();
 
     // Initialize fetchers
-    const {
-        status: sykmeldingFetcherStatus,
-        data: sykmelding,
-        error: sykmeldingFetcherError,
-        fetch: fetchSykmelding,
-    } = useFetch<Sykmelding>(
-        `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`,
-        (sykmelding) => new Sykmelding(sykmelding),
-    );
+    const { isLoading: isLoadingSykmelding, error: sykmeldingError, data: sykmelding } = useSykmelding(sykmeldingId);
     const {
         status: arbeidsgivereFetcherStatus,
         data: arbeidsgivere,
@@ -62,25 +55,20 @@ const SykmeldingSide = () => {
     );
 
     useEffect(() => {
-        fetchSykmelding();
         fetchArbeidsgivere();
         fetchErUtenforVentetid();
         fetchSoknader();
-    }, [fetchSykmelding, fetchArbeidsgivere, fetchErUtenforVentetid, fetchSoknader]);
+    }, [fetchArbeidsgivere, fetchErUtenforVentetid, fetchSoknader]);
 
     if (
-        areAnyNotStartetOrPending([
-            sykmeldingFetcherStatus,
-            arbeidsgivereFetcherStatus,
-            erUtenforVentetidFetcherStatus,
-            soknaderFetcherStatus,
-        ])
+        isLoadingSykmelding ||
+        areAnyNotStartetOrPending([arbeidsgivereFetcherStatus, erUtenforVentetidFetcherStatus, soknaderFetcherStatus])
     ) {
         return <Spinner headline="Henter sykmelding" />;
     }
 
     if (
-        sykmeldingFetcherError ||
+        sykmeldingError ||
         sykmelding === undefined ||
         arbeidsgivereFetcherError ||
         arbeidsgivere === undefined ||
@@ -124,51 +112,58 @@ const SykmeldingSide = () => {
         const erPapir = sykmelding.papirsykmelding;
         const status = sykmelding.sykmeldingStatus.statusEvent;
 
-        switch (status) {
-            case 'APEN':
-                if (erAvvist) {
-                    return <AvvistSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />;
-                }
-                if (erPapir) {
-                    return (
-                        <ApenPapirsykmelding
-                            sykmelding={sykmelding}
-                            arbeidsgivere={arbeidsgivere}
-                            sykmeldingUtenforVentetid={erUtenforVentetid}
-                            fetchSykmelding={fetchSykmelding}
-                            fetchSoknader={fetchSoknader}
-                        />
-                    );
-                }
-                return (
-                    <ApenSykmelding
-                        sykmelding={sykmelding}
-                        arbeidsgivere={arbeidsgivere}
-                        sykmeldingUtenforVentetid={erUtenforVentetid}
-                        fetchSykmelding={fetchSykmelding}
-                        fetchSoknader={fetchSoknader}
-                    />
-                );
-            case 'AVBRUTT':
-                return <AvbruttSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />;
-            case 'SENDT':
-                return <SendtSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />;
-            case 'BEKREFTET':
-                if (erAvvist) {
-                    return <AvvistBekreftetSykmelding sykmelding={sykmelding} />;
-                }
-                if (erEgenmeldt) {
-                    return <EgenmeldtSykmelding sykmelding={sykmelding} />;
-                }
-                return (
-                    <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />
-                );
-            case 'UTGATT':
-                return <UtgattSykmelding sykmelding={sykmelding} />;
-            default:
-                // TODO: Errorcomponent -  not found
-                break;
-        }
+        return (
+            <ApenSykmelding
+                sykmelding={sykmelding}
+                arbeidsgivere={arbeidsgivere}
+                sykmeldingUtenforVentetid={erUtenforVentetid}
+            />
+        );
+        /* switch (status) { */
+        /*     case 'APEN': */
+        /*         if (erAvvist) { */
+        /*             return <AvvistSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />; */
+        /*         } */
+        /*         if (erPapir) { */
+        /*             return ( */
+        /*                 <ApenPapirsykmelding */
+        /*                     sykmelding={sykmelding} */
+        /*                     arbeidsgivere={arbeidsgivere} */
+        /*                     sykmeldingUtenforVentetid={erUtenforVentetid} */
+        /*                     fetchSykmelding={fetchSykmelding} */
+        /*                     fetchSoknader={fetchSoknader} */
+        /*                 /> */
+        /*             ); */
+        /*         } */
+        /*         return ( */
+        /*             <ApenSykmelding */
+        /*                 sykmelding={sykmelding} */
+        /*                 arbeidsgivere={arbeidsgivere} */
+        /*                 sykmeldingUtenforVentetid={erUtenforVentetid} */
+        /*                 fetchSykmelding={fetchSykmelding} */
+        /*                 fetchSoknader={fetchSoknader} */
+        /*             /> */
+        /*         ); */
+        /*     case 'AVBRUTT': */
+        /*         return <AvbruttSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />; */
+        /*     case 'SENDT': */
+        /*         return <SendtSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />; */
+        /*     case 'BEKREFTET': */
+        /*         if (erAvvist) { */
+        /*             return <AvvistBekreftetSykmelding sykmelding={sykmelding} />; */
+        /*         } */
+        /*         if (erEgenmeldt) { */
+        /*             return <EgenmeldtSykmelding sykmelding={sykmelding} />; */
+        /*         } */
+        /*         return ( */
+        /*             <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} /> */
+        /*         ); */
+        /*     case 'UTGATT': */
+        /*         return <UtgattSykmelding sykmelding={sykmelding} />; */
+        /*     default: */
+        /*         // TODO: Errorcomponent -  not found */
+        /*         break; */
+        /* } */
     })();
 
     return (

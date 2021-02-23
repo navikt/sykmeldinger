@@ -5,9 +5,7 @@ function useSykmeldinger() {
     return useQuery<Sykmelding[], Error>('sykmeldinger', () =>
         fetch(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmeldinger`)
             .then((data) => data.json())
-            .then((sykmeldinger) => {
-                return sykmeldinger.body.map((sm: unknown) => new Sykmelding(sm));
-            }),
+            .then((sykmeldinger) => sykmeldinger.body.map((sm: unknown) => new Sykmelding(sm))),
     );
 }
 

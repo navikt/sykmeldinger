@@ -30,16 +30,15 @@ import { useParams } from 'react-router-dom';
 import useFetch, { areAnyPending, areAnyPendingOrFinished } from '../../../commonComponents/hooks/useFetch';
 import usePoll from '../../../commonComponents/hooks/useInterval';
 import { AlertStripeFeil, AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import useBekreft from '../../../../hooks/useBekreft';
 
 interface FormProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
     erUtenforVentetid: boolean;
-    fetchSykmelding: (request?: RequestInit | undefined) => void;
-    fetchSoknader: (request?: RequestInit | undefined) => void;
 }
 
-const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, fetchSoknader }: FormProps) => {
+const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
     const { formState, errors, setFormState, handleSubmit } = useForm<FormInputs>({ validationFunctions });
 
     // Local state
@@ -61,8 +60,8 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
         undefined,
         (sykmeldingBehandlet) => {
             if (sykmeldingBehandlet === true) {
-                fetchSykmelding();
-                fetchSoknader();
+                /* fetchSykmelding(); */
+                /* fetchSoknader(); */
                 window.scrollTo(0, 0);
             }
         },
@@ -74,14 +73,8 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
         10000,
     );
 
-    const { status: sykmeldingBekreftStatus, error: sykmeldingBekreftError, fetch: fetchSykmeldingBekreft } = useFetch(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/bekreft`,
-        undefined,
-        () => {
-            startInterval();
-            fetchSykmeldingBehandlet({ credentials: 'include' });
-        },
-    );
+    const { mutate: bekreft, isLoading, error } = useBekreft(sykmeldingId);
+
     const { status: sykmeldingSendStatus, error: sykmeldingSendError, fetch: fetchSykmeldingSend } = useFetch(
         `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/send`,
         undefined,
@@ -107,7 +100,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
                 handleSubmit((state) =>
                     skalSendes
                         ? fetchSykmeldingSend({ body: JSON.stringify(state), credentials: 'include' })
-                        : fetchSykmeldingBekreft({ body: JSON.stringify(state), credentials: 'include' }),
+                        : bekreft(JSON.stringify(state)),
                 );
             }}
         >
@@ -165,7 +158,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
                 />
             )}
 
-            {(sykmeldingSendError || sykmeldingBekreftError) && (
+            {(sykmeldingSendError || error) && (
                 <div className="margin-bottom--1">
                     <AlertStripeFeil>
                         En feil oppsto ved {skalSendes ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv igjen
@@ -187,7 +180,8 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
                 <div className="margin-bottom--2 text--center">
                     <Knapp
                         spinner={
-                            areAnyPending([sykmeldingSendStatus, sykmeldingBekreftStatus]) ||
+                            areAnyPending([sykmeldingSendStatus]) ||
+                            isLoading ||
                             (areAnyPendingOrFinished([sykmeldingBehandletStatus]) &&
                                 !limitReached &&
                                 !sykmeldingBehandletError)
