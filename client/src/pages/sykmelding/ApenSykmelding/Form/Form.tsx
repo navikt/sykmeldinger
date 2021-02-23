@@ -100,7 +100,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                 handleSubmit((state) =>
                     skalSendes
                         ? fetchSykmeldingSend({ body: JSON.stringify(state), credentials: 'include' })
-                        : bekreft(JSON.stringify(state)),
+                        : bekreft(state),
                 );
             }}
         >

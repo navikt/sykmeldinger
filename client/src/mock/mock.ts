@@ -79,6 +79,10 @@ mock.get(`${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere`, (_,
     res(ctx.json({ body: arbeidsgivereMock })),
 );
 
+mock.post(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/APEN`, (_, res, ctx) =>
+    res(ctx.json({ body: 'hello world' })),
+);
+
 mock.get(
     `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/APEN/actions/erUtenforVentetid`,
     (_, res, ctx) =>
