@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/useFetch';
-import { Sykmelding } from '../../types/sykmelding';
+import React from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Header from '../commonComponents/Header/Header';
 import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
@@ -10,28 +8,18 @@ import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
+import useSykmeldinger from '../../hooks/useSykmeldinger';
 
 const SykmeldingerPage = () => {
     document.title = 'Sykmeldinger - www.nav.no';
 
-    const {
-        status: sykmeldingerFetcherStatus,
-        data: sykmeldinger,
-        error: sykmeldingerFetcherError,
-        fetch: fetchSykmeldinger,
-    } = useFetch<Sykmelding[]>(`${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmeldinger`, (sykmeldinger) =>
-        sykmeldinger.map((sykmelding: any) => new Sykmelding(sykmelding)),
-    );
+    const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
 
-    useEffect(() => {
-        fetchSykmeldinger();
-    }, [fetchSykmeldinger]);
-
-    if (areAnyNotStartetOrPending([sykmeldingerFetcherStatus])) {
+    if (isLoading) {
         return <Spinner headline="Henter dine sykmeldinger" />;
     }
 
-    if (sykmeldingerFetcherError || sykmeldinger === undefined) {
+    if (error || !sykmeldinger) {
         return (
             <>
                 <Header title="Dine sykmeldinger" />
