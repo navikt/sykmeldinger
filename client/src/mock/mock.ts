@@ -14,56 +14,28 @@ import fetchMock from 'fetch-mock';
 
 fetchMock.config.fallbackToNetwork = true;
 
+const sykmeldinger = [
+    sykmeldingApen,
+    sykmeldingApenPapir,
+    sykmeldingSendt,
+    sykmeldingSendt2,
+    sykmeldingSendt3,
+    sykmeldingBekreftet,
+    sykmeldingAvvist,
+    sykmeldingAvvistBekreftet,
+    sykmeldingAvbrutt,
+    sykmeldingUtgatt,
+    sykmeldingEgenmeldt,
+];
+
 // SYKMELDINGER
 fetchMock.get('end:/v1/sykmeldinger', {
     status: 200,
-    body: [
-        sykmeldingApen,
-        sykmeldingApenPapir,
-        sykmeldingSendt,
-        sykmeldingSendt2,
-        sykmeldingSendt3,
-        sykmeldingBekreftet,
-        sykmeldingAvvist,
-        sykmeldingAvvistBekreftet,
-        sykmeldingAvbrutt,
-        sykmeldingUtgatt,
-        sykmeldingEgenmeldt,
-    ],
+    body: sykmeldinger,
 });
 
 // SYKMELDING
-fetchMock
-    .get(`end:/v1/sykmeldinger/${sykmeldingApen.id}`, {
-        body: sykmeldingApen,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingApenPapir.id}`, {
-        body: sykmeldingApenPapir,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingSendt.id}`, {
-        body: sykmeldingSendt,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingSendt2.id}`, {
-        body: sykmeldingSendt2,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingSendt3.id}`, {
-        body: sykmeldingSendt3,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingBekreftet.id}`, {
-        body: sykmeldingBekreftet,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingAvvist.id}`, {
-        body: sykmeldingAvvist,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingAvvistBekreftet.id}`, {
-        body: sykmeldingAvvistBekreftet,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingAvbrutt.id}`, {
-        body: sykmeldingAvbrutt,
-    })
-    .get(`end:/v1/sykmeldinger/${sykmeldingEgenmeldt.id}`, {
-        body: sykmeldingEgenmeldt,
-    });
+sykmeldinger.forEach((sykmelding: any) => fetchMock.get(`end:/v1/sykmeldinger/${sykmelding.id}`, { body: sykmelding }));
 
 // SYKMELDING-ACTIONS
 fetchMock.post('end:/actions/bekreft', 203).post('end:/actions/send', 203).post('end:/actions/avbryt', 203);
