@@ -6,6 +6,7 @@ on:
       - 'master'
     paths:
       - '**/*.mermaid'
+      - '.github/workflows/compile-mermaid.yml'
 
 jobs:
   build:
