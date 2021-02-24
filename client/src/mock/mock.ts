@@ -29,19 +29,33 @@ const sykmeldinger = [
 ];
 
 // SYKMELDINGER
-fetchMock.get('end:/v1/sykmeldinger', {
-    status: 200,
-    body: sykmeldinger,
-});
+fetchMock.get(
+    'end:/v1/sykmeldinger',
+    {
+        status: 200,
+        body: sykmeldinger,
+    },
+    { delay: 1000 },
+);
 
 // SYKMELDING
-sykmeldinger.forEach((sykmelding: any) => fetchMock.get(`end:/v1/sykmeldinger/${sykmelding.id}`, { body: sykmelding }));
+sykmeldinger.forEach((sykmelding: any) =>
+    fetchMock.get(`end:/v1/sykmeldinger/${sykmelding.id}`, { body: sykmelding }, { delay: 1000 }),
+);
 
 // SYKMELDING-ACTIONS
-fetchMock.post('end:/actions/bekreft', 203).post('end:/actions/send', 203).post('end:/actions/avbryt', 203);
+fetchMock
+    .post('end:/actions/bekreft', 203, { delay: 1000 })
+    .post('end:/actions/send', 203, { delay: 1000 })
+    .post('end:/actions/avbryt', 203, { delay: 1000 })
+    .post('end:/actions/gjenapne', 203, { delay: 1000 });
 
 // INFORMASJON OM BRUKER
-fetchMock.get('end:/v1/brukerinformasjon', { body: { diskresjonskode: false, arbeidsgivere: arbeidsgivereMock } });
+fetchMock.get(
+    'end:/v1/brukerinformasjon',
+    { body: { diskresjonskode: false, arbeidsgivere: arbeidsgivereMock } },
+    { delay: 1000 },
+);
 
 // VENTETID
-fetchMock.get('end:/actions/erUtenforVentetid', { body: { erUtenforVentetid: false } });
+fetchMock.get('end:/actions/erUtenforVentetid', { body: { erUtenforVentetid: false } }, { delay: 1000 });

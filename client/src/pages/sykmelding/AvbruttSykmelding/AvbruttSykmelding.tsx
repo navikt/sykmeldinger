@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
@@ -22,25 +22,16 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
-import useFetch from '../../commonComponents/hooks/useFetch';
+import useGjenapne from '../../commonComponents/hooks/useGjenapne';
+import { useParams } from 'react-router-dom';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
-    const { status: avbrytStatus, error: avbrytError, fetch: fetchAvbryt } = useFetch<any>(
-        `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/actions/gjenapne/${sykmelding.id}`,
-    );
-
-    useEffect(() => {
-        if (avbrytStatus === 'FINISHED' && !avbrytError) {
-            // Reopening of sykmelding successful
-            // Triggering fetchSykmelding will retrieve the same sykmelding with status APEN
-            /* fetchSykmelding(); */
-            /* } */
-        }
-    }, [avbrytStatus, avbrytError]);
+    const { sykmeldingId } = useParams();
+    const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 
     return (
         <div className="sykmelding-container">
@@ -51,7 +42,7 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
                         Dato avbrutt: {dayjs(sykmelding.sykmeldingStatus.timestamp).format('dddd D. MMMM, kl. HH:mm')}
                     </EtikettLiten>
                 </AlertStripe>
-                <Knapp spinner={avbrytStatus === 'PENDING'} onClick={() => fetchAvbryt()}>
+                <Knapp spinner={isLoading} onClick={() => gjenapne()}>
                     Bruk sykmeldingen
                 </Knapp>
             </div>

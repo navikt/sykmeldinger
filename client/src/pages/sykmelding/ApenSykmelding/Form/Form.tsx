@@ -3,7 +3,6 @@ import useForm from '../../../commonComponents/hooks/useForm';
 import { Feiloppsummering } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { Sykmelding } from '../../../../types/sykmelding';
-import { Arbeidsgiver } from '../../../../types/arbeidsgiver';
 import validationFunctions from './formValidation';
 import { FormInputs } from '../../../../types/form';
 import BekreftOpplysninger from './FormSections/BekreftOpplysninger';
@@ -27,17 +26,35 @@ import EtikettMedTekst from '../../components/Sykmeldingsopplysninger/layout/Eti
 
 import sladd from '../../SendtSykmelding/sladd.svg';
 import { useParams } from 'react-router-dom';
-import useFetch, { areAnyPending, areAnyPendingOrFinished } from '../../../commonComponents/hooks/useFetch';
-import usePoll from '../../../commonComponents/hooks/useInterval';
-import { AlertStripeFeil, AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import Spinner from '../../../commonComponents/Spinner/Spinner';
+import useBrukerinformasjon from '../../../commonComponents/hooks/useBrukerinformasjon';
+import useSykmeldingUtenforVentetid from '../../../commonComponents/hooks/useSykmeldingUtenforVentetid';
+import useBekreft from '../../../commonComponents/hooks/useBekreft';
+import useAvbryt from '../../../commonComponents/hooks/useAvbryt';
+import useSend from '../../../commonComponents/hooks/useSend';
 
 interface FormProps {
     sykmelding: Sykmelding;
-    arbeidsgivere: Arbeidsgiver[];
-    erUtenforVentetid: boolean;
 }
 
-const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
+const Form = ({ sykmelding }: FormProps) => {
+    const { sykmeldingId } = useParams();
+
+    const {
+        isLoading: isLoadingBrukerinformasjon,
+        error: errorBrukerinformasjon,
+        data: brukerinformasjon,
+    } = useBrukerinformasjon();
+    const {
+        isLoading: isLoadingSykmeldingUtenforVentetid,
+        error: errorSykmeldingUtenforVentetid,
+        data: sykmeldingUtenforVentetid,
+    } = useSykmeldingUtenforVentetid(sykmeldingId);
+    const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
+    const { mutate: send, isLoading: isLoadingSend, error: errorSend } = useSend(sykmeldingId);
+    const { mutate: avbryt, isLoading: isLoadingAvbryt, error: errorAvbryt } = useAvbryt(sykmeldingId);
+
     const { formState, errors, setFormState, handleSubmit } = useForm<FormInputs>({ validationFunctions });
 
     // Local state
@@ -47,73 +64,34 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
     );
     const skalSendes = !!formState.valgtArbeidsgiver;
 
-    // API
-    const { sykmeldingId } = useParams();
-    const {
-        status: sykmeldingBehandletStatus,
-        data: sykmeldingBehandlet,
-        error: sykmeldingBehandletError,
-        fetch: fetchSykmeldingBehandlet,
-    } = useFetch<boolean>(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/behandlet`,
-        undefined,
-        (sykmeldingBehandlet) => {
-            if (sykmeldingBehandlet === true) {
-                /* fetchSykmelding(); */
-                /* fetchSoknader(); */
-                window.scrollTo(0, 0);
-            }
-        },
-    );
-    const { startInterval, limitReached } = usePoll(
-        () => fetchSykmeldingBehandlet({ credentials: 'include' }),
-        sykmeldingBehandlet === true,
-        1000,
-        10000,
-    );
+    if (isLoadingBrukerinformasjon || isLoadingSykmeldingUtenforVentetid) {
+        return <Spinner headline="Henter arbeidsforhold" />;
+    }
 
-    const { status: sykmeldingBekreftStatus, error: sykmeldingBekreftError, fetch: fetchSykmeldingBekreft } = useFetch(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/bekreft`,
-        undefined,
-        () => {
-            startInterval();
-            fetchSykmeldingBehandlet({ credentials: 'include' });
-        },
-    );
-    const { status: sykmeldingSendStatus, error: sykmeldingSendError, fetch: fetchSykmeldingSend } = useFetch(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/send`,
-        undefined,
-        () => {
-            startInterval();
-            fetchSykmeldingBehandlet({ credentials: 'include' });
-        },
-    );
-    const { status: sykmeldingAvbrytStatus, error: sykmeldingAvbrytError, fetch: fetchSykmeldingAvbryt } = useFetch(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/avbryt`,
-        undefined,
-        () => {
-            startInterval();
-            fetchSykmeldingBehandlet({ credentials: 'include' });
-        },
-    );
+    if (
+        errorBrukerinformasjon ||
+        errorSykmeldingUtenforVentetid ||
+        brukerinformasjon === undefined ||
+        sykmeldingUtenforVentetid === undefined
+    ) {
+        return <div>Error</div>;
+    }
+
+    const { arbeidsgivere } = brukerinformasjon;
 
     return (
         <form
             id="apen-sykmelding-form"
             onSubmit={(event) => {
                 event.preventDefault();
-                handleSubmit((state) =>
-                    skalSendes
-                        ? fetchSykmeldingSend({ body: JSON.stringify(state), credentials: 'include' })
-                        : fetchSykmeldingBekreft({ body: JSON.stringify(state), credentials: 'include' }),
-                );
+                handleSubmit((state) => (skalSendes ? send(state) : bekreft(state)));
             }}
         >
             <BekreftOpplysninger formState={formState} setFormState={setFormState} errors={errors} />
             <Arbeidssituasjon
                 sykmelding={sykmelding}
                 arbeidsgivere={arbeidsgivere}
-                erUtenforVentetid={erUtenforVentetid}
+                erUtenforVentetid={sykmeldingUtenforVentetid}
                 formState={formState}
                 setFormState={setFormState}
                 errors={errors}
@@ -163,7 +141,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                 />
             )}
 
-            {(sykmeldingSendError || sykmeldingBekreftError) && (
+            {(errorSend || errorBekreft) && (
                 <div className="margin-bottom--1">
                     <AlertStripeFeil>
                         En feil oppsto ved {skalSendes ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv igjen
@@ -172,26 +150,9 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                 </div>
             )}
 
-            {(sykmeldingBehandletError || limitReached) && (
-                <div className="margin-bottom--1">
-                    <AlertStripeAdvarsel>
-                        Sykmeldingen ble {skalSendes ? 'sendt' : 'bekreftet'}, men på grunn av en feil med baksystemene
-                        klarte vi ikke å hente informasjon knyttet til søknad om sykepenger.
-                    </AlertStripeAdvarsel>
-                </div>
-            )}
-
             {!skalAvbrytes && (
                 <div className="margin-bottom--2 text--center">
-                    <Knapp
-                        spinner={
-                            areAnyPending([sykmeldingSendStatus, sykmeldingBekreftStatus]) ||
-                            (areAnyPendingOrFinished([sykmeldingBehandletStatus]) &&
-                                !limitReached &&
-                                !sykmeldingBehandletError)
-                        }
-                        type="hoved"
-                    >
+                    <Knapp spinner={isLoadingAvbryt} type="hoved">
                         {skalSendes ? 'Send' : 'Bekreft'} sykmelding
                     </Knapp>
                 </div>
@@ -210,7 +171,7 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
                 </div>
             )}
 
-            {sykmeldingAvbrytError && (
+            {errorAvbryt && (
                 <div className="margin-bottom--1">
                     <AlertStripeFeil>
                         På grunn av en feil med baksystemene klarte vi ikke å avbryte sykmeldingen. Vennligst prøv igjen
@@ -221,8 +182,8 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
 
             {(showCancel || skalAvbrytes) && (
                 <AvbrytPanel
-                    showLoadingSpinner={sykmeldingAvbrytStatus === 'PENDING'}
-                    avbrytSykmelding={() => fetchSykmeldingAvbryt({ credentials: 'include' })}
+                    showLoadingSpinner={isLoadingAvbryt}
+                    avbrytSykmelding={() => avbryt()}
                     closePanel={setShowCancel}
                     type={skalAvbrytes ? 'MANDATORY_CANCEL' : 'NORMAL'}
                 />

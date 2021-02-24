@@ -12,8 +12,8 @@ import VeilederContent from './VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { useParams } from 'react-router-dom';
-import useFetch from '../../commonComponents/hooks/useFetch';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import useBekreft from '../../commonComponents/hooks/useBekreft';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
@@ -23,14 +23,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
     const [bekreftet, setBekreftet] = useState(false);
 
     const { sykmeldingId } = useParams();
-
-    const { status: sykmeldingBekreftStatus, error: sykmeldingBekreftError, fetch: fetchSykmeldingBekreft } = useFetch(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/bekreft`,
-        undefined,
-        () => {
-            /* fetchSykmelding({ credentials: 'include' }); */
-        },
-    );
+    const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
 
     return (
         <div className="sykmelding-container">
@@ -50,7 +43,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                 <LegeSeksjon navn={sykmelding.navnFastlege} />
             </Sykmeldingsopplysninger>
 
-            {sykmeldingBekreftError && (
+            {errorBekreft && (
                 <AlertStripeAdvarsel className="margin-bottom--1">
                     Kunne ikke bekrefte at sykmeldingen er avvist på grunn av en feil med baksystemene våre. Vennligst
                     prøv igjen senere.
@@ -65,11 +58,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                         onChange={() => setBekreftet(!bekreftet)}
                     />
                 </div>
-                <Hovedknapp
-                    disabled={!bekreftet}
-                    spinner={sykmeldingBekreftStatus === 'PENDING'}
-                    onClick={() => fetchSykmeldingBekreft({ credentials: 'include' })}
-                >
+                <Hovedknapp disabled={!bekreftet} spinner={isLoadingBekreft} onClick={() => bekreft({})}>
                     Bekreft
                 </Hovedknapp>
             </div>

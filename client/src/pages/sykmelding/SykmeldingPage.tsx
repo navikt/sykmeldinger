@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
@@ -6,40 +6,26 @@ import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
 import ApenSykmelding from './ApenSykmelding/ApenSykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
-import { Sykmelding } from '../../types/sykmelding';
-import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/useFetch';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
 import SykmeldingPageWrapper from '../sykmeldinger/components/SykmeldingPageWrapper';
+import useSykmelding from '../commonComponents/hooks/useSykmelding';
 
 // BUSINESS LOGIC CONTROLLER
 const SykmeldingSide = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams();
 
-    // Initialize fetchers
-    const {
-        status: sykmeldingFetcherStatus,
-        data: sykmelding,
-        error: sykmeldingFetcherError,
-        fetch: fetchSykmelding,
-    } = useFetch<Sykmelding>(
-        `${process.env.REACT_APP_SYKMELDINGER_BACKEND_URL}/v1/sykmeldinger/${sykmeldingId}`,
-        (sykmelding) => new Sykmelding(sykmelding),
-    );
+    const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
 
-    useEffect(() => {
-        fetchSykmelding();
-    }, [fetchSykmelding]);
-
-    if (areAnyNotStartetOrPending([sykmeldingFetcherStatus])) {
+    if (isLoading) {
         return <Spinner headline="Henter sykmelding" />;
     }
 
-    if (sykmeldingFetcherError || sykmelding === undefined) {
+    if (error || sykmelding === undefined) {
         return (
             <SykmeldingPageWrapper>
                 <AlertStripeAdvarsel>

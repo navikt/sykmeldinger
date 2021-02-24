@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
@@ -20,46 +20,15 @@ import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/paneleleme
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 
 import { Sykmelding } from '../../../types/sykmelding';
-import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../commonComponents/Veileder/svg/VeilederMaleSvg';
 import Form from './Form/Form';
-import { useParams } from 'react-router-dom';
-import useFetch from '../../commonComponents/hooks/useFetch';
 
 interface ApenSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({ sykmelding }: ApenSykmeldingProps) => {
-    const { sykmeldingId } = useParams();
-
-    const {
-        /* status: arbeidsgivereFetcherStatus, */
-        data: arbeidsgivere,
-        /* error: arbeidsgivereFetcherError, */
-        fetch: fetchArbeidsgivere,
-    } = useFetch<Arbeidsgiver[]>(`${process.env.REACT_APP_SYKMELDINGER_BACKEND_URL}/v1/brukerinformasjon`, (body) =>
-        body.arbeidsgivere.map((arbeidsgiver: any) => new Arbeidsgiver(arbeidsgiver)),
-    );
-    const {
-        /* status: erUtenforVentetidFetcherStatus, */
-        data: sykmeldingUtenforVentetid,
-        /* error: erUtenforVentetidError, */
-        fetch: fetchErUtenforVentetid,
-    } = useFetch<boolean>(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/erUtenforVentetid`,
-        (data) => data.erUtenforVentetid,
-    );
-
-    useEffect(() => {
-        fetchErUtenforVentetid();
-        fetchArbeidsgivere();
-    }, [fetchArbeidsgivere, fetchErUtenforVentetid]);
-
-    if (arbeidsgivere === undefined || sykmeldingUtenforVentetid === undefined) {
-        return <div>Loading arbeidsgivere and ventetid</div>;
-    }
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--4">
@@ -110,7 +79,7 @@ const ApenSykmelding: React.FC<ApenSykmeldingProps> = ({ sykmelding }: ApenSykme
                 </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
 
-            <Form sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} erUtenforVentetid={sykmeldingUtenforVentetid} />
+            <Form sykmelding={sykmelding} />
         </div>
     );
 };

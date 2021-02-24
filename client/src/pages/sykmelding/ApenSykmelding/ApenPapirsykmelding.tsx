@@ -19,7 +19,6 @@ import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/paneleleme
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 
 import { Sykmelding } from '../../../types/sykmelding';
-import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../commonComponents/Veileder/svg/VeilederMaleSvg';
 import Form from './Form/Form';
@@ -27,15 +26,9 @@ import PapirInfoheader from './PapirInfohaeder';
 
 interface ApenPapirsykmeldingProps {
     sykmelding: Sykmelding;
-    arbeidsgivere: Arbeidsgiver[];
-    sykmeldingUtenforVentetid: boolean;
 }
 
-const ApenPapirsykmelding: React.FC<ApenPapirsykmeldingProps> = ({
-    sykmelding,
-    arbeidsgivere,
-    sykmeldingUtenforVentetid,
-}: ApenPapirsykmeldingProps) => {
+const ApenPapirsykmelding: React.FC<ApenPapirsykmeldingProps> = ({ sykmelding }: ApenPapirsykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--4">
@@ -86,7 +79,7 @@ const ApenPapirsykmelding: React.FC<ApenPapirsykmeldingProps> = ({
                 </Sykmeldingsopplysninger>
             </Sykmeldingsopplysninger>
 
-            <Form sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} erUtenforVentetid={sykmeldingUtenforVentetid} />
+            <Form sykmelding={sykmelding} />
         </div>
     );
 };
