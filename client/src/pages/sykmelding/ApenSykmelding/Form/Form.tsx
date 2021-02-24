@@ -152,7 +152,7 @@ const Form = ({ sykmelding }: FormProps) => {
 
             {!skalAvbrytes && (
                 <div className="margin-bottom--2 text--center">
-                    <Knapp spinner={isLoadingAvbryt} type="hoved">
+                    <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved">
                         {skalSendes ? 'Send' : 'Bekreft'} sykmelding
                     </Knapp>
                 </div>

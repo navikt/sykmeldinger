@@ -18,7 +18,7 @@ import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/paneleleme
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 import { Sykmelding } from '../../../types/sykmelding';
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
-import AlertStripe from 'nav-frontend-alertstriper';
+import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
@@ -45,6 +45,7 @@ const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
                 <Knapp spinner={isLoading} onClick={() => gjenapne()}>
                     Bruk sykmeldingen
                 </Knapp>
+                {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
             </div>
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
