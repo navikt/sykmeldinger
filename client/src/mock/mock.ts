@@ -12,6 +12,11 @@ import { sykmeldingSendt2 } from './data/sykmelding-sendt-2';
 import { sykmeldingSendt3 } from './data/sykmelding-sendt-3';
 import fetchMock from 'fetch-mock';
 
+// Redirect to basepath to make demo-app work by visiting ingress (sykmeldinger.labs.nais.io)
+if (window.location.pathname === '/') {
+    window.location.pathname = '/sykmeldinger';
+}
+
 fetchMock.config.fallbackToNetwork = true;
 
 const sykmeldinger = [
