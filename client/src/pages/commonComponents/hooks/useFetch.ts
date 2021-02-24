@@ -52,7 +52,7 @@ const useFetch = <D extends {}>(
                     return res.json();
                 }
             })
-            .then(({ body }) => {
+            .then((body) => {
                 setFetchState({
                     status: 'FINISHED',
                     data: transformDataOnFinish ? transformDataOnFinish(body) : body,

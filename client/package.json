@@ -89,7 +89,7 @@
         "@types/react-dom": "16.9.8",
         "@types/react-flatpickr": "^3.8.1",
         "@types/react-router-dom": "^5.1.5",
-        "prettier": "^2.0.5",
-        "yet-another-fetch-mock": "^4.0.0"
+        "fetch-mock": "^9.11.0",
+        "prettier": "^2.0.5"
     }
 }
