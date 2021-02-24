@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom';
 import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
 import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
 import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
-import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
-import Header from '../commonComponents/Header/Header';
 import ApenSykmelding from './ApenSykmelding/ApenSykmelding';
 import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import { Sykmelding } from '../../types/sykmelding';
@@ -15,38 +13,7 @@ import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
-import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
-
-interface SykmeldingPageWrapperProps {
-    children: any;
-}
-
-const SykmeldingPageWrapper = ({ children }: SykmeldingPageWrapperProps) => {
-    return (
-        <>
-            <Header title="Sykmelding" />
-            <div className="limit">
-                <Brodsmuler
-                    breadcrumbs={[
-                        {
-                            title: 'Sykefravær',
-                            path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
-                        },
-                        {
-                            title: 'Sykmeldinger',
-                            path: `${process.env.REACT_APP_SYKMELDINGER_ROOT}`,
-                        },
-                        {
-                            title: 'Sykmelding',
-                        },
-                    ]}
-                />
-                {children}
-            </div>
-            <TilHovedsiden />
-        </>
-    );
-};
+import SykmeldingPageWrapper from '../sykmeldinger/components/SykmeldingPageWrapper';
 
 // BUSINESS LOGIC CONTROLLER
 const SykmeldingSide = () => {
