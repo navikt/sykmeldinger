@@ -9,7 +9,7 @@ Frontend-app for visning og behandling av enkeltsykmeldinger.
 -   Less for styling
 -   Prettier er brukt lokalt i VSCode med config `.prettierrc.js`
 
-![State diagram][statediagram-mermaid.png]
+![State diagram][state-diagram-mermaid.png]
 
 ## Environment-variabler
 
