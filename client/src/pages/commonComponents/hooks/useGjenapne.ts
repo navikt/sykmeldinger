@@ -11,7 +11,6 @@ function useGjenapne(sykmeldingId: string) {
             }).then((data) => data.text()),
         {
             onSuccess: () => {
-                console.info('successfully reopened sykmelding');
                 queryClient.invalidateQueries('sykmeldinger');
                 queryClient.invalidateQueries(['sykmelding', sykmeldingId]);
             },
