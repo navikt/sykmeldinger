@@ -1,10 +1,9 @@
 ```mermaid
 stateDiagram-v2
-    [*] --> Sykmeldingliste
-    [*] --> Sykmeldingvisning
-    Sykmeldingvisning --> Kvittering
-    Sykmeldingliste --> Sykmeldingvisning
-    Kvittering --> [*]
+    [*] --> Sykmeldingliste: /sykmeldinger
+    [*] --> Sykmeldingvisning: /sykmeldinger/{sykmeldingId}
+    Sykmeldingliste --> Sykmeldingvisning: /sykmeldinger/{sykmeldingId}
+    Sykmeldingvisning --> Sykmeldingliste: /sykmeldinger
 
     state Sykmeldingvisning {
         state BEHANDLINGSUTFALL <<fork>>
@@ -27,8 +26,11 @@ stateDiagram-v2
         OK_BEKREFTET --> OK_APEN: gjenapne()
         OK_AVBRUTT --> OK_APEN: gjenapne()
 
-        OK_APEN --> [*]
-        INVALID_APEN --> [*]: bekreft()
+        OK_APEN --> OK_BEKREFTET: bekreft()
+        OK_APEN --> OK_AVBRUTT: avbryt()
+        OK_APEN --> OK_SENDT: send()
+
+        INVALID_APEN --> INVALID_BEKREFTET: bekreft()
 
         state OK_APEN {
             state KODE6 <<fork>>
