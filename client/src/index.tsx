@@ -2,7 +2,6 @@ import 'dayjs/locale/nb';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 import dayjs from 'dayjs';
 
 import withMenu from './mock/decorator/decorator-header-withmenu';
@@ -38,5 +37,3 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('app'),
 );
-
-serviceWorker.unregister();
