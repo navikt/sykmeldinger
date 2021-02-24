@@ -89,7 +89,7 @@ const Lenkepanel = ({
             href={process.env.REACT_APP_SYKMELDINGER_ROOT + sykmeldingId}
             onClick={(event) => {
                 event.preventDefault();
-                history.push(process.env.REACT_APP_SYKMELDINGER_ROOT + sykmeldingId);
+                history.push(`/sykmeldinger/${sykmeldingId}`);
                 window.scrollTo(0, 0);
             }}
             className={sykmeldingsstatus === 'APEN' ? 'lenkepanel--alert' : ''}

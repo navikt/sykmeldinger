@@ -35,11 +35,9 @@ interface FormProps {
     sykmelding: Sykmelding;
     arbeidsgivere: Arbeidsgiver[];
     erUtenforVentetid: boolean;
-    fetchSykmelding: (request?: RequestInit | undefined) => void;
-    fetchSoknader: (request?: RequestInit | undefined) => void;
 }
 
-const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, fetchSoknader }: FormProps) => {
+const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid }: FormProps) => {
     const { formState, errors, setFormState, handleSubmit } = useForm<FormInputs>({ validationFunctions });
 
     // Local state
@@ -61,8 +59,8 @@ const Form = ({ sykmelding, arbeidsgivere, erUtenforVentetid, fetchSykmelding, f
         undefined,
         (sykmeldingBehandlet) => {
             if (sykmeldingBehandlet === true) {
-                fetchSykmelding();
-                fetchSoknader();
+                /* fetchSykmelding(); */
+                /* fetchSoknader(); */
                 window.scrollTo(0, 0);
             }
         },

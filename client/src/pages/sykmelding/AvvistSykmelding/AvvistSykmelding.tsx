@@ -17,10 +17,9 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 interface SykmeldingProps {
     sykmelding: Sykmelding;
-    fetchSykmelding: (request?: RequestInit | undefined) => void;
 }
 
-const AvvistSykmelding = ({ sykmelding, fetchSykmelding }: SykmeldingProps) => {
+const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
     const [bekreftet, setBekreftet] = useState(false);
 
     const { sykmeldingId } = useParams();
@@ -29,7 +28,7 @@ const AvvistSykmelding = ({ sykmelding, fetchSykmelding }: SykmeldingProps) => {
         `${process.env.REACT_APP_SYFOREST_ROOT}/sykmeldinger/${sykmeldingId}/actions/bekreft`,
         undefined,
         () => {
-            fetchSykmelding({ credentials: 'include' });
+            /* fetchSykmelding({ credentials: 'include' }); */
         },
     );
 

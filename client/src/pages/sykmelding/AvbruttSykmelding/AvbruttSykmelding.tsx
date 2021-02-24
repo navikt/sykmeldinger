@@ -26,10 +26,9 @@ import useFetch from '../../commonComponents/hooks/useFetch';
 
 interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
-    fetchSykmelding: (request?: RequestInit | undefined) => void;
 }
 
-const AvbruttSykmelding = ({ sykmelding, fetchSykmelding }: AvbruttSykmeldingProps) => {
+const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
     const { status: avbrytStatus, error: avbrytError, fetch: fetchAvbryt } = useFetch<any>(
         `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/actions/gjenapne/${sykmelding.id}`,
     );
@@ -38,9 +37,10 @@ const AvbruttSykmelding = ({ sykmelding, fetchSykmelding }: AvbruttSykmeldingPro
         if (avbrytStatus === 'FINISHED' && !avbrytError) {
             // Reopening of sykmelding successful
             // Triggering fetchSykmelding will retrieve the same sykmelding with status APEN
-            fetchSykmelding();
+            /* fetchSykmelding(); */
+            /* } */
         }
-    }, [avbrytStatus, avbrytError, fetchSykmelding]);
+    }, [avbrytStatus, avbrytError]);
 
     return (
         <div className="sykmelding-container">

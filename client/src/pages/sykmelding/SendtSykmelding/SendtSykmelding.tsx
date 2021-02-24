@@ -22,17 +22,12 @@ import EtikettMedTekst from '../components/Sykmeldingsopplysninger/layout/Etiket
 import sladd from './sladd.svg';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
 import Statuspanel from '../components/Statuspanel/Statuspanel';
-import { Soknad } from '../../../types/soknad';
-import { Arbeidsgiver } from '../../../types/arbeidsgiver';
-import { getSoknadstype, getArbeidsgiverForskutterer, getSoknadFomDato } from '../../../utils/statuspanel-utils';
 
 interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
-    arbeidsgivere: Arbeidsgiver[];
-    soknader: Soknad[];
 }
 
-const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldingProps) => {
+const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel
@@ -40,10 +35,8 @@ const SendtSykmelding = ({ sykmelding, arbeidsgivere, soknader }: SendtSykmeldin
                 erEgenmeldt={sykmelding.egenmeldt}
                 arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
                 sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
-                soknadstype={getSoknadstype(soknader)}
-                soknadFomDato={getSoknadFomDato(soknader)}
                 avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
-                arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
+                // arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
                 skalViseReisetilskuddInfo={sykmelding.sykmeldingsperioder.some(
                     (periode) => periode.type === 'REISETILSKUDD',
                 )}

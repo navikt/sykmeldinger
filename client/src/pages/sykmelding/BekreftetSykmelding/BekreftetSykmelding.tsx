@@ -17,28 +17,21 @@ import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/paneleleme
 import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 import { Sykmelding } from '../../../types/sykmelding';
-import { Soknad } from '../../../types/soknad';
-import { Arbeidsgiver } from '../../../types/arbeidsgiver';
 import Statuspanel from '../components/Statuspanel/Statuspanel';
-import { getSoknadstype, getArbeidsgiverForskutterer, getSoknadFomDato } from '../../../utils/statuspanel-utils';
 import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 
 interface BekreftetSykmeldingProps {
     sykmelding: Sykmelding;
-    arbeidsgivere: Arbeidsgiver[];
-    soknader: Soknad[];
 }
 
-const BekreftetSykmelding = ({ sykmelding, arbeidsgivere, soknader }: BekreftetSykmeldingProps) => {
+const BekreftetSykmelding = ({ sykmelding }: BekreftetSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel
                 sykmeldingstatus={sykmelding.sykmeldingStatus.statusEvent}
                 sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
-                soknadstype={getSoknadstype(soknader)}
-                soknadFomDato={getSoknadFomDato(soknader)}
                 avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
-                arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
+                // arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
                 skalViseReisetilskuddInfo={sykmelding.sykmeldingsperioder.some(
                     (periode) => periode.type === 'REISETILSKUDD',
                 )}

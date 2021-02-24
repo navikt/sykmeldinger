@@ -6,15 +6,6 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import StatuspanelSection from './StatuspanelSection';
 import StatuspanelHeader from './StatuspanelHeader';
-import SoknadSection from './SoknadSection';
-
-export type Soknadstype =
-    | 'SOK_NA'
-    | 'SOK_SENERE_KORT_SYKMELDING'
-    | 'SOK_SENERE_LANG_SYKMELDING'
-    | 'SOK_PAPIR'
-    | 'SOK_SENDT'
-    | 'UTEN_SOKNAD';
 
 // Each prop defines whether each individual section of the statuspanel should be shown
 interface StatuspanelProps {
@@ -24,8 +15,6 @@ interface StatuspanelProps {
     arbeidsgiverNavn?: string;
     sykmeldingSendtEllerBekreftetDato: Date;
     // Status information about sykeforløp
-    soknadstype: Soknadstype;
-    soknadFomDato?: Date;
     avventendeSykmelding?: boolean;
     arbeidsgiverForskutterLonn?: boolean;
     skalViseInnteksmeldingInfo?: boolean; // TOOD: When does this apply?
@@ -38,8 +27,6 @@ const Statuspanel = ({
     erEgenmeldt = false,
     arbeidsgiverNavn,
     sykmeldingSendtEllerBekreftetDato,
-    soknadstype,
-    soknadFomDato,
     avventendeSykmelding = false,
     arbeidsgiverForskutterLonn,
     skalViseInnteksmeldingInfo = false,
@@ -58,7 +45,7 @@ const Statuspanel = ({
                 <img src={information} alt="informasjon" />
                 <div id="statuspanel__sections">
                     <Systemtittel tag="h2">Hva skjer videre?</Systemtittel>
-                    <SoknadSection soknadstype={soknadstype} soknadFomDato={soknadFomDato} />
+                    {/* <SoknadSection soknadstype={soknadstype} soknadFomDato={soknadFomDato} /> */}
                     <StatuspanelSection show={avventendeSykmelding} title="Avventende sykmelding">
                         Du har sendt beskjed til arbeidsgiveren din om at det er mulig å unngå sykmelding hvis det blir
                         lagt til rette for deg på arbeidsplassen. Hvis tilrettelegging ikke er mulig, og du blir helt
