@@ -1,35 +1,35 @@
 import React from 'react';
 
-import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
-import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
-import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
-import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
-import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
-import ElementMedTekst from '../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
-import FraverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/FraverSeksjon';
-import Friskmelding from '../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
-import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
-import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
-import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
-import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
-import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
-import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import { Sykmelding } from '../../../types/sykmelding';
-import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import Arbeidsevne from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
+import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import ArbeidsuforSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
+import BehandlingsDatoer from '../../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
+import DiagnoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
+import ElementMedTekst from '../../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
+import FraverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/FraverSeksjon';
+import Friskmelding from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
+import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
+import MulighetForArbeid from '../../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
+import PrognoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
+import SeksjonMedTittel from '../../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
+import SkadeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
+import SvangerskapSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
+import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
+import { Sykmelding } from '../../../../types/sykmelding';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
-import useGjenapne from '../../commonComponents/hooks/useGjenapne';
+import useGjenapne from '../../../commonComponents/hooks/useGjenapne';
 import { useParams } from 'react-router-dom';
 
-interface AvbruttSykmeldingProps {
+interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const AvbruttSykmelding: React.FC<AvbruttSykmeldingProps> = ({ sykmelding }) => {
+const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding }) => {
     const { sykmeldingId } = useParams();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 
@@ -87,4 +87,4 @@ const AvbruttSykmelding: React.FC<AvbruttSykmeldingProps> = ({ sykmelding }) => 
     );
 };
 
-export default AvbruttSykmelding;
+export default OkAvbruttSykmelding;

@@ -8,7 +8,7 @@ import labelPlugin from 'flatpickr/dist/plugins/labelPlugin/labelPlugin';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Label } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import { FormInputs } from '../../../../../types/form';
+import { FormInputs } from '../../../../../../types/form';
 
 export const locale: CustomLocale = {
     rangeSeparator: ' til ',

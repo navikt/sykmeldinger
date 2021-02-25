@@ -1,21 +1,21 @@
 import React from 'react';
-import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
-import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
-import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
-import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
-import { Sykmelding } from '../../../types/sykmelding';
-import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import VeilederContent from './VeilederContent';
+import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import DiagnoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
+import { Sykmelding } from '../../../../types/sykmelding';
+import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleNeurtralSvg from '../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
+import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import dayjs from 'dayjs';
 
-interface AvvistBekreftetSykmeldingProps {
+interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const AvvistBekreftetSykmelding: React.FC<AvvistBekreftetSykmeldingProps> = ({ sykmelding }) => {
+const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({ sykmelding }) => {
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--4">
@@ -44,4 +44,4 @@ const AvvistBekreftetSykmelding: React.FC<AvvistBekreftetSykmeldingProps> = ({ s
     );
 };
 
-export default AvvistBekreftetSykmelding;
+export default InvalidBekreftetSykmelding;

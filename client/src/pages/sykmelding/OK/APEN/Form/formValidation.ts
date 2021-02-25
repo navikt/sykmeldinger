@@ -1,5 +1,5 @@
-import { ValidationFunctions } from '../../../commonComponents/hooks/useForm';
-import { FormInputs, Arbeidssituasjoner } from '../../../../types/form';
+import { ValidationFunctions } from '../../../../commonComponents/hooks/useForm';
+import { FormInputs, Arbeidssituasjoner } from '../../../../../types/form';
 
 const validationFunctions: ValidationFunctions<FormInputs> = {
     opplysningeneErRiktige: (state) => {

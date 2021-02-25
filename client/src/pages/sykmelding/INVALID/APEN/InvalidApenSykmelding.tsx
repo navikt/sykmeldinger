@@ -2,24 +2,24 @@ import React, { useState } from 'react';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
-import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
-import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
-import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
-import { Sykmelding } from '../../../types/sykmelding';
-import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import VeilederContent from './VeilederContent';
+import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import DiagnoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
+import { Sykmelding } from '../../../../types/sykmelding';
+import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleNeurtralSvg from '../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
+import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import useBekreft from '../../commonComponents/hooks/useBekreft';
+import useBekreft from '../../../commonComponents/hooks/useBekreft';
 
-interface AvvistSykmeldingProps {
+interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const AvvistSykmelding: React.FC<AvvistSykmeldingProps> = ({ sykmelding }) => {
+const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmelding }) => {
     const [bekreftet, setBekreftet] = useState(false);
 
     const { sykmeldingId } = useParams();
@@ -66,4 +66,4 @@ const AvvistSykmelding: React.FC<AvvistSykmeldingProps> = ({ sykmelding }) => {
     );
 };
 
-export default AvvistSykmelding;
+export default InvalidApenSykmelding;

@@ -1,11 +1,11 @@
 import React from 'react';
-import { FormInputs, FeilaktigeOpplysninger } from '../../../../../types/form';
+import { FormInputs, FeilaktigeOpplysninger } from '../../../../../../types/form';
 import { FeiloppsummeringFeil, RadioPanelGruppe, CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import './FormSections.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import FormInfoMessage from '../Components/FormInfoMessage';
 import FeilaktigeOpplysningerInfo from '../Components/FeilaktigeOpplysningerInfo';
-import { getUpdatedFeilaktigeOpplysninger } from '../../../../../utils/formUtils';
+import { getUpdatedFeilaktigeOpplysninger } from '../../../../../../utils/formUtils';
 
 interface BekreftOpplysningerProps {
     formState: Partial<FormInputs>;

@@ -1,33 +1,33 @@
 import React from 'react';
 
-import Arbeidsevne from '../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
-import ArbeidsgiverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
-import ArbeidsuforSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
-import BehandlingsDatoer from '../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
-import DiagnoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
-import ElementMedTekst from '../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
-import FraverSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/FraverSeksjon';
-import Friskmelding from '../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
-import LegeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
-import MulighetForArbeid from '../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
-import PrognoseSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
-import SeksjonMedTittel from '../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import SkadeSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
-import SvangerskapSeksjon from '../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
-import SykmeldingPerioder from '../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import UtdypendeOpplysninger from '../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import { Sykmelding } from '../../../types/sykmelding';
-import Sykmeldingsopplysninger from '../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
-import EtikettMedTekst from '../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
+import Arbeidsevne from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
+import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
+import ArbeidsuforSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
+import BehandlingsDatoer from '../../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
+import DiagnoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
+import ElementMedTekst from '../../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
+import FraverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/FraverSeksjon';
+import Friskmelding from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
+import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
+import MulighetForArbeid from '../../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
+import PrognoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
+import SeksjonMedTittel from '../../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
+import SkadeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/SkadeSeksjon';
+import SvangerskapSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
+import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
+import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
+import { Sykmelding } from '../../../../types/sykmelding';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import EtikettMedTekst from '../../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
 import sladd from './sladd.svg';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
-import Statuspanel from '../components/Statuspanel/Statuspanel';
+import Statuspanel from '../../components/Statuspanel/Statuspanel';
 
-interface SendtSykmeldingProps {
+interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const SendtSykmelding: React.FC<SendtSykmeldingProps> = ({ sykmelding }) => {
+const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel
@@ -107,4 +107,4 @@ const SendtSykmelding: React.FC<SendtSykmeldingProps> = ({ sykmelding }) => {
     );
 };
 
-export default SendtSykmelding;
+export default OkSendtSykmelding;

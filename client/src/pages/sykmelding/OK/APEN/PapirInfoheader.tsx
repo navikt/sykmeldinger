@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Innholdstittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import AvbrytPanel from '../components/AvbrytPanel/AvbrytPanel';
+import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
 import { Knapp } from 'nav-frontend-knapper';
 
 const PapirInfoheader = () => {
@@ -10,7 +10,7 @@ const PapirInfoheader = () => {
 
     return (
         <>
-            <Innholdstittel className="margin-bottom--1">Før du bruker sykmeldingen</Innholdstittel>
+            <Innholdstittel className="margin-bottom--1">F�r du bruker sykmeldingen</Innholdstittel>
             <Normaltekst tag="p" className="margin-bottom--2">
                 Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik at du
                 kan gjøre resten digitalt.

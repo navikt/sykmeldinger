@@ -1,5 +1,5 @@
 import React from 'react';
-import { FeilaktigeOpplysninger } from '../../../../../types/form';
+import { FeilaktigeOpplysninger } from '../../../../../../types/form';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 

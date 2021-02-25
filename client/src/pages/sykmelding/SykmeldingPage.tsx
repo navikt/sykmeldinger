@@ -1,18 +1,18 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
-import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
-import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
-import ApenSykmelding from './ApenSykmelding/ApenSykmelding';
-import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
-import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
 import SykmeldingPageWrapper from '../sykmelding/components/SykmeldingPageWrapper';
 import useSykmelding from '../commonComponents/hooks/useSykmelding';
+import OkBekreftetSykmelding from './OK/BEKREFTET/OkBekreftetSykmelding';
+import OkAvbruttSykmelding from './OK/AVBRUTT/OkAvbruttSykmelding';
+import OkSendtSykmelding from './OK/SENDT/OkSendtSykmelding';
+import OkUtgattSykmelding from './OK/UTGATT/OkUtgattSykmelding';
+import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
+import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
+import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
 
 // BUSINESS LOGIC CONTROLLER
 const SykmeldingSide: React.FC = () => {
@@ -44,15 +44,15 @@ const SykmeldingSide: React.FC = () => {
         if (behandlingsutfall === 'OK') {
             switch (status) {
                 case 'APEN':
-                    return <ApenSykmelding sykmelding={sykmelding} />;
+                    return <OkApenSykmelding sykmelding={sykmelding} />;
                 case 'BEKREFTET':
-                    return <BekreftetSykmelding sykmelding={sykmelding} />;
+                    return <OkBekreftetSykmelding sykmelding={sykmelding} />;
                 case 'SENDT':
-                    return <SendtSykmelding sykmelding={sykmelding} />;
+                    return <OkSendtSykmelding sykmelding={sykmelding} />;
                 case 'AVBRUTT':
-                    return <AvbruttSykmelding sykmelding={sykmelding} />;
+                    return <OkAvbruttSykmelding sykmelding={sykmelding} />;
                 case 'UTGATT':
-                    return <UtgattSykmelding sykmelding={sykmelding} />;
+                    return <OkUtgattSykmelding sykmelding={sykmelding} />;
                 default:
                     // TODO: make seperate component
                     return <div>Ugylding status</div>;
@@ -60,9 +60,9 @@ const SykmeldingSide: React.FC = () => {
         } else if (behandlingsutfall === 'INVALID') {
             switch (status) {
                 case 'APEN':
-                    return <AvvistSykmelding sykmelding={sykmelding} />;
+                    return <InvalidApenSykmelding sykmelding={sykmelding} />;
                 case 'BEKREFTET':
-                    return <AvvistBekreftetSykmelding sykmelding={sykmelding} />;
+                    return <InvalidBekreftetSykmelding sykmelding={sykmelding} />;
                 default:
                     // TODO: make seperate component
                     return <div>Ugylding status</div>;
