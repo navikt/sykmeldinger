@@ -27,7 +27,7 @@ interface SendtSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
+const SendtSykmelding: React.FC<SendtSykmeldingProps> = ({ sykmelding }) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel

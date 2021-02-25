@@ -4,11 +4,10 @@ import './Statuspanel.less';
 
 interface StatuspanelSectionProps {
     show?: boolean;
-    title: React.ReactNode | React.ReactChild | React.ReactChildren;
-    children: React.ReactNode | React.ReactChild | React.ReactChildren;
+    title: React.ReactNode;
 }
 
-const StatuspanelSection = ({ show = true, title, children }: StatuspanelSectionProps) => {
+const StatuspanelSection: React.FC<StatuspanelSectionProps> = ({ show = true, title, children }) => {
     if (!show) {
         return null;
     }

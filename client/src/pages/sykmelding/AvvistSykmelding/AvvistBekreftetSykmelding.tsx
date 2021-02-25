@@ -11,11 +11,11 @@ import VeilederMaleNeurtralSvg from '../../commonComponents/Veileder/svg/Veilede
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import dayjs from 'dayjs';
 
-interface SykmeldingProps {
+interface AvvistBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const AvvistBekreftetSykmelding = ({ sykmelding }: SykmeldingProps) => {
+const AvvistBekreftetSykmelding: React.FC<AvvistBekreftetSykmeldingProps> = ({ sykmelding }) => {
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--4">

@@ -15,11 +15,11 @@ import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import useBekreft from '../../commonComponents/hooks/useBekreft';
 
-interface SykmeldingProps {
+interface AvvistSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
+const AvvistSykmelding: React.FC<AvvistSykmeldingProps> = ({ sykmelding }) => {
     const [bekreftet, setBekreftet] = useState(false);
 
     const { sykmeldingId } = useParams();
@@ -58,7 +58,7 @@ const AvvistSykmelding = ({ sykmelding }: SykmeldingProps) => {
                         onChange={() => setBekreftet(!bekreftet)}
                     />
                 </div>
-                <Hovedknapp disabled={!bekreftet} spinner={isLoadingBekreft} onClick={() => bekreft({})}>
+                <Hovedknapp disabled={isLoadingBekreft} spinner={isLoadingBekreft} onClick={() => bekreft({})}>
                     Bekreft
                 </Hovedknapp>
             </div>

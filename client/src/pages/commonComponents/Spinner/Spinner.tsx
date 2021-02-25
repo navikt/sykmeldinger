@@ -7,7 +7,7 @@ interface SpinnerProps {
     headline: string;
 }
 
-const Spinner = ({ headline }: SpinnerProps) => (
+const Spinner: React.FC<SpinnerProps> = ({ headline }) => (
     <div className="spinner-container">
         <Undertittel style={{ marginBottom: '15px' }}>{headline}</Undertittel>
         <NavFrontendSpinner />

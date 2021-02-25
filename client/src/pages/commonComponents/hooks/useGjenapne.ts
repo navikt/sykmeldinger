@@ -13,6 +13,7 @@ function useGjenapne(sykmeldingId: string) {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');
                 queryClient.invalidateQueries(['sykmelding', sykmeldingId]);
+                window.scrollTo(0, 0);
             },
         },
     );

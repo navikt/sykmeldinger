@@ -24,7 +24,7 @@ interface BekreftetSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const BekreftetSykmelding = ({ sykmelding }: BekreftetSykmeldingProps) => {
+const BekreftetSykmelding: React.FC<BekreftetSykmeldingProps> = ({ sykmelding }) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel

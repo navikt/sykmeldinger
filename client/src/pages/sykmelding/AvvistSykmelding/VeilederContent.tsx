@@ -5,23 +5,23 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { Behandler, Sykmelding } from '../../../types/sykmelding';
 
-const createLegenavn = (behandler: Behandler) => {
-    const { fornavn, mellomnavn, etternavn } = behandler;
-    let navn = fornavn;
-    if (mellomnavn) {
-        navn += ` ${mellomnavn}`;
-    }
-    if (etternavn) {
-        navn += ` ${etternavn}`;
-    }
-    return navn;
-};
-
 interface VeilederContentProps {
     sykmelding: Sykmelding;
 }
 
-const VeilederContent = ({ sykmelding }: VeilederContentProps) => {
+const VeilederContent: React.FC<VeilederContentProps> = ({ sykmelding }) => {
+    function createLegenavn(behandler: Behandler) {
+        const { fornavn, mellomnavn, etternavn } = behandler;
+        let navn = fornavn;
+        if (mellomnavn) {
+            navn += ` ${mellomnavn}`;
+        }
+        if (etternavn) {
+            navn += ` ${etternavn}`;
+        }
+        return navn;
+    }
+
     const legenavn = createLegenavn(sykmelding.behandler);
 
     return (
@@ -43,8 +43,8 @@ const VeilederContent = ({ sykmelding }: VeilederContentProps) => {
             <br />
             <Element>Grunnen til at sykmeldingen er avvist:</Element>
             <ul>
-                {sykmelding.behandlingsutfall.ruleHits.map((ruleHit) => (
-                    <li>
+                {sykmelding.behandlingsutfall.ruleHits.map((ruleHit, index) => (
+                    <li key={index}>
                         <Normaltekst>{ruleHit.messageForUser}</Normaltekst>
                     </li>
                 ))}

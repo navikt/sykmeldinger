@@ -10,7 +10,7 @@ interface StatuspanelHeaderProps {
     erEgenmeldt: boolean;
 }
 
-const StatuspanelHeader = ({ sykmeldingstatus, erEgenmeldt }: StatuspanelHeaderProps) => {
+const StatuspanelHeader: React.FC<StatuspanelHeaderProps> = ({ sykmeldingstatus, erEgenmeldt }) => {
     const { timestamp, statusEvent, arbeidsgiver } = sykmeldingstatus;
 
     const title = (function (): string {

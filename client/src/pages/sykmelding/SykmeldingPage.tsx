@@ -15,7 +15,7 @@ import SykmeldingPageWrapper from '../sykmeldinger/components/SykmeldingPageWrap
 import useSykmelding from '../commonComponents/hooks/useSykmelding';
 
 // BUSINESS LOGIC CONTROLLER
-const SykmeldingSide = () => {
+const SykmeldingSide: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams();
 

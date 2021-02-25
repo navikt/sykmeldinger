@@ -29,7 +29,7 @@ interface AvbruttSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const AvbruttSykmelding = ({ sykmelding }: AvbruttSykmeldingProps) => {
+const AvbruttSykmelding: React.FC<AvbruttSykmeldingProps> = ({ sykmelding }) => {
     const { sykmeldingId } = useParams();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 

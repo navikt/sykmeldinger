@@ -10,7 +10,7 @@ import Lenke from 'nav-frontend-lenker';
 import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
 import useSykmeldinger from '../commonComponents/hooks/useSykmeldinger';
 
-const SykmeldingerPage = () => {
+const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
 
     const { isLoading, error, data: sykmeldinger } = useSykmeldinger();

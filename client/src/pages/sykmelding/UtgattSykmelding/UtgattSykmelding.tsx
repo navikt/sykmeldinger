@@ -25,7 +25,7 @@ interface UtgattSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const UtgattSykmelding = ({ sykmelding }: UtgattSykmeldingProps) => {
+const UtgattSykmelding: React.FC<UtgattSykmeldingProps> = ({ sykmelding }) => {
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--2">
