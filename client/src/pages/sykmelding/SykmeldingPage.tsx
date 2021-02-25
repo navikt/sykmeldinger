@@ -11,7 +11,7 @@ import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
-import SykmeldingPageWrapper from '../sykmeldinger/components/SykmeldingPageWrapper';
+import SykmeldingPageWrapper from '../sykmelding/components/SykmeldingPageWrapper';
 import useSykmelding from '../commonComponents/hooks/useSykmelding';
 
 // BUSINESS LOGIC CONTROLLER

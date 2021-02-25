@@ -59,7 +59,7 @@ fetchMock
 fetchMock.get(
     'end:/v1/brukerinformasjon',
     { body: { diskresjonskode: false, arbeidsgivere: arbeidsgivereMock } },
-    { delay: 1000 },
+    { delay: 2000 },
 );
 
 // VENTETID
