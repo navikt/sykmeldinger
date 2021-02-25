@@ -31,18 +31,9 @@ const SendtSykmelding = ({ sykmelding }: SendtSykmeldingProps) => {
     return (
         <div className="sykmelding-container">
             <Statuspanel
-                sykmeldingstatus={sykmelding.sykmeldingStatus.statusEvent}
+                sykmeldingstatus={sykmelding.sykmeldingStatus}
                 erEgenmeldt={sykmelding.egenmeldt}
-                arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
-                sykmeldingSendtEllerBekreftetDato={sykmelding.sykmeldingStatus.timestamp}
                 avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
-                // arbeidsgiverForskutterLonn={getArbeidsgiverForskutterer(sykmelding, arbeidsgivere)}
-                skalViseReisetilskuddInfo={sykmelding.sykmeldingsperioder.some(
-                    (periode) => periode.type === 'REISETILSKUDD',
-                )}
-                skalViseBehandlingsdagerInfo={sykmelding.sykmeldingsperioder.some(
-                    (periode) => periode.type === 'BEHANDLINGSDAGER',
-                )}
             />
             <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />

@@ -25,6 +25,7 @@ const SykmeldingSide = () => {
         return <Spinner headline="Henter sykmelding" />;
     }
 
+    // TODO: make seperate component
     if (error || sykmelding === undefined) {
         return (
             <SykmeldingPageWrapper>
@@ -53,6 +54,7 @@ const SykmeldingSide = () => {
                 case 'UTGATT':
                     return <UtgattSykmelding sykmelding={sykmelding} />;
                 default:
+                    // TODO: make seperate component
                     return <div>Ugylding status</div>;
             }
         } else if (behandlingsutfall === 'INVALID') {
@@ -62,9 +64,11 @@ const SykmeldingSide = () => {
                 case 'BEKREFTET':
                     return <AvvistBekreftetSykmelding sykmelding={sykmelding} />;
                 default:
+                    // TODO: make seperate component
                     return <div>Ugylding status</div>;
             }
         } else {
+            // TODO: make seperate component
             return <div>Ugylding behandlingsutfall</div>;
         }
     })();
