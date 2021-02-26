@@ -47,6 +47,7 @@ const PapirInfoheader = () => {
                     </Knapp>
                 </>
             )}
+
             {harGittVidere === false && (
                 <>
                     <Normaltekst tag="p" className="margin-bottom--2">

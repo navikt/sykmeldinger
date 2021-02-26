@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormInputs, FeilaktigeOpplysninger } from '../../../../../../types/form';
 import { FeiloppsummeringFeil, RadioPanelGruppe, CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import './FormSections.less';
@@ -6,6 +6,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import FormInfoMessage from '../Components/FormInfoMessage';
 import FeilaktigeOpplysningerInfo from '../Components/FeilaktigeOpplysningerInfo';
 import { getUpdatedFeilaktigeOpplysninger } from '../../../../../../utils/formUtils';
+import { AvbrytContext } from '../../AvbrytContext';
 
 interface BekreftOpplysningerProps {
     formState: Partial<FormInputs>;
@@ -14,6 +15,8 @@ interface BekreftOpplysningerProps {
 }
 
 const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysningerProps) => {
+    const { setMaAvbryte } = useContext(AvbrytContext);
+
     return (
         <div className="form-section form-section--border">
             <Systemtittel className="margin-bottom--1">Bekreft opplysninger</Systemtittel>
@@ -103,6 +106,9 @@ const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysn
                                         updatedFeilaktigeOpplysninger.includes('PERIODE') ||
                                         updatedFeilaktigeOpplysninger.includes('SYKMELDINGSGRAD_LAV')
                                     ) {
+                                        // Open AvbrytPanel
+                                        setMaAvbryte(true);
+
                                         return {
                                             ...state,
                                             feilaktigeOpplysninger: updatedFeilaktigeOpplysninger,
@@ -113,6 +119,9 @@ const BekreftOpplysninger = ({ formState, errors, setFormState }: BekreftOpplysn
                                             harForsikring: undefined,
                                         };
                                     }
+
+                                    // Close AvbrytPanel
+                                    setMaAvbryte(false);
 
                                     return {
                                         ...state,

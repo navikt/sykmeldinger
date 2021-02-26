@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import useForm from '../../../../commonComponents/hooks/useForm';
 import { Feiloppsummering } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
@@ -56,18 +56,8 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
     const { mutate: send, isLoading: isLoadingSend, error: errorSend } = useSend(sykmeldingId);
 
-    const { maAvbryte, setMaAvbryte } = useContext(AvbrytContext);
+    const { maAvbryte } = useContext(AvbrytContext);
     const { formState, errors, setFormState, handleSubmit } = useForm<FormInputs>({ validationFunctions });
-
-    // TODO: refactor this...
-    useEffect(() => {
-        const skalAvbrytes = Boolean(
-            formState.feilaktigeOpplysninger?.some(
-                (opplysning) => opplysning === 'PERIODE' || opplysning === 'SYKMELDINGSGRAD_LAV',
-            ),
-        );
-        setMaAvbryte(skalAvbrytes);
-    }, [formState, setMaAvbryte]);
 
     const skalSendes = !!formState.valgtArbeidsgiver;
 
@@ -159,7 +149,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
             {maAvbryte === false && (
                 <div className="margin-bottom--2 text--center">
-                    <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved">
+                    <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved" htmlType="submit">
                         {skalSendes ? 'Send' : 'Bekreft'} sykmelding
                     </Knapp>
                 </div>
