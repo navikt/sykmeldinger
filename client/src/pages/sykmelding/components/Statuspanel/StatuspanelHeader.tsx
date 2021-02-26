@@ -13,7 +13,7 @@ interface StatuspanelHeaderProps {
 const StatuspanelHeader: React.FC<StatuspanelHeaderProps> = ({ sykmeldingstatus, erEgenmeldt }) => {
     const { timestamp, statusEvent, arbeidsgiver } = sykmeldingstatus;
 
-    const title = (function (): string {
+    const title = ((): string => {
         switch (statusEvent) {
             case 'SENDT':
                 return arbeidsgiver?.orgNavn

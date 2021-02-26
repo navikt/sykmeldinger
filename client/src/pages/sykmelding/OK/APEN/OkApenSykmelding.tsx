@@ -29,7 +29,7 @@ interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }: OkApenSykmeldingProps) => {
+const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--4">

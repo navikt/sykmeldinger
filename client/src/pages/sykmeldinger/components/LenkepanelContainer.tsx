@@ -23,7 +23,7 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({ type, sykmeld
     );
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
-    function handleSortChange(sortBy: SortBy): void {
+    const handleSortChange = (sortBy: SortBy): void => {
         switch (sortBy) {
             case 'DATE':
                 setSykmeldingerSorted(sortSykmeldingerNewestFirst(sykmeldinger));
@@ -33,7 +33,7 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({ type, sykmeld
                 break;
         }
         setSortBy(sortBy);
-    }
+    };
 
     if (type === 'TIDLIGERE_SYKMELDINGER' && sykmeldinger.length === 0) {
         return null;

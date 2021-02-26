@@ -10,7 +10,7 @@ interface VeilederContentProps {
 }
 
 const VeilederContent: React.FC<VeilederContentProps> = ({ sykmelding }) => {
-    function createLegenavn(behandler: Behandler) {
+    const createLegenavn = (behandler: Behandler) => {
         const { fornavn, mellomnavn, etternavn } = behandler;
         let navn = fornavn;
         if (mellomnavn) {
@@ -20,7 +20,7 @@ const VeilederContent: React.FC<VeilederContentProps> = ({ sykmelding }) => {
             navn += ` ${etternavn}`;
         }
         return navn;
-    }
+    };
 
     const legenavn = createLegenavn(sykmelding.behandler);
 

@@ -38,7 +38,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({
     erEgenmeldt,
     erPapir,
 }) => {
-    function getIconSet(behandlingsutfall: RegelStatus, erPapir: boolean): IconSet {
+    const getIconSet = (behandlingsutfall: RegelStatus, erPapir: boolean): IconSet => {
         if (behandlingsutfall === 'INVALID') {
             return { iconNormal: declined, iconHover: declinedHover };
         }
@@ -46,9 +46,9 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({
             return { iconNormal: papersykmelding, iconHover: papersykmeldingHover };
         }
         return { iconNormal: stethoscope, iconHover: stethoscopeHover };
-    }
+    };
 
-    function getEtikett(status: StatusEvent, behandlingsutfall: RegelStatus): JSX.Element | null {
+    const getEtikett = (status: StatusEvent, behandlingsutfall: RegelStatus): JSX.Element | null => {
         switch (status) {
             case 'AVBRUTT':
                 return <EtikettAdvarsel mini>Avbrutt av deg</EtikettAdvarsel>;
@@ -67,9 +67,9 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({
                 }
                 return null;
         }
-    }
+    };
 
-    function getMainTitle(erEgenmeldt?: boolean, erPapir?: boolean): string {
+    const getMainTitle = (erEgenmeldt?: boolean, erPapir?: boolean): string => {
         if (erEgenmeldt) {
             return 'Egenmelding';
         }
@@ -77,7 +77,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({
             return 'Papirsykmelding';
         }
         return 'Sykmelding';
-    }
+    };
 
     const iconSet = getIconSet(sykmeldingBehandlingsutfall, erPapir);
     const [activeIcon, setActiveIcon] = useState<string>(iconSet.iconNormal);

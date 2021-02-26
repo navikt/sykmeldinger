@@ -4,6 +4,7 @@ function useBekreft(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
     return useMutation(
+        // TODO: type argument to match form output
         (values: any) =>
             fetch(`${process.env.REACT_APP_SYKMELDINGER_BACKEND_URL}/v1/sykmelding/${sykmeldingId}/actions/bekreft`, {
                 method: 'POST',
