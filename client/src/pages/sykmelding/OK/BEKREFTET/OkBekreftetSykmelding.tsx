@@ -19,12 +19,20 @@ import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdy
 import { Sykmelding } from '../../../../types/sykmelding';
 import Statuspanel from '../../components/Statuspanel/Statuspanel';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
+import { useParams } from 'react-router-dom';
+import useGjenapne from '../../../commonComponents/hooks/useGjenapne';
+import { Knapp } from 'nav-frontend-knapper';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Undertittel } from 'nav-frontend-typografi';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmelding }) => {
+    const { sykmeldingId } = useParams();
+    const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
+
     return (
         <div className="sykmelding-container">
             <Statuspanel
@@ -32,6 +40,14 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                 erEgenmeldt={sykmelding.egenmeldt}
                 avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
             />
+
+            <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                <Undertittel style={{ marginBottom: '1rem' }}>Fylte du ut feil opplysninger?</Undertittel>
+                <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
+                    gjør utfyllingen på nytt
+                </Knapp>
+                {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
+            </div>
 
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
                 <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />

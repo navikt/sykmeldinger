@@ -1,88 +1,67 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './AvbrytPanel.less';
 import { Xknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
+import { AvbrytContext } from '../../OK/APEN/AvbrytContext';
+import useAvbryt from '../../../commonComponents/hooks/useAvbryt';
+import { useParams } from 'react-router-dom';
 
-interface AvbrytPanelProps {
-    avbrytSykmelding: () => void;
-    closePanel: React.Dispatch<React.SetStateAction<boolean>>;
-    type?: 'NORMAL' | 'PAPER' | 'MANDATORY_CANCEL';
-    showLoadingSpinner?: boolean;
-}
-const AvbrytPanel = ({
-    avbrytSykmelding,
-    closePanel,
-    type = 'NORMAL',
-    showLoadingSpinner = false,
-}: AvbrytPanelProps) => {
-    const MainContent: JSX.Element = (() => {
-        switch (type) {
-            case 'NORMAL':
-                return (
-                    <>
-                        <Normaltekst>Er du sikker på at du vil avbryte sykmeldingen?</Normaltekst>
-                        <br />
-                        <Knapp
-                            htmlType="button"
-                            type="fare"
-                            spinner={showLoadingSpinner}
-                            onClick={() => avbrytSykmelding()}
-                        >
-                            Ja, jeg er sikker
-                        </Knapp>
-                    </>
-                );
-            case 'PAPER':
-                return (
-                    <>
-                        <Normaltekst>Er du sikker på at du skal fortsette med papir?</Normaltekst>
-                        <br />
-                        <Normaltekst>Du avbryter kun den digitale sykmeldingen.</Normaltekst>
-                        <br />
-                        <Knapp
-                            htmlType="button"
-                            type="fare"
-                            spinner={showLoadingSpinner}
-                            onClick={() => avbrytSykmelding()}
-                        >
-                            Ja, jeg er sikker
-                        </Knapp>
-                    </>
-                );
-            case 'MANDATORY_CANCEL':
-                return (
-                    <>
-                        <Knapp
-                            htmlType="button"
-                            type="fare"
-                            className="margin-bottom--2"
-                            spinner={showLoadingSpinner}
-                            onClick={() => avbrytSykmelding()}
-                        >
-                            Avbryt sykmelding
-                        </Knapp>
-                        <br />
-                        <Normaltekst>
-                            Selv om du avbryter sykmeldingen nå, har du mulighet til å gjenåpne den på et senere
-                            tidspunkt.
-                        </Normaltekst>
-                    </>
-                );
-        }
-    })();
+const AvbrytPanel: React.FC = () => {
+    const { sykmeldingId } = useParams();
+
+    // maAvbryte overrules isOpen
+    const { maAvbryte } = useContext(AvbrytContext);
+    const [isOpen, setIsOpen] = useState(false);
+
+    // TODO: error state
+    const { isLoading, mutate: avbryt } = useAvbryt(sykmeldingId);
+
+    if (maAvbryte) {
+        return (
+            <div className="avbryt-panel">
+                <Knapp
+                    htmlType="button"
+                    type="fare"
+                    className="margin-bottom--2"
+                    spinner={isLoading}
+                    onClick={() => avbryt()}
+                >
+                    Avbryt sykmelding
+                </Knapp>
+                <br />
+                <Normaltekst>
+                    Selv om du avbryter sykmeldingen nå, har du mulighet til å gjenåpne den på et senere tidspunkt.
+                </Normaltekst>
+            </div>
+        );
+    }
 
     return (
-        <div className="avbryt-panel">
-            {type !== 'MANDATORY_CANCEL' && (
-                <Xknapp
-                    htmlType="button"
-                    className="avbryt-panel__cross"
-                    onClick={() => closePanel((previousValue) => !previousValue)}
-                />
+        <>
+            <div className="avbryt-toggle" style={{ textAlign: 'center', marginBottom: '1rem' }}>
+                <Knapp mini onClick={() => setIsOpen((prev) => !prev)}>
+                    Jeg ønsker ikke å bruke denne sykmeldingen
+                </Knapp>
+            </div>
+
+            {isOpen && (
+                <div className="avbryt-panel">
+                    {maAvbryte === false && (
+                        <Xknapp
+                            htmlType="button"
+                            className="avbryt-panel__cross"
+                            onClick={() => setIsOpen((prev) => !prev)}
+                        />
+                    )}
+                    <Normaltekst>Er du sikker på at du vil avbryte sykmeldingen?</Normaltekst>
+                    <br />
+                    <Knapp htmlType="button" type="fare" spinner={isLoading} onClick={() => avbryt()}>
+                        Ja, jeg er sikker
+                    </Knapp>
+                </div>
             )}
-            {MainContent}
-        </div>
+        </>
     );
 };
 

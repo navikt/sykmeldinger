@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Innholdstittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
 import { Knapp } from 'nav-frontend-knapper';
+import useAvbryt from '../../../commonComponents/hooks/useAvbryt';
+import { useParams } from 'react-router-dom';
 
 const PapirInfoheader = () => {
+    const { sykmeldingId } = useParams();
+    const { isLoading, mutate: avbryt } = useAvbryt(sykmeldingId);
+
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
-    const [skalAvbrytes, setSkalAvbrytes] = useState<boolean>(false);
 
     return (
         <>
@@ -28,10 +31,8 @@ const PapirInfoheader = () => {
                 onChange={(_event, value) => {
                     if (value === 'Ja') {
                         setHarGittVidere(true);
-                        setSkalAvbrytes(true);
                     } else {
                         setHarGittVidere(false);
-                        setSkalAvbrytes(false);
                     }
                 }}
             />
@@ -41,8 +42,12 @@ const PapirInfoheader = () => {
                     <Normaltekst tag="p" className="margin-bottom--1">
                         Da avbryter du den digitale sykmeldingen.
                     </Normaltekst>
+                    <Knapp className="margin-bottom--2" spinner={isLoading} onClick={() => avbryt()}>
+                        Avbryt den digitale sykmeldingen
+                    </Knapp>
                 </>
             )}
+
             {harGittVidere === false && (
                 <>
                     <Normaltekst tag="p" className="margin-bottom--2">
@@ -57,12 +62,11 @@ const PapirInfoheader = () => {
                     </a>
 
                     <Element className="margin-bottom--1">Hvis du i stedet skal fortsette med papiret:</Element>
-                    <Knapp className="margin-bottom--2" onClick={() => setSkalAvbrytes(true)}>
+                    <Knapp className="margin-bottom--2" spinner={isLoading} onClick={() => avbryt()}>
                         Avbryt den digitale sykmeldingen
                     </Knapp>
                 </>
             )}
-            {skalAvbrytes && <AvbrytPanel type="PAPER" avbrytSykmelding={() => {}} closePanel={setSkalAvbrytes} />}
         </>
     );
 };
