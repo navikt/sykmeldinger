@@ -1,203 +1,79 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import AvbruttSykmelding from './AvbruttSykmelding/AvbruttSykmelding';
-import AvvistSykmelding from './AvvistSykmelding/AvvistSykmelding';
-import BekreftetSykmelding from './BekreftetSykmelding/BekreftetSykmelding';
-import Brodsmuler from '../commonComponents/Breadcrumbs/Breadcrumbs';
-import Header from '../commonComponents/Header/Header';
-import ApenSykmelding from './ApenSykmelding/ApenSykmelding';
-import SendtSykmelding from './SendtSykmelding/SendtSykmelding';
-import { Arbeidsgiver } from '../../types/arbeidsgiver';
-import { Sykmelding } from '../../types/sykmelding';
-import useFetch, { areAnyNotStartetOrPending } from '../commonComponents/hooks/useFetch';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { Soknad } from '../../types/soknad';
-import UtgattSykmelding from './UtgattSykmelding/UtgattSykmelding';
-import EgenmeldtSykmelding from './EgenmeldtSykmelding/EgenmeldtSykmelding';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
-import ApenPapirsykmelding from './ApenSykmelding/ApenPapirsykmelding';
-import AvvistBekreftetSykmelding from './AvvistSykmelding/AvvistBekreftetSykmelding';
-import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
+import SykmeldingPageWrapper from '../sykmelding/components/SykmeldingPageWrapper';
+import useSykmelding from '../commonComponents/hooks/useSykmelding';
+import OkBekreftetSykmelding from './OK/BEKREFTET/OkBekreftetSykmelding';
+import OkAvbruttSykmelding from './OK/AVBRUTT/OkAvbruttSykmelding';
+import OkSendtSykmelding from './OK/SENDT/OkSendtSykmelding';
+import OkUtgattSykmelding from './OK/UTGATT/OkUtgattSykmelding';
+import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
+import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
+import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
 
-const SykmeldingSide = () => {
+// BUSINESS LOGIC CONTROLLER
+const SykmeldingSide: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams();
 
-    // Initialize fetchers
-    const {
-        status: sykmeldingFetcherStatus,
-        data: sykmelding,
-        error: sykmeldingFetcherError,
-        fetch: fetchSykmelding,
-    } = useFetch<Sykmelding>(
-        `${process.env.REACT_APP_SM_REGISTER_URL}/v1/sykmelding/${sykmeldingId}`,
-        (sykmelding) => new Sykmelding(sykmelding),
-    );
-    const {
-        status: arbeidsgivereFetcherStatus,
-        data: arbeidsgivere,
-        error: arbeidsgivereFetcherError,
-        fetch: fetchArbeidsgivere,
-    } = useFetch<Arbeidsgiver[]>(`${process.env.REACT_APP_SYFOREST_ROOT}/informasjon/arbeidsgivere`, (arbeidsgivere) =>
-        arbeidsgivere.map((arbeidsgiver: any) => new Arbeidsgiver(arbeidsgiver)),
-    );
-    const {
-        status: erUtenforVentetidFetcherStatus,
-        data: erUtenforVentetid,
-        error: erUtenforVentetidError,
-        fetch: fetchErUtenforVentetid,
-    } = useFetch<boolean>(
-        `${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/erUtenforVentetid`,
-        (data) => data.erUtenforVentetid,
-    );
-    const {
-        status: soknaderFetcherStatus,
-        data: soknader,
-        error: soknaderFetcherError,
-        fetch: fetchSoknader,
-    } = useFetch<Soknad[]>(`${process.env.REACT_APP_SYFOREST_ROOT}/syfosoknad/sykmelding/${sykmeldingId}`, (soknader) =>
-        soknader.map((soknad: any) => new Soknad(soknad)),
-    );
+    const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
 
-    useEffect(() => {
-        fetchSykmelding();
-        fetchArbeidsgivere();
-        fetchErUtenforVentetid();
-        fetchSoknader();
-    }, [fetchSykmelding, fetchArbeidsgivere, fetchErUtenforVentetid, fetchSoknader]);
-
-    if (
-        areAnyNotStartetOrPending([
-            sykmeldingFetcherStatus,
-            arbeidsgivereFetcherStatus,
-            erUtenforVentetidFetcherStatus,
-            soknaderFetcherStatus,
-        ])
-    ) {
+    if (isLoading) {
         return <Spinner headline="Henter sykmelding" />;
     }
 
-    if (
-        sykmeldingFetcherError ||
-        sykmelding === undefined ||
-        arbeidsgivereFetcherError ||
-        arbeidsgivere === undefined ||
-        erUtenforVentetidError ||
-        erUtenforVentetid === undefined ||
-        soknaderFetcherError ||
-        soknader === undefined
-    ) {
+    // TODO: make seperate component
+    if (error || sykmelding === undefined) {
         return (
-            <>
-                <Header title="Sykmelding" />
-                <div className="limit">
-                    <Brodsmuler
-                        breadcrumbs={[
-                            {
-                                title: 'Sykefravær',
-                                path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
-                            },
-                            {
-                                title: 'Sykmeldinger',
-                                path: `${process.env.REACT_APP_SYKMELDINGER_ROOT}`,
-                            },
-                            {
-                                title: 'Sykmelding',
-                            },
-                        ]}
-                    />
-                    <AlertStripeAdvarsel>
-                        <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
-                        <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
-                    </AlertStripeAdvarsel>
-                </div>
-                <TilHovedsiden />
-            </>
+            <SykmeldingPageWrapper>
+                <AlertStripeAdvarsel>
+                    <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
+                    <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
+                </AlertStripeAdvarsel>
+            </SykmeldingPageWrapper>
         );
     }
 
-    const SykmeldingComponent = (() => {
-        const erAvvist = sykmelding.behandlingsutfall.status === 'INVALID';
-        const erEgenmeldt = sykmelding.egenmeldt;
-        const erPapir = sykmelding.papirsykmelding;
+    const SykmeldingComponent: JSX.Element = (() => {
+        const behandlingsutfall = sykmelding.behandlingsutfall.status;
         const status = sykmelding.sykmeldingStatus.statusEvent;
 
-        switch (status) {
-            case 'APEN':
-                if (erAvvist) {
-                    return <AvvistSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />;
-                }
-                if (erPapir) {
-                    return (
-                        <ApenPapirsykmelding
-                            sykmelding={sykmelding}
-                            arbeidsgivere={arbeidsgivere}
-                            sykmeldingUtenforVentetid={erUtenforVentetid}
-                            fetchSykmelding={fetchSykmelding}
-                            fetchSoknader={fetchSoknader}
-                        />
-                    );
-                }
-                return (
-                    <ApenSykmelding
-                        sykmelding={sykmelding}
-                        arbeidsgivere={arbeidsgivere}
-                        sykmeldingUtenforVentetid={erUtenforVentetid}
-                        fetchSykmelding={fetchSykmelding}
-                        fetchSoknader={fetchSoknader}
-                    />
-                );
-            case 'AVBRUTT':
-                return <AvbruttSykmelding sykmelding={sykmelding} fetchSykmelding={fetchSykmelding} />;
-            case 'SENDT':
-                return <SendtSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />;
-            case 'BEKREFTET':
-                if (erAvvist) {
-                    return <AvvistBekreftetSykmelding sykmelding={sykmelding} />;
-                }
-                if (erEgenmeldt) {
-                    return <EgenmeldtSykmelding sykmelding={sykmelding} />;
-                }
-                return (
-                    <BekreftetSykmelding sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} soknader={soknader} />
-                );
-            case 'UTGATT':
-                return <UtgattSykmelding sykmelding={sykmelding} />;
-            default:
-                // TODO: Errorcomponent -  not found
-                break;
+        if (behandlingsutfall === 'OK') {
+            switch (status) {
+                case 'APEN':
+                    return <OkApenSykmelding sykmelding={sykmelding} />;
+                case 'BEKREFTET':
+                    return <OkBekreftetSykmelding sykmelding={sykmelding} />;
+                case 'SENDT':
+                    return <OkSendtSykmelding sykmelding={sykmelding} />;
+                case 'AVBRUTT':
+                    return <OkAvbruttSykmelding sykmelding={sykmelding} />;
+                case 'UTGATT':
+                    return <OkUtgattSykmelding sykmelding={sykmelding} />;
+                default:
+                    // TODO: make seperate component
+                    return <div>Ugylding status</div>;
+            }
+        } else if (behandlingsutfall === 'INVALID') {
+            switch (status) {
+                case 'APEN':
+                    return <InvalidApenSykmelding sykmelding={sykmelding} />;
+                case 'BEKREFTET':
+                    return <InvalidBekreftetSykmelding sykmelding={sykmelding} />;
+                default:
+                    // TODO: make seperate component
+                    return <div>Ugylding status</div>;
+            }
+        } else {
+            // TODO: make seperate component
+            return <div>Ugylding behandlingsutfall</div>;
         }
     })();
 
-    return (
-        <>
-            <Header
-                title={sykmelding.egenmeldt ? 'Egenmelding' : 'Sykmelding'}
-                sykmeldingPerioder={sykmelding.sykmeldingsperioder}
-            />
-            <div className="limit">
-                <Brodsmuler
-                    breadcrumbs={[
-                        {
-                            title: 'Sykefravær',
-                            path: `${process.env.REACT_APP_SYKEFRAVAER_ROOT}`,
-                        },
-                        {
-                            title: 'Sykmeldinger',
-                            path: `${process.env.REACT_APP_SYKMELDINGER_ROOT}`,
-                        },
-                        {
-                            title: 'Sykmelding',
-                        },
-                    ]}
-                />
-                {SykmeldingComponent}
-                <TilHovedsiden />
-            </div>
-        </>
-    );
+    return <SykmeldingPageWrapper>{SykmeldingComponent}</SykmeldingPageWrapper>;
 };
 
 export default SykmeldingSide;

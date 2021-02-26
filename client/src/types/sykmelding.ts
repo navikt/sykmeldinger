@@ -128,7 +128,7 @@ interface SporsmalOgSvar {
     shortName?: SporsmalShortName;
 }
 
-class SykmeldingStatus {
+export class SykmeldingStatus {
     timestamp: Date;
     statusEvent: StatusEvent;
     arbeidsgiver?: ArbeidsgiverStatus;

@@ -13,13 +13,12 @@ Frontend-app for visning og behandling av enkeltsykmeldinger.
 
 ## Environment-variabler
 
-Alle environment-variabler som er prefix-et med `REACT_APP_` injiseres i koden ved bygging av frontend. For utvikling lokalt settes disse i `./client/.env` (opprett fil selv), mens for bygg til dev, prod og gcp settes de i `./github/workflows/deploy-*.yml`. Liste over environment variabler som må settes:
+Alle environment-variabler som er prefix-et med `REACT_APP_` "injectes" i koden ved bygging av frontend. For utvikling lokalt settes disse i `./client/.env` (opprett fil selv), mens for bygg til dev, prod og gcp settes de i `./github/workflows/deploy-*.yml`. Liste over environment variabler som må settes:
 
 -   REACT_APP_IS_GCP_LABS # Set only for instance running on gcp-labs
 -   REACT_APP_SYKEFRAVAER_ROOT
 -   REACT_APP_SYKMELDINGER_ROOT
 -   REACT_APP_LOGINSERVICE_URL
--   REACT_APP_SM_REGISTER_URL
 -   REACT_APP_SYFOREST_ROOT
 
 Ved mangler i denne listen, gjør et søk i koden etter `REACT_APP_`

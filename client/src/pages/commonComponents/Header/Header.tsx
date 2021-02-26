@@ -11,7 +11,7 @@ interface HeaderProps {
     sykmeldingPerioder?: Periode[];
 }
 
-const Header = ({ title, subtitle, sykmeldingPerioder }: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({ title, subtitle, sykmeldingPerioder }) => {
     const totalPeriodString = sykmeldingPerioder
         ? `for ${getTotalSykmeldingLenghtReadableString(sykmeldingPerioder)}`
         : undefined;

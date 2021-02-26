@@ -16,7 +16,7 @@ interface LenkepanelContainerProps {
     sykmeldinger: Sykmelding[];
 }
 
-const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) => {
+const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({ type, sykmeldinger }) => {
     const [sortBy, setSortBy] = useState(SortBy.DATE); // Sort by date as default
     const [sykmeldingerSorted, setSykmeldingerSorted] = useState<Sykmelding[]>(
         sortSykmeldingerNewestFirst(sykmeldinger),
@@ -64,8 +64,8 @@ const LenkepanelContainer = ({ type, sykmeldinger }: LenkepanelContainerProps) =
                                 sykmeldingBehandlingsutfall={sykmelding.behandlingsutfall.status}
                                 sykmeldingsperioder={sykmelding.sykmeldingsperioder}
                                 arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
-                                erEgenmeldt={!!sykmelding.egenmeldt}
-                                erPapir={!!sykmelding.papirsykmelding}
+                                erEgenmeldt={Boolean(sykmelding.egenmeldt)}
+                                erPapir={Boolean(sykmelding.papirsykmelding)}
                             />
                         </li>
                     ))}
