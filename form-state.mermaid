@@ -1,0 +1,39 @@
+graph TD
+    OK_APEN[Åpen sykmelding] --> OPPLYSNINGER{ Er opplysningene <br/> riktige? };
+
+    OPPLYSNINGER -->|Ja| SYKMELDT_FRA{ Jeg er sykmeldt fra }
+    OPPLYSNINGER -->|Nei| URIKTIGE_OPPLYSNINGER{ Hvilke opplysniger <br/> er ikke riktige? }
+
+    URIKTIGE_OPPLYSNINGER -->|Periode| AVBRYT( Avbryt sykmeldingen)
+    URIKTIGE_OPPLYSNINGER -->|Sykmeldingsgraden <br/> er for lav| AVBRYT
+    URIKTIGE_OPPLYSNINGER -->|Sykmeldingsgraden <br/> er for høy| SYKMELDT_FRA
+    URIKTIGE_OPPLYSNINGER -->|Arbeidsgiver| SYKMELDT_FRA
+    URIKTIGE_OPPLYSNINGER -->|Diagnose| SYKMELDT_FRA
+    URIKTIGE_OPPLYSNINGER -->|Andre opplysninger| SYKMELDT_FRA
+
+    SYKMELDT_FRA -->|Arbeidsgiver| ARBEIDSGIVER{ Er det NL som skal <br/> følge deg opp på <br/> jobben når du er syk? };
+    SYKMELDT_FRA -->|Jobb som selvstendig <br/> næringsdrivende| UTENFOR_VENTETID[ erUtenforVentetid ]
+    SYKMELDT_FRA -->|Jobb som frilanser| UTENFOR_VENTETID
+    SYKMELDT_FRA -->|Jobb hos en <br/> annen arbeidsgiver| BEKREFT
+    SYKMELDT_FRA -->|Jeg er arbeidsledig <br/> eller permittert| BEKREFT
+    SYKMELDT_FRA -->|Jeg finner ingenting <br/> som passer for meg| BEKREFT
+
+    UTENFOR_VENTETID -->|true| BEKREFT( Bekreft sykmeldingen )
+    UTENFOR_VENTETID ---->|false| FOM
+
+    subgraph Egenmeldingsdager
+    FOM[Velg FOM] --> TOM[Velg TOM] --> NY_PERIODE{Legg til <br/> periode?} -->|Ja| FOM
+    end
+
+    NY_PERIODE -->|Nei| FORSIKRING{Har du foriskring <br/> som gjelder for <br/> de første 16 dagene <br/> av sykefraværet?} 
+
+    FORSIKRING -->|Ja| BEKREFT
+    FORSIKRING -->|Nei| BEKREFT
+
+    ARBEIDSGIVER -->|Ja| SEND( Send sykmeldingen )
+    ARBEIDSGIVER -->|Nei| SEND
+
+    style AVBRYT fill:#de7a7a
+    style BEKREFT fill:#7ade82
+    style SEND fill:#7ade82
+    style UTENFOR_VENTETID stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
