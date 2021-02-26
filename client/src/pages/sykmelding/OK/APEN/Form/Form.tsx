@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import useForm from '../../../../commonComponents/hooks/useForm';
 import { Feiloppsummering } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
@@ -7,7 +7,6 @@ import validationFunctions from './formValidation';
 import { FormInputs } from '../../../../../types/form';
 import BekreftOpplysninger from './FormSections/BekreftOpplysninger';
 import Arbeidssituasjon from './FormSections/Arbeidssituasjon';
-import AvbrytPanel from '../../../components/AvbrytPanel/AvbrytPanel';
 import Sykmeldingsopplysninger from '../../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import SykmeldingPerioder from '../../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import ArbeidsuforSeksjon from '../../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
@@ -32,14 +31,14 @@ import Spinner from '../../../../commonComponents/Spinner/Spinner';
 import useBrukerinformasjon from '../../../../commonComponents/hooks/useBrukerinformasjon';
 import useSykmeldingUtenforVentetid from '../../../../commonComponents/hooks/useSykmeldingUtenforVentetid';
 import useBekreft from '../../../../commonComponents/hooks/useBekreft';
-import useAvbryt from '../../../../commonComponents/hooks/useAvbryt';
 import useSend from '../../../../commonComponents/hooks/useSend';
+import { AvbrytContext } from '../AvbrytContext';
 
 interface FormProps {
     sykmelding: Sykmelding;
 }
 
-const Form = ({ sykmelding }: FormProps) => {
+const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const { sykmeldingId } = useParams();
 
     const {
@@ -47,22 +46,29 @@ const Form = ({ sykmelding }: FormProps) => {
         error: errorBrukerinformasjon,
         data: brukerinformasjon,
     } = useBrukerinformasjon();
+
     const {
         isLoading: isLoadingSykmeldingUtenforVentetid,
         error: errorSykmeldingUtenforVentetid,
         data: sykmeldingUtenforVentetid,
     } = useSykmeldingUtenforVentetid(sykmeldingId);
+
     const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
     const { mutate: send, isLoading: isLoadingSend, error: errorSend } = useSend(sykmeldingId);
-    const { mutate: avbryt, isLoading: isLoadingAvbryt, error: errorAvbryt } = useAvbryt(sykmeldingId);
 
+    const { maAvbryte, setMaAvbryte } = useContext(AvbrytContext);
     const { formState, errors, setFormState, handleSubmit } = useForm<FormInputs>({ validationFunctions });
 
-    // Local state
-    const [showCancel, setShowCancel] = useState<boolean>(false);
-    const skalAvbrytes = formState.feilaktigeOpplysninger?.some(
-        (opplysning) => opplysning === 'PERIODE' || opplysning === 'SYKMELDINGSGRAD_LAV',
-    );
+    // TODO: refactor this...
+    useEffect(() => {
+        const skalAvbrytes = Boolean(
+            formState.feilaktigeOpplysninger?.some(
+                (opplysning) => opplysning === 'PERIODE' || opplysning === 'SYKMELDINGSGRAD_LAV',
+            ),
+        );
+        setMaAvbryte(skalAvbrytes);
+    }, [formState, setMaAvbryte]);
+
     const skalSendes = !!formState.valgtArbeidsgiver;
 
     if (isLoadingBrukerinformasjon || isLoadingSykmeldingUtenforVentetid) {
@@ -96,7 +102,7 @@ const Form = ({ sykmelding }: FormProps) => {
                 formState={formState}
                 setFormState={setFormState}
                 errors={errors}
-                skalAvbrytes={skalAvbrytes}
+                skalAvbrytes={maAvbryte}
             />
 
             {skalSendes && (
@@ -134,7 +140,7 @@ const Form = ({ sykmelding }: FormProps) => {
                 </Sykmeldingsopplysninger>
             )}
 
-            {!!errors.size && (
+            {Boolean(errors.size) && (
                 <Feiloppsummering
                     className="margin-bottom--2"
                     tittel="Det finnes feil som må rettes opp"
@@ -151,43 +157,12 @@ const Form = ({ sykmelding }: FormProps) => {
                 </div>
             )}
 
-            {!skalAvbrytes && (
+            {maAvbryte === false && (
                 <div className="margin-bottom--2 text--center">
                     <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved">
                         {skalSendes ? 'Send' : 'Bekreft'} sykmelding
                     </Knapp>
                 </div>
-            )}
-
-            {!skalAvbrytes && (
-                <div className="margin-bottom--2 text--center">
-                    <Knapp
-                        htmlType="button"
-                        type="flat"
-                        mini
-                        onClick={() => setShowCancel((previousValue) => !previousValue)}
-                    >
-                        Jeg ønsker ikke å bruke denne sykmeldingen
-                    </Knapp>
-                </div>
-            )}
-
-            {errorAvbryt && (
-                <div className="margin-bottom--1">
-                    <AlertStripeFeil>
-                        På grunn av en feil med baksystemene klarte vi ikke å avbryte sykmeldingen. Vennligst prøv igjen
-                        senere.
-                    </AlertStripeFeil>
-                </div>
-            )}
-
-            {(showCancel || skalAvbrytes) && (
-                <AvbrytPanel
-                    showLoadingSpinner={isLoadingAvbryt}
-                    avbrytSykmelding={() => avbryt()}
-                    closePanel={setShowCancel}
-                    type={skalAvbrytes ? 'MANDATORY_CANCEL' : 'NORMAL'}
-                />
             )}
         </form>
     );

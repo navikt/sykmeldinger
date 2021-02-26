@@ -5,7 +5,6 @@ import Spinner from '../commonComponents/Spinner/Spinner';
 import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
-import TilHovedsiden from '../commonComponents/TilHovedsiden/TilHovedsiden';
 import useSykmeldinger from '../commonComponents/hooks/useSykmeldinger';
 import SykmeldingerPageWrapper from './components/SykmeldingerPageWrapper';
 
@@ -45,7 +44,6 @@ const SykmeldingerPage: React.FC = () => {
                 </Lenke>
             </Ekspanderbartpanel>
             <LenkepanelContainer type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
-            <TilHovedsiden />
         </SykmeldingerPageWrapper>
     );
 };

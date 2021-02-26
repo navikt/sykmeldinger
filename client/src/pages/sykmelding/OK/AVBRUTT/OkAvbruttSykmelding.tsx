@@ -42,7 +42,7 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                         Dato avbrutt: {dayjs(sykmelding.sykmeldingStatus.timestamp).format('dddd D. MMMM, kl. HH:mm')}
                     </EtikettLiten>
                 </AlertStripe>
-                <Knapp spinner={isLoading} onClick={() => gjenapne()}>
+                <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
                     Bruk sykmeldingen
                 </Knapp>
                 {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}

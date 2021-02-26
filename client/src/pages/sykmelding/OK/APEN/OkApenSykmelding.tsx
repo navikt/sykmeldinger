@@ -24,75 +24,104 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
 import Form from './Form/Form';
 import PapirInfoheader from './PapirInfoheader';
+import useBrukerinformasjon from '../../../commonComponents/hooks/useBrukerinformasjon';
+import Spinner from '../../../commonComponents/Spinner/Spinner';
+import AvbrytContextProvider from './AvbrytContext';
+import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
+    const { isLoading, error, data: brukerinformasjon } = useBrukerinformasjon();
+
+    if (isLoading) {
+        return <Spinner headline="Henter brukerinformasjon" />;
+    }
+
+    if (error || brukerinformasjon === undefined) {
+        return <p>Det oppsto en feil da vi forsøkte å hente brukerinformasjon</p>;
+    }
+
+    const { diskresjonskode } = brukerinformasjon;
+
+    if (diskresjonskode === true) {
+        // TODO: return OkApenKode6Sykmelding
+    }
+
     return (
-        <div className="sykmelding-container">
-            <div className="margin-bottom--4">
-                <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
-                    Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
-                    Du velger selv om du vil bruke sykmeldingen.
-                </Veilederpanel>
-            </div>
-
-            {Boolean(sykmelding.papirsykmelding) && (
+        <AvbrytContextProvider>
+            <div className="sykmelding-container">
                 <div className="margin-bottom--4">
-                    <PapirInfoheader />
+                    <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
+                        Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
+                        om? Du velger selv om du vil bruke sykmeldingen.
+                    </Veilederpanel>
                 </div>
-            )}
 
-            {Boolean(sykmelding.egenmeldt) &&
-                // TODO: egenmeldt info
-                // finnes det egenmeldinger med status APEN?
-                null}
+                {Boolean(sykmelding.papirsykmelding) && (
+                    <div className="margin-bottom--4">
+                        <PapirInfoheader />
+                    </div>
+                )}
 
-            <div className="margin-bottom--2">
-                <SporsmalInfoheader />
-            </div>
+                {Boolean(sykmelding.egenmeldt) &&
+                    // TODO: egenmeldt info
+                    // finnes det egenmeldinger med status APEN?
+                    null}
 
-            <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
-                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
-                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
-                {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
-                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
-                ))}
-                <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
-                <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
-                <SkadeSeksjon medisinskVurdering={sykmelding.medisinskVurdering} />
-                <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
-                <PrognoseSeksjon prognose={sykmelding.prognose} />
-                <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                <LegeSeksjon navn={sykmelding.navnFastlege} />
+                <div className="margin-bottom--2">
+                    <SporsmalInfoheader />
+                </div>
 
-                <Sykmeldingsopplysninger
-                    id="flere-sykmeldingsopplysnigner"
-                    title="Flere opplysniger fra den som sykmeldte deg"
-                    type="FLERE_OPPLYSNINGER"
-                    expandedDefault={false}
-                >
-                    <BehandlingsDatoer
-                        behandletTidspunkt={sykmelding.behandletTidspunkt}
-                        syketilfelleStartDato={sykmelding.syketilfelleStartDato}
-                    />
-                    <MulighetForArbeid />
-                    <Friskmelding prognose={sykmelding.prognose} />
-                    <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
-                    <Arbeidsevne
-                        tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
-                        tiltakNAV={sykmelding.tiltakNAV}
-                    />
-                    <SeksjonMedTittel tittel="Annet">
-                        <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
-                    </SeksjonMedTittel>
+                <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
+                    <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                    <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
+                    {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
+                        <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
+                    ))}
+                    <FraverSeksjon fraver={sykmelding.medisinskVurdering?.annenFraversArsak} />
+                    <SvangerskapSeksjon svangerskap={!!sykmelding.medisinskVurdering?.svangerskap} />
+                    <SkadeSeksjon medisinskVurdering={sykmelding.medisinskVurdering} />
+                    <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
+                    <PrognoseSeksjon prognose={sykmelding.prognose} />
+                    <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
+                    <LegeSeksjon navn={sykmelding.navnFastlege} />
+
+                    <Sykmeldingsopplysninger
+                        id="flere-sykmeldingsopplysnigner"
+                        title="Flere opplysniger fra den som sykmeldte deg"
+                        type="FLERE_OPPLYSNINGER"
+                        expandedDefault={false}
+                    >
+                        <BehandlingsDatoer
+                            behandletTidspunkt={sykmelding.behandletTidspunkt}
+                            syketilfelleStartDato={sykmelding.syketilfelleStartDato}
+                        />
+                        <MulighetForArbeid />
+                        <Friskmelding prognose={sykmelding.prognose} />
+                        <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
+                        <Arbeidsevne
+                            tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
+                            tiltakNAV={sykmelding.tiltakNAV}
+                        />
+                        <SeksjonMedTittel tittel="Annet">
+                            <ElementMedTekst
+                                margin
+                                tittel="Telefon til lege/sykmelder"
+                                tekst={sykmelding.behandler.tlf}
+                            />
+                        </SeksjonMedTittel>
+                    </Sykmeldingsopplysninger>
                 </Sykmeldingsopplysninger>
-            </Sykmeldingsopplysninger>
 
-            <Form sykmelding={sykmelding} />
-        </div>
+                <Form sykmelding={sykmelding} />
+
+                {/* Avbryt component */}
+                <AvbrytPanel />
+            </div>
+        </AvbrytContextProvider>
     );
 };
 
