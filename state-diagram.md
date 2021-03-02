@@ -1,3 +1,4 @@
+```mermaid
 stateDiagram-v2
     [*] --> Sykmeldingliste: /sykmeldinger
     [*] --> Sykmeldingvisning: /sykmeldinger/{sykmeldingId}
@@ -57,3 +58,4 @@ stateDiagram-v2
             OK_APEN_ARBEIDSGIVER --> [*]: send()
         }
     }
+```

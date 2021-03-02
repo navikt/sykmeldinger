@@ -5,7 +5,7 @@ on:
     branches:
       - 'master'
     paths:
-      - '**/*.mermaid'
+      - '**/*.md'
       - '.github/workflows/compile-mermaid.yml'
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
     - name: get changed files
       id: getfile
       run: |
-        echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e '.*\.mermaid$' | xargs)"
+        echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e '.*\.md$' | xargs)"
 
     - name: md files changed
       run: |
