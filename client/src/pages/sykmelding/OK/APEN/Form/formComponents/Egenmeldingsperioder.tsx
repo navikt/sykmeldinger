@@ -6,7 +6,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import Flatpickr from 'react-flatpickr';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Xknapp } from 'nav-frontend-ikonknapper';
-import '../FormSections/flatpickr.less';
+import '../Components/flatpickr.less';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
 const locale: CustomLocale = {
