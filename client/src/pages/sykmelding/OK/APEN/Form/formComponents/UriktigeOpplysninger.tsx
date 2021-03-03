@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useFormContext, Validate } from 'react-hook-form';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormData, UriktigeOpplysningerType } from '../Form';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 const UriktigeOpplysninger: React.FC = () => {
     const { getValues, register, watch } = useFormContext<FormData>();
@@ -17,13 +18,13 @@ const UriktigeOpplysninger: React.FC = () => {
     const trengerNySykmelding = useMemo(() => {
         return (
             Boolean(watchUriktigeOpplysninger?.includes('PERIODE')) ||
-            Boolean(getValues('uriktigeOpplysninger')?.includes('SYKMELDINGSGRAD_FOR_HOY'))
+            Boolean(watchUriktigeOpplysninger?.includes('SYKMELDINGSGRAD_FOR_HOY'))
         );
     }, [watchUriktigeOpplysninger]);
 
     return (
-        <>
-            <fieldset style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+        <QuestionWrapper>
+            <fieldset>
                 <legend>Hvilke opplysninger stemmer ikke?</legend>
 
                 {Object.entries(UriktigeOpplysningerType).map(([key, label]) => (
@@ -38,7 +39,7 @@ const UriktigeOpplysninger: React.FC = () => {
                     </div>
                 ))}
 
-                {/* TODO: */}
+                {/* TODO: convert to checkboxgruppe */}
                 {/* https://github.com/react-hook-form/react-hook-form/issues/1517 */}
             </fieldset>
 
@@ -51,7 +52,7 @@ const UriktigeOpplysninger: React.FC = () => {
                     )}
                 </>
             )}
-        </>
+        </QuestionWrapper>
     );
 };
 

@@ -3,6 +3,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData } from '../Form';
 import Egenmeldingsperioder from './Egenmeldingsperioder';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 interface HarBruktEgenmeldingProps {
     syketilfelleStartdato: Date;
@@ -13,7 +14,7 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleS
     const watchHarBruktEgenmelding = watch('harBruktEgenmelding');
 
     return (
-        <>
+        <QuestionWrapper>
             <Controller
                 control={control}
                 name="harBruktEgenmelding"
@@ -36,7 +37,7 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleS
             {watchHarBruktEgenmelding === 'JA' && (
                 <Egenmeldingsperioder syketilfelleStartdato={syketilfelleStartdato} />
             )}
-        </>
+        </QuestionWrapper>
     );
 };
 

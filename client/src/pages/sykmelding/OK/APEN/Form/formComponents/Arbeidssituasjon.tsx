@@ -6,6 +6,7 @@ import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer';
 import Brukerinformasjon from '../../../../../../types/brukerinformasjon';
 import HarBruktEgenmelding from './HarBruktEgenmelding';
 import HarForsikring from './HarForsikring';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 interface ArbeidssituasjonProps {
     erUtenforVentetid: boolean;
@@ -24,7 +25,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
             ['ARBEIDSTAKER', 'FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon) &&
             erUtenforVentetid === false
         );
-    }, [watchArbeidssituasjon]);
+    }, [watchArbeidssituasjon, erUtenforVentetid]);
 
     const skalViseForsikringSporsmal = useMemo(() => {
         if (watchArbeidssituasjon === undefined) return false;
@@ -33,10 +34,10 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
         return (
             ['FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon) && erUtenforVentetid === false
         );
-    }, [watchArbeidssituasjon]);
+    }, [watchArbeidssituasjon, erUtenforVentetid]);
 
     return (
-        <>
+        <QuestionWrapper>
             <Controller
                 control={control}
                 name="arbeidssituasjon"
@@ -64,7 +65,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
             {skalViseEgenmeldingsperioderSporsmal && <HarBruktEgenmelding syketilfelleStartdato={new Date()} />}
 
             {skalViseForsikringSporsmal && <HarForsikring />}
-        </>
+        </QuestionWrapper>
     );
 };
 

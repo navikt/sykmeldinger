@@ -4,6 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData } from '../Form';
 import Brukerinformasjon from '../../../../../../types/brukerinformasjon';
 import NyNarmesteLeder from './NyNarmesteLeder';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 interface ArbeidsgiverOrgnummerProps {
     brukerinformasjon: Brukerinformasjon;
@@ -16,7 +17,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
     const { arbeidsgivere } = brukerinformasjon;
 
     return (
-        <>
+        <QuestionWrapper>
             <Controller
                 control={control}
                 name="arbeidsgiverOrgnummer"
@@ -45,7 +46,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                     arbeidsgiver={arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer)!}
                 />
             )}
-        </>
+        </QuestionWrapper>
     );
 };
 

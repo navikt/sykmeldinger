@@ -3,6 +3,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData } from '../Form';
 import { Arbeidsgiver } from '../../../../../../types/arbeidsgiver';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 interface NyNarmesteLederProps {
     arbeidsgiver: Arbeidsgiver;
@@ -13,7 +14,7 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ arbeidsgiver }) => {
     const watchNyNarmesteLeder = watch('nyNarmesteLeder');
 
     return (
-        <>
+        <QuestionWrapper>
             <Controller
                 control={control}
                 name="nyNarmesteLeder"
@@ -43,7 +44,7 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ arbeidsgiver }) => {
             {watchNyNarmesteLeder === 'NEI' && (
                 <div>Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.</div>
             )}
-        </>
+        </QuestionWrapper>
     );
 };
 

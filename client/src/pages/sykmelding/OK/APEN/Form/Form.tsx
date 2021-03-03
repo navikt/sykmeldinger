@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Feiloppsummering } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { Sykmelding } from '../../../../../types/sykmelding';
 import { useParams } from 'react-router-dom';
@@ -12,17 +11,6 @@ import useSend from '../../../../commonComponents/hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
-
-export interface FormData {
-    erOpplysnigeneRiktige?: 'JA' | 'NEI';
-    uriktigeOpplysninger?: (keyof typeof UriktigeOpplysningerType)[];
-    arbeidssituasjon?: keyof typeof ArbeidssituasjonType;
-    arbeidsgiverOrgnummer?: string;
-    nyNarmesteLeder?: 'JA' | 'NEI';
-    harBruktEgenmelding?: 'JA' | 'NEI';
-    egenmeldingsperioder?: Egenmeldingsperiode[];
-    harForsikring?: 'JA' | 'NEI';
-}
 
 export interface Egenmeldingsperiode {
     fom: Date;
@@ -47,11 +35,22 @@ export enum ArbeidssituasjonType {
     ANNET = 'Annet',
 }
 
+export interface FormData {
+    erOpplysnigeneRiktige?: 'JA' | 'NEI';
+    uriktigeOpplysninger?: (keyof typeof UriktigeOpplysningerType)[];
+    arbeidssituasjon?: keyof typeof ArbeidssituasjonType;
+    arbeidsgiverOrgnummer?: string;
+    nyNarmesteLeder?: 'JA' | 'NEI';
+    harBruktEgenmelding?: 'JA' | 'NEI';
+    egenmeldingsperioder?: Egenmeldingsperiode[];
+    harForsikring?: 'JA' | 'NEI';
+}
+
 interface FormProps {
     sykmelding: Sykmelding;
 }
 
-const Form: React.FC<FormProps> = ({ sykmelding }) => {
+const Form: React.FC<FormProps> = () => {
     const { sykmeldingId } = useParams();
 
     const {
@@ -99,19 +98,10 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     skalSendes ? send(data) : bekreft(data);
                 })}
             >
-                {/* erOpplysnigeneRiktige */}
                 <ErOpplysningeneRiktige
                     erUtenforVentetid={sykmeldingUtenforVentetid}
                     brukerinformasjon={brukerinformasjon}
                 />
-
-                {/* uriktigeOpplysninger */}
-                {/* arbeidssituasjon */}
-                {/* arbeidsgiver */}
-                {/* nyNarmesteLeder */}
-                {/* harBruktEgenmelding */}
-                {/* egenmeldingsperioder */}
-                {/* forsikring */}
 
                 {(errorSend || errorBekreft) && (
                     <div className="margin-bottom--1">

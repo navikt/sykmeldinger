@@ -2,12 +2,13 @@ import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData } from '../Form';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 const HarForsikring: React.FC = () => {
     const { control } = useFormContext<FormData>();
 
     return (
-        <>
+        <QuestionWrapper>
             <Controller
                 control={control}
                 name="harForsikring"
@@ -26,7 +27,7 @@ const HarForsikring: React.FC = () => {
                     />
                 )}
             />
-        </>
+        </QuestionWrapper>
     );
 };
 

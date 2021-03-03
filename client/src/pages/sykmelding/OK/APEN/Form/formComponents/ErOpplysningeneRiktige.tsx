@@ -5,6 +5,7 @@ import { FormData } from '../Form';
 import UriktigeOpplysninger from './UriktigeOpplysninger';
 import Arbeidssituasjon from './Arbeidssituasjon';
 import Brukerinformasjon from '../../../../../../types/brukerinformasjon';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 interface ErOpplysningeneRiktigeProps {
     erUtenforVentetid: boolean;
@@ -16,7 +17,7 @@ const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ erUtenf
     const watchErOpplysningeneRiktige = watch('erOpplysnigeneRiktige');
 
     return (
-        <>
+        <QuestionWrapper>
             <Controller
                 control={control}
                 name="erOpplysnigeneRiktige"
@@ -41,7 +42,7 @@ const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ erUtenf
             {Boolean(watchErOpplysningeneRiktige) && (
                 <Arbeidssituasjon erUtenforVentetid={erUtenforVentetid} brukerinformasjon={brukerinformasjon} />
             )}
-        </>
+        </QuestionWrapper>
     );
 };
 

@@ -7,6 +7,7 @@ import Flatpickr from 'react-flatpickr';
 import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Xknapp } from 'nav-frontend-ikonknapper';
 import '../FormSections/flatpickr.less';
+import QuestionWrapper from '../layout/QuestionWrapper';
 
 const locale: CustomLocale = {
     rangeSeparator: ' til ',
@@ -38,19 +39,21 @@ interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
 }
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
-    const { control, register } = useFormContext<FormData>();
-    const { fields, append, remove, swap, move, insert } = useFieldArray<Egenmeldingsperiode>({
+    const { control } = useFormContext<FormData>();
+    const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
         control,
         name: 'egenmeldingsperioder',
     });
 
     useEffect(() => {
         append({ fom: undefined, tom: undefined });
-    }, []);
+    }, [append]);
 
     return (
-        <div id="egenmeldingsperioder">
-            <Label htmlFor="fdafsdf">Hvilke dager var du borte fra jobb før {syketilfelleStartdato.toString()}</Label>
+        <QuestionWrapper>
+            <Label htmlFor="egenmeldingsperioder">
+                Hvilke dager var du borte fra jobb før {syketilfelleStartdato.toString()}
+            </Label>
 
             {fields.map((field, index) => (
                 <div key={field.id}>
@@ -59,7 +62,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         name={`egenmeldingsperioder[${index}].fom`}
                         defaultValue={null}
                         rules={{ required: true }}
-                        render={({ onChange, onBlur, value }) => (
+                        render={({ onChange, value }) => (
                             <Flatpickr
                                 className="typo-normal flatpickr"
                                 placeholder="Fom"
@@ -83,7 +86,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         name={`egenmeldingsperioder[${index}].tom`}
                         defaultValue={null}
                         rules={{ required: true }}
-                        render={({ onChange, onBlur, value }) => (
+                        render={({ onChange, value }) => (
                             <Flatpickr
                                 className="typo-normal flatpickr"
                                 placeholder="Tom"
@@ -102,14 +105,14 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                             />
                         )}
                     />
-                    <Xknapp htmlType="button" onClick={() => remove(index)} />
+                    {index > 0 && <Xknapp htmlType="button" onClick={() => remove(index)} />}
                 </div>
             ))}
 
             <Knapp htmlType="button" type="standard" mini onClick={() => append({ fom: undefined, tom: undefined })}>
                 + Legg til ekstra periode
             </Knapp>
-        </div>
+        </QuestionWrapper>
     );
 };
 
