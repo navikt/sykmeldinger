@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData } from '../Form';
@@ -11,10 +11,18 @@ interface ArbeidsgiverOrgnummerProps {
 }
 
 const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinformasjon }) => {
+    const { arbeidsgivere } = brukerinformasjon;
     const { control, watch } = useFormContext<FormData>();
     const watchArbeidsgiverOrgnummer = watch('arbeidsgiverOrgnummer');
 
-    const { arbeidsgivere } = brukerinformasjon;
+    const valgtArbeidsgiver = useMemo(() => {
+        const arbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer);
+        if (watchArbeidsgiverOrgnummer && arbeidsgiver === undefined) {
+            // Skal ikke kunne skje, men må håndteres hvis bruker skulle klare å manipulere skjemaet på egenhånd.
+            throw new Error('The chosen arbeidsgiver does not match with any of arbeidsgivere fetched for the user.');
+        }
+        return arbeidsgiver;
+    }, [arbeidsgivere, watchArbeidsgiverOrgnummer]);
 
     return (
         <QuestionWrapper>
@@ -40,12 +48,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
 
             {/* TODO: slik ser sykmeldingen ut for arbeidsgiveren din */}
 
-            {/* TODO: make typesafe */}
-            {watchArbeidsgiverOrgnummer && (
-                <NyNarmesteLeder
-                    arbeidsgiver={arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer)!}
-                />
-            )}
+            {valgtArbeidsgiver?.naermesteLeder && <NyNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />}
         </QuestionWrapper>
     );
 };

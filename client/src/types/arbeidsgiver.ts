@@ -23,12 +23,12 @@ export class NaermesteLeder {
 }
 
 export class Arbeidsgiver {
-    naermesteLeder: NaermesteLeder;
+    naermesteLeder: NaermesteLeder | null;
     navn: string;
     orgnummer: string;
     stilling: string;
     constructor(data: any) {
-        this.naermesteLeder = new NaermesteLeder(data.naermesteLeder);
+        this.naermesteLeder = data.naermesteLeder ? new NaermesteLeder(data.naermesteLeder) : null;
         this.navn = data.navn;
         this.orgnummer = data.orgnummer;
         this.stilling = data.stilling;
