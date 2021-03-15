@@ -10,17 +10,24 @@ type TriggerType =
     | 'INVALID_APEN'
     | 'INVALID_BEKREFTET';
 
-class HotjarWindow extends Window {
+interface HotjarWindow extends Window {
     hj?: (name: string, value: string) => void;
+}
+
+type HotjarFunction = (name: string, value: string) => void;
+
+function isHotjarFunction(hj: unknown): hj is HotjarFunction {
+    // check if function takes at least two arguments
+    return typeof hj === 'function' && hj.prototype.constructor.length >= 2;
 }
 
 const useHotjarTrigger = (triggerType: TriggerType) => {
     useEffect(() => {
         if (process.env.NODE_ENV === 'production') {
             setTimeout(() => {
-                const hotjarWindow = new HotjarWindow();
+                const hotjarWindow = window as HotjarWindow;
 
-                if (hotjarWindow.hj !== undefined) {
+                if (isHotjarFunction(hotjarWindow.hj)) {
                     hotjarWindow.hj('trigger', triggerType);
                     console.info(`Hotjar triggered for ${triggerType}`);
                 } else {
