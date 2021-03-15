@@ -11,22 +11,23 @@ interface HarBruktEgenmeldingProps {
 
 const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleStartdato }) => {
     const { control, watch } = useFormContext<FormData>();
-    const watchHarBruktEgenmelding = watch('harBruktEgenmelding');
+    const fieldName: keyof FormData = 'harBruktEgenmelding';
+    const watchHarBruktEgenmelding = watch(fieldName);
 
     return (
         <QuestionWrapper>
             <Controller
                 control={control}
-                name="harBruktEgenmelding"
+                name={fieldName}
                 defaultValue={null}
-                rules={{ required: true }}
+                rules={{ required: 'du må svare på om du har brukt egenmelding.' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
-                        name={name}
+                        name={fieldName}
                         legend={`Vi har registrert at du ble syk ${syketilfelleStartdato.toString()}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`}
                         radios={[
-                            { label: 'Ja', value: 'JA', id: 'harBruktEgenmelding-ja' },
-                            { label: 'Nei', value: 'NEI', id: 'harBruktEgenmelding-nei' },
+                            { label: 'Ja', value: 'JA', id: fieldName },
+                            { label: 'Nei', value: 'NEI' },
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}

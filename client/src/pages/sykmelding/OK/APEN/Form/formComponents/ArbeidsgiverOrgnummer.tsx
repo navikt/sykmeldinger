@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData } from '../Form';
@@ -12,12 +12,29 @@ interface ArbeidsgiverOrgnummerProps {
 
 const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinformasjon }) => {
     const { arbeidsgivere } = brukerinformasjon;
-    const { control, watch } = useFormContext<FormData>();
-    const watchArbeidsgiverOrgnummer = watch('arbeidsgiverOrgnummer');
+    const { register, unregister, errors, control, watch } = useFormContext<FormData>();
+    const fieldName: keyof FormData = 'arbeidsgiverOrgnummer';
+    const sporsmaltekst = 'Min arbeidsgiver';
+    const watchArbeidsgiverOrgnummer = watch(fieldName);
+
+    useEffect(() => {
+        register({
+            name: `${fieldName}.sporsmaltekst`,
+            value: sporsmaltekst,
+        });
+        register({
+            name: `${fieldName}.svartekster`,
+            value: JSON.stringify(arbeidsgivere.map((ag) => ({ navn: ag.navn, orgnummer: ag.orgnummer }))),
+        });
+        return () => {
+            console.log(`unregistering ${fieldName}`);
+            unregister([fieldName + '.sporsmaltekst', fieldName + '.svartekster', fieldName + '.svar']);
+        };
+    }, []);
 
     const valgtArbeidsgiver = useMemo(() => {
-        const arbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer);
-        if (watchArbeidsgiverOrgnummer && arbeidsgiver === undefined) {
+        const arbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer?.svar);
+        if (watchArbeidsgiverOrgnummer?.svar && arbeidsgiver === undefined) {
             // Skal ikke kunne skje, men må håndteres hvis bruker skulle klare å manipulere skjemaet på egenhånd.
             throw new Error('The chosen arbeidsgiver does not match with any of arbeidsgivere fetched for the user.');
         }
@@ -28,20 +45,21 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
         <QuestionWrapper>
             <Controller
                 control={control}
-                name="arbeidsgiverOrgnummer"
+                name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: true }}
+                rules={{ required: 'arbeidsgiver mangler.' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
-                        legend="Min arbeidsgiver"
-                        radios={arbeidsgivere.map((arbeidsgiver) => ({
+                        legend={sporsmaltekst}
+                        radios={arbeidsgivere.map((arbeidsgiver, index) => ({
                             label: arbeidsgiver.navn,
                             value: arbeidsgiver.orgnummer,
-                            id: `arbeidsgiverOrgnummer-${arbeidsgiver.orgnummer}`,
+                            id: index === 0 ? fieldName : undefined,
                         }))}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}
+                        feil={errors.arbeidsgiverOrgnummer?.svar?.message}
                     />
                 )}
             />

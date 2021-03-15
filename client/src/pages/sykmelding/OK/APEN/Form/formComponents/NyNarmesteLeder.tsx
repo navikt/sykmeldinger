@@ -11,22 +11,23 @@ interface NyNarmesteLederProps {
 
 const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => {
     const { control, watch } = useFormContext<FormData>();
-    const watchNyNarmesteLeder = watch('nyNarmesteLeder');
+    const fieldName: keyof FormData = 'nyNarmesteLeder';
+    const watchNyNarmesteLeder = watch(fieldName);
 
     return (
         <QuestionWrapper>
             <Controller
                 control={control}
-                name="nyNarmesteLeder"
+                name={fieldName}
                 defaultValue={null}
-                rules={{ required: true }}
+                rules={{ required: 'er nærmeste leder riktig?' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
                         legend={`Er det ${naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`}
                         radios={[
-                            { label: 'Ja', value: 'JA', id: 'nyNarmesteLeder-ja' },
-                            { label: 'Nei', value: 'NEI', id: 'nyNarmesteLeder-nei' },
+                            { label: 'Ja', value: 'JA', id: fieldName },
+                            { label: 'Nei', value: 'NEI' },
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}

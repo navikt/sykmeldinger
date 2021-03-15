@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
+import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Sykmelding } from '../../../../../types/sykmelding';
 import { useParams } from 'react-router-dom';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
@@ -35,15 +36,26 @@ export enum ArbeidssituasjonType {
     ANNET = 'Annet',
 }
 
+export enum JaEllerNeiType {
+    JA = 'Ja',
+    NEI = 'Nei',
+}
+
+interface SporsmalSvar<Value> {
+    sporsmaltekst?: string;
+    svartekster?: string;
+    svar?: Value;
+}
+
 export interface FormData {
-    erOpplysnigeneRiktige?: 'JA' | 'NEI';
-    uriktigeOpplysninger?: (keyof typeof UriktigeOpplysningerType)[];
-    arbeidssituasjon?: keyof typeof ArbeidssituasjonType;
-    arbeidsgiverOrgnummer?: string;
-    nyNarmesteLeder?: 'JA' | 'NEI';
-    harBruktEgenmelding?: 'JA' | 'NEI';
+    erOpplysnigeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
+    arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
+    arbeidsgiverOrgnummer?: SporsmalSvar<string>;
+    nyNarmesteLeder?: keyof typeof JaEllerNeiType;
+    harBruktEgenmelding?: keyof typeof JaEllerNeiType;
     egenmeldingsperioder?: Egenmeldingsperiode[];
-    harForsikring?: 'JA' | 'NEI';
+    harForsikring?: keyof typeof JaEllerNeiType;
 }
 
 interface FormProps {
@@ -53,6 +65,7 @@ interface FormProps {
 const Form: React.FC<FormProps> = () => {
     const { sykmeldingId } = useParams();
 
+    // DATA FETCHING
     const {
         isLoading: isLoadingBrukerinformasjon,
         error: errorBrukerinformasjon,
@@ -65,16 +78,26 @@ const Form: React.FC<FormProps> = () => {
         data: sykmeldingUtenforVentetid,
     } = useSykmeldingUtenforVentetid(sykmeldingId);
 
+    // DATA PERSISTING
     const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
     const { mutate: send, isLoading: isLoadingSend, error: errorSend } = useSend(sykmeldingId);
 
-    const formMethods = useForm<FormData>();
-    const { handleSubmit, watch } = formMethods;
-
+    const formMethods = useForm<FormData>({ shouldFocusError: false });
+    const { handleSubmit, watch, errors } = formMethods;
     const watchArbeidssituasjon = watch('arbeidssituasjon');
     const skalSendes = watchArbeidssituasjon === 'ARBEIDSTAKER';
 
     const { maAvbryte } = useContext(AvbrytContext);
+
+    useEffect(() => {
+        console.log(errors);
+    }, [errors]);
+
+    const feiloppsummeringsfeil: FeiloppsummeringFeil[] = Object.entries(errors).map(([key, value], index) => ({
+        skjemaelementId: key,
+        feilmelding: (value as any)?.message,
+        key: index,
+    }));
 
     if (isLoadingBrukerinformasjon || isLoadingSykmeldingUtenforVentetid) {
         return <Spinner headline="Henter arbeidsforhold" />;
@@ -110,6 +133,10 @@ const Form: React.FC<FormProps> = () => {
                             igjen senere.
                         </AlertStripeFeil>
                     </div>
+                )}
+
+                {Boolean(Object.keys(errors).length) && (
+                    <Feiloppsummering tittel="For å gå videre må du rette opp følgende" feil={feiloppsummeringsfeil} />
                 )}
 
                 {maAvbryte === false && (

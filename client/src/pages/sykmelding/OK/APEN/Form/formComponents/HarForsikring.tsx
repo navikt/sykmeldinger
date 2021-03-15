@@ -6,14 +6,15 @@ import QuestionWrapper from '../layout/QuestionWrapper';
 
 const HarForsikring: React.FC = () => {
     const { control } = useFormContext<FormData>();
+    const fieldName: keyof FormData = 'harForsikring';
 
     return (
         <QuestionWrapper>
             <Controller
                 control={control}
-                name="harForsikring"
+                name={fieldName}
                 defaultValue={null}
-                rules={{ required: true }}
+                rules={{ required: 'du må svare på om du har hatt forsikring.' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}

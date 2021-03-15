@@ -61,7 +61,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         control={control}
                         name={`egenmeldingsperioder[${index}].fom`}
                         defaultValue={null}
-                        rules={{ required: true }}
+                        rules={{ required: 'fom dato mangler.' }}
                         render={({ onChange, value }) => (
                             <Flatpickr
                                 className="typo-normal flatpickr"
@@ -85,7 +85,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         control={control}
                         name={`egenmeldingsperioder[${index}].tom`}
                         defaultValue={null}
-                        rules={{ required: true }}
+                        rules={{ required: 'tom dato mangler.' }}
                         render={({ onChange, value }) => (
                             <Flatpickr
                                 className="typo-normal flatpickr"

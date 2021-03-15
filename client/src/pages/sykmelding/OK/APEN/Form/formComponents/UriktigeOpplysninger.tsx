@@ -1,40 +1,46 @@
-import React, { useMemo } from 'react';
-import { useFormContext, Validate } from 'react-hook-form';
+import React, { useMemo, useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormData, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
 const UriktigeOpplysninger: React.FC = () => {
-    const { getValues, register, watch } = useFormContext<FormData>();
-    const watchUriktigeOpplysninger = watch('uriktigeOpplysninger');
-
-    const atLeastOne: Validate = () => {
-        if (getValues('uriktigeOpplysninger')?.length) {
-            return true;
-        }
-        return 'Velg minst en';
-    };
+    const { register, unregister, watch } = useFormContext<FormData>();
+    const fieldName: keyof FormData = 'uriktigeOpplysninger';
+    const watchUriktigeOpplysninger = watch(fieldName);
 
     const trengerNySykmelding = useMemo(() => {
         return (
-            Boolean(watchUriktigeOpplysninger?.includes('PERIODE')) ||
-            Boolean(watchUriktigeOpplysninger?.includes('SYKMELDINGSGRAD_FOR_HOY'))
+            Boolean(watchUriktigeOpplysninger?.svar?.includes('PERIODE')) ||
+            Boolean(watchUriktigeOpplysninger?.svar?.includes('SYKMELDINGSGRAD_FOR_HOY'))
         );
     }, [watchUriktigeOpplysninger]);
+
+    useEffect(() => {
+        register({
+            name: 'uriktigeOpplysninger.sporsmal',
+            value: 'Hvilke opplysninger stemmer ikke?',
+        });
+        register({
+            name: 'uriktigeOpplysninger.svartekster',
+            value: JSON.stringify(UriktigeOpplysningerType),
+        });
+        return () => unregister('uriktigeOpplysninger');
+    }, [register, unregister]);
 
     return (
         <QuestionWrapper>
             <fieldset>
                 <legend>Hvilke opplysninger stemmer ikke?</legend>
 
-                {Object.entries(UriktigeOpplysningerType).map(([key, label]) => (
+                {Object.entries(UriktigeOpplysningerType).map(([key, label], index) => (
                     <div key={key} style={{ marginBottom: '1rem' }}>
                         <Checkbox
                             label={label}
-                            name="uriktigeOpplysninger"
+                            name={`${fieldName}.svar`}
                             value={key}
-                            id={key}
-                            checkboxRef={register({ validate: atLeastOne }) as any}
+                            id={index === 0 ? fieldName : undefined}
+                            checkboxRef={register({ required: 'minst en opplysning må være valgt.' }) as any}
                         />
                     </div>
                 ))}
@@ -47,7 +53,7 @@ const UriktigeOpplysninger: React.FC = () => {
                 <div>Siden du ser at perioden er feil trenger du ny sykmelding</div>
             ) : (
                 <>
-                    {watchUriktigeOpplysninger?.includes('ARBEIDSGIVER') && (
+                    {watchUriktigeOpplysninger?.svar?.includes('ARBEIDSGIVER') && (
                         <div>Du kan fortsatt bruke sykmeldingen</div>
                     )}
                 </>
