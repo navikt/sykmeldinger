@@ -22,12 +22,15 @@ import EtikettMedTekst from '../../components/Sykmeldingsopplysninger/layout/Eti
 import sladd from './sladd.svg';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
 import Statuspanel from '../../components/Statuspanel/Statuspanel';
+import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => {
+    useHotjarTrigger('OK_SENDT');
+
     return (
         <div className="sykmelding-container">
             <Statuspanel
