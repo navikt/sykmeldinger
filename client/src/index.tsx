@@ -10,6 +10,7 @@ import footer from './mock/decorator/decorator-footer';
 import scripts from './mock/decorator/decorator-scripts';
 import skiplinks from './mock/decorator/decorator-skiplinks';
 import styles from './mock/decorator/decorator-styles';
+import AmplitudeInstance from './utils/amplitudeInstance';
 
 dayjs.locale('nb');
 
@@ -30,6 +31,9 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_GCP_LABS === 'true') {
     require('./mock/mock');
 }
+
+// To log events call amplitudeInstance.logEvent
+export const amplitudeInstance = new AmplitudeInstance();
 
 ReactDOM.render(
     <React.StrictMode>
