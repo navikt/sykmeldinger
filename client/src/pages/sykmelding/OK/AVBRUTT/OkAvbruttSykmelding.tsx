@@ -24,12 +24,14 @@ import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
 import useGjenapne from '../../../commonComponents/hooks/useGjenapne';
 import { useParams } from 'react-router-dom';
+import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding }) => {
+    useHotjarTrigger('OK_AVBRUTT');
     const { sykmeldingId } = useParams();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 

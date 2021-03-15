@@ -14,12 +14,15 @@ import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/Veil
 import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import useBekreft from '../../../commonComponents/hooks/useBekreft';
+import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmelding }) => {
+    useHotjarTrigger('INVALID_APEN');
+
     const [bekreftet, setBekreftet] = useState(false);
 
     const { sykmeldingId } = useParams();

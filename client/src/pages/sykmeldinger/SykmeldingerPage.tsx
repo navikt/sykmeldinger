@@ -7,9 +7,11 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import useSykmeldinger from '../commonComponents/hooks/useSykmeldinger';
 import SykmeldingerPageWrapper from './components/SykmeldingerPageWrapper';
+import useHotjarTrigger from '../commonComponents/hooks/useHotjarTrigger';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
+    useHotjarTrigger('SYKMELDINGER');
 
     const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
 

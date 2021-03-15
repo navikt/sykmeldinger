@@ -20,12 +20,15 @@ import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdy
 import Arbeidsevne from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import SeksjonMedTittel from '../../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
+import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
 
 interface OkUtgattSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const OkUtgattSykmelding: React.FC<OkUtgattSykmeldingProps> = ({ sykmelding }) => {
+    useHotjarTrigger('OK_UTGATT');
+
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--2">

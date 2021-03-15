@@ -10,12 +10,15 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import dayjs from 'dayjs';
+import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({ sykmelding }) => {
+    useHotjarTrigger('INVALID_BEKREFTET');
+
     return (
         <div className="sykmelding-container">
             <div className="margin-bottom--4">

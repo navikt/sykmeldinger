@@ -28,12 +28,14 @@ import useBrukerinformasjon from '../../../commonComponents/hooks/useBrukerinfor
 import Spinner from '../../../commonComponents/Spinner/Spinner';
 import AvbrytContextProvider from './AvbrytContext';
 import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
+import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
+    useHotjarTrigger('OK_APEN');
     const { isLoading, error, data: brukerinformasjon } = useBrukerinformasjon();
 
     if (isLoading) {

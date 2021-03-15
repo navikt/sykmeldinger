@@ -24,12 +24,14 @@ import useGjenapne from '../../../commonComponents/hooks/useGjenapne';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel } from 'nav-frontend-typografi';
+import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
 const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmelding }) => {
+    useHotjarTrigger('OK_BEKREFTET');
     const { sykmeldingId } = useParams();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 
