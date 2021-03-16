@@ -10,5 +10,5 @@ type EnvironmentKeys =
     | 'AMPLITUDE_KEY';
 
 interface Window {
-    _env_: Record<EnvironmentKeys, string | undefined>;
+    _env_?: Record<EnvironmentKeys, string | undefined>;
 }
