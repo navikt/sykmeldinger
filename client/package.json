@@ -60,7 +60,7 @@
         "typescript": "3.9.7"
     },
     "scripts": {
-        "start": "craco start",
+        "start": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/env-config.js && craco start",
         "build": "craco build",
         "test": "craco test",
         "eject": "react-scripts eject",

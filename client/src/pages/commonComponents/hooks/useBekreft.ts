@@ -6,7 +6,7 @@ function useBekreft(sykmeldingId: string) {
     return useMutation(
         // TODO: type argument to match form output
         (values: any) =>
-            fetch(`${process.env.REACT_APP_SYKMELDINGER_BACKEND_URL}/v1/sykmelding/${sykmeldingId}/actions/bekreft`, {
+            fetch(`${window._env_.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/bekreft`, {
                 method: 'POST',
                 body: JSON.stringify(values),
                 credentials: 'include',

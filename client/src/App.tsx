@@ -3,7 +3,7 @@ import './App.less';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import SykmeldingSide from './pages/sykmelding/SykmeldingPage';
+import SykmeldingPage from './pages/sykmelding/SykmeldingPage';
 import SykmeldingerPage from './pages/sykmeldinger/SykmeldingerPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -15,11 +15,20 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <Switch>
-                    <Route path="/sykmeldinger" exact component={SykmeldingerPage} />
-                    <Route path="/sykmeldinger/:sykmeldingId" exact component={SykmeldingSide} />
+                    <Route
+                        path={window._env_.SYKMELDINGER_ROOT || '/sykmeldinger'}
+                        exact
+                        component={SykmeldingerPage}
+                    />
+                    <Route
+                        path={`${window._env_.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId`}
+                        exact
+                        component={SykmeldingPage}
+                    />
                     <Route component={() => <h1>404 Page not found</h1>} />
                 </Switch>
             </BrowserRouter>
+            {/* devtools are automatically removed in production build */}
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );

@@ -23,7 +23,7 @@ function isHotjarFunction(hj: unknown): hj is HotjarFunction {
 
 const useHotjarTrigger = (triggerType: TriggerType) => {
     useEffect(() => {
-        if (process.env.NODE_ENV === 'production') {
+        if (window._env_.RUNTIME_ENVIRONMENT === 'production') {
             setTimeout(() => {
                 const hotjarWindow = window as HotjarWindow;
 

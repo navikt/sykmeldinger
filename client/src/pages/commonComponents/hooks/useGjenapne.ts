@@ -5,7 +5,7 @@ function useGjenapne(sykmeldingId: string) {
 
     return useMutation(
         () =>
-            fetch(`${process.env.REACT_APP_SYKMELDINGER_BACKEND_URL}/v1/sykmelding/${sykmeldingId}/actions/gjenapne`, {
+            fetch(`${window._env_.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/gjenapne`, {
                 method: 'POST',
                 credentials: 'include',
             }).then((data) => data.text()),

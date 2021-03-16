@@ -38,7 +38,7 @@ const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
         <nav className="breadcrumbs" aria-label="Du er her: ">
             <img src={person} alt="Du" className="breadcrumbs__icon" />
             <Normaltekst tag="ul" className="breadcrumbs__crumbs">
-                <Breadcrumb path="/dittnav" title="Ditt NAV" />
+                <Breadcrumb path={window._env_.DITT_NAV_ROOT || '#'} title="Ditt NAV" />
                 {breadcrumbs.map(({ path, title }, index) => {
                     return <Breadcrumb key={index} path={path} title={title} />;
                 })}

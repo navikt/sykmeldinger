@@ -85,7 +85,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({
     const etikett = getEtikett(sykmeldingsstatus, sykmeldingBehandlingsutfall);
     const periodeString = toReadableTotalPeriodLength(sykmeldingsperioder);
 
-    const linkToSykmelding = `/sykmeldinger/${sykmeldingId}`;
+    const linkToSykmelding = `${window._env_.SYKMELDINGER_ROOT}/${sykmeldingId}`;
     const history = useHistory();
 
     return (

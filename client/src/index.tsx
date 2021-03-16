@@ -14,7 +14,9 @@ import AmplitudeInstance from './utils/amplitudeInstance';
 
 dayjs.locale('nb');
 
-if (process.env.NODE_ENV === 'development') {
+const runtimeEnvironment = window._env_.RUNTIME_ENVIRONMENT;
+
+if (runtimeEnvironment === 'development') {
     document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_HEADING}}}', withMenu);
     document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_FOOTER}}}', footer);
     document.body.innerHTML = document.body.innerHTML.replace('{{{NAV_STYLES}}}', styles);
@@ -28,7 +30,7 @@ if (process.env.NODE_ENV === 'development') {
     document.body.appendChild(script);
 }
 
-if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_GCP_LABS === 'true') {
+if (runtimeEnvironment === 'development' || runtimeEnvironment === 'demo') {
     require('./mock/mock');
 }
 
