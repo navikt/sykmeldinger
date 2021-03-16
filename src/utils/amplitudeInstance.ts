@@ -8,7 +8,7 @@ class AmplitudeInstance {
     constructor() {
         this.instance = amplitude.getInstance();
 
-        const amplitudeKey = window._env_.AMPLITUDE_KEY;
+        const amplitudeKey = window._env_?.AMPLITUDE_KEY;
         if (amplitudeKey) {
             this.instance.init(amplitudeKey, undefined, {
                 apiEndpoint: 'amplitude.nav.no/collect',

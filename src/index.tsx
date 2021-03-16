@@ -8,7 +8,7 @@ import AmplitudeInstance from './utils/amplitudeInstance';
 
 dayjs.locale('nb');
 
-const runtimeEnvironment = window._env_.RUNTIME_ENVIRONMENT;
+const runtimeEnvironment = window._env_?.RUNTIME_ENVIRONMENT;
 if (runtimeEnvironment === 'development' || runtimeEnvironment === 'labs-demo') {
     require('./mock/mock');
 }

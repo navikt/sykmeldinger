@@ -6,7 +6,7 @@ import './TilHovedsiden.less';
 
 const TilHovedsiden: React.FC = () => {
     return (
-        <Lenke href={window._env_.SYKEFRAVAER_ROOT || '#'} className="til-hovedsiden">
+        <Lenke href={window._env_?.SYKEFRAVAER_ROOT || '#'} className="til-hovedsiden">
             <VenstreChevron className="til-hovedsiden__chevron" />
             <Normaltekst>Til hovedsiden ditt sykefravær</Normaltekst>
         </Lenke>

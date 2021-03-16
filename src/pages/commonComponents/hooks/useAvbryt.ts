@@ -5,7 +5,7 @@ function useAvbryt(sykmeldingId: string) {
 
     return useMutation(
         () =>
-            fetch(`${window._env_.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/avbryt`, {
+            fetch(`${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/avbryt`, {
                 method: 'POST',
                 credentials: 'include',
             }).then((data) => data.text()),

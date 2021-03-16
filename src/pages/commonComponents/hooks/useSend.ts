@@ -7,7 +7,7 @@ function useSend(sykmeldingId: string) {
         // TODO: type argument to match form output
         // TODO: endpoint is not implemented at sykmeldinger-backend
         (values: any) =>
-            fetch(`${window._env_.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/send`, {
+            fetch(`${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/send`, {
                 method: 'POST',
                 body: JSON.stringify(values),
                 credentials: 'include',

@@ -16,12 +16,12 @@ const App = () => {
             <BrowserRouter>
                 <Switch>
                     <Route
-                        path={window._env_.SYKMELDINGER_ROOT || '/sykmeldinger'}
+                        path={window._env_?.SYKMELDINGER_ROOT || '/sykmeldinger'}
                         exact
                         component={SykmeldingerPage}
                     />
                     <Route
-                        path={`${window._env_.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId`}
+                        path={`${window._env_?.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId`}
                         exact
                         component={SykmeldingPage}
                     />
