@@ -65,7 +65,7 @@ jobs:
           name: VERSION.txt
           path: .
       - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
-      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-sykepengesoknad:$VERSION" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-sykmeldinger:$VERSION" >> $GITHUB_ENV
       - uses: nais/deploy/actions/deploy@v1
         name: Deploy to q1-sbs
         env:
