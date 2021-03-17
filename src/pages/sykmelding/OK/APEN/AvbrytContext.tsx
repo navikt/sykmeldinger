@@ -1,11 +1,11 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
 
-interface AvbrytContext {
+interface AvbrytContextProps {
     maAvbryte: boolean;
     setMaAvbryte: Dispatch<SetStateAction<boolean>>;
 }
 
-export const AvbrytContext = createContext<AvbrytContext>({
+export const AvbrytContext = createContext<AvbrytContextProps>({
     maAvbryte: false,
     setMaAvbryte: (): void => {
         throw new Error('setMaAvbryte function must be overridden');

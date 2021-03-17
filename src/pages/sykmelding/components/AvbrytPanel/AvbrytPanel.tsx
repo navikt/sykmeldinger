@@ -8,7 +8,7 @@ import useAvbryt from '../../../commonComponents/hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 
 const AvbrytPanel: React.FC = () => {
-    const { sykmeldingId } = useParams();
+    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
     // maAvbryte overrules isOpen
     const { maAvbryte } = useContext(AvbrytContext);

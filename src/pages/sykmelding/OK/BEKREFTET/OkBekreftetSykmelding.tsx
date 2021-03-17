@@ -32,7 +32,7 @@ interface OkBekreftetSykmeldingProps {
 
 const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmelding }) => {
     useHotjarTrigger('OK_BEKREFTET');
-    const { sykmeldingId } = useParams();
+    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 
     return (
