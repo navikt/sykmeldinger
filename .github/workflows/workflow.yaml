@@ -24,8 +24,8 @@ jobs:
           path: VERSION.txt
       - name: Install npm dependencies
         run: npm ci
-      # - name: Run audit
-      #   run: npm audit --audit-level=moderate
+      - name: Run audit
+        run: npm audit --audit-level=moderate
       - name: Run lint
         run: npm run lint
       # - name: Run tests

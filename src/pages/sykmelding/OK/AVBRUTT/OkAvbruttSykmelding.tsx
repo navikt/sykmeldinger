@@ -19,7 +19,7 @@ import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdy
 import { Sykmelding } from '../../../../types/sykmelding';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Undertittel, EtikettLiten } from 'nav-frontend-typografi';
+import { Undertittel, Element } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
 import useGjenapne from '../../../commonComponents/hooks/useGjenapne';
@@ -32,7 +32,7 @@ interface OkAvbruttSykmeldingProps {
 
 const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding }) => {
     useHotjarTrigger('OK_AVBRUTT');
-    const { sykmeldingId } = useParams();
+    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 
     return (
@@ -40,9 +40,9 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
             <div className="margin-bottom--4">
                 <AlertStripe className="margin-bottom--1" type="feil">
                     <Undertittel tag="h2">Sykmeldingen ble avbrutt av deg</Undertittel>
-                    <EtikettLiten>
+                    <Element>
                         Dato avbrutt: {dayjs(sykmelding.sykmeldingStatus.timestamp).format('dddd D. MMMM, kl. HH:mm')}
-                    </EtikettLiten>
+                    </Element>
                 </AlertStripe>
                 <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
                     Bruk sykmeldingen

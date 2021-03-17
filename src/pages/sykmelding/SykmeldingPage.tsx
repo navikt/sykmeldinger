@@ -17,7 +17,7 @@ import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykm
 // BUSINESS LOGIC CONTROLLER
 const SykmeldingSide: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
-    const { sykmeldingId } = useParams();
+    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
     const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
 

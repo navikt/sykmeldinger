@@ -1,5 +1,5 @@
 import React from 'react';
-import { EtikettLiten, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import Innrykk from './Innrykk';
 import Margin from './Margin';
@@ -15,7 +15,7 @@ interface EtikettMedTekstProps {
 const EtikettMedTekst = ({ tittel, tekst, undertekst, margin, innrykk }: EtikettMedTekstProps) => {
     const innhold = (
         <>
-            <EtikettLiten>{tittel}</EtikettLiten>
+            <Element>{tittel}</Element>
             <Normaltekst>{tekst}</Normaltekst>
             {undertekst && <Undertekst>{undertekst}</Undertekst>}
         </>

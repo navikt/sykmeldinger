@@ -1,7 +1,7 @@
 import './PeriodeSeksjon.less';
 
 import React from 'react';
-import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { hentDagerMellomDatoer, tilLesbarPeriodeMedArstall } from '../../../../../../utils/datoUtils';
 import { Periode } from '../../../../../../types/sykmelding';
@@ -16,7 +16,7 @@ const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
     const antallDager = hentDagerMellomDatoer(periode.fom, periode.tom);
     return (
         <div className="periodeseksjon">
-            <EtikettLiten>Periode</EtikettLiten>
+            <Element>Periode</Element>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 <Normaltekst>
                     <strong>{tilLesbarPeriodeMedArstall(periode.fom, periode.tom)}</strong>
@@ -38,7 +38,7 @@ const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
             {periode.innspillTilArbeidsgiver && (
                 <>
                     <Normaltekst>Avventende sykmelding</Normaltekst>
-                    <EtikettLiten>Innspill til arbeidsgiver om tilrettelegging</EtikettLiten>
+                    <Element>Innspill til arbeidsgiver om tilrettelegging</Element>
                     <Normaltekst>{periode.innspillTilArbeidsgiver}</Normaltekst>
                 </>
             )}

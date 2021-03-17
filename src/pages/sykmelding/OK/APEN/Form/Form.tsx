@@ -39,7 +39,7 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = ({ sykmelding }) => {
-    const { sykmeldingId } = useParams();
+    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
     const {
         isLoading: isLoadingBrukerinformasjon,

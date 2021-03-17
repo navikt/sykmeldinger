@@ -6,7 +6,7 @@ import useAvbryt from '../../../commonComponents/hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 
 const PapirInfoheader = () => {
-    const { sykmeldingId } = useParams();
+    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     const { isLoading, mutate: avbryt } = useAvbryt(sykmeldingId);
 
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
