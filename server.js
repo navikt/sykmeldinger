@@ -1,16 +1,16 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
 
-console.log('Starting server')
+console.log('Starting server');
 const app = express();
 
-app.disable('x-powered-by')
+app.disable('x-powered-by');
 app.use((_req, res, next) => {
     // Disable caching
     res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
-    res.setHeader('Expires', '0')
-    res.setHeader('Surrogate-Control', 'no-store')
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
     next();
 });
 
