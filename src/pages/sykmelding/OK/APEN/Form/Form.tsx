@@ -52,10 +52,10 @@ export interface FormData {
     uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
     arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
     arbeidsgiverOrgnummer?: SporsmalSvar<string>;
-    nyNarmesteLeder?: keyof typeof JaEllerNeiType;
-    harBruktEgenmelding?: keyof typeof JaEllerNeiType;
-    egenmeldingsperioder?: Egenmeldingsperiode[];
-    harForsikring?: keyof typeof JaEllerNeiType;
+    nyNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    egenmeldingsperioder?: SporsmalSvar<Egenmeldingsperiode[]>;
+    harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType>;
 }
 
 interface FormProps {
@@ -88,6 +88,8 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const skalSendes = watchArbeidssituasjon === 'ARBEIDSTAKER';
 
     const { maAvbryte } = useContext(AvbrytContext);
+
+    console.log(watch());
 
     useEffect(() => {
         console.log(errors);

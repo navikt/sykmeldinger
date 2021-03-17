@@ -15,19 +15,20 @@ interface ErOpplysningeneRiktigeProps {
 const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ erUtenforVentetid, brukerinformasjon }) => {
     const { register, unregister, control, watch, errors } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'erOpplysnigeneRiktige';
+    const sporsmaltekst = 'Er opplysningene riktige';
     const watchErOpplysningeneRiktige = watch(fieldName);
 
     useEffect(() => {
         register({
-            name: 'erOpplysnigeneRiktige.sporsmal',
-            value: 'Du må svare på om opplysningene stemmer.',
+            name: `${fieldName}.sporsmaltekst`,
+            value: sporsmaltekst,
         });
         register({
-            name: 'erOpplysnigeneRiktige.svartekster',
+            name: `${fieldName}.svartekster`,
             value: JSON.stringify(JaEllerNeiType),
         });
-        return () => unregister('erOpplysnigeneRiktige');
-    }, [register, unregister]);
+        return () => unregister(fieldName);
+    }, [register, unregister, sporsmaltekst]);
 
     return (
         <QuestionWrapper>
@@ -39,10 +40,10 @@ const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ erUtenf
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
-                        legend="Er opplysningene i sykmeldingen riktige"
+                        legend={sporsmaltekst}
                         radios={[
-                            { label: 'Ja', value: 'JA', id: fieldName },
-                            { label: 'Nei', value: 'NEI' },
+                            { label: JaEllerNeiType.JA, value: 'JA', id: fieldName },
+                            { label: JaEllerNeiType.NEI, value: 'NEI' },
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}

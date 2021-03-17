@@ -39,27 +39,39 @@ interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
 }
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
-    const { control } = useFormContext<FormData>();
+    const { control, register, unregister } = useFormContext<FormData>();
+    const fieldName: keyof FormData = 'egenmeldingsperioder';
+    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${syketilfelleStartdato.toString()}`;
     const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
         control,
-        name: 'egenmeldingsperioder',
+        name: `${fieldName}.svar`,
     });
 
     useEffect(() => {
         append({ fom: undefined, tom: undefined });
     }, [append]);
 
+    useEffect(() => {
+        register({
+            name: `${fieldName}.sporsmaltekst`,
+            value: sporsmaltekst,
+        });
+        register({
+            name: `${fieldName}.svartekster`,
+            value: JSON.stringify('Fom, Tom'),
+        });
+        return () => unregister(fieldName);
+    }, [register, unregister, sporsmaltekst]);
+
     return (
         <QuestionWrapper>
-            <Label htmlFor="egenmeldingsperioder">
-                Hvilke dager var du borte fra jobb før {syketilfelleStartdato.toString()}
-            </Label>
+            <Label htmlFor={fieldName}>{sporsmaltekst}</Label>
 
             {fields.map((field, index) => (
                 <div key={field.id}>
                     <Controller
                         control={control}
-                        name={`egenmeldingsperioder[${index}].fom`}
+                        name={`${fieldName}.svar[${index}].fom`}
                         defaultValue={null}
                         rules={{ required: 'fom dato mangler.' }}
                         render={({ onChange, value }) => (
@@ -83,7 +95,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                     />
                     <Controller
                         control={control}
-                        name={`egenmeldingsperioder[${index}].tom`}
+                        name={`${fieldName}.svar[${index}].tom`}
                         defaultValue={null}
                         rules={{ required: 'tom dato mangler.' }}
                         render={({ onChange, value }) => (

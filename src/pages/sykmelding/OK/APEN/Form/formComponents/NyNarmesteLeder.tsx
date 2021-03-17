@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormData } from '../Form';
+import { FormData, JaEllerNeiType } from '../Form';
 import { NaermesteLeder } from '../../../../../../types/arbeidsgiver';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
@@ -10,24 +10,31 @@ interface NyNarmesteLederProps {
 }
 
 const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => {
-    const { control, watch } = useFormContext<FormData>();
+    const { control, watch, register, unregister } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'nyNarmesteLeder';
+    const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`;
     const watchNyNarmesteLeder = watch(fieldName);
+
+    useEffect(() => {
+        register({ name: `${fieldName}.sporsmaltekst`, value: sporsmaltekst });
+        register({ name: `${fieldName}.svartekster`, value: JSON.stringify(JaEllerNeiType) });
+        return () => unregister(fieldName);
+    }, [register, unregister, sporsmaltekst]);
 
     return (
         <QuestionWrapper>
             <Controller
                 control={control}
-                name={fieldName}
+                name={`${fieldName}.svar`}
                 defaultValue={null}
                 rules={{ required: 'er nærmeste leder riktig?' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
-                        legend={`Er det ${naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`}
+                        legend={sporsmaltekst}
                         radios={[
-                            { label: 'Ja', value: 'JA', id: fieldName },
-                            { label: 'Nei', value: 'NEI' },
+                            { label: JaEllerNeiType.JA, value: 'JA', id: fieldName },
+                            { label: JaEllerNeiType.NEI, value: 'NEI' },
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}
@@ -35,11 +42,11 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
                 )}
             />
 
-            {watchNyNarmesteLeder === 'JA' && (
+            {watchNyNarmesteLeder?.svar === 'JA' && (
                 <div>Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no</div>
             )}
 
-            {watchNyNarmesteLeder === 'NEI' && (
+            {watchNyNarmesteLeder?.svar === 'NEI' && (
                 <div>Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.</div>
             )}
         </QuestionWrapper>

@@ -25,7 +25,7 @@ const UriktigeOpplysninger: React.FC = () => {
             name: 'uriktigeOpplysninger.svartekster',
             value: JSON.stringify(UriktigeOpplysningerType),
         });
-        return () => unregister('uriktigeOpplysninger');
+        return () => unregister(fieldName);
     }, [register, unregister]);
 
     return (

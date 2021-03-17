@@ -27,8 +27,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
             value: JSON.stringify(arbeidsgivere.map((ag) => ({ navn: ag.navn, orgnummer: ag.orgnummer }))),
         });
         return () => {
-            console.log(`unregistering ${fieldName}`);
-            unregister([fieldName + '.sporsmaltekst', fieldName + '.svartekster', fieldName + '.svar']);
+            unregister(fieldName);
         };
     }, [arbeidsgivere, register, unregister]);
 
