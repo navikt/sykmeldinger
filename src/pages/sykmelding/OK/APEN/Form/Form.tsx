@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Sykmelding } from '../../../../../types/sykmelding';
@@ -88,12 +88,6 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const skalSendes = watchArbeidssituasjon === 'ARBEIDSTAKER';
 
     const { maAvbryte } = useContext(AvbrytContext);
-
-    console.log(watch());
-
-    useEffect(() => {
-        console.log(errors);
-    }, [errors]);
 
     const feiloppsummeringsfeil: FeiloppsummeringFeil[] = Object.entries(errors).map(([key, value], index) => ({
         skjemaelementId: key,
