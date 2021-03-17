@@ -4,7 +4,8 @@ const path = require('path');
 console.log('Starting server');
 const app = express();
 
-app.disable('x-powered-by');
+app.set('etag', false)
+app.set('x-powered-by', false)
 app.use((_req, res, next) => {
     // Disable caching
     res.setHeader('Pragma', 'no-cache');
