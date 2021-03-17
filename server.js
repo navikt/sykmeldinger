@@ -24,7 +24,7 @@ app.get('/is_ready', (_req, res) => {
 
 const STATIC_FILES_PATH = path.join(__dirname, '/build');
 app.use(express.static(STATIC_FILES_PATH, { etag: false, maxAge: '0' }));
-app.get('*', (_req, res) => {
+app.get('/*', (_req, res) => {
     res.sendFile(STATIC_FILES_PATH + '/index.html');
 });
 
