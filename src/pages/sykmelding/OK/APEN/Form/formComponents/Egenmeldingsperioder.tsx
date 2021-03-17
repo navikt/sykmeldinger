@@ -3,37 +3,10 @@ import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import { FormData, Egenmeldingsperiode } from '../Form';
 import { Label } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import Flatpickr from 'react-flatpickr';
-import { CustomLocale } from 'flatpickr/dist/types/locale';
 import { Xknapp } from 'nav-frontend-ikonknapper';
-import '../Components/flatpickr.less';
 import QuestionWrapper from '../layout/QuestionWrapper';
-
-const locale: CustomLocale = {
-    rangeSeparator: ' til ',
-    firstDayOfWeek: 1,
-    weekdays: {
-        shorthand: ['søn', 'man', 'tirs', 'ons', 'tors', 'fre', 'lør'],
-        longhand: ['søndag', 'mandag', 'tirsadg', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
-    },
-    months: {
-        shorthand: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
-        longhand: [
-            'januar',
-            'februar',
-            'mars',
-            'april',
-            'mai',
-            'juni',
-            'juli',
-            'aug',
-            'september',
-            'oktober',
-            'november',
-            'desember',
-        ],
-    },
-};
+import { Datepicker } from 'nav-datovelger';
+import dayjs from 'dayjs';
 
 interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
@@ -68,28 +41,19 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
             <Label htmlFor={fieldName}>{sporsmaltekst}</Label>
 
             {fields.map((field, index) => (
-                <div key={field.id}>
+                <div key={field.id} style={{ display: 'flex', marginBottom: '1rem' }}>
                     <Controller
                         control={control}
                         name={`${fieldName}.svar[${index}].fom`}
                         defaultValue={null}
                         rules={{ required: 'fom dato mangler.' }}
                         render={({ onChange, value }) => (
-                            <Flatpickr
-                                className="typo-normal flatpickr"
-                                placeholder="Fom"
-                                onChange={(dates) => onChange(dates[0])}
-                                options={{
-                                    position: 'below',
-                                    maxDate: syketilfelleStartdato,
-                                    defaultDate: value,
-                                    mode: 'single',
-                                    enableTime: false,
-                                    dateFormat: 'd-m-y',
-                                    altInput: true,
-                                    altFormat: 'j. M. Y',
-                                    locale,
-                                }}
+                            <Datepicker
+                                locale="nb"
+                                value={value ? value : undefined}
+                                onChange={onChange}
+                                limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
+                                inputProps={{ placeholder: 'Fom' }}
                             />
                         )}
                     />
@@ -99,21 +63,12 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         defaultValue={null}
                         rules={{ required: 'tom dato mangler.' }}
                         render={({ onChange, value }) => (
-                            <Flatpickr
-                                className="typo-normal flatpickr"
-                                placeholder="Tom"
-                                onChange={(date) => onChange(date[0])}
-                                options={{
-                                    position: 'below',
-                                    maxDate: syketilfelleStartdato,
-                                    defaultDate: value,
-                                    mode: 'single',
-                                    enableTime: false,
-                                    dateFormat: 'd-m-y',
-                                    altInput: true,
-                                    altFormat: 'j. M. Y',
-                                    locale,
-                                }}
+                            <Datepicker
+                                locale="nb"
+                                value={value ? value : undefined}
+                                onChange={onChange}
+                                limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
+                                inputProps={{ placeholder: 'Tom' }}
                             />
                         )}
                     />

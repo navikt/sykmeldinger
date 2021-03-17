@@ -14,8 +14,8 @@ import { useForm, FormProvider } from 'react-hook-form';
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 
 export interface Egenmeldingsperiode {
-    fom: Date;
-    tom: Date;
+    fom: string;
+    tom: string;
 }
 
 export enum UriktigeOpplysningerType {
