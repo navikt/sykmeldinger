@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta name="robots" content="noindex" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="stylesheet" href="%PUBLIC_URL%/index.css" />
+        <link href="%REACT_APP_DECORATOR_URL%/css/client.css" rel="stylesheet" />
+        <script src="%PUBLIC_URL%/env-config.js"></script>
+        <script type="application/javascript">
+            window.frontendlogger = {
+                info: function () {},
+                warn: function () {},
+                error: function () {},
+                event: function () {},
+            };
+            window.frontendlogger.appname = 'sykmeldinger';
+        </script>
+        <script type="application/javascript" src="/frontendlogger/logger.js"></script>
+        <title>Sykmeldinger - www.nav.no</title>
+    </head>
+    <body>
+        <noscript> You need to enable JavaScript to run this app. </noscript>
+        <div class="pagewrapper">
+            <section id="decorator-header" class="navno-dekorator" role="main"></section>
+            <div id="root"></div>
+            <section id="decorator-footer" class="navno-dekorator" role="main"></section>
+            <div id="decorator-env" data-src="%REACT_APP_DECORATOR_URL%/env?&chatbot=false"></div>
+            <script type="text/javascript" src="%REACT_APP_DECORATOR_URL%/client.js"></script>
+        </div>
+    </body>
+</html>

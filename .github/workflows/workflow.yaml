@@ -1,0 +1,94 @@
+name: Push
+on: push
+env:
+  APP: sykmeldinger
+jobs:
+  build-and-publish:
+    name: Bygg, test og push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Generer versjon og image navn
+        run: |
+          TIME=$(TZ="Europe/Oslo" date +%Y.%m.%d-%H.%M)
+          COMMIT=$(git rev-parse --short=8 HEAD)
+          VERSION=$TIME-$COMMIT
+          echo "IMAGE_ROOT=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - run: echo $VERSION > VERSION.txt
+      - name: Last opp VERSION til neste job
+        uses: actions/upload-artifact@v1
+        with:
+          name: VERSION.txt
+          path: VERSION.txt
+      - name: Install npm dependencies
+        run: npm ci
+      # - name: Run audit
+      #   run: npm audit --audit-level=moderate
+      - name: Run lint
+        run: npm run lint
+      # - name: Run tests
+      #   run: CI=true npm run test
+      - name: Build application
+        run: npm run build
+      - name: Upload sources with sourcemaps
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v1
+        with:
+          name: sources-with-sourcemaps
+          path: build/static
+      - name: Slett sourcemaps
+        run: |
+          rm ./build/static/js/*.map
+          rm ./build/static/css/*.map
+      - name: Docker login
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+        run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+      - name: Bygg og push Docker image hvor appen serves på /
+        run: |
+            docker build . -f Dockerfile -t ${IMAGE_ROOT}
+            docker push ${IMAGE_ROOT}
+
+  deploy-to-q1-sbs:
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
+    name: Deploy to q1-sbs (Q1)
+    runs-on: ubuntu-latest
+    needs: [build-and-publish]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Last ned versjon
+        uses: actions/download-artifact@v1
+        with:
+          name: VERSION.txt
+          path: .
+      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
+      - uses: nais/deploy/actions/deploy@v1
+        name: Deploy to q1-sbs
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-sbs
+          RESOURCE: nais-q1.yaml
+
+  deploy-to-labs-gcp:
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
+    name: Deploy to labs-gcp (Demo)
+    needs: [build-and-publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/download-artifact@v1
+        with:
+          name: VERSION.txt
+          path: .
+      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
+      - name: Deploy to labs-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: labs-gcp
+          RESOURCE: nais-labs.yaml
