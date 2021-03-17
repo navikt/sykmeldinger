@@ -1,0 +1,71 @@
+@import '~nav-frontend-core/less/_variabler';
+@import '~nav-frontend-core/less/core.less';
+
+@headerFarge: #d1eff9;
+
+@skjermLiten: 30rem;
+@skjermMini: @skjermLiten;
+@skjermMedium: 35rem;
+
+@fontSizeBreakPoint: 35rem;
+@desktopLimitWidth: 672px;
+
+@font-family: 'Source Sans Pro', Arial, sans-serif;
+@font-size: 1rem;
+
+html,
+body {
+    height: 100%;
+    background-color: white;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    min-height: 70vh;
+}
+
+.limit {
+    min-height: 70vh;
+
+    position: relative;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: white;
+}
+
+.margin-bottom--1 {
+    margin-bottom: 1rem;
+}
+
+.margin-bottom--2 {
+    margin-bottom: 2rem;
+}
+
+.margin-bottom--4 {
+    margin-bottom: 4rem;
+}
+
+.margin-bottom--6 {
+    margin-bottom: 6rem;
+}
+
+.text--center {
+    text-align: center;
+}
+
+@media (min-width: @screen-sm) {
+    .limit {
+        width: @desktopLimitWidth;
+        margin: 0 auto;
+        padding-top: 1rem;
+        padding-bottom: 3rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}

@@ -1,0 +1,93 @@
+{
+    "name": "sykmeldinger",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@craco/craco": "^5.5.0",
+        "@navikt/fnrvalidator": "^1.1.3",
+        "amplitude-js": "^7.4.4",
+        "classnames": "^2.2.6",
+        "craco-less": "^1.17.1",
+        "dayjs": "^1.10.4",
+        "lodash.throttle": "^4.1.1",
+        "nav-frontend-alertstriper": "^3.0.51",
+        "nav-frontend-alertstriper-style": "^2.0.38",
+        "nav-frontend-chevron": "^1.0.28",
+        "nav-frontend-chevron-style": "^1.0.4",
+        "nav-frontend-core": "^5.0.11",
+        "nav-frontend-ekspanderbartpanel": "^3.0.56",
+        "nav-frontend-ekspanderbartpanel-style": "^1.0.42",
+        "nav-frontend-etiketter": "^2.0.32",
+        "nav-frontend-etiketter-style": "^1.0.19",
+        "nav-frontend-hjelpetekst": "^2.0.57",
+        "nav-frontend-hjelpetekst-style": "^2.0.42",
+        "nav-frontend-ikoner-assets": "^2.0.9",
+        "nav-frontend-ikonknapper": "^1.0.32",
+        "nav-frontend-js-utils": "^1.0.17",
+        "nav-frontend-knapper": "^2.0.32",
+        "nav-frontend-knapper-style": "^1.0.17",
+        "nav-frontend-lenkepanel": "^1.0.75",
+        "nav-frontend-lenkepanel-style": "^1.0.2",
+        "nav-frontend-lenker": "^1.0.60",
+        "nav-frontend-lenker-style": "^1.0.2",
+        "nav-frontend-paneler": "^2.0.32",
+        "nav-frontend-paneler-style": "^1.0.2",
+        "nav-frontend-popover": "^1.0.4",
+        "nav-frontend-popover-style": "^1.0.2",
+        "nav-frontend-skjema": "^3.1.0",
+        "nav-frontend-skjema-style": "^2.1.0",
+        "nav-frontend-spinner": "^2.0.16",
+        "nav-frontend-spinner-style": "^1.0.2",
+        "nav-frontend-typografi": "^3.0.4",
+        "nav-frontend-typografi-style": "^1.0.35",
+        "nav-frontend-veileder": "^2.0.40",
+        "nav-frontend-veileder-style": "^2.0.29",
+        "nav-frontend-veilederpanel": "^1.0.3",
+        "nav-frontend-veilederpanel-style": "1.0.3",
+        "prop-types": "^15.7.2",
+        "react": "^16.14.0",
+        "react-collapse": "^5.1.0",
+        "react-dom": "^16.14.0",
+        "react-flatpickr": "^3.10.4",
+        "react-hook-form": "^6.15.4",
+        "react-query": "^3.12.2",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "4.0.3",
+        "typescript": "4.1.5"
+    },
+    "scripts": {
+        "start": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/env-config.js && craco start",
+        "build": "craco build",
+        "test": "craco test",
+        "eject": "react-scripts eject",
+        "lint": "eslint 'src/**/**.{ts,tsx,js,jsx}'",
+        "format": "prettier --write 'src/**/**.{ts,tsx,js,jsx}'"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/amplitude-js": "^7.0.1",
+        "@types/jest": "^26.0.20",
+        "@types/node": "^14.14.35",
+        "@types/react": "16.14.0",
+        "@types/react-dom": "16.9.11",
+        "@types/react-collapse": "^5.0.0",
+        "@types/react-flatpickr": "^3.8.1",
+        "@types/react-router-dom": "^5.1.7",
+        "fetch-mock": "^9.11.0",
+        "prettier": "^2.2.1"
+    }
+}

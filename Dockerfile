@@ -1,19 +1,25 @@
 # Base image
 FROM navikt/node-express:12.2.0-alpine
 
-# Copy client production build to image
-COPY ./client/build ./client/build
+COPY server.js .
+COPY /build ./build
 
-# Copy transpiled Typescript server files to image as Javascript files
-COPY ./server/build ./server/build
-COPY ./server/package.json ./server/
+COPY ./env.sh .
+COPY ./process-index-html.sh .
+COPY ./start.sh .
 
-RUN pwd
-# Change working directory to the server
-WORKDIR /var/server/server
+COPY .env .
 
-# Install dependencies for server
-RUN npm install
+RUN apk add --no-cache bash
 
-# Start the web server
-CMD ["npm", "start"] 
+RUN chmod +x env.sh
+RUN chmod +x process-index-html.sh
+RUN chmod +x start.sh
+
+EXPOSE 8080
+
+ENV BASE_NAME=/
+ENV PUBLIC_URL=
+
+# https://stackoverflow.com/a/58805795/12159703
+CMD ["/bin/bash", "-c", "./start.sh"]
