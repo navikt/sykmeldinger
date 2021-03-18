@@ -48,13 +48,15 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         defaultValue={null}
                         rules={{ required: 'fom dato mangler.' }}
                         render={({ onChange, value }) => (
-                            <Datepicker
-                                locale="nb"
-                                value={value ? value : undefined}
-                                onChange={onChange}
-                                limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
-                                inputProps={{ placeholder: 'Fom' }}
-                            />
+                            <div style={{ marginRight: '1rem' }}>
+                                <Datepicker
+                                    locale="nb"
+                                    value={value ? value : undefined}
+                                    onChange={onChange}
+                                    limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
+                                    inputProps={{ placeholder: 'Fom' }}
+                                />
+                            </div>
                         )}
                     />
                     <Controller

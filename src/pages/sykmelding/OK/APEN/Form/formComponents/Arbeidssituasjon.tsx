@@ -52,7 +52,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
     }, [watchArbeidssituasjon, erUtenforVentetid]);
 
     return (
-        <QuestionWrapper>
+        <QuestionWrapper backgroundColor="#E4EDF2">
             <Controller
                 control={control}
                 name={`${fieldName}.svar`}
