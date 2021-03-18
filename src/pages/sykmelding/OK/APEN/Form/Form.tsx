@@ -116,7 +116,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     skalSendes ? send(data) : bekreft(data);
                 })}
             >
-                <ErOpplysningeneRiktige brukerinformasjon={brukerinformasjon} />
+                <ErOpplysningeneRiktige />
 
                 {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
                     <Arbeidssituasjon

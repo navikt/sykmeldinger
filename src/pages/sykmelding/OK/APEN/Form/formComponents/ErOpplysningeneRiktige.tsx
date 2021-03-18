@@ -3,14 +3,9 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData, JaEllerNeiType } from '../Form';
 import UriktigeOpplysninger from './UriktigeOpplysninger';
-import Brukerinformasjon from '../../../../../../types/brukerinformasjon';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
-interface ErOpplysningeneRiktigeProps {
-    brukerinformasjon: Brukerinformasjon;
-}
-
-const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ brukerinformasjon }) => {
+const ErOpplysningeneRiktige: React.FC = () => {
     const { register, unregister, control, watch, errors } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'erOpplysnigeneRiktige';
     const sporsmaltekst = 'Er opplysningene riktige';
