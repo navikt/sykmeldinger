@@ -10,7 +10,7 @@
         "craco-less": "^1.17.1",
         "dayjs": "^1.10.4",
         "lodash.throttle": "^4.1.1",
-        "nav-datovelger": "^10.1.2",
+        "nav-datovelger": "^11.0.0",
         "nav-frontend-alertstriper": "^3.0.51",
         "nav-frontend-alertstriper-style": "^2.0.38",
         "nav-frontend-chevron": "^1.0.28",
