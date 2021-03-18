@@ -4,6 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData, JaEllerNeiType } from '../Form';
 import { NaermesteLeder } from '../../../../../../types/arbeidsgiver';
 import QuestionWrapper from '../layout/QuestionWrapper';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 interface NyNarmesteLederProps {
     naermesteLeder: NaermesteLeder;
@@ -43,11 +44,15 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
             />
 
             {watchNyNarmesteLeder?.svar === 'JA' && (
-                <div>Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no</div>
+                <AlertStripe type="info" form="inline" style={{ marginTop: '0.5rem' }}>
+                    Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no
+                </AlertStripe>
             )}
 
             {watchNyNarmesteLeder?.svar === 'NEI' && (
-                <div>Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.</div>
+                <AlertStripe type="info" form="inline" style={{ marginTop: '0.5rem' }}>
+                    Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
+                </AlertStripe>
             )}
         </QuestionWrapper>
     );
