@@ -41,51 +41,53 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
         <QuestionWrapper>
             <Label htmlFor={fieldName}>{sporsmaltekst}</Label>
 
-            {fields.map((field, index) => (
-                <div key={field.id} style={{ display: 'flex', marginBottom: '1rem' }}>
-                    <Controller
-                        control={control}
-                        name={`${fieldName}.svar[${index}].fom`}
-                        defaultValue={null}
-                        rules={{ required: 'fom dato mangler.' }}
-                        render={({ onChange, value, name }) => (
-                            <div style={{ marginRight: '1rem' }}>
-                                <Datepicker
-                                    locale="nb"
-                                    value={value ? value : undefined}
-                                    onChange={onChange}
-                                    limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
-                                    inputProps={{ name, placeholder: 'Fom' }}
-                                />
-                                <Element style={{ color: 'darkred' }}>
-                                    {errors[fieldName]?.svar?.[index]?.fom?.message}
-                                </Element>
-                            </div>
-                        )}
-                    />
-                    <Controller
-                        control={control}
-                        name={`${fieldName}.svar[${index}].tom`}
-                        defaultValue={null}
-                        rules={{ required: 'tom dato mangler.' }}
-                        render={({ onChange, value, name }) => (
-                            <div>
-                                <Datepicker
-                                    locale="nb"
-                                    value={value ? value : undefined}
-                                    onChange={onChange}
-                                    limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
-                                    inputProps={{ name, placeholder: 'Tom' }}
-                                />
-                                <Element style={{ color: 'darkred' }}>
-                                    {errors[fieldName]?.svar?.[index]?.tom?.message}
-                                </Element>
-                            </div>
-                        )}
-                    />
-                    {index > 0 && <Xknapp htmlType="button" onClick={() => remove(index)} />}
-                </div>
-            ))}
+            <div id={fieldName}>
+                {fields.map((field, index) => (
+                    <div key={field.id} style={{ display: 'flex', marginBottom: '1rem' }}>
+                        <Controller
+                            control={control}
+                            name={`${fieldName}.svar[${index}].fom`}
+                            defaultValue={null}
+                            rules={{ required: 'fom dato mangler.' }}
+                            render={({ onChange, value, name }) => (
+                                <div style={{ marginRight: '1rem' }}>
+                                    <Datepicker
+                                        locale="nb"
+                                        value={value ? value : undefined}
+                                        onChange={onChange}
+                                        limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
+                                        inputProps={{ name, placeholder: 'Fom' }}
+                                    />
+                                    <Element style={{ color: 'darkred' }}>
+                                        {errors[fieldName]?.svar?.[index]?.fom?.message}
+                                    </Element>
+                                </div>
+                            )}
+                        />
+                        <Controller
+                            control={control}
+                            name={`${fieldName}.svar[${index}].tom`}
+                            defaultValue={null}
+                            rules={{ required: 'tom dato mangler.' }}
+                            render={({ onChange, value, name }) => (
+                                <div>
+                                    <Datepicker
+                                        locale="nb"
+                                        value={value ? value : undefined}
+                                        onChange={onChange}
+                                        limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
+                                        inputProps={{ name, placeholder: 'Tom' }}
+                                    />
+                                    <Element style={{ color: 'darkred' }}>
+                                        {errors[fieldName]?.svar?.[index]?.tom?.message}
+                                    </Element>
+                                </div>
+                            )}
+                        />
+                        {index > 0 && <Xknapp htmlType="button" onClick={() => remove(index)} />}
+                    </div>
+                ))}
+            </div>
 
             <Knapp htmlType="button" type="standard" mini onClick={() => append({ fom: undefined, tom: undefined })}>
                 + Legg til ekstra periode

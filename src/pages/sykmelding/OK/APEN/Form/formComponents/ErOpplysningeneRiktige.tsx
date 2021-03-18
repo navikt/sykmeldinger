@@ -3,16 +3,14 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData, JaEllerNeiType } from '../Form';
 import UriktigeOpplysninger from './UriktigeOpplysninger';
-import Arbeidssituasjon from './Arbeidssituasjon';
 import Brukerinformasjon from '../../../../../../types/brukerinformasjon';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
 interface ErOpplysningeneRiktigeProps {
-    erUtenforVentetid: boolean;
     brukerinformasjon: Brukerinformasjon;
 }
 
-const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ erUtenforVentetid, brukerinformasjon }) => {
+const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ brukerinformasjon }) => {
     const { register, unregister, control, watch, errors } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'erOpplysnigeneRiktige';
     const sporsmaltekst = 'Er opplysningene riktige';
@@ -53,10 +51,6 @@ const ErOpplysningeneRiktige: React.FC<ErOpplysningeneRiktigeProps> = ({ erUtenf
             />
 
             {watchErOpplysningeneRiktige?.svar === 'NEI' && <UriktigeOpplysninger />}
-
-            {Boolean(watchErOpplysningeneRiktige?.svar) && (
-                <Arbeidssituasjon erUtenforVentetid={erUtenforVentetid} brukerinformasjon={brukerinformasjon} />
-            )}
         </QuestionWrapper>
     );
 };

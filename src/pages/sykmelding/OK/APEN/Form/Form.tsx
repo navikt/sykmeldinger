@@ -12,6 +12,7 @@ import { AvbrytContext } from '../AvbrytContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
+import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -84,7 +85,10 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
     const formMethods = useForm<FormData>({ shouldFocusError: false });
     const { handleSubmit, watch, errors } = formMethods;
+
     const watchArbeidssituasjon = watch('arbeidssituasjon');
+    const watchErOpplysningeneRiktige = watch('erOpplysnigeneRiktige');
+
     const skalSendes = watchArbeidssituasjon === 'ARBEIDSTAKER';
 
     const { maAvbryte } = useContext(AvbrytContext);
@@ -106,15 +110,20 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         <FormProvider {...formMethods}>
             <form
                 id="apen-sykmelding-form"
+                style={{ marginBottom: '3rem' }}
                 onSubmit={handleSubmit((data) => {
                     console.log(data);
                     skalSendes ? send(data) : bekreft(data);
                 })}
             >
-                <ErOpplysningeneRiktige
-                    erUtenforVentetid={sykmeldingUtenforVentetid}
-                    brukerinformasjon={brukerinformasjon}
-                />
+                <ErOpplysningeneRiktige brukerinformasjon={brukerinformasjon} />
+
+                {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
+                    <Arbeidssituasjon
+                        erUtenforVentetid={sykmeldingUtenforVentetid}
+                        brukerinformasjon={brukerinformasjon}
+                    />
+                )}
 
                 {(errorSend || errorBekreft) && (
                     <div className="margin-bottom--1">

@@ -1,13 +1,16 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormData, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
+import { AvbrytContext } from '../../AvbrytContext';
+import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 const UriktigeOpplysninger: React.FC = () => {
     const { register, unregister, watch } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'uriktigeOpplysninger';
     const watchUriktigeOpplysninger = watch(fieldName);
+    const { setMaAvbryte } = useContext(AvbrytContext);
 
     const trengerNySykmelding = useMemo(() => {
         return (
@@ -15,6 +18,24 @@ const UriktigeOpplysninger: React.FC = () => {
             Boolean(watchUriktigeOpplysninger?.svar?.includes('SYKMELDINGSGRAD_FOR_HOY'))
         );
     }, [watchUriktigeOpplysninger]);
+
+    const alertstripetekst: string | undefined = useMemo(() => {
+        const value = watchUriktigeOpplysninger?.svar;
+        if (value === undefined) {
+            return undefined;
+        } else if (value.includes('PERIODE')) {
+            return 'Siden du sier at perioden er feil må du be den som sykmeldte deg om å skrive en ny sykmelidng.';
+        } else if (value.includes('SYKMELDINGSGRAD_FOR_HOY')) {
+            return 'Siden du sier at sykmeldingsgraden er for høy er feil må du be den som sykmeldte deg om å skrive en ny sykmelidng.';
+        } else if (value.includes('SYKMELDINGSGRAD_FOR_LAV')) {
+            return 'Du kan fortsatt bruke sykmeldingen. Hvis du ender opp med å jobbe mer enn graden på sykmeldingen sier du fra om det ved utfyllingen av søknaden.';
+        }
+        return 'Du kan fortsatt bruke sykmeldingen.';
+    }, [watchUriktigeOpplysninger]);
+
+    useEffect(() => {
+        setMaAvbryte(trengerNySykmelding);
+    }, [trengerNySykmelding, setMaAvbryte]);
 
     useEffect(() => {
         register({
@@ -25,8 +46,11 @@ const UriktigeOpplysninger: React.FC = () => {
             name: 'uriktigeOpplysninger.svartekster',
             value: JSON.stringify(UriktigeOpplysningerType),
         });
-        return () => unregister(fieldName);
-    }, [register, unregister]);
+        return () => {
+            unregister(fieldName);
+            setMaAvbryte(false);
+        };
+    }, [register, unregister, setMaAvbryte]);
 
     return (
         <QuestionWrapper>
@@ -50,11 +74,11 @@ const UriktigeOpplysninger: React.FC = () => {
             </fieldset>
 
             {trengerNySykmelding ? (
-                <div>Siden du ser at perioden er feil trenger du ny sykmelding</div>
+                <AlertStripeAdvarsel style={{ marginTop: '2rem' }}>{alertstripetekst}</AlertStripeAdvarsel>
             ) : (
                 <>
-                    {watchUriktigeOpplysninger?.svar?.includes('ARBEIDSGIVER') && (
-                        <div>Du kan fortsatt bruke sykmeldingen</div>
+                    {Boolean(watchUriktigeOpplysninger?.svar?.length) && (
+                        <AlertStripeInfo style={{ marginTop: '2rem' }}>{alertstripetekst}</AlertStripeInfo>
                     )}
                 </>
             )}
