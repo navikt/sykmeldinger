@@ -7,11 +7,12 @@ interface FeiloppsummeringContainerProps {
     errors: DeepMap<FormData, FieldErrors>;
 }
 
-interface CustomErrors extends Partial<Record<keyof FormData, string | undefined>> {}
+interface CustomErrors extends Record<keyof FormData, string | undefined> {}
 
 const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ errors }) => {
     const customErrors: CustomErrors = {
         erOpplysnigeneRiktige: errors.erOpplysnigeneRiktige?.svar?.message,
+        // TODO: fix this
         // @ts-ignore
         uriktigeOpplysninger: errors.uriktigeOpplysninger?.svar?.message,
         arbeidssituasjon: errors.arbeidssituasjon?.svar?.message,
