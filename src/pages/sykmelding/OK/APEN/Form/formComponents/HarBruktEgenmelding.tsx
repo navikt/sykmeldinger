@@ -10,7 +10,7 @@ interface HarBruktEgenmeldingProps {
 }
 
 const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleStartdato }) => {
-    const { control, watch, register, unregister } = useFormContext<FormData>();
+    const { control, watch, errors, register, unregister } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'harBruktEgenmelding';
     const sporsmaltekst = `Vi har registrert at du ble syk ${syketilfelleStartdato.toString()}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`;
     const watchHarBruktEgenmelding = watch(fieldName);
@@ -44,6 +44,7 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleS
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}
+                        feil={errors.harBruktEgenmelding?.svar?.message}
                     />
                 )}
             />

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Sykmelding } from '../../../../../types/sykmelding';
 import { useParams } from 'react-router-dom';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
@@ -12,6 +11,7 @@ import useSend from '../../../../commonComponents/hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
+import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -89,12 +89,6 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
     const { maAvbryte } = useContext(AvbrytContext);
 
-    const feiloppsummeringsfeil: FeiloppsummeringFeil[] = Object.entries(errors).map(([key, value], index) => ({
-        skjemaelementId: key,
-        feilmelding: (value as any)?.message,
-        key: index,
-    }));
-
     if (isLoadingBrukerinformasjon || isLoadingSykmeldingUtenforVentetid) {
         return <Spinner headline="Henter arbeidsforhold" />;
     }
@@ -131,12 +125,10 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     </div>
                 )}
 
-                {Boolean(Object.keys(errors).length) && (
-                    <Feiloppsummering tittel="For å gå videre må du rette opp følgende" feil={feiloppsummeringsfeil} />
-                )}
+                <FeiloppsummeringContainer errors={errors} />
 
                 {maAvbryte === false && (
-                    <div className="margin-bottom--2 text--center">
+                    <div style={{ marginTop: '3rem', marginBottom: '3rem', textAlign: 'center' }}>
                         <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved" htmlType="submit">
                             {skalSendes ? 'Send' : 'Bekreft'} sykmelding
                         </Knapp>

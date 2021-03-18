@@ -7,12 +7,13 @@ import { Xknapp } from 'nav-frontend-ikonknapper';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { Datepicker } from 'nav-datovelger';
 import dayjs from 'dayjs';
+import { Element } from 'nav-frontend-typografi';
 
 interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
 }
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
-    const { control, register, unregister } = useFormContext<FormData>();
+    const { errors, control, register, unregister } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'egenmeldingsperioder';
     const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${syketilfelleStartdato.toString()}`;
     const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
@@ -47,15 +48,18 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         name={`${fieldName}.svar[${index}].fom`}
                         defaultValue={null}
                         rules={{ required: 'fom dato mangler.' }}
-                        render={({ onChange, value }) => (
+                        render={({ onChange, value, name }) => (
                             <div style={{ marginRight: '1rem' }}>
                                 <Datepicker
                                     locale="nb"
                                     value={value ? value : undefined}
                                     onChange={onChange}
                                     limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
-                                    inputProps={{ placeholder: 'Fom' }}
+                                    inputProps={{ name, placeholder: 'Fom' }}
                                 />
+                                <Element style={{ color: 'darkred' }}>
+                                    {errors[fieldName]?.svar?.[index]?.fom?.message}
+                                </Element>
                             </div>
                         )}
                     />
@@ -64,14 +68,19 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                         name={`${fieldName}.svar[${index}].tom`}
                         defaultValue={null}
                         rules={{ required: 'tom dato mangler.' }}
-                        render={({ onChange, value }) => (
-                            <Datepicker
-                                locale="nb"
-                                value={value ? value : undefined}
-                                onChange={onChange}
-                                limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
-                                inputProps={{ placeholder: 'Tom' }}
-                            />
+                        render={({ onChange, value, name }) => (
+                            <div>
+                                <Datepicker
+                                    locale="nb"
+                                    value={value ? value : undefined}
+                                    onChange={onChange}
+                                    limitations={{ maxDate: dayjs(new Date()).format('YYYY-MM-DD') }}
+                                    inputProps={{ name, placeholder: 'Tom' }}
+                                />
+                                <Element style={{ color: 'darkred' }}>
+                                    {errors[fieldName]?.svar?.[index]?.tom?.message}
+                                </Element>
+                            </div>
                         )}
                     />
                     {index > 0 && <Xknapp htmlType="button" onClick={() => remove(index)} />}
