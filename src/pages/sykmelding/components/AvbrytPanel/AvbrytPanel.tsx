@@ -40,7 +40,7 @@ const AvbrytPanel: React.FC = () => {
     return (
         <>
             <div className="avbryt-toggle" style={{ textAlign: 'center', marginBottom: '1rem' }}>
-                <Knapp mini onClick={() => setIsOpen((prev) => !prev)}>
+                <Knapp htmlType="button" type="flat" mini onClick={() => setIsOpen((prev) => !prev)}>
                     Jeg ønsker ikke å bruke denne sykmeldingen
                 </Knapp>
             </div>
