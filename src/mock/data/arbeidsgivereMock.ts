@@ -12,7 +12,10 @@ const arbeidsgivereMock = [
         },
         navn: 'PONTYPANDY FIRE SERVICE',
         orgnummer: '110110110',
+        juridiskOrgnummer: '132456789',
         stilling: 'Brannmann',
+        stillingsprosent: '100',
+        aktivtArbeidsforhold: true,
     },
     {
         naermesteLeder: {
@@ -27,7 +30,10 @@ const arbeidsgivereMock = [
         },
         navn: 'ANDEBY BRANNSTATION',
         orgnummer: '110110112',
+        juridiskOrgnummer: '132456789',
         stilling: 'Brannmann',
+        stillingsprosent: '80',
+        aktivtArbeidsforhold: false,
     },
 ];
 

@@ -95,7 +95,7 @@ const Arbeidssituasjon = ({
                 <RadioPanelGruppe
                     name="beOmNyNaermesteLeder"
                     className="panelgruppe"
-                    legend={`Er det ${formState.valgtArbeidsgiver.naermesteLeder.navn} som skal følge deg opp når du er syk?`}
+                    legend={`Er det ${formState.valgtArbeidsgiver.naermesteLeder?.navn} som skal følge deg opp når du er syk?`}
                     feil={errors.get('beOmNyNaermesteLeder')?.feilmelding}
                     checked={
                         formState.beOmNyNaermesteLeder
@@ -120,7 +120,7 @@ const Arbeidssituasjon = ({
             )}
             {formState.beOmNyNaermesteLeder === false && (
                 <FormInfoMessage
-                    message={`Vi sender sykmeldingen til ${formState.valgtArbeidsgiver?.naermesteLeder.navn}, som finner den ved å
+                    message={`Vi sender sykmeldingen til ${formState.valgtArbeidsgiver?.naermesteLeder?.navn}, som finner den ved å
                     logge inn på nav.no.`}
                 />
             )}
