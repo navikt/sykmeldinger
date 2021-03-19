@@ -5,7 +5,7 @@ import { FormData, JaEllerNeiType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
 const HarForsikring: React.FC = () => {
-    const { control, register, unregister } = useFormContext<FormData>();
+    const { control, errors, register, unregister } = useFormContext<FormData>();
     const sporsmaltekst = 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?';
     const fieldName: keyof FormData = 'harForsikring';
 
@@ -26,7 +26,10 @@ const HarForsikring: React.FC = () => {
                 control={control}
                 name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: 'du må svare på om du har hatt forsikring.' }}
+                rules={{
+                    required:
+                        'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet.',
+                }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
@@ -37,6 +40,7 @@ const HarForsikring: React.FC = () => {
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}
+                        feil={errors.harForsikring?.svar?.message}
                     />
                 )}
             />

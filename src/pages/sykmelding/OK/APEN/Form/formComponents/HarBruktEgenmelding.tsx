@@ -4,6 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData, JaEllerNeiType } from '../Form';
 import Egenmeldingsperioder from './Egenmeldingsperioder';
 import QuestionWrapper from '../layout/QuestionWrapper';
+import dayjs from 'dayjs';
 
 interface HarBruktEgenmeldingProps {
     syketilfelleStartdato: Date;
@@ -12,7 +13,9 @@ interface HarBruktEgenmeldingProps {
 const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleStartdato }) => {
     const { control, watch, errors, register, unregister } = useFormContext<FormData>();
     const fieldName: keyof FormData = 'harBruktEgenmelding';
-    const sporsmaltekst = `Vi har registrert at du ble syk ${syketilfelleStartdato.toString()}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`;
+    const sporsmaltekst = `Vi har registrert at du ble syk ${dayjs(syketilfelleStartdato).format(
+        'D. MMMM YYYY',
+    )}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`;
     const watchHarBruktEgenmelding = watch(fieldName);
 
     useEffect(() => {
@@ -33,7 +36,7 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleS
                 control={control}
                 name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: 'du må svare på om du har brukt egenmelding.' }}
+                rules={{ required: 'Du må svare på om du har brukt egenmelding.' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}

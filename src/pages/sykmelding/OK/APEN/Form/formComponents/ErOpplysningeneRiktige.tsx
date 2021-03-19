@@ -29,7 +29,7 @@ const ErOpplysningeneRiktige: React.FC = () => {
                 control={control}
                 name={fieldName + '.svar'}
                 defaultValue={null}
-                rules={{ required: 'Du må svare på om opplysningene stemmer' }}
+                rules={{ required: 'Du må svare på om opplysningene i sykmeldingen er riktige.' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}

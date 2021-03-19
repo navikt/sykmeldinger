@@ -46,7 +46,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                 control={control}
                 name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: 'arbeidsgiver mangler.' }}
+                rules={{ required: 'Du må velge hvilken arbeidsgiver sykmeldingen gjelder for.' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}

@@ -28,7 +28,9 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
                 control={control}
                 name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: 'er nærmeste leder riktig?' }}
+                rules={{
+                    required: 'Du må svare på om dette er riktig person som skal følge deg opp på jobb når du er syk.',
+                }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}

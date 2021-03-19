@@ -27,7 +27,7 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
 
     const feiloppsummeringsfeil: FeiloppsummeringFeil[] = Object.entries(customErrors)
         .filter(([_key, value]) => value !== undefined)
-        .map(([key, value]) => ({ skjemaelementId: key, feilmelding: value! }));
+        .map(([key, value]) => ({ skjemaelementId: key, feilmelding: value }));
 
     if (feiloppsummeringsfeil.length === 0) {
         return null;
@@ -35,7 +35,7 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
 
     return (
         <div style={{ marginTop: '3rem' }}>
-            <Feiloppsummering tittel="For å gå vidre må du rette opp følgende:" feil={feiloppsummeringsfeil} />
+            <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={feiloppsummeringsfeil} />
         </div>
     );
 };
