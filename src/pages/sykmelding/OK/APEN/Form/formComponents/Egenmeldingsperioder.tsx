@@ -14,7 +14,9 @@ interface EgenmeldingsperioderProps {
 }
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
     const fieldName: keyof FormData = 'egenmeldingsperioder';
-    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${syketilfelleStartdato.toString()}`;
+    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(syketilfelleStartdato).format(
+        'D. MMMM YYYY',
+    )}.`;
 
     const { errors, control, register, getValues, unregister } = useFormContext<FormData>();
     const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
