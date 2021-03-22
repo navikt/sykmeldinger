@@ -20,6 +20,7 @@ export const sykmeldingAvvist = {
             fom: '2020-02-10',
             tom: '2020-02-11',
             behandlingsdager: 2,
+            reisetilskudd: false,
             type: 'BEHANDLINGSDAGER',
         },
         {
@@ -36,16 +37,19 @@ export const sykmeldingAvvist = {
                     arsak: ['MANGLENDE_TILRETTELEGGING'],
                 },
             },
+            reisetilskudd: false,
         },
         {
             fom: '2020-02-16',
             tom: '2020-02-20',
             type: 'REISETILSKUDD',
+            reisetilskudd: true,
         },
     ],
     sykmeldingStatus: {
         timestamp: '2020-01-01',
         statusEvent: 'APEN',
+        sporsmalOgSvarListe: [],
     },
     medisinskVurdering: {
         hovedDiagnose: {

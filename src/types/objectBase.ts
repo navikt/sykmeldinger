@@ -44,7 +44,10 @@ class ObjectBase<T> {
 
     getRequiredArray(prop: keyof T): Array<unknown> {
         const maybeArray = this.data[prop];
-        this.assert(Array.isArray(maybeArray), '');
+        this.assert(
+            Array.isArray(maybeArray),
+            `Property ${prop} of type ${typeof maybeArray} is not assignable to type array`,
+        );
         return maybeArray;
     }
 

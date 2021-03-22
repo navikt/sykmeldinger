@@ -15,11 +15,13 @@ export const sykmeldingBekreftet = {
             tom: '2020-02-21',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
+            reisetilskudd: false,
         },
     ],
     sykmeldingStatus: {
         timestamp: '2020-01-01',
         statusEvent: 'BEKREFTET',
+        sporsmalOgSvarListe: [],
     },
     medisinskVurdering: {
         hovedDiagnose: {
