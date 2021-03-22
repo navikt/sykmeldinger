@@ -1,12 +1,17 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
 
-console.log('Starting server')
+console.log('Starting server');
 const app = express();
 
+app.set('etag', false)
+app.set('x-powered-by', false)
 app.use((_req, res, next) => {
     // Disable caching
     res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
     next();
 });
 
@@ -18,8 +23,8 @@ app.get('/is_ready', (_req, res) => {
 });
 
 const STATIC_FILES_PATH = path.join(__dirname, '/build');
-app.use(express.static(STATIC_FILES_PATH));
-app.get('*', (_req, res) => {
+app.use(express.static(STATIC_FILES_PATH, { etag: false, maxAge: '0' }));
+app.get('/*', (_req, res) => {
     res.sendFile(STATIC_FILES_PATH + '/index.html');
 });
 

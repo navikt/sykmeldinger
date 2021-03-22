@@ -1,30 +1,6 @@
 import React, { useContext } from 'react';
-import useForm from '../../../../commonComponents/hooks/useForm';
-import { Feiloppsummering } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { Sykmelding } from '../../../../../types/sykmelding';
-import validationFunctions from './formValidation';
-import { FormInputs } from '../../../../../types/form';
-import BekreftOpplysninger from './FormSections/BekreftOpplysninger';
-import Arbeidssituasjon from './FormSections/Arbeidssituasjon';
-import Sykmeldingsopplysninger from '../../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
-import SykmeldingPerioder from '../../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
-import ArbeidsuforSeksjon from '../../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsuforSeksjon';
-import PrognoseSeksjon from '../../../components/Sykmeldingsopplysninger/panelelementer/PrognoseSeksjon';
-import ArbeidsgiverSeksjon from '../../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
-import LegeSeksjon from '../../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
-import BehandlingsDatoer from '../../../components/Sykmeldingsopplysninger/utdypendeelementer/BehandlingsDatoer';
-import MulighetForArbeid from '../../../components/Sykmeldingsopplysninger/utdypendeelementer/MulighetForArbeid';
-import Friskmelding from '../../../components/Sykmeldingsopplysninger/utdypendeelementer/Friskmelding';
-import UtdypendeOpplysninger from '../../../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import Arbeidsevne from '../../../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
-import SeksjonMedTittel from '../../../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
-import ElementMedTekst from '../../../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
-import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
-import EtikettMedTekst from '../../../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
-
-import sladd from '../../../OK/SENDT/sladd.svg';
-
 import { useParams } from 'react-router-dom';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Spinner from '../../../../commonComponents/Spinner/Spinner';
@@ -33,6 +9,55 @@ import useSykmeldingUtenforVentetid from '../../../../commonComponents/hooks/use
 import useBekreft from '../../../../commonComponents/hooks/useBekreft';
 import useSend from '../../../../commonComponents/hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
+import { useForm, FormProvider } from 'react-hook-form';
+import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
+import FeiloppsummeringContainer from './FeiloppsummeringContainer';
+import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
+
+export interface Egenmeldingsperiode {
+    fom: string;
+    tom: string;
+}
+
+export enum UriktigeOpplysningerType {
+    PERIODE = 'Periode',
+    SYKMELDINGSGRAD_FOR_HOY = 'Sykmeldingsgraden er for høy',
+    SYKMELDINGSGRAD_FOR_LAV = 'Sykmeldingsgraden er for lav',
+    ARBEIDSGIVER = 'Arbeidsgiver',
+    DIAGNOSE = 'Diagnose',
+    ANDRE_OPPLYSNINGER = 'Andre opplysninger',
+}
+
+export enum ArbeidssituasjonType {
+    ARBEIDSTAKER = 'Arbeidstaker',
+    FRILANSER = 'Frilanser',
+    SELVSTENDIG_NARINGSDRIVENDE = 'Selvstendig næringsdrivende',
+    ARGBEIDSLEDIG = 'Arbeidsledig',
+    PERMITTERT = 'Permittert',
+    ANNET = 'Annet',
+}
+
+export enum JaEllerNeiType {
+    JA = 'Ja',
+    NEI = 'Nei',
+}
+
+interface SporsmalSvar<Value> {
+    sporsmaltekst?: string;
+    svartekster?: string;
+    svar?: Value;
+}
+
+export interface FormData {
+    erOpplysnigeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
+    arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
+    arbeidsgiverOrgnummer?: SporsmalSvar<string>;
+    nyNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    egenmeldingsperioder?: SporsmalSvar<Egenmeldingsperiode[]>;
+    harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+}
 
 interface FormProps {
     sykmelding: Sykmelding;
@@ -41,6 +66,7 @@ interface FormProps {
 const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
+    // DATA FETCHING
     const {
         isLoading: isLoadingBrukerinformasjon,
         error: errorBrukerinformasjon,
@@ -53,13 +79,19 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         data: sykmeldingUtenforVentetid,
     } = useSykmeldingUtenforVentetid(sykmeldingId);
 
+    // DATA PERSISTING
     const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
     const { mutate: send, isLoading: isLoadingSend, error: errorSend } = useSend(sykmeldingId);
 
-    const { maAvbryte } = useContext(AvbrytContext);
-    const { formState, errors, setFormState, handleSubmit } = useForm<FormInputs>({ validationFunctions });
+    const formMethods = useForm<FormData>({ shouldFocusError: false });
+    const { handleSubmit, watch, errors } = formMethods;
 
-    const skalSendes = !!formState.valgtArbeidsgiver;
+    const watchArbeidssituasjon = watch('arbeidssituasjon');
+    const watchErOpplysningeneRiktige = watch('erOpplysnigeneRiktige');
+
+    const skalSendes = watchArbeidssituasjon === 'ARBEIDSTAKER';
+
+    const { maAvbryte } = useContext(AvbrytContext);
 
     if (isLoadingBrukerinformasjon || isLoadingSykmeldingUtenforVentetid) {
         return <Spinner headline="Henter arbeidsforhold" />;
@@ -74,88 +106,45 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         return <div>Error</div>;
     }
 
-    const { arbeidsgivere } = brukerinformasjon;
-
     return (
-        <form
-            id="apen-sykmelding-form"
-            onSubmit={(event) => {
-                event.preventDefault();
-                handleSubmit((state) => (skalSendes ? send(state) : bekreft(state)));
-            }}
-        >
-            <BekreftOpplysninger formState={formState} setFormState={setFormState} errors={errors} />
-            <Arbeidssituasjon
-                sykmelding={sykmelding}
-                arbeidsgivere={arbeidsgivere}
-                erUtenforVentetid={sykmeldingUtenforVentetid}
-                formState={formState}
-                setFormState={setFormState}
-                errors={errors}
-                skalAvbrytes={maAvbryte}
-            />
+        <FormProvider {...formMethods}>
+            <form
+                id="apen-sykmelding-form"
+                style={{ marginBottom: '3rem' }}
+                onSubmit={handleSubmit((data) => {
+                    console.log(data);
+                    skalSendes ? send(data) : bekreft(data);
+                })}
+            >
+                <ErOpplysningeneRiktige />
 
-            {skalSendes && (
-                <Sykmeldingsopplysninger
-                    id="arbeidsgivers-sykmelding"
-                    title="Slik ser sykmeldingen ut for arbeidsgiveren din"
-                    expandedDefault={false}
-                    type="ARBEIDSGIVER"
-                >
-                    <div className="panel-content-header">
-                        <Sidetittel>TODO: Pasientens navn</Sidetittel>
-                        <Undertekst>TODO: Pasientens personnummer</Undertekst>
+                {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
+                    <Arbeidssituasjon
+                        erUtenforVentetid={sykmeldingUtenforVentetid}
+                        brukerinformasjon={brukerinformasjon}
+                    />
+                )}
+
+                {(errorSend || errorBekreft) && (
+                    <div className="margin-bottom--1">
+                        <AlertStripeFeil>
+                            En feil oppsto ved {skalSendes ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv
+                            igjen senere.
+                        </AlertStripeFeil>
                     </div>
-                    <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
-                    <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} alt="skjult diagnose" />} />
-                    <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
-                    <PrognoseSeksjon prognose={sykmelding.prognose} />
-                    <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                    {/* TODO: fix typesafety */}
-                    <LegeSeksjon navn={sykmelding.navnFastlege || ''} />
-                    <hr className="margin-bottom--2" />
-                    <BehandlingsDatoer
-                        behandletTidspunkt={sykmelding.behandletTidspunkt}
-                        syketilfelleStartDato={sykmelding.syketilfelleStartDato}
-                    />
-                    <MulighetForArbeid />
-                    <Friskmelding prognose={sykmelding.prognose} />
-                    <UtdypendeOpplysninger opplysninger={sykmelding.utdypendeOpplysninger} />
-                    <Arbeidsevne
-                        tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
-                        tiltakNAV={sykmelding.tiltakNAV}
-                    />
-                    <SeksjonMedTittel tittel="Annet">
-                        <ElementMedTekst margin tittel="Telefon til lege/sykmelder" tekst={sykmelding.behandler.tlf} />
-                    </SeksjonMedTittel>
-                </Sykmeldingsopplysninger>
-            )}
+                )}
 
-            {Boolean(errors.size) && (
-                <Feiloppsummering
-                    className="margin-bottom--2"
-                    tittel="Det finnes feil som må rettes opp"
-                    feil={Array.from(errors.values())}
-                />
-            )}
+                <FeiloppsummeringContainer errors={errors} />
 
-            {(errorSend || errorBekreft) && (
-                <div className="margin-bottom--1">
-                    <AlertStripeFeil>
-                        En feil oppsto ved {skalSendes ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv igjen
-                        senere.
-                    </AlertStripeFeil>
-                </div>
-            )}
-
-            {maAvbryte === false && (
-                <div className="margin-bottom--2 text--center">
-                    <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved" htmlType="submit">
-                        {skalSendes ? 'Send' : 'Bekreft'} sykmelding
-                    </Knapp>
-                </div>
-            )}
-        </form>
+                {maAvbryte === false && (
+                    <div style={{ marginTop: '3rem', marginBottom: '3rem', textAlign: 'center' }}>
+                        <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved" htmlType="submit">
+                            {skalSendes ? 'Send' : 'Bekreft'} sykmelding
+                        </Knapp>
+                    </div>
+                )}
+            </form>
+        </FormProvider>
     );
 };
 

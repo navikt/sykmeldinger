@@ -19,7 +19,7 @@ export class Arbeidsgiver extends ObjectBase<Arbeidsgiver> {
         this.stilling = this.getRequiredString('stilling');
         this.aktivtArbeidsforhold = this.getRequiredBoolean('aktivtArbeidsforhold');
 
-        if (this.isDefined(data.naermesteLeder)) {
+        if (this.isDefined('naermesteLeder')) {
             this.naermesteLeder = new NaermesteLeder(data.naermesteLeder);
         }
     }

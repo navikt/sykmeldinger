@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
@@ -15,17 +15,22 @@ import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import useBekreft from '../../../commonComponents/hooks/useBekreft';
 import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import { Controller, useForm } from 'react-hook-form';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
+interface FormData {
+    bekreftetLest: boolean;
+}
+
 const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmelding }) => {
+    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     useHotjarTrigger('INVALID_APEN');
 
-    const [bekreftet, setBekreftet] = useState(false);
+    const { handleSubmit, control, errors } = useForm<FormData>();
 
-    const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
 
     return (
@@ -54,18 +59,39 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
                 </AlertStripeAdvarsel>
             )}
 
-            <div className="text--center">
-                <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
-                    <BekreftCheckboksPanel
-                        label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
-                        checked={bekreftet}
-                        onChange={() => setBekreftet(!bekreftet)}
+            <form
+                onSubmit={handleSubmit((data) => {
+                    console.log(data);
+                    bekreft(data);
+                })}
+            >
+                <div style={{ textAlign: 'center' }}>
+                    <Controller
+                        control={control}
+                        name="bekreftetLest"
+                        defaultValue={false}
+                        rules={{
+                            validate: (value) =>
+                                value === true || 'Du må bekrefte at du har lest at sykmeldingen er avvist',
+                        }}
+                        render={({ onChange, value }) => (
+                            <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
+                                <BekreftCheckboksPanel
+                                    label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
+                                    checked={value}
+                                    feil={errors.bekreftetLest?.message}
+                                    onChange={() => {
+                                        onChange(!value);
+                                    }}
+                                />
+                            </div>
+                        )}
                     />
+                    <Hovedknapp htmlType="submit" disabled={isLoadingBekreft} spinner={isLoadingBekreft}>
+                        Bekreft
+                    </Hovedknapp>
                 </div>
-                <Hovedknapp disabled={isLoadingBekreft} spinner={isLoadingBekreft} onClick={() => bekreft({})}>
-                    Bekreft
-                </Hovedknapp>
-            </div>
+            </form>
         </div>
     );
 };
