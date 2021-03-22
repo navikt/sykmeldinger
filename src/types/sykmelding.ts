@@ -104,7 +104,7 @@ export class Sykmelding extends ObjectBase<Sykmelding> {
     }
 
     private setUtdypendeOpplysninger(utdypendeOpplysninger: any) {
-        if (this.isDefined('utdypendeOpplysninger')) {
+        if (this.isDefined('utdypendeOpplysninger') && typeof utdypendeOpplysninger === 'object') {
             Object.keys(utdypendeOpplysninger).forEach((outerKey) => {
                 const opplysning = new Map<string, UtdypendeOpplysning>();
                 if (this.isDefined(utdypendeOpplysninger[outerKey])) {
