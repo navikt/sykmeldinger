@@ -1,11 +1,11 @@
 import './Statuspanel.less';
-import { SykmeldingStatus } from '../../../../types/sykmelding';
 import React from 'react';
 import information from './information.svg';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import StatuspanelSection from './StatuspanelSection';
 import StatuspanelHeader from './StatuspanelHeader';
+import SykmeldingStatus from '../../../../types/sykmelding/SykmeldingStatus';
 
 interface StatuspanelProps {
     sykmeldingstatus: SykmeldingStatus;

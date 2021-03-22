@@ -1,10 +1,9 @@
 import './PeriodeSeksjon.less';
 
-import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { hentDagerMellomDatoer, tilLesbarPeriodeMedArstall } from '../../../../../../utils/datoUtils';
-import { Periode } from '../../../../../../types/sykmelding';
+import Periode from '../../../../../../types/sykmelding/Periode';
 
 interface PeriodeSeksjonProps {
     periode: Periode;

@@ -15,11 +15,13 @@ export const sykmeldingSendt = {
             tom: '2020-02-11',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
+            reisetilskudd: false,
         },
         {
             fom: '2020-02-12',
             tom: '2020-02-15',
             type: 'AKTIVITET_IKKE_MULIG',
+            reisetilskudd: false,
             aktivitetIkkeMulig: {
                 medisinskArsak: {
                     beskrivelse: 'Han er veldig syk',
@@ -39,6 +41,7 @@ export const sykmeldingSendt = {
             orgnummer: '123456',
             orgNavn: 'Posten AS',
         },
+        sporsmalOgSvarListe: [],
     },
     medisinskVurdering: {
         hovedDiagnose: {

@@ -15,6 +15,7 @@ export const sykmeldingApen = {
             tom: '2020-02-15',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
+            reisetilskudd: false,
         },
         {
             fom: '2020-02-16',
@@ -24,11 +25,13 @@ export const sykmeldingApen = {
                 grad: 20,
                 reisetilskudd: false,
             },
+            reisetilskudd: false,
         },
     ],
     sykmeldingStatus: {
         timestamp: '2020-01-01',
         statusEvent: 'APEN',
+        sporsmalOgSvarListe: [],
     },
     medisinskVurdering: {
         hovedDiagnose: {

@@ -5,7 +5,7 @@ import EnkelCheckbox from '../layout/Checkbox/EnkelCheckbox';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
-import { Prognose } from '../../../../../types/sykmelding';
+import Prognose from '../../../../../types/sykmelding/Prognose';
 
 interface FriskmeldingProps {
     prognose?: Prognose;

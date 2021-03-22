@@ -1,17 +1,18 @@
 import React from 'react';
+import UtdypendeOpplysning from '../../../../../types/sykmelding/UtdypendeOpplysninger';
 
 import ElementMedTekst from '../layout/ElementMedTekst';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import { UtdypendeOpplysning } from '../../../../../types/sykmelding';
 
 interface OpplysningsGruppeProps {
     opplysningGruppe: Map<string, UtdypendeOpplysning>;
 }
 
+// TODO: fix typesafety tittel
 const OpplysningsGruppe = ({ opplysningGruppe }: OpplysningsGruppeProps) => {
     const sporsmal = Array.from(opplysningGruppe).map(([key, sporsmalSvar]) => (
-        <ElementMedTekst key={key} tittel={sporsmalSvar.sporsmal} tekst={sporsmalSvar.svar} margin />
+        <ElementMedTekst key={key} tittel={sporsmalSvar.sporsmal || ''} tekst={sporsmalSvar.svar} margin />
     ));
     return <>{sporsmal}</>;
 };

@@ -1,313 +1,33 @@
-// Class for objects that need parsing (e.g. dates and enums)
-// Interface for all other objects.
-// Type for string literals.
-// Enum for string literals with corresponding value.
-
-// ------ BEHANDLIGGSUTFALL
-
-export type RegelStatus = 'OK' | 'MANUAL_PROCESSING' | 'INVALID';
-
-interface RegelInfo {
-    messageForSender: string;
-    messageForUser: string;
-    ruleName: string;
-    ruleStatus?: RegelStatus;
-}
-
-interface Behandlingsutfall {
-    status: RegelStatus;
-    ruleHits: RegelInfo[];
-}
-
-// ------
-
-export interface Arbeidsgiver {
-    navn: string;
-    stillingsprosent: number;
-}
-
-// ------ PERIODER
-
-export enum MedisinskArsakType {
-    TILSTAND_HINDRER_AKTIVITET = 'Helsetilstanden hindrer pasienten i å være i aktivitet',
-    AKTIVITET_FORVERRER_TILSTAND = 'Aktivitet vil forverre helsetilstanden',
-    AKTIVITET_FORHINDRER_BEDRING = 'Aktivitet vil hindre/forsinke bedring av helsetilstanden',
-    ANNET = 'Annet',
-}
-
-class MedisinskArsak {
-    beskrivelse: string;
-    arsak: MedisinskArsakType[];
-
-    constructor(medisinskArsak: any) {
-        this.beskrivelse = medisinskArsak.beskrivelse;
-        this.arsak = medisinskArsak.arsak.map(
-            (arsak: string) => MedisinskArsakType[arsak as keyof typeof MedisinskArsakType],
-        );
-    }
-}
-
-export enum ArbeidsrelatertArsakType {
-    MANGLENDE_TILRETTELEGGING = 'Manglende tilrettelegging på arbeidsplassen',
-    ANNET = 'Annet',
-}
-
-class ArbeidsrelatertArsak {
-    beskrivelse: string;
-    arsak: ArbeidsrelatertArsakType[];
-
-    constructor(arbeidsrelatertArsak: any) {
-        this.beskrivelse = arbeidsrelatertArsak.beskrivelse;
-        this.arsak = arbeidsrelatertArsak.arsak.map(
-            (arsak: string) => ArbeidsrelatertArsakType[arsak as keyof typeof ArbeidsrelatertArsakType],
-        );
-    }
-}
-
-class AktivitetIkkeMulig {
-    medisinskArsak: MedisinskArsak;
-    arbeidsrelatertArsak: ArbeidsrelatertArsak;
-
-    constructor(aktivitetIkkeMulig: any) {
-        this.medisinskArsak = new MedisinskArsak(aktivitetIkkeMulig.medisinskArsak);
-        this.arbeidsrelatertArsak = new ArbeidsrelatertArsak(aktivitetIkkeMulig.arbeidsrelatertArsak);
-    }
-}
-
-interface Gradert {
-    grad: number;
-    reisetilskudd: boolean;
-}
-
-type Periodetype = 'AKTIVITET_IKKE_MULIG' | 'AVVENTENDE' | 'BEHANDLINGSDAGER' | 'GRADERT' | 'REISETILSKUDD';
-
-export class Periode {
-    fom: Date;
-    tom: Date;
-    aktivitetIkkeMulig?: AktivitetIkkeMulig;
-    gradert?: Gradert;
-    behandlingsdager?: number;
-    innspillTilArbeidsgiver?: string;
-    type: Periodetype;
-
-    constructor(periode: any) {
-        this.fom = new Date(periode.fom);
-        this.tom = new Date(periode.tom);
-        this.aktivitetIkkeMulig = periode.aktivitetIkkeMulig
-            ? new AktivitetIkkeMulig(periode.aktivitetIkkeMulig)
-            : undefined;
-        this.gradert = periode.gradert;
-        this.behandlingsdager = periode.behandlingsdager;
-        this.innspillTilArbeidsgiver = periode.innspillTilArbeidsgiver;
-        this.type = periode.type;
-    }
-}
-
-// ------ STATUS
-
-export type StatusEvent = 'SENDT' | 'APEN' | 'AVBRUTT' | 'UTGATT' | 'BEKREFTET';
-
-interface ArbeidsgiverStatus {
-    orgnummer: string;
-    juridiskOrgnummer?: string;
-    orgNavn: string;
-}
-
-type SvarType = 'ARBEIDSSITUASJON' | 'PERIODER' | 'JA_NEI ';
-
-interface Svar {
-    svar: string;
-    svarType: SvarType;
-}
-
-type SporsmalShortName = 'ARBEIDSSITUASJON' | 'NY_NARMESTE_LEDER' | 'FRAVAER' | 'PERIODE' | 'FORSIKRING';
-
-interface SporsmalOgSvar {
-    tekst?: string;
-    svar?: Svar;
-    shortName?: SporsmalShortName;
-}
-
-export class SykmeldingStatus {
-    timestamp: Date;
-    statusEvent: StatusEvent;
-    arbeidsgiver?: ArbeidsgiverStatus;
-    sporsmalOgSvarListe?: SporsmalOgSvar[];
-
-    constructor(sykmeldingStatus: any) {
-        this.timestamp = new Date(sykmeldingStatus.timestamp);
-        this.statusEvent = sykmeldingStatus.statusEvent;
-        this.arbeidsgiver = sykmeldingStatus.arbeidsgiver;
-        this.sporsmalOgSvarListe = sykmeldingStatus.sporsmalOgSvarListe;
-    }
-}
-
-// ------ MEDISINSK_VURDERING
+import ObjectBase from './objectBase';
+import ArbeidsgiverSykmelding from './sykmelding/ArbeidsgiverSykmelding';
+import Behandler from './sykmelding/Behandler';
+import Behandlingsutfall from './sykmelding/Behandlingsutfall';
+import KontaktMedPasient from './sykmelding/KontaktMedPasient';
+import MedisinskVurdering from './sykmelding/MedisinskVurdering';
+import MeldingTilNAV from './sykmelding/MeldingTilNav';
+import Merknad from './sykmelding/Merknad';
+import Periode from './sykmelding/Periode';
+import Prognose from './sykmelding/Prognose';
+import SykmeldingStatus from './sykmelding/SykmeldingStatus';
+import UtdypendeOpplysning from './sykmelding/UtdypendeOpplysninger';
 
 export enum DiagnosekodeSystem {
     '2.16.578.1.12.4.1.1.7110' = 'ICD-10',
     '2.16.578.1.12.4.1.1.7170' = 'ICPC-2',
 }
-export class Diagnose {
-    kode: string;
-    system: DiagnosekodeSystem;
-    tekst: string;
 
-    constructor(diagnose: any) {
-        this.kode = diagnose.kode;
-        this.system = DiagnosekodeSystem[diagnose.system as keyof typeof DiagnosekodeSystem];
-        this.tekst = diagnose.tekst;
-    }
-}
-
-export enum AnnenFraverGrunn {
-    GODKJENT_HELSEINSTITUSJON = 'Når vedkommende er innlagt i en godkjent helseinstitusjon',
-    BEHANDLING_FORHINDRER_ARBEID = 'Når vedkommende er under behandling og legen erklærer at behandlingen gjør det nødvendig at vedkommende ikke arbeider',
-    ARBEIDSRETTET_TILTAK = 'Når vedkommende deltar på et arbeidsrettet tiltak',
-    MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND = 'Når vedkommende på grunn av sykdom, skade eller lyte får tilskott når vedkommende på grunn av sykdom, skade eller lyte får tilskott',
-    NODVENDIG_KONTROLLUNDENRSOKELSE = 'Når vedkommende er til nødvendig kontrollundersøkelse som krever minst 24 timers fravær, reisetid medregnet',
-    SMITTEFARE = 'Når vedkommende myndighet har nedlagt forbud mot at han eller hun arbeider på grunn av smittefare',
-    ABORT = 'Når vedkommende er arbeidsufør som følge av svangerskapsavbrudd',
-    UFOR_GRUNNET_BARNLOSHET = 'Når vedkommende er arbeidsufør som følge av behandling for barnløshet',
-    DONOR = 'Når vedkommende er donor eller er under vurdering som donor',
-    BEHANDLING_STERILISERING = 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering',
-}
-
-export class AnnenFraversArsak {
-    beskrivelse?: string;
-    grunn?: AnnenFraverGrunn[];
-
-    constructor(annenFraversArsak: any) {
-        this.beskrivelse = annenFraversArsak.beskrivelse;
-        this.grunn = annenFraversArsak.grunn.map(
-            (grunn: string) => AnnenFraverGrunn[grunn as keyof typeof AnnenFraverGrunn],
-        );
-    }
-}
-
-export class MedisinskVurdering {
-    hovedDiagnose?: Diagnose;
-    biDiagnoser: Diagnose[];
-    svangerskap?: boolean;
-    yrkesskade?: boolean;
-    yrkesskadeDato?: Date;
-    annenFraversArsak?: AnnenFraversArsak;
-
-    constructor(medisinskVurdering: any) {
-        this.hovedDiagnose = new Diagnose(medisinskVurdering.hovedDiagnose);
-        this.biDiagnoser = medisinskVurdering.biDiagnoser.map((biDiagnose: any) => new Diagnose(biDiagnose));
-        this.svangerskap = medisinskVurdering.svangerskap;
-        this.yrkesskade = medisinskVurdering.yrkesskade;
-        this.yrkesskadeDato = new Date(medisinskVurdering.yrkesskadeDato);
-        this.annenFraversArsak = medisinskVurdering.annenFraversArsak;
-    }
-}
-
-// ------ PROGNOSE
-
-class ErIArbeid {
-    egetArbeidPaSikt: boolean;
-    annetArbeidPaSikt: boolean;
-    arbeidFOM?: Date;
-    vurderingsdato?: Date;
-
-    constructor(erIArbeid: any) {
-        this.egetArbeidPaSikt = erIArbeid.egetArbeidPaSikt;
-        this.annetArbeidPaSikt = erIArbeid.annetArbeidPaSikt;
-        this.arbeidFOM = erIArbeid.arbeidFOM ? new Date(erIArbeid.arbeidFOM) : undefined;
-        this.vurderingsdato = erIArbeid.vurderingsdato ? new Date(erIArbeid.vurderingsdato) : undefined;
-    }
-}
-
-class ErIkkeIArbeid {
-    arbeidsforPaSikt: boolean;
-    arbeidsforFOM?: Date;
-    vurderingsdato?: Date;
-
-    constructor(erIkkeIArbeid: any) {
-        this.arbeidsforPaSikt = erIkkeIArbeid.arbeidsforPaSikt;
-        this.arbeidsforFOM = erIkkeIArbeid.arbeidsforFOM ? new Date(erIkkeIArbeid.arbeidsforFOM) : undefined;
-        this.vurderingsdato = erIkkeIArbeid.vurderingsdato ? new Date(erIkkeIArbeid.vurderingsdato) : undefined;
-    }
-}
-
-export class Prognose {
-    arbeidsforEtterPeriode: boolean;
-    hensynArbeidsplassen?: string;
-    erIArbeid?: ErIArbeid;
-    erIkkeIArbeid?: ErIkkeIArbeid;
-
-    constructor(prognose: any) {
-        this.arbeidsforEtterPeriode = prognose.arbeidsforEtterPeriode;
-        this.hensynArbeidsplassen = prognose.hensynArbeidsplassen;
-        this.erIArbeid = prognose.erIArbeid ? new ErIArbeid(prognose.erIArbeid) : undefined;
-        this.erIkkeIArbeid = prognose.erIkkeIArbeid ? new ErIkkeIArbeid(prognose.erIkkeIArbeid) : undefined;
-    }
-}
-
-// ------ UTDYPENDE_OPPLYSNINGER
-
-type Restriksjoner = 'SKJERMET_FOR_ARBEIDSGIVER' | 'SKJERMET_FOR_NAV';
-
-export interface UtdypendeOpplysning {
-    sporsmal: string;
-    svar: string;
-    restriksjoner: Restriksjoner[];
-}
-
-// ------ MELDING_TIL_NAV
-
-interface MeldingTilNAV {
-    bistandUmiddelbart: boolean;
-    beskrivBistand?: string;
-}
-
-// ------ KONTAKT_MED_PASIENT
-
-export class KontaktMedPasient {
-    kontaktDato?: Date;
-    begrunnelseIkkeKontakt?: string;
-
-    constructor(kontaktMedPasient: any) {
-        this.kontaktDato = kontaktMedPasient.kontaktDato ? new Date(kontaktMedPasient.kontaktDato) : undefined;
-        this.begrunnelseIkkeKontakt = kontaktMedPasient.begrunnelseIkkeKontakt;
-    }
-}
-
-// ------- BEHANDLER
-
-interface Adresse {
-    gate?: string;
-    postnummer?: number;
-    kommune?: string;
-    postboks?: string;
-    land?: string;
-}
-
-export interface Behandler {
-    fornavn: string;
-    mellomnavn: string;
-    etternavn: string;
-    aktoerId: string;
-    fnr: string;
-    hpr?: string;
-    her?: string;
-    adresse: Adresse;
-    tlf?: string;
-}
-
-export class Sykmelding {
+export class Sykmelding extends ObjectBase<Sykmelding> {
     id: string;
     mottattTidspunkt: Date;
     behandlingsutfall: Behandlingsutfall;
     legekontorOrgnummer?: string;
-    arbeidsgiver?: Arbeidsgiver;
+    arbeidsgiver?: ArbeidsgiverSykmelding;
     sykmeldingsperioder: Periode[];
     sykmeldingStatus: SykmeldingStatus;
     medisinskVurdering?: MedisinskVurdering;
     skjermesForPasient: boolean;
     prognose?: Prognose;
-    utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>>;
+    utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>> = new Map();
     tiltakArbeidsplassen?: string;
     tiltakNAV?: string;
     andreTiltak?: string;
@@ -316,49 +36,84 @@ export class Sykmelding {
     kontaktMedPasient: KontaktMedPasient;
     behandletTidspunkt: Date;
     behandler: Behandler;
-    syketilfelleStartDato: Date;
-    navnFastlege: string;
-    egenmeldt: boolean;
-    papirsykmelding: boolean;
-    harRedusertArbeidsgiverperiode: boolean;
+    syketilfelleStartDato?: Date;
+    navnFastlege?: string;
+    egenmeldt?: boolean;
+    papirsykmelding?: boolean;
+    harRedusertArbeidsgiverperiode?: boolean;
+    merknader?: Merknad[];
 
-    private setUtdypendeOpplysninger(utdypendeOpplysninger: any) {
-        Object.keys(utdypendeOpplysninger).forEach((outerKey) => {
-            const opplysning = new Map<string, UtdypendeOpplysning>();
-            Object.keys(utdypendeOpplysninger[outerKey]).forEach((innerKey) => {
-                opplysning.set(innerKey, utdypendeOpplysninger[outerKey][innerKey]);
-            });
-            this.utdypendeOpplysninger.set(outerKey, opplysning);
-        });
+    constructor(data: any) {
+        super(data, 'Sykmelding');
+
+        this.id = this.getRequiredString('id');
+        this.mottattTidspunkt = this.getRequiredDate('mottattTidspunkt');
+        this.behandlingsutfall = new Behandlingsutfall(data.behandlingsutfall);
+        if (this.isDefined('legekontorOrgnummer')) {
+            this.legekontorOrgnummer = this.getRequiredString('legekontorOrgnummer');
+        }
+        if (this.isDefined('arbeidsgiver')) {
+            this.arbeidsgiver = new ArbeidsgiverSykmelding(data.arbeidsgiver);
+        }
+        this.sykmeldingsperioder = this.getRequiredArray('sykmeldingsperioder').map((periode) => new Periode(periode));
+        this.sykmeldingStatus = new SykmeldingStatus(data.sykmeldingStatus);
+        if (this.isDefined('medisinskVurdering')) {
+            this.medisinskVurdering = new MedisinskVurdering(data.medisinskVurdering);
+        }
+        this.skjermesForPasient = this.getRequiredBoolean('skjermesForPasient');
+        if (this.isDefined('prognose')) {
+            this.prognose = new Prognose(data.prognose);
+        }
+        this.setUtdypendeOpplysninger(data.utdypendeOpplysninger);
+        if (this.isDefined('tiltakArbeidsplassen')) {
+            this.tiltakArbeidsplassen = this.getRequiredString('tiltakArbeidsplassen');
+        }
+        if (this.isDefined('tiltakNAV')) {
+            this.tiltakNAV = this.getRequiredString('tiltakNAV');
+        }
+        if (this.isDefined('andreTiltak')) {
+            this.andreTiltak = this.getRequiredString('andreTiltak');
+        }
+        if (this.isDefined('meldingTilNAV')) {
+            this.meldingTilNAV = new MeldingTilNAV(data.meldingTilNAV);
+        }
+        if (this.isDefined('meldingTilArbeidsgiver')) {
+            this.meldingTilArbeidsgiver = this.getRequiredString('meldingTilArbeidsgiver');
+        }
+        this.kontaktMedPasient = new KontaktMedPasient(data.kontaktMedPasient);
+        this.behandletTidspunkt = this.getRequiredDate('behandletTidspunkt');
+        this.behandler = new Behandler(data.behandler);
+        if (this.isDefined('syketilfelleStartDato')) {
+            this.syketilfelleStartDato = this.getRequiredDate('syketilfelleStartDato');
+        }
+        if (this.isDefined('navnFastlege')) {
+            this.navnFastlege = this.getRequiredString('navnFastlege');
+        }
+        if (this.isDefined('egenmeldt')) {
+            this.egenmeldt = this.getRequiredBoolean('egenmeldt');
+        }
+        if (this.isDefined('papirsykmelding')) {
+            this.egenmeldt = this.getRequiredBoolean('papirsykmelding');
+        }
+        if (this.isDefined('harRedusertArbeidsgiverperiode')) {
+            this.egenmeldt = this.getRequiredBoolean('harRedusertArbeidsgiverperiode');
+        }
+        if (this.isDefined('merknader')) {
+            this.merknader = this.getRequiredArray('merknader').map((merknad) => new Merknad(merknad));
+        }
     }
 
-    constructor(sykmelding: any) {
-        this.id = sykmelding.id;
-        this.mottattTidspunkt = new Date(sykmelding.mottattTidspunkt);
-        this.behandlingsutfall = sykmelding.behandlingsutfall;
-        this.legekontorOrgnummer = sykmelding.legekontorOrgnummer;
-        this.arbeidsgiver = sykmelding.arbeidsgiver;
-        this.sykmeldingsperioder = sykmelding.sykmeldingsperioder.map((periode: any) => new Periode(periode));
-        this.sykmeldingStatus = new SykmeldingStatus(sykmelding.sykmeldingStatus);
-        this.medisinskVurdering = sykmelding.medisinskVurdering
-            ? new MedisinskVurdering(sykmelding.medisinskVurdering)
-            : undefined;
-        this.skjermesForPasient = sykmelding.skjermesForPasient;
-        this.prognose = sykmelding.prognose ? new Prognose(sykmelding.prognose) : undefined;
-        this.utdypendeOpplysninger = new Map<string, Map<string, UtdypendeOpplysning>>();
-        this.setUtdypendeOpplysninger(sykmelding.utdypendeOpplysninger);
-        this.tiltakArbeidsplassen = sykmelding.tiltakArbeidsplassen;
-        this.tiltakNAV = sykmelding.tiltakNAV;
-        this.andreTiltak = sykmelding.andreTiltak;
-        this.meldingTilNAV = sykmelding.meldingTilNAV;
-        this.meldingTilArbeidsgiver = sykmelding.meldingTilArbeidsgiver;
-        this.kontaktMedPasient = new KontaktMedPasient(sykmelding.kontaktMedPasient);
-        this.behandletTidspunkt = new Date(sykmelding.behandletTidspunkt);
-        this.behandler = sykmelding.behandler;
-        this.syketilfelleStartDato = new Date(sykmelding.syketilfelleStartDato);
-        this.navnFastlege = sykmelding.navnFastlege;
-        this.egenmeldt = sykmelding.egenmeldt;
-        this.papirsykmelding = sykmelding.papirsykmelding;
-        this.harRedusertArbeidsgiverperiode = sykmelding.harRedusertArbeidsgiverperiode;
+    private setUtdypendeOpplysninger(utdypendeOpplysninger: any) {
+        if (this.isDefined('utdypendeOpplysninger') && typeof utdypendeOpplysninger === 'object') {
+            Object.keys(utdypendeOpplysninger).forEach((outerKey) => {
+                const opplysning = new Map<string, UtdypendeOpplysning>();
+                if (this.isDefined(utdypendeOpplysninger[outerKey])) {
+                    Object.keys(utdypendeOpplysninger[outerKey]).forEach((innerKey) => {
+                        opplysning.set(innerKey, utdypendeOpplysninger[outerKey][innerKey]);
+                    });
+                    this.utdypendeOpplysninger.set(outerKey, opplysning);
+                }
+            });
+        }
     }
 }

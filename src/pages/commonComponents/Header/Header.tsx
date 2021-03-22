@@ -2,8 +2,8 @@ import './Header.less';
 
 import React from 'react';
 import { Undertittel, Innholdstittel } from 'nav-frontend-typografi';
-import { Periode } from '../../../types/sykmelding';
 import { getTotalSykmeldingLenghtReadableString } from '../../../utils/sykmeldingUtils';
+import Periode from '../../../types/sykmelding/Periode';
 
 interface HeaderProps {
     title: string;

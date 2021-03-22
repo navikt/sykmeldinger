@@ -111,7 +111,8 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
                     <PrognoseSeksjon prognose={sykmelding.prognose} />
                     <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                    <LegeSeksjon navn={sykmelding.navnFastlege} />
+                    {/* TODO: fix typesafety */}
+                    <LegeSeksjon navn={sykmelding.navnFastlege || ''} />
                     <hr className="margin-bottom--2" />
                     <BehandlingsDatoer
                         behandletTidspunkt={sykmelding.behandletTidspunkt}

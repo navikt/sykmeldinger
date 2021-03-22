@@ -1,7 +1,7 @@
 import { Arbeidsgiver } from '../types/arbeidsgiver';
 import { RadioPanelProps } from 'nav-frontend-skjema';
-import { Periode } from '../types/sykmelding';
 import { Arbeidssituasjoner, FeilaktigeOpplysninger } from '../types/form';
+import Periode from '../types/sykmelding/Periode';
 
 // helper function for infering types with Object.entries
 export const getEntries = <T extends {}>(object: T): Array<[keyof T, T[keyof T]]> =>

@@ -1,5 +1,5 @@
-import { Periode } from '../types/sykmelding';
 import dayjs from 'dayjs';
+import Periode from '../types/sykmelding/Periode';
 
 const getPeriodLength = (periode: Periode): number => {
     return dayjs(periode.tom).diff(dayjs(periode.fom), 'day');

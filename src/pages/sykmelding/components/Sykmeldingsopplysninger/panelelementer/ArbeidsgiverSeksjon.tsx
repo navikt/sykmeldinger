@@ -1,10 +1,10 @@
 import React from 'react';
+import ArbeidsgiverSykmelding from '../../../../../types/sykmelding/ArbeidsgiverSykmelding';
 
 import EtikettMedTekst from '../layout/EtikettMedTekst';
-import { Arbeidsgiver } from '../../../../../types/sykmelding';
 
 interface ArbeidsgiverSeksjonProps {
-    arbeidsgiver?: Arbeidsgiver;
+    arbeidsgiver?: ArbeidsgiverSykmelding;
 }
 
 const ArbeidsgiverSeksjon = ({ arbeidsgiver }: ArbeidsgiverSeksjonProps) => {

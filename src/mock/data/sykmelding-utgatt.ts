@@ -15,6 +15,7 @@ export const sykmeldingUtgatt = {
             tom: '2020-02-11',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
+            reisetilskudd: false,
         },
     ],
     sykmeldingStatus: {
@@ -24,6 +25,7 @@ export const sykmeldingUtgatt = {
             orgnummer: '123456',
             orgNavn: 'Posten AS',
         },
+        sporsmalOgSvarListe: [],
     },
     medisinskVurdering: {
         hovedDiagnose: {
