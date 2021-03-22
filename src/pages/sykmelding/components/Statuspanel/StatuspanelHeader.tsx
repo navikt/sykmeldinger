@@ -1,9 +1,9 @@
 import React from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { SykmeldingStatus } from '../../../../types/sykmelding';
 import dayjs from 'dayjs';
 import checkMark from './checkMark.svg';
 import './Statuspanel.less';
+import SykmeldingStatus from '../../../../types/sykmelding/SykmeldingStatus';
 
 interface StatuspanelHeaderProps {
     sykmeldingstatus: SykmeldingStatus;

@@ -61,7 +61,8 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
                 <PrognoseSeksjon prognose={sykmelding.prognose} />
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                <LegeSeksjon navn={sykmelding.navnFastlege} />
+                {/* TODO */}
+                <LegeSeksjon navn={sykmelding.navnFastlege || ''} />
 
                 <Sykmeldingsopplysninger
                     id="flere-sykmeldingsopplysnigner"

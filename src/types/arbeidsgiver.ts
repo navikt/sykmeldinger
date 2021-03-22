@@ -1,36 +1,58 @@
-// Made as class because dates need parsing
+import ObjectBase from './objectBase';
 
-export class NaermesteLeder {
-    aktivTom?: Date;
-    aktoerId: string;
-    arbeidsgiverForskuttererLoenn?: boolean;
-    epost: string;
-    mobil: string;
-    navn: string;
-    organisasjonsnavn?: string;
-    orgnummer: string;
+export class Arbeidsgiver extends ObjectBase<Arbeidsgiver> {
+    readonly orgnummer: string;
+    readonly juridiskOrgnummer: string;
+    readonly navn: string;
+    readonly stillingsprosent: string;
+    readonly stilling: string;
+    readonly aktivtArbeidsforhold: boolean;
+    readonly naermesteLeder?: NaermesteLeder;
 
     constructor(data: any) {
-        this.aktivTom = new Date(data.aktivTom);
-        this.aktoerId = data.aktoerId;
-        this.arbeidsgiverForskuttererLoenn = data.arbeidsgiverForskuttererLoenn;
-        this.epost = data.epost;
-        this.mobil = data.mobil;
-        this.navn = data.navn;
-        this.organisasjonsnavn = data.organisasjonsnavn;
-        this.orgnummer = data.orgnummer;
+        super(data, 'Arbeidsgiver');
+
+        this.orgnummer = this.getRequiredString('orgnummer');
+        this.juridiskOrgnummer = this.getRequiredString('juridiskOrgnummer');
+        this.navn = this.getRequiredString('navn');
+        this.stillingsprosent = this.getRequiredString('stillingsprosent');
+        this.stilling = this.getRequiredString('stilling');
+        this.aktivtArbeidsforhold = this.getRequiredBoolean('aktivtArbeidsforhold');
+
+        if (this.isDefined('naermesteLeder')) {
+            this.naermesteLeder = new NaermesteLeder(data.naermesteLeder);
+        }
     }
 }
 
-export class Arbeidsgiver {
-    naermesteLeder: NaermesteLeder | null;
-    navn: string;
-    orgnummer: string;
-    stilling: string;
+export class NaermesteLeder extends ObjectBase<NaermesteLeder> {
+    readonly aktoerId: string;
+    readonly navn: string;
+    readonly orgnummer: string;
+    readonly organisasjonsnavn: string;
+    readonly epost?: string;
+    readonly mobil?: string;
+    readonly aktivTom?: Date;
+    readonly arbeidsgiverForskuttererLoenn?: boolean;
+
     constructor(data: any) {
-        this.naermesteLeder = data.naermesteLeder ? new NaermesteLeder(data.naermesteLeder) : null;
-        this.navn = data.navn;
-        this.orgnummer = data.orgnummer;
-        this.stilling = data.stilling;
+        super(data, 'NaermesteLeder');
+
+        this.aktoerId = this.getRequiredString('aktoerId');
+        this.navn = this.getRequiredString('navn');
+        this.orgnummer = this.getRequiredString('orgnummer');
+        this.organisasjonsnavn = this.getRequiredString('organisasjonsnavn');
+        if (this.isDefined('epost')) {
+            this.epost = this.getRequiredString('epost');
+        }
+        if (this.isDefined('mobil')) {
+            this.epost = this.getRequiredString('mobil');
+        }
+        if (this.isDefined('aktivTom')) {
+            this.aktivTom = this.getRequiredDate('aktivTom');
+        }
+        if (this.isDefined('arbeidsgiverForskuttererLoenn')) {
+            this.arbeidsgiverForskuttererLoenn = this.getRequiredBoolean('arbeidsgiverForskuttererLoenn');
+        }
     }
 }

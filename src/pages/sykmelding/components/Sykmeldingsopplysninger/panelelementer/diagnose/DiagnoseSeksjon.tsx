@@ -3,7 +3,7 @@ import './Diagnoseseksjon.less';
 import React from 'react';
 
 import EtikettMedTekst from '../../layout/EtikettMedTekst';
-import { Diagnose } from '../../../../../../types/sykmelding';
+import { Diagnose } from '../../../../../../types/sykmelding/MedisinskVurdering';
 
 interface DiagnoseSeksjonProps {
     diagnose?: Diagnose;

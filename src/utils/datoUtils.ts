@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Periode } from '../types/sykmelding';
+import Periode from '../types/sykmelding/Periode';
 
 const maaneder = [
     'januar',
