@@ -64,7 +64,7 @@ export class Sykmelding extends ObjectBase<Sykmelding> {
         if (this.isDefined('prognose')) {
             this.prognose = new Prognose(data.prognose);
         }
-        this.setUtdypendeOpplysninger();
+        this.setUtdypendeOpplysninger(data.utdypendeOpplysninger);
         if (this.isDefined('tiltakArbeidsplassen')) {
             this.tiltakArbeidsplassen = this.getRequiredString('tiltakArbeidsplassen');
         }
@@ -103,13 +103,13 @@ export class Sykmelding extends ObjectBase<Sykmelding> {
         }
     }
 
-    private setUtdypendeOpplysninger() {
+    private setUtdypendeOpplysninger(utdypendeOpplysninger: any) {
         if (this.isDefined('utdypendeOpplysninger')) {
-            Object.keys(this.data.utdypendeOpplysninger).forEach((outerKey) => {
+            Object.keys(utdypendeOpplysninger).forEach((outerKey) => {
                 const opplysning = new Map<string, UtdypendeOpplysning>();
-                if (this.isDefined(this.data.utdypendeOpplysninger[outerKey])) {
-                    Object.keys(this.data.utdypendeOpplysninger[outerKey]).forEach((innerKey) => {
-                        opplysning.set(innerKey, this.data.utdypendeOpplysninger[outerKey][innerKey]);
+                if (this.isDefined(utdypendeOpplysninger[outerKey])) {
+                    Object.keys(utdypendeOpplysninger[outerKey]).forEach((innerKey) => {
+                        opplysning.set(innerKey, utdypendeOpplysninger[outerKey][innerKey]);
                     });
                     this.utdypendeOpplysninger.set(outerKey, opplysning);
                 }

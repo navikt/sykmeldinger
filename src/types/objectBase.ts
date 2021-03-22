@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 class ObjectBase<T> {
-    data: any;
+    private data: any;
 
     constructor(data: any, constructorName: string) {
         this.assert(
