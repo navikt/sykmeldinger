@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { StatusEvent, RegelStatus, Periode } from '../../../../types/sykmelding';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { EtikettAdvarsel, EtikettSuksess, EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
@@ -13,6 +12,9 @@ import './Lenkepanel.less';
 import { toReadableTotalPeriodLength } from '../../../../utils/datoUtils';
 import { useHistory } from 'react-router-dom';
 import { getPeriodDescriptionStrings } from '../../../../utils/periodeUtils';
+import { StatusEvent } from '../../../../types/sykmelding/SykmeldingStatus';
+import { RegelStatus } from '../../../../types/sykmelding/Behandlingsutfall';
+import Periode from '../../../../types/sykmelding/Periode';
 
 interface IconSet {
     iconNormal: string;
@@ -21,8 +23,8 @@ interface IconSet {
 
 interface LenkepanelProps {
     sykmeldingId: string;
-    sykmeldingsstatus: StatusEvent;
-    sykmeldingBehandlingsutfall: RegelStatus;
+    sykmeldingsstatus: keyof typeof StatusEvent;
+    sykmeldingBehandlingsutfall: keyof typeof RegelStatus;
     sykmeldingsperioder: Periode[];
     arbeidsgiverNavn?: string;
     erEgenmeldt: boolean;
@@ -38,7 +40,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({
     erEgenmeldt,
     erPapir,
 }) => {
-    const getIconSet = (behandlingsutfall: RegelStatus, erPapir: boolean): IconSet => {
+    const getIconSet = (behandlingsutfall: keyof typeof RegelStatus, erPapir: boolean): IconSet => {
         if (behandlingsutfall === 'INVALID') {
             return { iconNormal: declined, iconHover: declinedHover };
         }
@@ -48,7 +50,10 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({
         return { iconNormal: stethoscope, iconHover: stethoscopeHover };
     };
 
-    const getEtikett = (status: StatusEvent, behandlingsutfall: RegelStatus): JSX.Element | null => {
+    const getEtikett = (
+        status: keyof typeof StatusEvent,
+        behandlingsutfall: keyof typeof RegelStatus,
+    ): JSX.Element | null => {
         switch (status) {
             case 'AVBRUTT':
                 return <EtikettAdvarsel mini>Avbrutt av deg</EtikettAdvarsel>;

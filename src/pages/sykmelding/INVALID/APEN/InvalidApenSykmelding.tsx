@@ -43,7 +43,8 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
                 ))}
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                <LegeSeksjon navn={sykmelding.navnFastlege} />
+                {/* TODO: typesafety */}
+                <LegeSeksjon navn={sykmelding.navnFastlege || ''} />
             </Sykmeldingsopplysninger>
 
             {errorBekreft && (

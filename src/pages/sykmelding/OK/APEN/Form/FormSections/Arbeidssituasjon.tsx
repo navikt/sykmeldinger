@@ -162,7 +162,8 @@ const Arbeidssituasjon = ({
                         <Egenmeldingsdager
                             formState={formState}
                             setFormState={setFormState}
-                            sykmeldingStartdato={sykmelding.syketilfelleStartDato}
+                            // TODO: FIX
+                            sykmeldingStartdato={sykmelding.syketilfelleStartDato || new Date()}
                             feil={errors.get('fravaersperioder')?.feilmelding}
                         />
                     )}

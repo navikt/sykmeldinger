@@ -9,9 +9,7 @@ class Brukerinformasjon extends ObjectBase<Brukerinformasjon> {
         super(data, 'Brukerinformasjon');
 
         this.diskresjonskode = this.getRequiredBoolean('diskresjonskode');
-
-        this.assert(Array.isArray(data.arbeidsgivere), 'Property arbeidsgivere is not of type Array');
-        this.arbeidsgivere = data.arbeidsgivere.map((ag: unknown) => new Arbeidsgiver(ag));
+        this.arbeidsgivere = this.getRequiredArray('arbeidsgivere').map((ag) => new Arbeidsgiver(ag));
     }
 }
 

@@ -3,7 +3,8 @@ import './VeilederContent.less';
 import React from 'react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import { Behandler, Sykmelding } from '../../../types/sykmelding';
+import { Sykmelding } from '../../../types/sykmelding';
+import Behandler from '../../../types/sykmelding/Behandler';
 
 interface VeilederContentProps {
     sykmelding: Sykmelding;

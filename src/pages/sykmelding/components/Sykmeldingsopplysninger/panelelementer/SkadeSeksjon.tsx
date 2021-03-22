@@ -2,7 +2,7 @@ import React from 'react';
 
 import CheckboxMedDato from '../layout/Checkbox/CheckboxMedDato';
 import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
-import { MedisinskVurdering } from '../../../../../types/sykmelding';
+import MedisinskVurdering from '../../../../../types/sykmelding/MedisinskVurdering';
 
 interface SkadeSeksjonProps {
     medisinskVurdering?: MedisinskVurdering;

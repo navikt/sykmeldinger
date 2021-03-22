@@ -50,7 +50,8 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
                 <PrognoseSeksjon prognose={sykmelding.prognose} />
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                <LegeSeksjon navn={sykmelding.navnFastlege} />
+                {/* TODO */}
+                <LegeSeksjon navn={sykmelding.navnFastlege || ''} />
 
                 <Sykmeldingsopplysninger
                     id="flere-sykmeldingsopplysnigner"
@@ -90,7 +91,8 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />
                 <PrognoseSeksjon prognose={sykmelding.prognose} />
                 <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                <LegeSeksjon navn={sykmelding.navnFastlege} />
+                {/* TODO */}
+                <LegeSeksjon navn={sykmelding.navnFastlege || ''} />
 
                 <hr style={{ marginBottom: '2rem' }} />
 
