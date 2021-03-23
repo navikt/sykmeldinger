@@ -17,10 +17,10 @@ app.use((_req, res, next) => {
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
 
-app.get(`${PUBLIC_URL}/is_alive`, (_req, res) => {
+app.get('/is_alive', (_req, res) => {
     res.status(200).send('Alive');
 });
-app.get(`${PUBLIC_URL}/is_ready`, (_req, res) => {
+app.get('/is_ready', (_req, res) => {
     res.status(200).send('Ready');
 });
 
