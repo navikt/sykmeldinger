@@ -15,6 +15,7 @@ jobs:
           COMMIT=$(git rev-parse --short=8 HEAD)
           VERSION=$TIME-$COMMIT
           echo "IMAGE_ROOT=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
+          echo "IMAGE_SYK_SYKMELDINGER=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - run: echo $VERSION > VERSION.txt
       - name: Last opp VERSION til neste job
@@ -48,8 +49,12 @@ jobs:
         run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
       - name: Bygg og push Docker image hvor appen serves på /
         run: |
-            docker build . -f Dockerfile -t ${IMAGE_ROOT}
+            docker build . -f Dockerfile.root -t ${IMAGE_ROOT}
             docker push ${IMAGE_ROOT}
+      - name: Bygg og push Docker image hvor appen serves på /sykmeldinger
+        run: |
+            docker build . -f Dockerfile.syk.sykmeldinger -t ${IMAGE_SYK_SYKMELDINGER}
+            docker push ${IMAGE_SYK_SYKMELDINGER}
 
   deploy-to-q1-sbs:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
@@ -72,6 +77,26 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-sbs
           RESOURCE: nais-q1.yaml
+
+  deploy-to-q1-dev-gcp:
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
+    name: Deploy to q1 dev-gcp
+    needs: [build-and-publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/download-artifact@v1
+        with:
+          name: VERSION.txt
+          path: .
+      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
+      - name: Deploy to dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais-dev-gcp.yaml
 
   deploy-to-labs-gcp:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')

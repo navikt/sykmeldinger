@@ -14,7 +14,7 @@ import fetchMock from 'fetch-mock';
 
 // Redirect to basepath to make demo-app work by visiting ingress (sykmeldinger.labs.nais.io)
 if (window.location.pathname === '/') {
-    window.location.pathname = '/sykmeldinger';
+    window.location.pathname = window._env_?.SYKMELDINGER_ROOT || '/syk/sykmeldinger';
 }
 
 fetchMock.config.fallbackToNetwork = true;

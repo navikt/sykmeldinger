@@ -1,16 +1,19 @@
 import { useQuery } from 'react-query';
+import { authenticatedGet } from '../../../utils/fetchUtils';
 
 function useSykmeldingUtenforVentetid(sykmeldingId: string) {
     return useQuery<boolean, Error>(['erUtenforVentetid', sykmeldingId], () =>
         // TODO: correct endpoint
-        fetch(`${window._env_?.SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/erUtenforVentetid`)
-            .then((data) => data.json())
-            .then((body) => {
-                if (typeof body?.erUtenforVentetid === 'boolean') {
-                    return Boolean(body.erUtenforVentetid);
+        // TODO: make Class for respons
+        authenticatedGet(
+            `${window._env_?.SYFOREST_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/erUtenforVentetid`,
+            (data) => {
+                if (typeof (data as any).erUtenforVentetid === 'boolean') {
+                    return Boolean((data as any).erUtenforVentetid);
                 }
-                throw new TypeError('Property "erUtenforVentetid" is not of expected type "boolean"');
-            }),
+                throw new Error();
+            },
+        ),
     );
 }
 

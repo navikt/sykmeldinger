@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
+import { authenticatedPost } from '../../../utils/fetchUtils';
 
 function useSend(sykmeldingId: string) {
     const queryClient = useQueryClient();
@@ -7,11 +8,10 @@ function useSend(sykmeldingId: string) {
         // TODO: type argument to match form output
         // TODO: endpoint is not implemented at sykmeldinger-backend
         (values: any) =>
-            fetch(`${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/send`, {
-                method: 'POST',
-                body: JSON.stringify(values),
-                credentials: 'include',
-            }).then((data) => data.text()),
+            authenticatedPost(
+                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/send`,
+                values,
+            ),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

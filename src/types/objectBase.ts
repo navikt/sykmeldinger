@@ -4,7 +4,7 @@ class ObjectBase<T> {
     private data: any;
 
     constructor(data: any, constructorName: string) {
-        this.assert(
+        ObjectBase.assert(
             typeof data === 'object',
             `Data of type ${typeof data} passed to ${constructorName} constructor is not assignable to type "object"`,
         );
@@ -12,7 +12,7 @@ class ObjectBase<T> {
     }
 
     // Will infer the condition on the property that is tested
-    assert(condition: any, msg: string): asserts condition {
+    static assert(condition: any, msg: string): asserts condition {
         if (!condition) {
             throw new TypeError(msg);
         }
@@ -30,11 +30,11 @@ class ObjectBase<T> {
         const enumKeys = Object.keys(e);
         const unknownArray = this.getRequiredArray(prop);
         unknownArray.forEach((maybeEnumKey) => {
-            this.assert(
+            ObjectBase.assert(
                 typeof maybeEnumKey === 'string',
                 `Arrayvalue ${typeof maybeEnumKey} in property ${prop} is not assignable to type string`,
             );
-            this.assert(
+            ObjectBase.assert(
                 enumKeys.includes(maybeEnumKey),
                 `Arrayvalue ${typeof maybeEnumKey} in property ${prop} is not assignable to key of enum type`,
             );
@@ -44,7 +44,7 @@ class ObjectBase<T> {
 
     getRequiredArray(prop: keyof T): Array<unknown> {
         const maybeArray = this.data[prop];
-        this.assert(
+        ObjectBase.assert(
             Array.isArray(maybeArray),
             `Property ${prop} of type ${typeof maybeArray} is not assignable to type array`,
         );
@@ -53,7 +53,7 @@ class ObjectBase<T> {
 
     getRequiredString(prop: keyof T): string {
         const maybeStr = this.data[prop];
-        this.assert(
+        ObjectBase.assert(
             typeof maybeStr === 'string',
             `Property ${prop} of type ${typeof maybeStr} is not assignable to type string`,
         );
@@ -62,7 +62,7 @@ class ObjectBase<T> {
 
     getRequiredNumber(prop: keyof T): number {
         const maybeNumber = this.data[prop];
-        this.assert(
+        ObjectBase.assert(
             typeof maybeNumber === 'number',
             `Property ${prop} of type ${typeof maybeNumber} is not assignable to type number`,
         );
@@ -71,7 +71,7 @@ class ObjectBase<T> {
 
     getRequiredBoolean(prop: keyof T): boolean {
         const maybeBoolean = this.data[prop];
-        this.assert(
+        ObjectBase.assert(
             typeof maybeBoolean === 'boolean',
             `Property ${prop} of type ${typeof maybeBoolean} is not assignable to type boolean`,
         );
@@ -80,11 +80,11 @@ class ObjectBase<T> {
 
     getRequiredDate(prop: keyof T): Date {
         const maybeDateString = this.data[prop];
-        this.assert(
+        ObjectBase.assert(
             typeof maybeDateString === 'string',
             `Property ${prop} of type ${typeof maybeDateString} can not be parsed as date`,
         );
-        this.assert(
+        ObjectBase.assert(
             dayjs(maybeDateString).isValid(),
             `Property ${prop} with value ${maybeDateString} is not a valid date`,
         );
@@ -93,11 +93,11 @@ class ObjectBase<T> {
 
     getRequiredStringAsEnumKey<K>(e: K, prop: keyof T): keyof K {
         const maybeEnumKey = this.data[prop];
-        this.assert(
+        ObjectBase.assert(
             typeof maybeEnumKey === 'string',
             `Property ${prop} of type ${typeof maybeEnumKey} is not assignable as enum key`,
         );
-        this.assert(
+        ObjectBase.assert(
             Object.keys(e).includes(maybeEnumKey),
             `Could not match any enum key to property ${prop} with value ${maybeEnumKey}`,
         );

@@ -59,7 +59,7 @@
     },
     "scripts": {
         "start": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/env-config.js && craco start",
-        "build": "craco build",
+        "build": "CI=true PUBLIC_URL=##PUBLIC_URL## REACT_APP_DECORATOR_URL=##DECORATOR_URL## craco build",
         "test": "craco test",
         "eject": "react-scripts eject",
         "lint": "eslint 'src/**/**.{ts,tsx,js,jsx}'",

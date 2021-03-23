@@ -15,6 +15,8 @@ app.use((_req, res, next) => {
     next();
 });
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 app.get('/is_alive', (_req, res) => {
     res.status(200).send('Alive');
 });
@@ -23,8 +25,8 @@ app.get('/is_ready', (_req, res) => {
 });
 
 const STATIC_FILES_PATH = path.join(__dirname, '/build');
-app.use(express.static(STATIC_FILES_PATH, { etag: false, maxAge: '0' }));
-app.get('/*', (_req, res) => {
+app.use(`${PUBLIC_URL}`, express.static(STATIC_FILES_PATH, { etag: false, maxAge: '0' }));
+app.get(`${PUBLIC_URL}/*`, (_req, res) => {
     res.sendFile(STATIC_FILES_PATH + '/index.html');
 });
 
