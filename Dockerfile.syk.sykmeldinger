@@ -18,8 +18,8 @@ RUN chmod +x start.sh
 
 EXPOSE 8080
 
-ENV BASE_NAME=/sykmeldinger
-ENV PUBLIC_URL=/sykmeldinger
+ENV BASE_NAME=/syk/sykmeldinger
+ENV PUBLIC_URL=/syk/sykmeldinger
 
 # https://stackoverflow.com/a/58805795/12159703
 CMD ["/bin/bash", "-c", "./start.sh"]
