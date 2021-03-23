@@ -58,15 +58,7 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({ type, sykmeld
                 <ol className="lenkepanel-container__sykmeldinger">
                     {sykmeldingerSorted.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">
-                            <Lenkepanel
-                                sykmeldingId={sykmelding.id}
-                                sykmeldingsstatus={sykmelding.sykmeldingStatus.statusEvent}
-                                sykmeldingBehandlingsutfall={sykmelding.behandlingsutfall.status}
-                                sykmeldingsperioder={sykmelding.sykmeldingsperioder}
-                                arbeidsgiverNavn={sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
-                                erEgenmeldt={Boolean(sykmelding.egenmeldt)}
-                                erPapir={Boolean(sykmelding.papirsykmelding)}
-                            />
+                            <Lenkepanel sykmelding={sykmelding} />
                         </li>
                     ))}
                 </ol>
