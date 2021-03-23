@@ -1,0 +1,25 @@
+# Base image
+FROM navikt/node-express:12.2.0-alpine
+
+COPY server.js .
+COPY /build ./build
+
+COPY ./env.sh .
+COPY ./process-index-html.sh .
+COPY ./start.sh .
+
+COPY .env .
+
+RUN apk add --no-cache bash
+
+RUN chmod +x env.sh
+RUN chmod +x process-index-html.sh
+RUN chmod +x start.sh
+
+EXPOSE 8080
+
+ENV BASE_NAME=/sykmeldinger
+ENV PUBLIC_URL=/sykmeldinger
+
+# https://stackoverflow.com/a/58805795/12159703
+CMD ["/bin/bash", "-c", "./start.sh"]

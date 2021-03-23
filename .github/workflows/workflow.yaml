@@ -15,6 +15,7 @@ jobs:
           COMMIT=$(git rev-parse --short=8 HEAD)
           VERSION=$TIME-$COMMIT
           echo "IMAGE_ROOT=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
+          echo "IMAGE_SYKMELDINGER=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-sykmeldinger:$VERSION" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - run: echo $VERSION > VERSION.txt
       - name: Last opp VERSION til neste job
@@ -48,8 +49,12 @@ jobs:
         run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
       - name: Bygg og push Docker image hvor appen serves på /
         run: |
-            docker build . -f Dockerfile -t ${IMAGE_ROOT}
+            docker build . -f Dockerfile.root -t ${IMAGE_ROOT}
             docker push ${IMAGE_ROOT}
+      - name: Bygg og push Docker image hvor appen serves på /sykmeldinger
+        run: |
+            docker build . -f Dockerfile.sykmeldinger -t ${IMAGE_SYKMELDINGER}
+            docker push ${IMAGE_SYKMELDINGER}
 
   deploy-to-q1-sbs:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
@@ -85,7 +90,7 @@ jobs:
           name: VERSION.txt
           path: .
       - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
-      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-sykmeldinger:$VERSION" >> $GITHUB_ENV
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
