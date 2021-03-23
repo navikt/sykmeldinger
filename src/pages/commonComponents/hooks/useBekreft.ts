@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
+import { authenticatedPost } from '../../../utils/fetchUtils';
 
 function useBekreft(sykmeldingId: string) {
     const queryClient = useQueryClient();
@@ -6,11 +7,10 @@ function useBekreft(sykmeldingId: string) {
     return useMutation(
         // TODO: type argument to match form output
         (values: any) =>
-            fetch(`${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/bekreft`, {
-                method: 'POST',
-                body: JSON.stringify(values),
-                credentials: 'include',
-            }).then((data) => data.text()),
+            authenticatedPost(
+                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/bekreft`,
+                values,
+            ),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

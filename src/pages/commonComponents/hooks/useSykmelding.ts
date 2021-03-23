@@ -1,11 +1,13 @@
 import { useQuery } from 'react-query';
 import { Sykmelding } from '../../../types/sykmelding';
+import { authenticatedGet } from '../../../utils/fetchUtils';
 
 function useSykmelding(sykmeldingId: string) {
     return useQuery<Sykmelding, Error>(['sykmelding', sykmeldingId], () =>
-        fetch(`${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmeldinger/${sykmeldingId}`)
-            .then((data) => data.json())
-            .then((sykmelding) => new Sykmelding(sykmelding)),
+        authenticatedGet(
+            `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmeldinger/${sykmeldingId}`,
+            (sykmelding) => new Sykmelding(sykmelding),
+        ),
     );
 }
 

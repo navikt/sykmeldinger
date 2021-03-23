@@ -6,6 +6,7 @@ type EnvironmentKeys =
     | 'SYKMELDINGER_ROOT'
     | 'SYKEFRAVAER_ROOT'
     | 'LOGIN_SERVICE_URL'
+    | 'LOGIN_SERVICE_REDIRECT_URL'
     | 'SYFOREST_ROOT'
     | 'AMPLITUDE_KEY';
 
