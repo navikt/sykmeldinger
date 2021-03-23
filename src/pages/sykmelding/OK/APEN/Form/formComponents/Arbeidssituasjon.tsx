@@ -36,7 +36,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
 
         // Only Arbeidstaker, FL and SN within arbeidsgiverperiode/ventetid
         return (
-            ['ARBEIDSTAKER', 'FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
+            ['FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
             erUtenforVentetid === false
         );
     }, [watchArbeidssituasjon, erUtenforVentetid]);
