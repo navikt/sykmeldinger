@@ -56,28 +56,6 @@ jobs:
             docker build . -f Dockerfile.syk.sykmeldinger -t ${IMAGE_SYK_SYKMELDINGER}
             docker push ${IMAGE_SYK_SYKMELDINGER}
 
-  deploy-to-q1-sbs:
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
-    name: Deploy to q1-sbs (Q1)
-    runs-on: ubuntu-latest
-    needs: [build-and-publish]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-      - name: Last ned versjon
-        uses: actions/download-artifact@v1
-        with:
-          name: VERSION.txt
-          path: .
-      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
-      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
-      - uses: nais/deploy/actions/deploy@v1
-        name: Deploy to q1-sbs
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-sbs
-          RESOURCE: nais-q1.yaml
-
   deploy-to-q1-dev-gcp:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
     name: Deploy to q1 dev-gcp
