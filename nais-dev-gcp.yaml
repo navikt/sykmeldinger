@@ -9,7 +9,7 @@ spec:
   image: {{ image }}
   port: 8080
   ingresses:
-    - "https://www-gcp.dev.nav.no/syk/sykmeldinger"
+    - "https://www-gcp.dev.nav.no/sykmeldinger"
   replicas:
     min: 2
     max: 2
