@@ -31,10 +31,10 @@ spec:
     - name: RUNTIME_ENVIRONMENT
       value: "dev-gcp"
     - name: SYKMELDINGER_ROOT
-      value: "/syk/sykmeldinger"
+      value: "/sykmeldinger"
     - name: SYKMELDINGER_BACKEND_PROXY_ROOT
       value: "https://sykmeldinger-backend-proxy.dev.nav.no"
     - name: LOGINSERVICE_URL
       value: "https://loginservice.dev.nav.no/login"
     - name: LOGINSERVICE_REDIRECT_URL
-      value: "https://www-gcp.dev.nav.no/syk/sykmeldinger"
+      value: "https://www-gcp.dev.nav.no/sykmeldinger"
