@@ -34,7 +34,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
     const skalViseEgenmeldingsperioderSporsmal = useMemo(() => {
         if (watchArbeidssituasjon?.svar === undefined) return false;
 
-        // Only Arbeidstaker, FL and SN within arbeidsgiverperiode/ventetid
+        // Only FL and SN within ventetid
         return (
             ['FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
             erUtenforVentetid === false
