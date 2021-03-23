@@ -76,7 +76,7 @@ jobs:
   deploy-to-q1-dev-gcp:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
     name: Deploy to q1 dev-gcp
-    needs: [build-and-publish, integrasjonstest]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
