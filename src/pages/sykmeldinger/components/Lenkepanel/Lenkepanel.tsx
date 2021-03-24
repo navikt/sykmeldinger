@@ -40,11 +40,13 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding }) => {
             border
         >
             <div className="lenkepanel-content">
-                <LenkepanelIcon
-                    hover={isHoverState}
-                    behandlingsutfall={behandlingsutfallStatus}
-                    isPaper={Boolean(sykmelding.papirsykmelding)}
-                />
+                <div className="lenkepanel-content__icon">
+                    <LenkepanelIcon
+                        hover={isHoverState}
+                        behandlingsutfall={behandlingsutfallStatus}
+                        isPaper={Boolean(sykmelding.papirsykmelding)}
+                    />
+                </div>
                 <div className="lenkepanel-content__main-content">
                     <Normaltekst tag="p">{periodeString}</Normaltekst>
                     <Undertittel tag="h3">{sykmelding.papirsykmelding ? 'Papirsykmelding' : 'Sykmelding'}</Undertittel>
