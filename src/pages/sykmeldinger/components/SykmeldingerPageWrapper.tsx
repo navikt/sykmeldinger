@@ -12,7 +12,7 @@ const SykmeldingerPageWrapper: React.FC = ({ children }) => {
                     breadcrumbs={[
                         {
                             title: 'Sykefravær',
-                            path: '/sykefravaer',
+                            path: window._env_?.SYKEFRAVAER_ROOT || '#',
                         },
                         {
                             title: 'Sykmeldinger',
