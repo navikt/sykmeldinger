@@ -41,7 +41,7 @@ const AvbrytPanel: React.FC = () => {
         <>
             <div className="avbryt-toggle" style={{ textAlign: 'center', marginBottom: '1rem' }}>
                 <Knapp htmlType="button" type="flat" mini onClick={() => setIsOpen((prev) => !prev)}>
-                    Jeg ønsker ikke å bruke denne sykmeldingen
+                    Jeg vil avbryte sykmeldingen
                 </Knapp>
             </div>
 
