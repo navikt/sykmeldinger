@@ -2,13 +2,13 @@ import { Arbeidsgiver } from './arbeidsgiver';
 import ObjectBase from './objectBase';
 
 class Brukerinformasjon extends ObjectBase<Brukerinformasjon> {
-    readonly diskresjonskode: boolean;
+    readonly strengtFortroligAdresse: boolean;
     readonly arbeidsgivere: Arbeidsgiver[];
 
     constructor(data: any) {
         super(data, 'Brukerinformasjon');
 
-        this.diskresjonskode = this.getRequiredBoolean('diskresjonskode');
+        this.strengtFortroligAdresse = this.getRequiredBoolean('strengtFortroligAdresse');
         this.arbeidsgivere = this.getRequiredArray('arbeidsgivere').map((ag) => new Arbeidsgiver(ag));
     }
 }

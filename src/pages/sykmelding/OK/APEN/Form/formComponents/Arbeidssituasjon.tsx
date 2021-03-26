@@ -63,7 +63,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
                         name={name}
                         legend={sporsmaltekst}
                         radios={Object.entries(ArbeidssituasjonType)
-                            .filter(([key]) => !(brukerinformasjon.diskresjonskode === true && key === 'ARBEIDSTAKER'))
+                            .filter(([key]) => !(brukerinformasjon.strengtFortroligAdresse === true && key === 'ARBEIDSTAKER'))
                             .map(([key, label], index) => ({
                                 label: label,
                                 value: key,

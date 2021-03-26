@@ -58,7 +58,7 @@ fetchMock
 // INFORMASJON OM BRUKER
 fetchMock.get(
     'end:/v1/brukerinformasjon',
-    { body: { diskresjonskode: false, arbeidsgivere: arbeidsgivereMock } },
+    { body: { strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock } },
     { delay: 2000 },
 );
 

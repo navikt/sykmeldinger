@@ -46,9 +46,9 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
         return <p>Det oppsto en feil da vi forsøkte å hente brukerinformasjon</p>;
     }
 
-    const { diskresjonskode } = brukerinformasjon;
+    const { strengtFortroligAdresse } = brukerinformasjon;
 
-    if (diskresjonskode === true) {
+    if (strengtFortroligAdresse === true) {
         // TODO: return OkApenKode6Sykmelding
     }
 
