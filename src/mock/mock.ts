@@ -63,4 +63,4 @@ fetchMock.get(
 );
 
 // VENTETID
-fetchMock.get('end:/actions/erUtenforVentetid', { body: { erUtenforVentetid: false } }, { delay: 1000 });
+fetchMock.get('end:/actions/v2/erUtenforVentetid', { body: { erUtenforVentetid: false } }, { delay: 1000 });
