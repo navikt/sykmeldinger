@@ -1,38 +1,45 @@
 import amplitude, { AmplitudeClient } from 'amplitude-js';
 
-type EventName = 'EVENT_NAME' | 'EVENT_NAME_2';
+// https://github.com/navikt/analytics-taxonomy
+type EventName =
+    | 'skjema åpnet'
+    | 'skjema startet'
+    | 'skjemaspørsmål besvart'
+    | 'skjemasteg fullført'
+    | 'skjemavalidering feilet'
+    | 'skjemainnsending feilet'
+    | 'skjema fullført'
+    | 'panel åpnet';
+
+interface EventData {
+    component: string;
+}
 
 class AmplitudeInstance {
-    instance: AmplitudeClient;
+    private instance: AmplitudeClient;
 
     constructor() {
         this.instance = amplitude.getInstance();
 
-        const amplitudeKey = window._env_?.AMPLITUDE_KEY;
-        if (amplitudeKey) {
-            this.instance.init(amplitudeKey, undefined, {
-                apiEndpoint: 'amplitude.nav.no/collect',
+        const amplitudeKey = window._env_?.AMPLITUDE_ENABLED;
+        if (amplitudeKey === 'true') {
+            this.instance.init('default', undefined, {
+                apiEndpoint: 'amplitude.nav.no/collect-auto',
                 saveEvents: false,
                 includeUtm: true,
                 batchEvents: false,
                 includeReferrer: true,
-                trackingOptions: {
-                    city: false,
-                    ip_address: false,
-                    version_name: false,
-                    region: false,
-                    country: false,
-                    dma: false,
-                },
+                platform: window.location.toString(),
             });
         } else {
-            console.warn('Amplitude is not initialized because AMPLITUDE_KEY is not set');
+            console.warn('Amplitude is not initialized because AMPLITUDE_ENABLED is not set');
         }
     }
 
-    public logEvent(eventName: EventName, data: any) {
+    public logEvent(eventName: EventName, data: EventData) {
         this.instance.logEvent(eventName, data);
     }
 }
 
-export default AmplitudeInstance;
+const amplitudeInstance = new AmplitudeInstance();
+export default amplitudeInstance;

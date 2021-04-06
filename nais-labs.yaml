@@ -22,3 +22,5 @@ spec:
       value: https://www.nav.no/dekoratoren
     - name: RUNTIME_ENVIRONMENT
       value: labs-demo
+    - name: AMPLITUDE_ENABLED
+      value: 'false'

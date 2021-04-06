@@ -8,7 +8,7 @@ type EnvironmentKeys =
     | 'SYKEFRAVAER_ROOT'
     | 'LOGIN_SERVICE_URL'
     | 'LOGIN_SERVICE_REDIRECT_URL'
-    | 'AMPLITUDE_KEY';
+    | 'AMPLITUDE_ENABLED';
 
 interface Window {
     _env_?: Record<EnvironmentKeys, string | undefined>;
