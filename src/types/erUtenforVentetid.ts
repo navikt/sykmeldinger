@@ -1,13 +1,8 @@
-import ObjectBase from './objectBase';
+import { IsBoolean } from 'class-validator';
 
-class ErUtenforVentetid extends ObjectBase<ErUtenforVentetid> {
+class ErUtenforVentetid {
+    @IsBoolean()
     readonly erUtenforVentetid: boolean;
-
-    constructor(data: any) {
-        super(data, 'ErUtenforVentetid');
-
-        this.erUtenforVentetid = this.getRequiredBoolean('erUtenforVentetid');
-    }
 }
 
 export default ErUtenforVentetid;
