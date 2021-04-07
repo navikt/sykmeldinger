@@ -1,11 +1,11 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { useQuery } from 'react-query';
 import Brukerinformasjon from '../models/Brukerinformasjon';
-import { authenticatedGet } from '../utils/fetchUtils';
+import Fetch from '../utils/Fetch';
 
 function useBrukerinformasjon() {
     return useQuery<Brukerinformasjon, Error>('brukerinformasjon', () =>
-        authenticatedGet(
+        Fetch.authenticatedGet(
             `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/brukerinformasjon`,
             (maybeBrukerinformasjon) =>
                 transformAndValidate(Brukerinformasjon, maybeBrukerinformasjon as Brukerinformasjon, {
