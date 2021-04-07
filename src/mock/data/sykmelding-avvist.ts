@@ -8,6 +8,7 @@ export const sykmeldingAvvist = {
                 messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                 messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                 ruleName: 'tilbakedatering',
+                ruleStatus: 'INVALID',
             },
         ],
     },
@@ -75,7 +76,7 @@ export const sykmeldingAvvist = {
         annenFraversArsak: {
             beskrivelse:
                 'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-            grunn: ['NODVENDIG_KONTROLLUNDENRSOKELSE', 'ABORT'],
+            grunn: ['NODVENDIG_KONTROLLUNDERSOKELSE', 'ABORT'],
         },
     },
     skjermesForPasient: false,

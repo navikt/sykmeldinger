@@ -1,65 +1,60 @@
-import ObjectBase from '../objectBase';
+import { Type } from 'class-transformer';
+import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
-class Adresse extends ObjectBase<Adresse> {
+class Adresse {
+    @IsOptional()
+    @IsString()
     gate?: string;
+
+    @IsOptional()
+    @IsNumber()
     postnummer?: number;
+
+    @IsOptional()
+    @IsString()
     kommune?: string;
+
+    @IsOptional()
+    @IsString()
     postboks?: string;
+
+    @IsOptional()
+    @IsString()
     land?: string;
-
-    constructor(data: any) {
-        super(data, 'Adresse');
-
-        if (this.isDefined('gate')) {
-            this.gate = this.getRequiredString('gate');
-        }
-        if (this.isDefined('postnummer')) {
-            this.postnummer = this.getRequiredNumber('postnummer');
-        }
-        if (this.isDefined('kommune')) {
-            this.kommune = this.getRequiredString('kommune');
-        }
-        if (this.isDefined('postboks')) {
-            this.postboks = this.getRequiredString('postboks');
-        }
-        if (this.isDefined('land')) {
-            this.land = this.getRequiredString('land');
-        }
-    }
 }
 
-class Behandler extends ObjectBase<Behandler> {
+class Behandler {
+    @IsString()
     fornavn: string;
+
+    @IsOptional()
+    @IsString()
     mellomnavn?: string;
+
+    @IsString()
     etternavn: string;
+
+    @IsString()
     aktoerId: string;
+
+    @IsString()
     fnr: string;
+
+    @IsOptional()
+    @IsString()
     hpr?: string;
+
+    @IsOptional()
+    @IsString()
     her?: string;
+
+    @ValidateNested()
+    @Type(() => Adresse)
     adresse: Adresse;
+
+    @IsOptional()
+    @IsString()
     tlf?: string;
-
-    constructor(data: any) {
-        super(data, 'Behandler');
-
-        this.fornavn = this.getRequiredString('fornavn');
-        if (this.isDefined('mellomnavn')) {
-            this.mellomnavn = this.getRequiredString('mellomnavn');
-        }
-        this.etternavn = this.getRequiredString('etternavn');
-        this.aktoerId = this.getRequiredString('aktoerId');
-        this.fnr = this.getRequiredString('fnr');
-        if (this.isDefined('hpr')) {
-            this.hpr = this.getRequiredString('hpr');
-        }
-        if (this.isDefined('her')) {
-            this.her = this.getRequiredString('her');
-        }
-        this.adresse = new Adresse(data.adresse);
-        if (this.isDefined('tlf')) {
-            this.tlf = this.getRequiredString('tlf');
-        }
-    }
 }
 
 export default Behandler;

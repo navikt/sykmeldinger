@@ -1,85 +1,74 @@
-import ObjectBase from '../objectBase';
+import { Type } from 'class-transformer';
+import { IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
 
-class ArbeidsgiverStatus extends ObjectBase<ArbeidsgiverStatus> {
+class ArbeidsgiverStatus {
+    @IsString()
     orgnummer: string;
+
+    @IsOptional()
+    @IsString()
     juridiskOrgnummer?: string;
+
+    @IsString()
     orgNavn: string;
-
-    constructor(data: any) {
-        super(data, 'ArbeidsgiverStatus');
-
-        this.orgnummer = this.getRequiredString('orgnummer');
-        if (this.isDefined('juridiskOrgnummer')) {
-            this.juridiskOrgnummer = this.getRequiredString('juridiskOrgnummer');
-        }
-        this.orgNavn = this.getRequiredString('orgNavn');
-    }
 }
 
 enum ShortName {
-    ARBEIDSSITUASJON,
-    NY_NARMESTE_LEDER,
-    FRAVAER,
-    PERIODE,
-    FORSIKRING,
+    ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    NY_NARMESTE_LEDER = 'NY_NARMESTE_LEDER',
+    FRAVAER = 'FRAVAER',
+    PERIODE = 'PERIODE',
+    FORSIKRING = 'FORSIKRING',
 }
 
 enum Svartype {
-    ARBEIDSSITUASJON,
-    PERIODER,
-    JA_NEI,
+    ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    PERIODER = 'PERIODER',
+    JA_NEI = 'JA_NEI',
 }
 
-class Svar extends ObjectBase<Svar> {
+class Svar {
+    @IsIn(Object.keys(Svartype))
     svarType: keyof typeof Svartype;
+    @IsString()
     svar: string;
-
-    constructor(data: any) {
-        super(data, 'Svar');
-        this.svarType = this.getRequiredStringAsEnumKey(Svartype, 'svarType');
-        this.svar = this.getRequiredString('svar');
-    }
 }
 
-class Sporsmal extends ObjectBase<Sporsmal> {
+class Sporsmal {
+    @IsString()
     tekst: string;
-    shortName: keyof typeof ShortName;
-    svar: Svar;
 
-    constructor(data: any) {
-        super(data, 'Sporsmal');
-        this.tekst = this.getRequiredString('tekst');
-        this.shortName = this.getRequiredStringAsEnumKey(ShortName, 'shortName');
-        this.svar = new Svar(data.svar);
-    }
+    @IsIn(Object.keys(ShortName))
+    shortName: keyof typeof ShortName;
+
+    @ValidateNested()
+    @Type(() => Svar)
+    svar: Svar;
 }
 
 export enum StatusEvent {
-    SENDT,
-    APEN,
-    AVBRUTT,
-    UTGATT,
-    BEKREFTET,
+    SENDT = 'SENDT',
+    APEN = 'APEN',
+    AVBRUTT = 'AVBRUTT',
+    UTGATT = 'UTGATT',
+    BEKREFTET = 'BEKREFTET',
 }
 
-class SykmeldingStatus extends ObjectBase<SykmeldingStatus> {
+class SykmeldingStatus {
+    @IsIn(Object.keys(StatusEvent))
     statusEvent: keyof typeof StatusEvent;
+
+    @Type(() => Date)
     timestamp: Date;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => ArbeidsgiverStatus)
     arbeidsgiver?: ArbeidsgiverStatus;
+
+    @ValidateNested({ each: true })
+    @Type(() => Sporsmal)
     sporsmalOgSvarListe: Sporsmal[];
-
-    constructor(data: any) {
-        super(data, 'SykmeldingStatus');
-
-        this.statusEvent = this.getRequiredStringAsEnumKey(StatusEvent, 'statusEvent');
-        this.timestamp = this.getRequiredDate('timestamp');
-        if (this.isDefined('arbeidsgiver')) {
-            this.arbeidsgiver = new ArbeidsgiverStatus(data.arbeidsgiver);
-        }
-        this.sporsmalOgSvarListe = this.getRequiredArray('sporsmalOgSvarListe').map(
-            (sporsmalOgSvar) => new Sporsmal(sporsmalOgSvar),
-        );
-    }
 }
 
 export default SykmeldingStatus;

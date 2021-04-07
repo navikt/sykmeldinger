@@ -1,4 +1,4 @@
-export async function authenticatedGet<T>(url: string, cb: (data: unknown) => T): Promise<T> {
+export async function authenticatedGet<T>(url: string, cb: (data: unknown) => T | Promise<T>): Promise<T> {
     return fetch(url, { credentials: 'include' })
         .then((res) => {
             if (res.status === 401) {

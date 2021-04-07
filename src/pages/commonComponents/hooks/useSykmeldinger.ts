@@ -1,14 +1,23 @@
+import { transformAndValidate } from 'class-transformer-validator';
 import { useQuery } from 'react-query';
-import ObjectBase from '../../../types/objectBase';
 import { Sykmelding } from '../../../types/sykmelding';
 import { authenticatedGet } from '../../../utils/fetchUtils';
 
 function useSykmeldinger() {
     return useQuery<Sykmelding[], Error>('sykmeldinger', () =>
-        authenticatedGet(`${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger`, (data) => {
-            ObjectBase.assert(Array.isArray(data), '');
-            return data.map((sm: unknown) => new Sykmelding(sm));
-        }),
+        authenticatedGet(
+            `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger`,
+            async (maybeSykmeldinger) => {
+                return transformAndValidate(Sykmelding, maybeSykmeldinger as Sykmelding[], {
+                    validator: {
+                        validationError: {
+                            target: false,
+                            value: false,
+                        },
+                    },
+                });
+            },
+        ),
     );
 }
 

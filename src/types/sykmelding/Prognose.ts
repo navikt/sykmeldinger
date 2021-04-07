@@ -1,60 +1,52 @@
-import ObjectBase from '../objectBase';
+import { Type } from 'class-transformer';
+import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
 
-class ErIArbeid extends ObjectBase<ErIArbeid> {
+class ErIArbeid {
+    @IsBoolean()
     egetArbeidPaSikt: boolean;
+
+    @IsBoolean()
     annetArbeidPaSikt: boolean;
+
+    @IsOptional()
+    @Type(() => Date)
     arbeidFOM?: Date;
-    vurderingsdato?: Date;
 
-    constructor(data: any) {
-        super(data, 'ErIArbeid');
-        this.egetArbeidPaSikt = this.getRequiredBoolean('egetArbeidPaSikt');
-        this.annetArbeidPaSikt = this.getRequiredBoolean('annetArbeidPaSikt');
-        if (this.isDefined('arbeidFOM')) {
-            this.arbeidFOM = this.getRequiredDate('arbeidFOM');
-        }
-        if (this.isDefined('vurderingsdato')) {
-            this.vurderingsdato = this.getRequiredDate('vurderingsdato');
-        }
-    }
+    @IsOptional()
+    @Type(() => Date)
+    vurderingsdato?: Date;
 }
 
-class ErIkkeIArbeid extends ObjectBase<ErIkkeIArbeid> {
+class ErIkkeIArbeid {
+    @IsBoolean()
     arbeidsforPaSikt: boolean;
-    arbeidsforFOM?: Date;
-    vurderingsdato?: Date;
 
-    constructor(data: any) {
-        super(data, 'ErIkkeIArbeid');
-        this.arbeidsforPaSikt = this.getRequiredBoolean('arbeidsforPaSikt');
-        if (this.isDefined('arbeidsforFOM')) {
-            this.arbeidsforFOM = this.getRequiredDate('arbeidsforFOM');
-        }
-        if (this.isDefined('vurderingsdato')) {
-            this.vurderingsdato = this.getRequiredDate('vurderingsdato');
-        }
-    }
+    @IsOptional()
+    @Type(() => Date)
+    arbeidsforFOM?: Date;
+
+    @IsOptional()
+    @Type(() => Date)
+    vurderingsdato?: Date;
 }
 
-class Prognose extends ObjectBase<Prognose> {
+class Prognose {
+    @IsBoolean()
     arbeidsforEtterPeriode: boolean;
-    hensynArbeidsplassen?: string;
-    erIArbeid?: ErIArbeid;
-    erIkkeIArbeid?: ErIkkeIArbeid;
 
-    constructor(data: any) {
-        super(data, 'Prognose');
-        this.arbeidsforEtterPeriode = this.getRequiredBoolean('arbeidsforEtterPeriode');
-        if (this.isDefined('hensynArbeidsplassen')) {
-            this.hensynArbeidsplassen = this.getRequiredString('hensynArbeidsplassen');
-        }
-        if (this.isDefined('erIArbeid')) {
-            this.erIArbeid = new ErIArbeid(data.erIArbeid);
-        }
-        if (this.isDefined('erIkkeIArbeid')) {
-            this.erIkkeIArbeid = new ErIkkeIArbeid(data.erIkkeIArbeid);
-        }
-    }
+    @IsOptional()
+    @IsString()
+    hensynArbeidsplassen?: string;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => ErIArbeid)
+    erIArbeid?: ErIArbeid;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => ErIkkeIArbeid)
+    erIkkeIArbeid?: ErIkkeIArbeid;
 }
 
 export default Prognose;

@@ -1,4 +1,5 @@
-import ObjectBase from '../objectBase';
+import { Type } from 'class-transformer';
+import { IsBoolean, IsIn, IsInt, IsOptional, IsString, Max, Min, ValidateNested } from 'class-validator';
 
 enum Periodetype {
     AKTIVITET_IKKE_MULIG,
@@ -8,15 +9,14 @@ enum Periodetype {
     REISETILSKUDD,
 }
 
-class GradertPeriode extends ObjectBase<GradertPeriode> {
+class GradertPeriode {
+    @IsInt()
+    @Min(0)
+    @Max(100)
     grad: number;
-    reisetilskudd: boolean;
 
-    constructor(data: any) {
-        super(data, 'GradertPeriode');
-        this.grad = this.getRequiredNumber('grad');
-        this.reisetilskudd = this.getRequiredBoolean('reisetilskudd');
-    }
+    @IsBoolean()
+    reisetilskudd: boolean;
 }
 
 export enum MedisinskArsakType {
@@ -26,17 +26,13 @@ export enum MedisinskArsakType {
     ANNET = 'Annet',
 }
 
-class MedisinskArsak extends ObjectBase<MedisinskArsak> {
+class MedisinskArsak {
+    @IsOptional()
+    @IsString()
     beskrivelse?: string;
-    arsak: (keyof typeof MedisinskArsakType)[];
 
-    constructor(data: any) {
-        super(data, 'MedisinskArsak');
-        if (this.isDefined('beskrivelse')) {
-            this.beskrivelse = this.getRequiredString('beskrivelse');
-        }
-        this.arsak = this.getRequiredArrayOfEnumKeys(MedisinskArsakType, 'arsak');
-    }
+    @IsIn(Object.keys(MedisinskArsakType), { each: true })
+    arsak: (keyof typeof MedisinskArsakType)[];
 }
 
 export enum ArbeidsrelatertArsakType {
@@ -44,65 +40,57 @@ export enum ArbeidsrelatertArsakType {
     ANNET = 'Annet',
 }
 
-class ArbeidsrelatertArsak extends ObjectBase<MedisinskArsak> {
+class ArbeidsrelatertArsak {
+    @IsOptional()
+    @IsString()
     beskrivelse?: string;
+
+    @IsIn(Object.keys(ArbeidsrelatertArsakType), { each: true })
     arsak: (keyof typeof ArbeidsrelatertArsakType)[];
-
-    constructor(data: any) {
-        super(data, 'ArbeidsrelatertArsak');
-        if (this.isDefined('beskrivelse')) {
-            this.beskrivelse = this.getRequiredString('beskrivelse');
-        }
-        this.arsak = this.getRequiredArrayOfEnumKeys(ArbeidsrelatertArsakType, 'arsak');
-    }
 }
 
-class AktivitetIkkeMuligPeriode extends ObjectBase<AktivitetIkkeMuligPeriode> {
+class AktivitetIkkeMuligPeriode {
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => MedisinskArsak)
     medisinskArsak?: MedisinskArsak;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => ArbeidsrelatertArsak)
     arbeidsrelatertArsak?: ArbeidsrelatertArsak;
-
-    constructor(data: any) {
-        super(data, 'AktivitetIkkeMuligPeriode');
-
-        if (this.isDefined('medisinskArsak')) {
-            this.medisinskArsak = new MedisinskArsak(data.medisinskArsak);
-        }
-        if (this.isDefined('arbeidsrelatertArsak')) {
-            this.arbeidsrelatertArsak = new ArbeidsrelatertArsak(data.arbeidsrelatertArsak);
-        }
-    }
 }
 
-class Periode extends ObjectBase<Periode> {
+class Periode {
+    @Type(() => Date)
     fom: Date;
+
+    @Type(() => Date)
     tom: Date;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => GradertPeriode)
     gradert?: GradertPeriode;
+
+    @IsOptional()
+    @IsInt()
     behandlingsdager?: number;
+
+    @IsOptional()
+    @IsString()
     innspillTilArbeidsgiver?: string;
+
+    @IsIn(Object.keys(Periodetype))
     type: keyof typeof Periodetype;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => AktivitetIkkeMuligPeriode)
     aktivitetIkkeMulig?: AktivitetIkkeMuligPeriode;
+
+    @IsBoolean()
     reisetilskudd: boolean;
-
-    constructor(data: any) {
-        super(data, 'Periode');
-
-        this.fom = this.getRequiredDate('fom');
-        this.tom = this.getRequiredDate('tom');
-        if (this.isDefined('gradert')) {
-            this.gradert = new GradertPeriode(data.gradert);
-        }
-        if (this.isDefined('behandlingsdager')) {
-            this.behandlingsdager = this.getRequiredNumber('behandlingsdager');
-        }
-        if (this.isDefined('innspillTilArbeidsgiver')) {
-            this.innspillTilArbeidsgiver = this.getRequiredString('innspillTilArbeidsgiver');
-        }
-        this.type = this.getRequiredStringAsEnumKey(Periodetype, 'type');
-        if (this.isDefined('aktivitetIkkeMulig')) {
-            this.aktivitetIkkeMulig = new AktivitetIkkeMuligPeriode(data.aktivitetIkkeMulig);
-        }
-        this.reisetilskudd = this.getRequiredBoolean('reisetilskudd');
-    }
 }
 
 export default Periode;

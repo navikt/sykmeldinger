@@ -1,16 +1,12 @@
-import ObjectBase from '../objectBase';
+import { IsOptional, IsString } from 'class-validator';
 
-class Merknad extends ObjectBase<Merknad> {
+class Merknad {
+    @IsString()
     type: string;
-    beskrivelse?: string;
 
-    constructor(data: any) {
-        super(data, 'Merknad');
-        this.type = this.getRequiredString('type');
-        if (this.isDefined('beskrivelse')) {
-            this.beskrivelse = this.getRequiredString('beskrivelse');
-        }
-    }
+    @IsOptional()
+    @IsString()
+    beskrivelse?: string;
 }
 
 export default Merknad;

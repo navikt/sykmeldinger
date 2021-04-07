@@ -1,4 +1,3 @@
-import ObjectBase from './objectBase';
 import ArbeidsgiverSykmelding from './sykmelding/ArbeidsgiverSykmelding';
 import Behandler from './sykmelding/Behandler';
 import Behandlingsutfall from './sykmelding/Behandlingsutfall';
@@ -10,110 +9,106 @@ import Periode from './sykmelding/Periode';
 import Prognose from './sykmelding/Prognose';
 import SykmeldingStatus from './sykmelding/SykmeldingStatus';
 import UtdypendeOpplysning from './sykmelding/UtdypendeOpplysninger';
+import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export enum DiagnosekodeSystem {
     '2.16.578.1.12.4.1.1.7110' = 'ICD-10',
     '2.16.578.1.12.4.1.1.7170' = 'ICPC-2',
 }
 
-export class Sykmelding extends ObjectBase<Sykmelding> {
+export class Sykmelding {
+    @IsString()
     id: string;
+
+    @Type(() => Date)
     mottattTidspunkt: Date;
+
+    @ValidateNested()
+    @Type(() => Behandlingsutfall)
     behandlingsutfall: Behandlingsutfall;
+
+    @IsOptional()
+    @IsString()
     legekontorOrgnummer?: string;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => ArbeidsgiverSykmelding)
     arbeidsgiver?: ArbeidsgiverSykmelding;
+
+    @ValidateNested({ each: true })
+    @Type(() => Periode)
     sykmeldingsperioder: Periode[];
+
+    @ValidateNested()
+    @Type(() => SykmeldingStatus)
     sykmeldingStatus: SykmeldingStatus;
+
+    @ValidateNested()
+    @Type(() => MedisinskVurdering)
     medisinskVurdering?: MedisinskVurdering;
+
+    @IsBoolean()
     skjermesForPasient: boolean;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => Prognose)
     prognose?: Prognose;
-    utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>> = new Map();
+
+    // @ValidateNested({ each: true })
+    utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>>;
+
+    @IsOptional()
+    @IsString()
     tiltakArbeidsplassen?: string;
+
+    @IsOptional()
+    @IsString()
     tiltakNAV?: string;
+
+    @IsOptional()
+    @IsString()
     andreTiltak?: string;
     meldingTilNAV?: MeldingTilNAV;
+
+    @IsOptional()
+    @IsString()
     meldingTilArbeidsgiver?: string;
+
+    @ValidateNested()
+    @Type(() => KontaktMedPasient)
     kontaktMedPasient: KontaktMedPasient;
+
+    @Type(() => Date)
     behandletTidspunkt: Date;
+
+    @ValidateNested()
+    @Type(() => Behandler)
     behandler: Behandler;
+
+    @IsOptional()
+    @Type(() => Date)
     syketilfelleStartDato?: Date;
+
+    @IsOptional()
+    @IsString()
     navnFastlege?: string;
+
+    @IsOptional()
+    @IsBoolean()
     egenmeldt?: boolean;
+
+    @IsOptional()
+    @IsBoolean()
     papirsykmelding?: boolean;
+
+    @IsOptional()
+    @IsBoolean()
     harRedusertArbeidsgiverperiode?: boolean;
+
+    @ValidateNested({ each: true })
+    @Type(() => Merknad)
     merknader?: Merknad[];
-
-    constructor(data: any) {
-        super(data, 'Sykmelding');
-
-        this.id = this.getRequiredString('id');
-        this.mottattTidspunkt = this.getRequiredDate('mottattTidspunkt');
-        this.behandlingsutfall = new Behandlingsutfall(data.behandlingsutfall);
-        if (this.isDefined('legekontorOrgnummer')) {
-            this.legekontorOrgnummer = this.getRequiredString('legekontorOrgnummer');
-        }
-        if (this.isDefined('arbeidsgiver')) {
-            this.arbeidsgiver = new ArbeidsgiverSykmelding(data.arbeidsgiver);
-        }
-        this.sykmeldingsperioder = this.getRequiredArray('sykmeldingsperioder').map((periode) => new Periode(periode));
-        this.sykmeldingStatus = new SykmeldingStatus(data.sykmeldingStatus);
-        if (this.isDefined('medisinskVurdering')) {
-            this.medisinskVurdering = new MedisinskVurdering(data.medisinskVurdering);
-        }
-        this.skjermesForPasient = this.getRequiredBoolean('skjermesForPasient');
-        if (this.isDefined('prognose')) {
-            this.prognose = new Prognose(data.prognose);
-        }
-        this.setUtdypendeOpplysninger(data.utdypendeOpplysninger);
-        if (this.isDefined('tiltakArbeidsplassen')) {
-            this.tiltakArbeidsplassen = this.getRequiredString('tiltakArbeidsplassen');
-        }
-        if (this.isDefined('tiltakNAV')) {
-            this.tiltakNAV = this.getRequiredString('tiltakNAV');
-        }
-        if (this.isDefined('andreTiltak')) {
-            this.andreTiltak = this.getRequiredString('andreTiltak');
-        }
-        if (this.isDefined('meldingTilNAV')) {
-            this.meldingTilNAV = new MeldingTilNAV(data.meldingTilNAV);
-        }
-        if (this.isDefined('meldingTilArbeidsgiver')) {
-            this.meldingTilArbeidsgiver = this.getRequiredString('meldingTilArbeidsgiver');
-        }
-        this.kontaktMedPasient = new KontaktMedPasient(data.kontaktMedPasient);
-        this.behandletTidspunkt = this.getRequiredDate('behandletTidspunkt');
-        this.behandler = new Behandler(data.behandler);
-        if (this.isDefined('syketilfelleStartDato')) {
-            this.syketilfelleStartDato = this.getRequiredDate('syketilfelleStartDato');
-        }
-        if (this.isDefined('navnFastlege')) {
-            this.navnFastlege = this.getRequiredString('navnFastlege');
-        }
-        if (this.isDefined('egenmeldt')) {
-            this.egenmeldt = this.getRequiredBoolean('egenmeldt');
-        }
-        if (this.isDefined('papirsykmelding')) {
-            this.egenmeldt = this.getRequiredBoolean('papirsykmelding');
-        }
-        if (this.isDefined('harRedusertArbeidsgiverperiode')) {
-            this.egenmeldt = this.getRequiredBoolean('harRedusertArbeidsgiverperiode');
-        }
-        if (this.isDefined('merknader')) {
-            this.merknader = this.getRequiredArray('merknader').map((merknad) => new Merknad(merknad));
-        }
-    }
-
-    private setUtdypendeOpplysninger(utdypendeOpplysninger: any) {
-        if (this.isDefined('utdypendeOpplysninger') && typeof utdypendeOpplysninger === 'object') {
-            Object.keys(utdypendeOpplysninger).forEach((outerKey) => {
-                const opplysning = new Map<string, UtdypendeOpplysning>();
-                if (this.isDefined(utdypendeOpplysninger[outerKey])) {
-                    Object.keys(utdypendeOpplysninger[outerKey]).forEach((innerKey) => {
-                        opplysning.set(innerKey, utdypendeOpplysninger[outerKey][innerKey]);
-                    });
-                    this.utdypendeOpplysninger.set(outerKey, opplysning);
-                }
-            });
-        }
-    }
 }

@@ -1,18 +1,14 @@
-import ObjectBase from '../objectBase';
+import { Type } from 'class-transformer';
+import { IsOptional, IsString } from 'class-validator';
 
-class KontaktMedPasient extends ObjectBase<KontaktMedPasient> {
+class KontaktMedPasient {
+    @IsOptional()
+    @Type(() => Date)
     kontaktMedPasient?: Date;
-    begrunnelseIkkeKontakt?: string;
 
-    constructor(data: any) {
-        super(data, 'KontaktMedPasient');
-        if (this.isDefined('kontaktMedPasient')) {
-            this.kontaktMedPasient = this.getRequiredDate('kontaktMedPasient');
-        }
-        if (this.isDefined('begrunnelseIkkeKontakt')) {
-            this.begrunnelseIkkeKontakt = this.getRequiredString('begrunnelseIkkeKontakt');
-        }
-    }
+    @IsOptional()
+    @IsString()
+    begrunnelseIkkeKontakt?: string;
 }
 
 export default KontaktMedPasient;

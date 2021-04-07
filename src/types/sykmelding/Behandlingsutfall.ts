@@ -1,39 +1,35 @@
-import ObjectBase from '../objectBase';
+import { Type } from 'class-transformer';
+import { IsIn, IsString, ValidateNested } from 'class-validator';
 
 export enum RegelStatus {
-    OK,
-    MANUAL_PROCESSING,
-    INVALID,
+    OK = 'OK',
+    MANUAL_PROCESSING = 'MANUAL_PROCESSING',
+    INVALID = 'INVALID',
 }
 
-class Regelinfo extends ObjectBase<Regelinfo> {
+class Regelinfo {
+    @IsString()
     messageForSender: string;
+
+    @IsString()
     messageForUser: string;
+
+    @IsString()
     ruleName: string;
-    ruleStatus?: keyof typeof RegelStatus;
 
-    constructor(data: any) {
-        super(data, 'Regelinfo');
-
-        this.messageForSender = this.getRequiredString('messageForSender');
-        this.messageForUser = this.getRequiredString('messageForUser');
-        this.ruleName = this.getRequiredString('ruleName');
-        if (this.isDefined('ruleStatus')) {
-            this.ruleStatus = this.getRequiredStringAsEnumKey(RegelStatus, 'ruleStatus');
-        }
-    }
+    @IsIn(Object.keys(RegelStatus))
+    ruleStatus: keyof typeof RegelStatus;
 }
 
-class Behandlingsutfall extends ObjectBase<Behandlingsutfall> {
+class Behandlingsutfall {
+    @IsIn(Object.keys(RegelStatus))
     status: keyof typeof RegelStatus;
+
+    @ValidateNested({
+        each: true,
+    })
+    @Type(() => Regelinfo)
     ruleHits: Regelinfo[];
-
-    constructor(data: any) {
-        super(data, 'Behandlingsutfall');
-
-        this.status = this.getRequiredStringAsEnumKey(RegelStatus, 'status');
-        this.ruleHits = this.getRequiredArray('ruleHits').map((ruleHit) => new Regelinfo(ruleHit));
-    }
 }
 
 export default Behandlingsutfall;

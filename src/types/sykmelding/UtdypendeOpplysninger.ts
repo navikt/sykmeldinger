@@ -1,23 +1,20 @@
-import ObjectBase from '../objectBase';
+import { IsIn, IsOptional, IsString } from 'class-validator';
 
 enum SvarRestriksjon {
     SKJERMET_FOR_ARBEIDSGIVER,
     SKJERMET_FOR_NAV,
 }
-class UtdypendeOpplysning extends ObjectBase<UtdypendeOpplysning> {
+
+class UtdypendeOpplysning {
+    @IsOptional()
+    @IsString()
     sporsmal?: string;
+
+    @IsString()
     svar: string;
+
+    @IsIn(Object.keys(SvarRestriksjon), { each: true })
     restriksjoner: (keyof typeof SvarRestriksjon)[];
-
-    constructor(data: any) {
-        super(data, 'UtdypendeOpplysning');
-
-        if (this.isDefined('sporsmal')) {
-            this.sporsmal = this.getRequiredString('sporsmal');
-        }
-        this.svar = this.getRequiredString('svar');
-        this.restriksjoner = this.getRequiredArrayOfEnumKeys(SvarRestriksjon, 'restriksjoner');
-    }
 }
 
 export default UtdypendeOpplysning;

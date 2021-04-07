@@ -1,16 +1,12 @@
-import ObjectBase from '../objectBase';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-class MeldingTilNAV extends ObjectBase<MeldingTilNAV> {
+class MeldingTilNAV {
+    @IsBoolean()
     bistandUmiddelbart: boolean;
-    beskrivBistand?: string;
 
-    constructor(data: any) {
-        super(data, 'MeldingTilNAV');
-        this.bistandUmiddelbart = this.getRequiredBoolean('bistandUmiddelbart');
-        if (this.isDefined('beskrivBistand')) {
-            this.beskrivBistand = this.getRequiredString('beskrivBistand');
-        }
-    }
+    @IsOptional()
+    @IsString()
+    beskrivBistand?: string;
 }
 
 export default MeldingTilNAV;
