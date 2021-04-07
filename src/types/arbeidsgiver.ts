@@ -1,58 +1,57 @@
-import ObjectBase from './objectBase';
+import { Type } from 'class-transformer';
+import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
 
-export class Arbeidsgiver extends ObjectBase<Arbeidsgiver> {
+export class Arbeidsgiver {
+    @IsString()
     readonly orgnummer: string;
+
+    @IsString()
     readonly juridiskOrgnummer: string;
+
+    @IsString()
     readonly navn: string;
+
+    @IsString()
     readonly stillingsprosent: string;
+
+    @IsString()
     readonly stilling: string;
+
+    @IsBoolean()
     readonly aktivtArbeidsforhold: boolean;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => NaermesteLeder)
     readonly naermesteLeder?: NaermesteLeder;
-
-    constructor(data: any) {
-        super(data, 'Arbeidsgiver');
-
-        this.orgnummer = this.getRequiredString('orgnummer');
-        this.juridiskOrgnummer = this.getRequiredString('juridiskOrgnummer');
-        this.navn = this.getRequiredString('navn');
-        this.stillingsprosent = this.getRequiredString('stillingsprosent');
-        this.stilling = this.getRequiredString('stilling');
-        this.aktivtArbeidsforhold = this.getRequiredBoolean('aktivtArbeidsforhold');
-
-        if (this.isDefined('naermesteLeder')) {
-            this.naermesteLeder = new NaermesteLeder(data.naermesteLeder);
-        }
-    }
 }
 
-export class NaermesteLeder extends ObjectBase<NaermesteLeder> {
+export class NaermesteLeder {
+    @IsString()
     readonly aktoerId: string;
+
+    @IsString()
     readonly navn: string;
+
+    @IsString()
     readonly orgnummer: string;
+
+    @IsString()
     readonly organisasjonsnavn: string;
+
+    @IsOptional()
+    @IsString()
     readonly epost?: string;
+
+    @IsOptional()
+    @IsString()
     readonly mobil?: string;
+
+    @IsOptional()
+    @Type(() => Date)
     readonly aktivTom?: Date;
+
+    @IsOptional()
+    @IsBoolean()
     readonly arbeidsgiverForskuttererLoenn?: boolean;
-
-    constructor(data: any) {
-        super(data, 'NaermesteLeder');
-
-        this.aktoerId = this.getRequiredString('aktoerId');
-        this.navn = this.getRequiredString('navn');
-        this.orgnummer = this.getRequiredString('orgnummer');
-        this.organisasjonsnavn = this.getRequiredString('organisasjonsnavn');
-        if (this.isDefined('epost')) {
-            this.epost = this.getRequiredString('epost');
-        }
-        if (this.isDefined('mobil')) {
-            this.epost = this.getRequiredString('mobil');
-        }
-        if (this.isDefined('aktivTom')) {
-            this.aktivTom = this.getRequiredDate('aktivTom');
-        }
-        if (this.isDefined('arbeidsgiverForskuttererLoenn')) {
-            this.arbeidsgiverForskuttererLoenn = this.getRequiredBoolean('arbeidsgiverForskuttererLoenn');
-        }
-    }
 }

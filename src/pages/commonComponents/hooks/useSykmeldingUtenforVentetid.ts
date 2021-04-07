@@ -8,7 +8,9 @@ function useSykmeldingUtenforVentetid(sykmeldingId: string) {
         authenticatedGet(
             `${window._env_?.FLEX_GATEWAY_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/v2/erUtenforVentetid`,
             (maybeErUtenforVentetid) =>
-                transformAndValidate(ErUtenforVentetid, maybeErUtenforVentetid as ErUtenforVentetid),
+                transformAndValidate(ErUtenforVentetid, maybeErUtenforVentetid as ErUtenforVentetid, {
+                    validator: { validationError: { target: false, value: false } },
+                }),
         ),
     );
 }

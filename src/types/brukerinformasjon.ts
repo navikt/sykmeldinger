@@ -1,16 +1,14 @@
+import { Type } from 'class-transformer';
+import { IsBoolean, ValidateNested } from 'class-validator';
 import { Arbeidsgiver } from './arbeidsgiver';
-import ObjectBase from './objectBase';
 
-class Brukerinformasjon extends ObjectBase<Brukerinformasjon> {
+class Brukerinformasjon {
+    @IsBoolean()
     readonly strengtFortroligAdresse: boolean;
+
+    @ValidateNested({ each: true })
+    @Type(() => Arbeidsgiver)
     readonly arbeidsgivere: Arbeidsgiver[];
-
-    constructor(data: any) {
-        super(data, 'Brukerinformasjon');
-
-        this.strengtFortroligAdresse = this.getRequiredBoolean('strengtFortroligAdresse');
-        this.arbeidsgivere = this.getRequiredArray('arbeidsgivere').map((ag) => new Arbeidsgiver(ag));
-    }
 }
 
 export default Brukerinformasjon;
