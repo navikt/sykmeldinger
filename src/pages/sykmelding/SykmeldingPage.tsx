@@ -5,7 +5,7 @@ import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
 import SykmeldingPageWrapper from '../sykmelding/components/SykmeldingPageWrapper';
-import useSykmelding from '../commonComponents/hooks/useSykmelding';
+import useSykmelding from '../../hooks/useSykmelding';
 import OkBekreftetSykmelding from './OK/BEKREFTET/OkBekreftetSykmelding';
 import OkAvbruttSykmelding from './OK/AVBRUTT/OkAvbruttSykmelding';
 import OkSendtSykmelding from './OK/SENDT/OkSendtSykmelding';

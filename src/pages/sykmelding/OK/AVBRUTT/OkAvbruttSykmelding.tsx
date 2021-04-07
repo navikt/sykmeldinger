@@ -22,9 +22,9 @@ import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import { Knapp } from 'nav-frontend-knapper';
-import useGjenapne from '../../../commonComponents/hooks/useGjenapne';
+import useGjenapne from '../../../../hooks/useGjenapne';
 import { useParams } from 'react-router-dom';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;

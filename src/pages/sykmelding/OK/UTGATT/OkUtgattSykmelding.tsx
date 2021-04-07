@@ -20,7 +20,7 @@ import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdy
 import Arbeidsevne from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import SeksjonMedTittel from '../../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 
 interface OkUtgattSykmeldingProps {
     sykmelding: Sykmelding;

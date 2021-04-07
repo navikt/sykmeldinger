@@ -1,13 +1,15 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { authenticatedPost } from '../../../utils/fetchUtils';
+import { authenticatedPost } from '../utils/fetchUtils';
 
-function useAvbryt(sykmeldingId: string) {
+function useBekreft(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
     return useMutation(
-        () =>
+        // TODO: type argument to match form output
+        (values: any) =>
             authenticatedPost(
-                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/avbryt`,
+                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/bekreft`,
+                values,
             ),
         {
             onSuccess: () => {
@@ -19,4 +21,4 @@ function useAvbryt(sykmeldingId: string) {
     );
 }
 
-export default useAvbryt;
+export default useBekreft;

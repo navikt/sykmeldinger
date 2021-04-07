@@ -1,7 +1,7 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { useQuery } from 'react-query';
-import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
-import { authenticatedGet } from '../../../utils/fetchUtils';
+import { Sykmelding } from '../models/Sykmelding/Sykmelding';
+import { authenticatedGet } from '../utils/fetchUtils';
 
 function useSykmeldinger() {
     return useQuery<Sykmelding[], Error>('sykmeldinger', () =>

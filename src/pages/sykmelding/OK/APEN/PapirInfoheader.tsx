@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Innholdstittel, Normaltekst, Element } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import useAvbryt from '../../../commonComponents/hooks/useAvbryt';
+import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 
 const PapirInfoheader = () => {

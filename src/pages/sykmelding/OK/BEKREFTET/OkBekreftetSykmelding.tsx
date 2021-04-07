@@ -20,11 +20,11 @@ import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Statuspanel from '../../components/Statuspanel/Statuspanel';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import { useParams } from 'react-router-dom';
-import useGjenapne from '../../../commonComponents/hooks/useGjenapne';
+import useGjenapne from '../../../../hooks/useGjenapne';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel } from 'nav-frontend-typografi';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;

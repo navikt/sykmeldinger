@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { authenticatedPost } from '../../../utils/fetchUtils';
+import { authenticatedPost } from '../utils/fetchUtils';
 
 function useGjenapne(sykmeldingId: string) {
     const queryClient = useQueryClient();

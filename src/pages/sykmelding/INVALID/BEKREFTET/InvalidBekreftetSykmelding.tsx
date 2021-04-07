@@ -10,7 +10,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import dayjs from 'dayjs';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;

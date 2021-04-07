@@ -4,7 +4,7 @@ import { Xknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import { AvbrytContext } from '../../OK/APEN/AvbrytContext';
-import useAvbryt from '../../../commonComponents/hooks/useAvbryt';
+import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 
 const AvbrytPanel: React.FC = () => {

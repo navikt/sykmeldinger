@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { authenticatedPost } from '../../../utils/fetchUtils';
+import { authenticatedPost } from '../utils/fetchUtils';
 
-function useBekreft(sykmeldingId: string) {
+function useSend(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
     return useMutation(
         // TODO: type argument to match form output
+        // TODO: endpoint is not implemented at sykmeldinger-backend
         (values: any) =>
             authenticatedPost(
-                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/bekreft`,
+                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/send`,
                 values,
             ),
         {
@@ -21,4 +22,4 @@ function useBekreft(sykmeldingId: string) {
     );
 }
 
-export default useBekreft;
+export default useSend;

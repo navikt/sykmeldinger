@@ -1,7 +1,7 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { useQuery } from 'react-query';
-import ErUtenforVentetid from '../../../models/ErUtenforVentetid';
-import { authenticatedGet } from '../../../utils/fetchUtils';
+import ErUtenforVentetid from '../models/ErUtenforVentetid';
+import { authenticatedGet } from '../utils/fetchUtils';
 
 function useSykmeldingUtenforVentetid(sykmeldingId: string) {
     return useQuery<ErUtenforVentetid, Error>(['erUtenforVentetid', sykmeldingId], () =>

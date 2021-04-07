@@ -13,8 +13,8 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import useBekreft from '../../../commonComponents/hooks/useBekreft';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useBekreft from '../../../../hooks/useBekreft';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import { Controller, useForm } from 'react-hook-form';
 
 interface InvalidApenSykmeldingProps {

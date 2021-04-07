@@ -24,11 +24,11 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
 import Form from './Form/Form';
 import PapirInfoheader from './PapirInfoheader';
-import useBrukerinformasjon from '../../../commonComponents/hooks/useBrukerinformasjon';
+import useBrukerinformasjon from '../../../../hooks/useBrukerinformasjon';
 import Spinner from '../../../commonComponents/Spinner/Spinner';
 import AvbrytContextProvider from './AvbrytContext';
 import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;
