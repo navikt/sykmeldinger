@@ -16,7 +16,7 @@ import SkadeSeksjon from '../../components/Sykmeldingsopplysninger/panelelemente
 import SvangerskapSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import { Sykmelding } from '../../../../types/sykmelding';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import EtikettMedTekst from '../../components/Sykmeldingsopplysninger/layout/EtikettMedTekst';
 import sladd from './sladd.svg';
@@ -39,7 +39,7 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
                 avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
             />
             <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
-                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <SykmeldingPerioder sykmelding={sykmelding} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
@@ -85,7 +85,7 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
                     <Sidetittel>TODO: Pasientens navn</Sidetittel>
                     <Undertekst>TODO: Pasientens personnummer</Undertekst>
                 </div>
-                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <SykmeldingPerioder sykmelding={sykmelding} />
                 <EtikettMedTekst margin tittel="Diagnose" tekst={<img src={sladd} alt="skjult diagnose" />} />
 
                 <ArbeidsuforSeksjon prognose={sykmelding.prognose} />

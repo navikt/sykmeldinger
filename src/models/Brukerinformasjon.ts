@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsBoolean, ValidateNested } from 'class-validator';
-import { Arbeidsgiver } from './arbeidsgiver';
+import { Arbeidsgiver } from './Arbeidsgiver';
 
 class Brukerinformasjon {
     @IsBoolean()

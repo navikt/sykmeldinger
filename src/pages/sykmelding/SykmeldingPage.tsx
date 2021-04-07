@@ -73,7 +73,7 @@ const SykmeldingSide: React.FC = () => {
         }
     })();
 
-    return <SykmeldingPageWrapper>{SykmeldingComponent}</SykmeldingPageWrapper>;
+    return <SykmeldingPageWrapper sykmelding={sykmelding}>{SykmeldingComponent}</SykmeldingPageWrapper>;
 };
 
 export default SykmeldingSide;

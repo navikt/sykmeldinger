@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import { Sykmelding } from '../../../../../types/sykmelding';
+import { Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
 import { useParams } from 'react-router-dom';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Spinner from '../../../../commonComponents/Spinner/Spinner';

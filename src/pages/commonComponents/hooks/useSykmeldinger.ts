@@ -1,6 +1,6 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { useQuery } from 'react-query';
-import { Sykmelding } from '../../../types/sykmelding';
+import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import { authenticatedGet } from '../../../utils/fetchUtils';
 
 function useSykmeldinger() {

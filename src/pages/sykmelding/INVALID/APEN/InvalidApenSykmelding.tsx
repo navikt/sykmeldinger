@@ -6,7 +6,7 @@ import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panele
 import DiagnoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
-import { Sykmelding } from '../../../../types/sykmelding';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
@@ -42,7 +42,7 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
             </div>
 
             <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
-                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <SykmeldingPerioder sykmelding={sykmelding} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />

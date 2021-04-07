@@ -19,7 +19,7 @@ import SvangerskapSeksjon from '../../components/Sykmeldingsopplysninger/panelel
 import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
 
-import { Sykmelding } from '../../../../types/sykmelding';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
 import Form from './Form/Form';
@@ -78,7 +78,7 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
                 </div>
 
                 <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
-                    <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                    <SykmeldingPerioder sykmelding={sykmelding} />
                     <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                     {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                         <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />

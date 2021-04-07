@@ -1,5 +1,5 @@
 import React from 'react';
-import ArbeidsgiverSykmelding from '../../../../../types/sykmelding/ArbeidsgiverSykmelding';
+import ArbeidsgiverSykmelding from '../../../../../models/Sykmelding/ArbeidsgiverSykmelding';
 
 import EtikettMedTekst from '../layout/EtikettMedTekst';
 

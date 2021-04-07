@@ -2,7 +2,7 @@ import React from 'react';
 
 import ElementMedTekst from '../layout/ElementMedTekst';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
+import DateFormatter from '../../../../../utils/DateFormatter';
 
 interface BehandlingsDatoerProps {
     behandletTidspunkt: Date;
@@ -14,15 +14,17 @@ const BehandlingsDatoer = ({ behandletTidspunkt, syketilfelleStartDato }: Behand
         <SeksjonMedTittel understrek>
             <ElementMedTekst
                 tittel="Dato sykmeldingen ble skrevet"
-                tekst={tilLesbarDatoMedArstall(behandletTidspunkt)}
+                tekst={DateFormatter.toReadableDate(behandletTidspunkt, { withYear: true })}
                 margin
             />
-            <ElementMedTekst
-                vis={!!syketilfelleStartDato}
-                tittel="Når startet det legemeldte fraværet?"
-                tekst={tilLesbarDatoMedArstall(syketilfelleStartDato)}
-                margin
-            />
+            {syketilfelleStartDato ? (
+                <ElementMedTekst
+                    vis={!!syketilfelleStartDato}
+                    tittel="Når startet det legemeldte fraværet?"
+                    tekst={DateFormatter.toReadableDate(syketilfelleStartDato, { withYear: true })}
+                    margin
+                />
+            ) : null}
         </SeksjonMedTittel>
     );
 };

@@ -2,8 +2,7 @@ import './PeriodeSeksjon.less';
 
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { hentDagerMellomDatoer, tilLesbarPeriodeMedArstall } from '../../../../../../utils/datoUtils';
-import Periode from '../../../../../../types/sykmelding/Periode';
+import Periode from '../../../../../../models/Sykmelding/Periode';
 
 interface PeriodeSeksjonProps {
     periode: Periode;
@@ -12,13 +11,14 @@ interface PeriodeSeksjonProps {
 
 // TODO: needs refactor
 const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
-    const antallDager = hentDagerMellomDatoer(periode.fom, periode.tom);
+    const antallDager = periode.getLength();
+
     return (
         <div className="periodeseksjon">
             <Element>Periode</Element>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 <Normaltekst>
-                    <strong>{tilLesbarPeriodeMedArstall(periode.fom, periode.tom)}</strong>
+                    <strong>{periode.getReadableLength()}</strong>
                 </Normaltekst>
                 <Normaltekst>
                     &nbsp;&bull; {antallDager} {antallDager === 1 ? 'dag' : 'dager'}

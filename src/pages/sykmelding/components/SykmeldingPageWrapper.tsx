@@ -1,12 +1,16 @@
 import React from 'react';
+import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import Brodsmuler from '../../commonComponents/Breadcrumbs/Breadcrumbs';
 import Header from '../../commonComponents/Header/Header';
 import TilHovedsiden from '../../commonComponents/TilHovedsiden/TilHovedsiden';
 
-const SykmeldingPageWrapper: React.FC = ({ children }) => {
+interface SykmeldingPageWrapperProps {
+    sykmelding?: Sykmelding;
+}
+const SykmeldingPageWrapper: React.FC<SykmeldingPageWrapperProps> = ({ children, sykmelding }) => {
     return (
         <>
-            <Header title="Sykmelding" />
+            <Header title="Sykmelding" sykmelding={sykmelding} />
             <div className="limit">
                 <Brodsmuler
                     breadcrumbs={[

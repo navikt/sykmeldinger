@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsBoolean, IsIn, IsInt, IsOptional, IsString, Max, Min, ValidateNested } from 'class-validator';
+import dayjs from 'dayjs';
 
 enum Periodetype {
     AKTIVITET_IKKE_MULIG,
@@ -91,6 +92,51 @@ class Periode {
 
     @IsBoolean()
     reisetilskudd: boolean;
+
+    /**
+     * Get a text representation of the period length
+     * @return {string} The period string
+     */
+    getReadableLength(): string {
+        return `${dayjs(this.fom).format('D. MMM YYYY')} - ${dayjs(this.tom).format('D. MMM YYYY')}`;
+    }
+
+    /**
+     * Get the total length between fom and tom in days
+     * @return {number} The period length
+     */
+    getLength(): number {
+        return dayjs(this.tom).diff(dayjs(this.fom), 'day');
+    }
+
+    /**
+     * Get a text representation of the period based on the type of the period
+     * @return {string} The period discription
+     */
+    getDescription(arbeidsgiverNavn?: string): string {
+        const periodLength = this.getLength();
+
+        switch (this.type) {
+            case 'AKTIVITET_IKKE_MULIG':
+                return `100% sykmeldt${arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''} i ${periodLength} dag${
+                    periodLength > 1 ? 'er' : ''
+                }`;
+            case 'GRADERT':
+                return `${this.gradert?.grad}% sykmeldt${
+                    arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''
+                } i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
+            case 'BEHANDLINGSDAGER':
+                return `${this.behandlingsdager} behandlingsdager i løpet av ${periodLength} dag${
+                    periodLength > 1 ? 'er' : ''
+                }`;
+            case 'AVVENTENDE':
+                return `Avventende sykmelding i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
+            case 'REISETILSKUDD':
+                return `Reisetilskudd i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
+            default:
+                return '';
+        }
+    }
 }
 
 export default Periode;

@@ -1,6 +1,6 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { useQuery } from 'react-query';
-import Brukerinformasjon from '../../../types/brukerinformasjon';
+import Brukerinformasjon from '../../../models/Brukerinformasjon';
 import { authenticatedGet } from '../../../utils/fetchUtils';
 
 function useBrukerinformasjon() {

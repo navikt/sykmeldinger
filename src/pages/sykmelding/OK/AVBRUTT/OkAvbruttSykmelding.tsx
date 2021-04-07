@@ -16,7 +16,7 @@ import SkadeSeksjon from '../../components/Sykmeldingsopplysninger/panelelemente
 import SvangerskapSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/SvangerskapSeksjon';
 import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdypendeelementer/UtdypendeOpplysninger';
-import { Sykmelding } from '../../../../types/sykmelding';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel, Element } from 'nav-frontend-typografi';
@@ -50,7 +50,7 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                 {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
             </div>
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
-                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <SykmeldingPerioder sykmelding={sykmelding} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />

@@ -1,6 +1,6 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { useQuery } from 'react-query';
-import ErUtenforVentetid from '../../../types/erUtenforVentetid';
+import ErUtenforVentetid from '../../../models/ErUtenforVentetid';
 import { authenticatedGet } from '../../../utils/fetchUtils';
 
 function useSykmeldingUtenforVentetid(sykmeldingId: string) {

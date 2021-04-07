@@ -1,7 +1,7 @@
 import React from 'react';
 
 import EtikettMedTekst from '../layout/EtikettMedTekst';
-import { AnnenFraversArsak } from '../../../../../types/sykmelding/MedisinskVurdering';
+import { AnnenFraversArsak } from '../../../../../models/Sykmelding/MedisinskVurdering';
 
 interface FraverSeksjonProps {
     fraver?: AnnenFraversArsak;

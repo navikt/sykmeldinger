@@ -3,12 +3,37 @@ import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 import './LenkepanelContainer.less';
 import Lenkepanel from './Lenkepanel/Lenkepanel';
-import { Sykmelding } from '../../../types/sykmelding';
-import { sortSykmeldingerNewestFirst, sortSykmeldingerArbeidsgiver } from '../../../utils/sorterSykemeldingUtils';
+import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
+import dayjs from 'dayjs';
 
 export enum SortBy {
     DATE = 'DATE',
     ARBEIDSGIVER = 'ARBEIDSGIVER',
+}
+
+function sortSykmeldingerByDate(sykmeldinger: Sykmelding[]): Sykmelding[] {
+    return [...sykmeldinger].sort((a, b) => {
+        if (dayjs(a.getSykmeldingStartDate()).isAfter(dayjs(b.getSykmeldingStartDate()))) {
+            return -1;
+        } else if (dayjs(a.getSykmeldingStartDate()).isBefore(b.getSykmeldingStartDate())) {
+            return 0;
+        }
+        return 1;
+    });
+}
+
+function sortSykmeldingerByArbeidsgiver(sykmeldinger: Sykmelding[]): Sykmelding[] {
+    return [...sykmeldinger].sort((a, b) => {
+        if (a.arbeidsgiver?.navn && b.arbeidsgiver?.navn) {
+            if (a.arbeidsgiver.navn > b.arbeidsgiver.navn) {
+                return 1;
+            }
+            if (a.arbeidsgiver.navn < b.arbeidsgiver.navn) {
+                return -1;
+            }
+        }
+        return 0;
+    });
 }
 
 interface LenkepanelContainerProps {
@@ -18,18 +43,16 @@ interface LenkepanelContainerProps {
 
 const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({ type, sykmeldinger }) => {
     const [sortBy, setSortBy] = useState(SortBy.DATE); // Sort by date as default
-    const [sykmeldingerSorted, setSykmeldingerSorted] = useState<Sykmelding[]>(
-        sortSykmeldingerNewestFirst(sykmeldinger),
-    );
+    const [sykmeldingerSorted, setSykmeldingerSorted] = useState<Sykmelding[]>(sortSykmeldingerByDate(sykmeldinger));
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
     const handleSortChange = (sortBy: SortBy): void => {
         switch (sortBy) {
             case 'DATE':
-                setSykmeldingerSorted(sortSykmeldingerNewestFirst(sykmeldinger));
+                setSykmeldingerSorted(sortSykmeldingerByDate(sykmeldinger));
                 break;
             case 'ARBEIDSGIVER':
-                setSykmeldingerSorted(sortSykmeldingerArbeidsgiver(sykmeldinger));
+                setSykmeldingerSorted(sortSykmeldingerByArbeidsgiver(sykmeldinger));
                 break;
         }
         setSortBy(sortBy);

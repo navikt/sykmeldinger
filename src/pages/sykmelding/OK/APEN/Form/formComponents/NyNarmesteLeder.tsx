@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData, JaEllerNeiType } from '../Form';
-import { NaermesteLeder } from '../../../../../../types/arbeidsgiver';
+import { NaermesteLeder } from '../../../../../../models/Arbeidsgiver';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import AlertStripe from 'nav-frontend-alertstriper';
 
