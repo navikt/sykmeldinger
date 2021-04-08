@@ -1,5 +1,5 @@
 import React from 'react';
-import UtdypendeOpplysning from '../../../../../types/sykmelding/UtdypendeOpplysninger';
+import UtdypendeOpplysning from '../../../../../models/Sykmelding/UtdypendeOpplysninger';
 
 import ElementMedTekst from '../layout/ElementMedTekst';
 import Margin from '../layout/Margin';

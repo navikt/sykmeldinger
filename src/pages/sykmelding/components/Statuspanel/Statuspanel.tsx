@@ -5,7 +5,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import StatuspanelSection from './StatuspanelSection';
 import StatuspanelHeader from './StatuspanelHeader';
-import SykmeldingStatus from '../../../../types/sykmelding/SykmeldingStatus';
+import SykmeldingStatus from '../../../../models/Sykmelding/SykmeldingStatus';
 
 interface StatuspanelProps {
     sykmeldingstatus: SykmeldingStatus;

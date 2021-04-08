@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import { Sykmelding } from '../../../../../types/sykmelding';
+import { Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
 import { useParams } from 'react-router-dom';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Spinner from '../../../../commonComponents/Spinner/Spinner';
-import useBrukerinformasjon from '../../../../commonComponents/hooks/useBrukerinformasjon';
-import useSykmeldingUtenforVentetid from '../../../../commonComponents/hooks/useSykmeldingUtenforVentetid';
-import useBekreft from '../../../../commonComponents/hooks/useBekreft';
-import useSend from '../../../../commonComponents/hooks/useSend';
+import useBrukerinformasjon from '../../../../../hooks/useBrukerinformasjon';
+import useSykmeldingUtenforVentetid from '../../../../../hooks/useSykmeldingUtenforVentetid';
+import useBekreft from '../../../../../hooks/useBekreft';
+import useSend from '../../../../../hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';

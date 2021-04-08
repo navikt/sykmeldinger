@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import 'dayjs/locale/nb';
 import React from 'react';
 import ReactDOM from 'react-dom';

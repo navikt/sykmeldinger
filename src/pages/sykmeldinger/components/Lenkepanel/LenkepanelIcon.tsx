@@ -1,5 +1,5 @@
 import React from 'react';
-import { RegelStatus } from '../../../../types/sykmelding/Behandlingsutfall';
+import { RegelStatus } from '../../../../models/Sykmelding/Behandlingsutfall';
 
 interface Icon {
     hover?: boolean;

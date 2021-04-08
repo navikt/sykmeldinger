@@ -6,15 +6,15 @@ import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panele
 import DiagnoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
 import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
-import { Sykmelding } from '../../../../types/sykmelding';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import useBekreft from '../../../commonComponents/hooks/useBekreft';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useBekreft from '../../../../hooks/useBekreft';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import { Controller, useForm } from 'react-hook-form';
 
 interface InvalidApenSykmeldingProps {
@@ -42,7 +42,7 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
             </div>
 
             <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
-                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <SykmeldingPerioder sykmelding={sykmelding} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />

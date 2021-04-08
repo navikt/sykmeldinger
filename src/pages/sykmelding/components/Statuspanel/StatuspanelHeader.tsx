@@ -3,7 +3,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import checkMark from './checkMark.svg';
 import './Statuspanel.less';
-import SykmeldingStatus from '../../../../types/sykmelding/SykmeldingStatus';
+import SykmeldingStatus from '../../../../models/Sykmelding/SykmeldingStatus';
 
 interface StatuspanelHeaderProps {
     sykmeldingstatus: SykmeldingStatus;

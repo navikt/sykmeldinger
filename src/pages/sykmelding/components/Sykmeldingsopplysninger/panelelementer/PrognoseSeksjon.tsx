@@ -1,5 +1,5 @@
 import React from 'react';
-import Prognose from '../../../../../types/sykmelding/Prognose';
+import Prognose from '../../../../../models/Sykmelding/Prognose';
 
 import EtikettMedTekst from '../layout/EtikettMedTekst';
 

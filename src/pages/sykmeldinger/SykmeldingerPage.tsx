@@ -5,9 +5,9 @@ import Spinner from '../commonComponents/Spinner/Spinner';
 import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
-import useSykmeldinger from '../commonComponents/hooks/useSykmeldinger';
+import useSykmeldinger from '../../hooks/useSykmeldinger';
 import SykmeldingerPageWrapper from './components/SykmeldingerPageWrapper';
-import useHotjarTrigger from '../commonComponents/hooks/useHotjarTrigger';
+import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';

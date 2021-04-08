@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 import './LenkepanelContainer.less';
 import Lenkepanel from './Lenkepanel/Lenkepanel';
-import { Sykmelding } from '../../../types/sykmelding';
-import { sortSykmeldingerNewestFirst, sortSykmeldingerArbeidsgiver } from '../../../utils/sorterSykemeldingUtils';
+import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
+import SykmeldingSorter from '../../../utils/SykmeldingSorter';
 
 export enum SortBy {
     DATE = 'DATE',
@@ -12,59 +12,66 @@ export enum SortBy {
 }
 
 interface LenkepanelContainerProps {
-    type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER';
     sykmeldinger: Sykmelding[];
+    type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER';
+    defaultSortBy?: SortBy;
 }
 
-const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({ type, sykmeldinger }) => {
-    const [sortBy, setSortBy] = useState(SortBy.DATE); // Sort by date as default
-    const [sykmeldingerSorted, setSykmeldingerSorted] = useState<Sykmelding[]>(
-        sortSykmeldingerNewestFirst(sykmeldinger),
+const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
+    sykmeldinger,
+    type,
+    defaultSortBy = SortBy.DATE,
+}) => {
+    const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy);
+    const sykmeldingerSortedByArbeidsgiver = useMemo(
+        () => SykmeldingSorter.sortSykmeldingerByArbeidsgiver(sykmeldinger),
+        [sykmeldinger],
     );
+
+    const sykmeldingerSortedByDate = useMemo(() => SykmeldingSorter.sortSykmeldingerByDate(sykmeldinger), [
+        sykmeldinger,
+    ]);
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
-    const handleSortChange = (sortBy: SortBy): void => {
-        switch (sortBy) {
-            case 'DATE':
-                setSykmeldingerSorted(sortSykmeldingerNewestFirst(sykmeldinger));
-                break;
-            case 'ARBEIDSGIVER':
-                setSykmeldingerSorted(sortSykmeldingerArbeidsgiver(sykmeldinger));
-                break;
+    if (sykmeldinger.length === 0) {
+        if (type === 'TIDLIGERE_SYKMELDINGER') {
+            return null;
         }
-        setSortBy(sortBy);
-    };
 
-    if (type === 'TIDLIGERE_SYKMELDINGER' && sykmeldinger.length === 0) {
-        return null;
+        if (type === 'NYE_SYKMELDINGER') {
+            return <Normaltekst>Du har ingen nye sykmeldinger</Normaltekst>;
+        }
     }
 
     return (
         <div className="lenkepanel-container">
             <header className="lenkepanel-container__header">
                 <Undertittel tag="h2">{title}</Undertittel>
-                {type === 'TIDLIGERE_SYKMELDINGER' ? (
+                {type === 'TIDLIGERE_SYKMELDINGER' && (
                     <Select
                         value={sortBy}
                         label="Sorter etter"
-                        onChange={(event) => handleSortChange(event.target.value as SortBy)}
+                        onChange={(event) => setSortBy(event.target.value as SortBy)}
                     >
                         <option value={SortBy.DATE}>Dato</option>
                         <option value={SortBy.ARBEIDSGIVER}>Arbeidsgiver</option>
                     </Select>
-                ) : null}
+                )}
             </header>
-            {sykmeldingerSorted.length ? (
-                <ol className="lenkepanel-container__sykmeldinger">
-                    {sykmeldingerSorted.map((sykmelding, index) => (
+            <ol className="lenkepanel-container__sykmeldinger">
+                {sortBy === SortBy.DATE &&
+                    sykmeldingerSortedByDate.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">
                             <Lenkepanel sykmelding={sykmelding} />
                         </li>
                     ))}
-                </ol>
-            ) : (
-                <Normaltekst>Du har ingen nye sykmeldinger</Normaltekst>
-            )}
+                {sortBy === SortBy.ARBEIDSGIVER &&
+                    sykmeldingerSortedByArbeidsgiver.map((sykmelding, index) => (
+                        <li key={index} className="lenkepanel-container__sykmelding">
+                            <Lenkepanel sykmelding={sykmelding} />
+                        </li>
+                    ))}
+            </ol>
         </div>
     );
 };

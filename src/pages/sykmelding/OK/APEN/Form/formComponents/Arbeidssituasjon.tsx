@@ -3,7 +3,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData, ArbeidssituasjonType } from '../Form';
 import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer';
-import Brukerinformasjon from '../../../../../../types/brukerinformasjon';
+import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import HarBruktEgenmelding from './HarBruktEgenmelding';
 import HarForsikring from './HarForsikring';
 import QuestionWrapper from '../layout/QuestionWrapper';

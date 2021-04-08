@@ -2,25 +2,18 @@ import './Header.less';
 
 import React from 'react';
 import { Undertittel, Innholdstittel } from 'nav-frontend-typografi';
-import { getTotalSykmeldingLenghtReadableString } from '../../../utils/sykmeldingUtils';
-import Periode from '../../../types/sykmelding/Periode';
+import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 
 interface HeaderProps {
     title: string;
-    subtitle?: string;
-    sykmeldingPerioder?: Periode[];
+    sykmelding?: Sykmelding;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, subtitle, sykmeldingPerioder }) => {
-    const totalPeriodString = sykmeldingPerioder
-        ? `for ${getTotalSykmeldingLenghtReadableString(sykmeldingPerioder)}`
-        : undefined;
-
+const Header: React.FC<HeaderProps> = ({ title, sykmelding }) => {
     return (
         <div className="location-header">
             <Innholdstittel tag="h1">{title}</Innholdstittel>
-            {subtitle ? <Undertittel tag="h2">{subtitle}</Undertittel> : null}
-            {totalPeriodString ? <Undertittel tag="h2">{totalPeriodString}</Undertittel> : null}
+            {sykmelding ? <Undertittel tag="h2">{sykmelding.getReadableSykmeldingLength()}</Undertittel> : null}
         </div>
     );
 };

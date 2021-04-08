@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sykmelding } from '../../../../types/sykmelding';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Undertittel } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
@@ -20,7 +20,7 @@ import UtdypendeOpplysninger from '../../components/Sykmeldingsopplysninger/utdy
 import Arbeidsevne from '../../components/Sykmeldingsopplysninger/utdypendeelementer/Arbeidsevne';
 import SeksjonMedTittel from '../../components/Sykmeldingsopplysninger/layout/SeksjonMedTittel';
 import ElementMedTekst from '../../components/Sykmeldingsopplysninger/layout/ElementMedTekst';
-import useHotjarTrigger from '../../../commonComponents/hooks/useHotjarTrigger';
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 
 interface OkUtgattSykmeldingProps {
     sykmelding: Sykmelding;
@@ -39,7 +39,7 @@ const OkUtgattSykmelding: React.FC<OkUtgattSykmeldingProps> = ({ sykmelding }) =
             </div>
 
             <Sykmeldingsopplysninger id="flere-sykmeldingsopplysnigner" title="Opplysninger fra sykmeldingen">
-                <SykmeldingPerioder perioder={sykmelding.sykmeldingsperioder} />
+                <SykmeldingPerioder sykmelding={sykmelding} />
                 <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
                     <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />

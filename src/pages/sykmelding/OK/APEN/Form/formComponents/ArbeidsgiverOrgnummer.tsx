@@ -2,7 +2,7 @@ import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormData } from '../Form';
-import Brukerinformasjon from '../../../../../../types/brukerinformasjon';
+import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import NyNarmesteLeder from './NyNarmesteLeder';
 import QuestionWrapper from '../layout/QuestionWrapper';
 

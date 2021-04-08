@@ -4,8 +4,8 @@ import ElementMedTekst from '../layout/ElementMedTekst';
 import EnkelCheckbox from '../layout/Checkbox/EnkelCheckbox';
 import Margin from '../layout/Margin';
 import SeksjonMedTittel from '../layout/SeksjonMedTittel';
-import { tilLesbarDatoMedArstall } from '../../../../../utils/datoUtils';
-import Prognose from '../../../../../types/sykmelding/Prognose';
+import DateFormatter from '../../../../../utils/DateFormatter';
+import Prognose from '../../../../../models/Sykmelding/Prognose';
 
 interface FriskmeldingProps {
     prognose?: Prognose;
@@ -44,12 +44,14 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                         checked={erIArbeid.egetArbeidPaSikt}
                         vis={erIArbeid.egetArbeidPaSikt}
                     />
-                    <ElementMedTekst
-                        vis={erIArbeid.egetArbeidPaSikt && !!erIArbeid.arbeidFOM}
-                        tittel="Anslå når du tror dette kan skje"
-                        tekst={tilLesbarDatoMedArstall(erIArbeid.arbeidFOM)}
-                        innrykk
-                    />
+                    {!!erIArbeid.arbeidFOM && (
+                        <ElementMedTekst
+                            vis={erIArbeid.egetArbeidPaSikt && !!erIArbeid.arbeidFOM}
+                            tittel="Anslå når du tror dette kan skje"
+                            tekst={DateFormatter.toReadableDate(erIArbeid.arbeidFOM, { withYear: true })}
+                            innrykk
+                        />
+                    )}
                 </Margin>
                 <Margin>
                     <EnkelCheckbox
@@ -59,12 +61,14 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                         checked={erIArbeid.annetArbeidPaSikt}
                         vis={erIArbeid.annetArbeidPaSikt}
                     />
-                    <ElementMedTekst
-                        vis={erIArbeid.annetArbeidPaSikt && !!erIArbeid.vurderingsdato}
-                        tittel="Når antar du å kunne gi tilbakemelding på dette?"
-                        tekst={tilLesbarDatoMedArstall(erIArbeid.vurderingsdato)}
-                        innrykk
-                    />
+                    {!!erIArbeid.vurderingsdato && (
+                        <ElementMedTekst
+                            vis={erIArbeid.annetArbeidPaSikt && !!erIArbeid.vurderingsdato}
+                            tittel="Når antar du å kunne gi tilbakemelding på dette?"
+                            tekst={DateFormatter.toReadableDate(erIArbeid.vurderingsdato, { withYear: true })}
+                            innrykk
+                        />
+                    )}
                 </Margin>
             </Margin>
         );
@@ -84,16 +88,20 @@ const Friskmelding = ({ prognose }: FriskmeldingProps) => {
                     checked={erIkkeIArbeid.arbeidsforPaSikt}
                     vis={erIkkeIArbeid.arbeidsforPaSikt}
                 />
-                <ElementMedTekst
-                    vis={!!erIkkeIArbeid.arbeidsforFOM}
-                    tittel="Anslå når du tror dette kan skje"
-                    tekst={tilLesbarDatoMedArstall(erIkkeIArbeid.arbeidsforFOM)}
-                />
-                <ElementMedTekst
-                    vis={!!erIkkeIArbeid.vurderingsdato}
-                    tittel="Når antar du å kunne gi tilbakemelding på dette?"
-                    tekst={tilLesbarDatoMedArstall(erIkkeIArbeid.vurderingsdato)}
-                />
+                {!!erIkkeIArbeid.arbeidsforFOM && (
+                    <ElementMedTekst
+                        vis={!!erIkkeIArbeid.arbeidsforFOM}
+                        tittel="Anslå når du tror dette kan skje"
+                        tekst={DateFormatter.toReadableDate(erIkkeIArbeid.arbeidsforFOM, { withYear: true })}
+                    />
+                )}
+                {!!erIkkeIArbeid.vurderingsdato && (
+                    <ElementMedTekst
+                        vis={!!erIkkeIArbeid.vurderingsdato}
+                        tittel="Når antar du å kunne gi tilbakemelding på dette?"
+                        tekst={DateFormatter.toReadableDate(erIkkeIArbeid.vurderingsdato, { withYear: true })}
+                    />
+                )}
             </Margin>
         );
     };
