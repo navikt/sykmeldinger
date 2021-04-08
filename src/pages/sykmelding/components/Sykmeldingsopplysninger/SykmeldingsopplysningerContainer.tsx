@@ -1,4 +1,4 @@
-import './Sykmeldingsopplysninger.less';
+import './SykmeldingsopplysningerContainer.less';
 
 import React, { useState, useRef } from 'react';
 import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
@@ -9,21 +9,25 @@ import arbeidsgiver from './svg/arbeidsgiver.svg';
 import arbeidsgiverHover from './svg/arbeidsgiverHover.svg';
 import doktor from './svg/doktor.svg';
 import doktorHover from './svg/doktorHover.svg';
+import SykmeldingsopplysningerNormal from './SykmeldingVariants/SykmeldingsopplysningerNormal';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import SykmeldingsopplysningerArbeidsgiver from './SykmeldingVariants/SykmeldingsopplysningerArbeidsgiver';
+import SykmeldingsopplysningerAvvist from './SykmeldingVariants/SykmeldingsopplysningerAvvist';
 
 interface SykmeldingsopplysningerProps {
     id: string;
     title: string;
+    sykmelding: Sykmelding;
     expandedDefault?: boolean;
-    type?: 'NORMAL' | 'ARBEIDSGIVER' | 'FLERE_OPPLYSNINGER';
-    children: React.ReactNode | React.ReactChild | React.ReactChildren;
+    type?: 'NORMAL' | 'AVVIST' | 'ARBEIDSGIVER' | 'FLERE_OPPLYSNINGER';
 }
 
-const Sykmeldingsopplysninger = ({
+const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     id,
     title,
+    sykmelding,
     expandedDefault = true,
     type = 'NORMAL',
-    children,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef(document.createElement('article'));
@@ -32,10 +36,10 @@ const Sykmeldingsopplysninger = ({
         switch (type) {
             case 'ARBEIDSGIVER':
                 return { iconNormal: arbeidsgiver, iconHover: arbeidsgiverHover };
-            case 'NORMAL':
-                return { iconNormal: plaster, iconHover: plasterHover };
             case 'FLERE_OPPLYSNINGER':
                 return { iconNormal: doktor, iconHover: doktorHover };
+            default:
+                return { iconNormal: plaster, iconHover: plasterHover };
         }
     })();
     const [icon, setIcon] = useState(icons.iconNormal);
@@ -46,7 +50,7 @@ const Sykmeldingsopplysninger = ({
                 return 'sykmeldingsopplysninger__header--bg-violet';
             case 'FLERE_OPPLYSNINGER':
                 return 'sykmeldingsopplysninger__header--bg-white';
-            case 'NORMAL':
+            default:
                 return '';
         }
     })();
@@ -90,7 +94,9 @@ const Sykmeldingsopplysninger = ({
                     expanded ? '' : 'sykmeldingsopplysninger__content--hidden'
                 }`}
             >
-                {children}
+                {type === 'NORMAL' && <SykmeldingsopplysningerNormal sykmelding={sykmelding} />}
+                {type === 'AVVIST' && <SykmeldingsopplysningerAvvist sykmelding={sykmelding} />}
+                {type === 'ARBEIDSGIVER' && <SykmeldingsopplysningerArbeidsgiver sykmelding={sykmelding} />}
             </div>
         </article>
     );

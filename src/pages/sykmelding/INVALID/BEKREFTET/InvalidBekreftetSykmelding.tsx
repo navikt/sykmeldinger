@@ -1,10 +1,6 @@
 import React from 'react';
-import ArbeidsgiverSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/ArbeidsgiverSeksjon';
-import DiagnoseSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/diagnose/DiagnoseSeksjon';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/Sykmeldingsopplysninger';
-import LegeSeksjon from '../../components/Sykmeldingsopplysninger/panelelementer/LegeSeksjon';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import SykmeldingPerioder from '../../components/Sykmeldingsopplysninger/panelelementer/periode/SykmeldingPerioder';
 import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
@@ -34,16 +30,12 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
                 </Veilederpanel>
             </div>
 
-            <Sykmeldingsopplysninger id="sykmeldingsopplysninger" title="Opplysninger fra sykmeldingen">
-                <SykmeldingPerioder sykmelding={sykmelding} />
-                <DiagnoseSeksjon diagnose={sykmelding.medisinskVurdering?.hovedDiagnose} />
-                {sykmelding.medisinskVurdering?.biDiagnoser.map((diagnose, index) => (
-                    <DiagnoseSeksjon key={index.toString()} diagnose={diagnose} isBidiagnose />
-                ))}
-                <ArbeidsgiverSeksjon arbeidsgiver={sykmelding.arbeidsgiver} />
-                {/* TODO: typesafety */}
-                <LegeSeksjon navn={sykmelding.navnFastlege || ''} />
-            </Sykmeldingsopplysninger>
+            <Sykmeldingsopplysninger
+                id="sykmeldingsopplysninger"
+                title="Opplysninger fra sykmeldingen"
+                sykmelding={sykmelding}
+                type="AVVIST"
+            />
         </div>
     );
 };
