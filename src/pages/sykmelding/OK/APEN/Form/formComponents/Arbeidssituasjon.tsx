@@ -32,7 +32,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
     }, [register, unregister]);
 
     const skalViseEgenmeldingsperioderSporsmal = useMemo(() => {
-        if (watchArbeidssituasjon?.svar === undefined) return false;
+        if (!watchArbeidssituasjon?.svar) return false;
 
         // Only FL and SN within ventetid
         return (
@@ -42,7 +42,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
     }, [watchArbeidssituasjon, erUtenforVentetid]);
 
     const skalViseForsikringSporsmal = useMemo(() => {
-        if (watchArbeidssituasjon?.svar === undefined) return false;
+        if (!watchArbeidssituasjon?.svar) return false;
 
         // Only FL and SN within ventetid
         return (
@@ -73,7 +73,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
                                 id: index === 0 ? fieldName : undefined,
                             }))}
                         checked={value}
-                        onChange={(e: any) => onChange(e.target.value)}
+                        onChange={(_e, value) => onChange(value)}
                         feil={errors.arbeidssituasjon?.svar?.message}
                     />
                 )}

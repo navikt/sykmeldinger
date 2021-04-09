@@ -1,13 +1,13 @@
 import React, { useMemo, useEffect, useContext } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Controller, useFormContext } from 'react-hook-form';
+import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { FormShape, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { AvbrytContext } from '../../AvbrytContext';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 const UriktigeOpplysninger: React.FC = () => {
-    const { register, unregister, watch } = useFormContext<FormShape>();
+    const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'uriktigeOpplysninger';
     const watchUriktigeOpplysninger = watch(fieldName);
     const { setMaAvbryte } = useContext(AvbrytContext);
@@ -21,7 +21,7 @@ const UriktigeOpplysninger: React.FC = () => {
 
     const alertstripetekst: string | undefined = useMemo(() => {
         const value = watchUriktigeOpplysninger?.svar;
-        if (value === undefined) {
+        if (!value) {
             return undefined;
         } else if (value.includes('PERIODE')) {
             return 'Siden du sier at perioden er feil må du be den som sykmeldte deg om å skrive en ny sykmelidng.';
@@ -54,24 +54,34 @@ const UriktigeOpplysninger: React.FC = () => {
 
     return (
         <QuestionWrapper>
-            <fieldset>
-                <legend>Hvilke opplysninger stemmer ikke?</legend>
-
-                {Object.entries(UriktigeOpplysningerType).map(([key, label], index) => (
-                    <div key={key} style={{ marginBottom: '1rem' }}>
-                        <Checkbox
-                            label={label}
-                            name={`${fieldName}.svar`}
-                            value={key}
-                            id={index === 0 ? fieldName : undefined}
-                            checkboxRef={register({ required: 'minst en opplysning må være valgt.' }) as any}
-                        />
-                    </div>
-                ))}
-
-                {/* TODO: convert to checkboxgruppe */}
-                {/* https://github.com/react-hook-form/react-hook-form/issues/1517 */}
-            </fieldset>
+            <Controller
+                name={`${fieldName}.svar`}
+                control={control}
+                defaultValue={null}
+                rules={{
+                    validate: (val: [] | undefined) =>
+                        (val && val.length > 0) || 'Du må svare på hvilke opplysninger som ikke stemmer.',
+                }}
+                render={({ onChange: onCheckboxChange, value }) => (
+                    <CheckboksPanelGruppe
+                        legend="Hvilke opplysninger stemmer ikke?"
+                        checkboxes={Object.entries(UriktigeOpplysningerType).map(([key, label], index) => ({
+                            label: label,
+                            value: key,
+                            checked: value?.includes(key),
+                            id: index === 0 ? fieldName : undefined,
+                        }))}
+                        onChange={(_e, checkedValue) => {
+                            const oldValues = value as (keyof typeof UriktigeOpplysningerType)[] | undefined;
+                            const newVals = oldValues?.includes(checkedValue)
+                                ? oldValues.filter((vals) => vals !== checkedValue)
+                                : [...(oldValues ?? []), checkedValue];
+                            onCheckboxChange(newVals);
+                        }}
+                        feil={(errors.uriktigeOpplysninger?.svar as any)?.message}
+                    />
+                )}
+            />
 
             {trengerNySykmelding ? (
                 <AlertStripeAdvarsel style={{ marginTop: '2rem' }}>{alertstripetekst}</AlertStripeAdvarsel>
