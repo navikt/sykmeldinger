@@ -6,7 +6,6 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Spinner from '../../../../commonComponents/Spinner/Spinner';
 import useBrukerinformasjon from '../../../../../hooks/useBrukerinformasjon';
 import useSykmeldingUtenforVentetid from '../../../../../hooks/useSykmeldingUtenforVentetid';
-import useBekreft from '../../../../../hooks/useBekreft';
 import useSend from '../../../../../hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -48,7 +47,7 @@ interface SporsmalSvar<Value> {
     svar?: Value;
 }
 
-export interface FormData {
+export interface FormShape {
     erOpplysnigeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
     uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
     arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
@@ -80,16 +79,13 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     } = useSykmeldingUtenforVentetid(sykmeldingId);
 
     // DATA PERSISTING
-    const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
-    const { mutate: send, isLoading: isLoadingSend, error: errorSend } = useSend(sykmeldingId);
+    const { mutate: send, isLoading: isSending, error: errorSend } = useSend(sykmeldingId);
 
-    const formMethods = useForm<FormData>({ shouldFocusError: false });
+    const formMethods = useForm<FormShape>({ shouldFocusError: false });
     const { handleSubmit, watch, errors } = formMethods;
 
-    const watchArbeidssituasjon = watch('arbeidssituasjon');
+    const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
     const watchErOpplysningeneRiktige = watch('erOpplysnigeneRiktige');
-
-    const skalSendes = watchArbeidssituasjon === 'ARBEIDSTAKER';
 
     const { maAvbryte } = useContext(AvbrytContext);
 
@@ -113,7 +109,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                 style={{ marginBottom: '3rem' }}
                 onSubmit={handleSubmit((data) => {
                     console.log(data);
-                    skalSendes ? send(data) : bekreft(data);
+                    send(data);
                 })}
             >
                 <ErOpplysningeneRiktige />
@@ -125,10 +121,10 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     />
                 )}
 
-                {(errorSend || errorBekreft) && (
+                {errorSend && (
                     <div className="margin-bottom--1">
                         <AlertStripeFeil>
-                            En feil oppsto ved {skalSendes ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv
+                            En feil oppsto ved {erArbeidstaker ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv
                             igjen senere.
                         </AlertStripeFeil>
                     </div>
@@ -138,8 +134,8 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
                 {maAvbryte === false && (
                     <div style={{ marginTop: '3rem', marginBottom: '3rem', textAlign: 'center' }}>
-                        <Knapp spinner={isLoadingSend || isLoadingBekreft} type="hoved" htmlType="submit">
-                            {skalSendes ? 'Send' : 'Bekreft'} sykmelding
+                        <Knapp spinner={isSending} type="hoved" htmlType="submit">
+                            {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
                         </Knapp>
                     </div>
                 )}

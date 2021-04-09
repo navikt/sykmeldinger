@@ -1,13 +1,13 @@
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import React from 'react';
 import { DeepMap, FieldErrors } from 'react-hook-form';
-import { FormData } from './Form';
+import { FormShape } from './Form';
 
 interface FeiloppsummeringContainerProps {
-    errors: DeepMap<FormData, FieldErrors>;
+    errors: DeepMap<FormShape, FieldErrors>;
 }
 
-interface CustomErrors extends Record<keyof FormData, string | undefined> {}
+interface CustomErrors extends Record<keyof FormShape, string | undefined> {}
 
 const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ errors }) => {
     const customErrors: CustomErrors = {

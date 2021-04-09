@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormData, JaEllerNeiType } from '../Form';
+import { FormShape, JaEllerNeiType } from '../Form';
 import UriktigeOpplysninger from './UriktigeOpplysninger';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
 const ErOpplysningeneRiktige: React.FC = () => {
-    const { register, unregister, control, watch, errors } = useFormContext<FormData>();
-    const fieldName: keyof FormData = 'erOpplysnigeneRiktige';
+    const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
+    const fieldName: keyof FormShape = 'erOpplysnigeneRiktige';
     const sporsmaltekst = 'Er opplysningene riktige';
     const watchErOpplysningeneRiktige = watch(fieldName);
 

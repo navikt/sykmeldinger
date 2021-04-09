@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormData, JaEllerNeiType } from '../Form';
+import { FormShape, JaEllerNeiType } from '../Form';
 import Egenmeldingsperioder from './Egenmeldingsperioder';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import dayjs from 'dayjs';
@@ -11,8 +11,8 @@ interface HarBruktEgenmeldingProps {
 }
 
 const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleStartdato }) => {
-    const { control, watch, errors, register, unregister } = useFormContext<FormData>();
-    const fieldName: keyof FormData = 'harBruktEgenmelding';
+    const { control, watch, errors, register, unregister } = useFormContext<FormShape>();
+    const fieldName: keyof FormShape = 'harBruktEgenmelding';
     const sporsmaltekst = `Vi har registrert at du ble syk ${dayjs(syketilfelleStartdato).format(
         'D. MMMM YYYY',
     )}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`;

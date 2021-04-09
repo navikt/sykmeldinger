@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormData, ArbeidssituasjonType } from '../Form';
+import { FormShape, ArbeidssituasjonType } from '../Form';
 import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer';
 import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import HarBruktEgenmelding from './HarBruktEgenmelding';
@@ -14,8 +14,8 @@ interface ArbeidssituasjonProps {
 }
 
 const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, brukerinformasjon }) => {
-    const { register, unregister, errors, control, watch } = useFormContext<FormData>();
-    const fieldName: keyof FormData = 'arbeidssituasjon';
+    const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
+    const fieldName: keyof FormShape = 'arbeidssituasjon';
     const sporsmaltekst = 'Min arbeidssituasjon';
     const watchArbeidssituasjon = watch(fieldName);
 
@@ -63,7 +63,10 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
                         name={name}
                         legend={sporsmaltekst}
                         radios={Object.entries(ArbeidssituasjonType)
-                            .filter(([key]) => !(brukerinformasjon.strengtFortroligAdresse === true && key === 'ARBEIDSTAKER'))
+                            .filter(
+                                ([key]) =>
+                                    !(brukerinformasjon.strengtFortroligAdresse === true && key === 'ARBEIDSTAKER'),
+                            )
                             .map(([key, label], index) => ({
                                 label: label,
                                 value: key,

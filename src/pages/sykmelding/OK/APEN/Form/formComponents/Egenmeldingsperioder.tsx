@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
-import { FormData, Egenmeldingsperiode } from '../Form';
+import { FormShape, Egenmeldingsperiode } from '../Form';
 import { Label } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { Xknapp } from 'nav-frontend-ikonknapper';
@@ -13,12 +13,12 @@ interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
 }
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
-    const fieldName: keyof FormData = 'egenmeldingsperioder';
+    const fieldName: keyof FormShape = 'egenmeldingsperioder';
     const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(syketilfelleStartdato).format(
         'D. MMMM YYYY',
     )}.`;
 
-    const { errors, control, register, getValues, unregister } = useFormContext<FormData>();
+    const { errors, control, register, getValues, unregister } = useFormContext<FormShape>();
     const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
         control,
         name: `${fieldName}.svar`,

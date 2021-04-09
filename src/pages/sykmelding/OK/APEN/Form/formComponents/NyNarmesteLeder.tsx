@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormData, JaEllerNeiType } from '../Form';
+import { FormShape, JaEllerNeiType } from '../Form';
 import { NaermesteLeder } from '../../../../../../models/Arbeidsgiver';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -11,8 +11,8 @@ interface NyNarmesteLederProps {
 }
 
 const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => {
-    const { control, watch, register, unregister } = useFormContext<FormData>();
-    const fieldName: keyof FormData = 'nyNarmesteLeder';
+    const { control, watch, register, unregister } = useFormContext<FormShape>();
+    const fieldName: keyof FormShape = 'nyNarmesteLeder';
     const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`;
     const watchNyNarmesteLeder = watch(fieldName);
 

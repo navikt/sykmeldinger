@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormData } from '../Form';
+import { FormShape } from '../Form';
 import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import NyNarmesteLeder from './NyNarmesteLeder';
 import QuestionWrapper from '../layout/QuestionWrapper';
@@ -12,8 +12,8 @@ interface ArbeidsgiverOrgnummerProps {
 
 const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinformasjon }) => {
     const { arbeidsgivere } = brukerinformasjon;
-    const { register, unregister, errors, control, watch } = useFormContext<FormData>();
-    const fieldName: keyof FormData = 'arbeidsgiverOrgnummer';
+    const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
+    const fieldName: keyof FormShape = 'arbeidsgiverOrgnummer';
     const sporsmaltekst = 'Min arbeidsgiver';
     const watchArbeidsgiverOrgnummer = watch(fieldName);
 

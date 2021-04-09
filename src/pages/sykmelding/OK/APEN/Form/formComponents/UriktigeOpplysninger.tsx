@@ -1,14 +1,14 @@
 import React, { useMemo, useEffect, useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Checkbox } from 'nav-frontend-skjema';
-import { FormData, UriktigeOpplysningerType } from '../Form';
+import { FormShape, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { AvbrytContext } from '../../AvbrytContext';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 const UriktigeOpplysninger: React.FC = () => {
-    const { register, unregister, watch } = useFormContext<FormData>();
-    const fieldName: keyof FormData = 'uriktigeOpplysninger';
+    const { register, unregister, watch } = useFormContext<FormShape>();
+    const fieldName: keyof FormShape = 'uriktigeOpplysninger';
     const watchUriktigeOpplysninger = watch(fieldName);
     const { setMaAvbryte } = useContext(AvbrytContext);
 

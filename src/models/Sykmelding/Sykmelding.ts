@@ -10,8 +10,9 @@ import Prognose from './Prognose';
 import SykmeldingStatus from './SykmeldingStatus';
 import UtdypendeOpplysning from './UtdypendeOpplysninger';
 import { ArrayNotEmpty, IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import dayjs from 'dayjs';
+import { transformAndValidateSync } from 'class-transformer-validator';
 
 export enum DiagnosekodeSystem {
     '2.16.578.1.12.4.1.1.7110' = 'ICD-10',
@@ -59,7 +60,30 @@ export class Sykmelding {
     @Type(() => Prognose)
     readonly prognose?: Prognose;
 
-    // @ValidateNested({ each: true })
+    @ValidateNested({ each: true })
+    @Transform(
+        ({ value }) => {
+            const outerMap = new Map<string, Map<string, UtdypendeOpplysning>>();
+            if (value && value instanceof Object) {
+                for (const [outerKey, outerValue] of Object.entries(value.value)) {
+                    if (outerValue && outerValue instanceof Object) {
+                        const innerMap = new Map<string, UtdypendeOpplysning>();
+                        for (const [innerKey, innerValue] of Object.entries(outerValue)) {
+                            const utdypendeOpplysning = transformAndValidateSync(
+                                UtdypendeOpplysning,
+                                innerValue as UtdypendeOpplysning,
+                                { validator: { validationError: { target: false, value: false } } },
+                            );
+                            innerMap.set(innerKey, utdypendeOpplysning);
+                        }
+                        outerMap.set(outerKey, innerMap);
+                    }
+                }
+            }
+            return outerMap;
+        },
+        { toClassOnly: true },
+    )
     readonly utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>>;
 
     @IsOptional()
@@ -143,7 +167,7 @@ export class Sykmelding {
     }
 
     /**
-     * Get the periods of the sykmelding sorted by earliest first
+     * Get the periods of the sykmelding sorted by newest first
      * @return {Periode[]} The sorted sykmelding periods
      */
     getSykmeldingperioderSorted(): Periode[] {
