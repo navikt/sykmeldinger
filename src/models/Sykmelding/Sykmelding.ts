@@ -65,7 +65,7 @@ export class Sykmelding {
         ({ value }) => {
             const outerMap = new Map<string, Map<string, UtdypendeOpplysning>>();
             if (value && value instanceof Object) {
-                for (const [outerKey, outerValue] of Object.entries(value.value)) {
+                for (const [outerKey, outerValue] of Object.entries(value)) {
                     if (outerValue && outerValue instanceof Object) {
                         const innerMap = new Map<string, UtdypendeOpplysning>();
                         for (const [innerKey, innerValue] of Object.entries(outerValue)) {
