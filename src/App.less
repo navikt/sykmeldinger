@@ -25,18 +25,15 @@ body {
 }
 
 #root {
-    min-height: 70vh;
+    min-height: 50vh;
 }
 
 .limit {
-    min-height: 70vh;
+    width: @desktopLimitWidth;
+    max-width: 100%;
 
-    position: relative;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    background-color: white;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
 .margin-bottom--1 {
@@ -57,15 +54,4 @@ body {
 
 .text--center {
     text-align: center;
-}
-
-@media (min-width: @screen-sm) {
-    .limit {
-        width: @desktopLimitWidth;
-        margin: 0 auto;
-        padding-top: 1rem;
-        padding-bottom: 3rem;
-        padding-left: 3rem;
-        padding-right: 3rem;
-    }
 }

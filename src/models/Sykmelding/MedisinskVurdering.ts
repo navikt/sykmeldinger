@@ -31,6 +31,7 @@ export class AnnenFraversArsak {
     @IsString()
     beskrivelse?: string;
 
+    // Can only have one entry
     @IsIn(Object.keys(AnnenFraverGrunn), { each: true })
     grunn: (keyof typeof AnnenFraverGrunn)[];
 }
