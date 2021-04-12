@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import Statuspanel from '../../components/Statuspanel/Statuspanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import DateFormatter from '../../../../utils/DateFormatter';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -14,16 +16,22 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
 
     return (
         <div className="sykmelding-container">
-            <Statuspanel
-                sykmeldingstatus={sykmelding.sykmeldingStatus}
-                erEgenmeldt={sykmelding.egenmeldt}
-                avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
-            />
+            <AlertStripeSuksess style={{ marginBottom: '2rem' }}>
+                <Systemtittel tag="h2">
+                    Sykmeldingen er sendt til {sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
+                </Systemtittel>
+                <Normaltekst>
+                    Dato sendt:{' '}
+                    {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
+                </Normaltekst>
+            </AlertStripeSuksess>
+
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysninger"
                 title="Opplysninger fra sykmeldingen"
                 sykmelding={sykmelding}
             />
+
             <Sykmeldingsopplysninger
                 id="arbeidsgivers-sykmelding"
                 title="Slik ser sykmeldingen ut for arbeidsgiveren din"

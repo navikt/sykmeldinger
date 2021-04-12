@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import Statuspanel from '../../components/Statuspanel/Statuspanel';
 import { useParams } from 'react-router-dom';
 import useGjenapne from '../../../../hooks/useGjenapne';
 import { Knapp } from 'nav-frontend-knapper';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Undertittel } from 'nav-frontend-typografi';
+import { AlertStripeFeil, AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import DateFormatter from '../../../../utils/DateFormatter';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -21,18 +21,24 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
 
     return (
         <div className="sykmelding-container">
-            <Statuspanel
-                sykmeldingstatus={sykmelding.sykmeldingStatus}
-                erEgenmeldt={sykmelding.egenmeldt}
-                avventendeSykmelding={sykmelding.sykmeldingsperioder.some((periode) => periode.type === 'AVVENTENDE')}
-            />
+            <AlertStripeSuksess style={{ marginBottom: '2rem' }}>
+                <Systemtittel tag="h2">Sykmeldingen er sendt til NAV</Systemtittel>
+                <Normaltekst>
+                    Dato sendt:{' '}
+                    {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
+                </Normaltekst>
+            </AlertStripeSuksess>
 
-            <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                <Undertittel style={{ marginBottom: '1rem' }}>Fylte du ut feil opplysninger?</Undertittel>
+            <div style={{ marginBottom: '4rem', textAlign: 'center' }}>
+                <Normaltekst style={{ marginBottom: '1rem' }}>Fylte du ut feil opplysninger?</Normaltekst>
                 <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
                     gjør utfyllingen på nytt
                 </Knapp>
-                {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
+                {error && (
+                    <AlertStripeFeil style={{ marginTop: '1rem' }}>
+                        Det oppsto en feil ved gjenåpning av sykmeldingen
+                    </AlertStripeFeil>
+                )}
             </div>
 
             <Sykmeldingsopplysninger

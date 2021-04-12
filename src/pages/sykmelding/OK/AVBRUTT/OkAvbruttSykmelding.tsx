@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Undertittel, Element } from 'nav-frontend-typografi';
-import dayjs from 'dayjs';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import useGjenapne from '../../../../hooks/useGjenapne';
 import { useParams } from 'react-router-dom';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import DateFormatter from '../../../../utils/DateFormatter';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
@@ -21,17 +21,23 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
 
     return (
         <div className="sykmelding-container">
-            <div className="margin-bottom--4">
-                <AlertStripe className="margin-bottom--1" type="feil">
+            <div style={{ marginBottom: '4rem' }}>
+                <AlertStripe type="feil" style={{ marginBottom: '2rem' }}>
                     <Undertittel tag="h2">Sykmeldingen ble avbrutt av deg</Undertittel>
-                    <Element>
-                        Dato avbrutt: {dayjs(sykmelding.sykmeldingStatus.timestamp).format('dddd D. MMMM, kl. HH:mm')}
-                    </Element>
+                    <Normaltekst>
+                        Dato avbrutt:{' '}
+                        {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
+                    </Normaltekst>
                 </AlertStripe>
-                <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
-                    Bruk sykmeldingen
-                </Knapp>
-                {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
+                <div style={{ textAlign: 'center' }}>
+                    <Normaltekst style={{ marginBottom: '1rem' }}>
+                        Du kan fortsatt velge å ta i bruk sykmeldingen
+                    </Normaltekst>
+                    <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
+                        Bruk sykmeldingen
+                    </Knapp>
+                    {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
+                </div>
             </div>
             <Sykmeldingsopplysninger
                 id="flere-sykmeldingsopplysnigner"

@@ -23,7 +23,7 @@ export const sykmeldingSendt2 = {
         statusEvent: 'SENDT',
         arbeidsgiver: {
             orgnummer: '123456',
-            orgNavn: 'NAV',
+            orgNavn: 'NAV IT-avdelingen',
         },
         sporsmalOgSvarListe: [],
     },
