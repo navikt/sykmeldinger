@@ -1,5 +1,6 @@
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import DateFormatter from '../../../../utils/DateFormatter';
+import FlereOpplysninger from './FlereOpplysninger';
 import Section from './Layout/Section';
 import SykmeldingEntry from './Layout/SykmeldingEntry';
 import ArbeidsevneView from './Sections/ArbeidsevneView';
@@ -25,8 +26,11 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                     arbeidsgiver={arbeidsgiver}
                 />
             )}
-            <PeriodeView perioder={sykmelding.sykmeldingsperioder} />
-            <div className="utdypende-opplysninger" style={{ marginTop: '2rem' }}>
+            <div style={{ marginBottom: '2rem' }}>
+                <PeriodeView perioder={sykmelding.sykmeldingsperioder} />
+            </div>
+
+            <FlereOpplysninger>
                 <SykmeldingEntry
                     title="Dato sykmeldingen ble skrevet"
                     mainText={DateFormatter.toReadableDate(sykmelding.behandletTidspunkt)}
@@ -59,7 +63,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                         <SykmeldingEntry title="Telefon til lege/sykmelder" mainText={sykmelding.behandler.tlf} />
                     </Section>
                 )}
-            </div>
+            </FlereOpplysninger>
         </>
     );
 };
