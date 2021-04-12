@@ -11,7 +11,7 @@ interface NyNarmesteLederProps {
 }
 
 const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => {
-    const { control, watch, register, unregister } = useFormContext<FormShape>();
+    const { control, watch, register, unregister, setValue } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'nyNarmesteLeder';
     const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`;
     const watchNyNarmesteLeder = watch(fieldName);
@@ -21,6 +21,11 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
         register({ name: `${fieldName}.svartekster`, value: JSON.stringify(JaEllerNeiType) });
         return () => unregister(fieldName);
     }, [register, unregister, sporsmaltekst]);
+
+    // Reset the answer if the prop changes
+    useEffect(() => {
+        setValue(`${fieldName}.svar`, undefined);
+    }, [naermesteLeder, setValue]);
 
     return (
         <QuestionWrapper>

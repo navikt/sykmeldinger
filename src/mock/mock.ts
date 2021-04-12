@@ -58,7 +58,7 @@ fetchMock
 // INFORMASJON OM BRUKER
 fetchMock.get(
     'end:/v1/brukerinformasjon',
-    { body: { strengtFortroligAdresse: true, arbeidsgivere: arbeidsgivereMock } },
+    { body: { strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock } },
     { delay: 2000 },
 );
 
