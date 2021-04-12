@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
@@ -9,6 +8,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import useGjenapne from '../../../../hooks/useGjenapne';
 import { useParams } from 'react-router-dom';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;

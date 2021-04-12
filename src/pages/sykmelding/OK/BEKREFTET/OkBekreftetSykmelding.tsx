@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Statuspanel from '../../components/Statuspanel/Statuspanel';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import { useParams } from 'react-router-dom';
 import useGjenapne from '../../../../hooks/useGjenapne';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel } from 'nav-frontend-typografi';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;

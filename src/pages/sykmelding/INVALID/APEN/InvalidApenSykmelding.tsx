@@ -2,7 +2,6 @@ import React from 'react';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
@@ -12,6 +11,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import useBekreft from '../../../../hooks/useBekreft';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import { Controller, useForm } from 'react-hook-form';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;

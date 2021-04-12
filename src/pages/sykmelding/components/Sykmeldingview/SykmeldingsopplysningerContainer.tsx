@@ -3,12 +3,12 @@ import './SykmeldingsopplysningerContainer.less';
 import React, { useState, useRef } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import plaster from './svg/plaster.svg';
-import plasterHover from './svg/plasterHover.svg';
-import arbeidsgiverSvg from './svg/arbeidsgiver.svg';
-import arbeidsgiverHover from './svg/arbeidsgiverHover.svg';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Sykmeldingview from '../Sykmeldingview/Sykmeldingview';
+import PlasterSvg from './Svg/PlasterSvg';
+import PlasterHoverSvg from './Svg/PlasterHoverSvg';
+import ArbeidsgiverSvg from './Svg/ArbeidsgiverSvg';
+import ArbeidsgiverHoverSvg from './Svg/ArbeidsgiverHoverSvg';
 
 interface SykmeldingsopplysningerProps {
     id: string;
@@ -28,13 +28,13 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef(document.createElement('article'));
 
-    const icons: { iconNormal: string; iconHover: string } = (() => {
+    const icons = (() => {
         if (arbeidsgiver) {
-            return { iconNormal: arbeidsgiverSvg, iconHover: arbeidsgiverHover };
+            return { iconNormal: ArbeidsgiverSvg, iconHover: ArbeidsgiverHoverSvg };
         }
-        return { iconNormal: plaster, iconHover: plasterHover };
+        return { iconNormal: PlasterSvg, iconHover: PlasterHoverSvg };
     })();
-    const [icon, setIcon] = useState(icons.iconNormal);
+    const [icon, setIcon] = useState<JSX.Element>(icons.iconNormal);
 
     const classStyleModifier: string = (() => {
         if (arbeidsgiver) {
@@ -60,7 +60,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                 }}
                 className={`sykmeldingsopplysninger__header ${classStyleModifier}`}
             >
-                <img aria-hidden="true" className="sykmeldingsopplysninger__icon" src={icon} alt="Opplysniger" />
+                {icon}
                 <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
                     {title}
                 </Undertittel>

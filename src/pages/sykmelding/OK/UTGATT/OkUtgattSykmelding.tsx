@@ -3,8 +3,8 @@ import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Undertittel } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 interface OkUtgattSykmeldingProps {
     sykmelding: Sykmelding;

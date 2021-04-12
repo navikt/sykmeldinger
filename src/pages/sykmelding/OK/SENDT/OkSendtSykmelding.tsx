@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import Statuspanel from '../../components/Statuspanel/Statuspanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
