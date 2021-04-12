@@ -18,6 +18,22 @@ export const sykmeldingApen = {
             reisetilskudd: false,
         },
         {
+            fom: '2020-02-10',
+            tom: '2020-02-15',
+            type: 'AKTIVITET_IKKE_MULIG',
+            aktivitetIkkeMulig: {
+                medisinskArsak: {
+                    arsak: ['ANNET', 'AKTIVITET_FORVERRER_TILSTAND'],
+                    beskrivelse: 'Dette er en beskrivelse av den medisinske årsaken.',
+                },
+                arbeidsrelatertArsak: {
+                    arsak: ['ANNET'],
+                    beskrivelse: 'Dette er en beskrivelse av den arbeidsrelaterte årsaken',
+                },
+            },
+            reisetilskudd: false,
+        },
+        {
             fom: '2020-02-16',
             tom: '2020-02-20',
             type: 'GRADERT',
@@ -60,17 +76,43 @@ export const sykmeldingApen = {
             grunn: ['NODVENDIG_KONTROLLUNDERSOKELSE', 'ABORT'],
         },
     },
+    prognose: {
+        arbeidsforEtterPeriode: true,
+        hensynArbeidsplassen: 'Du må ta det rolig på jobben',
+    },
     skjermesForPasient: false,
     utdypendeOpplysninger: {
+        '6.1': {
+            '6.1.1': {
+                sporsmal: 'Dette er et spørsmål',
+                svar: 'Dette er et svar',
+                restriksjoner: [],
+            },
+        },
         '6.2': {
             '6.2.1': {
                 sporsmal: 'Dette er et spørsmål',
                 svar: 'Dette er et svar',
                 restriksjoner: [],
             },
+            '6.2.2': {
+                sporsmal: 'Dette er et spørsmål',
+                svar: 'Dette er et svar',
+                restriksjoner: [],
+            },
         },
     },
-    kontaktMedPasient: {},
+    tiltakArbeidsplassen: 'Tiltak på arbeidsplassen',
+    tiltakNAV: 'Tiltak NAV',
+    andreTiltak: 'Du må gjøre andre tiltak',
+    meldingTilNAV: {
+        bistandUmiddelbart: true,
+        beskrivBistand: 'Trenger hjelp med penger',
+    },
+    kontaktMedPasient: {
+        kontaktDato: '2020-04-01',
+        begrunnelseIkkeKontakt: 'Han var kjempesyk',
+    },
     behandletTidspunkt: '2020-01-01',
     behandler: {
         fornavn: 'Fornavn',

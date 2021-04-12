@@ -32,6 +32,8 @@ class MedisinskArsak {
     @IsString()
     beskrivelse?: string;
 
+    // TODO: not optional if beskrivelse exists
+    @IsOptional()
     @IsIn(Object.keys(MedisinskArsakType), { each: true })
     arsak: (keyof typeof MedisinskArsakType)[];
 }
@@ -46,11 +48,13 @@ class ArbeidsrelatertArsak {
     @IsString()
     beskrivelse?: string;
 
+    // TODO: not optional if beskrivelse exists
+    @IsOptional()
     @IsIn(Object.keys(ArbeidsrelatertArsakType), { each: true })
     arsak: (keyof typeof ArbeidsrelatertArsakType)[];
 }
 
-class AktivitetIkkeMuligPeriode {
+export class AktivitetIkkeMuligPeriode {
     @IsOptional()
     @ValidateNested()
     @Type(() => MedisinskArsak)
@@ -94,10 +98,29 @@ class Periode {
     reisetilskudd: boolean;
 
     /**
-     * Get a text representation of the period length
+     * Get a text representation of the period type
      * @return {string} The period string
      */
-    getReadableLength(): string {
+    getPeriodTitle(): string {
+        switch (this.type) {
+            case 'AVVENTENDE':
+                return 'Avventende sykmedling';
+            case 'AKTIVITET_IKKE_MULIG':
+                return '100% sykmelding';
+            case 'GRADERT':
+                return `${this.gradert?.grad}% sykmelding`;
+            case 'REISETILSKUDD':
+                return 'Reisetilskudd';
+            case 'BEHANDLINGSDAGER':
+                return 'Behandlingsdager';
+        }
+    }
+
+    /**
+     * Get a text representation of the period fom to tom
+     * @return {string} The period string
+     */
+    getReadablePeriod(): string {
         return `${dayjs(this.fom).format('D. MMM YYYY')} - ${dayjs(this.tom).format('D. MMM YYYY')}`;
     }
 
@@ -107,6 +130,18 @@ class Periode {
      */
     getLength(): number {
         return dayjs(this.tom).diff(dayjs(this.fom), 'day');
+    }
+
+    /**
+     * Get a text representation of the period length
+     * @return {string} The period string
+     */
+    getReadableLength(): string {
+        const length = this.getLength();
+        if (this.type === 'BEHANDLINGSDAGER') {
+            return `${length} behandlingsdag${length === 1 ? '' : 'er'}`;
+        }
+        return `${length} dag${length === 1 ? '' : 'er'}`;
     }
 
     /**

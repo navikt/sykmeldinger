@@ -1,5 +1,4 @@
 import React from 'react';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
@@ -7,6 +6,7 @@ import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/Veil
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import dayjs from 'dayjs';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -34,7 +34,6 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
                 id="sykmeldingsopplysninger"
                 title="Opplysninger fra sykmeldingen"
                 sykmelding={sykmelding}
-                type="AVVIST"
             />
         </div>
     );

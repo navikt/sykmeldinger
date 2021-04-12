@@ -13,7 +13,7 @@ export class Diagnose {
     tekst?: string;
 }
 
-enum AnnenFraverGrunn {
+export enum AnnenFraverGrunn {
     GODKJENT_HELSEINSTITUSJON = 'Når vedkommende er innlagt i en godkjent helseinstitusjon',
     BEHANDLING_FORHINDRER_ARBEID = 'Når vedkommende er under behandling og legen erklærer at behandlingen gjør det nødvendig at vedkommende ikke arbeider',
     ARBEIDSRETTET_TILTAK = 'Når vedkommende deltar på et arbeidsrettet tiltak',
@@ -31,6 +31,7 @@ export class AnnenFraversArsak {
     @IsString()
     beskrivelse?: string;
 
+    // Can only have one entry
     @IsIn(Object.keys(AnnenFraverGrunn), { each: true })
     grunn: (keyof typeof AnnenFraverGrunn)[];
 }

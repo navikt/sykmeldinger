@@ -4,7 +4,7 @@ import { IsOptional, IsString } from 'class-validator';
 class KontaktMedPasient {
     @IsOptional()
     @Type(() => Date)
-    kontaktMedPasient?: Date;
+    kontaktDato?: Date;
 
     @IsOptional()
     @IsString()
