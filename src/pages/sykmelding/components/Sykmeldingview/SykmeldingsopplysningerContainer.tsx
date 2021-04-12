@@ -60,7 +60,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                 }}
                 className={`sykmeldingsopplysninger__header ${classStyleModifier}`}
             >
-                {icon}
+                <div className="sykmeldingsopplysninger__icon">{icon}</div>
                 <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
                     {title}
                 </Undertittel>
