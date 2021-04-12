@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Sykmeldingsopplysninger from '../../components/Sykmeldingsopplysninger/SykmeldingsopplysningerContainer';
 import SporsmalInfoheader from './SporsmalInfoheader';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
@@ -13,6 +12,7 @@ import Spinner from '../../../commonComponents/Spinner/Spinner';
 import AvbrytContextProvider from './AvbrytContext';
 import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;

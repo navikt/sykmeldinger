@@ -29,7 +29,7 @@ class Behandler {
 
     @IsOptional()
     @IsString()
-    mellomnavn?: string;
+    mellomnavn?: string | null;
 
     @IsString()
     etternavn: string;
@@ -55,6 +55,10 @@ class Behandler {
     @IsOptional()
     @IsString()
     tlf?: string;
+
+    getName(): string {
+        return `${this.fornavn}${this.mellomnavn ? ' ' + this.mellomnavn : ''} ${this.etternavn}`;
+    }
 }
 
 export default Behandler;
