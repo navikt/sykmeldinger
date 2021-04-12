@@ -85,6 +85,8 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const { handleSubmit, watch, errors } = formMethods;
 
     const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
+    const erArbeidstakerMedStrengtFortroligAdressse =
+        erArbeidstaker && brukerinformasjon?.strengtFortroligAdresse === true;
     const watchErOpplysningeneRiktige = watch('erOpplysnigeneRiktige');
 
     const { maAvbryte } = useContext(AvbrytContext);
@@ -122,7 +124,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                 )}
 
                 {errorSend && (
-                    <div className="margin-bottom--1">
+                    <div style={{ marginBottom: '1rem' }}>
                         <AlertStripeFeil>
                             En feil oppsto ved {erArbeidstaker ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv
                             igjen senere.
@@ -132,7 +134,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
                 <FeiloppsummeringContainer errors={errors} />
 
-                {maAvbryte === false && (
+                {maAvbryte === false && !erArbeidstakerMedStrengtFortroligAdressse && (
                     <div style={{ marginTop: '3rem', marginBottom: '3rem', textAlign: 'center' }}>
                         <Knapp spinner={isSending} type="hoved" htmlType="submit">
                             {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding

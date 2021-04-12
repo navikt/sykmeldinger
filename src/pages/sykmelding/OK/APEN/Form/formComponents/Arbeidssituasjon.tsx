@@ -7,6 +7,22 @@ import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import HarBruktEgenmelding from './HarBruktEgenmelding';
 import HarForsikring from './HarForsikring';
 import QuestionWrapper from '../layout/QuestionWrapper';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+
+const StrengtFortroligInfo = () => (
+    <AlertStripeAdvarsel style={{ marginTop: '2rem' }}>
+        <Normaltekst>
+            Du er registrert med adressesperre strengt fortrolig. Du kan derfor ikke sende sykmeldingen til
+            arbeidsgiveren din fra nav.no. Det betyr at du må levere sykmeldingen personlig til arbeidsgiveren din.
+        </Normaltekst>
+        <Normaltekst>For å levere sykmeldingen manuelt kan du:</Normaltekst>
+        <ul>
+            <li>ta kontakt med den som har sykmeldt deg for å få en utskrift</li>
+            <li>skrive ut sykmeldingen og levere til arbeidsgiveren din</li>
+        </ul>
+    </AlertStripeAdvarsel>
+);
 
 interface ArbeidssituasjonProps {
     erUtenforVentetid: boolean;
@@ -52,7 +68,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
     }, [watchArbeidssituasjon, erUtenforVentetid]);
 
     return (
-        <QuestionWrapper backgroundColor="#E4EDF2">
+        <QuestionWrapper innrykk>
             <Controller
                 control={control}
                 name={`${fieldName}.svar`}
@@ -62,24 +78,22 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
                     <RadioPanelGruppe
                         name={name}
                         legend={sporsmaltekst}
-                        radios={Object.entries(ArbeidssituasjonType)
-                            .filter(
-                                ([key]) =>
-                                    !(brukerinformasjon.strengtFortroligAdresse === true && key === 'ARBEIDSTAKER'),
-                            )
-                            .map(([key, label], index) => ({
-                                label: label,
-                                value: key,
-                                id: index === 0 ? fieldName : undefined,
-                            }))}
+                        radios={Object.entries(ArbeidssituasjonType).map(([key, label], index) => ({
+                            label: label,
+                            value: key,
+                            id: index === 0 ? fieldName : undefined,
+                        }))}
                         checked={value}
                         onChange={(_e, value) => onChange(value)}
                         feil={errors.arbeidssituasjon?.svar?.message}
                     />
                 )}
             />
+            {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && brukerinformasjon.strengtFortroligAdresse && (
+                <StrengtFortroligInfo />
+            )}
 
-            {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && (
+            {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && !brukerinformasjon.strengtFortroligAdresse && (
                 <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} />
             )}
 

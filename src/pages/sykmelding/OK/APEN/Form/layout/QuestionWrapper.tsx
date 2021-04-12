@@ -1,15 +1,11 @@
-import React from 'react';
+import './QuestionWrapper.less';
 
 interface QuestionWrapperProps {
-    backgroundColor?: '#E4EDF2';
+    innrykk?: boolean;
 }
 
-const QuestionWrapper: React.FC<QuestionWrapperProps> = ({ children, backgroundColor }) => {
-    return (
-        <div style={{ marginTop: '3rem', backgroundColor, padding: backgroundColor ? '1.5rem' : undefined }}>
-            {children}
-        </div>
-    );
+const QuestionWrapper: React.FC<QuestionWrapperProps> = ({ children, innrykk = false }) => {
+    return <div className={`question-wrapper ${innrykk ? 'question-wrapper--innrykk' : ''}`}>{children}</div>;
 };
 
 export default QuestionWrapper;

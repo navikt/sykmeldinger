@@ -1,0 +1,27 @@
+@import '../../../../../../App.less';
+
+.question-wrapper {
+    margin-top: 3rem;
+}
+
+.question-wrapper--innrykk {
+    background-color: #e4edf2;
+    padding: 2rem 1.5rem;
+}
+
+@media (max-width: @desktopLimitWidth) {
+    .question-wrapper--innrykk {
+        padding: 2rem 0;
+        position: relative;
+    }
+    .question-wrapper--innrykk::before {
+        content: '';
+        background-color: #e4edf2;
+        position: absolute;
+        height: 100%;
+        width: 200vw;
+        top: 0;
+        left: -100vw;
+        z-index: -1;
+    }
+}

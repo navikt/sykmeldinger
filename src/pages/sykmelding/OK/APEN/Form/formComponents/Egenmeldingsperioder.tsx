@@ -2,12 +2,12 @@ import React, { useEffect, useMemo } from 'react';
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import { FormShape, Egenmeldingsperiode } from '../Form';
 import { Label } from 'nav-frontend-skjema';
-import { Knapp } from 'nav-frontend-knapper';
-import { Xknapp } from 'nav-frontend-ikonknapper';
+import { Fareknapp, Knapp } from 'nav-frontend-knapper';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { Datepicker, DatepickerDateRange } from 'nav-datovelger';
 import dayjs from 'dayjs';
 import { Element } from 'nav-frontend-typografi';
+import './Egenmeldingsperioder.less';
 
 interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
@@ -59,7 +59,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
 
             <div id={fieldName}>
                 {fields.map((field, index) => (
-                    <div key={field.id} style={{ display: 'flex', marginBottom: '1rem' }}>
+                    <div key={field.id} className="egenmeldingsperiode">
                         <Controller
                             control={control}
                             name={`${fieldName}.svar[${index}].fom`}
@@ -77,7 +77,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                 },
                             }}
                             render={({ onChange, value, name }) => (
-                                <div style={{ marginRight: '1rem' }}>
+                                <div className="egenmeldingsperiode__fom">
                                     <Datepicker
                                         locale="nb"
                                         value={value ? value : undefined}
@@ -115,7 +115,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                 },
                             }}
                             render={({ onChange, value, name }) => (
-                                <div>
+                                <div className="egenmeldingsperiode__tom">
                                     <Datepicker
                                         locale="nb"
                                         value={value ? value : undefined}
@@ -134,12 +134,21 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                 </div>
                             )}
                         />
-                        {index > 0 && <Xknapp htmlType="button" onClick={() => remove(index)} />}
+                        {index > 0 && (
+                            <Fareknapp
+                                htmlType="button"
+                                mini
+                                onClick={() => remove(index)}
+                                className="egenmeldingsperiode__slett"
+                            >
+                                Slett periode
+                            </Fareknapp>
+                        )}
                     </div>
                 ))}
             </div>
 
-            <Knapp htmlType="button" type="standard" mini onClick={() => append({ fom: undefined, tom: undefined })}>
+            <Knapp htmlType="button" type="hoved" mini onClick={() => append({ fom: undefined, tom: undefined })}>
                 + Legg til ekstra periode
             </Knapp>
         </QuestionWrapper>
