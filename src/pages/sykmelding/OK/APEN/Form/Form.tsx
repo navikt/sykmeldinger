@@ -101,7 +101,12 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         brukerinformasjon === undefined ||
         sykmeldingUtenforVentetid === undefined
     ) {
-        return <div>Error</div>;
+        return (
+            <AlertStripeFeil>
+                Det oppsto en feil ved henting av av skjemadata. Du kan dessverre ikke ta i bruk sykmeldingen akkurat
+                nå. Prøv igjen senere
+            </AlertStripeFeil>
+        );
     }
 
     return (

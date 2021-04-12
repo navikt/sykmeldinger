@@ -7,8 +7,6 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
 import Form from './Form/Form';
 import PapirInfoheader from './PapirInfoheader';
-import useBrukerinformasjon from '../../../../hooks/useBrukerinformasjon';
-import Spinner from '../../../commonComponents/Spinner/Spinner';
 import AvbrytContextProvider from './AvbrytContext';
 import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
@@ -20,21 +18,6 @@ interface OkApenSykmeldingProps {
 
 const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
     useHotjarTrigger('OK_APEN');
-    const { isLoading, error, data: brukerinformasjon } = useBrukerinformasjon();
-
-    if (isLoading) {
-        return <Spinner headline="Henter brukerinformasjon" />;
-    }
-
-    if (error || brukerinformasjon === undefined) {
-        return <p>Det oppsto en feil da vi forsøkte å hente brukerinformasjon</p>;
-    }
-
-    const { strengtFortroligAdresse } = brukerinformasjon;
-
-    if (strengtFortroligAdresse === true) {
-        // TODO: return OkApenKode6Sykmelding
-    }
 
     return (
         <AvbrytContextProvider>
@@ -52,11 +35,6 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
                     </div>
                 )}
 
-                {Boolean(sykmelding.egenmeldt) &&
-                    // TODO: egenmeldt info
-                    // finnes det egenmeldinger med status APEN?
-                    null}
-
                 <div className="margin-bottom--2">
                     <SporsmalInfoheader />
                 </div>
@@ -69,7 +47,6 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
 
                 <Form sykmelding={sykmelding} />
 
-                {/* Avbryt component */}
                 <AvbrytPanel />
             </div>
         </AvbrytContextProvider>

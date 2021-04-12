@@ -44,12 +44,21 @@ const SykmeldingSide: React.FC = () => {
         if (behandlingsutfall === 'OK') {
             switch (status) {
                 case 'APEN':
+                    if (sykmelding.egenmeldt) {
+                        // TODO: make egenmeldt view
+                    }
                     return <OkApenSykmelding sykmelding={sykmelding} />;
                 case 'BEKREFTET':
+                    if (sykmelding.egenmeldt) {
+                        // TODO: make egenmeldt view
+                    }
                     return <OkBekreftetSykmelding sykmelding={sykmelding} />;
                 case 'SENDT':
                     return <OkSendtSykmelding sykmelding={sykmelding} />;
                 case 'AVBRUTT':
+                    if (sykmelding.egenmeldt) {
+                        // TODO: make egenmeldt view
+                    }
                     return <OkAvbruttSykmelding sykmelding={sykmelding} />;
                 case 'UTGATT':
                     return <OkUtgattSykmelding sykmelding={sykmelding} />;
