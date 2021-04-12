@@ -26,11 +26,11 @@ class SykmeldingSorter {
      */
     static sortSykmeldingerByArbeidsgiver(sykmeldinger: Sykmelding[]): Sykmelding[] {
         return [...sykmeldinger].sort((a, b) => {
-            if (a.arbeidsgiver?.navn && b.arbeidsgiver?.navn) {
-                if (a.arbeidsgiver.navn > b.arbeidsgiver.navn) {
+            if (a.sykmeldingStatus.arbeidsgiver?.orgNavn && b.sykmeldingStatus.arbeidsgiver?.orgNavn) {
+                if (a.sykmeldingStatus.arbeidsgiver.orgNavn > b.sykmeldingStatus.arbeidsgiver.orgNavn) {
                     return 1;
                 }
-                if (a.arbeidsgiver.navn < b.arbeidsgiver.navn) {
+                if (a.sykmeldingStatus.arbeidsgiver.orgNavn < b.sykmeldingStatus.arbeidsgiver.orgNavn) {
                     return -1;
                 }
             }
