@@ -1,25 +1,21 @@
 import './SykmeldingsopplysningerContainer.less';
 
 import React, { useState, useRef } from 'react';
-import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import plaster from './svg/plaster.svg';
 import plasterHover from './svg/plasterHover.svg';
-import arbeidsgiver from './svg/arbeidsgiver.svg';
+import arbeidsgiverSvg from './svg/arbeidsgiver.svg';
 import arbeidsgiverHover from './svg/arbeidsgiverHover.svg';
-import doktor from './svg/doktor.svg';
-import doktorHover from './svg/doktorHover.svg';
-import SykmeldingsopplysningerNormal from './SykmeldingVariants/SykmeldingsopplysningerNormal';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import SykmeldingsopplysningerArbeidsgiver from './SykmeldingVariants/SykmeldingsopplysningerArbeidsgiver';
-import SykmeldingsopplysningerAvvist from './SykmeldingVariants/SykmeldingsopplysningerAvvist';
+import Sykmeldingview from '../Sykmeldingview/Sykmeldingview';
 
 interface SykmeldingsopplysningerProps {
     id: string;
     title: string;
     sykmelding: Sykmelding;
     expandedDefault?: boolean;
-    type?: 'NORMAL' | 'AVVIST' | 'ARBEIDSGIVER' | 'FLERE_OPPLYSNINGER';
+    arbeidsgiver?: boolean;
 }
 
 const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
@@ -27,32 +23,24 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     title,
     sykmelding,
     expandedDefault = true,
-    type = 'NORMAL',
+    arbeidsgiver = false,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef(document.createElement('article'));
 
     const icons: { iconNormal: string; iconHover: string } = (() => {
-        switch (type) {
-            case 'ARBEIDSGIVER':
-                return { iconNormal: arbeidsgiver, iconHover: arbeidsgiverHover };
-            case 'FLERE_OPPLYSNINGER':
-                return { iconNormal: doktor, iconHover: doktorHover };
-            default:
-                return { iconNormal: plaster, iconHover: plasterHover };
+        if (arbeidsgiver) {
+            return { iconNormal: arbeidsgiverSvg, iconHover: arbeidsgiverHover };
         }
+        return { iconNormal: plaster, iconHover: plasterHover };
     })();
     const [icon, setIcon] = useState(icons.iconNormal);
 
     const classStyleModifier: string = (() => {
-        switch (type) {
-            case 'ARBEIDSGIVER':
-                return 'sykmeldingsopplysninger__header--bg-violet';
-            case 'FLERE_OPPLYSNINGER':
-                return 'sykmeldingsopplysninger__header--bg-white';
-            default:
-                return '';
+        if (arbeidsgiver) {
+            return 'sykmeldingsopplysninger__header--bg-violet';
         }
+        return '';
     })();
 
     return (
@@ -73,15 +61,9 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                 className={`sykmeldingsopplysninger__header ${classStyleModifier}`}
             >
                 <img aria-hidden="true" className="sykmeldingsopplysninger__icon" src={icon} alt="Opplysniger" />
-                {type === 'FLERE_OPPLYSNINGER' ? (
-                    <Element className="sykmeldingsopplysninger__text" tag="h3">
-                        {title}
-                    </Element>
-                ) : (
-                    <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
-                        {title}
-                    </Undertittel>
-                )}
+                <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
+                    {title}
+                </Undertittel>
                 <div className="sykmeldingsopplysninger__expand">
                     <Normaltekst className="sykmeldingsopplysninger__expand-text">
                         {expanded ? 'Lukk' : 'Åpne'}
@@ -94,9 +76,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     expanded ? '' : 'sykmeldingsopplysninger__content--hidden'
                 }`}
             >
-                {type === 'NORMAL' && <SykmeldingsopplysningerNormal sykmelding={sykmelding} />}
-                {type === 'AVVIST' && <SykmeldingsopplysningerAvvist sykmelding={sykmelding} />}
-                {type === 'ARBEIDSGIVER' && <SykmeldingsopplysningerArbeidsgiver sykmelding={sykmelding} />}
+                <Sykmeldingview sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
             </div>
         </article>
     );

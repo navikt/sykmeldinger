@@ -97,6 +97,10 @@ export class Sykmelding {
     @IsOptional()
     @IsString()
     readonly andreTiltak?: string;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => MeldingTilNAV)
     readonly meldingTilNAV?: MeldingTilNAV;
 
     @IsOptional()

@@ -18,7 +18,7 @@ const PeriodeSeksjon = ({ periode, understrek }: PeriodeSeksjonProps) => {
             <Element>Periode</Element>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 <Normaltekst>
-                    <strong>{periode.getReadableLength()}</strong>
+                    <strong>{periode.getReadablePeriod()}</strong>
                 </Normaltekst>
                 <Normaltekst>
                     &nbsp;&bull; {antallDager} {antallDager === 1 ? 'dag' : 'dager'}

@@ -41,7 +41,6 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
                 id="sykmeldingsopplysninger"
                 title="Opplysninger fra sykmeldingen"
                 sykmelding={sykmelding}
-                type="AVVIST"
             />
 
             {errorBekreft && (

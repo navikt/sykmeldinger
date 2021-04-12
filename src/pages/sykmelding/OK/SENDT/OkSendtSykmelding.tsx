@@ -29,7 +29,7 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
                 title="Slik ser sykmeldingen ut for arbeidsgiveren din"
                 sykmelding={sykmelding}
                 expandedDefault={false}
-                type="ARBEIDSGIVER"
+                arbeidsgiver
             />
         </div>
     );
