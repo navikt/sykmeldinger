@@ -13,6 +13,9 @@ import OkUtgattSykmelding from './OK/UTGATT/OkUtgattSykmelding';
 import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
 import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
 import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
+import OkApenEgenmelding from './OK/APEN/OkApenEgenmelding';
+import OkBekreftetEgenmelding from './OK/BEKREFTET/OkBekreftetEgenmelding';
+import OkAvbruttEgenmelding from './OK/AVBRUTT/OkAvbruttEgenmelding';
 
 // BUSINESS LOGIC CONTROLLER
 const SykmeldingSide: React.FC = () => {
@@ -45,19 +48,19 @@ const SykmeldingSide: React.FC = () => {
             switch (status) {
                 case 'APEN':
                     if (sykmelding.egenmeldt) {
-                        // TODO: make egenmeldt view
+                        return <OkApenEgenmelding sykmelding={sykmelding} />;
                     }
                     return <OkApenSykmelding sykmelding={sykmelding} />;
                 case 'BEKREFTET':
                     if (sykmelding.egenmeldt) {
-                        // TODO: make egenmeldt view
+                        return <OkBekreftetEgenmelding sykmelding={sykmelding} />;
                     }
                     return <OkBekreftetSykmelding sykmelding={sykmelding} />;
                 case 'SENDT':
                     return <OkSendtSykmelding sykmelding={sykmelding} />;
                 case 'AVBRUTT':
                     if (sykmelding.egenmeldt) {
-                        // TODO: make egenmeldt view
+                        return <OkAvbruttEgenmelding sykmelding={sykmelding} />;
                     }
                     return <OkAvbruttSykmelding sykmelding={sykmelding} />;
                 case 'UTGATT':

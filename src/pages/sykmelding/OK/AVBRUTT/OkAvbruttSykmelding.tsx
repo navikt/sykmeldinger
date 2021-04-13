@@ -40,7 +40,7 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                 </div>
             </div>
             <Sykmeldingsopplysninger
-                id="flere-sykmeldingsopplysnigner"
+                id="sykmeldingsopplysnigner"
                 title="Opplysninger fra sykmeldingen"
                 sykmelding={sykmelding}
             />
