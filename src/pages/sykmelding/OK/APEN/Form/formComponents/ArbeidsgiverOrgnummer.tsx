@@ -26,9 +26,8 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
             name: `${fieldName}.svartekster`,
             value: JSON.stringify(arbeidsgivere.map((ag) => ({ navn: ag.navn, orgnummer: ag.orgnummer }))),
         });
-        return () => {
-            unregister(fieldName);
-        };
+        return () =>
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [arbeidsgivere, register, unregister]);
 
     const valgtArbeidsgiver = useMemo(() => {

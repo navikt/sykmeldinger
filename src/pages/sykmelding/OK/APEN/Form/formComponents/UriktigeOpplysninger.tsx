@@ -39,7 +39,7 @@ const UriktigeOpplysninger: React.FC = () => {
 
     useEffect(() => {
         register({
-            name: 'uriktigeOpplysninger.sporsmal',
+            name: 'uriktigeOpplysninger.sporsmaltekst',
             value: 'Hvilke opplysninger stemmer ikke?',
         });
         register({
@@ -47,7 +47,7 @@ const UriktigeOpplysninger: React.FC = () => {
             value: JSON.stringify(UriktigeOpplysningerType),
         });
         return () => {
-            unregister(fieldName);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
             setMaAvbryte(false);
         };
     }, [register, unregister, setMaAvbryte]);

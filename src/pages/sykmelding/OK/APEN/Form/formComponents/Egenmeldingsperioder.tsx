@@ -12,6 +12,8 @@ import './Egenmeldingsperioder.less';
 interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
 }
+
+// TODO: find correct date
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
     const fieldName: keyof FormShape = 'egenmeldingsperioder';
     const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(syketilfelleStartdato).format(
@@ -24,6 +26,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
         name: `${fieldName}.svar`,
     });
 
+    // TODO: dont invalidate dates for respective index
     const invalidDateRanges: DatepickerDateRange[] = useMemo(
         () =>
             fields
@@ -50,7 +53,8 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
             name: `${fieldName}.svartekster`,
             value: JSON.stringify('Fom, Tom'),
         });
-        return () => unregister(fieldName);
+        return () =>
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [register, unregister, sporsmaltekst]);
 
     return (

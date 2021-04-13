@@ -44,7 +44,8 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
             name: `${fieldName}.svartekster`,
             value: JSON.stringify(ArbeidssituasjonType),
         });
-        return () => unregister(fieldName);
+        return () =>
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [register, unregister]);
 
     const skalViseEgenmeldingsperioderSporsmal = useMemo(() => {

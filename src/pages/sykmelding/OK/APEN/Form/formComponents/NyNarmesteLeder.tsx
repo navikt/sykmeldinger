@@ -19,7 +19,8 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
     useEffect(() => {
         register({ name: `${fieldName}.sporsmaltekst`, value: sporsmaltekst });
         register({ name: `${fieldName}.svartekster`, value: JSON.stringify(JaEllerNeiType) });
-        return () => unregister(fieldName);
+        return () =>
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [register, unregister, sporsmaltekst]);
 
     // Reset the answer if the prop changes

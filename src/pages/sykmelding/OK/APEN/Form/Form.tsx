@@ -12,6 +12,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
+import Sykmeldingsopplysninger from '../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -126,6 +127,17 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                         erUtenforVentetid={sykmeldingUtenforVentetid.erUtenforVentetid}
                         brukerinformasjon={brukerinformasjon}
                     />
+                )}
+
+                {erArbeidstaker && !brukerinformasjon.strengtFortroligAdresse && (
+                    <div style={{ marginTop: '2rem' }}>
+                        <Sykmeldingsopplysninger
+                            id="arbeidsgivers-sykmeldingsopplysninger"
+                            title="Slik ser sykmeldingen ut for arbeidsgiveren din"
+                            sykmelding={sykmelding}
+                            arbeidsgiver
+                        />
+                    </div>
                 )}
 
                 {errorSend && (
