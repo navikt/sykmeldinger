@@ -24,6 +24,15 @@ export class Arbeidsgiver {
     @ValidateNested()
     @Type(() => NaermesteLeder)
     readonly naermesteLeder?: NaermesteLeder;
+
+    /**
+     * Get the name of the arbeisgiver.
+     * "(aktiv)" is appended if the prop aktivtArbeidsforhold is true
+     * @return {string} The name
+     */
+    getName(): string {
+        return `${this.navn}${this.aktivtArbeidsforhold ? ' (aktiv)' : ''}`;
+    }
 }
 
 export class NaermesteLeder {

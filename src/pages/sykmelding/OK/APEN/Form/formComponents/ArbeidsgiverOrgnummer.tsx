@@ -51,7 +51,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                         name={name}
                         legend={sporsmaltekst}
                         radios={arbeidsgivere.map((arbeidsgiver, index) => ({
-                            label: arbeidsgiver.navn,
+                            label: arbeidsgiver.getName(),
                             value: arbeidsgiver.orgnummer,
                             id: index === 0 ? fieldName : undefined,
                         }))}
@@ -62,9 +62,9 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                 )}
             />
 
-            {/* TODO: slik ser sykmeldingen ut for arbeidsgiveren din */}
-
-            {valgtArbeidsgiver?.naermesteLeder && <NyNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />}
+            {valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder && (
+                <NyNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />
+            )}
         </QuestionWrapper>
     );
 };
