@@ -193,6 +193,6 @@ export class Sykmelding {
         const startDate = this.getSykmeldingStartDate();
         const endDate = this.getSykmeldingEndDate();
 
-        return `${dayjs(startDate).format('D. MMMM. YYYY')} - ${dayjs(endDate).format('D. MMMM. YYYY')}`;
+        return `${dayjs(startDate).format('D. MMMM YYYY')} - ${dayjs(endDate).format('D. MMMM YYYY')}`;
     }
 }

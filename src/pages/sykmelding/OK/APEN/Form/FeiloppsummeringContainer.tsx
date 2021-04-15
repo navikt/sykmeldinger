@@ -1,5 +1,5 @@
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { DeepMap, FieldErrors } from 'react-hook-form';
 import { FormShape } from './Form';
 
@@ -10,9 +10,15 @@ interface FeiloppsummeringContainerProps {
 interface CustomErrors extends Record<keyof FormShape, string | undefined> {}
 
 const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ errors }) => {
+    const summaryRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        summaryRef.current?.focus();
+    }, [errors, summaryRef]);
+
     const customErrors: CustomErrors = {
         erOpplysnigeneRiktige: errors.erOpplysnigeneRiktige?.svar?.message,
-        // TODO: fix this
+        // safe for now, but could be refactored
         // @ts-ignore
         uriktigeOpplysninger: errors.uriktigeOpplysninger?.svar?.message,
         arbeidssituasjon: errors.arbeidssituasjon?.svar?.message,
@@ -35,7 +41,11 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
 
     return (
         <div style={{ marginTop: '3rem' }}>
-            <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={feiloppsummeringsfeil} />
+            <Feiloppsummering
+                innerRef={summaryRef}
+                tittel="For å gå videre må du rette opp følgende:"
+                feil={feiloppsummeringsfeil}
+            />
         </div>
     );
 };

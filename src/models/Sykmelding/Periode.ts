@@ -1,6 +1,8 @@
 import { Type } from 'class-transformer';
 import { IsBoolean, IsIn, IsInt, IsOptional, IsString, Max, Min, ValidateNested } from 'class-validator';
+import 'dayjs/locale/nb';
 import dayjs from 'dayjs';
+dayjs.locale('nb');
 
 enum Periodetype {
     AKTIVITET_IKKE_MULIG,
@@ -104,7 +106,7 @@ class Periode {
     getPeriodTitle(): string {
         switch (this.type) {
             case 'AVVENTENDE':
-                return 'Avventende sykmedling';
+                return 'Avventende sykmelding';
             case 'AKTIVITET_IKKE_MULIG':
                 return '100% sykmelding';
             case 'GRADERT':
@@ -129,7 +131,7 @@ class Periode {
      * @return {number} The period length
      */
     getLength(): number {
-        return dayjs(this.tom).diff(dayjs(this.fom), 'day');
+        return dayjs(this.tom).diff(dayjs(this.fom), 'day') + 1;
     }
 
     /**
@@ -139,7 +141,9 @@ class Periode {
     getReadableLength(): string {
         const length = this.getLength();
         if (this.type === 'BEHANDLINGSDAGER') {
-            return `${length} behandlingsdag${length === 1 ? '' : 'er'}`;
+            return `${this.behandlingsdager} behandlingsdag${
+                this.behandlingsdager && this.behandlingsdager > 1 ? 'er' : ''
+            } i løpet av ${length} dag${length > 1 ? 'er' : ''}`;
         }
         return `${length} dag${length === 1 ? '' : 'er'}`;
     }
@@ -161,9 +165,9 @@ class Periode {
                     arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''
                 } i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
             case 'BEHANDLINGSDAGER':
-                return `${this.behandlingsdager} behandlingsdager i løpet av ${periodLength} dag${
-                    periodLength > 1 ? 'er' : ''
-                }`;
+                return `${this.behandlingsdager} behandlingsdag${
+                    this.behandlingsdager && this.behandlingsdager > 1 ? 'er' : ''
+                } i løpet av ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
             case 'AVVENTENDE':
                 return `Avventende sykmelding i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
             case 'REISETILSKUDD':
