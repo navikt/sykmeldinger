@@ -1,19 +1,22 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import { FormShape, Egenmeldingsperiode } from '../Form';
 import { Label } from 'nav-frontend-skjema';
 import { Fareknapp, Knapp } from 'nav-frontend-knapper';
 import QuestionWrapper from '../layout/QuestionWrapper';
-import { Datepicker, DatepickerDateRange } from 'nav-datovelger';
-import dayjs from 'dayjs';
-import { Element } from 'nav-frontend-typografi';
+import { Datepicker } from 'nav-datovelger';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './Egenmeldingsperioder.less';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+
+dayjs.extend(isBetween);
 
 interface EgenmeldingsperioderProps {
     syketilfelleStartdato: Date;
 }
 
-// TODO: find correct date
+// TODO: wait for new API
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
     const fieldName: keyof FormShape = 'egenmeldingsperioder';
     const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(syketilfelleStartdato).format(
@@ -25,20 +28,6 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
         control,
         name: `${fieldName}.svar`,
     });
-
-    // TODO: dont invalidate dates for respective index
-    const invalidDateRanges: DatepickerDateRange[] = useMemo(
-        () =>
-            fields
-                .filter((field) => field.fom && field.tom)
-                .map((field) => {
-                    return {
-                        from: field.fom!,
-                        to: field.tom!,
-                    };
-                }),
-        [fields],
-    );
 
     useEffect(() => {
         append({ fom: undefined, tom: undefined });
@@ -71,29 +60,46 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                             rules={{
                                 required: 'fom dato mangler.',
                                 validate: (fom) => {
+                                    // Test max date
+                                    if (dayjs(fom).isAfter(syketilfelleStartdato)) {
+                                        return 'Startdato kan ikke være etter oppfølgingsdato';
+                                    }
+
+                                    // Test current peirod
                                     const tom = getValues<string, string | undefined>(
                                         `${fieldName}.svar[${index}].tom`,
                                     );
                                     if (tom && dayjs(tom).isBefore(fom)) {
                                         return 'Startdato kan ikke være etter sluttdato';
                                     }
+
+                                    // Test cross-period
+                                    if (
+                                        fields
+                                            .filter((f) => f.id !== field.id)
+                                            .filter((f) => !!f.fom && !!f.tom)
+                                            .some((f) => dayjs(fom).isBetween(f.fom!, f.tom!, null, '[]'))
+                                    ) {
+                                        return 'Du kan ikke ha overlappende perioder';
+                                    }
+
                                     return true;
                                 },
                             }}
                             render={({ onChange, value, name }) => (
                                 <div className="egenmeldingsperiode__fom">
+                                    <Normaltekst>Fra og med:</Normaltekst>
                                     <Datepicker
                                         locale="nb"
                                         value={value ? value : undefined}
                                         onChange={onChange}
                                         limitations={{
-                                            invalidDateRanges,
                                             maxDate: dayjs(syketilfelleStartdato).format('YYYY-MM-DD'),
                                         }}
-                                        inputProps={{ name, placeholder: 'Fom' }}
+                                        inputProps={{ name, placeholder: 'dd.mm.åååå' }}
                                     />
                                     {errors[fieldName]?.svar?.[index]?.fom?.message && (
-                                        <Element style={{ color: 'darkred' }}>
+                                        <Element style={{ color: 'darkred', maxWidth: '12rem' }}>
                                             {errors[fieldName]?.svar?.[index]?.fom?.message}
                                         </Element>
                                     )}
@@ -108,6 +114,12 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                             rules={{
                                 required: 'tom dato mangler.',
                                 validate: (tom) => {
+                                    // Test max date
+                                    if (dayjs(tom).isAfter(syketilfelleStartdato)) {
+                                        return 'Sluttdato kan ikke være etter oppfølgingsdato';
+                                    }
+
+                                    // Test current peirod
                                     const fom = getValues<string, string | undefined>(
                                         `${fieldName}.svar[${index}].fom`,
                                     );
@@ -115,23 +127,34 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                         console.log('sluttdato is before startdato');
                                         return 'Sluttdato kan ikke være før startdato';
                                     }
+
+                                    // Test cross-period
+                                    if (
+                                        fields
+                                            .filter((f) => f.id !== field.id)
+                                            .filter((f) => !!f.fom && !!f.tom)
+                                            .some((f) => dayjs(fom).isBetween(f.fom!, f.tom!, null, '[]'))
+                                    ) {
+                                        return 'Du kan ikke ha overlappende perioder';
+                                    }
+
                                     return true;
                                 },
                             }}
                             render={({ onChange, value, name }) => (
                                 <div className="egenmeldingsperiode__tom">
+                                    <Normaltekst>Til og med:</Normaltekst>
                                     <Datepicker
                                         locale="nb"
                                         value={value ? value : undefined}
                                         onChange={onChange}
                                         limitations={{
-                                            invalidDateRanges,
                                             maxDate: dayjs(syketilfelleStartdato).format('YYYY-MM-DD'),
                                         }}
-                                        inputProps={{ name, placeholder: 'Tom' }}
+                                        inputProps={{ name, placeholder: 'dd.mm.åååå' }}
                                     />
                                     {errors[fieldName]?.svar?.[index]?.tom?.message && (
-                                        <Element style={{ color: 'darkred' }}>
+                                        <Element style={{ color: 'darkred', maxWidth: '11rem' }}>
                                             {errors[fieldName]?.svar?.[index]?.tom?.message}
                                         </Element>
                                     )}
