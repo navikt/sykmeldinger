@@ -4,6 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
+import Panel from 'nav-frontend-paneler';
 
 const PapirInfoheader = () => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
@@ -12,7 +13,7 @@ const PapirInfoheader = () => {
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
 
     return (
-        <>
+        <Panel border>
             <Innholdstittel className="margin-bottom--1">Før du bruker sykmeldingen</Innholdstittel>
             <Normaltekst tag="p" className="margin-bottom--2">
                 Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik at du
@@ -67,7 +68,7 @@ const PapirInfoheader = () => {
                     </Knapp>
                 </>
             )}
-        </>
+        </Panel>
     );
 };
 
