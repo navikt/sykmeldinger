@@ -89,10 +89,11 @@
         "@types/jest": "^26.0.20",
         "@types/node": "^14.14.35",
         "@types/react": "16.14.0",
-        "@types/react-dom": "16.9.11",
         "@types/react-collapse": "^5.0.0",
+        "@types/react-dom": "16.9.11",
         "@types/react-flatpickr": "^3.8.1",
         "@types/react-router-dom": "^5.1.7",
+        "cypress": "^7.1.0",
         "fetch-mock": "^9.11.0",
         "prettier": "^2.2.1"
     }
