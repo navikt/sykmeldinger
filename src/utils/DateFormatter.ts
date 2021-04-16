@@ -1,4 +1,6 @@
+import 'dayjs/locale/nb';
 import dayjs from 'dayjs';
+dayjs.locale('nb');
 
 /** Class with utility functions for working with dates. */
 class DateFormatter {
