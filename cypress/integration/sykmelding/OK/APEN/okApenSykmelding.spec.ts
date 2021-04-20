@@ -58,25 +58,27 @@ describe('Behandlingsutfall: OK, Status: APEN', () => {
         });
 
         it('Fyller ut skjema', () => {
-            cy.get('#apen-sykmelding-form').within(() => {
-                cy.contains('Er opplysningene riktige').should('be.visible');
-                cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
+            cy.get('#apen-sykmelding-form')
+                .scrollIntoView()
+                .within(() => {
+                    cy.contains('Er opplysningene riktige').should('be.visible');
+                    cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
 
-                cy.contains('Min arbeidssituasjon').should('be.visible');
-                cy.get('input[name="arbeidssituasjon.svar"][value=ARBEIDSTAKER]').click({ force: true });
+                    cy.contains('Min arbeidssituasjon').should('be.visible');
+                    cy.get('input[name="arbeidssituasjon.svar"][value=ARBEIDSTAKER]').click({ force: true });
 
-                cy.contains('Min arbeidsgiver').should('be.visible');
-                cy.get(`input[name="arbeidsgiverOrgnummer.svar"][value=${arbeidsgiverAktiv.orgnummer}]`).click({
-                    force: true,
+                    cy.contains('Min arbeidsgiver').should('be.visible');
+                    cy.get(`input[name="arbeidsgiverOrgnummer.svar"][value=${arbeidsgiverAktiv.orgnummer}]`).click({
+                        force: true,
+                    });
+
+                    cy.contains(
+                        `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`,
+                    ).should('be.visible');
+                    cy.get('input[name="nyNarmesteLeder.svar"][value=JA]').click({
+                        force: true,
+                    });
                 });
-
-                cy.contains(
-                    `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`,
-                ).should('be.visible');
-                cy.get('input[name="nyNarmesteLeder.svar"][value=JA]').click({
-                    force: true,
-                });
-            });
         });
 
         it('Sender skjema', () => {
