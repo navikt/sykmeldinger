@@ -76,11 +76,11 @@ jobs:
         with:
           install: false
           record: false
-          browser: chrome
+          browser: chrome # fails with default (electron)
           start: npm run start:integration-test
           wait-on: http://localhost:8080
       - uses: actions/upload-artifact@v1
-        if: ${{ always() }}
+        if: ${{ failure() }}
         with:
           name: cypress-screenshots
           path: cypress/screenshots
