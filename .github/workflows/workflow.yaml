@@ -14,7 +14,6 @@ jobs:
           TIME=$(TZ="Europe/Oslo" date +%Y.%m.%d-%H.%M)
           COMMIT=$(git rev-parse --short=8 HEAD)
           VERSION=$TIME-$COMMIT
-          echo "IMAGE_ROOT=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
           echo "IMAGE_SYK_SYKMELDINGER=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - run: echo $VERSION > VERSION.txt
@@ -47,11 +46,7 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-      - name: Bygg og push Docker image hvor appen serves på /
-        run: |
-            docker build . -f Dockerfile.root -t ${IMAGE_ROOT}
-            docker push ${IMAGE_ROOT}
-      - name: Bygg og push Docker image hvor appen serves på /sykmeldinger
+      - name: Bygg og push Docker image hvor appen serves på /syk/sykmeldinger
         run: |
             docker build . -f Dockerfile.syk.sykmeldinger -t ${IMAGE_SYK_SYKMELDINGER}
             docker push ${IMAGE_SYK_SYKMELDINGER}
