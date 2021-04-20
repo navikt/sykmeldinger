@@ -76,6 +76,7 @@ jobs:
         with:
           install: false
           record: false
+          browser: chrome
           start: npm run start:integration-test
           wait-on: http://localhost:8080
       - uses: actions/upload-artifact@v1
