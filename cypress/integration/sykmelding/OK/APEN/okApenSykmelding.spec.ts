@@ -84,7 +84,7 @@ describe('Behandlingsutfall: OK, Status: APEN', () => {
             cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, { body: sykmeldingSendt });
 
             cy.get('button[type=submit]').contains('Send sykmelding').click();
-            cy.get('@postSend')
+            cy.wait('@postSend')
                 .its('request.body')
                 .should(
                     'equal',
