@@ -101,20 +101,67 @@ describe('Behandlingsutfall: OK, Status: APEN', () => {
                                 '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARGBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
                         },
                         arbeidsgiverOrgnummer: {
-                            svar: '110110110',
+                            svar: arbeidsgiverAktiv.orgnummer,
                             sporsmaltekst: 'Min arbeidsgiver',
-                            svartekster: '[{"navn":"PONTYPANDY FIRE SERVICE","orgnummer":"110110110"}]',
+                            svartekster: `[{"navn":"${arbeidsgiverAktiv.navn}","orgnummer":"${arbeidsgiverAktiv.orgnummer}"}]`,
                         },
                         nyNarmesteLeder: {
                             svar: 'JA',
-                            sporsmaltekst:
-                                'Er det Station Officer Steele som skal følge deg opp på jobb mens du er syk?',
+                            sporsmaltekst: `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`,
                             svartekster: '{"JA":"Ja","NEI":"Nei"}',
                         },
                     }),
                 );
 
             cy.contains(`Sykmeldingen er sendt til`);
+        });
+    });
+
+    describe('Kan ikke sende sykmelding til arbeidsgiver hvis bruker har diskresjonskode', () => {
+        beforeEach(() => {
+            cy.intercept('**/api/v1/sykmeldinger', { body: [sykmeldingApen] });
+            cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, { body: sykmeldingApen });
+            cy.intercept('**/api/v1/brukerinformasjon', {
+                body: { arbeidsgivere: [], strengtFortroligAdresse: true },
+            });
+            cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
+                body: { erUtenforVentetid: false },
+            });
+        });
+
+        it('Laster landingsside', () => {
+            cy.visit('/syk/sykmeldinger');
+            cy.contains('Sykmelding').should('be.visible');
+        });
+
+        it('Navigerer til sykmeldingen', () => {
+            cy.get('.lenkepanel-container__sykmelding').click();
+            cy.url().should('contain', `/syk/sykmeldinger/${sykmeldingApen.id}`);
+            cy.contains('Opplysninger fra sykmeldingen');
+        });
+
+        it('Fyller ut skjema', () => {
+            cy.get('#apen-sykmelding-form').within(() => {
+                cy.contains('Er opplysningene riktige').should('be.visible');
+                cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
+
+                cy.contains('Min arbeidssituasjon').should('be.visible');
+                cy.get('input[name="arbeidssituasjon.svar"][value=ARBEIDSTAKER]').click({ force: true });
+            });
+        });
+
+        it('Får feilmelding om at sykmelding ikke kan sendes til arbeidsgiver pga strengt fortrolig adresse', () => {
+            cy.contains(
+                'Du er registrert med adressesperre strengt fortrolig. Du kan derfor ikke sende sykmeldingen til arbeidsgiveren din fra nav.no.',
+            );
+        });
+
+        it('Viser ikke arbeidsgiverspørsmål', () => {
+            cy.contains('Min arbeidsgiver').should('not.exist');
+        });
+
+        it('Viser ikke submit-knapp', () => {
+            cy.get('button[type=submit]').contains('Send sykmelding').should('not.exist');
         });
     });
 });
