@@ -57,3 +57,7 @@ typings/
 # Idea project files
 *.iml
 .idea/
+
+# Media
+*/cypress/screenshots/
+*/cypress/videos/
