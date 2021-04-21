@@ -24,9 +24,9 @@ const UriktigeOpplysninger: React.FC = () => {
         if (!value) {
             return undefined;
         } else if (value.includes('PERIODE')) {
-            return 'Siden du sier at perioden er feil må du be den som sykmeldte deg om å skrive en ny sykmelidng.';
+            return 'Siden du sier at perioden er feil må du be den som sykmeldte deg om å skrive en ny sykmelding.';
         } else if (value.includes('SYKMELDINGSGRAD_FOR_HOY')) {
-            return 'Siden du sier at sykmeldingsgraden er for høy er feil må du be den som sykmeldte deg om å skrive en ny sykmelidng.';
+            return 'Siden du sier at sykmeldingsgraden er for høy er feil må du be den som sykmeldte deg om å skrive en ny sykmelding.';
         } else if (value.includes('SYKMELDINGSGRAD_FOR_LAV')) {
             return 'Du kan fortsatt bruke sykmeldingen. Hvis du ender opp med å jobbe mer enn graden på sykmeldingen sier du fra om det ved utfyllingen av søknaden.';
         }

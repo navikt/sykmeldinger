@@ -75,7 +75,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
                         svar: 'ARBEIDSTAKER',
                         sporsmaltekst: 'Min arbeidssituasjon',
                         svartekster:
-                            '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARGBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
+                            '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
                     },
                     arbeidsgiverOrgnummer: {
                         svar: arbeidsgiverAktiv.orgnummer,

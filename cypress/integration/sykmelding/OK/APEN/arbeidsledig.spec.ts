@@ -1,8 +1,7 @@
 /// <reference types="cypress" />
 import sykmeldingApen from '../../../../fixtures/sykmeldinger/sykmelding-apen.json';
-import sykmeldingBekreftet from '../../../../fixtures/sykmeldinger/sykmelding-bekreftet.json';
 
-describe('Frilanser innenfor ventetid', () => {
+describe('Arbeidsledig', () => {
     beforeEach(() => {
         cy.intercept('**/api/v1/sykmeldinger', { body: [sykmeldingApen] });
         cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, { body: sykmeldingApen }).as('sykmelding');
@@ -10,7 +9,7 @@ describe('Frilanser innenfor ventetid', () => {
             body: { arbeidsgivere: [], strengtFortroligAdresse: false },
         }).as('brukerinformasjon');
         cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
-            body: { erUtenforVentetid: false },
+            body: { erUtenforVentetid: true },
         }).as('ventetid');
     });
 
@@ -39,31 +38,18 @@ describe('Frilanser innenfor ventetid', () => {
                 cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
 
                 cy.contains('Min arbeidssituasjon').should('be.visible');
-                cy.get('input[name="arbeidssituasjon.svar"][value=FRILANSER]').click({ force: true });
-
-                cy.contains('Brukte du egenmelding eller noen annen sykmelding før denne datoen?').should('be.visible');
-                cy.get(`input[name="harBruktEgenmelding.svar"][value=JA]`).click({ force: true });
-
-                cy.contains('Hvilke dager var du borte fra jobb').should('be.visible');
-                cy.get('.egenmeldingsperiode__fom').within(() => {
-                    cy.get('.nav-datovelger__kalenderknapp').click();
-                    cy.get('.DayPicker-Day').contains('5').click();
-                });
-                cy.get('.egenmeldingsperiode__tom').within(() => {
-                    cy.get('.nav-datovelger__kalenderknapp').click();
-                    cy.get('.DayPicker-Day').contains('9').click();
-                });
-
-                cy.contains('Har du forsikring som gjelder for de første 16 dagene av sykefraværet?').should(
-                    'be.visible',
-                );
-                cy.get('input[name="harForsikring.svar"][value=JA]').click({ force: true });
+                cy.get('input[name="arbeidssituasjon.svar"][value=ARBEIDSLEDIG]').click({ force: true });
             });
     });
 
     it('Sender skjema', () => {
         cy.intercept('POST', `**/api/v1/sykmelding/${sykmeldingApen.id}/actions/send`).as('postSend');
-        cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, { body: sykmeldingBekreftet });
+        cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, {
+            body: {
+                ...sykmeldingApen,
+                sykmeldingStatus: { ...sykmeldingApen.sykmeldingStatus, statusEvent: 'BEKREFTET' },
+            },
+        });
 
         cy.get('button[type=submit]').contains('Bekreft sykmelding').click();
         cy.wait('@postSend')
@@ -77,32 +63,16 @@ describe('Frilanser innenfor ventetid', () => {
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                     arbeidssituasjon: {
-                        svar: 'FRILANSER',
+                        svar: 'ARBEIDSLEDIG',
                         sporsmaltekst: 'Min arbeidssituasjon',
                         svartekster:
                             '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
-                    },
-                    harBruktEgenmelding: {
-                        svar: 'JA',
-                        sporsmaltekst:
-                            'Vi har registrert at du ble syk 20. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    harForsikring: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    egenmeldingsperioder: {
-                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 20. april 2021.',
-                        svartekster: '"Fom, Tom"',
-                        svar: [{ fom: '2021-04-05', tom: '2021-04-09' }],
                     },
                 }),
             );
     });
 
     it('Får riktig statusbanner', () => {
-        cy.contains(`Sykmeldingen er sendt til NAV`);
+        cy.contains('Sykmeldingen er sendt til NAV');
     });
 });

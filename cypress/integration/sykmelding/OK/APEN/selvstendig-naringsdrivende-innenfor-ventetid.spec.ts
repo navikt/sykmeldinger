@@ -82,7 +82,7 @@ describe('Selvstendig næringsdrivende innenfor ventetid', () => {
                         svar: 'SELVSTENDIG_NARINGSDRIVENDE',
                         sporsmaltekst: 'Min arbeidssituasjon',
                         svartekster:
-                            '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARGBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
+                            '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',

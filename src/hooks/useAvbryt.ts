@@ -7,7 +7,7 @@ function useAvbryt(sykmeldingId: string) {
     return useMutation(
         () =>
             Fetch.authenticatedPost(
-                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/avbryt`,
+                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmelding/${sykmeldingId}/actions/avbryt`,
             ),
         {
             onSuccess: () => {
