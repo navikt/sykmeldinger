@@ -8,7 +8,7 @@ function useBekreft(sykmeldingId: string) {
         // TODO: type argument to match form output
         (values: any) =>
             Fetch.authenticatedPost(
-                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/v1/sykmelding/${sykmeldingId}/actions/bekreft`,
+                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmelding/${sykmeldingId}/actions/bekreft`,
                 values,
             ),
         {

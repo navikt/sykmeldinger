@@ -98,7 +98,9 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
                 <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} />
             )}
 
-            {skalViseEgenmeldingsperioderSporsmal && <HarBruktEgenmelding syketilfelleStartdato={new Date()} />}
+            {skalViseEgenmeldingsperioderSporsmal && (
+                <HarBruktEgenmelding syketilfelleStartdato={new Date('2021-04-20')} />
+            )}
 
             {skalViseForsikringSporsmal && <HarForsikring />}
         </QuestionWrapper>
