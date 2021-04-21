@@ -39,7 +39,7 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
         }
 
         if (type === 'NYE_SYKMELDINGER') {
-            return <Normaltekst>Du har ingen nye sykmeldinger</Normaltekst>;
+            return <Normaltekst style={{ marginBottom: '2rem' }}>Du har ingen nye sykmeldinger</Normaltekst>;
         }
     }
 

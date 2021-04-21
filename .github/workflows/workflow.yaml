@@ -14,7 +14,6 @@ jobs:
           TIME=$(TZ="Europe/Oslo" date +%Y.%m.%d-%H.%M)
           COMMIT=$(git rev-parse --short=8 HEAD)
           VERSION=$TIME-$COMMIT
-          echo "IMAGE_ROOT=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
           echo "IMAGE_SYK_SYKMELDINGER=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - run: echo $VERSION > VERSION.txt
@@ -47,19 +46,44 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-      - name: Bygg og push Docker image hvor appen serves på /
-        run: |
-            docker build . -f Dockerfile.root -t ${IMAGE_ROOT}
-            docker push ${IMAGE_ROOT}
-      - name: Bygg og push Docker image hvor appen serves på /sykmeldinger
+      - name: Bygg og push Docker image hvor appen serves på /syk/sykmeldinger
         run: |
             docker build . -f Dockerfile.syk.sykmeldinger -t ${IMAGE_SYK_SYKMELDINGER}
             docker push ${IMAGE_SYK_SYKMELDINGER}
 
+  integration-test:
+    name: Run integration tests with Cypress
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Cache Cypress binary
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-cypress-
+      - name: Install npm dependencies
+        run: npm ci
+      - name: Run cypress
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          record: false
+          browser: chrome # fails with default (electron)
+          start: npm run start:integration-test
+          wait-on: http://localhost:8080
+      - uses: actions/upload-artifact@v1
+        if: ${{ failure() }}
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
   deploy-to-q1-dev-gcp:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
     name: Deploy to q1 dev-gcp
-    needs: [build-and-publish]
+    needs: [build-and-publish, integration-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -79,7 +103,7 @@ jobs:
   deploy-to-labs-gcp:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
     name: Deploy to labs-gcp (Demo)
-    needs: [build-and-publish]
+    needs: [build-and-publish, integration-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

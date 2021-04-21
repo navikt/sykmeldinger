@@ -28,7 +28,7 @@ const LenkepanelEtikett: React.FC<LenkepanelEtikettProps> = ({ status, behandlin
         if (status === 'APEN') {
             return <EtikettFokus mini>Avvist av NAV</EtikettFokus>;
         } else if (status === 'BEKREFTET') {
-            return <EtikettFokus mini>Bekreftet avvist</EtikettFokus>;
+            return <EtikettFokus mini>Avvist av NAV</EtikettFokus>;
         }
     }
 

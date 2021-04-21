@@ -1,0 +1,18 @@
+{
+    "naermesteLeder": {
+        "aktoerId": "1101101101102",
+        "navn": "Station Officer Steele",
+        "epost": "steele@pontypandyfire.gov.uk",
+        "mobil": "110",
+        "orgnummer": "110110110",
+        "organisasjonsnavn": "Brannstasjon",
+        "aktivTom": null,
+        "arbeidsgiverForskuttererLoenn": true
+    },
+    "navn": "PONTYPANDY FIRE SERVICE",
+    "orgnummer": "110110110",
+    "juridiskOrgnummer": "132456789",
+    "stilling": "Brannmann",
+    "stillingsprosent": "100",
+    "aktivtArbeidsforhold": true
+}

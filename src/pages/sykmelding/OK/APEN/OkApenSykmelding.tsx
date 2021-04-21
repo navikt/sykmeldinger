@@ -35,15 +35,15 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
                     </div>
                 )}
 
-                <div className="margin-bottom--2">
-                    <SporsmalInfoheader />
-                </div>
-
                 <Sykmeldingsopplysninger
                     id="sykmeldingsopplysninger"
                     title="Opplysninger fra sykmeldingen"
                     sykmelding={sykmelding}
                 />
+
+                <div className="margin-bottom--2">
+                    <SporsmalInfoheader />
+                </div>
 
                 <Form sykmelding={sykmelding} />
 

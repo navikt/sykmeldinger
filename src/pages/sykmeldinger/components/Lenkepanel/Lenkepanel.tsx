@@ -21,6 +21,16 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding }) => {
     const linkToSykmelding = `${window._env_?.SYKMELDINGER_ROOT}/${sykmelding.id}`;
     const history = useHistory();
 
+    const getTitle = (): string => {
+        if (sykmelding.papirsykmelding) {
+            return 'Papirsykmelding';
+        }
+        if (sykmelding.egenmeldt) {
+            return 'Egenmelding';
+        }
+        return 'Sykmelding';
+    };
+
     return (
         <LenkepanelBase
             onMouseEnter={() => setIsHoverState(true)}
@@ -44,7 +54,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding }) => {
                 </div>
                 <div className="lenkepanel-content__main-content">
                     <Normaltekst tag="p">{sykmelding.getReadableSykmeldingLength()}</Normaltekst>
-                    <Undertittel tag="h3">{sykmelding.papirsykmelding ? 'Papirsykmelding' : 'Sykmelding'}</Undertittel>
+                    <Undertittel tag="h3">{getTitle()}</Undertittel>
                     <ul>
                         {sykmelding.sykmeldingsperioder.map((periode, index) => (
                             <li key={index}>
