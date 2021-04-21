@@ -70,6 +70,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           install: false
+          video: false
           record: false
           browser: chrome # fails with default (electron)
           start: npm run start:integration-test
