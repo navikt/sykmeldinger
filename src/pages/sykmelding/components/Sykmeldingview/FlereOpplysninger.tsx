@@ -25,20 +25,27 @@ const FlereOpplysninger: React.FC = ({ children }) => {
                 <Element className="toggle-text">{expanded ? 'Færre' : 'Flere'} opplysninger</Element>
                 <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
             </button>
-            {expanded && (
-                <div className="flere-opplysninger__content">
-                    {children}
-                    <button
-                        type="button"
-                        aria-expanded={expanded}
-                        onClick={() => setExpanded((prev) => !prev)}
-                        className="flere-opplysninger__toggle--center"
-                    >
-                        <Element className="toggle-text">Lukk</Element>
-                        <NavFrontendChevron type="opp" />
-                    </button>
-                </div>
-            )}
+            <div
+                style={{ display: expanded ? '' : 'none' }}
+                aria-hidden={!expanded}
+                className="flere-opplysninger__content"
+            >
+                {children}
+                <button
+                    type="button"
+                    aria-expanded={expanded}
+                    onClick={() => {
+                        setTimeout(() => {
+                            elementRef.current?.scrollIntoView({ behavior: 'smooth' });
+                        }, 200);
+                        setExpanded((prev) => !prev);
+                    }}
+                    className="flere-opplysninger__toggle--center"
+                >
+                    <Element className="toggle-text">Lukk</Element>
+                    <NavFrontendChevron type="opp" />
+                </button>
+            </div>
         </div>
     );
 };
