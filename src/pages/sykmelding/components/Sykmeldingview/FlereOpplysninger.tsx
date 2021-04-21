@@ -5,14 +5,21 @@ import './FlereOpplysninger.less';
 
 const FlereOpplysninger: React.FC = ({ children }) => {
     const [expanded, setExpanded] = useState<boolean>(false);
-    const elementRef = useRef(document.createElement('div'));
+    const elementRef = useRef<HTMLDivElement>(null);
 
     return (
         <div ref={elementRef} className="flere-opplysninger">
             <button
                 type="button"
                 aria-expanded={expanded}
-                onClick={() => setExpanded((prev) => !prev)}
+                onClick={() => {
+                    if (!expanded) {
+                        setTimeout(() => {
+                            elementRef.current?.scrollIntoView({ behavior: 'smooth' });
+                        }, 200);
+                    }
+                    setExpanded((prev) => !prev);
+                }}
                 className="flere-opplysninger__toggle"
             >
                 <Element className="toggle-text">{expanded ? 'Færre' : 'Flere'} opplysninger</Element>
