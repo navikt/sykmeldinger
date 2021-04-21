@@ -112,7 +112,7 @@ jobs:
           name: VERSION.txt
           path: .
       - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
-      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-root:$VERSION" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmelidnger:$VERSION" >> $GITHUB_ENV
       - name: Deploy to labs-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
