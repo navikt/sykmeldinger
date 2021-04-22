@@ -52,7 +52,7 @@ jobs:
             docker push ${IMAGE_SYK_SYKMELDINGER}
 
   integration-test:
-    name: Run integration tests with Cypress
+    name: Run integration and component tests with Cypress
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -67,10 +67,8 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
       - name: Run cypress component tests
-        uses: cypress-io/github-action@v2
-        with:
-          command: npx cypress run-ct
-      - name: Run cypress
+        run: npx cypress run-ct
+      - name: Run cypress integration tests
         uses: cypress-io/github-action@v2
         with:
           install: false
