@@ -87,6 +87,8 @@
         ]
     },
     "devDependencies": {
+        "@cypress/react": "^5.3.4",
+        "@cypress/webpack-dev-server": "^1.1.4",
         "@types/amplitude-js": "^7.0.1",
         "@types/jest": "^26.0.20",
         "@types/node": "^14.14.35",
