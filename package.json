@@ -100,5 +100,11 @@
         "cypress": "^7.1.0",
         "fetch-mock": "^9.11.0",
         "prettier": "^2.2.1"
+    },
+    "jest": {
+        "testMatch": [
+            "**/__tests__/**/*.[jt]s",
+            "**/?(*.)+(spec|test).[jt]s"
+        ]
     }
 }
