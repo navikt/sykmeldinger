@@ -9,6 +9,8 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
+import CenterItems from '../../../commonComponents/CenterItems/CenterItems';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -21,25 +23,29 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
 
     return (
         <div className="sykmelding-container">
-            <AlertStripeSuksess style={{ marginBottom: '2rem' }}>
-                <Systemtittel tag="h2">Sykmeldingen er sendt til NAV</Systemtittel>
-                <Normaltekst>
-                    Dato sendt:{' '}
-                    {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
-                </Normaltekst>
-            </AlertStripeSuksess>
+            <Spacing>
+                <AlertStripeSuksess>
+                    <Systemtittel tag="h2">Sykmeldingen er sendt til NAV</Systemtittel>
+                    <Normaltekst>
+                        Dato sendt:{' '}
+                        {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
+                    </Normaltekst>
+                </AlertStripeSuksess>
+            </Spacing>
 
-            <div style={{ marginBottom: '4rem', textAlign: 'center' }}>
-                <Normaltekst style={{ marginBottom: '1rem' }}>Fylte du ut feil opplysninger?</Normaltekst>
-                <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
-                    gjør utfyllingen på nytt
-                </Knapp>
-                {error && (
-                    <AlertStripeFeil style={{ marginTop: '1rem' }}>
-                        Det oppsto en feil ved gjenåpning av sykmeldingen
-                    </AlertStripeFeil>
-                )}
-            </div>
+            <Spacing amount="large">
+                <CenterItems horizontal>
+                    <Spacing amount="small">
+                        <Normaltekst>Fylte du ut feil opplysninger?</Normaltekst>
+                    </Spacing>
+                    <Spacing amount="small">
+                        <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
+                            gjør utfyllingen på nytt
+                        </Knapp>
+                    </Spacing>
+                    {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
+                </CenterItems>
+            </Spacing>
 
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysnigner"

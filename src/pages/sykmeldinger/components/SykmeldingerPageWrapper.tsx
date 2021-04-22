@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../commonComponents/Header/Header';
 import Breadcrumbs from '../../commonComponents/Breadcrumbs/Breadcrumbs';
 import TilHovedsiden from '../../commonComponents/TilHovedsiden/TilHovedsiden';
+import Spacing from '../../commonComponents/Spacing/Spacing';
 
 const SykmeldingerPageWrapper: React.FC = ({ children }) => {
     return (
@@ -20,7 +21,9 @@ const SykmeldingerPageWrapper: React.FC = ({ children }) => {
                     ]}
                 />
                 {children}
-                <TilHovedsiden />
+                <Spacing direction="top" amount="large">
+                    <TilHovedsiden />
+                </Spacing>
             </div>
         </>
     );

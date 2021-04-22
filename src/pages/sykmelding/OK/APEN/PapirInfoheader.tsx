@@ -5,6 +5,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 import Panel from 'nav-frontend-paneler';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
 
 const PapirInfoheader = () => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
@@ -14,15 +15,19 @@ const PapirInfoheader = () => {
 
     return (
         <Panel border>
-            <Innholdstittel className="margin-bottom--1">Før du bruker sykmeldingen</Innholdstittel>
-            <Normaltekst tag="p" className="margin-bottom--2">
-                Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik at du
-                kan gjøre resten digitalt.
-            </Normaltekst>
+            <Spacing amount="small">
+                <Innholdstittel>Før du bruker sykmeldingen</Innholdstittel>
+            </Spacing>
+
+            <Spacing>
+                <Normaltekst tag="p">
+                    Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik at
+                    du kan gjøre resten digitalt.
+                </Normaltekst>
+            </Spacing>
 
             <RadioPanelGruppe
                 name="harDuGittPapirsykmeldingenVidere"
-                className="margin-bottom--2"
                 legend="Har du allerede gitt papirsykmeldingen videre?"
                 radios={[
                     { label: 'Ja', value: 'Ja' },
@@ -39,34 +44,44 @@ const PapirInfoheader = () => {
             />
 
             {harGittVidere === true && (
-                <>
-                    <Normaltekst tag="p" className="margin-bottom--1">
-                        Da avbryter du den digitale sykmeldingen.
-                    </Normaltekst>
-                    <Knapp className="margin-bottom--2" spinner={isLoading} onClick={() => avbryt()}>
+                <Spacing direction="top">
+                    <Spacing amount="small">
+                        <Normaltekst tag="p">Da avbryter du den digitale sykmeldingen.</Normaltekst>
+                    </Spacing>
+
+                    <Knapp spinner={isLoading} onClick={() => avbryt()}>
                         Avbryt den digitale sykmeldingen
                     </Knapp>
-                </>
+                </Spacing>
             )}
 
             {harGittVidere === false && (
-                <>
-                    <Normaltekst tag="p" className="margin-bottom--2">
-                        Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i stedet. Det er en
-                        fordel for begge: Da får dere alt her, både sykepengesøknaden og andre meldinger som handler om
-                        sykefraværet. Papirsykmeldingen kan du legge bort. Det du gjør her erstatter papiret.
-                    </Normaltekst>
+                <Spacing direction="top">
+                    <Spacing>
+                        <Normaltekst tag="p">
+                            Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i stedet. Det er
+                            en fordel for begge: Da får dere alt her, både sykepengesøknaden og andre meldinger som
+                            handler om sykefraværet. Papirsykmeldingen kan du legge bort. Det du gjør her erstatter
+                            papiret.
+                        </Normaltekst>
+                    </Spacing>
 
-                    <Element className="margin-bottom--1">Hvis du får ja fra arbeidsgiveren din:</Element>
-                    <a href="#apen-sykmelding-form" className="knapp margin-bottom--2">
-                        Gå til utfyllingen
-                    </a>
+                    <Spacing amount="small">
+                        <Element>Hvis du får ja fra arbeidsgiveren din:</Element>
+                    </Spacing>
 
-                    <Element className="margin-bottom--1">Hvis du i stedet skal fortsette med papiret:</Element>
-                    <Knapp className="margin-bottom--2" spinner={isLoading} onClick={() => avbryt()}>
+                    <Spacing>
+                        <a href="#apen-sykmelding-form">Gå til utfyllingen</a>
+                    </Spacing>
+
+                    <Spacing amount="small">
+                        <Element>Hvis du i stedet skal fortsette med papiret:</Element>
+                    </Spacing>
+
+                    <Knapp spinner={isLoading} onClick={() => avbryt()}>
                         Avbryt den digitale sykmeldingen
                     </Knapp>
-                </>
+                </Spacing>
             )}
         </Panel>
     );

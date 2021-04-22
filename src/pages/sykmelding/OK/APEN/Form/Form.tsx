@@ -13,6 +13,11 @@ import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import Sykmeldingsopplysninger from '../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Spacing from '../../../../commonComponents/Spacing/Spacing';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import VeilederMaleSvg from '../../../../commonComponents/Veileder/svg/VeilederMaleSvg';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -93,7 +98,11 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const { maAvbryte } = useContext(AvbrytContext);
 
     if (isLoadingBrukerinformasjon || isLoadingSykmeldingUtenforVentetid) {
-        return <Spinner headline="Henter arbeidsforhold" />;
+        return (
+            <Spacing amount="large">
+                <Spinner headline="Henter arbeidsforhold" />
+            </Spacing>
+        );
     }
 
     if (
@@ -103,10 +112,12 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         sykmeldingUtenforVentetid === undefined
     ) {
         return (
-            <AlertStripeFeil style={{ marginBottom: '2rem' }}>
-                Det oppsto en feil ved henting av av skjemadata. Du kan dessverre ikke ta i bruk sykmeldingen akkurat
-                nå. Prøv igjen senere
-            </AlertStripeFeil>
+            <Spacing>
+                <AlertStripeFeil>
+                    Det oppsto en feil ved henting av av skjemadata. Du kan dessverre ikke ta i bruk sykmeldingen
+                    akkurat nå. Prøv igjen senere
+                </AlertStripeFeil>
+            </Spacing>
         );
     }
 
@@ -114,49 +125,82 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         <FormProvider {...formMethods}>
             <form
                 id="apen-sykmelding-form"
-                style={{ marginBottom: '3rem' }}
                 onSubmit={handleSubmit((data) => {
                     console.log(data);
                     send(data);
                 })}
             >
-                <ErOpplysningeneRiktige />
+                <Spacing>
+                    <Spacing>
+                        <ErOpplysningeneRiktige />
 
-                {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
-                    <Arbeidssituasjon
-                        erUtenforVentetid={sykmeldingUtenforVentetid.erUtenforVentetid}
-                        brukerinformasjon={brukerinformasjon}
-                    />
-                )}
+                        {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
+                            <Arbeidssituasjon
+                                erUtenforVentetid={sykmeldingUtenforVentetid.erUtenforVentetid}
+                                brukerinformasjon={brukerinformasjon}
+                            />
+                        )}
+                    </Spacing>
 
-                {erArbeidstaker && !brukerinformasjon.strengtFortroligAdresse && (
-                    <div style={{ marginTop: '2rem' }}>
-                        <Sykmeldingsopplysninger
-                            id="arbeidsgivers-sykmeldingsopplysninger"
-                            title="Slik ser sykmeldingen ut for arbeidsgiveren din"
-                            sykmelding={sykmelding}
-                            arbeidsgiver
-                        />
-                    </div>
-                )}
+                    {erArbeidstaker && !brukerinformasjon.strengtFortroligAdresse && (
+                        <>
+                            <Spacing>
+                                <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
+                                    <Element>Vi sender sykmeldingen til bedriftens innboks i Altinn</Element>
+                                    <Normaltekst>
+                                        Under ser du hva arbeidsgiveren din får se hvis du sender sykmeldingen. Det er
+                                        bare disse opplysningene som blir sendt. Arbeidsgiveren din får for eksempel
+                                        ikke se diagnosen.
+                                    </Normaltekst>
+                                </Veilederpanel>
+                            </Spacing>
+                            <Spacing>
+                                <Sykmeldingsopplysninger
+                                    id="arbeidsgivers-sykmeldingsopplysninger"
+                                    title="Slik ser sykmeldingen ut for arbeidsgiveren din"
+                                    sykmelding={sykmelding}
+                                    arbeidsgiver
+                                />
+                            </Spacing>
+                            <Spacing>
+                                <Ekspanderbartpanel tittel="Om du ikke ønsker å sende sykmeldingen til arbeidsgiver">
+                                    <Normaltekst>
+                                        Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk, enten
+                                        den digitale sykmeldingen du finner her, eller papirsykmeldingen som du kan få
+                                        hos legen.
+                                    </Normaltekst>
+                                    <Normaltekst>
+                                        Ønsker du ikke å sende den slik du ser den her, kan du snakke med legen om å få
+                                        en ny sykmelding. Da kan du ta stilling til om du vil gi den nye sykmeldingen
+                                        til arbeidsgiveren din i stedet.
+                                    </Normaltekst>
+                                </Ekspanderbartpanel>
+                            </Spacing>
+                        </>
+                    )}
 
-                {errorSend && (
-                    <div style={{ marginBottom: '1rem' }}>
-                        <AlertStripeFeil>
-                            En feil oppsto ved {erArbeidstaker ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst prøv
-                            igjen senere.
-                        </AlertStripeFeil>
-                    </div>
-                )}
+                    {errorSend && (
+                        <Spacing amount="small">
+                            <AlertStripeFeil>
+                                En feil oppsto ved {erArbeidstaker ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst
+                                prøv igjen senere.
+                            </AlertStripeFeil>
+                        </Spacing>
+                    )}
+                </Spacing>
 
-                <FeiloppsummeringContainer errors={errors} />
+                <Spacing>
+                    <FeiloppsummeringContainer errors={errors} />
+                </Spacing>
 
                 {maAvbryte === false && !erArbeidstakerMedStrengtFortroligAdressse && (
-                    <div style={{ marginTop: '3rem', marginBottom: '3rem', textAlign: 'center' }}>
-                        <Knapp spinner={isSending} type="hoved" htmlType="submit">
-                            {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
-                        </Knapp>
-                    </div>
+                    <Spacing>
+                        <div style={{ textAlign: 'center' }}>
+                            <Knapp spinner={isSending} type="hoved" htmlType="submit">
+                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
+                            </Knapp>
+                        </div>
+                    </Spacing>
                 )}
             </form>
         </FormProvider>

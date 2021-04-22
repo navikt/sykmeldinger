@@ -8,6 +8,7 @@ import Lenke from 'nav-frontend-lenker';
 import useSykmeldinger from '../../hooks/useSykmeldinger';
 import SykmeldingerPageWrapper from './components/SykmeldingerPageWrapper';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
+import Spacing from '../commonComponents/Spacing/Spacing';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -16,7 +17,11 @@ const SykmeldingerPage: React.FC = () => {
     const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
 
     if (isLoading) {
-        return <Spinner headline="Henter dine sykmeldinger" />;
+        return (
+            <Spacing>
+                <Spinner headline="Henter dine sykmeldinger" />
+            </Spacing>
+        );
     }
 
     if (error || sykmeldinger === undefined) {
@@ -36,15 +41,20 @@ const SykmeldingerPage: React.FC = () => {
     return (
         <SykmeldingerPageWrapper>
             <LenkepanelContainer type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
+
             <Ekspanderbartpanel tittel="Ser du ikke sykmeldingen din her?">
-                <Normaltekst className="margin-bottom--1">
-                    Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
-                    papirsykmeldingen i stedet.
-                </Normaltekst>
+                <Spacing amount="small">
+                    <Normaltekst>
+                        Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
+                        papirsykmeldingen i stedet.
+                    </Normaltekst>
+                </Spacing>
+
                 <Lenke href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
                     Mer informasjon om papirsykmelding finner du her.
                 </Lenke>
             </Ekspanderbartpanel>
+
             <LenkepanelContainer type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
         </SykmeldingerPageWrapper>
     );

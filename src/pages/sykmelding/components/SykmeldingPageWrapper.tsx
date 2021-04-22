@@ -2,6 +2,7 @@ import React from 'react';
 import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import Brodsmuler from '../../commonComponents/Breadcrumbs/Breadcrumbs';
 import Header from '../../commonComponents/Header/Header';
+import Spacing from '../../commonComponents/Spacing/Spacing';
 import TilHovedsiden from '../../commonComponents/TilHovedsiden/TilHovedsiden';
 
 interface SykmeldingPageWrapperProps {
@@ -30,7 +31,9 @@ const SykmeldingPageWrapper: React.FC<SykmeldingPageWrapperProps> = ({ children,
                     ]}
                 />
                 {children}
-                <TilHovedsiden />
+                <Spacing direction="top" amount="large">
+                    <TilHovedsiden />
+                </Spacing>
             </div>
         </>
     );

@@ -7,6 +7,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -17,18 +18,18 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
 
     return (
         <div className="sykmelding-container">
-            <div style={{ marginBottom: '5rem' }}>
+            <Spacing amount="large">
                 <AlertStripeInfo>
                     Du bekreftet at du har lest at sykmeldingen er avvist den{' '}
                     {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
                 </AlertStripeInfo>
-            </div>
+            </Spacing>
 
-            <div style={{ marginBottom: '2rem' }}>
+            <Spacing>
                 <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
                     <VeilederContent sykmelding={sykmelding} />
                 </Veilederpanel>
-            </div>
+            </Spacing>
 
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysninger"

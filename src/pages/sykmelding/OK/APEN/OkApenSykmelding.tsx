@@ -1,7 +1,3 @@
-import React from 'react';
-
-import SporsmalInfoheader from './SporsmalInfoheader';
-
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
@@ -11,6 +7,8 @@ import AvbrytContextProvider from './AvbrytContext';
 import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
+import InfoOmDigitalSykmelding from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -22,28 +20,30 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
     return (
         <AvbrytContextProvider>
             <div className="sykmelding-container">
-                <div className="margin-bottom--4">
-                    <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
+                <Spacing>
+                    <Veilederpanel kompakt type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
                         Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
                         om? Du velger selv om du vil bruke sykmeldingen.
                     </Veilederpanel>
-                </div>
+                </Spacing>
 
                 {Boolean(sykmelding.papirsykmelding) && (
-                    <div className="margin-bottom--4">
+                    <Spacing amount="large">
                         <PapirInfoheader />
-                    </div>
+                    </Spacing>
                 )}
 
-                <Sykmeldingsopplysninger
-                    id="sykmeldingsopplysninger"
-                    title="Opplysninger fra sykmeldingen"
-                    sykmelding={sykmelding}
-                />
+                <Spacing amount="small">
+                    <Sykmeldingsopplysninger
+                        id="sykmeldingsopplysninger"
+                        title="Opplysninger fra sykmeldingen"
+                        sykmelding={sykmelding}
+                    />
+                </Spacing>
 
-                <div className="margin-bottom--2">
-                    <SporsmalInfoheader />
-                </div>
+                <Spacing amount="large">
+                    <InfoOmDigitalSykmelding />
+                </Spacing>
 
                 <Form sykmelding={sykmelding} />
 

@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
+import CenterItems from '../../../commonComponents/CenterItems/CenterItems';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
@@ -21,24 +23,28 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
 
     return (
         <div className="sykmelding-container">
-            <div style={{ marginBottom: '4rem' }}>
-                <AlertStripe type="feil" style={{ marginBottom: '2rem' }}>
+            <Spacing>
+                <AlertStripe type="feil">
                     <Undertittel tag="h2">Sykmeldingen ble avbrutt av deg</Undertittel>
                     <Normaltekst>
                         Dato avbrutt:{' '}
                         {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
                     </Normaltekst>
                 </AlertStripe>
-                <div style={{ textAlign: 'center' }}>
-                    <Normaltekst style={{ marginBottom: '1rem' }}>
-                        Du kan fortsatt velge å ta i bruk sykmeldingen
-                    </Normaltekst>
+            </Spacing>
+
+            <Spacing amount="large">
+                <CenterItems horizontal>
+                    <Spacing amount="small">
+                        <Normaltekst>Du kan fortsatt velge å ta i bruk sykmeldingen</Normaltekst>
+                    </Spacing>
                     <Knapp spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
                         Bruk sykmeldingen
                     </Knapp>
                     {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen</AlertStripeFeil>}
-                </div>
-            </div>
+                </CenterItems>
+            </Spacing>
+
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysnigner"
                 title="Opplysninger fra sykmeldingen"

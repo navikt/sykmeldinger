@@ -40,13 +40,11 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
     }
 
     return (
-        <div style={{ marginTop: '3rem' }}>
-            <Feiloppsummering
-                innerRef={summaryRef}
-                tittel="For å gå videre må du rette opp følgende:"
-                feil={feiloppsummeringsfeil}
-            />
-        </div>
+        <Feiloppsummering
+            innerRef={summaryRef}
+            tittel="For å gå videre må du rette opp følgende:"
+            feil={feiloppsummeringsfeil}
+        />
     );
 };
 

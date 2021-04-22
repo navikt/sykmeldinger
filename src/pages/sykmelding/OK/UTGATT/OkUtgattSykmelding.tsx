@@ -5,6 +5,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
 
 interface OkUtgattSykmeldingProps {
     sykmelding: Sykmelding;
@@ -15,13 +16,13 @@ const OkUtgattSykmelding: React.FC<OkUtgattSykmeldingProps> = ({ sykmelding }) =
 
     return (
         <div className="sykmelding-container">
-            <div className="margin-bottom--2">
+            <Spacing>
                 <AlertStripeInfo>
                     <Undertittel>Sykmeldingen er utgått</Undertittel>
                     Dato utgått:{' '}
                     {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
                 </AlertStripeInfo>
-            </div>
+            </Spacing>
 
             <Sykmeldingsopplysninger
                 id="flere-sykmeldingsopplysnigner"

@@ -6,6 +6,7 @@ import Sykmeldingsopplysninger from '../../components/Sykmeldingview/Sykmeldings
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import DateFormatter from '../../../../utils/DateFormatter';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -16,21 +17,25 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
 
     return (
         <div className="sykmelding-container">
-            <AlertStripeSuksess style={{ marginBottom: '2rem' }}>
-                <Systemtittel tag="h2">
-                    Sykmeldingen er sendt til {sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
-                </Systemtittel>
-                <Normaltekst>
-                    Dato sendt:{' '}
-                    {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
-                </Normaltekst>
-            </AlertStripeSuksess>
+            <Spacing>
+                <AlertStripeSuksess>
+                    <Systemtittel tag="h2">
+                        Sykmeldingen er sendt til {sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
+                    </Systemtittel>
+                    <Normaltekst>
+                        Dato sendt:{' '}
+                        {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
+                    </Normaltekst>
+                </AlertStripeSuksess>
+            </Spacing>
 
-            <Sykmeldingsopplysninger
-                id="sykmeldingsopplysninger"
-                title="Opplysninger fra sykmeldingen"
-                sykmelding={sykmelding}
-            />
+            <Spacing>
+                <Sykmeldingsopplysninger
+                    id="sykmeldingsopplysninger"
+                    title="Opplysninger fra sykmeldingen"
+                    sykmelding={sykmelding}
+                />
+            </Spacing>
 
             <Sykmeldingsopplysninger
                 id="arbeidsgivers-sykmelding"

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
@@ -12,6 +11,8 @@ import useBekreft from '../../../../hooks/useBekreft';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import { Controller, useForm } from 'react-hook-form';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Spacing from '../../../commonComponents/Spacing/Spacing';
+import CenterItems from '../../../commonComponents/CenterItems/CenterItems';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -31,32 +32,26 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
 
     return (
         <div className="sykmelding-container">
-            <div className="margin-bottom--4">
+            <Spacing>
                 <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
                     <VeilederContent sykmelding={sykmelding} />
                 </Veilederpanel>
-            </div>
+            </Spacing>
 
-            <Sykmeldingsopplysninger
-                id="sykmeldingsopplysninger"
-                title="Opplysninger fra sykmeldingen"
-                sykmelding={sykmelding}
-            />
-
-            {errorBekreft && (
-                <AlertStripeAdvarsel className="margin-bottom--1">
-                    Kunne ikke bekrefte at sykmeldingen er avvist på grunn av en feil med baksystemene våre. Vennligst
-                    prøv igjen senere.
-                </AlertStripeAdvarsel>
-            )}
+            <Spacing>
+                <Sykmeldingsopplysninger
+                    id="sykmeldingsopplysninger"
+                    title="Opplysninger fra sykmeldingen"
+                    sykmelding={sykmelding}
+                />
+            </Spacing>
 
             <form
                 onSubmit={handleSubmit((data) => {
-                    console.log(data);
                     bekreft(data);
                 })}
             >
-                <div style={{ textAlign: 'center' }}>
+                <CenterItems horizontal>
                     <Controller
                         control={control}
                         name="bekreftetLest"
@@ -66,7 +61,7 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
                                 value === true || 'Du må bekrefte at du har lest at sykmeldingen er avvist',
                         }}
                         render={({ onChange, value }) => (
-                            <div style={{ width: 'fit-content', margin: 'auto', padding: '2rem' }}>
+                            <Spacing>
                                 <BekreftCheckboksPanel
                                     label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
                                     checked={value}
@@ -75,13 +70,23 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
                                         onChange(!value);
                                     }}
                                 />
-                            </div>
+                            </Spacing>
                         )}
                     />
+
+                    {errorBekreft && (
+                        <Spacing amount="small">
+                            <AlertStripeAdvarsel>
+                                Kunne ikke bekrefte at sykmeldingen er avvist på grunn av en feil med baksystemene våre.
+                                Vennligst prøv igjen senere.
+                            </AlertStripeAdvarsel>
+                        </Spacing>
+                    )}
+
                     <Hovedknapp htmlType="submit" disabled={isLoadingBekreft} spinner={isLoadingBekreft}>
                         Bekreft
                     </Hovedknapp>
-                </div>
+                </CenterItems>
             </form>
         </div>
     );
