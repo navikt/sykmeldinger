@@ -66,6 +66,10 @@ jobs:
             cypress-${{ runner.os }}-cypress-
       - name: Install npm dependencies
         run: npm ci
+      - name: Run cypress component tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: npx cypress run-ct
       - name: Run cypress
         uses: cypress-io/github-action@v2
         with:
