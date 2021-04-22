@@ -5,6 +5,8 @@ import { FormShape, JaEllerNeiType } from '../Form';
 import { NaermesteLeder } from '../../../../../../models/Arbeidsgiver';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import AlertStripe from 'nav-frontend-alertstriper';
+import Spacing from '../../../../../commonComponents/Spacing/Spacing';
+import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
 
 interface NyNarmesteLederProps {
     naermesteLeder: NaermesteLeder;
@@ -25,7 +27,7 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
 
     // Reset the answer if the prop changes
     useEffect(() => {
-        setValue(`${fieldName}.svar`, undefined);
+        setValue(`${fieldName}.svar`, null);
     }, [naermesteLeder, setValue]);
 
     return (
@@ -40,7 +42,16 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
-                        legend={sporsmaltekst}
+                        legend={
+                            <div>
+                                <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
+                                <Ekspanderbar title="Mer om oppfolging">
+                                    Personen som er oppgitt her vil få se sykmeldingen ved å logge seg på nav.no, og kan
+                                    bli kontaktet av NAV underveis i sykefraværet hvis det er behov for det. Hør med
+                                    arbeidsgiveren din om du er usikker på om personen er riktig.
+                                </Ekspanderbar>
+                            </div>
+                        }
                         radios={[
                             { label: JaEllerNeiType.JA, value: 'JA', id: fieldName },
                             { label: JaEllerNeiType.NEI, value: 'NEI' },
@@ -52,15 +63,19 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
             />
 
             {watchNyNarmesteLeder?.svar === 'JA' && (
-                <AlertStripe type="info" form="inline" style={{ marginTop: '0.5rem' }}>
-                    Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no
-                </AlertStripe>
+                <Spacing direction="top" amount="small">
+                    <AlertStripe type="info">
+                        Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no
+                    </AlertStripe>
+                </Spacing>
             )}
 
             {watchNyNarmesteLeder?.svar === 'NEI' && (
-                <AlertStripe type="info" form="inline" style={{ marginTop: '0.5rem' }}>
-                    Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
-                </AlertStripe>
+                <Spacing direction="top" amount="small">
+                    <AlertStripe type="info">
+                        Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
+                    </AlertStripe>
+                </Spacing>
             )}
         </QuestionWrapper>
     );

@@ -7,8 +7,10 @@ import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import HarBruktEgenmelding from './HarBruktEgenmelding';
 import HarForsikring from './HarForsikring';
 import QuestionWrapper from '../layout/QuestionWrapper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Spacing from '../../../../../commonComponents/Spacing/Spacing';
+import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
 
 const StrengtFortroligInfo = () => (
     <AlertStripeAdvarsel style={{ marginTop: '2rem' }}>
@@ -18,8 +20,8 @@ const StrengtFortroligInfo = () => (
         </Normaltekst>
         <Normaltekst>For å levere sykmeldingen manuelt kan du:</Normaltekst>
         <ul>
-            <li>ta kontakt med den som har sykmeldt deg for å få en utskrift</li>
-            <li>skrive ut sykmeldingen og levere til arbeidsgiveren din</li>
+            <Normaltekst tag="li">ta kontakt med den som har sykmeldt deg for å få en utskrift</Normaltekst>
+            <Normaltekst tag="li">skrive ut sykmeldingen og levere til arbeidsgiveren din</Normaltekst>
         </ul>
     </AlertStripeAdvarsel>
 );
@@ -70,6 +72,22 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
 
     return (
         <QuestionWrapper innrykk>
+            <Spacing>
+                <Spacing amount="x-small">
+                    <Systemtittel tag="h2">Ditt arbeidsfohold</Systemtittel>
+                </Spacing>
+                <Spacing amount="x-small">
+                    <Normaltekst>
+                        For å vite hvem som skal utbetale hva, må vi vite mer om arbeidssituasjonen din. Velg et av
+                        alternativene under.
+                    </Normaltekst>
+                </Spacing>
+                <Ekspanderbar title="Om du har flere arbeidsforhold">
+                    Er du sykmeldt fra flere arbeidsforhold må du ha én sykmelding per forhold. Trenger du flere
+                    sykmeldinger, må du kontakte den som har sykmeldt deg.
+                </Ekspanderbar>
+            </Spacing>
+
             <Controller
                 control={control}
                 name={`${fieldName}.svar`}

@@ -2,7 +2,7 @@ import './Spacing.less';
 
 interface SpacingProps {
     direction?: 'top' | 'bottom';
-    amount?: 'small' | 'medium' | 'large';
+    amount?: 'x-small' | 'small' | 'medium' | 'large';
 }
 
 const Spacing: React.FC<SpacingProps> = ({ direction = 'bottom', amount = 'medium', children }) => {

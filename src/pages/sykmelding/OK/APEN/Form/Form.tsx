@@ -154,7 +154,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                     </Normaltekst>
                                 </Veilederpanel>
                             </Spacing>
-                            <Spacing>
+                            <Spacing amount="small">
                                 <Sykmeldingsopplysninger
                                     id="arbeidsgivers-sykmeldingsopplysninger"
                                     title="Slik ser sykmeldingen ut for arbeidsgiveren din"
@@ -162,13 +162,15 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                     arbeidsgiver
                                 />
                             </Spacing>
-                            <Spacing>
+                            <Spacing amount="large">
                                 <Ekspanderbartpanel tittel="Om du ikke ønsker å sende sykmeldingen til arbeidsgiver">
-                                    <Normaltekst>
-                                        Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk, enten
-                                        den digitale sykmeldingen du finner her, eller papirsykmeldingen som du kan få
-                                        hos legen.
-                                    </Normaltekst>
+                                    <Spacing amount="small">
+                                        <Normaltekst>
+                                            Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk,
+                                            enten den digitale sykmeldingen du finner her, eller papirsykmeldingen som
+                                            du kan få hos legen.
+                                        </Normaltekst>
+                                    </Spacing>
                                     <Normaltekst>
                                         Ønsker du ikke å sende den slik du ser den her, kan du snakke med legen om å få
                                         en ny sykmelding. Da kan du ta stilling til om du vil gi den nye sykmeldingen
