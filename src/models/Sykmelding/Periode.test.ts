@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import 'reflect-metadata';
 import { plainToClass } from 'class-transformer';
 import Periode from './Periode';

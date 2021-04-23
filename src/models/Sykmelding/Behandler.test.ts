@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import { plainToClass } from 'class-transformer';
 import 'reflect-metadata';
 import Behandler from './Behandler';
