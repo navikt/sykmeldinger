@@ -42,7 +42,9 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                     />
                 )}
                 {!!sykmelding.prognose && <PrognoseView prognose={sykmelding.prognose} />}
-                <UtdypendeOpplysningerView utdypendeOpplysninger={sykmelding.utdypendeOpplysninger} />
+                {Boolean(arbeidsgiver) === false && (
+                    <UtdypendeOpplysningerView utdypendeOpplysninger={sykmelding.utdypendeOpplysninger} />
+                )}
                 <ArbeidsevneView
                     tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
                     tiltakNAV={sykmelding.tiltakNAV}
