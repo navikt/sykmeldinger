@@ -11,6 +11,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spacing from '../../../../../commonComponents/Spacing/Spacing';
 import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
+import ErUtenforVentetid from '../../../../../../models/ErUtenforVentetid';
 
 const StrengtFortroligInfo = () => (
     <AlertStripeAdvarsel style={{ marginTop: '2rem' }}>
@@ -27,7 +28,7 @@ const StrengtFortroligInfo = () => (
 );
 
 interface ArbeidssituasjonProps {
-    erUtenforVentetid: boolean;
+    erUtenforVentetid: ErUtenforVentetid;
     brukerinformasjon: Brukerinformasjon;
 }
 
@@ -56,7 +57,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
         // Only FL and SN within ventetid
         return (
             ['FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
-            erUtenforVentetid === false
+            erUtenforVentetid.erUtenforVentetid === false
         );
     }, [watchArbeidssituasjon, erUtenforVentetid]);
 
@@ -66,7 +67,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
         // Only FL and SN within ventetid
         return (
             ['FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
-            erUtenforVentetid === false
+            erUtenforVentetid.erUtenforVentetid === false
         );
     }, [watchArbeidssituasjon, erUtenforVentetid]);
 
@@ -116,8 +117,8 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
                 <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} />
             )}
 
-            {skalViseEgenmeldingsperioderSporsmal && (
-                <HarBruktEgenmelding syketilfelleStartdato={new Date('2021-04-20')} />
+            {skalViseEgenmeldingsperioderSporsmal && !!erUtenforVentetid.oppfolgingsdato && (
+                <HarBruktEgenmelding oppfolgingsdato={erUtenforVentetid.oppfolgingsdato} />
             )}
 
             {skalViseForsikringSporsmal && <HarForsikring />}

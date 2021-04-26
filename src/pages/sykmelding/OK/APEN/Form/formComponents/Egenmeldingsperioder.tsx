@@ -13,15 +13,13 @@ import isBetween from 'dayjs/plugin/isBetween';
 dayjs.extend(isBetween);
 
 interface EgenmeldingsperioderProps {
-    syketilfelleStartdato: Date;
+    oppfolgingsdato: Date;
 }
 
 // TODO: wait for new API
-const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfelleStartdato }) => {
+const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgingsdato }) => {
     const fieldName: keyof FormShape = 'egenmeldingsperioder';
-    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(syketilfelleStartdato).format(
-        'D. MMMM YYYY',
-    )}.`;
+    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(oppfolgingsdato).format('D. MMMM YYYY')}.`;
 
     const { errors, control, register, getValues, unregister } = useFormContext<FormShape>();
     const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
@@ -61,7 +59,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                 required: 'fom dato mangler.',
                                 validate: (fom) => {
                                     // Test max date
-                                    if (dayjs(fom).isAfter(syketilfelleStartdato)) {
+                                    if (dayjs(fom).isAfter(oppfolgingsdato)) {
                                         return 'Startdato kan ikke være etter oppfølgingsdato';
                                     }
 
@@ -94,7 +92,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                         value={value ? value : undefined}
                                         onChange={onChange}
                                         limitations={{
-                                            maxDate: dayjs(syketilfelleStartdato).format('YYYY-MM-DD'),
+                                            maxDate: dayjs(oppfolgingsdato).format('YYYY-MM-DD'),
                                         }}
                                         inputProps={{ name, placeholder: 'dd.mm.åååå' }}
                                     />
@@ -115,7 +113,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                 required: 'tom dato mangler.',
                                 validate: (tom) => {
                                     // Test max date
-                                    if (dayjs(tom).isAfter(syketilfelleStartdato)) {
+                                    if (dayjs(tom).isAfter(oppfolgingsdato)) {
                                         return 'Sluttdato kan ikke være etter oppfølgingsdato';
                                     }
 
@@ -149,7 +147,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ syketilfell
                                         value={value ? value : undefined}
                                         onChange={onChange}
                                         limitations={{
-                                            maxDate: dayjs(syketilfelleStartdato).format('YYYY-MM-DD'),
+                                            maxDate: dayjs(oppfolgingsdato).format('YYYY-MM-DD'),
                                         }}
                                         inputProps={{ name, placeholder: 'dd.mm.åååå' }}
                                     />

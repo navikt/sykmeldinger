@@ -10,7 +10,7 @@ describe('Frilanser innenfor ventetid', () => {
             body: { arbeidsgivere: [], strengtFortroligAdresse: false },
         }).as('brukerinformasjon');
         cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
-            body: { erUtenforVentetid: false },
+            body: { erUtenforVentetid: false, oppfolgingsdato: '2021-04-20' },
         }).as('ventetid');
     });
 

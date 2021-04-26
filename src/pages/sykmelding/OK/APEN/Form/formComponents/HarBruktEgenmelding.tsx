@@ -7,13 +7,13 @@ import QuestionWrapper from '../layout/QuestionWrapper';
 import dayjs from 'dayjs';
 
 interface HarBruktEgenmeldingProps {
-    syketilfelleStartdato: Date;
+    oppfolgingsdato: Date;
 }
 
-const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleStartdato }) => {
+const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsdato }) => {
     const { control, watch, errors, register, unregister } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'harBruktEgenmelding';
-    const sporsmaltekst = `Vi har registrert at du ble syk ${dayjs(syketilfelleStartdato).format(
+    const sporsmaltekst = `Vi har registrert at du ble syk ${dayjs(oppfolgingsdato).format(
         'D. MMMM YYYY',
     )}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`;
     const watchHarBruktEgenmelding = watch(fieldName);
@@ -53,9 +53,7 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ syketilfelleS
                 )}
             />
 
-            {watchHarBruktEgenmelding?.svar === 'JA' && (
-                <Egenmeldingsperioder syketilfelleStartdato={syketilfelleStartdato} />
-            )}
+            {watchHarBruktEgenmelding?.svar === 'JA' && <Egenmeldingsperioder oppfolgingsdato={oppfolgingsdato} />}
         </QuestionWrapper>
     );
 };

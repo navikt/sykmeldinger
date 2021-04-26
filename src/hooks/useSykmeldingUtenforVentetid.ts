@@ -10,6 +10,13 @@ function useSykmeldingUtenforVentetid(sykmeldingId: string) {
             (maybeErUtenforVentetid) =>
                 transformAndValidate(ErUtenforVentetid, maybeErUtenforVentetid as ErUtenforVentetid, {
                     validator: { validationError: { target: false, value: false } },
+                }).then((value) => {
+                    if (value.erUtenforVentetid === false && !!value.oppfolgingsdato) {
+                        console.warn(
+                            `Expected oppfolgingsdato to be defined when sykmelding within ventetid, but was ${typeof value.oppfolgingsdato}. Sykmeldingid: ${sykmeldingId}`,
+                        );
+                    }
+                    return value;
                 }),
         ),
     );
