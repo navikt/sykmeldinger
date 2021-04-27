@@ -35,7 +35,7 @@ describe('Arbeidstaker med diskresjonskode', () => {
             cy.contains('Er opplysningene riktige').should('be.visible');
             cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
 
-            cy.contains('Min arbeidssituasjon').should('be.visible');
+            cy.contains('Jeg er sykmeldt som').should('be.visible');
             cy.get('input[name="arbeidssituasjon.svar"][value=ARBEIDSTAKER]').click({ force: true });
         });
     });

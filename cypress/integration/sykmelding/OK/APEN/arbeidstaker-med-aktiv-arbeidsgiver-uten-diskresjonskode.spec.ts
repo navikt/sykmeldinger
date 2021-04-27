@@ -39,7 +39,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
                 cy.contains('Er opplysningene riktige').should('be.visible');
                 cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
 
-                cy.contains('Min arbeidssituasjon').should('be.visible');
+                cy.contains('Jeg er sykmeldt som').should('be.visible');
                 cy.get('input[name="arbeidssituasjon.svar"][value=ARBEIDSTAKER]').click({ force: true });
 
                 cy.contains('Min arbeidsgiver').should('be.visible');
@@ -73,7 +73,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
                     },
                     arbeidssituasjon: {
                         svar: 'ARBEIDSTAKER',
-                        sporsmaltekst: 'Min arbeidssituasjon',
+                        sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
                             '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
                     },

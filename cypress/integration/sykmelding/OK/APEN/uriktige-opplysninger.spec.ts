@@ -41,7 +41,7 @@ describe('Uriktige opplysninger', () => {
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=PERIODE]').click({ force: true });
 
-                    cy.contains('Min arbeidssituasjon').should('not.exist');
+                    cy.contains('Jeg er sykmeldt som').should('not.exist');
                 });
         });
 
@@ -123,7 +123,7 @@ describe('Uriktige opplysninger', () => {
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=SYKMELDINGSGRAD_FOR_HOY]').click({ force: true });
 
-                    cy.contains('Min arbeidssituasjon').should('not.exist');
+                    cy.contains('Jeg er sykmeldt som').should('not.exist');
                 });
         });
 
@@ -205,7 +205,7 @@ describe('Uriktige opplysninger', () => {
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=SYKMELDINGSGRAD_FOR_LAV]').click({ force: true });
 
-                    cy.contains('Min arbeidssituasjon').should('be.visible');
+                    cy.contains('Jeg er sykmeldt som').should('be.visible');
                 });
         });
 
@@ -263,7 +263,7 @@ describe('Uriktige opplysninger', () => {
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=ARBEIDSGIVER]').click({ force: true });
 
-                    cy.contains('Min arbeidssituasjon').should('be.visible');
+                    cy.contains('Jeg er sykmeldt som').should('be.visible');
                 });
         });
 
@@ -319,7 +319,7 @@ describe('Uriktige opplysninger', () => {
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=DIAGNOSE]').click({ force: true });
 
-                    cy.contains('Min arbeidssituasjon').should('be.visible');
+                    cy.contains('Jeg er sykmeldt som').should('be.visible');
                 });
         });
 
@@ -375,7 +375,7 @@ describe('Uriktige opplysninger', () => {
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=ANDRE_OPPLYSNINGER]').click({ force: true });
 
-                    cy.contains('Min arbeidssituasjon').should('be.visible');
+                    cy.contains('Jeg er sykmeldt som').should('be.visible');
                 });
         });
 

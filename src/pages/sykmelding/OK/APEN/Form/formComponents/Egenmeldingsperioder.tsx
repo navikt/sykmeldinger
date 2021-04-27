@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import { FormShape, Egenmeldingsperiode } from '../Form';
 import { Label } from 'nav-frontend-skjema';
-import { Fareknapp, Knapp } from 'nav-frontend-knapper';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { Datepicker } from 'nav-datovelger';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './Egenmeldingsperioder.less';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+import IconButton from '../../../../../commonComponents/IconButton/IconButton';
 
 dayjs.extend(isBetween);
 
@@ -159,23 +159,16 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 </div>
                             )}
                         />
-                        {index > 0 && (
-                            <Fareknapp
-                                htmlType="button"
-                                mini
-                                onClick={() => remove(index)}
-                                className="egenmeldingsperiode__slett"
-                            >
-                                Slett periode
-                            </Fareknapp>
-                        )}
+                        {index > 0 && <IconButton type="cross" tekst="Fjern periode" onClick={() => remove(index)} />}
                     </div>
                 ))}
             </div>
 
-            <Knapp htmlType="button" type="hoved" mini onClick={() => append({ fom: undefined, tom: undefined })}>
-                + Legg til ekstra periode
-            </Knapp>
+            <IconButton
+                type="pluss"
+                tekst="Legg til ekstra periode"
+                onClick={() => append({ fom: undefined, tom: undefined })}
+            />
         </QuestionWrapper>
     );
 };

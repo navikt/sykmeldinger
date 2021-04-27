@@ -35,7 +35,7 @@ interface ArbeidssituasjonProps {
 const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, brukerinformasjon }) => {
     const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'arbeidssituasjon';
-    const sporsmaltekst = 'Min arbeidssituasjon';
+    const sporsmaltekst = 'Jeg er sykmeldt som';
     const watchArbeidssituasjon = watch(fieldName);
 
     useEffect(() => {

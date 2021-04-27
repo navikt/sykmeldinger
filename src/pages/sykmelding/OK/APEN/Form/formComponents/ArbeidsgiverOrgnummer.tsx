@@ -5,6 +5,8 @@ import { FormShape } from '../Form';
 import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import NyNarmesteLeder from './NyNarmesteLeder';
 import QuestionWrapper from '../layout/QuestionWrapper';
+import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
+import Spacing from '../../../../../commonComponents/Spacing/Spacing';
 
 interface ArbeidsgiverOrgnummerProps {
     brukerinformasjon: Brukerinformasjon;
@@ -49,7 +51,19 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
-                        legend={sporsmaltekst}
+                        legend={
+                            <div>
+                                <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
+                                <Ekspanderbar title="Om du ikke ser arbeidsgiveren din her">
+                                    <Spacing amount="small">
+                                        Be arbeidsgiveren din om å registrere deg i A-meldingen. Da blir det oppdatert
+                                        her slik at du kan få sendt den til arbeidsgiveren.
+                                    </Spacing>
+                                    Hvis arbeidsgiveren mener at du ikke skal være registrert som ansatt må du velge
+                                    frilanser eller selvstendig næringsdrivende.
+                                </Ekspanderbar>
+                            </div>
+                        }
                         radios={arbeidsgivere.map((arbeidsgiver, index) => ({
                             label: arbeidsgiver.navn,
                             value: arbeidsgiver.orgnummer,

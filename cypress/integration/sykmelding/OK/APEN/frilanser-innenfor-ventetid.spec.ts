@@ -38,7 +38,7 @@ describe('Frilanser innenfor ventetid', () => {
                 cy.contains('Er opplysningene riktige').should('be.visible');
                 cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
 
-                cy.contains('Min arbeidssituasjon').should('be.visible');
+                cy.contains('Jeg er sykmeldt som').should('be.visible');
                 cy.get('input[name="arbeidssituasjon.svar"][value=FRILANSER]').click({ force: true });
 
                 cy.contains('Brukte du egenmelding eller noen annen sykmelding før denne datoen?').should('be.visible');
@@ -78,7 +78,7 @@ describe('Frilanser innenfor ventetid', () => {
                     },
                     arbeidssituasjon: {
                         svar: 'FRILANSER',
-                        sporsmaltekst: 'Min arbeidssituasjon',
+                        sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
                             '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
                     },
