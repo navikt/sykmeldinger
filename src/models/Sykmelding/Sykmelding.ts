@@ -193,6 +193,17 @@ export class Sykmelding {
         const startDate = this.getSykmeldingStartDate();
         const endDate = this.getSykmeldingEndDate();
 
+        if (dayjs(startDate).isSame(endDate)) {
+            return dayjs(startDate).format('D. MMMM YYYY');
+        }
+
+        if (dayjs(startDate).isSame(endDate, 'year')) {
+            if (dayjs(startDate).isSame(endDate, 'month')) {
+                return `${dayjs(startDate).format('D.')} - ${dayjs(endDate).format('D. MMMM YYYY')}`;
+            }
+            return `${dayjs(startDate).format('D. MMMM')} - ${dayjs(endDate).format('D. MMMM YYYY')}`;
+        }
+
         return `${dayjs(startDate).format('D. MMMM YYYY')} - ${dayjs(endDate).format('D. MMMM YYYY')}`;
     }
 }
