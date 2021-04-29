@@ -83,21 +83,21 @@ describe('PeriodeView', () => {
         }).toThrow();
         expect(() => {
             screen.getByText(plainJson.sporsmal);
-        }).toThrow;
+        }).toThrow();
         expect(() => {
             screen.getByText(plainJson.svar);
-        }).toThrow;
+        }).toThrow();
         expect(() => {
             screen.getByText(plainJson2.sporsmal);
-        }).toThrow;
+        }).toThrow();
         expect(() => {
             screen.getByText(plainJson2.svar);
-        }).toThrow;
+        }).toThrow();
         expect(() => {
             screen.getByText(plainJson3.sporsmal);
-        }).toThrow;
+        }).toThrow();
         expect(() => {
             screen.getByText(plainJson3.svar);
-        }).toThrow;
+        }).toThrow();
     });
 });
