@@ -139,6 +139,7 @@ export class Sykmelding {
     @IsBoolean()
     readonly harRedusertArbeidsgiverperiode?: boolean;
 
+    @IsOptional()
     @ValidateNested({ each: true })
     @Type(() => Merknad)
     readonly merknader?: Merknad[];
