@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import ArbeidsgiverSykmelding from './ArbeidsgiverSykmelding';
 import Behandler from './Behandler';
 import Behandlingsutfall from './Behandlingsutfall';

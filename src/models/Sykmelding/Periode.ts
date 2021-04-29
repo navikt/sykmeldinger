@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsIn, IsInt, IsOptional, IsString, Max, Min, ValidateNested } from 'class-validator';
 import 'dayjs/locale/nb';

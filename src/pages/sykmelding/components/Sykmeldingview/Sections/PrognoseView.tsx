@@ -4,7 +4,11 @@ import CheckboxEntry from '../Layout/CheckboxEntry';
 import Section from '../Layout/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry';
 
-const PrognoseView: React.FC<{ prognose: Prognose }> = ({ prognose }) => {
+const PrognoseView: React.FC<{ prognose?: Prognose }> = ({ prognose }) => {
+    if (!prognose) {
+        return null;
+    }
+
     return (
         <Section title="Friskmelding/Prognose">
             <CheckboxEntry

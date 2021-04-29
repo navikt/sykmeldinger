@@ -2,9 +2,14 @@ import UtdypendeOpplysning from '../../../../../models/Sykmelding/UtdypendeOpply
 import Section from '../Layout/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry';
 
-const UtdypendeOpplysningerView: React.FC<{ utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>> }> = ({
-    utdypendeOpplysninger,
-}) => {
+const UtdypendeOpplysningerView: React.FC<{
+    utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>>;
+    arbeidsgiver?: boolean;
+}> = ({ utdypendeOpplysninger, arbeidsgiver }) => {
+    if (arbeidsgiver) {
+        return null;
+    }
+
     if (utdypendeOpplysninger.size === 0) {
         return null;
     }

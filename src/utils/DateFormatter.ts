@@ -9,7 +9,7 @@ class DateFormatter {
      * @return {string} The date string
      */
     static toReadableDate(date: Date, options?: { withYear?: boolean }): string {
-        return dayjs(date).format(`D. MMMM${options?.withYear ? ' YYYY' : ''}`);
+        return dayjs(date).format(`D. MMMM${options?.withYear === false ? '' : ' YYYY'}`);
     }
 }
 

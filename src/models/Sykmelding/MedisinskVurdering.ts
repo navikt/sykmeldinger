@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
 
