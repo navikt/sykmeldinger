@@ -3,10 +3,14 @@ import DateFormatter from '../../../../../utils/DateFormatter';
 import CheckboxEntry from '../Layout/CheckboxEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry';
 
-const MedisinskVurderingView: React.FC<{ medisinskVurdering: MedisinskVurdering; arbeidsgiver?: boolean }> = ({
+const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering; arbeidsgiver?: boolean }> = ({
     medisinskVurdering,
     arbeidsgiver = false,
 }) => {
+    if (!medisinskVurdering) {
+        return null;
+    }
+
     return (
         <div>
             {!!medisinskVurdering.hovedDiagnose?.tekst && (
@@ -21,7 +25,7 @@ const MedisinskVurderingView: React.FC<{ medisinskVurdering: MedisinskVurdering;
                     return (
                         <SykmeldingEntry
                             key={index}
-                            title="Bidignose"
+                            title="Bidiagnose"
                             mainText={bidiagnose.tekst}
                             sladd={arbeidsgiver === true}
                         />

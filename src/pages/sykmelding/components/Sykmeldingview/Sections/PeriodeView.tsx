@@ -15,7 +15,7 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
         <div className="aktivitet-ikke-mulig">
             <div className="aktivitet-ikke-mulig__medisinsk-arsak">
                 {aktivitetIkkeMulig.medisinskArsak && (
-                    <Element>Medisinske årsaker hindrer arbeidsrealtert aktivitet</Element>
+                    <Element>Medisinske årsaker hindrer arbeidsrelatert aktivitet</Element>
                 )}
                 {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                     <CheckboxEntry
@@ -25,7 +25,7 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
                 )}
                 {aktivitetIkkeMulig.medisinskArsak?.beskrivelse && (
                     <SykmeldingEntry
-                        title="Begrunnelse for vurdeing av aktivitetskravet"
+                        title="Begrunnelse for vurdering av aktivitetskravet"
                         mainText={aktivitetIkkeMulig.medisinskArsak.beskrivelse}
                         small
                     />

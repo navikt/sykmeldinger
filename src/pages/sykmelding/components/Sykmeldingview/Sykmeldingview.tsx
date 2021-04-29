@@ -1,15 +1,17 @@
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import DateFormatter from '../../../../utils/DateFormatter';
 import FlereOpplysninger from './FlereOpplysninger';
-import Section from './Layout/Section';
 import SykmeldingEntry from './Layout/SykmeldingEntry';
 import ArbeidsevneView from './Sections/ArbeidsevneView';
 import MedisinskVurderingView from './Sections/MedisinskVurderingView';
+import MeldingTilArbeidsgiverView from './Sections/MeldingTilArbeidsgiverView';
 import MeldingTilNavView from './Sections/MeldingTilNavView';
 import PeriodeView from './Sections/PeriodeView';
-import PrognoseView from './Sections/PrognoseView';
+import ArbeidsgiverView from './Sections/ArbeidsgiverView';
 import TilbakedateringView from './Sections/TilbakedateringView';
 import UtdypendeOpplysningerView from './Sections/UtdypendeOpplysningerView';
+import PrognoseView from './Sections/PrognoseView';
+import AnnetView from './Sections/AnnetView';
 
 interface SykmeldingviewProps {
     sykmelding: Sykmelding;
@@ -20,12 +22,9 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
     return (
         <>
             <SykmeldingEntry title="Lege/Sykmelder" mainText={sykmelding.behandler.getName()} />
-            {!!sykmelding.medisinskVurdering && (
-                <MedisinskVurderingView
-                    medisinskVurdering={sykmelding.medisinskVurdering}
-                    arbeidsgiver={arbeidsgiver}
-                />
-            )}
+
+            <MedisinskVurderingView medisinskVurdering={sykmelding.medisinskVurdering} arbeidsgiver={arbeidsgiver} />
+
             <div style={{ marginBottom: '2rem' }}>
                 <PeriodeView perioder={sykmelding.sykmeldingsperioder} />
             </div>
@@ -35,36 +34,29 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                     title="Dato sykmeldingen ble skrevet"
                     mainText={DateFormatter.toReadableDate(sykmelding.behandletTidspunkt)}
                 />
-                {!!sykmelding.arbeidsgiver?.navn && (
-                    <SykmeldingEntry
-                        title="Arbeidsgiver som legen har skrevet inn"
-                        mainText={sykmelding.arbeidsgiver.navn}
-                    />
-                )}
-                {!!sykmelding.prognose && <PrognoseView prognose={sykmelding.prognose} />}
-                {Boolean(arbeidsgiver) === false && (
-                    <UtdypendeOpplysningerView utdypendeOpplysninger={sykmelding.utdypendeOpplysninger} />
-                )}
+
+                <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
+
+                <PrognoseView prognose={sykmelding.prognose} />
+
+                <UtdypendeOpplysningerView
+                    utdypendeOpplysninger={sykmelding.utdypendeOpplysninger}
+                    arbeidsgiver={arbeidsgiver}
+                />
+
                 <ArbeidsevneView
                     tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
                     tiltakNAV={sykmelding.tiltakNAV}
                     andreTiltak={sykmelding.andreTiltak}
                 />
-                {!!sykmelding.meldingTilNAV && <MeldingTilNavView meldingTilNav={sykmelding.meldingTilNAV} />}
-                {!!sykmelding.meldingTilArbeidsgiver && (
-                    <Section title="Melding til arbeidsgiver">
-                        <SykmeldingEntry
-                            title="Andre innspill til arbeidsgiver"
-                            mainText={sykmelding.meldingTilArbeidsgiver}
-                        />
-                    </Section>
-                )}
+
+                <MeldingTilNavView meldingTilNav={sykmelding.meldingTilNAV} />
+
+                <MeldingTilArbeidsgiverView meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver} />
+
                 <TilbakedateringView kontaktMedPasient={sykmelding.kontaktMedPasient} />
-                {!!sykmelding.behandler.tlf && (
-                    <Section title="Annet">
-                        <SykmeldingEntry title="Telefon til lege/sykmelder" mainText={sykmelding.behandler.tlf} />
-                    </Section>
-                )}
+
+                <AnnetView behandlerTlf={sykmelding.behandler.tlf} />
             </FlereOpplysninger>
         </>
     );
