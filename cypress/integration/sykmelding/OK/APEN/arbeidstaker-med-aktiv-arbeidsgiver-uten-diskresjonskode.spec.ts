@@ -48,7 +48,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
                 });
 
                 cy.contains(
-                    `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`,
+                    `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`,
                 ).should('be.visible');
                 cy.get('input[name="nyNarmesteLeder.svar"][value=JA]').click({
                     force: true,
@@ -84,7 +84,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
                     },
                     nyNarmesteLeder: {
                         svar: 'JA',
-                        sporsmaltekst: `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`,
+                        sporsmaltekst: `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`,
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                 }),

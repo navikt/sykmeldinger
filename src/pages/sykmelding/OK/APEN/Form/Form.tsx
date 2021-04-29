@@ -146,7 +146,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                         <>
                             <Spacing>
                                 <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
-                                    <Element>Vi sender sykmeldingen til bedriftens innboks i Altinn</Element>
+                                    <Element>Vi sender sykmeldingen til arbeidsgiverens innboks i Altinn</Element>
                                     <Normaltekst>
                                         Under ser du hva arbeidsgiveren din får se hvis du sender sykmeldingen. Det er
                                         bare disse opplysningene som blir sendt. Arbeidsgiveren din får for eksempel
@@ -163,7 +163,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                 />
                             </Spacing>
                             <Spacing amount="large">
-                                <Ekspanderbartpanel tittel="Om du ikke ønsker å sende sykmeldingen til arbeidsgiver">
+                                <Ekspanderbartpanel tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
                                     <Spacing amount="small">
                                         <Normaltekst>
                                             Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk,

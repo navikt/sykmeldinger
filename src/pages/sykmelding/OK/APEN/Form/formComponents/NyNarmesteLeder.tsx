@@ -15,7 +15,7 @@ interface NyNarmesteLederProps {
 const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => {
     const { control, watch, register, unregister, setValue } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'nyNarmesteLeder';
-    const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobb mens du er syk?`;
+    const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`;
     const watchNyNarmesteLeder = watch(fieldName);
 
     useEffect(() => {
@@ -37,7 +37,8 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
                 name={`${fieldName}.svar`}
                 defaultValue={null}
                 rules={{
-                    required: 'Du må svare på om dette er riktig person som skal følge deg opp på jobb når du er syk.',
+                    required:
+                        'Du må svare på om dette er riktig person som skal følge deg opp på jobben når du er syk.',
                 }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
@@ -45,10 +46,10 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
                         legend={
                             <div>
                                 <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
-                                <Ekspanderbar title="Mer om oppfolging">
-                                    Personen som er oppgitt her vil få se sykmeldingen ved å logge seg på nav.no, og kan
-                                    bli kontaktet av NAV underveis i sykefraværet hvis det er behov for det. Hør med
-                                    arbeidsgiveren din om du er usikker på om personen er riktig.
+                                <Ekspanderbar title="Les om hva det innebærer">
+                                    Den vi spør om, vil få se sykmeldingen din og kan bli kontaktet av NAV underveis i
+                                    sykefraværet. Hør med arbeidsgiveren din hvis du mener det er en annen de skulle
+                                    meldt inn i stedet.
                                 </Ekspanderbar>
                             </div>
                         }

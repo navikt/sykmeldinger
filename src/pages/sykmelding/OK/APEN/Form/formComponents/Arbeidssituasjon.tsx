@@ -75,17 +75,16 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
         <QuestionWrapper innrykk>
             <Spacing>
                 <Spacing amount="x-small">
-                    <Systemtittel tag="h2">Ditt arbeidsfohold</Systemtittel>
+                    <Systemtittel tag="h2">Arbeidet du er sykmeldt fra</Systemtittel>
                 </Spacing>
                 <Spacing amount="x-small">
                     <Normaltekst>
-                        For å vite hvem som skal utbetale hva, må vi vite mer om arbeidssituasjonen din. Velg et av
-                        alternativene under.
+                        Fortell oss hva som er situasjonen din, så vet vi hvilken informasjon du skal få
                     </Normaltekst>
                 </Spacing>
-                <Ekspanderbar title="Om du har flere arbeidsforhold">
-                    Er du sykmeldt fra flere arbeidsforhold må du ha én sykmelding per forhold. Trenger du flere
-                    sykmeldinger, må du kontakte den som har sykmeldt deg.
+                <Ekspanderbar title="Har du flere arbeidsforhold?">
+                    Du trenger én sykmelding for hvert arbeidsforhold du er sykmeldt fra. Kontakt den som har sykmeldt
+                    deg.
                 </Ekspanderbar>
             </Spacing>
 

@@ -54,13 +54,13 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                         legend={
                             <div>
                                 <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
-                                <Ekspanderbar title="Om du ikke ser arbeidsgiveren din her">
+                                <Ekspanderbar title="Ser du ikke arbeidsgiveren din her?">
                                     <Spacing amount="small">
                                         Be arbeidsgiveren din om å registrere deg i A-meldingen. Da blir det oppdatert
                                         her slik at du kan få sendt den til arbeidsgiveren.
                                     </Spacing>
-                                    Hvis arbeidsgiveren mener at du ikke skal være registrert som ansatt må du velge
-                                    frilanser eller selvstendig næringsdrivende.
+                                    Be arbeidsgiveren din registrere deg i A-meldingen. Da vil du få sendt sykmeldingen
+                                    herfra.
                                 </Ekspanderbar>
                             </div>
                         }
