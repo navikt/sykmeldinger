@@ -44,44 +44,43 @@ const SykmeldingSide: React.FC = () => {
         const behandlingsutfall = sykmelding.behandlingsutfall.status;
         const status = sykmelding.sykmeldingStatus.statusEvent;
 
-        if (behandlingsutfall === 'OK') {
-            switch (status) {
-                case 'APEN':
-                    if (sykmelding.egenmeldt) {
-                        return <OkApenEgenmelding sykmelding={sykmelding} />;
-                    }
-                    return <OkApenSykmelding sykmelding={sykmelding} />;
-                case 'BEKREFTET':
-                    if (sykmelding.egenmeldt) {
-                        return <OkBekreftetEgenmelding sykmelding={sykmelding} />;
-                    }
-                    return <OkBekreftetSykmelding sykmelding={sykmelding} />;
-                case 'SENDT':
-                    return <OkSendtSykmelding sykmelding={sykmelding} />;
-                case 'AVBRUTT':
-                    if (sykmelding.egenmeldt) {
-                        return <OkAvbruttEgenmelding sykmelding={sykmelding} />;
-                    }
-                    return <OkAvbruttSykmelding sykmelding={sykmelding} />;
-                case 'UTGATT':
-                    return <OkUtgattSykmelding sykmelding={sykmelding} />;
-                default:
-                    // TODO: make seperate component
-                    return <div>Ugylding status</div>;
-            }
-        } else if (behandlingsutfall === 'INVALID') {
-            switch (status) {
-                case 'APEN':
-                    return <InvalidApenSykmelding sykmelding={sykmelding} />;
-                case 'BEKREFTET':
-                    return <InvalidBekreftetSykmelding sykmelding={sykmelding} />;
-                default:
-                    // TODO: make seperate component
-                    return <div>Ugylding status</div>;
-            }
-        } else {
-            // TODO: make seperate component
-            return <div>Ugylding behandlingsutfall</div>;
+        switch (behandlingsutfall) {
+            case 'OK':
+            case 'MANUAL_PROCESSING':
+                switch (status) {
+                    case 'APEN':
+                        if (sykmelding.egenmeldt) {
+                            return <OkApenEgenmelding sykmelding={sykmelding} />;
+                        }
+                        return <OkApenSykmelding sykmelding={sykmelding} />;
+                    case 'BEKREFTET':
+                        if (sykmelding.egenmeldt) {
+                            return <OkBekreftetEgenmelding sykmelding={sykmelding} />;
+                        }
+                        return <OkBekreftetSykmelding sykmelding={sykmelding} />;
+                    case 'SENDT':
+                        return <OkSendtSykmelding sykmelding={sykmelding} />;
+                    case 'AVBRUTT':
+                        if (sykmelding.egenmeldt) {
+                            return <OkAvbruttEgenmelding sykmelding={sykmelding} />;
+                        }
+                        return <OkAvbruttSykmelding sykmelding={sykmelding} />;
+                    case 'UTGATT':
+                        return <OkUtgattSykmelding sykmelding={sykmelding} />;
+                    default:
+                        // TODO: make seperate component
+                        return <div>Ugylding status</div>;
+                }
+            case 'INVALID':
+                switch (status) {
+                    case 'APEN':
+                        return <InvalidApenSykmelding sykmelding={sykmelding} />;
+                    case 'BEKREFTET':
+                        return <InvalidBekreftetSykmelding sykmelding={sykmelding} />;
+                    default:
+                        // TODO: make seperate component
+                        return <div>Ugylding status</div>;
+                }
         }
     })();
 
