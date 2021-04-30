@@ -33,7 +33,7 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
 
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysninger"
-                title="Opplysninger fra sykmeldingen"
+                title="Se hele sykmeldingen din"
                 sykmelding={sykmelding}
             />
         </div>

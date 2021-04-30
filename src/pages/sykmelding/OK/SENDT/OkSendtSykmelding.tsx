@@ -32,14 +32,14 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
             <Spacing>
                 <Sykmeldingsopplysninger
                     id="sykmeldingsopplysninger"
-                    title="Opplysninger fra sykmeldingen"
+                    title="Se hele sykmeldingen din"
                     sykmelding={sykmelding}
                 />
             </Spacing>
 
             <Sykmeldingsopplysninger
                 id="arbeidsgivers-sykmelding"
-                title="Slik ser sykmeldingen ut for arbeidsgiveren din"
+                title="Dette ble sendt til arbeidsgiveren din"
                 sykmelding={sykmelding}
                 expandedDefault={false}
                 arbeidsgiver

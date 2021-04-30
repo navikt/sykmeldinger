@@ -49,7 +49,7 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
 
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysnigner"
-                title="Opplysninger fra sykmeldingen"
+                title="Se hele sykmeldingen din"
                 sykmelding={sykmelding}
             />
         </div>

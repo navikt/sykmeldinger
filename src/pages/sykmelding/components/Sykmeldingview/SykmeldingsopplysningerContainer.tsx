@@ -6,9 +6,7 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Sykmeldingview from '../Sykmeldingview/Sykmeldingview';
 import PlasterSvg from './Svg/PlasterSvg';
-import PlasterHoverSvg from './Svg/PlasterHoverSvg';
 import ArbeidsgiverSvg from './Svg/ArbeidsgiverSvg';
-import ArbeidsgiverHoverSvg from './Svg/ArbeidsgiverHoverSvg';
 
 interface SykmeldingsopplysningerProps {
     id: string;
@@ -28,22 +26,12 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef<HTMLElement>(null);
 
-    const icons = (() => {
-        if (arbeidsgiver) {
-            return { iconNormal: ArbeidsgiverSvg, iconHover: ArbeidsgiverHoverSvg };
-        }
-        return { iconNormal: PlasterSvg, iconHover: PlasterHoverSvg };
-    })();
-    const [icon, setIcon] = useState<JSX.Element>(icons.iconNormal);
-
     return (
         <article id={id} ref={elementRef} className="sykmeldingsopplysninger">
             {arbeidsgiver === true ? (
                 <button
                     type="button"
                     aria-expanded={expanded}
-                    onMouseEnter={() => setIcon(icons.iconHover)}
-                    onMouseLeave={() => setIcon(icons.iconNormal)}
                     onClick={() => {
                         if (!expanded) {
                             setTimeout(() => {
@@ -56,7 +44,9 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                         arbeidsgiver === true ? 'sykmeldingsopplysninger__header--bg-orange' : ''
                     } sykmeldingsopplysninger__header--expandable`}
                 >
-                    <div className="sykmeldingsopplysninger__icon">{icon}</div>
+                    <div className="sykmeldingsopplysninger__icon">
+                        <ArbeidsgiverSvg />
+                    </div>
                     <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
                         {title}
                     </Undertittel>
@@ -69,7 +59,9 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                 </button>
             ) : (
                 <header className="sykmeldingsopplysninger__header">
-                    <div className="sykmeldingsopplysninger__icon">{icon}</div>
+                    <div className="sykmeldingsopplysninger__icon">
+                        <PlasterSvg />
+                    </div>
                     <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
                         {title}
                     </Undertittel>

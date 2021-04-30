@@ -20,7 +20,7 @@ const OkApenEgenmelding: React.FC<OkApenEgenmeldingProps> = ({ sykmelding }) => 
 
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysninger"
-                title="Opplysninger fra egenmeldingen"
+                title="Se hele egenmeldingen din"
                 sykmelding={sykmelding}
             />
         </div>

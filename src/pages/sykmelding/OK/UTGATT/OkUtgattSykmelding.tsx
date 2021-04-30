@@ -26,7 +26,7 @@ const OkUtgattSykmelding: React.FC<OkUtgattSykmeldingProps> = ({ sykmelding }) =
 
             <Sykmeldingsopplysninger
                 id="flere-sykmeldingsopplysnigner"
-                title="Opplysninger fra sykmeldingen"
+                title="Se hele sykmeldingen din"
                 sykmelding={sykmelding}
             />
         </div>

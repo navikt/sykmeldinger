@@ -24,7 +24,7 @@ const OkBekreftetEgenmelding: React.FC<OkBekreftetEgenmeldingProps> = ({ sykmeld
 
             <Sykmeldingsopplysninger
                 id="sykmeldingsopplysnigner"
-                title="Opplysninger fra egenmeldingen"
+                title="Se hele sykmeldingen din"
                 sykmelding={sykmelding}
             />
         </div>
