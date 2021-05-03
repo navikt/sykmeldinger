@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { plainToClass } from 'class-transformer';
 import Prognose from '../../../../../models/Sykmelding/Prognose';
 import PrognoseView from './PrognoseView';
 
@@ -10,7 +9,7 @@ describe('PrognoseView', () => {
             arbeidsforEtterPeriode: true,
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
         expect(screen.getByText('Friskmelding/Prognose')).toBeInTheDocument();
     });
@@ -20,7 +19,7 @@ describe('PrognoseView', () => {
             arbeidsforEtterPeriode: true,
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
         expect(screen.getByText('Pasienten er 100% arbeidsfør etter denne perioden')).toBeInTheDocument();
     });
@@ -30,7 +29,7 @@ describe('PrognoseView', () => {
             arbeidsforEtterPeriode: false,
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
         expect(() => {
             screen.getByText('Pasienten er 100% arbeidsfør etter denne perioden');
@@ -42,7 +41,7 @@ describe('PrognoseView', () => {
             arbeidsforEtterPeriode: true,
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
         expect(screen.getByText('Hensyn som må tas på arbeidsplassen')).toBeInTheDocument();
         expect(screen.getByText(plainJson.hensynArbeidsplassen)).toBeInTheDocument();
@@ -59,7 +58,7 @@ describe('PrognoseView', () => {
                 vurderingsdato: '2021-04-15',
             },
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
         expect(
             screen.getByText('Pasienten antas å kunne komme tilbake til samme arbeidsgiver på sikt'),
@@ -86,7 +85,7 @@ describe('PrognoseView', () => {
                 vurderingsdato: '2021-04-15',
             },
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
         expect(
             screen.getByText('Pasienten antas å kunne komme tilbake til annen arbeidsgiver på sikt'),
@@ -112,7 +111,7 @@ describe('PrognoseView', () => {
                 vurderingsdato: '2021-04-15',
             },
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
         expect(screen.getByText('Pasienten antas å kunne komme i arbeid på sikt')).toBeInTheDocument();
 
@@ -132,7 +131,7 @@ describe('PrognoseView', () => {
                 vurderingsdato: '2021-04-15',
             },
         };
-        const prognose = plainToClass(Prognose, plainJson);
+        const prognose = new Prognose(plainJson);
         render(<PrognoseView prognose={prognose} />);
 
         expect(() => {

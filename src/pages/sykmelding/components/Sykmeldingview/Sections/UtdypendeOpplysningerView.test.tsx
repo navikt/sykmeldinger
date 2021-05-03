@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { plainToClass } from 'class-transformer';
 import UtdypendeOpplysning from '../../../../../models/Sykmelding/UtdypendeOpplysninger';
 import UtdypendeOpplysningerView from './UtdypendeOpplysningerView';
 
@@ -22,9 +21,9 @@ describe('PeriodeView', () => {
             restriksjoner: [],
         };
 
-        const utdypende = plainToClass(UtdypendeOpplysning, plainJson);
-        const utdypende2 = plainToClass(UtdypendeOpplysning, plainJson2);
-        const utdypende3 = plainToClass(UtdypendeOpplysning, plainJson3);
+        const utdypende = new UtdypendeOpplysning(plainJson);
+        const utdypende2 = new UtdypendeOpplysning(plainJson2);
+        const utdypende3 = new UtdypendeOpplysning(plainJson3);
 
         const utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>> = new Map();
 
@@ -63,9 +62,9 @@ describe('PeriodeView', () => {
             restriksjoner: [],
         };
 
-        const utdypende = plainToClass(UtdypendeOpplysning, plainJson);
-        const utdypende2 = plainToClass(UtdypendeOpplysning, plainJson2);
-        const utdypende3 = plainToClass(UtdypendeOpplysning, plainJson3);
+        const utdypende = new UtdypendeOpplysning(plainJson);
+        const utdypende2 = new UtdypendeOpplysning(plainJson2);
+        const utdypende3 = new UtdypendeOpplysning(plainJson3);
 
         const utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>> = new Map();
 

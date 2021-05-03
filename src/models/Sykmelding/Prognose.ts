@@ -1,6 +1,5 @@
 import 'reflect-metadata';
-import { Type } from 'class-transformer';
-import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 class ErIArbeid {
     @IsBoolean()
@@ -10,12 +9,19 @@ class ErIArbeid {
     annetArbeidPaSikt: boolean;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     arbeidFOM?: Date;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     vurderingsdato?: Date;
+
+    constructor(data: any) {
+        this.egetArbeidPaSikt = data.egetArbeidPaSikt;
+        this.annetArbeidPaSikt = data.annetArbeidPaSikt;
+        this.arbeidFOM = data.arbeidFOM ? new Date(data.arbeidFOM) : undefined;
+        this.vurderingsdato = data.vurderingsdato ? new Date(data.vurderingsdato) : undefined;
+    }
 }
 
 class ErIkkeIArbeid {
@@ -23,12 +29,18 @@ class ErIkkeIArbeid {
     arbeidsforPaSikt: boolean;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     arbeidsforFOM?: Date;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     vurderingsdato?: Date;
+
+    constructor(data: any) {
+        this.arbeidsforPaSikt = data.arbeidsforPaSikt;
+        this.arbeidsforFOM = data.arbeidsforFOM ? new Date(data.arbeidsforFOM) : undefined;
+        this.vurderingsdato = data.vurderingsdato ? new Date(data.vurderingsdato) : undefined;
+    }
 }
 
 class Prognose {
@@ -41,13 +53,18 @@ class Prognose {
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => ErIArbeid)
     erIArbeid?: ErIArbeid;
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => ErIkkeIArbeid)
     erIkkeIArbeid?: ErIkkeIArbeid;
+
+    constructor(data: any) {
+        this.arbeidsforEtterPeriode = data.arbeidsforEtterPeriode;
+        this.hensynArbeidsplassen = data.hensynArbeidsplassen ?? undefined;
+        this.erIArbeid = data.erIArbeid ? new ErIArbeid(data.erIArbeid) : undefined;
+        this.erIkkeIArbeid = data.erIkkeIArbeid ? new ErIkkeIArbeid(data.erIkkeIArbeid) : undefined;
+    }
 }
 
 export default Prognose;

@@ -1,13 +1,17 @@
-import { Type } from 'class-transformer';
-import { IsBoolean, IsOptional } from 'class-validator';
+import { IsBoolean, IsDate, IsOptional } from 'class-validator';
 
 class ErUtenforVentetid {
     @IsBoolean()
     readonly erUtenforVentetid: boolean;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     readonly oppfolgingsdato?: Date;
+
+    constructor(data: any) {
+        this.erUtenforVentetid = data.erUtenforVentetid;
+        this.oppfolgingsdato = data.oppfolgingsdato ? new Date(data.oppfolgingsdato) : undefined;
+    }
 }
 
 export default ErUtenforVentetid;

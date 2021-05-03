@@ -1,4 +1,4 @@
-import { transformAndValidate } from 'class-transformer-validator';
+import { validateOrReject } from 'class-validator';
 import { useQuery } from 'react-query';
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 import Fetch from '../utils/Fetch';
@@ -9,16 +9,10 @@ function useSykmeldinger() {
         () =>
             Fetch.authenticatedGet(
                 `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger`,
-                (maybeSykmeldinger) => {
-                    console.log(maybeSykmeldinger);
-                    return transformAndValidate(Sykmelding, maybeSykmeldinger as Sykmelding[], {
-                        validator: {
-                            validationError: {
-                                target: false,
-                                value: false,
-                            },
-                        },
-                    });
+                async (maybeSykmeldinger) => {
+                    const sykmeldinger = (maybeSykmeldinger as Sykmelding[]).map((sm) => new Sykmelding(sm));
+                    await validateOrReject(sykmeldinger, { validationError: { target: false, value: false } });
+                    return sykmeldinger;
                 },
             ),
         { retry: false },

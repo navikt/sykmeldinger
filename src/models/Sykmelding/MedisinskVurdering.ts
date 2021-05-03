@@ -1,6 +1,5 @@
 import 'reflect-metadata';
-import { Type } from 'class-transformer';
-import { IsBoolean, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsBoolean, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class Diagnose {
     @IsString()
@@ -12,6 +11,12 @@ export class Diagnose {
     @IsOptional()
     @IsString()
     tekst?: string;
+
+    constructor(data: any) {
+        this.kode = data.kode;
+        this.system = data.system;
+        this.tekst = data.tekst ?? undefined;
+    }
 }
 
 export enum AnnenFraverGrunn {
@@ -33,23 +38,28 @@ export class AnnenFraversArsak {
     beskrivelse?: string;
 
     // Can only have one entry
+    @IsArray()
+    @ArrayMaxSize(1)
     @IsIn(Object.keys(AnnenFraverGrunn), { each: true })
     grunn: (keyof typeof AnnenFraverGrunn)[];
+
+    constructor(data: any) {
+        this.beskrivelse = data.beskrivelse ?? undefined;
+        this.grunn = data.grunn;
+    }
 }
 
 class MedisinskVurdering {
     @IsOptional()
     @ValidateNested()
-    @Type(() => Diagnose)
     hovedDiagnose?: Diagnose;
 
     @ValidateNested({ each: true })
-    @Type(() => Diagnose)
+    @IsArray()
     biDiagnoser: Diagnose[];
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => AnnenFraversArsak)
     annenFraversArsak?: AnnenFraversArsak;
 
     @IsBoolean()
@@ -59,8 +69,17 @@ class MedisinskVurdering {
     yrkesskade: boolean;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     yrkesskadeDato?: Date;
+
+    constructor(data: any) {
+        this.hovedDiagnose = data.hovedDiagnose ? new Diagnose(data.hovedDiagnose) : undefined;
+        this.biDiagnoser = data.biDiagnoser.map((bidiagnose: any) => new Diagnose(bidiagnose));
+        this.annenFraversArsak = data.annenFraversArsak ? new AnnenFraversArsak(data.annenFraversArsak) : undefined;
+        this.svangerskap = data.svangerskap;
+        this.yrkesskade = data.yrkesskade;
+        this.yrkesskadeDato = data.yrkesskadeDato ? new Date(data.yrkesskadeDato) : undefined;
+    }
 }
 
 export default MedisinskVurdering;

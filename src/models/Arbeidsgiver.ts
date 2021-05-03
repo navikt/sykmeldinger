@@ -1,5 +1,4 @@
-import { Type } from 'class-transformer';
-import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class Arbeidsgiver {
     @IsString()
@@ -22,8 +21,17 @@ export class Arbeidsgiver {
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => NaermesteLeder)
     readonly naermesteLeder?: NaermesteLeder;
+
+    constructor(data: any) {
+        this.orgnummer = data.orgnummer;
+        this.juridiskOrgnummer = data.juridiskOrgnummer;
+        this.navn = data.navn;
+        this.stilling = data.stilling;
+        this.stillingsprosent = data.stillingsprosent;
+        this.aktivtArbeidsforhold = data.aktivtArbeidsforhold;
+        this.naermesteLeder = data.naermesteLeder ? new NaermesteLeder(data.naermesteLeder) : undefined;
+    }
 }
 
 export class NaermesteLeder {
@@ -48,10 +56,21 @@ export class NaermesteLeder {
     readonly mobil?: string;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     readonly aktivTom?: Date;
 
     @IsOptional()
     @IsBoolean()
     readonly arbeidsgiverForskuttererLoenn?: boolean;
+
+    constructor(data: any) {
+        this.aktoerId = data.aktoerId;
+        this.navn = data.navn;
+        this.orgnummer = data.orgnummer;
+        this.organisasjonsnavn = data.organisasjonsnavn;
+        this.epost = data.epost;
+        this.mobil = data.mobil;
+        this.aktivTom = data.aktivTom ? new Date(data.aktivTom) : undefined;
+        this.arbeidsgiverForskuttererLoenn = data.arbeidsgiverForskuttererLoenn;
+    }
 }

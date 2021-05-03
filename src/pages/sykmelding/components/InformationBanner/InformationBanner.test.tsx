@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { plainToClass } from 'class-transformer';
 import Merknad from '../../../../models/Sykmelding/Merknad';
 import InformationBanner, { Merknadtype } from './InformationBanner';
 
@@ -9,7 +8,7 @@ describe('InformationBanner', () => {
         const plainJson = {
             type: Merknadtype.UGYLDIG_TILBAKEDATERING,
         };
-        const merknad = plainToClass(Merknad, plainJson);
+        const merknad = new Merknad(plainJson);
         render(<InformationBanner merknader={[merknad]} />);
         expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
         expect(screen.getByText('Tilbakedateringen kan ikke godkjennes')).toBeInTheDocument();
@@ -19,7 +18,7 @@ describe('InformationBanner', () => {
         const plainJson = {
             type: Merknadtype.TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER,
         };
-        const merknad = plainToClass(Merknad, plainJson);
+        const merknad = new Merknad(plainJson);
         render(<InformationBanner merknader={[merknad]} />);
         expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
         expect(screen.getByText('Behov for mer opplysninger')).toBeInTheDocument();

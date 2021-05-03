@@ -1,6 +1,16 @@
 import 'reflect-metadata';
-import { Type } from 'class-transformer';
-import { IsBoolean, IsIn, IsInt, IsOptional, IsString, Max, Min, ValidateNested } from 'class-validator';
+import {
+    IsArray,
+    IsBoolean,
+    IsDate,
+    IsIn,
+    IsInt,
+    IsOptional,
+    IsString,
+    Max,
+    Min,
+    ValidateNested,
+} from 'class-validator';
 import 'dayjs/locale/nb';
 import dayjs from 'dayjs';
 dayjs.locale('nb');
@@ -21,6 +31,11 @@ class GradertPeriode {
 
     @IsBoolean()
     reisetilskudd: boolean;
+
+    constructor(data: any) {
+        this.grad = data.grad;
+        this.reisetilskudd = data.reisetilskudd;
+    }
 }
 
 export enum MedisinskArsakType {
@@ -38,7 +53,13 @@ class MedisinskArsak {
     // TODO: not optional if beskrivelse exists
     @IsOptional()
     @IsIn(Object.keys(MedisinskArsakType), { each: true })
+    @IsArray()
     arsak: (keyof typeof MedisinskArsakType)[];
+
+    constructor(data: any) {
+        this.beskrivelse = data.beskrivelse ?? undefined;
+        this.arsak = data.arsak;
+    }
 }
 
 export enum ArbeidsrelatertArsakType {
@@ -54,31 +75,41 @@ class ArbeidsrelatertArsak {
     // TODO: not optional if beskrivelse exists
     @IsOptional()
     @IsIn(Object.keys(ArbeidsrelatertArsakType), { each: true })
+    @IsArray()
     arsak: (keyof typeof ArbeidsrelatertArsakType)[];
+
+    constructor(data: any) {
+        this.beskrivelse = data.beskrivelse ?? undefined;
+        this.arsak = data.arsak;
+    }
 }
 
 export class AktivitetIkkeMuligPeriode {
     @IsOptional()
     @ValidateNested()
-    @Type(() => MedisinskArsak)
     medisinskArsak?: MedisinskArsak;
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => ArbeidsrelatertArsak)
     arbeidsrelatertArsak?: ArbeidsrelatertArsak;
+
+    constructor(data: any) {
+        this.medisinskArsak = data.medisinskArsak ? new MedisinskArsak(data.medisinskArsak) : undefined;
+        this.arbeidsrelatertArsak = data.arbeidsrelatertArsak
+            ? new ArbeidsrelatertArsak(data.arbeidsrelatertArsak)
+            : undefined;
+    }
 }
 
 class Periode {
-    @Type(() => Date)
+    @IsDate()
     fom: Date;
 
-    @Type(() => Date)
+    @IsDate()
     tom: Date;
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => GradertPeriode)
     gradert?: GradertPeriode;
 
     @IsOptional()
@@ -94,11 +125,23 @@ class Periode {
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => AktivitetIkkeMuligPeriode)
     aktivitetIkkeMulig?: AktivitetIkkeMuligPeriode;
 
     @IsBoolean()
     reisetilskudd: boolean;
+
+    constructor(data: any) {
+        this.fom = new Date(data.fom);
+        this.tom = new Date(data.tom);
+        this.gradert = data.gradert ? new GradertPeriode(data.gradert) : undefined;
+        this.behandlingsdager = data.behandlingsdager ?? undefined;
+        this.innspillTilArbeidsgiver = data.innspillTilArbeidsgiver ?? undefined;
+        this.type = data.type;
+        this.aktivitetIkkeMulig = data.aktivitetIkkeMulig
+            ? new AktivitetIkkeMuligPeriode(data.aktivitetIkkeMulig)
+            : undefined;
+        this.reisetilskudd = data.reisetilskudd;
+    }
 
     /**
      * Get a text representation of the period type

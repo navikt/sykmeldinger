@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { plainToClass } from 'class-transformer';
 import KontaktMedPasient from '../../../../../models/Sykmelding/KontaktMedPasient';
 import TilbakedateringView from './TilbakedateringView';
 
@@ -9,7 +8,7 @@ describe('TilbakedateringView', () => {
         const plainJson = {
             kontaktDato: '2021-04-01',
         };
-        const kontaktMedPasient = plainToClass(KontaktMedPasient, plainJson);
+        const kontaktMedPasient = new KontaktMedPasient(plainJson);
         render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />);
 
         expect(screen.getByText('Tilbakedatering')).toBeInTheDocument();
@@ -22,7 +21,7 @@ describe('TilbakedateringView', () => {
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: 'han var kjempesyk',
         };
-        const kontaktMedPasient = plainToClass(KontaktMedPasient, plainJson);
+        const kontaktMedPasient = new KontaktMedPasient(plainJson);
         render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />);
 
         expect(screen.getByText('Tilbakedatering')).toBeInTheDocument();

@@ -16,7 +16,7 @@ describe('MedisinskVurdering', () => {
             svangerskap: false,
             yrkesskade: false,
         };
-        const medisinskVurdering = plainToClass(MedisinskVurdering, plainJson);
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getByText('Diagnose')).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('MedisinskVurdering', () => {
             svangerskap: false,
             yrkesskade: false,
         };
-        const medisinskVurdering = plainToClass(MedisinskVurdering, plainJson);
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getAllByText('Bidiagnose').length).toBe(2);
@@ -70,7 +70,7 @@ describe('MedisinskVurdering', () => {
             svangerskap: false,
             yrkesskade: false,
         };
-        const medisinskVurdering = plainToClass(MedisinskVurdering, plainJson);
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver />);
 
         expect(screen.getByText('Diagnose')).toBeInTheDocument();
@@ -95,7 +95,7 @@ describe('MedisinskVurdering', () => {
             svangerskap: false,
             yrkesskade: false,
         };
-        const medisinskVurdering = plainToClass(MedisinskVurdering, plainJson);
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getByText('Annen lovfestet fraværsgrunn')).toBeInTheDocument();
@@ -111,7 +111,7 @@ describe('MedisinskVurdering', () => {
             svangerskap: true,
             yrkesskade: false,
         };
-        const medisinskVurdering = plainToClass(MedisinskVurdering, plainJson);
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getByText('Sykdommen er svangerskapsrelatert')).toBeInTheDocument();
@@ -124,7 +124,7 @@ describe('MedisinskVurdering', () => {
             yrkesskade: true,
             yrkesskadeDato: '2020-04-01',
         };
-        const medisinskVurdering = plainToClass(MedisinskVurdering, plainJson);
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getByText('Sykdommen kan skyldes en yrkesskade/yrkessykdom')).toBeInTheDocument();

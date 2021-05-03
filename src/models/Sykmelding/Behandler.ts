@@ -1,5 +1,5 @@
-import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import 'reflect-metadata';
+import { IsInt, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 class Adresse {
     @IsOptional()
@@ -7,7 +7,7 @@ class Adresse {
     gate?: string;
 
     @IsOptional()
-    @IsNumber()
+    @IsInt()
     postnummer?: number;
 
     @IsOptional()
@@ -21,6 +21,14 @@ class Adresse {
     @IsOptional()
     @IsString()
     land?: string;
+
+    constructor(data: any) {
+        this.gate = data.gate ?? undefined;
+        this.postnummer = data.postnummer ?? undefined;
+        this.kommune = data.kommune ?? undefined;
+        this.postboks = data.postboks ?? undefined;
+        this.land = data.land ?? undefined;
+    }
 }
 
 class Behandler {
@@ -29,7 +37,7 @@ class Behandler {
 
     @IsOptional()
     @IsString()
-    mellomnavn?: string | null;
+    mellomnavn?: string;
 
     @IsString()
     etternavn: string;
@@ -37,24 +45,29 @@ class Behandler {
     @IsString()
     aktoerId: string;
 
-    @IsString()
-    fnr: string;
+    // @IsOptional()
+    // @IsString()
+    // hpr?: string;
 
-    @IsOptional()
-    @IsString()
-    hpr?: string;
-
-    @IsOptional()
-    @IsString()
-    her?: string;
+    // @IsOptional()
+    // @IsString()
+    // her?: string;
 
     @ValidateNested()
-    @Type(() => Adresse)
     adresse: Adresse;
 
     @IsOptional()
     @IsString()
     tlf?: string;
+
+    constructor(data: any) {
+        this.fornavn = data.fornavn;
+        this.mellomnavn = data.mellomnavn ?? undefined;
+        this.etternavn = data.etternavn;
+        this.aktoerId = data.aktoerId;
+        this.adresse = new Adresse(data.adresse);
+        this.tlf = data.tlf ?? undefined;
+    }
 
     getName(): string {
         return `${this.fornavn}${this.mellomnavn ? ' ' + this.mellomnavn : ''} ${this.etternavn}`;

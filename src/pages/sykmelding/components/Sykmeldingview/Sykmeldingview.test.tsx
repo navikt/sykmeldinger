@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { plainToClass } from 'class-transformer';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import Sykmeldingview from './Sykmeldingview';
 
@@ -66,7 +65,7 @@ const minimalSykmelding = {
 };
 
 describe('SykmeldingView', () => {
-    const sykmelding = plainToClass(Sykmelding, minimalSykmelding);
+    const sykmelding = new Sykmelding(minimalSykmelding);
 
     beforeEach(() => {
         render(<Sykmeldingview sykmelding={sykmelding} />);

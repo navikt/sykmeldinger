@@ -1,5 +1,3 @@
-import { plainToClass } from 'class-transformer';
-import 'reflect-metadata';
 import Behandler from './Behandler';
 
 describe('Behandler', () => {
@@ -22,7 +20,7 @@ describe('Behandler', () => {
                 },
                 tlf: null,
             };
-            const behandler = plainToClass(Behandler, behandlerJson);
+            const behandler = new Behandler(behandlerJson);
             expect(behandler.getName()).toBe('Ola Robert Normann');
         });
 
@@ -44,7 +42,7 @@ describe('Behandler', () => {
                 },
                 tlf: null,
             };
-            const behandler = plainToClass(Behandler, behandlerJson);
+            const behandler = new Behandler(behandlerJson);
             expect(behandler.getName()).toBe('Ola Normann');
         });
     });
