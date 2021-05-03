@@ -36,7 +36,7 @@ export const sykmeldingEgenmeldt = {
         annenFraversArsak: {
             beskrivelse:
                 'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-            grunn: ['NODVENDIG_KONTROLLUNDERSOKELSE', 'ABORT'],
+            grunn: ['ABORT'],
         },
     },
     skjermesForPasient: false,

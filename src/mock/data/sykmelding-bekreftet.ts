@@ -47,7 +47,7 @@ export const sykmeldingBekreftet = {
         annenFraversArsak: {
             beskrivelse:
                 'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-            grunn: ['NODVENDIG_KONTROLLUNDERSOKELSE', 'ABORT'],
+            grunn: ['NODVENDIG_KONTROLLUNDERSOKELSE'],
         },
     },
     skjermesForPasient: false,
