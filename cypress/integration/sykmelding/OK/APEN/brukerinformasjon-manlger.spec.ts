@@ -21,7 +21,7 @@ describe('Henting av brukerinformasjon feiler', () => {
     it('Navigerer til sykmeldingen', () => {
         cy.get('.lenkepanel-container__sykmelding').click();
         cy.url().should('contain', `/syk/sykmeldinger/${sykmeldingApen.id}`);
-        cy.contains('Opplysninger fra sykmeldingen');
+        cy.contains('Se hele sykmeldingen din');
         cy.wait('@sykmelding');
         cy.wait('@brukerinformasjon');
         cy.wait('@ventetid');

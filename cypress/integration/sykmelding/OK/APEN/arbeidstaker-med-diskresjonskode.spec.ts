@@ -27,7 +27,7 @@ describe('Arbeidstaker med diskresjonskode', () => {
     });
 
     it('Viser opplysninger fra sykmeldingen', () => {
-        cy.contains('Opplysninger fra sykmeldingen').should('be.visible');
+        cy.contains('Se hele sykmeldingen din').should('be.visible');
     });
 
     it('Fyller ut skjema', () => {

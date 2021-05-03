@@ -95,6 +95,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                             maxDate: dayjs(oppfolgingsdato).format('YYYY-MM-DD'),
                                         }}
                                         inputProps={{ name, placeholder: 'dd.mm.åååå' }}
+                                        dayPickerProps={{ initialMonth: oppfolgingsdato }}
                                     />
                                     {errors[fieldName]?.svar?.[index]?.fom?.message && (
                                         <Element style={{ color: 'darkred', maxWidth: '12rem' }}>
@@ -150,6 +151,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                             maxDate: dayjs(oppfolgingsdato).format('YYYY-MM-DD'),
                                         }}
                                         inputProps={{ name, placeholder: 'dd.mm.åååå' }}
+                                        dayPickerProps={{ initialMonth: oppfolgingsdato }}
                                     />
                                     {errors[fieldName]?.svar?.[index]?.tom?.message && (
                                         <Element style={{ color: 'darkred', maxWidth: '11rem' }}>
