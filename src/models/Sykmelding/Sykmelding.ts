@@ -10,25 +10,17 @@ import Periode from './Periode';
 import Prognose from './Prognose';
 import SykmeldingStatus from './SykmeldingStatus';
 import UtdypendeOpplysning from './UtdypendeOpplysninger';
-import { ArrayNotEmpty, IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { Transform, Type } from 'class-transformer';
+import { ArrayNotEmpty, IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
 import dayjs from 'dayjs';
-import { transformAndValidateSync } from 'class-transformer-validator';
-
-export enum DiagnosekodeSystem {
-    '2.16.578.1.12.4.1.1.7110' = 'ICD-10',
-    '2.16.578.1.12.4.1.1.7170' = 'ICPC-2',
-}
 
 export class Sykmelding {
     @IsString()
     readonly id: string;
 
-    @Type(() => Date)
+    @IsDate()
     readonly mottattTidspunkt: Date;
 
     @ValidateNested()
-    @Type(() => Behandlingsutfall)
     readonly behandlingsutfall: Behandlingsutfall;
 
     @IsOptional()
@@ -37,20 +29,16 @@ export class Sykmelding {
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => ArbeidsgiverSykmelding)
     readonly arbeidsgiver?: ArbeidsgiverSykmelding;
 
     @ArrayNotEmpty()
     @ValidateNested({ each: true })
-    @Type(() => Periode)
     readonly sykmeldingsperioder: Periode[];
 
     @ValidateNested()
-    @Type(() => SykmeldingStatus)
     readonly sykmeldingStatus: SykmeldingStatus;
 
     @ValidateNested()
-    @Type(() => MedisinskVurdering)
     readonly medisinskVurdering?: MedisinskVurdering;
 
     @IsBoolean()
@@ -58,33 +46,9 @@ export class Sykmelding {
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => Prognose)
     readonly prognose?: Prognose;
 
     @ValidateNested({ each: true })
-    @Transform(
-        ({ value }) => {
-            const outerMap = new Map<string, Map<string, UtdypendeOpplysning>>();
-            if (value && value instanceof Object) {
-                for (const [outerKey, outerValue] of Object.entries(value)) {
-                    if (outerValue && outerValue instanceof Object) {
-                        const innerMap = new Map<string, UtdypendeOpplysning>();
-                        for (const [innerKey, innerValue] of Object.entries(outerValue)) {
-                            const utdypendeOpplysning = transformAndValidateSync(
-                                UtdypendeOpplysning,
-                                innerValue as UtdypendeOpplysning,
-                                { validator: { validationError: { target: false, value: false } } },
-                            );
-                            innerMap.set(innerKey, utdypendeOpplysning);
-                        }
-                        outerMap.set(outerKey, innerMap);
-                    }
-                }
-            }
-            return outerMap;
-        },
-        { toClassOnly: true },
-    )
     readonly utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>>;
 
     @IsOptional()
@@ -101,7 +65,6 @@ export class Sykmelding {
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => MeldingTilNAV)
     readonly meldingTilNAV?: MeldingTilNAV;
 
     @IsOptional()
@@ -109,18 +72,16 @@ export class Sykmelding {
     readonly meldingTilArbeidsgiver?: string;
 
     @ValidateNested()
-    @Type(() => KontaktMedPasient)
     readonly kontaktMedPasient: KontaktMedPasient;
 
-    @Type(() => Date)
+    @IsDate()
     readonly behandletTidspunkt: Date;
 
     @ValidateNested()
-    @Type(() => Behandler)
     readonly behandler: Behandler;
 
     @IsOptional()
-    @Type(() => Date)
+    @IsDate()
     readonly syketilfelleStartDato?: Date;
 
     @IsOptional()
@@ -141,8 +102,51 @@ export class Sykmelding {
 
     @IsOptional()
     @ValidateNested({ each: true })
-    @Type(() => Merknad)
     readonly merknader?: Merknad[];
+
+    constructor(data: any) {
+        this.id = data.id;
+        this.mottattTidspunkt = new Date(data.mottattTidspunkt);
+        this.behandlingsutfall = new Behandlingsutfall(data.behandlingsutfall);
+        this.legekontorOrgnummer = data.legekontorOrgnummer ?? undefined;
+        this.arbeidsgiver = data.arbeidsgiver ? new ArbeidsgiverSykmelding(data.arbeidsgiver) : undefined;
+        this.sykmeldingsperioder = data.sykmeldingsperioder.map((periode: any) => new Periode(periode));
+        this.sykmeldingStatus = new SykmeldingStatus(data.sykmeldingStatus);
+        this.medisinskVurdering = data.medisinskVurdering ? new MedisinskVurdering(data.medisinskVurdering) : undefined;
+        this.skjermesForPasient = data.skjermesForPasient;
+        this.prognose = data.prognose ? new Prognose(data.prognose) : undefined;
+        this.utdypendeOpplysninger = this.getUtdypendeOpplysninger(data.utdypendeOpplysninger);
+        this.tiltakArbeidsplassen = data.tiltakArbeidsplassen ?? undefined;
+        this.tiltakNAV = data.tiltakNAV ?? undefined;
+        this.andreTiltak = data.andreTiltak ?? undefined;
+        this.meldingTilNAV = data.meldingTilNAV ? new MeldingTilNAV(data.meldingTilNAV) : undefined;
+        this.meldingTilArbeidsgiver = data.meldingTilArbeidsgiver ?? undefined;
+        this.kontaktMedPasient = new KontaktMedPasient(data.kontaktMedPasient);
+        this.behandletTidspunkt = new Date(data.behandletTidspunkt);
+        this.behandler = new Behandler(data.behandler);
+        this.syketilfelleStartDato = data.syketilfelleStartDato ? new Date(data.syketilfelleStartDato) : undefined;
+        this.navnFastlege = data.navnFastlege ?? undefined;
+        this.egenmeldt = typeof data.egenmeldt === 'boolean' ? data.egenmeldt : undefined;
+        this.papirsykmelding = typeof data.papirsykmelding === 'boolean' ? data.papirsykmelding : undefined;
+        this.harRedusertArbeidsgiverperiode = data.harRedusertArbeidsgiverperiode ?? undefined;
+        this.merknader = data.merknader ? data.merknader.map((merknad: any) => new Merknad(merknad)) : undefined;
+    }
+
+    private getUtdypendeOpplysninger(value: unknown): Map<string, Map<string, UtdypendeOpplysning>> {
+        const outerMap = new Map<string, Map<string, UtdypendeOpplysning>>();
+        if (value && value instanceof Object) {
+            for (const [outerKey, outerValue] of Object.entries(value)) {
+                if (outerValue && outerValue instanceof Object) {
+                    const innerMap = new Map<string, UtdypendeOpplysning>();
+                    for (const [innerKey, innerValue] of Object.entries(outerValue)) {
+                        innerMap.set(innerKey, new UtdypendeOpplysning(innerValue));
+                    }
+                    outerMap.set(outerKey, innerMap);
+                }
+            }
+        }
+        return outerMap;
+    }
 
     /**
      * Get the first fom date of the earliest sykmelding period

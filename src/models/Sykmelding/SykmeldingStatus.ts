@@ -1,5 +1,4 @@
-import { Type } from 'class-transformer';
-import { IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 class ArbeidsgiverStatus {
     @IsString()
@@ -11,6 +10,12 @@ class ArbeidsgiverStatus {
 
     @IsString()
     orgNavn: string;
+
+    constructor(data: any) {
+        this.orgnummer = data.orgnummer;
+        this.juridiskOrgnummer = data.juridiskOrgnummer ?? undefined;
+        this.orgNavn = data.orgNavn;
+    }
 }
 
 enum ShortName {
@@ -30,8 +35,14 @@ enum Svartype {
 class Svar {
     @IsIn(Object.keys(Svartype))
     svarType: keyof typeof Svartype;
+
     @IsString()
     svar: string;
+
+    constructor(data: any) {
+        this.svarType = data.svarType;
+        this.svar = data.svar;
+    }
 }
 
 class Sporsmal {
@@ -42,8 +53,13 @@ class Sporsmal {
     shortName: keyof typeof ShortName;
 
     @ValidateNested()
-    @Type(() => Svar)
     svar: Svar;
+
+    constructor(data: any) {
+        this.tekst = data.tekst;
+        this.shortName = data.shortName;
+        this.svar = new Svar(data.svar);
+    }
 }
 
 export enum StatusEvent {
@@ -58,17 +74,23 @@ class SykmeldingStatus {
     @IsIn(Object.keys(StatusEvent))
     statusEvent: keyof typeof StatusEvent;
 
-    @Type(() => Date)
+    @IsDate()
     timestamp: Date;
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => ArbeidsgiverStatus)
     arbeidsgiver?: ArbeidsgiverStatus;
 
     @ValidateNested({ each: true })
-    @Type(() => Sporsmal)
+    @IsArray()
     sporsmalOgSvarListe: Sporsmal[];
+
+    constructor(data: any) {
+        this.statusEvent = data.statusEvent;
+        this.timestamp = new Date(data.timestamp);
+        this.arbeidsgiver = data.arbeidsgiver ? new ArbeidsgiverStatus(data.arbeidsgiver) : undefined;
+        this.sporsmalOgSvarListe = data.sporsmalOgSvarListe.map((sporsmalSvar: any) => new Sporsmal(sporsmalSvar));
+    }
 }
 
 export default SykmeldingStatus;

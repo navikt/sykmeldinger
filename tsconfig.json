@@ -19,8 +19,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "experimentalDecorators": true,
-    "strictPropertyInitialization": false
+    "experimentalDecorators": true
   },
   "include": [
     "src"

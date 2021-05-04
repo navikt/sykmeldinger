@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
 import Periode from './Periode';
 
 describe('Periode', () => {
@@ -15,7 +14,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getPeriodTitle()).toBe('Avventende sykmelding');
         });
 
@@ -33,7 +32,7 @@ describe('Periode', () => {
                 },
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getPeriodTitle()).toBe('100% sykmelding');
         });
 
@@ -51,7 +50,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getPeriodTitle()).toBe('80% sykmelding');
         });
 
@@ -66,7 +65,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: true,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getPeriodTitle()).toBe('Reisetilskudd');
         });
 
@@ -81,7 +80,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getPeriodTitle()).toBe('Behandlingsdager');
         });
     });
@@ -98,7 +97,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadablePeriod()).toBe('1. april 2021 - 3. april 2021');
         });
     });
@@ -115,7 +114,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getLength()).toBe(1);
         });
 
@@ -130,7 +129,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getLength()).toBe(3);
         });
 
@@ -145,7 +144,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getLength()).toBe(3);
         });
 
@@ -160,7 +159,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getLength()).toBe(2);
         });
     });
@@ -177,7 +176,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadableLength()).toBe('1 dag');
         });
 
@@ -192,7 +191,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadableLength()).toBe('3 dager');
         });
 
@@ -210,7 +209,7 @@ describe('Periode', () => {
                 },
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadableLength()).toBe('3 dager');
         });
 
@@ -228,7 +227,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadableLength()).toBe('3 dager');
         });
 
@@ -243,7 +242,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: true,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadableLength()).toBe('3 dager');
         });
 
@@ -258,7 +257,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadableLength()).toBe('1 behandlingsdag i løpet av 3 dager');
         });
 
@@ -273,7 +272,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getReadableLength()).toBe('3 behandlingsdager i løpet av 3 dager');
         });
     });
@@ -290,7 +289,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription()).toBe('Avventende sykmelding i 3 dager');
         });
 
@@ -308,7 +307,7 @@ describe('Periode', () => {
                 },
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription()).toBe('100% sykmeldt i 3 dager');
         });
 
@@ -326,7 +325,7 @@ describe('Periode', () => {
                 },
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription('NAV')).toBe('100% sykmeldt fra NAV i 3 dager');
         });
 
@@ -344,7 +343,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription()).toBe('80% sykmeldt i 3 dager');
         });
 
@@ -362,7 +361,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription('NAV')).toBe('80% sykmeldt fra NAV i 3 dager');
         });
 
@@ -377,7 +376,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: true,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription()).toBe('Reisetilskudd i 3 dager');
         });
 
@@ -392,7 +391,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription()).toBe('1 behandlingsdag i løpet av 3 dager');
         });
 
@@ -407,7 +406,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            const periode = plainToClass(Periode, periodeJson);
+            const periode = new Periode(periodeJson);
             expect(periode.getDescription()).toBe('2 behandlingsdager i løpet av 3 dager');
         });
     });

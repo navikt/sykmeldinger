@@ -1,4 +1,4 @@
-import { IsIn, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsIn, IsOptional, IsString } from 'class-validator';
 
 enum SvarRestriksjon {
     SKJERMET_FOR_ARBEIDSGIVER,
@@ -14,7 +14,14 @@ class UtdypendeOpplysning {
     svar: string;
 
     @IsIn(Object.keys(SvarRestriksjon), { each: true })
+    @IsArray()
     restriksjoner: (keyof typeof SvarRestriksjon)[];
+
+    constructor(data: any) {
+        this.sporsmal = data.sporsmal ?? undefined;
+        this.svar = data.svar;
+        this.restriksjoner = data.restriksjoner;
+    }
 }
 
 export default UtdypendeOpplysning;

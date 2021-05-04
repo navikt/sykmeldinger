@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import { IsIn, IsString, ValidateNested } from 'class-validator';
 
 export enum RegelStatus {
@@ -19,6 +18,13 @@ class Regelinfo {
 
     @IsIn(Object.keys(RegelStatus))
     ruleStatus: keyof typeof RegelStatus;
+
+    constructor(data: any) {
+        this.messageForSender = data.messageForSender;
+        this.messageForUser = data.messageForUser;
+        this.ruleName = data.ruleName;
+        this.ruleStatus = data.ruleStatus;
+    }
 }
 
 class Behandlingsutfall {
@@ -28,8 +34,12 @@ class Behandlingsutfall {
     @ValidateNested({
         each: true,
     })
-    @Type(() => Regelinfo)
     ruleHits: Regelinfo[];
+
+    constructor(data: any) {
+        this.status = data.status;
+        this.ruleHits = data.ruleHits.map((ruleHit: any) => new Regelinfo(ruleHit));
+    }
 }
 
 export default Behandlingsutfall;

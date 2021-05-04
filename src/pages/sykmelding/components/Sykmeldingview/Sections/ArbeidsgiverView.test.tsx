@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { plainToClass } from 'class-transformer';
 import ArbeidsgiverSykmelding from '../../../../../models/Sykmelding/ArbeidsgiverSykmelding';
 import ArbeidsgiverView from './ArbeidsgiverView';
 
@@ -9,7 +8,7 @@ describe('ArbeidsgiverView', () => {
         const plainJson = {
             navn: 'Arbeidsgiveren AS',
         };
-        const arbeidsgiver = plainToClass(ArbeidsgiverSykmelding, plainJson);
+        const arbeidsgiver = new ArbeidsgiverSykmelding(plainJson);
         render(<ArbeidsgiverView arbeidsgiver={arbeidsgiver} />);
         expect(screen.getByText('Arbeidsgiver som legen har skrevet inn')).toBeInTheDocument();
         expect(screen.getByText(plainJson.navn)).toBeInTheDocument();
@@ -17,7 +16,7 @@ describe('ArbeidsgiverView', () => {
 
     it('Does not render arbeidsgiver navn if it does not exist', () => {
         const plainJson = {};
-        const arbeidsgiver = plainToClass(ArbeidsgiverSykmelding, plainJson);
+        const arbeidsgiver = new ArbeidsgiverSykmelding(plainJson);
         render(<ArbeidsgiverView arbeidsgiver={arbeidsgiver} />);
         expect(() => {
             screen.getByText('Arbeidsgiver som legen har skrevet inn');

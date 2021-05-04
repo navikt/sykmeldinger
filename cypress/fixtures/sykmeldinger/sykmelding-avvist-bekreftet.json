@@ -53,7 +53,7 @@
         "yrkesskadeDato": "2018-10-18",
         "annenFraversArsak": {
             "beskrivelse": "word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word",
-            "grunn": ["NODVENDIG_KONTROLLUNDERSOKELSE", "ABORT"]
+            "grunn": ["ABORT"]
         }
     },
     "skjermesForPasient": false,

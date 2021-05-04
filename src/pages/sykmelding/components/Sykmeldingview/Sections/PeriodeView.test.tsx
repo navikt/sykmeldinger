@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { plainToClass } from 'class-transformer';
 import Periode from '../../../../../models/Sykmelding/Periode';
 import PeriodeView from './PeriodeView';
 
@@ -13,7 +12,7 @@ describe('PeriodeView', () => {
             type: 'AVVENTENDE',
             reisetilskudd: false,
         };
-        const periode = plainToClass(Periode, plainJson);
+        const periode = new Periode(plainJson);
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -35,7 +34,7 @@ describe('PeriodeView', () => {
             },
             reisetilskudd: false,
         };
-        const periode = plainToClass(Periode, plainJson);
+        const periode = new Periode(plainJson);
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -66,7 +65,7 @@ describe('PeriodeView', () => {
             },
             reisetilskudd: false,
         };
-        const periode = plainToClass(Periode, plainJson);
+        const periode = new Periode(plainJson);
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -98,7 +97,7 @@ describe('PeriodeView', () => {
             },
             reisetilskudd: false,
         };
-        const periode = plainToClass(Periode, plainJson);
+        const periode = new Periode(plainJson);
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -115,7 +114,7 @@ describe('PeriodeView', () => {
             type: 'REISETILSKUDD',
             reisetilskudd: true,
         };
-        const periode = plainToClass(Periode, plainJson);
+        const periode = new Periode(plainJson);
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -132,7 +131,7 @@ describe('PeriodeView', () => {
             behandlingsdager: 3,
             reisetilskudd: false,
         };
-        const periode = plainToClass(Periode, plainJson);
+        const periode = new Periode(plainJson);
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -155,8 +154,8 @@ describe('PeriodeView', () => {
             behandlingsdager: 3,
             reisetilskudd: false,
         };
-        const reisetilskuddPeriode = plainToClass(Periode, reisetilskuddJson);
-        const behandlingsdagerPeriode = plainToClass(Periode, behandlingsdagerJson);
+        const reisetilskuddPeriode = new Periode(reisetilskuddJson);
+        const behandlingsdagerPeriode = new Periode(behandlingsdagerJson);
 
         render(<PeriodeView perioder={[reisetilskuddPeriode, behandlingsdagerPeriode]} />);
 
