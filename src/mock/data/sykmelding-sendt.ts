@@ -86,10 +86,6 @@ export const sykmeldingSendt = {
         fornavn: 'Fornavn',
         mellomnavn: null,
         etternavn: 'Etternavn',
-        aktoerId: '1234',
-        fnr: '99999999999',
-        hpr: '321',
-        her: '123',
         adresse: {
             gate: 'Gateveien 4',
             postnummer: 1001,

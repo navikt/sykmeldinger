@@ -42,17 +42,6 @@ class Behandler {
     @IsString()
     etternavn: string;
 
-    @IsString()
-    aktoerId: string;
-
-    // @IsOptional()
-    // @IsString()
-    // hpr?: string;
-
-    // @IsOptional()
-    // @IsString()
-    // her?: string;
-
     @ValidateNested()
     adresse: Adresse;
 
@@ -64,7 +53,6 @@ class Behandler {
         this.fornavn = data.fornavn;
         this.mellomnavn = data.mellomnavn ?? undefined;
         this.etternavn = data.etternavn;
-        this.aktoerId = data.aktoerId;
         this.adresse = new Adresse(data.adresse);
         this.tlf = data.tlf ?? undefined;
     }
