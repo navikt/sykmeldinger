@@ -82,7 +82,7 @@ describe('Selvstendig næringsdrivende innenfor ventetid', () => {
                         svar: 'SELVSTENDIG_NARINGSDRIVENDE',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ARBEIDSTAKER":"Arbeidstaker","FRILANSER":"Frilanser","SELVSTENDIG_NARINGSDRIVENDE":"Selvstendig næringsdrivende","ARBEIDSLEDIG":"Arbeidsledig","PERMITTERT":"Permittert","ANNET":"Annet"}',
+                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',

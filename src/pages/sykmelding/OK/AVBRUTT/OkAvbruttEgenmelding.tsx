@@ -22,11 +22,7 @@ const OkAvbruttEgenmelding: React.FC<OkAvbruttEgenmeldingProps> = ({ sykmelding 
                 </AlertStripe>
             </Spacing>
 
-            <Sykmeldingsopplysninger
-                id="sykmeldingsopplysnigner"
-                title="Opplysninger fra egenmeldingen"
-                sykmelding={sykmelding}
-            />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} />
         </div>
     );
 };

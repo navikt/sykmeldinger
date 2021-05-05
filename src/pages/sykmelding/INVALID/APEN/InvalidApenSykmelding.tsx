@@ -39,11 +39,7 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
             </Spacing>
 
             <Spacing>
-                <Sykmeldingsopplysninger
-                    id="sykmeldingsopplysninger"
-                    title="Se hele sykmeldingen din"
-                    sykmelding={sykmelding}
-                />
+                <Sykmeldingsopplysninger sykmelding={sykmelding} />
             </Spacing>
 
             <form

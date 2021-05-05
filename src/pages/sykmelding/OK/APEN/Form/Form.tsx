@@ -34,12 +34,12 @@ export enum UriktigeOpplysningerType {
 }
 
 export enum ArbeidssituasjonType {
-    ARBEIDSTAKER = 'Arbeidstaker',
-    FRILANSER = 'Frilanser',
-    SELVSTENDIG_NARINGSDRIVENDE = 'Selvstendig næringsdrivende',
-    ARBEIDSLEDIG = 'Arbeidsledig',
-    PERMITTERT = 'Permittert',
-    ANNET = 'Annet',
+    ARBEIDSTAKER = 'arbeidstaker',
+    FRILANSER = 'frilanser',
+    SELVSTENDIG_NARINGSDRIVENDE = 'selvstendig næringsdrivende',
+    ARBEIDSLEDIG = 'arbeidsledig',
+    PERMITTERT = 'permittert',
+    ANNET = 'annet',
 }
 
 export enum JaEllerNeiType {
@@ -155,12 +155,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                 </Veilederpanel>
                             </Spacing>
                             <Spacing amount="small">
-                                <Sykmeldingsopplysninger
-                                    id="arbeidsgivers-sykmeldingsopplysninger"
-                                    title="Slik ser sykmeldingen ut for arbeidsgiveren din"
-                                    sykmelding={sykmelding}
-                                    arbeidsgiver
-                                />
+                                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver />
                             </Spacing>
                             <Spacing amount="large">
                                 <Ekspanderbartpanel tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
