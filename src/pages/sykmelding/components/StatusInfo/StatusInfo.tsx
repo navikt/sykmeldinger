@@ -26,8 +26,8 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ avventende, statusEvent }) => {
                 </Spacing>
                 <Spacing amount="small">
                     <Normaltekst>
-                        Husk at du har mulighet til å lage en digital oppfølgingsplan med arbeidsgiveren din. Hensikten
-                        er å finne ut hvilke oppgaver du kan gjøre hvis lederen din legger til rette for det.
+                        Husk at du har mulighet til å lage en digital oppfølgingsplan sammen med arbeidsgiveren din.
+                        Hensikten er å finne ut hvilke oppgaver du kan gjøre hvis lederen din legger til rette for det.
                     </Normaltekst>
                 </Spacing>
                 <a href="/oppfolgingsplan/oppfolgingsplaner" className="knapp">
@@ -77,7 +77,9 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ avventende, statusEvent }) => {
                 </a>
             </Spacing>
             <Element>Skal du ut og reise?</Element>
-            <Lenke href="#">Les om hva du må gjøre for å beholde sykepengene.</Lenke>
+            <Lenke href="https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykepenger/sykepenger-ved-utenlandsopphold">
+                Les om hva du må gjøre for å beholde sykepengene.
+            </Lenke>
         </Veilederpanel>
     );
 };
