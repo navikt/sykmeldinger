@@ -68,38 +68,35 @@ describe('Frilanser innenfor ventetid', () => {
         cy.get('button[type=submit]').contains('Bekreft sykmelding').click();
         cy.wait('@postSend')
             .its('request.body')
-            .should(
-                'equal',
-                JSON.stringify({
-                    erOpplysnigeneRiktige: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    arbeidssituasjon: {
-                        svar: 'FRILANSER',
-                        sporsmaltekst: 'Jeg er sykmeldt som',
-                        svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                    },
-                    harBruktEgenmelding: {
-                        svar: 'JA',
-                        sporsmaltekst:
-                            'Vi har registrert at du ble syk 20. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    harForsikring: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    egenmeldingsperioder: {
-                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 20. april 2021.',
-                        svartekster: '"Fom, Tom"',
-                        svar: [{ fom: '2021-04-05', tom: '2021-04-09' }],
-                    },
-                }),
-            );
+            .should('deep.equal', {
+                erOpplysnigeneRiktige: {
+                    svar: 'JA',
+                    sporsmaltekst: 'Er opplysningene riktige',
+                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                },
+                arbeidssituasjon: {
+                    svar: 'FRILANSER',
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    svartekster:
+                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
+                },
+                harBruktEgenmelding: {
+                    svar: 'JA',
+                    sporsmaltekst:
+                        'Vi har registrert at du ble syk 20. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                },
+                harForsikring: {
+                    svar: 'JA',
+                    sporsmaltekst: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
+                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                },
+                egenmeldingsperioder: {
+                    sporsmaltekst: 'Hvilke dager var du borte fra jobb før 20. april 2021.',
+                    svartekster: '"Fom, Tom"',
+                    svar: [{ fom: '2021-04-05', tom: '2021-04-09' }],
+                },
+            });
     });
 
     it('Får riktig statusbanner', () => {

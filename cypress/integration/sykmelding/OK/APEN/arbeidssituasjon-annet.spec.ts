@@ -54,22 +54,19 @@ describe('Arbeidssituasjon annet', () => {
         cy.get('button[type=submit]').contains('Bekreft sykmelding').click();
         cy.wait('@postSend')
             .its('request.body')
-            .should(
-                'equal',
-                JSON.stringify({
-                    erOpplysnigeneRiktige: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    arbeidssituasjon: {
-                        svar: 'ANNET',
-                        sporsmaltekst: 'Jeg er sykmeldt som',
-                        svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                    },
-                }),
-            );
+            .should('deep.equal', {
+                erOpplysnigeneRiktige: {
+                    svar: 'JA',
+                    sporsmaltekst: 'Er opplysningene riktige',
+                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                },
+                arbeidssituasjon: {
+                    svar: 'ANNET',
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    svartekster:
+                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
+                },
+            });
     });
 
     it('Får riktig statusbanner', () => {

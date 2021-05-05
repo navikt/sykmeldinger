@@ -63,32 +63,29 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
         cy.get('button[type=submit]').contains('Send sykmelding').click();
         cy.wait('@postSend')
             .its('request.body')
-            .should(
-                'equal',
-                JSON.stringify({
-                    erOpplysnigeneRiktige: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    arbeidssituasjon: {
-                        svar: 'ARBEIDSTAKER',
-                        sporsmaltekst: 'Jeg er sykmeldt som',
-                        svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                    },
-                    arbeidsgiverOrgnummer: {
-                        svar: arbeidsgiverAktiv.orgnummer,
-                        sporsmaltekst: 'Min arbeidsgiver',
-                        svartekster: `[{"navn":"${arbeidsgiverAktiv.navn}","orgnummer":"${arbeidsgiverAktiv.orgnummer}"}]`,
-                    },
-                    nyNarmesteLeder: {
-                        svar: 'JA',
-                        sporsmaltekst: `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`,
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                }),
-            );
+            .should('deep.equal', {
+                erOpplysnigeneRiktige: {
+                    svar: 'JA',
+                    sporsmaltekst: 'Er opplysningene riktige',
+                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                },
+                arbeidssituasjon: {
+                    svar: 'ARBEIDSTAKER',
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    svartekster:
+                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
+                },
+                arbeidsgiverOrgnummer: {
+                    svar: arbeidsgiverAktiv.orgnummer,
+                    sporsmaltekst: 'Min arbeidsgiver',
+                    svartekster: `[{"navn":"${arbeidsgiverAktiv.navn}","orgnummer":"${arbeidsgiverAktiv.orgnummer}"}]`,
+                },
+                nyNarmesteLeder: {
+                    svar: 'JA',
+                    sporsmaltekst: `Er det ${arbeidsgiverAktiv.naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`,
+                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                },
+            });
     });
 
     it('Får riktig statusbanner', () => {
