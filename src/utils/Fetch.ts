@@ -34,6 +34,9 @@ class Fetch {
             method: 'POST',
             credentials: 'include',
             body: body ? JSON.stringify(body) : undefined,
+            headers: {
+                'Content-Type': 'application/json',
+            },
         }).then((res) => {
             if (res.status === 401) {
                 const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
