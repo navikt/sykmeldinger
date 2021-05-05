@@ -9,7 +9,7 @@ function useSend(sykmeldingId: string) {
         // TODO: endpoint is not implemented at sykmeldinger-backend
         (values: FormShape) =>
             Fetch.authenticatedPost(
-                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmelding/${sykmeldingId}/actions/send`,
+                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v2/sykmelding/${sykmeldingId}/actions/send`,
                 values,
             ),
         {
