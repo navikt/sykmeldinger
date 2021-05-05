@@ -30,11 +30,7 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
                 )}
 
                 <Spacing amount="small">
-                    <Sykmeldingsopplysninger
-                        id="sykmeldingsopplysninger"
-                        title="Se hele sykmeldingen din"
-                        sykmelding={sykmelding}
-                    />
+                    <Sykmeldingsopplysninger sykmelding={sykmelding} />
                 </Spacing>
 
                 <Spacing amount="large">

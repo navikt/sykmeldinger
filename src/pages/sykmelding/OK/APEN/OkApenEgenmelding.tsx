@@ -18,11 +18,7 @@ const OkApenEgenmelding: React.FC<OkApenEgenmeldingProps> = ({ sykmelding }) => 
                 </Veilederpanel>
             </Spacing>
 
-            <Sykmeldingsopplysninger
-                id="sykmeldingsopplysninger"
-                title="Se hele egenmeldingen din"
-                sykmelding={sykmelding}
-            />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} />
         </div>
     );
 };

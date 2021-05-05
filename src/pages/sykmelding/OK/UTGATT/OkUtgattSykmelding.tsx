@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Element, Undertittel } from 'nav-frontend-typografi';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';
@@ -19,16 +19,11 @@ const OkUtgattSykmelding: React.FC<OkUtgattSykmeldingProps> = ({ sykmelding }) =
             <Spacing>
                 <AlertStripeInfo>
                     <Undertittel>Sykmeldingen er utgått</Undertittel>
-                    Dato utgått:{' '}
-                    {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
+                    <Element>{DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
                 </AlertStripeInfo>
             </Spacing>
 
-            <Sykmeldingsopplysninger
-                id="flere-sykmeldingsopplysnigner"
-                title="Se hele sykmeldingen din"
-                sykmelding={sykmelding}
-            />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} />
         </div>
     );
 };

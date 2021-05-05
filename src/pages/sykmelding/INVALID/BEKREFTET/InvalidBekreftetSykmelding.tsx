@@ -31,11 +31,7 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
                 </Veilederpanel>
             </Spacing>
 
-            <Sykmeldingsopplysninger
-                id="sykmeldingsopplysninger"
-                title="Se hele sykmeldingen din"
-                sykmelding={sykmelding}
-            />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />
         </div>
     );
 };

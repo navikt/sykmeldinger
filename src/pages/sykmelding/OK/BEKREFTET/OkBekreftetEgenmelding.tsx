@@ -22,11 +22,7 @@ const OkBekreftetEgenmelding: React.FC<OkBekreftetEgenmeldingProps> = ({ sykmeld
                 </AlertStripeSuksess>
             </Spacing>
 
-            <Sykmeldingsopplysninger
-                id="sykmeldingsopplysnigner"
-                title="Se hele sykmeldingen din"
-                sykmelding={sykmelding}
-            />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} />
         </div>
     );
 };

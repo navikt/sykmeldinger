@@ -9,26 +9,26 @@ import PlasterSvg from './Svg/PlasterSvg';
 import ArbeidsgiverSvg from './Svg/ArbeidsgiverSvg';
 
 interface SykmeldingsopplysningerProps {
-    id: string;
-    title: string;
     sykmelding: Sykmelding;
+    expandable?: boolean;
     expandedDefault?: boolean;
     arbeidsgiver?: boolean;
 }
 
 const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
-    id,
-    title,
     sykmelding,
+    expandable = true,
     expandedDefault = true,
     arbeidsgiver = false,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef<HTMLElement>(null);
 
+    const title = arbeidsgiver ? 'Dette får arbeidsgiveren din se' : 'Se hele sykmeldingen din';
+
     return (
-        <article id={id} ref={elementRef} className="sykmeldingsopplysninger">
-            {arbeidsgiver === true ? (
+        <article ref={elementRef} className="sykmeldingsopplysninger">
+            {expandable === true ? (
                 <button
                     type="button"
                     aria-expanded={expanded}
@@ -45,7 +45,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     } sykmeldingsopplysninger__header--expandable`}
                 >
                     <div className="sykmeldingsopplysninger__icon">
-                        <ArbeidsgiverSvg />
+                        {arbeidsgiver ? <ArbeidsgiverSvg /> : <PlasterSvg />}
                     </div>
                     <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
                         {title}
