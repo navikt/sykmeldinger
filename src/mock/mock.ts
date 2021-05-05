@@ -51,7 +51,7 @@ sykmeldinger.forEach((sykmelding: any) =>
 // SYKMELDING-ACTIONS
 fetchMock
     .post('end:/actions/bekreft', 203, { delay: 1000 })
-    .post('end:/actions/send', 203, { delay: 1000 })
+    .post('end:/send', 203, { delay: 1000 })
     .post('end:/actions/avbryt', 203, { delay: 1000 })
     .post('end:/actions/gjenapne', 203, { delay: 1000 });
 

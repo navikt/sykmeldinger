@@ -62,7 +62,7 @@ describe('Frilanser innenfor ventetid', () => {
     });
 
     it('Sender skjema', () => {
-        cy.intercept('POST', `**/api/v2/sykmelding/${sykmeldingApen.id}/actions/send`).as('postSend');
+        cy.intercept('POST', `**/api/v2/sykmelding/${sykmeldingApen.id}/send`).as('postSend');
         cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, { body: sykmeldingBekreftet });
 
         cy.get('button[type=submit]').contains('Bekreft sykmelding').click();
