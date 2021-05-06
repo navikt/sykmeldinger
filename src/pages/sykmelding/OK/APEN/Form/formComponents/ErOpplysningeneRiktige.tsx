@@ -7,7 +7,7 @@ import QuestionWrapper from '../layout/QuestionWrapper';
 
 const ErOpplysningeneRiktige: React.FC = () => {
     const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'erOpplysnigeneRiktige';
+    const fieldName: keyof FormShape = 'erOpplysningeneRiktige';
     const sporsmaltekst = 'Er opplysningene riktige';
     const watchErOpplysningeneRiktige = watch(fieldName);
 
@@ -41,7 +41,7 @@ const ErOpplysningeneRiktige: React.FC = () => {
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}
-                        feil={errors.erOpplysnigeneRiktige?.svar?.message}
+                        feil={errors.erOpplysningeneRiktige?.svar?.message}
                     />
                 )}
             />

@@ -17,7 +17,7 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
     }, [errors, summaryRef]);
 
     const customErrors: CustomErrors = {
-        erOpplysnigeneRiktige: errors.erOpplysnigeneRiktige?.svar?.message,
+        erOpplysningeneRiktige: errors.erOpplysningeneRiktige?.svar?.message,
         // safe for now, but could be refactored
         // @ts-ignore
         uriktigeOpplysninger: errors.uriktigeOpplysninger?.svar?.message,

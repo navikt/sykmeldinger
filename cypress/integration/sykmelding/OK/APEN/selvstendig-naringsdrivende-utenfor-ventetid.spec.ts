@@ -36,7 +36,7 @@ describe('Selvstendig næringsdrivende utenfor ventetid', () => {
             .scrollIntoView()
             .within(() => {
                 cy.contains('Er opplysningene riktige').should('be.visible');
-                cy.get('input[name="erOpplysnigeneRiktige.svar"][value=JA]').click({ force: true });
+                cy.get('input[name="erOpplysningeneRiktige.svar"][value=JA]').click({ force: true });
 
                 cy.contains('Jeg er sykmeldt som').should('be.visible');
                 cy.get('input[name="arbeidssituasjon.svar"][value=SELVSTENDIG_NARINGSDRIVENDE]').click({
@@ -61,7 +61,7 @@ describe('Selvstendig næringsdrivende utenfor ventetid', () => {
         cy.wait('@postSend')
             .its('request.body')
             .should('deep.equal', {
-                erOpplysnigeneRiktige: {
+                erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Er opplysningene riktige',
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',

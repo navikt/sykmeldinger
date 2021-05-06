@@ -36,7 +36,7 @@ describe('Uriktige opplysninger', () => {
                 .scrollIntoView()
                 .within(() => {
                     cy.contains('Er opplysningene riktige').should('be.visible');
-                    cy.get('input[name="erOpplysnigeneRiktige.svar"][value=NEI]').click({ force: true });
+                    cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=PERIODE]').click({ force: true });
@@ -118,7 +118,7 @@ describe('Uriktige opplysninger', () => {
                 .scrollIntoView()
                 .within(() => {
                     cy.contains('Er opplysningene riktige').should('be.visible');
-                    cy.get('input[name="erOpplysnigeneRiktige.svar"][value=NEI]').click({ force: true });
+                    cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=SYKMELDINGSGRAD_FOR_HOY]').click({ force: true });
@@ -200,7 +200,7 @@ describe('Uriktige opplysninger', () => {
                 .scrollIntoView()
                 .within(() => {
                     cy.contains('Er opplysningene riktige').should('be.visible');
-                    cy.get('input[name="erOpplysnigeneRiktige.svar"][value=NEI]').click({ force: true });
+                    cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=SYKMELDINGSGRAD_FOR_LAV]').click({ force: true });
@@ -258,7 +258,7 @@ describe('Uriktige opplysninger', () => {
                 .scrollIntoView()
                 .within(() => {
                     cy.contains('Er opplysningene riktige').should('be.visible');
-                    cy.get('input[name="erOpplysnigeneRiktige.svar"][value=NEI]').click({ force: true });
+                    cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=ARBEIDSGIVER]').click({ force: true });
@@ -314,7 +314,7 @@ describe('Uriktige opplysninger', () => {
                 .scrollIntoView()
                 .within(() => {
                     cy.contains('Er opplysningene riktige').should('be.visible');
-                    cy.get('input[name="erOpplysnigeneRiktige.svar"][value=NEI]').click({ force: true });
+                    cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=DIAGNOSE]').click({ force: true });
@@ -370,7 +370,7 @@ describe('Uriktige opplysninger', () => {
                 .scrollIntoView()
                 .within(() => {
                     cy.contains('Er opplysningene riktige').should('be.visible');
-                    cy.get('input[name="erOpplysnigeneRiktige.svar"][value=NEI]').click({ force: true });
+                    cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
                     cy.get('input[type=checkbox][value=ANDRE_OPPLYSNINGER]').click({ force: true });

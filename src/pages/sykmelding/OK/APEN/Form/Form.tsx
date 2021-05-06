@@ -54,7 +54,7 @@ interface SporsmalSvar<Value> {
 }
 
 export interface FormShape {
-    erOpplysnigeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    erOpplysningeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
     uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
     arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
     arbeidsgiverOrgnummer?: SporsmalSvar<string>;
@@ -93,7 +93,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
     const erArbeidstakerMedStrengtFortroligAdressse =
         erArbeidstaker && brukerinformasjon?.strengtFortroligAdresse === true;
-    const watchErOpplysningeneRiktige = watch('erOpplysnigeneRiktige');
+    const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
 
     const { maAvbryte } = useContext(AvbrytContext);
 
