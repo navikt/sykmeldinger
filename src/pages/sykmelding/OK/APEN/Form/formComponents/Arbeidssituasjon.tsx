@@ -58,8 +58,6 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
 
     const skalViseEgenmeldingsperioderSporsmal = useMemo(() => {
         if (!watchArbeidssituasjon?.svar) return false;
-
-        // Only FL and SN within ventetid
         return (
             ['FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
             erUtenforVentetid.erUtenforVentetid === false
@@ -68,8 +66,6 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
 
     const skalViseForsikringSporsmal = useMemo(() => {
         if (!watchArbeidssituasjon?.svar) return false;
-
-        // Only FL and SN within ventetid
         return (
             ['FRILANSER', 'SELVSTENDIG_NARINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
             erUtenforVentetid.erUtenforVentetid === false
