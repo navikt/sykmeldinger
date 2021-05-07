@@ -7,7 +7,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
 import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import useBekreft from '../../../../hooks/useBekreft';
+import useBekreftAvvist from '../../../../hooks/useBekreftAvvist';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import { Controller, useForm } from 'react-hook-form';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
@@ -28,7 +28,7 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
 
     const { handleSubmit, control, errors } = useForm<FormData>();
 
-    const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreft(sykmeldingId);
+    const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreftAvvist(sykmeldingId);
 
     return (
         <div className="sykmelding-container">
@@ -43,8 +43,8 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
             </Spacing>
 
             <form
-                onSubmit={handleSubmit((data) => {
-                    bekreft(data);
+                onSubmit={handleSubmit(() => {
+                    bekreft();
                 })}
             >
                 <CenterItems horizontal>

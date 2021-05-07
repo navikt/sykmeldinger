@@ -44,7 +44,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
     });
 
     it('Bekrefter lest', () => {
-        cy.intercept('POST', `**/api/v1/sykmelding/${sykmeldingAvvist.id}/actions/bekreft`).as('postBekreft');
+        cy.intercept('POST', `**/api/v1/sykmeldinger/${sykmeldingAvvist.id}/bekreftAvvist`).as('postBekreft');
         cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingAvvist.id}`, {
             body: {
                 ...sykmeldingAvvist,
