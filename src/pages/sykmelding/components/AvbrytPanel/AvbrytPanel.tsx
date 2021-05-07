@@ -8,6 +8,7 @@ import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 import Spacing from '../../../commonComponents/Spacing/Spacing';
 import CenterItems from '../../../commonComponents/CenterItems/CenterItems';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 const AvbrytPanel: React.FC = () => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
@@ -17,7 +18,7 @@ const AvbrytPanel: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     // TODO: error state
-    const { isLoading, mutate: avbryt } = useAvbryt(sykmeldingId);
+    const { isLoading, mutate: avbryt, error } = useAvbryt(sykmeldingId);
 
     if (maAvbryte) {
         return (
@@ -34,6 +35,13 @@ const AvbrytPanel: React.FC = () => {
                 <Normaltekst>
                     Selv om du avbryter sykmeldingen nå, har du mulighet til å gjenåpne den på et senere tidspunkt.
                 </Normaltekst>
+                {error && (
+                    <Spacing direction="top">
+                        <AlertStripeFeil>
+                            Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
+                        </AlertStripeFeil>
+                    </Spacing>
+                )}
             </div>
         );
     }
@@ -64,6 +72,14 @@ const AvbrytPanel: React.FC = () => {
                     <Knapp htmlType="button" type="fare" spinner={isLoading} onClick={() => avbryt()}>
                         Ja, jeg er sikker
                     </Knapp>
+
+                    {error && (
+                        <Spacing direction="top">
+                            <AlertStripeFeil>
+                                Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
+                            </AlertStripeFeil>
+                        </Spacing>
+                    )}
                 </div>
             )}
         </>
