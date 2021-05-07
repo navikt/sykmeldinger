@@ -41,7 +41,7 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                                 fill="#0067C5"
                             />
                         </svg>
-                        <span>gjør utfyllingen på nytt</span>
+                        <span>GJØR UTFYLLINGEN PÅ NYTT</span>
                     </Knapp>
                 </Spacing>
                 {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen.</AlertStripeFeil>}
