@@ -53,7 +53,7 @@ fetchMock
     .post('end:/bekreftAvvist', 203, { delay: 1000 })
     .post('end:/send', 203, { delay: 1000 })
     .post('end:/actions/avbryt', 203, { delay: 1000 })
-    .post('end:/actions/gjenapne', 203, { delay: 1000 });
+    .post('end:/gjenapne', 203, { delay: 1000 });
 
 // INFORMASJON OM BRUKER
 fetchMock.get(
