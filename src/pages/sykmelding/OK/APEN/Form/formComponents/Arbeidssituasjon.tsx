@@ -28,11 +28,16 @@ const StrengtFortroligInfo = () => (
 );
 
 interface ArbeidssituasjonProps {
+    harAvventendePeriode: boolean;
     erUtenforVentetid: ErUtenforVentetid;
     brukerinformasjon: Brukerinformasjon;
 }
 
-const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, brukerinformasjon }) => {
+const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
+    harAvventendePeriode,
+    erUtenforVentetid,
+    brukerinformasjon,
+}) => {
     const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'arbeidssituasjon';
     const sporsmaltekst = 'Jeg er sykmeldt som';
@@ -101,6 +106,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({ erUtenforVentetid, 
                             label: label,
                             value: key,
                             id: index === 0 ? fieldName : undefined,
+                            disabled: harAvventendePeriode && label !== ArbeidssituasjonType.ARBEIDSTAKER,
                         }))}
                         checked={value}
                         onChange={(_e, value) => onChange(value)}

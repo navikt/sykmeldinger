@@ -138,6 +138,9 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
                         {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
                             <Arbeidssituasjon
+                                harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
+                                    (sm) => sm.type === 'AVVENTENDE',
+                                )}
                                 erUtenforVentetid={sykmeldingUtenforVentetid}
                                 brukerinformasjon={brukerinformasjon}
                             />
