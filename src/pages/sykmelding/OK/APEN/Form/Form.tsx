@@ -93,6 +93,8 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
     const erArbeidstakerMedStrengtFortroligAdressse =
         erArbeidstaker && brukerinformasjon?.strengtFortroligAdresse === true;
+    const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;
+
     const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
 
     const { maAvbryte } = useContext(AvbrytContext);
@@ -142,7 +144,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                         )}
                     </Spacing>
 
-                    {erArbeidstaker && !brukerinformasjon.strengtFortroligAdresse && (
+                    {erArbeidstaker && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
                         <>
                             <Spacing>
                                 <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>

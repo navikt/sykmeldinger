@@ -6,7 +6,7 @@ import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import NyNarmesteLeder from './NyNarmesteLeder';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
-import Spacing from '../../../../../commonComponents/Spacing/Spacing';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 interface ArbeidsgiverOrgnummerProps {
     brukerinformasjon: Brukerinformasjon;
@@ -18,6 +18,8 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
     const fieldName: keyof FormShape = 'arbeidsgiverOrgnummer';
     const sporsmaltekst = 'Min arbeidsgiver';
     const watchArbeidsgiverOrgnummer = watch(fieldName);
+
+    const harArbeidsgiver = arbeidsgivere.length > 0;
 
     useEffect(() => {
         register({
@@ -47,21 +49,26 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                 control={control}
                 name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: 'Du må velge hvilken arbeidsgiver sykmeldingen gjelder for.' }}
+                rules={{
+                    required: 'Arbeidsgiver må være valgt siden du har valgt at du er arbeidstaker',
+                }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}
                         legend={
                             <div>
-                                <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
-                                <Ekspanderbar title="Ser du ikke arbeidsgiveren din her?">
-                                    <Spacing amount="small">
+                                <div
+                                    id={!harArbeidsgiver ? fieldName : undefined}
+                                    style={{ marginBottom: arbeidsgivere.length ? '0.5rem' : undefined }}
+                                >
+                                    {sporsmaltekst}
+                                </div>
+                                {harArbeidsgiver && (
+                                    <Ekspanderbar title="Ser du ikke arbeidsgiveren din her?">
                                         Be arbeidsgiveren din om å registrere deg i A-meldingen. Da blir det oppdatert
                                         her slik at du kan få sendt den til arbeidsgiveren.
-                                    </Spacing>
-                                    Be arbeidsgiveren din registrere deg i A-meldingen. Da vil du få sendt sykmeldingen
-                                    herfra.
-                                </Ekspanderbar>
+                                    </Ekspanderbar>
+                                )}
                             </div>
                         }
                         radios={arbeidsgivere.map((arbeidsgiver, index) => ({
@@ -75,6 +82,13 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                     />
                 )}
             />
+
+            {!harArbeidsgiver && (
+                <AlertStripeAdvarsel>
+                    Vi klarer ikke å finne noen arbeidsforhold registrert på deg. Be arbeidsgiveren din om å registrere
+                    deg i A-meldingen. Da blir det oppdatert her slik at du kan få sendt den til arbeidsgiveren.
+                </AlertStripeAdvarsel>
+            )}
 
             {valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder && (
                 <NyNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />
