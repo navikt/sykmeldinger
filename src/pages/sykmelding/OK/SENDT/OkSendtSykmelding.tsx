@@ -29,8 +29,8 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
 
             <Spacing>
                 <StatusInfo
-                    avventende={sykmelding.sykmeldingsperioder.some((sm) => sm.type === 'AVVENTENDE')}
-                    statusEvent={sykmelding.sykmeldingStatus.statusEvent}
+                    sykmeldingStatus={sykmelding.sykmeldingStatus}
+                    sykmeldingsperioder={sykmelding.sykmeldingsperioder}
                 />
             </Spacing>
 
