@@ -4,13 +4,12 @@ import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import { useParams } from 'react-router-dom';
 import useGjenapne from '../../../../hooks/useGjenapne';
 import { Knapp } from 'nav-frontend-knapper';
-import { AlertStripeFeil, AlertStripeSuksess } from 'nav-frontend-alertstriper';
-import { Element, Systemtittel } from 'nav-frontend-typografi';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
-import DateFormatter from '../../../../utils/DateFormatter';
 import Spacing from '../../../commonComponents/Spacing/Spacing';
 import StatusInfo from '../../components/StatusInfo/StatusInfo';
+import StatusBanner from '../../../commonComponents/StatusBanner/StatusBanner';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -24,10 +23,10 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
     return (
         <div className="sykmelding-container">
             <Spacing amount="small">
-                <AlertStripeSuksess>
-                    <Systemtittel tag="h2">Sykmeldingen er sendt til NAV</Systemtittel>
-                    <Element>{DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
-                </AlertStripeSuksess>
+                <StatusBanner
+                    sykmeldingStatus={sykmelding.sykmeldingStatus}
+                    behandlingsutfall={sykmelding.behandlingsutfall}
+                />
             </Spacing>
 
             <Spacing>

@@ -3,11 +3,9 @@ import React from 'react';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
-import { Element, Systemtittel } from 'nav-frontend-typografi';
-import DateFormatter from '../../../../utils/DateFormatter';
 import Spacing from '../../../commonComponents/Spacing/Spacing';
 import StatusInfo from '../../components/StatusInfo/StatusInfo';
+import StatusBanner from '../../../commonComponents/StatusBanner/StatusBanner';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -19,12 +17,10 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
     return (
         <div className="sykmelding-container">
             <Spacing>
-                <AlertStripeSuksess>
-                    <Systemtittel tag="h2">
-                        Sykmeldingen er sendt til {sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn}
-                    </Systemtittel>
-                    <Element>{DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
-                </AlertStripeSuksess>
+                <StatusBanner
+                    sykmeldingStatus={sykmelding.sykmeldingStatus}
+                    behandlingsutfall={sykmelding.behandlingsutfall}
+                />
             </Spacing>
 
             <Spacing>
