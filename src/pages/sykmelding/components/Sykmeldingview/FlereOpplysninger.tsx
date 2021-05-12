@@ -3,8 +3,12 @@ import { Element } from 'nav-frontend-typografi';
 import { useRef, useState } from 'react';
 import './FlereOpplysninger.less';
 
-const FlereOpplysninger: React.FC = ({ children }) => {
-    const [expanded, setExpanded] = useState<boolean>(false);
+interface FlereOpplysningerProps {
+    expandedDefault?: boolean;
+}
+
+const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ expandedDefault = false, children }) => {
+    const [expanded, setExpanded] = useState<boolean>(expandedDefault);
     const elementRef = useRef<HTMLDivElement>(null);
 
     return (

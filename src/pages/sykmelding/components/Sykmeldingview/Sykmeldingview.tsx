@@ -29,7 +29,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                 <PeriodeView perioder={sykmelding.sykmeldingsperioder} />
             </div>
 
-            <FlereOpplysninger>
+            <FlereOpplysninger expandedDefault={arbeidsgiver}>
                 <SykmeldingEntry
                     title="Dato sykmeldingen ble skrevet"
                     mainText={DateFormatter.toReadableDate(sykmelding.behandletTidspunkt)}
