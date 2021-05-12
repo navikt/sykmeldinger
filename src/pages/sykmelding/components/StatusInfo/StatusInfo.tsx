@@ -23,6 +23,7 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
     const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe.find(
         (sporsmal) => sporsmal.shortName === 'ARBEIDSSITUASJON',
     );
+    const erArbeidstaker = arbeidssituasjonSporsmal?.svar.svar === 'ARBEIDSTAKER';
     const erFlEllerSn =
         arbeidssituasjonSporsmal?.svar.svar === 'FRILANSER' ||
         arbeidssituasjonSporsmal?.svar.svar === 'SELVSTENDIG_NARINGSDRIVENDE';
@@ -75,11 +76,13 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                             du ikke har fått papiret, må du be legen om å få det.
                         </Normaltekst>
                     </Spacing>
-                    <Spacing amount="small">
-                        <Normaltekst>
-                            Hør med arbeidsgiveren din om du skal sende del D direkte til dem eller til NAV.
-                        </Normaltekst>
-                    </Spacing>
+                    {erArbeidstaker && (
+                        <Spacing amount="small">
+                            <Normaltekst>
+                                Hør med arbeidsgiveren din om du skal sende del D direkte til dem eller til NAV.
+                            </Normaltekst>
+                        </Spacing>
+                    )}
                     <Spacing amount="small">
                         <Normaltekst>
                             Adressen til NAV finner du på en <Lenke href="#">egen førsteside</Lenke> som skal skrives ut

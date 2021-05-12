@@ -17,7 +17,7 @@ describe('StatusInfo', () => {
         expect(screen.queryByTestId('status-info')).not.toBeInTheDocument();
     });
 
-    describe('status SENDT', () => {
+    describe('Avventende', () => {
         it('Renders avventende info when status is SENDT and periode is AVVENTENDE', () => {
             const plainSykmeldingStatus = {
                 statusEvent: 'SENDT',
@@ -41,160 +41,6 @@ describe('StatusInfo', () => {
             ).toBeInTheDocument();
         });
 
-        it('Renders papir info when status is SENDT and periode is gradert reisetilskudd', () => {
-            const plainSykmeldingStatus = {
-                statusEvent: 'SENDT',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [],
-            };
-            const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
-            const plainPeriode = {
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'GRADERT',
-                gradert: {
-                    grad: 80,
-                    reisetilskudd: true,
-                },
-                reisetilskudd: false,
-            };
-            const gradertPeriode = new Periode(plainPeriode);
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[gradertPeriode]} />);
-            expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
-        });
-
-        it('Renders papir info when status is SENDT and periode is reisetilskudd in combination with another period type', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'SENDT',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [],
-            });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
-            });
-            const aktivitetIkkeMuligPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'AKTIVITET_IKKE_MULIG',
-                reisetilskudd: false,
-                aktivitetIkkeMulig: {},
-            });
-            render(
-                <StatusInfo
-                    sykmeldingStatus={sykmeldingStatus}
-                    sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
-                />,
-            );
-            expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
-        });
-
-        it('Renders standard info when status is SENDT and single reisetilskudd periode not in combination with another period type', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'SENDT',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [],
-            });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
-            });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-        });
-
-        it('Renders standard info with freelancer info when status SENDT and arbeidssituasjon is FRILANSER', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'SENDT',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [
-                    {
-                        tekst: 'sporsmalstekst',
-                        shortName: 'ARBEIDSSITUASJON',
-                        svar: {
-                            svarType: 'ARBEIDSSITUASJON',
-                            svar: 'FRILANSER',
-                        },
-                    },
-                ],
-            });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
-            });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-            expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
-        });
-
-        it('Renders standard info with frilanser info when status SENDT and arbeidssituasjon is SELVSTENDIG_NARINGSDRIVENDE', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'SENDT',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [
-                    {
-                        tekst: 'sporsmalstekst',
-                        shortName: 'ARBEIDSSITUASJON',
-                        svar: {
-                            svarType: 'ARBEIDSSITUASJON',
-                            svar: 'SELVSTENDIG_NARINGSDRIVENDE',
-                        },
-                    },
-                ],
-            });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
-            });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-            expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
-        });
-
-        it('Renders standard info without frilanser info when status SENDT and arbeidssituasjon is different from FRILANSER and SELVSTENDIG_NARINGSDRIVENDE', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'SENDT',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [
-                    {
-                        tekst: 'sporsmalstekst',
-                        shortName: 'ARBEIDSSITUASJON',
-                        svar: {
-                            svarType: 'ARBEIDSSITUASJON',
-                            svar: 'ANNET',
-                        },
-                    },
-                ],
-            });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
-            });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-            expect(
-                screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-            ).not.toBeInTheDocument();
-        });
-    });
-
-    describe('status BEKREFTET', () => {
         it('Renders nothing when status is BEKREFTET and periode is AVVENTENDE', () => {
             const plainSykmeldingStatus = {
                 statusEvent: 'BEKREFTET',
@@ -214,157 +60,403 @@ describe('StatusInfo', () => {
             render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[avventendePeriode]} />);
             expect(screen.queryByTestId('status-info')).not.toBeInTheDocument();
         });
+    });
 
-        it('Renders papir info when status is BEKREFTET and periode is gradert reisetilskudd', () => {
-            const plainSykmeldingStatus = {
-                statusEvent: 'BEKREFTET',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [],
-            };
-            const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
-            const plainPeriode = {
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'GRADERT',
-                gradert: {
-                    grad: 80,
+    describe('Papirsøknad', () => {
+        describe('SENDT', () => {
+            it('Gradert reisetilskudd renders papir info', () => {
+                const plainSykmeldingStatus = {
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [],
+                };
+                const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
+                const plainPeriode = {
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'GRADERT',
+                    gradert: {
+                        grad: 80,
+                        reisetilskudd: true,
+                    },
+                    reisetilskudd: false,
+                };
+                const gradertPeriode = new Periode(plainPeriode);
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[gradertPeriode]} />);
+                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
+                expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
+            });
+
+            it('Reisetilskudd in combination with another period type renders papirinfo', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
                     reisetilskudd: true,
-                },
-                reisetilskudd: false,
-            };
-            const gradertPeriode = new Periode(plainPeriode);
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[gradertPeriode]} />);
-            expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
-        });
+                });
+                const aktivitetIkkeMuligPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'AKTIVITET_IKKE_MULIG',
+                    reisetilskudd: false,
+                    aktivitetIkkeMulig: {},
+                });
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                    />,
+                );
+                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
+                expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
+            });
 
-        it('Renders papir info when status is BEKREFTET and periode is reisetilskudd in combination with another period type', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'BEKREFTET',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [],
-            });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
-            });
-            const aktivitetIkkeMuligPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'AKTIVITET_IKKE_MULIG',
-                reisetilskudd: false,
-                aktivitetIkkeMulig: {},
-            });
-            render(
-                <StatusInfo
-                    sykmeldingStatus={sykmeldingStatus}
-                    sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
-                />,
-            );
-            expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
-        });
-
-        it('Renders standard info when status is BEKREFTET and single reisetilskudd periode not in combination with another period type', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'BEKREFTET',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [],
-            });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
-            });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-        });
-
-        it('Renders standard info with freelancer info when status BEKREFTET and arbeidssituasjon is FRILANSER', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'BEKREFTET',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [
-                    {
-                        tekst: 'sporsmalstekst',
-                        shortName: 'ARBEIDSSITUASJON',
-                        svar: {
-                            svarType: 'ARBEIDSSITUASJON',
-                            svar: 'FRILANSER',
+            it('Arbeidstaker with reisetilskudd in combination with another period type renders papirinfo with infor for arbeidstaker', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'ARBEIDSTAKER',
+                            },
                         },
-                    },
-                ],
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                const aktivitetIkkeMuligPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'AKTIVITET_IKKE_MULIG',
+                    reisetilskudd: false,
+                    aktivitetIkkeMulig: {},
+                });
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                    />,
+                );
+                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
+                expect(screen.getByText(/Hør med arbeidsgiveren din/)).toBeInTheDocument();
             });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
+
+            it('Does not render arbeidstaker info for other arbeidssiuasjon', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'FRILANSER',
+                            },
+                        },
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                const aktivitetIkkeMuligPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'AKTIVITET_IKKE_MULIG',
+                    reisetilskudd: false,
+                    aktivitetIkkeMulig: {},
+                });
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                    />,
+                );
+                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
+                expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
             });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-            expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
         });
 
-        it('Renders standard info with frilanser info when status BEKREFTET and arbeidssituasjon is SELVSTENDIG_NARINGSDRIVENDE', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'BEKREFTET',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [
-                    {
-                        tekst: 'sporsmalstekst',
-                        shortName: 'ARBEIDSSITUASJON',
-                        svar: {
-                            svarType: 'ARBEIDSSITUASJON',
-                            svar: 'SELVSTENDIG_NARINGSDRIVENDE',
-                        },
+        describe('BEKREFTET', () => {
+            it('Gradert reisetilskudd renders papirinfo', () => {
+                const plainSykmeldingStatus = {
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [],
+                };
+                const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
+                const plainPeriode = {
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'GRADERT',
+                    gradert: {
+                        grad: 80,
+                        reisetilskudd: true,
                     },
-                ],
+                    reisetilskudd: false,
+                };
+                const gradertPeriode = new Periode(plainPeriode);
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[gradertPeriode]} />);
+                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
+                expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
             });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
+
+            it('Reisetilskudd in combination with another period type renders papirinfor', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                const aktivitetIkkeMuligPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'AKTIVITET_IKKE_MULIG',
+                    reisetilskudd: false,
+                    aktivitetIkkeMulig: {},
+                });
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                    />,
+                );
+                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
+                expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
             });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-            expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
+        });
+    });
+
+    describe('Standard digital søknad', () => {
+        describe('SENDT', () => {
+            it('Single reisetilskudd periode not in combination with another period type renders standard info', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+            });
+
+            it('Renders standard info with freelancer info for FRILANSER', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'FRILANSER',
+                            },
+                        },
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
+            });
+
+            it('Renders standard info with frilanser info for SELVSTENDIG_NARINGSDRIVENDE', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'SELVSTENDIG_NARINGSDRIVENDE',
+                            },
+                        },
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
+            });
+
+            it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'ARBEIDSLEDIG',
+                            },
+                        },
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
+                ).not.toBeInTheDocument();
+            });
         });
 
-        it('Renders standard info without frilanser info when status BEKREFTET and arbeidssituasjon is different from FRILANSER and SELVSTENDIG_NARINGSDRIVENDE', () => {
-            const sykmeldingStatus = new SykmeldingStatus({
-                statusEvent: 'BEKREFTET',
-                timestamp: '2021-05-01',
-                arbeidsgiver: null,
-                sporsmalOgSvarListe: [
-                    {
-                        tekst: 'sporsmalstekst',
-                        shortName: 'ARBEIDSSITUASJON',
-                        svar: {
-                            svarType: 'ARBEIDSSITUASJON',
-                            svar: 'ANNET',
+        describe('BEKREFTET', () => {
+            it('Single reisetilskudd periode not in combination with another period type renders standard info', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+            });
+
+            it('Renders standard info with freelancer info for FRILANSER', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'FRILANSER',
+                            },
                         },
-                    },
-                ],
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
-            const reisetilskuddPeriode = new Periode({
-                fom: '2021-05-01',
-                tom: '2021-05-05',
-                type: 'REISETILSKUDD',
-                reisetilskudd: true,
+
+            it('Renders standard info with frilanser info for SELVSTENDIG_NARINGSDRIVENDE', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'SELVSTENDIG_NARINGSDRIVENDE',
+                            },
+                        },
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
-            expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
-            expect(
-                screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-            ).not.toBeInTheDocument();
+
+            it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'ARBEIDSLEDIG',
+                            },
+                        },
+                    ],
+                });
+                const reisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'REISETILSKUDD',
+                    reisetilskudd: true,
+                });
+                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
+                ).not.toBeInTheDocument();
+            });
         });
     });
 });
