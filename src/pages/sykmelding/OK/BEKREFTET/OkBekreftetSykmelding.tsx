@@ -8,7 +8,6 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../commonComponents/Spacing/Spacing';
-import StatusInfo from '../../components/StatusInfo/StatusInfo';
 import StatusBanner from '../../../commonComponents/StatusBanner/StatusBanner';
 
 interface OkBekreftetSykmeldingProps {
@@ -46,14 +45,7 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                 {error && <AlertStripeFeil>Det oppsto en feil ved gjenåpning av sykmeldingen.</AlertStripeFeil>}
             </Spacing>
 
-            <Spacing>
-                <StatusInfo
-                    sykmeldingStatus={sykmelding.sykmeldingStatus}
-                    sykmeldingsperioder={sykmelding.sykmeldingsperioder}
-                />
-            </Spacing>
-
-            <Sykmeldingsopplysninger expandedDefault={false} sykmelding={sykmelding} />
+            <Sykmeldingsopplysninger expandedDefault sykmelding={sykmelding} />
         </div>
     );
 };

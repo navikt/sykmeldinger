@@ -10,6 +10,9 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title, sykmelding }) => {
+    if (!title && !sykmelding) {
+        return null;
+    }
     return (
         <div className="location-header">
             <Innholdstittel tag="h1">{title}</Innholdstittel>

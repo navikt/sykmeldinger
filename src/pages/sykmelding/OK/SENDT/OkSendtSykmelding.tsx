@@ -4,7 +4,6 @@ import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../commonComponents/Spacing/Spacing';
-import StatusInfo from '../../components/StatusInfo/StatusInfo';
 import StatusBanner from '../../../commonComponents/StatusBanner/StatusBanner';
 
 interface OkSendtSykmeldingProps {
@@ -24,14 +23,7 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
             </Spacing>
 
             <Spacing>
-                <StatusInfo
-                    sykmeldingStatus={sykmelding.sykmeldingStatus}
-                    sykmeldingsperioder={sykmelding.sykmeldingsperioder}
-                />
-            </Spacing>
-
-            <Spacing>
-                <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />
+                <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault />
             </Spacing>
 
             <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} arbeidsgiver />
