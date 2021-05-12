@@ -5,7 +5,7 @@ import { Undertittel, Innholdstittel } from 'nav-frontend-typografi';
 import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 
 interface HeaderProps {
-    title: string;
+    title?: string;
     sykmelding?: Sykmelding;
 }
 

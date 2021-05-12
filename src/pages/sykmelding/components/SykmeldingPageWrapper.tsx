@@ -9,11 +9,9 @@ interface SykmeldingPageWrapperProps {
     sykmelding?: Sykmelding;
 }
 const SykmeldingPageWrapper: React.FC<SykmeldingPageWrapperProps> = ({ children, sykmelding }) => {
-    const title = sykmelding?.egenmeldt ? 'Egenmelding' : 'Sykmelding';
-
     return (
         <>
-            <Header title={title} sykmelding={sykmelding} />
+            <Header title={sykmelding?.getSykmeldingTitle()} sykmelding={sykmelding} />
             <div className="limit">
                 <Brodsmuler
                     breadcrumbs={[
@@ -26,7 +24,7 @@ const SykmeldingPageWrapper: React.FC<SykmeldingPageWrapperProps> = ({ children,
                             path: window._env_?.SYKMELDINGER_ROOT || '#',
                         },
                         {
-                            title,
+                            title: sykmelding?.getSykmeldingTitle() ?? 'Sykmelding',
                         },
                     ]}
                 />

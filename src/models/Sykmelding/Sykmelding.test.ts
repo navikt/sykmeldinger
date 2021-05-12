@@ -39,6 +39,34 @@ const minimalSykmelding = {
 };
 
 describe('Sykmelding', () => {
+    describe('getSykmeldingTitle', () => {
+        it('Gets standard sykmelding title', () => {
+            const sykmeldingJson = {
+                ...minimalSykmelding,
+            };
+            const sykmelding = new Sykmelding(sykmeldingJson);
+            expect(sykmelding.getSykmeldingTitle()).toEqual('Sykmelding');
+        });
+
+        it('Gets papirsykmelding title', () => {
+            const sykmeldingJson = {
+                ...minimalSykmelding,
+                papirsykmelding: true,
+            };
+            const sykmelding = new Sykmelding(sykmeldingJson);
+            expect(sykmelding.getSykmeldingTitle()).toEqual('Papirsykmelding');
+        });
+
+        it('Gets egenmeldt title', () => {
+            const sykmeldingJson = {
+                ...minimalSykmelding,
+                egenmeldt: true,
+            };
+            const sykmelding = new Sykmelding(sykmeldingJson);
+            expect(sykmelding.getSykmeldingTitle()).toEqual('Egenmelding');
+        });
+    });
+
     describe('getSykmeldingStartDate', () => {
         it('Gets fom of the earliest period', () => {
             const sykmeldingJson = {

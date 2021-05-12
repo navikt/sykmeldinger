@@ -149,6 +149,21 @@ export class Sykmelding {
     }
 
     /**
+     * Get the type of sykmelding
+     * Used for displaying the title.
+     * @return {string}
+     */
+    getSykmeldingTitle(): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' {
+        if (this.papirsykmelding) {
+            return 'Papirsykmelding';
+        }
+        if (this.egenmeldt) {
+            return 'Egenmelding';
+        }
+        return 'Sykmelding';
+    }
+
+    /**
      * Get the first fom date of the earliest sykmelding period
      * @return {Date} The start date
      */
