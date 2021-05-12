@@ -58,7 +58,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Avbryter sykmeldingen', () => {
-            cy.intercept('POST', `**/api/v1/sykmelding/${sykmeldingApen.id}/actions/avbryt`).as('postAvbryt');
+            cy.intercept('POST', `**/api/v1/sykmelding/${sykmeldingApen.id}/avbryt`).as('postAvbryt');
             cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, {
                 body: {
                     ...sykmeldingApen,
@@ -131,7 +131,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Avbryter sykmeldingen', () => {
-            cy.intercept('POST', `**/api/v1/sykmelding/${sykmeldingApen.id}/actions/avbryt`).as('postAvbryt');
+            cy.intercept('POST', `**/api/v1/sykmelding/${sykmeldingApen.id}/avbryt`).as('postAvbryt');
             cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, {
                 body: {
                     ...sykmeldingApen,
