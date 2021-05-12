@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Innholdstittel, Normaltekst, Element } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
-import Panel from 'nav-frontend-paneler';
 import Spacing from '../../../commonComponents/Spacing/Spacing';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 const PapirInfoheader = () => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
@@ -14,18 +14,7 @@ const PapirInfoheader = () => {
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
 
     return (
-        <Panel border>
-            <Spacing amount="small">
-                <Innholdstittel>Før du bruker sykmeldingen</Innholdstittel>
-            </Spacing>
-
-            <Spacing>
-                <Normaltekst tag="p">
-                    Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik at
-                    du kan gjøre resten digitalt.
-                </Normaltekst>
-            </Spacing>
-
+        <div>
             <RadioPanelGruppe
                 name="harDuGittPapirsykmeldingenVidere"
                 legend="Har du allerede gitt papirsykmeldingen videre?"
@@ -46,44 +35,41 @@ const PapirInfoheader = () => {
             {harGittVidere === true && (
                 <Spacing direction="top">
                     <Spacing amount="small">
-                        <Normaltekst tag="p">Da avbryter du den digitale sykmeldingen.</Normaltekst>
+                        <AlertStripeInfo>
+                            <Spacing amount="small">
+                                <Normaltekst>
+                                    Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i
+                                    stedet. Det er en fordel for begge: Da får dere alt her, både sykepengesøknaden og
+                                    andre meldinger som handler om sykefraværet. Papirsykmeldingen kan du legge bort.
+                                    Det du gjør her, erstatter papiret.
+                                </Normaltekst>
+                            </Spacing>
+
+                            <Element>
+                                Hvis du får ja fra arbeidsgiveren din kan du fortsette utfyllingen på denne siden. Hvis
+                                du i stedet skal fortsette med papiret må du avbryte denne sykmeldingen.
+                            </Element>
+                        </AlertStripeInfo>
                     </Spacing>
 
                     <Knapp spinner={isLoading} onClick={() => avbryt()}>
-                        Avbryt den digitale sykmeldingen
+                        Avbryt sykmeldingen
                     </Knapp>
                 </Spacing>
             )}
 
             {harGittVidere === false && (
                 <Spacing direction="top">
-                    <Spacing>
-                        <Normaltekst tag="p">
-                            Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i stedet. Det er
-                            en fordel for begge: Da får dere alt her, både sykepengesøknaden og andre meldinger som
-                            handler om sykefraværet. Papirsykmeldingen kan du legge bort. Det du gjør her erstatter
-                            papiret.
+                    <AlertStripeInfo>
+                        <Element>Da kan du sende sykmeldingen herfra</Element>
+                        <Normaltekst>
+                            Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
+                            om? Du velger selv om du vil bruke sykmeldingen.
                         </Normaltekst>
-                    </Spacing>
-
-                    <Spacing amount="small">
-                        <Element>Hvis du får ja fra arbeidsgiveren din:</Element>
-                    </Spacing>
-
-                    <Spacing>
-                        <a href="#apen-sykmelding-form">Gå til utfyllingen</a>
-                    </Spacing>
-
-                    <Spacing amount="small">
-                        <Element>Hvis du i stedet skal fortsette med papiret:</Element>
-                    </Spacing>
-
-                    <Knapp spinner={isLoading} onClick={() => avbryt()}>
-                        Avbryt den digitale sykmeldingen
-                    </Knapp>
+                    </AlertStripeInfo>
                 </Spacing>
             )}
-        </Panel>
+        </div>
     );
 };
 

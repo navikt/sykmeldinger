@@ -45,12 +45,6 @@ describe('Uriktige opplysninger', () => {
                 });
         });
 
-        it('Viser feilmelding om at man ikke bruke sykmelding med uriktig periode', () => {
-            cy.contains(
-                'Siden du sier at perioden er feil må du be den som sykmeldte deg om å skrive en ny sykmelding.',
-            );
-        });
-
         it('Viser ikke submitknapp', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
@@ -61,9 +55,6 @@ describe('Uriktige opplysninger', () => {
 
         it('Viser avbrytpanel', () => {
             cy.get('button').contains('Avbryt sykmelding').should('be.visible');
-            cy.contains(
-                'Selv om du avbryter sykmeldingen nå, har du mulighet til å gjenåpne den på et senere tidspunkt.',
-            );
         });
 
         it('Avbryter sykmeldingen', () => {
@@ -127,12 +118,6 @@ describe('Uriktige opplysninger', () => {
                 });
         });
 
-        it('Viser feilmelding om at man ikke bruke sykmelding med for høy sykmeldingsgrad', () => {
-            cy.contains(
-                'Siden du sier at sykmeldingsgraden er for høy er feil må du be den som sykmeldte deg om å skrive en ny sykmelding.',
-            );
-        });
-
         it('Viser ikke submitknapp', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
@@ -143,9 +128,6 @@ describe('Uriktige opplysninger', () => {
 
         it('Viser avbrytpanel', () => {
             cy.get('button').contains('Avbryt sykmelding').should('be.visible');
-            cy.contains(
-                'Selv om du avbryter sykmeldingen nå, har du mulighet til å gjenåpne den på et senere tidspunkt.',
-            );
         });
 
         it('Avbryter sykmeldingen', () => {
@@ -210,9 +192,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser infomelding om at man kan bruke en sykmelding med for lav sykmeldingsgrad', () => {
-            cy.contains(
-                'Du kan fortsatt bruke sykmeldingen. Hvis du ender opp med å jobbe mer enn graden på sykmeldingen sier du fra om det ved utfyllingen av søknaden.',
-            );
+            cy.contains(/Du kan fortsatt bruke sykmeldingen/);
         });
 
         it('Viser submitknapp', () => {
@@ -268,7 +248,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser infomelding om at man kan bruke en sykmelding med for lav sykmeldingsgrad', () => {
-            cy.contains('Du kan fortsatt bruke sykmeldingen.');
+            cy.contains(/Du kan fortsatt bruke sykmeldingen/);
         });
 
         it('Viser submitknapp', () => {
@@ -324,7 +304,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser infomelding om at man kan bruke en sykmelding med for lav sykmeldingsgrad', () => {
-            cy.contains('Du kan fortsatt bruke sykmeldingen.');
+            cy.contains(/Du kan fortsatt bruke sykmeldingen/);
         });
 
         it('Viser submitknapp', () => {
@@ -380,7 +360,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser infomelding om at man kan bruke en sykmelding med for lav sykmeldingsgrad', () => {
-            cy.contains('Du kan fortsatt bruke sykmeldingen.');
+            cy.contains(/Du kan fortsatt bruke sykmeldingen/);
         });
 
         it('Viser submitknapp', () => {

@@ -20,7 +20,7 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
         <AvbrytContextProvider>
             <div className="sykmelding-container">
                 <Spacing>
-                    <InformationBanner merknader={sykmelding.merknader} />
+                    <InformationBanner merknader={sykmelding.merknader} papirsykmelding={sykmelding.papirsykmelding} />
                 </Spacing>
 
                 {Boolean(sykmelding.papirsykmelding) && (

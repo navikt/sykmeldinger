@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import './AvbrytPanel.less';
 import { Xknapp } from 'nav-frontend-ikonknapper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import { AvbrytContext } from '../../OK/APEN/AvbrytContext';
 import useAvbryt from '../../../../hooks/useAvbryt';
@@ -17,12 +17,19 @@ const AvbrytPanel: React.FC = () => {
     const { maAvbryte } = useContext(AvbrytContext);
     const [isOpen, setIsOpen] = useState(false);
 
-    // TODO: error state
+    const avbrytPanelRef = useRef<HTMLDivElement>(null);
+
     const { isLoading, mutate: avbryt, error } = useAvbryt(sykmeldingId);
 
     if (maAvbryte) {
         return (
             <div className="avbryt-panel">
+                <Undertittel tag="h3" className="avbryt-panel__title">
+                    Du kan ikke bruke denne sykmeldingen
+                </Undertittel>
+                <Element className="avbryt-panel__info">
+                    Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
+                </Element>
                 <Knapp
                     htmlType="button"
                     type="fare"
@@ -32,9 +39,7 @@ const AvbrytPanel: React.FC = () => {
                 >
                     Avbryt sykmelding
                 </Knapp>
-                <Normaltekst>
-                    Selv om du avbryter sykmeldingen nå, har du mulighet til å gjenåpne den på et senere tidspunkt.
-                </Normaltekst>
+
                 {error && (
                     <Spacing direction="top">
                         <AlertStripeFeil>
@@ -50,21 +55,29 @@ const AvbrytPanel: React.FC = () => {
         <>
             <Spacing amount="small">
                 <CenterItems horizontal>
-                    <Knapp htmlType="button" type="flat" mini onClick={() => setIsOpen((prev) => !prev)}>
+                    <Knapp
+                        htmlType="button"
+                        type="flat"
+                        mini
+                        onClick={() => {
+                            setIsOpen((prev) => !prev);
+                            setTimeout(() => {
+                                avbrytPanelRef.current?.focus();
+                            }, 100);
+                        }}
+                    >
                         Jeg vil avbryte sykmeldingen
                     </Knapp>
                 </CenterItems>
             </Spacing>
 
             {isOpen && (
-                <div className="avbryt-panel">
-                    {maAvbryte === false && (
-                        <Xknapp
-                            htmlType="button"
-                            className="avbryt-panel__cross"
-                            onClick={() => setIsOpen((prev) => !prev)}
-                        />
-                    )}
+                <div className="avbryt-panel" ref={avbrytPanelRef}>
+                    <Xknapp
+                        htmlType="button"
+                        className="avbryt-panel__cross"
+                        onClick={() => setIsOpen((prev) => !prev)}
+                    />
 
                     <Normaltekst className="avbryt-panel__er-du-sikker">
                         Er du sikker på at du vil avbryte sykmeldingen?

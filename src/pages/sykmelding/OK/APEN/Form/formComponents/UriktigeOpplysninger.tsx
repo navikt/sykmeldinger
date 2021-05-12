@@ -4,7 +4,8 @@ import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { FormShape, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { AvbrytContext } from '../../AvbrytContext';
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import Spacing from '../../../../../commonComponents/Spacing/Spacing';
+import UriktigeOpplysningerInfo from '../UriktigeOpplysningerInfo';
 
 const UriktigeOpplysninger: React.FC = () => {
     const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
@@ -17,20 +18,6 @@ const UriktigeOpplysninger: React.FC = () => {
             Boolean(watchUriktigeOpplysninger?.svar?.includes('PERIODE')) ||
             Boolean(watchUriktigeOpplysninger?.svar?.includes('SYKMELDINGSGRAD_FOR_HOY'))
         );
-    }, [watchUriktigeOpplysninger]);
-
-    const alertstripetekst: string | undefined = useMemo(() => {
-        const value = watchUriktigeOpplysninger?.svar;
-        if (!value) {
-            return undefined;
-        } else if (value.includes('PERIODE')) {
-            return 'Siden du sier at perioden er feil må du be den som sykmeldte deg om å skrive en ny sykmelding.';
-        } else if (value.includes('SYKMELDINGSGRAD_FOR_HOY')) {
-            return 'Siden du sier at sykmeldingsgraden er for høy er feil må du be den som sykmeldte deg om å skrive en ny sykmelding.';
-        } else if (value.includes('SYKMELDINGSGRAD_FOR_LAV')) {
-            return 'Du kan fortsatt bruke sykmeldingen. Hvis du ender opp med å jobbe mer enn graden på sykmeldingen sier du fra om det ved utfyllingen av søknaden.';
-        }
-        return 'Du kan fortsatt bruke sykmeldingen.';
     }, [watchUriktigeOpplysninger]);
 
     useEffect(() => {
@@ -83,15 +70,9 @@ const UriktigeOpplysninger: React.FC = () => {
                 )}
             />
 
-            {trengerNySykmelding ? (
-                <AlertStripeAdvarsel style={{ marginTop: '2rem' }}>{alertstripetekst}</AlertStripeAdvarsel>
-            ) : (
-                <>
-                    {Boolean(watchUriktigeOpplysninger?.svar?.length) && (
-                        <AlertStripeInfo style={{ marginTop: '2rem' }}>{alertstripetekst}</AlertStripeInfo>
-                    )}
-                </>
-            )}
+            <Spacing direction="top" amount="small">
+                <UriktigeOpplysningerInfo uriktigeOpplysninger={watchUriktigeOpplysninger?.svar} />
+            </Spacing>
         </QuestionWrapper>
     );
 };

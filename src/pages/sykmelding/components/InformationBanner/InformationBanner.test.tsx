@@ -11,6 +11,7 @@ describe('InformationBanner', () => {
         const merknad = new Merknad(plainJson);
         render(<InformationBanner merknader={[merknad]} />);
         expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
+        expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
         expect(screen.getByText('Tilbakedateringen kan ikke godkjennes')).toBeInTheDocument();
     });
 
@@ -21,12 +22,21 @@ describe('InformationBanner', () => {
         const merknad = new Merknad(plainJson);
         render(<InformationBanner merknader={[merknad]} />);
         expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
+        expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
         expect(screen.getByText('Behov for mer opplysninger')).toBeInTheDocument();
     });
 
-    it('Renders Normal view if merknader is undefined', () => {
+    it('Renders papirsinfo view if papirsykmelding is true', () => {
+        render(<InformationBanner papirsykmelding />);
+        expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('papir-banner')).toBeInTheDocument();
+        expect(screen.getByText('Før du bruker sykmeldingen')).toBeInTheDocument();
+    });
+
+    it('Renders Normal view if merknader and papirsykmelding is undefined', () => {
         render(<InformationBanner />);
         expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
         expect(
             screen.getByText(
                 'Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om? Du velger selv om du vil bruke sykmeldingen.',

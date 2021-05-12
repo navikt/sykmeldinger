@@ -1,4 +1,4 @@
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Merknad from '../../../../models/Sykmelding/Merknad';
 import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
@@ -11,9 +11,10 @@ export enum Merknadtype {
 
 interface InformationBannerProps {
     merknader?: Merknad[];
+    papirsykmelding?: boolean;
 }
 
-const InformationBanner: React.FC<InformationBannerProps> = ({ merknader }) => {
+const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirsykmelding }) => {
     if (merknader?.some((merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING)) {
         return (
             <div data-testid="merknad-banner">
@@ -57,6 +58,20 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader }) => {
                         behandleren din for å få opplysninger om hvorfor sykmeldingen er datert tilbake.
                     </Normaltekst>
                     <Normaltekst>Du kan likevel sende inn søknaden om sykepenger.</Normaltekst>
+                </Veilederpanel>
+            </div>
+        );
+    }
+
+    if (papirsykmelding === true) {
+        return (
+            <div data-testid="papir-banner">
+                <Veilederpanel kompakt type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
+                    <Element>Før du bruker sykmeldingen</Element>
+                    <Normaltekst>
+                        Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik
+                        at du kan gjøre resten digitalt.
+                    </Normaltekst>
                 </Veilederpanel>
             </div>
         );
