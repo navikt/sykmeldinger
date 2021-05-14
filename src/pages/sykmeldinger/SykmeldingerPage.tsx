@@ -6,9 +6,9 @@ import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import useSykmeldinger from '../../hooks/useSykmeldinger';
-import SykmeldingerPageWrapper from './components/SykmeldingerPageWrapper';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import Spacing from '../commonComponents/Spacing/Spacing';
+import PageWrapper from '../commonComponents/PageWrapper/PageWrapper';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -26,12 +26,12 @@ const SykmeldingerPage: React.FC = () => {
 
     if (error || sykmeldinger === undefined) {
         return (
-            <SykmeldingerPageWrapper>
+            <PageWrapper>
                 <AlertStripeAdvarsel>
                     <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
                     <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
                 </AlertStripeAdvarsel>
-            </SykmeldingerPageWrapper>
+            </PageWrapper>
         );
     }
 
@@ -39,7 +39,7 @@ const SykmeldingerPage: React.FC = () => {
     const pastSykmeldinger = sykmeldinger.filter((sykmelding) => sykmelding.sykmeldingStatus.statusEvent !== 'APEN');
 
     return (
-        <SykmeldingerPageWrapper>
+        <PageWrapper>
             <LenkepanelContainer type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
 
             <Ekspanderbartpanel tittel="Ser du ikke sykmeldingen din her?">
@@ -56,7 +56,7 @@ const SykmeldingerPage: React.FC = () => {
             </Ekspanderbartpanel>
 
             <LenkepanelContainer type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
-        </SykmeldingerPageWrapper>
+        </PageWrapper>
     );
 };
 

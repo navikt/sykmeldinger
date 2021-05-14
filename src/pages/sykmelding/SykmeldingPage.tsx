@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../commonComponents/Spinner/Spinner';
-import SykmeldingPageWrapper from '../sykmelding/components/SykmeldingPageWrapper';
 import useSykmelding from '../../hooks/useSykmelding';
 import OkBekreftetSykmelding from './OK/BEKREFTET/OkBekreftetSykmelding';
 import OkAvbruttSykmelding from './OK/AVBRUTT/OkAvbruttSykmelding';
@@ -13,8 +12,9 @@ import OkUtgattSykmelding from './OK/UTGATT/OkUtgattSykmelding';
 import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
 import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
 import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
+import PageWrapper from '../commonComponents/PageWrapper/PageWrapper';
 
-const SykmeldingSide: React.FC = () => {
+const SykmeldingPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
@@ -24,15 +24,14 @@ const SykmeldingSide: React.FC = () => {
         return <Spinner headline="Henter sykmelding" />;
     }
 
-    // TODO: make seperate component
     if (error || sykmelding === undefined) {
         return (
-            <SykmeldingPageWrapper>
+            <PageWrapper>
                 <AlertStripeAdvarsel>
                     <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
                     <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
                 </AlertStripeAdvarsel>
-            </SykmeldingPageWrapper>
+            </PageWrapper>
         );
     }
 
@@ -71,7 +70,7 @@ const SykmeldingSide: React.FC = () => {
         }
     })();
 
-    return <SykmeldingPageWrapper sykmelding={sykmelding}>{SykmeldingComponent}</SykmeldingPageWrapper>;
+    return <PageWrapper sykmelding={sykmelding}>{SykmeldingComponent}</PageWrapper>;
 };
 
-export default SykmeldingSide;
+export default SykmeldingPage;
