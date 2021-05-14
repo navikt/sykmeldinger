@@ -8,6 +8,8 @@ import Sykmeldingsopplysninger from '../../components/Sykmeldingview/Sykmeldings
 import Spacing from '../../../commonComponents/Spacing/Spacing';
 import InfoOmDigitalSykmelding from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
 import InformationBanner from '../../components/InformationBanner/InformationBanner';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -15,6 +17,21 @@ interface OkApenSykmeldingProps {
 
 const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
     useHotjarTrigger('OK_APEN');
+
+    if (sykmelding.egenmeldt) {
+        return (
+            <div>
+                <Spacing amount="large">
+                    <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
+                        Hei, denne egenmeldingen er utløpt og kan derfor ikke benyttes. Du kan fortsatt se opplysninger
+                        fra egenmeldingen under.
+                    </Veilederpanel>
+                </Spacing>
+
+                <Sykmeldingsopplysninger sykmelding={sykmelding} />
+            </div>
+        );
+    }
 
     return (
         <AvbrytContextProvider>

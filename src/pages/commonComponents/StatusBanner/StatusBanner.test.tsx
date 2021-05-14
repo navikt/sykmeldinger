@@ -42,6 +42,23 @@ describe('StatusBanner', () => {
         expect(screen.getByText('Sykmeldingen er sendt til NAV')).toBeInTheDocument();
     });
 
+    it('Renders Bekreftet egenmelding banner', () => {
+        const plainSykmeldingStatus = {
+            statusEvent: 'BEKREFTET',
+            timestamp: '2021-05-01',
+            arbeidsgiver: null,
+            sporsmalOgSvarListe: [],
+        };
+        const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
+        const plainBehandlingsutfall = {
+            status: 'OK',
+            ruleHits: [],
+        };
+        const behandlingsutfall = new Behandlingsutfall(plainBehandlingsutfall);
+        render(<StatusBanner sykmeldingStatus={sykmeldingStatus} behandlingsutfall={behandlingsutfall} egenmeldt />);
+        expect(screen.getByText('Egenmeldingen er sendt til NAV')).toBeInTheDocument();
+    });
+
     it('Renders bekreftet avvist banner', () => {
         const plainSykmeldingStatus = {
             statusEvent: 'BEKREFTET',

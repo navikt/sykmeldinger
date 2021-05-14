@@ -7,9 +7,10 @@ import DateFormatter from '../../../utils/DateFormatter';
 interface StatusBannerProps {
     sykmeldingStatus: SykmeldingStatus;
     behandlingsutfall: Behandlingsutfall;
+    egenmeldt?: boolean;
 }
 
-const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlingsutfall }) => {
+const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlingsutfall, egenmeldt = false }) => {
     if (behandlingsutfall.status === 'INVALID') {
         if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
             return (
@@ -33,7 +34,7 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlin
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
         return (
             <AlertStripeSuksess>
-                <Systemtittel tag="h2">Sykmeldingen er sendt til NAV</Systemtittel>
+                <Systemtittel tag="h2">{egenmeldt ? 'Egenmelding' : 'Sykmelding'}en er sendt til NAV</Systemtittel>
                 <Element>{DateFormatter.toReadableDate(sykmeldingStatus.timestamp)}</Element>
             </AlertStripeSuksess>
         );

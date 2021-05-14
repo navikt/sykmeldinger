@@ -13,11 +13,7 @@ import OkUtgattSykmelding from './OK/UTGATT/OkUtgattSykmelding';
 import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
 import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
 import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
-import OkApenEgenmelding from './OK/APEN/OkApenEgenmelding';
-import OkBekreftetEgenmelding from './OK/BEKREFTET/OkBekreftetEgenmelding';
-import OkAvbruttEgenmelding from './OK/AVBRUTT/OkAvbruttEgenmelding';
 
-// BUSINESS LOGIC CONTROLLER
 const SykmeldingSide: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
@@ -49,21 +45,12 @@ const SykmeldingSide: React.FC = () => {
             case 'MANUAL_PROCESSING':
                 switch (status) {
                     case 'APEN':
-                        if (sykmelding.egenmeldt) {
-                            return <OkApenEgenmelding sykmelding={sykmelding} />;
-                        }
                         return <OkApenSykmelding sykmelding={sykmelding} />;
                     case 'BEKREFTET':
-                        if (sykmelding.egenmeldt) {
-                            return <OkBekreftetEgenmelding sykmelding={sykmelding} />;
-                        }
                         return <OkBekreftetSykmelding sykmelding={sykmelding} />;
                     case 'SENDT':
                         return <OkSendtSykmelding sykmelding={sykmelding} />;
                     case 'AVBRUTT':
-                        if (sykmelding.egenmeldt) {
-                            return <OkAvbruttEgenmelding sykmelding={sykmelding} />;
-                        }
                         return <OkAvbruttSykmelding sykmelding={sykmelding} />;
                     case 'UTGATT':
                         return <OkUtgattSykmelding sykmelding={sykmelding} />;
