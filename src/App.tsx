@@ -8,6 +8,7 @@ import SykmeldingerPage from './pages/sykmeldinger/SykmeldingerPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import SykmeldingkvitteringPage from './pages/sykmeldingkvittering/SykmeldingkvitteringPage';
+import NotFoundPage from './pages/notFound/NotFoundPage';
 
 const App = () => {
     const queryClient = new QueryClient();
@@ -31,7 +32,7 @@ const App = () => {
                         exact
                         component={SykmeldingkvitteringPage}
                     />
-                    <Route component={() => <h1>404 Page not found</h1>} />
+                    <Route component={NotFoundPage} />
                 </Switch>
             </BrowserRouter>
             {/* devtools are automatically removed in production build */}
