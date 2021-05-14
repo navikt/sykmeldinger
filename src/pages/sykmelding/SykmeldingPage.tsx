@@ -13,6 +13,8 @@ import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
 import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
 import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
 import PageWrapper from '../commonComponents/PageWrapper/PageWrapper';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import VeilederMaleSvg from '../commonComponents/Veileder/svg/VeilederMaleSvg';
 
 const SykmeldingPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -54,8 +56,12 @@ const SykmeldingPage: React.FC = () => {
                     case 'UTGATT':
                         return <OkUtgattSykmelding sykmelding={sykmelding} />;
                     default:
-                        // TODO: make seperate component
-                        return <div>Ugylding status</div>;
+                        console.error(`${behandlingsutfall} sykmelding with unsupported status: ${status}`);
+                        return (
+                            <Veilederpanel svg={<VeilederMaleSvg />}>
+                                Oisann! Det har oppstått en feil i baksystemene.
+                            </Veilederpanel>
+                        );
                 }
             case 'INVALID':
                 switch (status) {
@@ -64,8 +70,12 @@ const SykmeldingPage: React.FC = () => {
                     case 'BEKREFTET':
                         return <InvalidBekreftetSykmelding sykmelding={sykmelding} />;
                     default:
-                        // TODO: make seperate component
-                        return <div>Ugylding status</div>;
+                        console.error(`Avvist sykmelding with unsupported status: ${status}`);
+                        return (
+                            <Veilederpanel svg={<VeilederMaleSvg />}>
+                                Oisann! Det har oppstått en feil i baksystemene.
+                            </Veilederpanel>
+                        );
                 }
         }
     })();
