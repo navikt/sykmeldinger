@@ -28,8 +28,8 @@ const UriktigeOpplysningerInfo: React.FC<UriktigeOpplysningerInfoProps> = ({ uri
         <AlertStripeInfo>
             Du kan fortsatt bruke sykmeldingen
             <ul>
-                {uriktigeOpplysninger.map((opplysning) => (
-                    <li>{uriktigOpplysningTekst[opplysning]}</li>
+                {uriktigeOpplysninger.map((opplysning, index) => (
+                    <li key={index}>{uriktigOpplysningTekst[opplysning]}</li>
                 ))}
             </ul>
         </AlertStripeInfo>
