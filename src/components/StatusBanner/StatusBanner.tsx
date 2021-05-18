@@ -25,7 +25,9 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlin
     if (sykmeldingStatus.statusEvent === 'SENDT') {
         return (
             <AlertStripeSuksess>
-                <Systemtittel tag="h2">Sykmeldingen er sendt til {sykmeldingStatus.arbeidsgiver?.orgNavn}</Systemtittel>
+                <Systemtittel tag="h2">
+                    Sykmeldingen ble sendt til {sykmeldingStatus.arbeidsgiver?.orgNavn}
+                </Systemtittel>
                 <Element>{DateFormatter.toReadableDate(sykmeldingStatus.timestamp)}</Element>
             </AlertStripeSuksess>
         );
@@ -34,7 +36,7 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlin
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
         return (
             <AlertStripeSuksess>
-                <Systemtittel tag="h2">{egenmeldt ? 'Egenmelding' : 'Sykmelding'}en er sendt til NAV</Systemtittel>
+                <Systemtittel tag="h2">{egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble sendt til NAV</Systemtittel>
                 <Element>{DateFormatter.toReadableDate(sykmeldingStatus.timestamp)}</Element>
             </AlertStripeSuksess>
         );
