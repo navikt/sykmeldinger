@@ -14,7 +14,10 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
     const { sykmeldingId } = useParams<{ sykmeldingId?: string }>();
     const { pathname } = useLocation();
 
-    if (pathname === '/syk/sykmeldinger') {
+    const pathnameWithoutTrailingSlash =
+        pathname.charAt(pathname.length - 1) === '/' ? pathname.slice(0, pathname.length - 1) : pathname;
+
+    if (pathnameWithoutTrailingSlash === '/syk/sykmeldinger') {
         return (
             <>
                 <Header title="Dine sykmeldinger" />
@@ -39,7 +42,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
         );
     }
 
-    if (pathname === `/syk/sykmeldinger/${sykmeldingId}`) {
+    if (pathnameWithoutTrailingSlash === `/syk/sykmeldinger/${sykmeldingId}`) {
         return (
             <>
                 <Header title={sykmelding?.getSykmeldingTitle()} subTitle={sykmelding?.getReadableSykmeldingLength()} />
@@ -68,7 +71,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
         );
     }
 
-    if (pathname === `/syk/sykmeldinger/${sykmeldingId}/kvittering`) {
+    if (pathnameWithoutTrailingSlash === `/syk/sykmeldinger/${sykmeldingId}/kvittering`) {
         return (
             <>
                 <Header title={sykmelding?.getSykmeldingTitle()} subTitle={sykmelding?.getReadableSykmeldingLength()} />
