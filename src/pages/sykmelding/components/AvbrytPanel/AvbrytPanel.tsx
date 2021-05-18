@@ -6,8 +6,8 @@ import { Knapp } from 'nav-frontend-knapper';
 import { AvbrytContext } from '../../OK/APEN/AvbrytContext';
 import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
-import CenterItems from '../../../commonComponents/CenterItems/CenterItems';
+import Spacing from '../../../../components/Spacing/Spacing';
+import CenterItems from '../../../../components/CenterItems/CenterItems';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 const AvbrytPanel: React.FC = () => {

@@ -9,8 +9,8 @@ import HarForsikring from './HarForsikring';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Spacing from '../../../../../commonComponents/Spacing/Spacing';
-import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
+import Spacing from '../../../../../../components/Spacing/Spacing';
+import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 import ErUtenforVentetid from '../../../../../../models/ErUtenforVentetid';
 
 const StrengtFortroligInfo = () => (

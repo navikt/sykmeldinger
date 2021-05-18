@@ -8,7 +8,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './Egenmeldingsperioder.less';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import IconButton from '../../../../../commonComponents/IconButton/IconButton';
+import IconButton from '../../../../../../components/IconButton/IconButton';
 
 dayjs.extend(isBetween);
 

@@ -1,0 +1,78 @@
+@import '../../App.less';
+
+// Formatting style: BEM http://getbem.com/introduction/
+.sykmeldingsopplysninger {
+    background-color: white;
+
+    .sykmeldingsopplysninger__header {
+        // For positioning statusHeader on top of container border
+        position: relative;
+        z-index: 1;
+
+        display: flex;
+        background: #fff;
+        border: 1px solid #78706a;
+        border-radius: 4px;
+        width: 100%;
+        padding: 15px 20px;
+        align-items: center;
+
+        .sykmeldingsopplysninger__icon {
+            width: 1.5rem;
+            margin-right: 1.2rem;
+        }
+
+        .sykmeldingsopplysninger__text {
+            align-items: center;
+            display: flex;
+            flex: 1;
+            text-align: start;
+        }
+        .sykmeldingsopplysninger__expand {
+            color: @navBla;
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+
+            .sykmeldingsopplysninger__expand-text {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .sykmeldingsopplysninger__header--bg-orange {
+        background: @navOransjeLighten80;
+    }
+
+    .sykmeldingsopplysninger__header--expandable {
+        cursor: pointer;
+    }
+
+    .sykmeldingsopplysninger__content {
+        top: -7px; // Offset content border to overlap header seamlessly
+        position: relative;
+        padding: 30px 20px;
+        border: 1px solid #78706a;
+        border-radius: 4px;
+    }
+
+    .sykmeldingsopplysninger__content--hidden {
+        display: none;
+    }
+}
+
+@media (max-width: @screen-sm) {
+    .sykmeldingsopplysninger {
+        .sykmeldingsopplysninger__header {
+            padding: 15px 20px;
+
+            .sykmeldingsopplysninger__expand-text {
+                display: none;
+            }
+        }
+
+        .sykmeldingsopplysninger__content {
+            padding: 1.5rem 1rem 2.5rem 1rem;
+        }
+    }
+}

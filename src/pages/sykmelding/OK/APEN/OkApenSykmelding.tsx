@@ -4,12 +4,12 @@ import PapirInfoheader from './PapirInfoheader';
 import AvbrytContextProvider from './AvbrytContext';
 import AvbrytPanel from '../../components/AvbrytPanel/AvbrytPanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
+import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Spacing from '../../../../components/Spacing/Spacing';
 import InfoOmDigitalSykmelding from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
-import InformationBanner from '../../components/InformationBanner/InformationBanner';
+import InformationBanner from '../../../../components/InformationBanner/InformationBanner';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleSvg from '../../../commonComponents/Veileder/svg/VeilederMaleSvg';
+import VeilederMaleSvg from '../../../../components/Veileder/svg/VeilederMaleSvg';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;

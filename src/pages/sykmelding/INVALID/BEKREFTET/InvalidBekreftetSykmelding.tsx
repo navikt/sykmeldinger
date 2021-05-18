@@ -2,11 +2,11 @@ import React from 'react';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
+import VeilederMaleNeurtralSvg from '../../../../components/Veileder/svg/VeilederMaleNeutralSvg';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
-import StatusBanner from '../../../commonComponents/StatusBanner/StatusBanner';
+import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Spacing from '../../../../components/Spacing/Spacing';
+import StatusBanner from '../../../../components/StatusBanner/StatusBanner';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;

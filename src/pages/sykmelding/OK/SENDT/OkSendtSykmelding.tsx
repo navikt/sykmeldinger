@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
-import StatusBanner from '../../../commonComponents/StatusBanner/StatusBanner';
+import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Spacing from '../../../../components/Spacing/Spacing';
+import StatusBanner from '../../../../components/StatusBanner/StatusBanner';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;

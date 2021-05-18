@@ -3,13 +3,13 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import { useParams } from 'react-router-dom';
 import useSykmelding from '../../hooks/useSykmelding';
-import PageWrapper from '../commonComponents/PageWrapper/PageWrapper';
-import Spacing from '../commonComponents/Spacing/Spacing';
-import Spinner from '../commonComponents/Spinner/Spinner';
-import StatusBanner from '../commonComponents/StatusBanner/StatusBanner';
-import VeilederMaleSvg from '../commonComponents/Veileder/svg/VeilederMaleSvg';
-import StatusInfo from '../sykmelding/components/StatusInfo/StatusInfo';
-import Sykmeldingsopplysninger from '../sykmelding/components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
+import Spacing from '../../components/Spacing/Spacing';
+import Spinner from '../../components/Spinner/Spinner';
+import StatusBanner from '../../components/StatusBanner/StatusBanner';
+import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
+import StatusInfo from '../../components/StatusInfo/StatusInfo';
+import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 
 const SykmeldingkvitteringPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';

@@ -3,9 +3,9 @@ import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
+import Spacing from '../../../../components/Spacing/Spacing';
 
 interface OkUtgattSykmeldingProps {
     sykmelding: Sykmelding;

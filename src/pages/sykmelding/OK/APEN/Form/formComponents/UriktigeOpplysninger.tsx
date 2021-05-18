@@ -4,7 +4,7 @@ import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { FormShape, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { AvbrytContext } from '../../AvbrytContext';
-import Spacing from '../../../../../commonComponents/Spacing/Spacing';
+import Spacing from '../../../../../../components/Spacing/Spacing';
 import UriktigeOpplysningerInfo from '../UriktigeOpplysningerInfo';
 
 const UriktigeOpplysninger: React.FC = () => {

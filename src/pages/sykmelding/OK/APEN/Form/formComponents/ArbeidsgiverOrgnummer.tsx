@@ -5,7 +5,7 @@ import { FormShape } from '../Form';
 import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
 import NyNarmesteLeder from './NyNarmesteLeder';
 import QuestionWrapper from '../layout/QuestionWrapper';
-import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
+import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 interface ArbeidsgiverOrgnummerProps {

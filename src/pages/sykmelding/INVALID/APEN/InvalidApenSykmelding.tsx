@@ -4,15 +4,15 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import VeilederContent from '../VeilederContent';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleNeurtralSvg from '../../../commonComponents/Veileder/svg/VeilederMaleNeutralSvg';
+import VeilederMaleNeurtralSvg from '../../../../components/Veileder/svg/VeilederMaleNeutralSvg';
 import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import useBekreftAvvist from '../../../../hooks/useBekreftAvvist';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import { Controller, useForm } from 'react-hook-form';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
-import CenterItems from '../../../commonComponents/CenterItems/CenterItems';
+import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Spacing from '../../../../components/Spacing/Spacing';
+import CenterItems from '../../../../components/CenterItems/CenterItems';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;

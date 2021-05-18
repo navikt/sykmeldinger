@@ -4,7 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
+import Spacing from '../../../../components/Spacing/Spacing';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 const PapirInfoheader = () => {

@@ -5,8 +5,8 @@ import { FormShape, JaEllerNeiType } from '../Form';
 import { NaermesteLeder } from '../../../../../../models/Arbeidsgiver';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import AlertStripe from 'nav-frontend-alertstriper';
-import Spacing from '../../../../../commonComponents/Spacing/Spacing';
-import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
+import Spacing from '../../../../../../components/Spacing/Spacing';
+import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 
 interface NyNarmesteLederProps {
     naermesteLeder: NaermesteLeder;

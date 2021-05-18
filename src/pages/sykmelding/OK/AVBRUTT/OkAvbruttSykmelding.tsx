@@ -7,9 +7,9 @@ import { Knapp } from 'nav-frontend-knapper';
 import useGjenapne from '../../../../hooks/useGjenapne';
 import { useParams } from 'react-router-dom';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';
-import Spacing from '../../../commonComponents/Spacing/Spacing';
+import Spacing from '../../../../components/Spacing/Spacing';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;

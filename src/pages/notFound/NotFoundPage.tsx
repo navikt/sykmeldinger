@@ -1,5 +1,5 @@
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleSvg from '../commonComponents/Veileder/svg/VeilederMaleSvg';
+import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 
 const NotFoundPage: React.FC = () => {
     return (

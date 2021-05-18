@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Spinner from '../commonComponents/Spinner/Spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import useSykmelding from '../../hooks/useSykmelding';
 import OkBekreftetSykmelding from './OK/BEKREFTET/OkBekreftetSykmelding';
 import OkAvbruttSykmelding from './OK/AVBRUTT/OkAvbruttSykmelding';
@@ -12,9 +12,9 @@ import OkUtgattSykmelding from './OK/UTGATT/OkUtgattSykmelding';
 import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
 import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
 import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
-import PageWrapper from '../commonComponents/PageWrapper/PageWrapper';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleSvg from '../commonComponents/Veileder/svg/VeilederMaleSvg';
+import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 
 const SykmeldingPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';

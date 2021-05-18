@@ -5,9 +5,9 @@ import { FormShape, JaEllerNeiType } from '../Form';
 import Egenmeldingsperioder from './Egenmeldingsperioder';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import dayjs from 'dayjs';
-import Ekspanderbar from '../../../../../commonComponents/Ekspanderbar/Ekspanderbar';
+import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import Spacing from '../../../../../commonComponents/Spacing/Spacing';
+import Spacing from '../../../../../../components/Spacing/Spacing';
 
 interface HarBruktEgenmeldingProps {
     oppfolgingsdato: Date;

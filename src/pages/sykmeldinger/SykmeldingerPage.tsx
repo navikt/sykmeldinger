@@ -1,14 +1,14 @@
 import React from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Spinner from '../commonComponents/Spinner/Spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import useSykmeldinger from '../../hooks/useSykmeldinger';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
-import Spacing from '../commonComponents/Spacing/Spacing';
-import PageWrapper from '../commonComponents/PageWrapper/PageWrapper';
+import Spacing from '../../components/Spacing/Spacing';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
