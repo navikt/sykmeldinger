@@ -85,8 +85,11 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                     )}
                     <Spacing amount="small">
                         <Normaltekst>
-                            Adressen til NAV finner du på en <Lenke href="#">egen førsteside</Lenke> som skal skrives ut
-                            og sendes sammen med papirene.
+                            Adressen til NAV finner du på en{' '}
+                            <Lenke href="https://www.nav.no/soknader/nb/person/helse/sykepenger/NAV%2008-07.04D/brev">
+                                egen førsteside
+                            </Lenke>{' '}
+                            som skal skrives ut og sendes sammen med papirene.
                         </Normaltekst>
                     </Spacing>
                     <Normaltekst>God bedring!</Normaltekst>
