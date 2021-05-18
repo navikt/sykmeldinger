@@ -110,7 +110,7 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                         <Normaltekst>
                             Husk at NAV ikke dekker sykepenger de første 16 dagene av sykefraværet, med mindre du har
                             tegnet forsikring. Har du ikke forsikring, trenger du ikke levere søknad hvis sykefraværet
-                            er kortere enn 16 dager.
+                            er kortere enn 17 dager.
                         </Normaltekst>
                     </Spacing>
                 )}
