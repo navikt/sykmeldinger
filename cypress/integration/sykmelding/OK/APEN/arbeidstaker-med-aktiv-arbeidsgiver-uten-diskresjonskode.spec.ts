@@ -89,6 +89,6 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
     });
 
     it('Får riktig statusbanner', () => {
-        cy.contains(`Sykmeldingen er sendt til`);
+        cy.contains(`Sykmeldingen ble sendt til`);
     });
 });

@@ -76,6 +76,6 @@ describe('Selvstendig næringsdrivende utenfor ventetid', () => {
     });
 
     it('Får riktig statusbanner', () => {
-        cy.contains('Sykmeldingen er sendt til NAV');
+        cy.contains('Sykmeldingen ble sendt til NAV');
     });
 });
