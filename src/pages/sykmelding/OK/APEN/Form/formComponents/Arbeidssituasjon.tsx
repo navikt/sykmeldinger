@@ -93,7 +93,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                 control={control}
                 name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: 'arbeidssituasjon mangler.' }}
+                rules={{ required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}

@@ -43,7 +43,9 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsda
                 control={control}
                 name={`${fieldName}.svar`}
                 defaultValue={null}
-                rules={{ required: 'Du må svare på om du har brukt hatt annet fravær' }}
+                rules={{
+                    required: 'Du må svare på om du har brukt egenmelding eller annen sykmelding før du ble syk.',
+                }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
                         name={name}

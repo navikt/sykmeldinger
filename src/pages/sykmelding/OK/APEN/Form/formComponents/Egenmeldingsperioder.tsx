@@ -60,7 +60,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 validate: (fom) => {
                                     // Test max date
                                     if (dayjs(fom).isAfter(oppfolgingsdato)) {
-                                        return 'Startdato kan ikke være etter oppfølgingsdato';
+                                        return 'Startdato kan ikke være etter oppfølgingsdato.';
                                     }
 
                                     // Test current peirod
@@ -68,7 +68,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                         `${fieldName}.svar[${index}].tom`,
                                     );
                                     if (tom && dayjs(tom).isBefore(fom)) {
-                                        return 'Startdato kan ikke være etter sluttdato';
+                                        return 'Startdato kan ikke være etter sluttdato.';
                                     }
 
                                     // Test cross-period
@@ -78,7 +78,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                             .filter((f) => !!f.fom && !!f.tom)
                                             .some((f) => dayjs(fom).isBetween(f.fom!, f.tom!, null, '[]'))
                                     ) {
-                                        return 'Du kan ikke ha overlappende perioder';
+                                        return 'Du kan ikke ha overlappende perioder.';
                                     }
 
                                     return true;
@@ -115,7 +115,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 validate: (tom) => {
                                     // Test max date
                                     if (dayjs(tom).isAfter(oppfolgingsdato)) {
-                                        return 'Sluttdato kan ikke være etter oppfølgingsdato';
+                                        return 'Sluttdato kan ikke være etter oppfølgingsdato.';
                                     }
 
                                     // Test current peirod
@@ -123,8 +123,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                         `${fieldName}.svar[${index}].fom`,
                                     );
                                     if (fom && dayjs(fom).isAfter(tom)) {
-                                        console.log('sluttdato is before startdato');
-                                        return 'Sluttdato kan ikke være før startdato';
+                                        return 'Sluttdato kan ikke være før startdato.';
                                     }
 
                                     // Test cross-period
@@ -134,7 +133,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                             .filter((f) => !!f.fom && !!f.tom)
                                             .some((f) => dayjs(fom).isBetween(f.fom!, f.tom!, null, '[]'))
                                     ) {
-                                        return 'Du kan ikke ha overlappende perioder';
+                                        return 'Du kan ikke ha overlappende perioder.';
                                     }
 
                                     return true;
