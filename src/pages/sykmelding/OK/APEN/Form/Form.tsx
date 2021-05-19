@@ -36,7 +36,7 @@ export enum UriktigeOpplysningerType {
 export enum ArbeidssituasjonType {
     ARBEIDSTAKER = 'arbeidstaker',
     FRILANSER = 'frilanser',
-    SELVSTENDIG_NARINGSDRIVENDE = 'selvstendig næringsdrivende',
+    NAERINGSDRIVENDE = 'selvstendig næringsdrivende',
     ARBEIDSLEDIG = 'arbeidsledig',
     PERMITTERT = 'permittert',
     ANNET = 'annet',

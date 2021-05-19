@@ -39,7 +39,7 @@ describe('Selvstendig næringsdrivende innenfor ventetid', () => {
                 cy.get('input[name="erOpplysningeneRiktige.svar"][value=JA]').click({ force: true });
 
                 cy.contains('Jeg er sykmeldt som').should('be.visible');
-                cy.get('input[name="arbeidssituasjon.svar"][value=SELVSTENDIG_NARINGSDRIVENDE]').click({
+                cy.get('input[name="arbeidssituasjon.svar"][value=NAERINGSDRIVENDE]').click({
                     force: true,
                 });
 
@@ -77,10 +77,10 @@ describe('Selvstendig næringsdrivende innenfor ventetid', () => {
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
                 },
                 arbeidssituasjon: {
-                    svar: 'SELVSTENDIG_NARINGSDRIVENDE',
+                    svar: 'NAERINGSDRIVENDE',
                     sporsmaltekst: 'Jeg er sykmeldt som',
                     svartekster:
-                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","SELVSTENDIG_NARINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
+                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                 },
                 harBruktEgenmelding: {
                     svar: 'JA',
