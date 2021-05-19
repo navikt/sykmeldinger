@@ -37,8 +37,7 @@ export enum ArbeidssituasjonType {
     ARBEIDSTAKER = 'arbeidstaker',
     FRILANSER = 'frilanser',
     NAERINGSDRIVENDE = 'selvstendig næringsdrivende',
-    ARBEIDSLEDIG = 'arbeidsledig',
-    PERMITTERT = 'permittert',
+    ARBEIDSLEDIG = 'arbeidsledig eller permittert',
     ANNET = 'annet',
 }
 

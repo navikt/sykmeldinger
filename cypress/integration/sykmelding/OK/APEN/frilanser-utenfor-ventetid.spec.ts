@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 import sykmeldingApen from '../../../../fixtures/sykmeldinger/sykmelding-apen.json';
-// import sykmeldingBekreftet from '../../../../fixtures/sykmeldinger/sykmelding-bekreftet.json';
 
 describe('Frilanser utenfor ventetid', () => {
     beforeEach(() => {
@@ -73,7 +72,7 @@ describe('Frilanser utenfor ventetid', () => {
                     svar: 'FRILANSER',
                     sporsmaltekst: 'Jeg er sykmeldt som',
                     svartekster:
-                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
+                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                 },
             });
     });

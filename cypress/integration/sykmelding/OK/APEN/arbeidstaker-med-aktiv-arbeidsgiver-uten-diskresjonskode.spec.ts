@@ -73,7 +73,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
                     svar: 'ARBEIDSTAKER',
                     sporsmaltekst: 'Jeg er sykmeldt som',
                     svartekster:
-                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
+                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                 },
                 arbeidsgiverOrgnummer: {
                     svar: arbeidsgiverAktiv.orgnummer,
