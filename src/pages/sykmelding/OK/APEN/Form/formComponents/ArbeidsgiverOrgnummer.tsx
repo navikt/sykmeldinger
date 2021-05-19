@@ -50,7 +50,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                 name={`${fieldName}.svar`}
                 defaultValue={null}
                 rules={{
-                    required: 'Arbeidsgiver må være valgt siden du har valgt at du er arbeidstaker.',
+                    required: 'Arbeidsgiver må være valgt siden du har valgt at du er arbeidstaker',
                 }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe

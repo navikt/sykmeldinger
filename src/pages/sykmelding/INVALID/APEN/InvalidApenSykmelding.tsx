@@ -2,9 +2,7 @@ import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import VeilederContent from '../VeilederContent';
-import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleNeurtralSvg from '../../../../components/Veileder/svg/VeilederMaleNeutralSvg';
+import AvvistVeileder from '../../../../components/AvvistVeileder/AvvistVeileder';
 import { useParams } from 'react-router-dom';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import useBekreftAvvist from '../../../../hooks/useBekreftAvvist';
@@ -33,9 +31,7 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
     return (
         <div className="sykmelding-container">
             <Spacing>
-                <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
-                    <VeilederContent sykmelding={sykmelding} />
-                </Veilederpanel>
+                <AvvistVeileder sykmelding={sykmelding} />
             </Spacing>
 
             <Spacing>

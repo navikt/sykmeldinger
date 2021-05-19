@@ -1,8 +1,6 @@
 import React from 'react';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import VeilederContent from '../VeilederContent';
-import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleNeurtralSvg from '../../../../components/Veileder/svg/VeilederMaleNeutralSvg';
+import AvvistVeileder from '../../../../components/AvvistVeileder/AvvistVeileder';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../components/Spacing/Spacing';
@@ -25,9 +23,7 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
             </Spacing>
 
             <Spacing>
-                <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
-                    <VeilederContent sykmelding={sykmelding} />
-                </Veilederpanel>
+                <AvvistVeileder sykmelding={sykmelding} />
             </Spacing>
 
             <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />

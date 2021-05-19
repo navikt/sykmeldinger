@@ -1,19 +1,21 @@
-import './VeilederContent.less';
+import './AvvistVeileder.less';
 
 import React from 'react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
+import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import VeilederMaleNeurtralSvg from '../Veileder/svg/VeilederMaleNeutralSvg';
 
-interface VeilederContentProps {
+interface AvvistVeilederProps {
     sykmelding: Sykmelding;
 }
 
-const VeilederContent: React.FC<VeilederContentProps> = ({ sykmelding }) => {
+const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ sykmelding }) => {
     const behandlerNavn = sykmelding.behandler.getName();
 
     return (
-        <>
+        <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
             <Undertittel className="veiledercontent__title">Sykmeldingen kan dessverre ikke brukes</Undertittel>
             <hr aria-hidden className="veiledercontent__underline" />
             <Normaltekst>Beklager at vi må bry deg mens du er syk.</Normaltekst>
@@ -37,8 +39,8 @@ const VeilederContent: React.FC<VeilederContentProps> = ({ sykmelding }) => {
                     </li>
                 ))}
             </ul>
-        </>
+        </Veilederpanel>
     );
 };
 
-export default VeilederContent;
+export default AvvistVeileder;

@@ -3,11 +3,11 @@ import './AvbrytPanel.less';
 import { Xknapp } from 'nav-frontend-ikonknapper';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
-import { AvbrytContext } from '../../OK/APEN/AvbrytContext';
-import useAvbryt from '../../../../hooks/useAvbryt';
+import { AvbrytContext } from '../AvbrytContext';
+import useAvbryt from '../../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
-import Spacing from '../../../../components/Spacing/Spacing';
-import CenterItems from '../../../../components/CenterItems/CenterItems';
+import Spacing from '../../../../../components/Spacing/Spacing';
+import CenterItems from '../../../../../components/CenterItems/CenterItems';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 const AvbrytPanel: React.FC = () => {
