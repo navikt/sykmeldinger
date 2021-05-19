@@ -26,7 +26,7 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
     const erArbeidstaker = arbeidssituasjonSporsmal?.svar.svar === 'ARBEIDSTAKER';
     const erFlEllerSn =
         arbeidssituasjonSporsmal?.svar.svar === 'FRILANSER' ||
-        arbeidssituasjonSporsmal?.svar.svar === 'SELVSTENDIG_NARINGSDRIVENDE';
+        arbeidssituasjonSporsmal?.svar.svar === 'NAERINGSDRIVENDE';
 
     if (sykmeldingStatus.statusEvent !== 'SENDT' && sykmeldingStatus.statusEvent !== 'BEKREFTET') return null;
 

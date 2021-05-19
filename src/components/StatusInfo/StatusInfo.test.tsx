@@ -300,7 +300,7 @@ describe('StatusInfo', () => {
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
 
-            it('Renders standard info with frilanser info for SELVSTENDIG_NARINGSDRIVENDE', () => {
+            it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
                 const sykmeldingStatus = new SykmeldingStatus({
                     statusEvent: 'SENDT',
                     timestamp: '2021-05-01',
@@ -311,7 +311,7 @@ describe('StatusInfo', () => {
                             shortName: 'ARBEIDSSITUASJON',
                             svar: {
                                 svarType: 'ARBEIDSSITUASJON',
-                                svar: 'SELVSTENDIG_NARINGSDRIVENDE',
+                                svar: 'NAERINGSDRIVENDE',
                             },
                         },
                     ],
@@ -402,7 +402,7 @@ describe('StatusInfo', () => {
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
 
-            it('Renders standard info with frilanser info for SELVSTENDIG_NARINGSDRIVENDE', () => {
+            it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
                 const sykmeldingStatus = new SykmeldingStatus({
                     statusEvent: 'BEKREFTET',
                     timestamp: '2021-05-01',
@@ -413,7 +413,7 @@ describe('StatusInfo', () => {
                             shortName: 'ARBEIDSSITUASJON',
                             svar: {
                                 svarType: 'ARBEIDSSITUASJON',
-                                svar: 'SELVSTENDIG_NARINGSDRIVENDE',
+                                svar: 'NAERINGSDRIVENDE',
                             },
                         },
                     ],
