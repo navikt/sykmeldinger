@@ -1,5 +1,5 @@
 import ArbeidsgiverSykmelding from '../../../models/Sykmelding/ArbeidsgiverSykmelding';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const ArbeidsgiverView: React.FC<{ arbeidsgiver?: ArbeidsgiverSykmelding }> = ({ arbeidsgiver }) => {
     if (!arbeidsgiver?.navn) {

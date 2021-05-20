@@ -1,7 +1,7 @@
 import MeldingTilNAV from '../../../models/Sykmelding/MeldingTilNav';
 import CheckboxEntry from '../Layout/CheckboxEntry';
-import Section from '../Layout/Section';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import Section from '../Layout/Section/Section';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const MeldingTilNavView: React.FC<{ meldingTilNav?: MeldingTilNAV }> = ({ meldingTilNav }) => {
     if (!meldingTilNav || (meldingTilNav.bistandUmiddelbart === false && !meldingTilNav.beskrivBistand)) {

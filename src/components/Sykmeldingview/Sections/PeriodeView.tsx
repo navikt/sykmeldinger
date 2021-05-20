@@ -5,7 +5,7 @@ import Periode, {
     MedisinskArsakType,
 } from '../../../models/Sykmelding/Periode';
 import CheckboxEntry from '../Layout/CheckboxEntry';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 import './PeriodeView.less';
 
 const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligPeriode }> = ({
@@ -13,7 +13,7 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
 }) => {
     return (
         <div className="aktivitet-ikke-mulig">
-            <div className="aktivitet-ikke-mulig__medisinsk-arsak">
+            <div className="aktivitet-ikke-mulig__arsak">
                 {aktivitetIkkeMulig.medisinskArsak && (
                     <Element>Medisinske årsaker hindrer arbeidsrelatert aktivitet</Element>
                 )}
@@ -31,7 +31,7 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
                     />
                 )}
             </div>
-            <div className="aktivitet-ikke-mulig__arbeidsrelatert-arsak">
+            <div className="aktivitet-ikke-mulig__arsak">
                 {aktivitetIkkeMulig.arbeidsrelatertArsak && (
                     <Element>Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet</Element>
                 )}

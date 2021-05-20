@@ -1,6 +1,6 @@
 import UtdypendeOpplysning from '../../../models/Sykmelding/UtdypendeOpplysninger';
-import Section from '../Layout/Section';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import Section from '../Layout/Section/Section';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const UtdypendeOpplysningerView: React.FC<{
     utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>>;

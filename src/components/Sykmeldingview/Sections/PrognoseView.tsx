@@ -1,8 +1,8 @@
 import Prognose from '../../../models/Sykmelding/Prognose';
 import DateFormatter from '../../../utils/DateFormatter';
 import CheckboxEntry from '../Layout/CheckboxEntry';
-import Section from '../Layout/Section';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import Section from '../Layout/Section/Section';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const PrognoseView: React.FC<{ prognose?: Prognose }> = ({ prognose }) => {
     if (!prognose) {

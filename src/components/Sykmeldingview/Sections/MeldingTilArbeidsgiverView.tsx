@@ -1,5 +1,5 @@
-import Section from '../Layout/Section';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import Section from '../Layout/Section/Section';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const MeldingTilArbeidsgiverView: React.FC<{ meldingTilArbeidsgiver?: string }> = ({ meldingTilArbeidsgiver }) => {
     if (!meldingTilArbeidsgiver) {

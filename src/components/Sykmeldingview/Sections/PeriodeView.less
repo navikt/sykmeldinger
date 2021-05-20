@@ -2,15 +2,15 @@
     padding: 2rem 1rem;
     background-color: #ffe9cc;
 
-    .periode-view__periode:not(:last-child) {
+    &__periode:not(:last-child) {
         border-bottom: 1px solid grey;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
     }
+}
 
-    .periode-view__periode:not(:first-child) {
-        margin-top: 2rem;
-    }
-
-    .periode-view__periode:last-child {
-        margin-bottom: -2rem;
+.aktivitet-ikke-mulig {
+    &__arsak:not(:last-of-type) {
+        margin-bottom: 2rem;
     }
 }
