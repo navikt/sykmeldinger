@@ -1,3 +1,5 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 import 'reflect-metadata';
 import 'dayjs/locale/nb';
 import React from 'react';

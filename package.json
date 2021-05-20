@@ -49,6 +49,7 @@
         "nav-frontend-veilederpanel-style": "1.0.3",
         "prop-types": "^15.7.2",
         "react": "^16.14.0",
+        "react-app-polyfill": "^2.0.0",
         "react-collapse": "^5.1.0",
         "react-day-picker": "^7.4.8",
         "react-dom": "^16.14.0",
