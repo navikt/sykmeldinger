@@ -1,7 +1,7 @@
 import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding/MedisinskVurdering';
 import DateFormatter from '../../../utils/DateFormatter';
 import CheckboxEntry from '../Layout/CheckboxEntry';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering; arbeidsgiver?: boolean }> = ({
     medisinskVurdering,
@@ -12,7 +12,7 @@ const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering
     }
 
     return (
-        <div>
+        <div style={{ marginBottom: '2rem' }}>
             {!!medisinskVurdering.hovedDiagnose?.tekst && (
                 <SykmeldingEntry
                     title="Diagnose"

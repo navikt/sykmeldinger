@@ -1,7 +1,7 @@
 import KontaktMedPasient from '../../../models/Sykmelding/KontaktMedPasient';
 import DateFormatter from '../../../utils/DateFormatter';
-import Section from '../Layout/Section';
-import SykmeldingEntry from '../Layout/SykmeldingEntry';
+import Section from '../Layout/Section/Section';
+import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const TilbakedateringView: React.FC<{ kontaktMedPasient: KontaktMedPasient }> = ({ kontaktMedPasient }) => {
     if (!kontaktMedPasient.kontaktDato && !kontaktMedPasient.begrunnelseIkkeKontakt) {

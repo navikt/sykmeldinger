@@ -1,7 +1,6 @@
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import DateFormatter from '../../utils/DateFormatter';
 import FlereOpplysninger from './FlereOpplysninger';
-import SykmeldingEntry from './Layout/SykmeldingEntry';
 import ArbeidsevneView from './Sections/ArbeidsevneView';
 import MedisinskVurderingView from './Sections/MedisinskVurderingView';
 import MeldingTilArbeidsgiverView from './Sections/MeldingTilArbeidsgiverView';
@@ -12,6 +11,8 @@ import TilbakedateringView from './Sections/TilbakedateringView';
 import UtdypendeOpplysningerView from './Sections/UtdypendeOpplysningerView';
 import PrognoseView from './Sections/PrognoseView';
 import AnnetView from './Sections/AnnetView';
+import Section from './Layout/Section/Section';
+import SykmeldingEntry from './Layout/SykmeldingEntry/SykmeldingEntry';
 
 interface SykmeldingviewProps {
     sykmelding: Sykmelding;
@@ -21,8 +22,6 @@ interface SykmeldingviewProps {
 const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgiver = false }) => {
     return (
         <>
-            <SykmeldingEntry title="Lege/Sykmelder" mainText={sykmelding.behandler.getName()} />
-
             <MedisinskVurderingView medisinskVurdering={sykmelding.medisinskVurdering} arbeidsgiver={arbeidsgiver} />
 
             <div style={{ marginBottom: '2rem' }}>
@@ -30,12 +29,13 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
             </div>
 
             <FlereOpplysninger expandedDefault={arbeidsgiver}>
-                <SykmeldingEntry
-                    title="Dato sykmeldingen ble skrevet"
-                    mainText={DateFormatter.toReadableDate(sykmelding.behandletTidspunkt)}
-                />
-
-                <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
+                <Section>
+                    <SykmeldingEntry
+                        title="Dato sykmeldingen ble skrevet"
+                        mainText={DateFormatter.toReadableDate(sykmelding.behandletTidspunkt)}
+                    />
+                    <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
+                </Section>
 
                 <PrognoseView prognose={sykmelding.prognose} />
 
@@ -56,7 +56,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
 
                 <TilbakedateringView kontaktMedPasient={sykmelding.kontaktMedPasient} />
 
-                <AnnetView behandlerTlf={sykmelding.behandler.tlf} />
+                <AnnetView behandler={sykmelding.behandler} />
             </FlereOpplysninger>
         </>
     );
