@@ -76,9 +76,4 @@ describe('SykmeldingView', () => {
             screen.getByText(`${minimalSykmelding.behandler.fornavn} ${minimalSykmelding.behandler.etternavn}`),
         ).toBeInTheDocument();
     });
-
-    it('Renders behandletTidspunkt', () => {
-        expect(screen.getByText('Dato sykmeldingen ble skrevet')).toBeInTheDocument();
-        expect(screen.getByText('1. januar 2020')).toBeInTheDocument();
-    });
 });

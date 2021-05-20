@@ -9,48 +9,30 @@ describe('Flere opplysninger', () => {
                 <p>Hello world</p>
             </FlereOpplysninger>,
         );
-        expect(screen.getByText('Hello world')).not.toBeVisible();
+        expect(screen.queryByText('Hello world')).not.toBeInTheDocument();
     });
 
-    it('Renders content when button is not cliked', () => {
+    it('Renders content when button is clicked', async () => {
         render(
             <FlereOpplysninger>
                 <p>Hello world</p>
             </FlereOpplysninger>,
         );
-        expect(screen.getByText('Hello world')).not.toBeVisible();
-        fireEvent(
-            screen.getByText('Flere opplysninger'),
-            new MouseEvent('click', {
-                bubbles: true,
-                cancelable: true,
-            }),
-        );
-        expect(screen.getByText('Hello world')).toBeVisible();
+        expect(screen.queryByText('Hello world')).not.toBeInTheDocument();
+        fireEvent.click(screen.getByText('Flere opplysninger'));
+        await screen.findByText('Hello world');
     });
 
-    it('Does not render content when flere opplysninger gets closed', () => {
+    it('Does not render content when flere opplysninger gets closed', async () => {
         render(
             <FlereOpplysninger>
                 <p>Hello world</p>
             </FlereOpplysninger>,
         );
-        expect(screen.getByText('Hello world')).not.toBeVisible();
-        fireEvent(
-            screen.getByText('Flere opplysninger'),
-            new MouseEvent('click', {
-                bubbles: true,
-                cancelable: true,
-            }),
-        );
-        expect(screen.getByText('Hello world')).toBeVisible();
-        fireEvent(
-            screen.getByText('Lukk'),
-            new MouseEvent('click', {
-                bubbles: true,
-                cancelable: true,
-            }),
-        );
-        expect(screen.getByText('Hello world')).not.toBeVisible();
+        expect(screen.queryByText('Hello world')).not.toBeInTheDocument();
+        fireEvent.click(screen.getByText('Flere opplysninger'));
+        await screen.findByText('Hello world');
+        fireEvent.click(screen.getByRole('button', { name: 'Lukk' }));
+        expect(screen.queryByRole('button', { name: 'Lukk' })).not.toBeInTheDocument();
     });
 });
