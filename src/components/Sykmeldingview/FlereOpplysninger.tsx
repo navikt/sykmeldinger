@@ -1,6 +1,7 @@
 import NavFrontendChevron from 'nav-frontend-chevron';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { Element } from 'nav-frontend-typografi';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import './FlereOpplysninger.less';
 
 interface FlereOpplysningerProps {
@@ -9,48 +10,22 @@ interface FlereOpplysningerProps {
 
 const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ expandedDefault = false, children }) => {
     const [expanded, setExpanded] = useState<boolean>(expandedDefault);
-    const elementRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div ref={elementRef} className="flere-opplysninger">
+        <EkspanderbartpanelBase tittel="Flere opplysninger" apen={expanded} onClick={() => setExpanded(!expanded)}>
+            {children}
             <button
                 type="button"
                 aria-expanded={expanded}
                 onClick={() => {
-                    if (!expanded) {
-                        setTimeout(() => {
-                            elementRef.current?.scrollIntoView({ behavior: 'smooth' });
-                        }, 200);
-                    }
-                    setExpanded((prev) => !prev);
+                    setExpanded(!expanded);
                 }}
-                className="flere-opplysninger__toggle"
+                className="flere-opplysninger__toggle--center"
             >
-                <Element className="toggle-text">{expanded ? 'Færre' : 'Flere'} opplysninger</Element>
-                <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
+                <Element className="toggle-text">Lukk</Element>
+                <NavFrontendChevron type="opp" />
             </button>
-            <div
-                style={{ display: expanded ? '' : 'none' }}
-                aria-hidden={!expanded}
-                className="flere-opplysninger__content"
-            >
-                {children}
-                <button
-                    type="button"
-                    aria-expanded={expanded}
-                    onClick={() => {
-                        setTimeout(() => {
-                            elementRef.current?.scrollIntoView({ behavior: 'smooth' });
-                        }, 200);
-                        setExpanded((prev) => !prev);
-                    }}
-                    className="flere-opplysninger__toggle--center"
-                >
-                    <Element className="toggle-text">Lukk</Element>
-                    <NavFrontendChevron type="opp" />
-                </button>
-            </div>
-        </div>
+        </EkspanderbartpanelBase>
     );
 };
 
