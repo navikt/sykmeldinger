@@ -4,7 +4,7 @@
 .sykmeldingsopplysninger {
     background-color: white;
 
-    .sykmeldingsopplysninger__header {
+    &__header {
         // For positioning statusHeader on top of container border
         position: relative;
         z-index: 1;
@@ -14,7 +14,7 @@
         border: 1px solid #78706a;
         border-radius: 4px;
         width: 100%;
-        padding: 15px 20px;
+        padding: 15px;
         align-items: center;
 
         .sykmeldingsopplysninger__icon {
@@ -40,15 +40,27 @@
         }
     }
 
-    .sykmeldingsopplysninger__header--bg-orange {
+    &__header:hover {
+        border: 1px solid #0067c5;
+        box-shadow: #a0a0a0 0 2px 1px 0;
+        text-decoration: underline;
+        color: #0067c5;
+    }
+
+    &__header:focus {
+        box-shadow: 0 0 0 3px #254b6d;
+        outline: none;
+    }
+
+    &__header--bg-orange {
         background: @navOransjeLighten80;
     }
 
-    .sykmeldingsopplysninger__header--expandable {
+    &__header--expandable {
         cursor: pointer;
     }
 
-    .sykmeldingsopplysninger__content {
+    &__content {
         top: -7px; // Offset content border to overlap header seamlessly
         position: relative;
         padding: 30px 20px;
@@ -56,22 +68,22 @@
         border-radius: 4px;
     }
 
-    .sykmeldingsopplysninger__content--hidden {
+    &__content--hidden {
         display: none;
     }
 }
 
 @media (max-width: @screen-sm) {
     .sykmeldingsopplysninger {
-        .sykmeldingsopplysninger__header {
+        &__header {
             padding: 15px 20px;
 
-            .sykmeldingsopplysninger__expand-text {
+            &__expand-text {
                 display: none;
             }
         }
 
-        .sykmeldingsopplysninger__content {
+        &__content {
             padding: 1.5rem 1rem 2.5rem 1rem;
         }
     }

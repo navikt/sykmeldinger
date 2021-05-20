@@ -7,6 +7,7 @@ import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import Sykmeldingview from './Sykmeldingview';
 import PlasterSvg from './Svg/PlasterSvg';
 import ArbeidsgiverSvg from './Svg/ArbeidsgiverSvg';
+import Lukknapp from '../Lukknapp/Lukknap';
 
 interface SykmeldingsopplysningerProps {
     sykmelding: Sykmelding;
@@ -73,6 +74,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                 }`}
             >
                 <Sykmeldingview sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
+                <Lukknapp onClick={() => setExpanded(false)} />
             </div>
         </article>
     );
