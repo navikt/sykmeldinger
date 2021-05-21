@@ -31,13 +31,11 @@ const InfoOmDigitalSykmelding: React.FC = () => (
         }
     >
         <section>
-            <Normaltekst>
+            <Normaltekst className="info-omdigital-sykmelding__paragraph" style={{ marginBottom: '1rem' }}>
                 NAV får alle sykmeldinger som blir skrevet i Norge. Den som er sykmeldt, finner den på{' '}
                 <Lenke href="nav.no/dittsykefravaer">nav.no/dittsykefravær</Lenke>, der du er logget inn nå.
             </Normaltekst>
-        </section>
-        <section>
-            <Normaltekst>
+            <Normaltekst className="info-omdigital-sykmelding__paragraph">
                 Du kan kreve at NAV sletter sykmeldingen din. Da kan du bruke{' '}
                 <Lenke href="nav.no/skrivtiloss">nav.no/skrivtiloss</Lenke> eller ringe 55 55 33 33.
             </Normaltekst>

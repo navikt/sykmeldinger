@@ -1,9 +1,13 @@
 .info-om-digital-sykmelding {
     section:not(:last-child) {
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
 
-    .info-om-digital-sykmelding__title {
+    &__paragraph:not(:last-of-type) {
+        margin-bottom: 1rem;
+    }
+
+    &__title {
         display: flex;
         align-items: center;
 
@@ -12,7 +16,7 @@
         }
     }
 
-    .info-om-digital-sykmelding__subtitle {
+    &__subtitle {
         margin-bottom: 0.5rem;
     }
 }
