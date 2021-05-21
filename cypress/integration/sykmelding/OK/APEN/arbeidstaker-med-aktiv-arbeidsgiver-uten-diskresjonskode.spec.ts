@@ -29,7 +29,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
     });
 
     it('Viser opplysninger fra sykmeldingen', () => {
-        cy.contains('Se hele sykmeldingen din').should('be.visible');
+        cy.contains('Din sykmelding').should('be.visible');
     });
 
     it('Fyller ut skjema', () => {

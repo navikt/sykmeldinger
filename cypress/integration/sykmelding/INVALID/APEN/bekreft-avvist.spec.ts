@@ -25,7 +25,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
     });
 
     it('Viser sykmeldingsopplysninger', () => {
-        cy.contains('Se hele sykmeldingen din');
+        cy.contains('Din sykmelding');
     });
 
     it('Får feilmelding ved å bekrefte uten å ha trykket på checkbox', () => {

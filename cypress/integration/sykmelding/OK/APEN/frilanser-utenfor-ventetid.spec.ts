@@ -27,7 +27,7 @@ describe('Frilanser utenfor ventetid', () => {
     });
 
     it('Viser opplysninger fra sykmeldingen', () => {
-        cy.contains('Se hele sykmeldingen din').should('be.visible');
+        cy.contains('Din sykmelding').should('be.visible');
     });
 
     it('Fyller ut skjema', () => {

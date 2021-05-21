@@ -25,7 +25,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef<HTMLElement>(null);
 
-    const title = arbeidsgiver ? 'Dette får arbeidsgiveren din se' : 'Se hele sykmeldingen din';
+    const title = arbeidsgiver ? 'Dette får arbeidsgiveren din se' : 'Din sykmelding';
 
     return (
         <article ref={elementRef} className="sykmeldingsopplysninger">
