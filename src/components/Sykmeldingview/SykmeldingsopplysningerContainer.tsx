@@ -1,7 +1,7 @@
 import './SykmeldingsopplysningerContainer.less';
 
 import React, { useState, useRef } from 'react';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import Sykmeldingview from './Sykmeldingview';
@@ -51,12 +51,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
                         {title}
                     </Undertittel>
-                    <div className="sykmeldingsopplysninger__expand">
-                        <Normaltekst className="sykmeldingsopplysninger__expand-text">
-                            {expanded ? 'Lukk' : 'Åpne'}
-                        </Normaltekst>
-                        <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
-                    </div>
+                    <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
                 </button>
             ) : (
                 <header className="sykmeldingsopplysninger__header">
