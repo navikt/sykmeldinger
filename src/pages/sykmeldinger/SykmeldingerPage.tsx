@@ -24,7 +24,16 @@ const SykmeldingerPage: React.FC = () => {
         );
     }
 
-    if (error || sykmeldinger === undefined) {
+    if (error) {
+        return (
+            <PageWrapper>
+                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
+            </PageWrapper>
+        );
+    }
+
+    if (sykmeldinger === undefined) {
+        console.error(`Sykmeldinger er undefined`);
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>

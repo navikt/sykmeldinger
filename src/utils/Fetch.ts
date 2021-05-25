@@ -11,15 +11,16 @@ class Fetch {
      * @return {Promise<T>} The data
      */
     static async authenticatedGet<T>(url: string, cb: (data: unknown) => T | Promise<T>): Promise<T> {
-        return fetch(url, { credentials: 'include' })
-            .then((res) => {
-                if (res.status === 401) {
-                    const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
-                    window.location.href = loginServiceUrl;
-                }
-                return res.json();
-            })
-            .then(cb);
+        const res = await fetch(url, { credentials: 'include' });
+        if (res.status === 401) {
+            const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
+            window.location.href = loginServiceUrl;
+        }
+        if (res.status >= 400) {
+            throw new Error(await res.text());
+        }
+        const data = await res.json();
+        return cb(data);
     }
 
     /**
@@ -30,20 +31,22 @@ class Fetch {
      * @return {string} The response from the http request parsed as text
      */
     static async authenticatedPost<T>(url: string, body?: T): Promise<string> {
-        return fetch(url, {
+        const res = await fetch(url, {
             method: 'POST',
             credentials: 'include',
             body: body ? JSON.stringify(body) : undefined,
             headers: {
                 'Content-Type': 'application/json',
             },
-        }).then((res) => {
-            if (res.status === 401) {
-                const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
-                window.location.href = loginServiceUrl;
-            }
-            return res.text();
         });
+        if (res.status === 401) {
+            const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
+            window.location.href = loginServiceUrl;
+        }
+        if (res.status >= 400) {
+            throw new Error(await res.text());
+        }
+        return res.text();
     }
 }
 

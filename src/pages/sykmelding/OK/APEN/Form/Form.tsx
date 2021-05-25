@@ -182,10 +182,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
                     {errorSend && (
                         <Spacing amount="small">
-                            <AlertStripeFeil>
-                                En feil oppsto ved {erArbeidstaker ? 'send' : 'bekreft'}ing av sykmeldingen. Vennligst
-                                prøv igjen senere.
-                            </AlertStripeFeil>
+                            <AlertStripeFeil>{errorSend.message}</AlertStripeFeil>
                         </Spacing>
                     )}
                 </Spacing>

@@ -4,7 +4,7 @@ import Fetch from '../utils/Fetch';
 function useGjenapne(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
-    return useMutation(
+    return useMutation<unknown, Error>(
         () =>
             Fetch.authenticatedPost(
                 `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/gjenapne`,

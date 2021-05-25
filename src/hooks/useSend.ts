@@ -8,7 +8,7 @@ function useSend(sykmeldingId: string) {
     const history = useHistory();
     const { pathname } = useLocation();
 
-    return useMutation(
+    return useMutation<unknown, Error, FormShape>(
         (values: FormShape) =>
             Fetch.authenticatedPost(
                 `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v2/sykmeldinger/${sykmeldingId}/send`,

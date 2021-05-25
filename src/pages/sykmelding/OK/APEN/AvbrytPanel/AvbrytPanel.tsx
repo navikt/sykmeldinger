@@ -42,9 +42,7 @@ const AvbrytPanel: React.FC = () => {
 
                 {error && (
                     <Spacing direction="top">
-                        <AlertStripeFeil>
-                            Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
-                        </AlertStripeFeil>
+                        <AlertStripeFeil>{error.message}</AlertStripeFeil>
                     </Spacing>
                 )}
             </div>

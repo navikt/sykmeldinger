@@ -4,8 +4,7 @@ import Fetch from '../utils/Fetch';
 function useBekreftAvvist(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
-    return useMutation(
-        // TODO: type argument to match form output
+    return useMutation<unknown, Error>(
         () =>
             Fetch.authenticatedPost(
                 `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/bekreftAvvist`,

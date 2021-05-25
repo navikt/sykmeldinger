@@ -26,7 +26,16 @@ const SykmeldingPage: React.FC = () => {
         return <Spinner headline="Henter sykmelding" />;
     }
 
-    if (error || sykmelding === undefined) {
+    if (error) {
+        return (
+            <PageWrapper>
+                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
+            </PageWrapper>
+        );
+    }
+
+    if (sykmelding === undefined) {
+        console.error(`Sykmelding med id: ${sykmeldingId} er undefined`);
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>

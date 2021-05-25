@@ -68,10 +68,7 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
 
                     {errorBekreft && (
                         <Spacing amount="small">
-                            <AlertStripeAdvarsel>
-                                Kunne ikke bekrefte at sykmeldingen er avvist på grunn av en feil med baksystemene våre.
-                                Vennligst prøv igjen senere.
-                            </AlertStripeAdvarsel>
+                            <AlertStripeAdvarsel>{errorBekreft.message}</AlertStripeAdvarsel>
                         </Spacing>
                     )}
 

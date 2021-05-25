@@ -5,11 +5,11 @@ import { Knapp } from 'nav-frontend-knapper';
 import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 import Spacing from '../../../../components/Spacing/Spacing';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 const PapirInfoheader = () => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
-    const { isLoading, mutate: avbryt } = useAvbryt(sykmeldingId);
+    const { isLoading, mutate: avbryt, error } = useAvbryt(sykmeldingId);
 
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
 
@@ -55,6 +55,12 @@ const PapirInfoheader = () => {
                     <Knapp spinner={isLoading} onClick={() => avbryt()}>
                         Avbryt sykmeldingen
                     </Knapp>
+
+                    {error && (
+                        <Spacing direction="top">
+                            <AlertStripeFeil>{error.message}</AlertStripeFeil>
+                        </Spacing>
+                    )}
                 </Spacing>
             )}
 
