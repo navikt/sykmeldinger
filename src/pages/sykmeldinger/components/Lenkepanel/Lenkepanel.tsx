@@ -14,7 +14,7 @@ interface LenkepanelProps {
 const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding }) => {
     const status = sykmelding.sykmeldingStatus.statusEvent;
     const behandlingsutfallStatus = sykmelding.behandlingsutfall.status;
-    const arbeidsgiverNavn = sykmelding.arbeidsgiver?.navn;
+    const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn;
 
     const [isHoverState, setIsHoverState] = useState<boolean>(false);
 
