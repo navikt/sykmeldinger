@@ -16,10 +16,10 @@ interface EgenmeldingsperioderProps {
     oppfolgingsdato: Date;
 }
 
-// TODO: wait for new API
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgingsdato }) => {
     const fieldName: keyof FormShape = 'egenmeldingsperioder';
-    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(oppfolgingsdato).format('D. MMMM YYYY')}.`;
+    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(oppfolgingsdato).format('D. MMMM YYYY')}?`;
+    const maxDate = dayjs(oppfolgingsdato).subtract(1, 'day');
 
     const { errors, control, register, getValues, unregister } = useFormContext<FormShape>();
     const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
@@ -59,8 +59,8 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 required: 'fom dato mangler.',
                                 validate: (fom) => {
                                     // Test max date
-                                    if (dayjs(fom).isAfter(oppfolgingsdato)) {
-                                        return 'Startdato kan ikke være etter oppfølgingsdato.';
+                                    if (dayjs(fom).isAfter(maxDate)) {
+                                        return 'Startdato kan ikke være oppfølgingsdato eller senere.';
                                     }
 
                                     // Test current peirod
@@ -92,10 +92,10 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                         value={value ? value : undefined}
                                         onChange={onChange}
                                         limitations={{
-                                            maxDate: dayjs(oppfolgingsdato).format('YYYY-MM-DD'),
+                                            maxDate: maxDate.format('YYYY-MM-DD'),
                                         }}
                                         inputProps={{ name, placeholder: 'dd.mm.åååå' }}
-                                        dayPickerProps={{ initialMonth: oppfolgingsdato }}
+                                        dayPickerProps={{ initialMonth: maxDate.toDate() }}
                                     />
                                     {errors[fieldName]?.svar?.[index]?.fom?.message && (
                                         <Element style={{ color: 'darkred', maxWidth: '12rem' }}>
@@ -114,8 +114,8 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 required: 'tom dato mangler.',
                                 validate: (tom) => {
                                     // Test max date
-                                    if (dayjs(tom).isAfter(oppfolgingsdato)) {
-                                        return 'Sluttdato kan ikke være etter oppfølgingsdato.';
+                                    if (dayjs(tom).isAfter(maxDate)) {
+                                        return 'Sluttdato kan ikke være oppfølgingsdato eller senere.';
                                     }
 
                                     // Test current peirod
@@ -147,10 +147,10 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                         value={value ? value : undefined}
                                         onChange={onChange}
                                         limitations={{
-                                            maxDate: dayjs(oppfolgingsdato).format('YYYY-MM-DD'),
+                                            maxDate: maxDate.format('YYYY-MM-DD'),
                                         }}
                                         inputProps={{ name, placeholder: 'dd.mm.åååå' }}
-                                        dayPickerProps={{ initialMonth: oppfolgingsdato }}
+                                        dayPickerProps={{ initialMonth: maxDate.toDate() }}
                                     />
                                     {errors[fieldName]?.svar?.[index]?.tom?.message && (
                                         <Element style={{ color: 'darkred', maxWidth: '11rem' }}>
