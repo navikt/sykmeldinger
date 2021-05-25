@@ -94,7 +94,7 @@ describe('Selvstendig næringsdrivende innenfor ventetid', () => {
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
                 },
                 egenmeldingsperioder: {
-                    sporsmaltekst: 'Hvilke dager var du borte fra jobb før 20. april 2021.',
+                    sporsmaltekst: 'Hvilke dager var du borte fra jobb før 20. april 2021?',
                     svartekster: '"Fom, Tom"',
                     svar: [{ fom: '2021-04-05', tom: '2021-04-09' }],
                 },
