@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Undertittel, Element } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import useGjenapne from '../../../../hooks/useGjenapne';
 import { useParams } from 'react-router-dom';
@@ -23,14 +23,11 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
     return (
         <div className="sykmelding-container">
             <Spacing amount="small">
-                <AlertStripe type="feil">
+                <AlertStripe type="info">
                     <Undertittel tag="h2">
                         {sykmelding.egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble avbrutt av deg
                     </Undertittel>
-                    <Normaltekst>
-                        Dato avbrutt:{' '}
-                        {DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp, { withYear: true })}
-                    </Normaltekst>
+                    <Element>{DateFormatter.toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
                 </AlertStripe>
             </Spacing>
 
