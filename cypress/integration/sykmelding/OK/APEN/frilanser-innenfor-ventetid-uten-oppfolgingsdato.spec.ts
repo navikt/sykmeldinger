@@ -2,7 +2,7 @@
 import sykmeldingApen from '../../../../fixtures/sykmeldinger/sykmelding-apen.json';
 import sykmeldingBekreftet from '../../../../fixtures/sykmeldinger/sykmelding-bekreftet.json';
 
-describe('Frilanser innenfor ventetid', () => {
+describe('Frilanser innenfor ventetid, uten oppfolgingsdato', () => {
     beforeEach(() => {
         cy.intercept('**/api/v1/sykmeldinger', { body: [sykmeldingApen] });
         cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, { body: sykmeldingApen }).as('sykmelding');
@@ -10,7 +10,7 @@ describe('Frilanser innenfor ventetid', () => {
             body: { arbeidsgivere: [], strengtFortroligAdresse: false },
         }).as('brukerinformasjon');
         cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
-            body: { erUtenforVentetid: false, oppfolgingsdato: '2021-04-20' },
+            body: { erUtenforVentetid: false, oppfolgingsdato: null },
         }).as('ventetid');
     });
 
@@ -41,8 +41,9 @@ describe('Frilanser innenfor ventetid', () => {
                 cy.contains('Jeg er sykmeldt som').should('be.visible');
                 cy.get('input[name="arbeidssituasjon.svar"][value=FRILANSER]').click({ force: true });
 
+                // Should get the earliest fom date of the periods in the sykmelding.
                 cy.contains(
-                    'Vi har registrert at du ble syk 20. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                    `Vi har registrert at du ble syk 10. februar 2020. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`,
                 ).should('be.visible');
                 cy.get(`input[name="harBruktEgenmelding.svar"][value=JA]`).click({ force: true });
 
@@ -85,7 +86,7 @@ describe('Frilanser innenfor ventetid', () => {
                 harBruktEgenmelding: {
                     svar: 'JA',
                     sporsmaltekst:
-                        'Vi har registrert at du ble syk 20. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                        'Vi har registrert at du ble syk 10. februar 2020. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
                 },
                 harForsikring: {
@@ -94,9 +95,9 @@ describe('Frilanser innenfor ventetid', () => {
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
                 },
                 egenmeldingsperioder: {
-                    sporsmaltekst: 'Hvilke dager var du borte fra jobb før 20. april 2021?',
+                    sporsmaltekst: 'Hvilke dager var du borte fra jobb før 10. februar 2020?',
                     svartekster: '"Fom, Tom"',
-                    svar: [{ fom: '2021-04-05', tom: '2021-04-09' }],
+                    svar: [{ fom: '2020-02-05', tom: '2020-02-09' }],
                 },
             });
     });

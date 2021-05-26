@@ -142,6 +142,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                 )}
                                 erUtenforVentetid={sykmeldingUtenforVentetid}
                                 brukerinformasjon={brukerinformasjon}
+                                sykmeldingFom={sykmelding.getSykmeldingStartDate()}
                             />
                         )}
                     </Spacing>

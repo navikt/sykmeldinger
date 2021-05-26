@@ -31,12 +31,14 @@ interface ArbeidssituasjonProps {
     harAvventendePeriode: boolean;
     erUtenforVentetid: ErUtenforVentetid;
     brukerinformasjon: Brukerinformasjon;
+    sykmeldingFom: Date;
 }
 
 const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
     harAvventendePeriode,
     erUtenforVentetid,
     brukerinformasjon,
+    sykmeldingFom,
 }) => {
     const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'arbeidssituasjon';
@@ -120,8 +122,8 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                 <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} />
             )}
 
-            {skalViseEgenmeldingsperioderSporsmal && !!erUtenforVentetid.oppfolgingsdato && (
-                <HarBruktEgenmelding oppfolgingsdato={erUtenforVentetid.oppfolgingsdato} />
+            {skalViseEgenmeldingsperioderSporsmal && (
+                <HarBruktEgenmelding oppfolgingsdato={erUtenforVentetid.oppfolgingsdato || sykmeldingFom} />
             )}
 
             {skalViseForsikringSporsmal && <HarForsikring />}
