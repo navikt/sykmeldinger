@@ -24,21 +24,13 @@ const SykmeldingerPage: React.FC = () => {
         );
     }
 
-    if (error) {
-        return (
-            <PageWrapper>
-                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
-            </PageWrapper>
-        );
-    }
-
-    if (sykmeldinger === undefined) {
-        console.error(`Sykmeldinger er undefined`);
+    if (error || sykmeldinger === undefined) {
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>
-                    <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
-                    <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
+                    <Undertittel>
+                        Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.
+                    </Undertittel>
                 </AlertStripeAdvarsel>
             </PageWrapper>
         );

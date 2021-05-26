@@ -58,7 +58,9 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Avbryter sykmeldingen', () => {
-            cy.intercept('POST', `**/api/v1/sykmeldinger/${sykmeldingApen.id}/avbryt`).as('postAvbryt');
+            cy.intercept('POST', `**/api/v1/sykmeldinger/${sykmeldingApen.id}/avbryt`, { statusCode: 203 }).as(
+                'postAvbryt',
+            );
             cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, {
                 body: {
                     ...sykmeldingApen,
@@ -131,7 +133,9 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Avbryter sykmeldingen', () => {
-            cy.intercept('POST', `**/api/v1/sykmeldinger/${sykmeldingApen.id}/avbryt`).as('postAvbryt');
+            cy.intercept('POST', `**/api/v1/sykmeldinger/${sykmeldingApen.id}/avbryt`, { statusCode: 203 }).as(
+                'postAvbryt',
+            );
             cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, {
                 body: {
                     ...sykmeldingApen,

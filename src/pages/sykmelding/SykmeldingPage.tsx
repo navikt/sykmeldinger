@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../../components/Spinner/Spinner';
 import useSykmelding from '../../hooks/useSykmelding';
@@ -26,21 +26,13 @@ const SykmeldingPage: React.FC = () => {
         return <Spinner headline="Henter sykmelding" />;
     }
 
-    if (error) {
-        return (
-            <PageWrapper>
-                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
-            </PageWrapper>
-        );
-    }
-
-    if (sykmelding === undefined) {
-        console.error(`Sykmelding med id: ${sykmeldingId} er undefined`);
+    if (error || sykmelding === undefined) {
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>
-                    <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
-                    <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
+                    <Undertittel>
+                        Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.
+                    </Undertittel>
                 </AlertStripeAdvarsel>
             </PageWrapper>
         );

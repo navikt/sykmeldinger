@@ -1,5 +1,5 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import { useParams } from 'react-router-dom';
 import useSykmelding from '../../hooks/useSykmelding';
@@ -25,8 +25,9 @@ const SykmeldingkvitteringPage: React.FC = () => {
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>
-                    <Undertittel>Beklager, vi har problemer med baksystemene for øyeblikket.</Undertittel>
-                    <Normaltekst>Det kan ta litt tid å rette opp feilen. Vennligst prøv igjen senere!</Normaltekst>
+                    <Undertittel>
+                        Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.
+                    </Undertittel>
                 </AlertStripeAdvarsel>
             </PageWrapper>
         );

@@ -14,7 +14,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         cy.intercept('**/api/v1/sykmeldinger', { statusCode: 500, delay: 1000 });
         cy.visit('/syk/sykmeldinger');
 
-        cy.contains('Beklager, vi har problemer med baksystemene for øyeblikket.').should('be.visible');
+        cy.contains('Vi har problemer med baksystemene for øyeblikket.').should('be.visible');
     });
 
     it('Tom liste med sykmeldinger', () => {

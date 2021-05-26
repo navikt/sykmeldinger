@@ -57,7 +57,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
     });
 
     it('Sender skjema', () => {
-        cy.intercept('POST', `**/api/v2/sykmeldinger/${sykmeldingApen.id}/send`).as('postSend');
+        cy.intercept('POST', `**/api/v2/sykmeldinger/${sykmeldingApen.id}/send`, { statusCode: 203 }).as('postSend');
         cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingApen.id}`, { body: sykmeldingSendt });
 
         cy.get('button[type=submit]').contains('Send sykmelding').click();

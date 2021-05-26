@@ -44,7 +44,9 @@ describe('Bekreft avvist sykmelding som lest', () => {
     });
 
     it('Bekrefter lest', () => {
-        cy.intercept('POST', `**/api/v1/sykmeldinger/${sykmeldingAvvist.id}/bekreftAvvist`).as('postBekreft');
+        cy.intercept('POST', `**/api/v1/sykmeldinger/${sykmeldingAvvist.id}/bekreftAvvist`, { statusCode: 203 }).as(
+            'postBekreft',
+        );
         cy.intercept(`**/api/v1/sykmeldinger/${sykmeldingAvvist.id}`, {
             body: {
                 ...sykmeldingAvvist,
