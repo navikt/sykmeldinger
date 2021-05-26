@@ -11,46 +11,56 @@ import './PeriodeView.less';
 const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligPeriode }> = ({
     aktivitetIkkeMulig,
 }) => {
+    if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
+        return null;
+    }
+
     return (
         <div className="aktivitet-ikke-mulig">
-            <div className="aktivitet-ikke-mulig__arsak">
-                {aktivitetIkkeMulig.medisinskArsak && (
-                    <Element>Medisinske årsaker hindrer arbeidsrelatert aktivitet</Element>
-                )}
-                {aktivitetIkkeMulig.medisinskArsak?.arsak && (
-                    <CheckboxEntry
-                        show
-                        checkboxText={aktivitetIkkeMulig.medisinskArsak.arsak.map((arsak) => MedisinskArsakType[arsak])}
-                    />
-                )}
-                {aktivitetIkkeMulig.medisinskArsak?.beskrivelse && (
-                    <SykmeldingEntry
-                        title="Begrunnelse for vurdering av aktivitetskravet"
-                        mainText={aktivitetIkkeMulig.medisinskArsak.beskrivelse}
-                        small
-                    />
-                )}
-            </div>
-            <div className="aktivitet-ikke-mulig__arsak">
-                {aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                    <Element>Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet</Element>
-                )}
-                {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
-                    <CheckboxEntry
-                        show
-                        checkboxText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(
-                            (arsak) => ArbeidsrelatertArsakType[arsak],
-                        )}
-                    />
-                )}
-                {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (
-                    <SykmeldingEntry
-                        title="Nærmere beskrivelse"
-                        mainText={aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
-                        small
-                    />
-                )}
-            </div>
+            {!!aktivitetIkkeMulig.medisinskArsak && (
+                <div className="aktivitet-ikke-mulig__arsak">
+                    {aktivitetIkkeMulig.medisinskArsak && (
+                        <Element>Medisinske årsaker hindrer arbeidsrelatert aktivitet</Element>
+                    )}
+                    {aktivitetIkkeMulig.medisinskArsak?.arsak && (
+                        <CheckboxEntry
+                            show
+                            checkboxText={aktivitetIkkeMulig.medisinskArsak.arsak.map(
+                                (arsak) => MedisinskArsakType[arsak],
+                            )}
+                        />
+                    )}
+                    {aktivitetIkkeMulig.medisinskArsak?.beskrivelse && (
+                        <SykmeldingEntry
+                            title="Begrunnelse for vurdering av aktivitetskravet"
+                            mainText={aktivitetIkkeMulig.medisinskArsak.beskrivelse}
+                            small
+                        />
+                    )}
+                </div>
+            )}
+            {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
+                <div className="aktivitet-ikke-mulig__arsak">
+                    {aktivitetIkkeMulig.arbeidsrelatertArsak && (
+                        <Element>Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet</Element>
+                    )}
+                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
+                        <CheckboxEntry
+                            show
+                            checkboxText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(
+                                (arsak) => ArbeidsrelatertArsakType[arsak],
+                            )}
+                        />
+                    )}
+                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (
+                        <SykmeldingEntry
+                            title="Nærmere beskrivelse"
+                            mainText={aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
+                            small
+                        />
+                    )}
+                </div>
+            )}
         </div>
     );
 };
