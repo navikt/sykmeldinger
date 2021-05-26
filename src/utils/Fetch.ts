@@ -20,6 +20,7 @@ class Fetch {
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
         }
+        console.error(`Request to ${url} resulted in statuscode: ${res.status}`);
         if (res.status === 400) {
             throw new Error(await res.text());
         }
@@ -48,6 +49,7 @@ class Fetch {
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
         }
+        console.error(`Request to ${url} resulted in statuscode: ${res.status}`);
         if (res.status === 400) {
             throw new Error(await res.text());
         }
