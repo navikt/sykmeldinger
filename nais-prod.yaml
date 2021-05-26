@@ -1,0 +1,44 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sykmeldinger
+  namespace: teamsykmelding
+  labels:
+    team: teamsykmelding
+spec:
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - "https://www.nav.no/syk/sykmeldinger"
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  liveness:
+    path: /is_alive
+  readiness:
+    path: /is_ready
+  env:
+    - name: DECORATOR_URL
+      value: "https://www.nav.no/dekoratoren"
+    - name: RUNTIME_ENVIRONMENT
+      value: "prod"
+    - name: SYKMELDINGER_ROOT
+      value: "/syk/sykmeldinger"
+    - name: SYKMELDINGER_BACKEND_PROXY_ROOT
+      value: "https://sykmeldinger-backend-proxy.nav.no"
+    - name: FLEX_GATEWAY_ROOT
+      value: "https://flex-gateway.nav.no"
+    - name: LOGIN_SERVICE_URL
+      value: "https://loginservice.nav.no/login"
+    - name: LOGIN_SERVICE_REDIRECT_URL
+      value: "https://www.nav.no/syk/sykmeldinger"
+    - name: AMPLITUDE_ENABLED
+      value: 'true'
