@@ -44,3 +44,5 @@ spec:
       value: "false"
     - name: SYKEPENGESOKNAD_URL
       value: "https://www-gcp.dev.nav.no/syk/sykepengesoknad"
+    - name: SYKEFRAVAER_ROOT
+      value: "https://www-gcp.dev.nav.no/sykefravaer"
