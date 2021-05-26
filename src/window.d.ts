@@ -8,6 +8,7 @@ type EnvironmentKeys =
     | 'SYKEFRAVAER_ROOT'
     | 'LOGIN_SERVICE_URL'
     | 'LOGIN_SERVICE_REDIRECT_URL'
+    | 'SYKEPENGESOKNAD_URL'
     | 'AMPLITUDE_ENABLED';
 
 interface Window {

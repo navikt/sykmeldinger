@@ -41,4 +41,6 @@ spec:
     - name: LOGIN_SERVICE_REDIRECT_URL
       value: "https://www-gcp.dev.nav.no/syk/sykmeldinger"
     - name: AMPLITUDE_ENABLED
-      value: 'false'
+      value: "false"
+    - name: SYKEPENGESOKNAD_URL
+      value: "https://www-gcp.dev.nav.no/syk/sykepengesoknad"

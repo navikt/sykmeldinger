@@ -122,7 +122,7 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                     <Normaltekst>God bedring!</Normaltekst>
                 </Spacing>
 
-                <a href="/sykepengesoknad" className="knapp">
+                <a href={window._env_?.SYKEPENGESOKNAD_URL || '#'} className="knapp">
                     Gå til søknader
                 </a>
             </Veilederpanel>

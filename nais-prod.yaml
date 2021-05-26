@@ -41,4 +41,6 @@ spec:
     - name: LOGIN_SERVICE_REDIRECT_URL
       value: "https://www.nav.no/syk/sykmeldinger"
     - name: AMPLITUDE_ENABLED
-      value: 'true'
+      value: "true"
+    - name: SYKEPENGESOKNAD_URL
+      value: "https://tjenester.nav.no/sykepengesoknad"
