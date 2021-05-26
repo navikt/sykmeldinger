@@ -25,10 +25,6 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
                     <Brodsmuler
                         breadcrumbs={[
                             {
-                                title: 'Sykefravær',
-                                path: window._env_?.SYKEFRAVAER_ROOT || '#',
-                            },
-                            {
                                 title: 'Sykmeldinger',
                             },
                         ]}
@@ -49,10 +45,6 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
                 <div className="limit">
                     <Brodsmuler
                         breadcrumbs={[
-                            {
-                                title: 'Sykefravær',
-                                path: window._env_?.SYKEFRAVAER_ROOT || '#',
-                            },
                             {
                                 title: 'Sykmeldinger',
                                 path: window._env_?.SYKMELDINGER_ROOT || '#',
@@ -78,10 +70,6 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
                 <div className="limit">
                     <Brodsmuler
                         breadcrumbs={[
-                            {
-                                title: 'Sykefravær',
-                                path: window._env_?.SYKEFRAVAER_ROOT || '#',
-                            },
                             {
                                 title: 'Sykmeldinger',
                                 path: window._env_?.SYKMELDINGER_ROOT || '#',

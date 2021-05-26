@@ -3,6 +3,7 @@ import './Breadcrumbs.less';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
+import Lenke from 'nav-frontend-lenker';
 
 const PersonIcon = () => {
     return (
@@ -29,7 +30,7 @@ export interface BreadcrumbProps {
     title: string;
 }
 
-const Breadcrumb = ({ path, title }: BreadcrumbProps) => {
+const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
     if (path) {
         return (
             <li className="breadcrumbs__crumb">
@@ -51,14 +52,23 @@ interface BreadcrumbsProps {
     breadcrumbs: BreadcrumbProps[];
 }
 
-const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
     return (
         <nav className="breadcrumbs" aria-label="Du er her: ">
             <div className="breadcrumbs__icon">
                 <PersonIcon />
             </div>
             <Normaltekst tag="ul" className="breadcrumbs__crumbs">
-                <Breadcrumb path={window._env_?.DITT_NAV_ROOT || '#'} title="Ditt NAV" />
+                <li className="breadcrumbs__crumb">
+                    <Lenke href={window._env_?.DITT_NAV_ROOT || '#'} className="lenke">
+                        Ditt NAV
+                    </Lenke>
+                </li>
+                <li className="breadcrumbs__crumb">
+                    <Lenke href={window._env_?.SYKEFRAVAER_ROOT || '#'} className="lenke">
+                        Sykefravær
+                    </Lenke>
+                </li>
                 {breadcrumbs.map(({ path, title }, index) => {
                     return <Breadcrumb key={index} path={path} title={title} />;
                 })}
