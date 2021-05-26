@@ -20,7 +20,7 @@ class Fetch {
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
         }
-        if (res.status >= 400 && res.status < 500) {
+        if (res.status === 400) {
             throw new Error(await res.text());
         }
         throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
@@ -48,7 +48,7 @@ class Fetch {
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
         }
-        if (res.status >= 400 && res.status < 500) {
+        if (res.status === 400) {
             throw new Error(await res.text());
         }
         throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
