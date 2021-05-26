@@ -101,7 +101,7 @@ jobs:
           RESOURCE: nais-dev-gcp.yaml
 
   deploy-to-prod-gcp:
-    if: github.ref == 'refs/heads/master')
+    if: github.ref == 'refs/heads/master'
     name: Deploy to prod
     needs: [build-and-publish, integration-test]
     runs-on: ubuntu-latest
