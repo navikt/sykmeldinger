@@ -14,16 +14,16 @@ import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar
 import ErUtenforVentetid from '../../../../../../models/ErUtenforVentetid';
 
 const StrengtFortroligInfo = () => (
-    <AlertStripeAdvarsel style={{ marginTop: '2rem' }}>
+    <AlertStripeAdvarsel>
+        <Spacing amount="small">
+            <Normaltekst>
+                Du er registrert med adressesperre strengt fortrolig. Du kan derfor ikke sende sykmeldingen til
+                arbeidsgiveren din fra nav.no. Det betyr at du må levere sykmeldingen personlig til arbeidsgiveren din.
+            </Normaltekst>
+        </Spacing>
         <Normaltekst>
-            Du er registrert med adressesperre strengt fortrolig. Du kan derfor ikke sende sykmeldingen til
-            arbeidsgiveren din fra nav.no. Det betyr at du må levere sykmeldingen personlig til arbeidsgiveren din.
+            For å levere sykmeldingen manuelt kan du ta kontakt med den som har sykmeldt deg for å få en utskrift.
         </Normaltekst>
-        <Normaltekst>For å levere sykmeldingen manuelt kan du:</Normaltekst>
-        <ul>
-            <Normaltekst tag="li">ta kontakt med den som har sykmeldt deg for å få en utskrift</Normaltekst>
-            <Normaltekst tag="li">skrive ut sykmeldingen og levere til arbeidsgiveren din</Normaltekst>
-        </ul>
     </AlertStripeAdvarsel>
 );
 
@@ -111,7 +111,9 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                 )}
             />
             {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && brukerinformasjon.strengtFortroligAdresse && (
-                <StrengtFortroligInfo />
+                <Spacing direction="top">
+                    <StrengtFortroligInfo />
+                </Spacing>
             )}
 
             {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && !brukerinformasjon.strengtFortroligAdresse && (
