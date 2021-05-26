@@ -115,8 +115,8 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         return (
             <Spacing>
                 <AlertStripeFeil>
-                    Det oppsto en feil ved henting av av skjemadata. Du kan dessverre ikke ta i bruk sykmeldingen
-                    akkurat nå. Prøv igjen senere
+                    Vi klarte dessverre ikke å hente opp informasjonen som trengs for at du kan bruke sykmeldingen.
+                    Vennligst prøv igjen senere.
                 </AlertStripeFeil>
             </Spacing>
         );

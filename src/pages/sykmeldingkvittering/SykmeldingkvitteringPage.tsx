@@ -1,5 +1,4 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import { useParams } from 'react-router-dom';
 import useSykmelding from '../../hooks/useSykmelding';
@@ -21,13 +20,19 @@ const SykmeldingkvitteringPage: React.FC = () => {
         return <Spinner headline="Laster kvittering" />;
     }
 
-    if (error || sykmelding === undefined) {
+    if (error) {
+        return (
+            <PageWrapper>
+                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
+            </PageWrapper>
+        );
+    }
+    if (sykmelding === undefined) {
+        console.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>
-                    <Undertittel>
-                        Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.
-                    </Undertittel>
+                    En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
                 </AlertStripeAdvarsel>
             </PageWrapper>
         );

@@ -3,6 +3,8 @@
  * Redirects to Login Service if any request contains a 401 response.
  */
 class Fetch {
+    static loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
+
     /**
      * Make a GET request for the specified resource
      * Redirects to Login Service if request contains a 401 response.
@@ -12,15 +14,16 @@ class Fetch {
      */
     static async authenticatedGet<T>(url: string, cb: (data: unknown) => T | Promise<T>): Promise<T> {
         const res = await fetch(url, { credentials: 'include' });
-        if (res.status === 401) {
-            const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
-            window.location.href = loginServiceUrl;
+        if (res.ok) {
+            return cb(await res.json());
         }
-        if (res.status >= 400) {
+        if (res.status === 401) {
+            window.location.href = this.loginServiceUrl;
+        }
+        if (res.status >= 400 && res.status < 500) {
             throw new Error(await res.text());
         }
-        const data = await res.json();
-        return cb(data);
+        throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
     }
 
     /**
@@ -39,14 +42,16 @@ class Fetch {
                 'Content-Type': 'application/json',
             },
         });
-        if (res.status === 401) {
-            const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
-            window.location.href = loginServiceUrl;
+        if (res.ok) {
+            return res.text();
         }
-        if (res.status >= 400) {
+        if (res.status === 401) {
+            window.location.href = this.loginServiceUrl;
+        }
+        if (res.status >= 400 && res.status < 500) {
             throw new Error(await res.text());
         }
-        return res.text();
+        throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
     }
 }
 

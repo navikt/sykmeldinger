@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Undertittel } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../../components/Spinner/Spinner';
 import useSykmelding from '../../hooks/useSykmelding';
@@ -26,13 +25,19 @@ const SykmeldingPage: React.FC = () => {
         return <Spinner headline="Henter sykmelding" />;
     }
 
-    if (error || sykmelding === undefined) {
+    if (error) {
+        return (
+            <PageWrapper>
+                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
+            </PageWrapper>
+        );
+    }
+    if (sykmelding === undefined) {
+        console.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>
-                    <Undertittel>
-                        Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.
-                    </Undertittel>
+                    En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
                 </AlertStripeAdvarsel>
             </PageWrapper>
         );

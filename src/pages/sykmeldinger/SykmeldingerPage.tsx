@@ -1,5 +1,5 @@
 import React from 'react';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spinner from '../../components/Spinner/Spinner';
 import LenkepanelContainer from './components/LenkepanelContainer';
@@ -24,13 +24,19 @@ const SykmeldingerPage: React.FC = () => {
         );
     }
 
-    if (error || sykmeldinger === undefined) {
+    if (error) {
+        return (
+            <PageWrapper>
+                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
+            </PageWrapper>
+        );
+    }
+    if (sykmeldinger === undefined) {
+        console.error('Sykmeldinger is undefined');
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>
-                    <Undertittel>
-                        Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.
-                    </Undertittel>
+                    En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
                 </AlertStripeAdvarsel>
             </PageWrapper>
         );
