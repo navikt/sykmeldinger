@@ -14,6 +14,19 @@ describe('PrognoseView', () => {
         expect(screen.getByText('Friskmelding/Prognose')).toBeInTheDocument();
     });
 
+    it('Does not render section if arbeidsforEtterPeriode is false and all other properties are undefined', () => {
+        const plainJson = {
+            arbeidsforEtterPeriode: false,
+            hensynArbeidsplassen: null,
+            erIkkeIArbeid: null,
+            erIArbeid: null,
+        };
+        const prognose = new Prognose(plainJson);
+        render(<PrognoseView prognose={prognose} />);
+
+        expect(screen.queryByText('Friskmelding/Prognose')).not.toBeInTheDocument();
+    });
+
     it('Renders arbeidsforEtterPeriode if true', () => {
         const plainJson = {
             arbeidsforEtterPeriode: true,

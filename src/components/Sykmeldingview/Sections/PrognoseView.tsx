@@ -9,6 +9,15 @@ const PrognoseView: React.FC<{ prognose?: Prognose }> = ({ prognose }) => {
         return null;
     }
 
+    if (
+        prognose.arbeidsforEtterPeriode === false &&
+        !prognose.erIArbeid &&
+        !prognose.erIkkeIArbeid &&
+        !prognose.hensynArbeidsplassen
+    ) {
+        return null;
+    }
+
     return (
         <Section title="Friskmelding/Prognose">
             <CheckboxEntry
