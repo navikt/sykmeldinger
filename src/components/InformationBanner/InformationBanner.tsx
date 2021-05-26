@@ -53,7 +53,7 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
                     <Undertittel tag="h2" className="merknad-banner__title">
                         Behov for mer opplysninger
                     </Undertittel>
-                    <Normaltekst>
+                    <Normaltekst className="merknad-banner__paragraph">
                         Sykmeldingen din starter tidligere enn den dagen du var hos behandleren. Vi kontakter nå
                         behandleren din for å få opplysninger om hvorfor sykmeldingen er datert tilbake.
                     </Normaltekst>
