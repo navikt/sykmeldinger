@@ -29,7 +29,7 @@ spec:
     - name: DECORATOR_URL
       value: "https://www.nav.no/dekoratoren"
     - name: RUNTIME_ENVIRONMENT
-      value: "prod"
+      value: "production"
     - name: SYKMELDINGER_ROOT
       value: "/syk/sykmeldinger"
     - name: SYKMELDINGER_BACKEND_PROXY_ROOT
