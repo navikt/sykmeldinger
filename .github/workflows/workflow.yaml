@@ -100,6 +100,26 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: nais-dev-gcp.yaml
 
+  deploy-to-prod-gcp:
+    if: github.ref == 'refs/heads/master')
+    name: Deploy to prod
+    needs: [build-and-publish, integration-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/download-artifact@v1
+        with:
+          name: VERSION.txt
+          path: .
+      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
+      - name: Deploy to prod-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: nais-prod.yaml
+
   deploy-to-labs-gcp:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
     name: Deploy to labs-gcp (Demo)
