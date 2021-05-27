@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import { logger } from '../../utils/logger';
 import Brodsmuler from '../Breadcrumbs/Breadcrumbs';
 import Header from '../Header/Header';
 import Spacing from '../Spacing/Spacing';
@@ -13,6 +14,10 @@ interface PageWrapperProps {
 const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
     const { sykmeldingId } = useParams<{ sykmeldingId?: string }>();
     const { pathname } = useLocation();
+
+    useEffect(() => {
+        logger.info(pathname);
+    }, [pathname]);
 
     const pathnameWithoutTrailingSlash =
         pathname.charAt(pathname.length - 1) === '/' ? pathname.slice(0, pathname.length - 1) : pathname;
