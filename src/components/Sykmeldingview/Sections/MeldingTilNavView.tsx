@@ -1,5 +1,5 @@
 import MeldingTilNAV from '../../../models/Sykmelding/MeldingTilNav';
-import CheckboxEntry from '../Layout/CheckboxEntry';
+import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import Section from '../Layout/Section/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 

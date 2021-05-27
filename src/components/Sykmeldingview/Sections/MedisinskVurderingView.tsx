@@ -1,6 +1,6 @@
 import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding/MedisinskVurdering';
 import DateFormatter from '../../../utils/DateFormatter';
-import CheckboxEntry from '../Layout/CheckboxEntry';
+import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering; arbeidsgiver?: boolean }> = ({

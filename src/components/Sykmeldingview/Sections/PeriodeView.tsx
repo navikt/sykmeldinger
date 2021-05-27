@@ -4,7 +4,7 @@ import Periode, {
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
 } from '../../../models/Sykmelding/Periode';
-import CheckboxEntry from '../Layout/CheckboxEntry';
+import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 import './PeriodeView.less';
 
@@ -24,7 +24,7 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
                     )}
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                         <CheckboxEntry
-                            show
+                            show={Boolean(aktivitetIkkeMulig.medisinskArsak.arsak.length)}
                             checkboxText={aktivitetIkkeMulig.medisinskArsak.arsak.map(
                                 (arsak) => MedisinskArsakType[arsak],
                             )}
@@ -46,7 +46,7 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
                     )}
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
                         <CheckboxEntry
-                            show
+                            show={Boolean(aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.length)}
                             checkboxText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(
                                 (arsak) => ArbeidsrelatertArsakType[arsak],
                             )}
