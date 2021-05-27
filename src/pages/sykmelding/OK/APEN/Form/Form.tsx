@@ -127,7 +127,6 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
             <form
                 id="apen-sykmelding-form"
                 onSubmit={handleSubmit((data) => {
-                    console.log(data);
                     send(data);
                 })}
             >
