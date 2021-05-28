@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { logger } from '../utils/logger';
 
 type TriggerType =
     | 'SYKMELDINGER'
@@ -29,9 +30,8 @@ const useHotjarTrigger = (triggerType: TriggerType) => {
 
                 if (isHotjarFunction(hotjarWindow.hj)) {
                     hotjarWindow.hj('trigger', triggerType);
-                    console.info(`Hotjar triggered for ${triggerType}`);
                 } else {
-                    console.warn('Hotjar was not found on window');
+                    logger.error('Hotjar was not found on window');
                 }
             }, 500);
         } else {

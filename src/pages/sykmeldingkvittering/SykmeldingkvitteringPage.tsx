@@ -9,6 +9,7 @@ import StatusBanner from '../../components/StatusBanner/StatusBanner';
 import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 import StatusInfo from '../../components/StatusInfo/StatusInfo';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
+import { logger } from '../../utils/logger';
 
 const SykmeldingkvitteringPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -28,7 +29,7 @@ const SykmeldingkvitteringPage: React.FC = () => {
         );
     }
     if (sykmelding === undefined) {
-        console.error(`Sykmelding with id ${sykmeldingId} is undefined`);
+        logger.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>

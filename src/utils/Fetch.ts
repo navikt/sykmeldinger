@@ -1,3 +1,5 @@
+import { logger } from './logger';
+
 /**
  * Class with utility functions for working with fetch.
  * Redirects to Login Service if any request contains a 401 response.
@@ -20,7 +22,7 @@ class Fetch {
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
         }
-        console.error(`Request to ${url} resulted in statuscode: ${res.status}`);
+        logger.error(`Request to ${url} resulted in statuscode: ${res.status}`);
         if (res.status === 400) {
             throw new Error(await res.text());
         }
@@ -49,7 +51,7 @@ class Fetch {
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
         }
-        console.error(`Request to ${url} resulted in statuscode: ${res.status}`);
+        logger.error(`Request to ${url} resulted in statuscode: ${res.status}`);
         if (res.status === 400) {
             throw new Error(await res.text());
         }
