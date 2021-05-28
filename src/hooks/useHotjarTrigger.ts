@@ -18,8 +18,7 @@ interface HotjarWindow extends Window {
 type HotjarFunction = (name: string, value: string) => void;
 
 function isHotjarFunction(hj: unknown): hj is HotjarFunction {
-    // check if function takes at least two arguments
-    return typeof hj === 'function' && hj.prototype.constructor.length >= 2;
+    return typeof hj === 'function';
 }
 
 const useHotjarTrigger = (triggerType: TriggerType) => {
