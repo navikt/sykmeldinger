@@ -33,7 +33,7 @@ const useHotjarTrigger = (triggerType: TriggerType) => {
                 } else {
                     logger.warn('Hotjar was not found on window');
                 }
-            }, 500);
+            }, 1000);
         } else {
             console.info(`Not loading Hotjar ${triggerType} because the application is not in production`);
         }
