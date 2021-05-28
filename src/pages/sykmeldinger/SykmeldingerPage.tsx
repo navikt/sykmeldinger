@@ -9,6 +9,7 @@ import useSykmeldinger from '../../hooks/useSykmeldinger';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import Spacing from '../../components/Spacing/Spacing';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
+import { logger } from '../../utils/logger';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -32,7 +33,7 @@ const SykmeldingerPage: React.FC = () => {
         );
     }
     if (sykmeldinger === undefined) {
-        console.error('Sykmeldinger is undefined');
+        logger.error('Sykmeldinger is undefined');
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>

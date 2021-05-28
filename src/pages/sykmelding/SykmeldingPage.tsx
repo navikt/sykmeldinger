@@ -14,6 +14,7 @@ import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykm
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
+import { logger } from '../../utils/logger';
 
 const SykmeldingPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
@@ -33,7 +34,7 @@ const SykmeldingPage: React.FC = () => {
         );
     }
     if (sykmelding === undefined) {
-        console.error(`Sykmelding with id ${sykmeldingId} is undefined`);
+        logger.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel>
@@ -62,7 +63,7 @@ const SykmeldingPage: React.FC = () => {
                     case 'UTGATT':
                         return <OkUtgattSykmelding sykmelding={sykmelding} />;
                     default:
-                        console.error(`${behandlingsutfall} sykmelding with unsupported status: ${status}`);
+                        logger.error(`${behandlingsutfall} sykmelding with unsupported status: ${status}`);
                         return (
                             <Veilederpanel svg={<VeilederMaleSvg />}>
                                 Oisann! Det har oppstått en feil i baksystemene.
@@ -76,7 +77,7 @@ const SykmeldingPage: React.FC = () => {
                     case 'BEKREFTET':
                         return <InvalidBekreftetSykmelding sykmelding={sykmelding} />;
                     default:
-                        console.error(`Avvist sykmelding with unsupported status: ${status}`);
+                        logger.error(`Avvist sykmelding with unsupported status: ${status}`);
                         return (
                             <Veilederpanel svg={<VeilederMaleSvg />}>
                                 Oisann! Det har oppstått en feil i baksystemene.
