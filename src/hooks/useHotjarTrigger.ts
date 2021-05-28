@@ -30,10 +30,11 @@ const useHotjarTrigger = (triggerType: TriggerType) => {
 
                 if (isHotjarFunction(hotjarWindow.hj)) {
                     hotjarWindow.hj('trigger', triggerType);
+                    logger.info(`Hotjar triggered for ${triggerType}`);
                 } else {
                     logger.warn('Hotjar was not found on window');
                 }
-            }, 1000);
+            }, 500);
         } else {
             console.info(`Not loading Hotjar ${triggerType} because the application is not in production`);
         }
