@@ -32,7 +32,7 @@ describe('Arbeidstaker med diskresjonskode', () => {
 
     it('Fyller ut skjema', () => {
         cy.get('#apen-sykmelding-form').within(() => {
-            cy.contains('Er opplysningene riktige').should('be.visible');
+            cy.contains('Er opplysningene riktige?').should('be.visible');
             cy.get('input[name="erOpplysningeneRiktige.svar"][value=JA]').click({ force: true });
 
             cy.contains('Jeg er sykmeldt som').should('be.visible');

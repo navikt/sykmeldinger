@@ -36,7 +36,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
         cy.get('#apen-sykmelding-form')
             .scrollIntoView()
             .within(() => {
-                cy.contains('Er opplysningene riktige').should('be.visible');
+                cy.contains('Er opplysningene riktige?').should('be.visible');
                 cy.get('input[name="erOpplysningeneRiktige.svar"][value=JA]').click({ force: true });
 
                 cy.contains('Jeg er sykmeldt som').should('be.visible');
@@ -66,7 +66,7 @@ describe('Arbeidstaker med aktiv arbeidsgiver uten diskresjonskode', () => {
             .should('deep.equal', {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
-                    sporsmaltekst: 'Er opplysningene riktige',
+                    sporsmaltekst: 'Er opplysningene riktige?',
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
                 },
                 arbeidssituasjon: {
