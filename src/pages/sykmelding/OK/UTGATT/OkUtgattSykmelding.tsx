@@ -12,7 +12,7 @@ interface OkUtgattSykmeldingProps {
 }
 
 const OkUtgattSykmelding: React.FC<OkUtgattSykmeldingProps> = ({ sykmelding }) => {
-    useHotjarTrigger('OK_UTGATT');
+    useHotjarTrigger('SYKMELDING_OK_UTGATT');
 
     return (
         <div className="sykmelding-container">

@@ -15,7 +15,7 @@ interface OkBekreftetSykmeldingProps {
 }
 
 const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmelding }) => {
-    useHotjarTrigger('OK_BEKREFTET');
+    useHotjarTrigger('SYKMELDING_OK_BEKREFTET');
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 

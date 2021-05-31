@@ -11,7 +11,7 @@ interface InvalidBekreftetSykmeldingProps {
 }
 
 const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({ sykmelding }) => {
-    useHotjarTrigger('INVALID_BEKREFTET');
+    useHotjarTrigger('SYKMELDING_INVALID_BEKREFTET');
 
     return (
         <div className="sykmelding-container">

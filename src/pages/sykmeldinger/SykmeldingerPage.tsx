@@ -13,7 +13,7 @@ import { logger } from '../../utils/logger';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
-    useHotjarTrigger('SYKMELDINGER');
+    useHotjarTrigger('SYKMELDING_LISTEVISNING');
 
     const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
 

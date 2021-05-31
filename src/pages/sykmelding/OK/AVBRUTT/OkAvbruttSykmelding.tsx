@@ -16,7 +16,7 @@ interface OkAvbruttSykmeldingProps {
 }
 
 const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding }) => {
-    useHotjarTrigger('OK_AVBRUTT');
+    useHotjarTrigger('SYKMELDING_OK_AVBRUTT');
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
 

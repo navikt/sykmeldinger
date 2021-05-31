@@ -11,7 +11,7 @@ interface OkSendtSykmeldingProps {
 }
 
 const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => {
-    useHotjarTrigger('OK_SENDT');
+    useHotjarTrigger('SYKMELDING_OK_SENDT');
 
     return (
         <div className="sykmelding-container">

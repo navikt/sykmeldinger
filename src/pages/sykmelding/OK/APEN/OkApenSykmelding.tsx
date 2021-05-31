@@ -16,7 +16,7 @@ interface OkApenSykmeldingProps {
 }
 
 const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
-    useHotjarTrigger('OK_APEN');
+    useHotjarTrigger('SYKMELDING_OK_APEN');
 
     if (sykmelding.egenmeldt) {
         return (

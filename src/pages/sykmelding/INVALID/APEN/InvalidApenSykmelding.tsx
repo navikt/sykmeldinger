@@ -22,7 +22,7 @@ interface FormData {
 
 const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmelding }) => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
-    useHotjarTrigger('INVALID_APEN');
+    useHotjarTrigger('SYKMELDING_INVALID_APEN');
 
     const { handleSubmit, control, errors } = useForm<FormData>();
 

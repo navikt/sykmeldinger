@@ -10,10 +10,12 @@ import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 import StatusInfo from '../../components/StatusInfo/StatusInfo';
 import Sykmeldingsopplysninger from '../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import { logger } from '../../utils/logger';
+import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 
 const SykmeldingkvitteringPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
+    useHotjarTrigger('SYKMELDING_KVITTERING');
 
     const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
 
