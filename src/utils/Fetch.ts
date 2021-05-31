@@ -11,13 +11,27 @@ class Fetch {
      * Make a GET request for the specified resource
      * Redirects to Login Service if request contains a 401 response.
      * @param {string} url - The endpoint to call
-     * @param {(data: unknown) => T | Promise<T>} cb - The function to call after res.json()
+     * @param {(data: unknown) => Promise<T>} cb - The function to call after res.json()
      * @return {Promise<T>} The data
      */
-    static async authenticatedGet<T>(url: string, cb: (data: unknown) => T | Promise<T>): Promise<T> {
+    static async authenticatedGet<T>(url: string, cb: (data: unknown) => Promise<T>): Promise<T> {
         const res = await fetch(url, { credentials: 'include' });
         if (res.ok) {
-            return cb(await res.json());
+            try {
+                return await cb(await res.json());
+            } catch (error) {
+                if (error instanceof TypeError) {
+                    logger.error({
+                        message: `${error.name}: ${error.message}`,
+                        stack: error.stack,
+                    });
+                } else {
+                    logger.error({ ...error, message: 'Unnamed error occured' });
+                }
+                throw new Error(
+                    'Beklager! En uventet feil har oppstått. Sannsynligvis jobber vi med saken allerede, men ta kontakt med oss hvis det ikke har løst seg til i morgen.',
+                );
+            }
         }
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
@@ -48,7 +62,7 @@ class Fetch {
             },
         });
         if (res.ok) {
-            return res.text();
+            return await res.text();
         }
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
