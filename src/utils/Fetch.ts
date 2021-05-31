@@ -38,9 +38,10 @@ class Fetch {
             logger.warn(`Session expired for request to ${url}`);
             throw new Error('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
         }
-        logger.error(`Request to ${url} resulted in statuscode: ${res.status}`);
+        const textResponse = await res.text();
+        logger.error(`Request to ${url} resulted in statuscode: ${res.status} with message: ${textResponse}`);
         if (res.status === 400) {
-            throw new Error(await res.text());
+            throw new Error(textResponse);
         }
         throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
     }
@@ -61,17 +62,18 @@ class Fetch {
                 'Content-Type': 'application/json',
             },
         });
+        const textResponse = await res.text();
         if (res.ok) {
-            return await res.text();
+            return textResponse;
         }
         if (res.status === 401) {
             window.location.href = this.loginServiceUrl;
             logger.warn(`Session expired for request to ${url}`);
             throw new Error('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
         }
-        logger.error(`Request to ${url} resulted in statuscode: ${res.status}`);
+        logger.error(`Request to ${url} resulted in statuscode: ${res.status} with message: ${textResponse}`);
         if (res.status === 400) {
-            throw new Error(await res.text());
+            throw new Error(textResponse);
         }
         throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
     }
