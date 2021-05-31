@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import { logger } from '../utils/logger';
 
 type TriggerType =
-    | 'SYKMELDINGER'
-    | 'OK_APEN'
-    | 'OK_BEKREFTET'
-    | 'OK_SENDT'
-    | 'OK_AVBRUTT'
-    | 'OK_UTGATT'
-    | 'INVALID_APEN'
-    | 'INVALID_BEKREFTET';
+    | 'SYKMELDING_LISTEVISNING'
+    | 'SYKMELDING_OK_APEN'
+    | 'SYKMELDING_OK_BEKREFTET'
+    | 'SYKMELDING_OK_SENDT'
+    | 'SYKMELDING_OK_AVBRUTT'
+    | 'SYKMELDING_OK_UTGATT'
+    | 'SYKMELDING_INVALID_APEN'
+    | 'SYKMELDING_INVALID_BEKREFTET'
+    | 'SYKMELDING_KVITTERING';
 
 interface HotjarWindow extends Window {
     hj?: (name: string, value: string) => void;
@@ -29,7 +30,6 @@ const useHotjarTrigger = (triggerType: TriggerType) => {
 
                 if (isHotjarFunction(hotjarWindow.hj)) {
                     hotjarWindow.hj('trigger', triggerType);
-                    logger.info(`Hotjar triggered for ${triggerType}`);
                 } else {
                     logger.warn('Hotjar was not found on window');
                 }
