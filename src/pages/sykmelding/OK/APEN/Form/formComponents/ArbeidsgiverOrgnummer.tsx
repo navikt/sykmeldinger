@@ -3,7 +3,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { FormShape } from '../Form';
 import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
-import NyNarmesteLeder from './NyNarmesteLeder';
+import RiktigNarmesteLeder from './RiktigNarmesteLeder';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
@@ -91,7 +91,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
             )}
 
             {valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder && (
-                <NyNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />
+                <RiktigNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />
             )}
         </QuestionWrapper>
     );

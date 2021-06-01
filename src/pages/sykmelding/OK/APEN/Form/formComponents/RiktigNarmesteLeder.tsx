@@ -8,15 +8,15 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import Spacing from '../../../../../../components/Spacing/Spacing';
 import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 
-interface NyNarmesteLederProps {
+interface RiktigNarmesteLederProps {
     naermesteLeder: NaermesteLeder;
 }
 
-const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => {
+const RiktigNarmesteLeder: React.FC<RiktigNarmesteLederProps> = ({ naermesteLeder }) => {
     const { control, watch, register, unregister, setValue } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'nyNarmesteLeder';
+    const fieldName: keyof FormShape = 'riktigNarmesteLeder';
     const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`;
-    const watchNyNarmesteLeder = watch(fieldName);
+    const watchRiktigNarmesteLeder = watch(fieldName);
 
     useEffect(() => {
         register({ name: `${fieldName}.sporsmaltekst`, value: sporsmaltekst });
@@ -63,7 +63,7 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
                 )}
             />
 
-            {watchNyNarmesteLeder?.svar === 'JA' && (
+            {watchRiktigNarmesteLeder?.svar === 'JA' && (
                 <Spacing direction="top" amount="small">
                     <AlertStripe type="info">
                         Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no
@@ -71,7 +71,7 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
                 </Spacing>
             )}
 
-            {watchNyNarmesteLeder?.svar === 'NEI' && (
+            {watchRiktigNarmesteLeder?.svar === 'NEI' && (
                 <Spacing direction="top" amount="small">
                     <AlertStripe type="info">
                         Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
@@ -82,4 +82,4 @@ const NyNarmesteLeder: React.FC<NyNarmesteLederProps> = ({ naermesteLeder }) => 
     );
 };
 
-export default NyNarmesteLeder;
+export default RiktigNarmesteLeder;

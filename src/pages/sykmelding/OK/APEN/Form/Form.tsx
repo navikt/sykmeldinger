@@ -57,7 +57,7 @@ export interface FormShape {
     uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
     arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
     arbeidsgiverOrgnummer?: SporsmalSvar<string>;
-    nyNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    riktigNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType>;
     harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType>;
     egenmeldingsperioder?: SporsmalSvar<Egenmeldingsperiode[]>;
     harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType>;

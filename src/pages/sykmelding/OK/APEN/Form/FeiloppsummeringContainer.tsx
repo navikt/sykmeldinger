@@ -23,7 +23,7 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
         uriktigeOpplysninger: errors.uriktigeOpplysninger?.svar?.message,
         arbeidssituasjon: errors.arbeidssituasjon?.svar?.message,
         arbeidsgiverOrgnummer: errors.arbeidsgiverOrgnummer?.svar?.message,
-        nyNarmesteLeder: errors.nyNarmesteLeder?.svar?.message,
+        riktigNarmesteLeder: errors.riktigNarmesteLeder?.svar?.message,
         harBruktEgenmelding: errors.harBruktEgenmelding?.svar?.message,
         egenmeldingsperioder:
             errors.egenmeldingsperioder?.svar?.find((ep) => ep?.fom)?.fom?.message ||
