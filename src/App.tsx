@@ -15,6 +15,7 @@ const App = () => {
         defaultOptions: {
             queries: {
                 retry: 1,
+                refetchOnWindowFocus: false,
             },
         },
     });
