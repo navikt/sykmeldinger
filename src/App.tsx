@@ -11,7 +11,13 @@ import SykmeldingkvitteringPage from './pages/sykmeldingkvittering/Sykmeldingkvi
 import NotFoundPage from './pages/notFound/NotFoundPage';
 
 const App = () => {
-    const queryClient = new QueryClient();
+    const queryClient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                retry: 1,
+            },
+        },
+    });
 
     return (
         <QueryClientProvider client={queryClient}>

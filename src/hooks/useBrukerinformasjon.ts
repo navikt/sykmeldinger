@@ -15,7 +15,7 @@ function useBrukerinformasjon() {
                     return brukerinformasjon;
                 },
             ),
-        { retry: false },
+        { refetchOnWindowFocus: false },
     );
 }
 
