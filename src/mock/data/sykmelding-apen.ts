@@ -73,7 +73,7 @@ export const sykmeldingApen = {
         annenFraversArsak: {
             beskrivelse:
                 'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-            grunn: ['NODVENDIG_KONTROLLUNDERSOKELSE'],
+            grunn: ['NODVENDIG_KONTROLLUNDENRSOKELSE'],
         },
     },
     prognose: {
