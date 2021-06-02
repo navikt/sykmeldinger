@@ -1,64 +1,32 @@
-# Sykmeldinger
+# Sykmeldinger 📝
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+Frontend for visning og behandling av sykmeldinger.
 
-Frontend-app for visning og behandling av enkeltsykmeldinger.
+Lever under:
+
+-   prod-gcp: https://www.nav.no/syk/sykmeldinger
+-   dev-gcp: https://www-gcp.dev.nav.no/syk/sykmeldinger
+-   labs-gcp (demo): https://sykmeldinger.labs.nais.io/syk/sykmeldinger/
+
+Tekniske valg:
 
 -   Laget med [Create React App](https://github.com/facebook/create-react-app)
--   Craco for konfigurasjon av utvidelser
--   Less for styling
--   Prettier er brukt lokalt i VSCode med config `.prettierrc.js`
-
-![State diagram](https://github.com/navikt/sykmeldinger/blob/master/state-diagram-mermaid.png)
+-   Craco for konfigurasjon av utvidelser slik at man kan bruke craco-less for kompilering av less-filer. Dette forbi designbiblioteket bruker Less til styling.
+-   React-query for håndtering av server state.
+-   Class-validator for validering av "ukjent" data fra diverse API.
+-   React-testing-library for enhetstesting av enkeltkomponenter.
+-   Cypress for integrasjonstester.
 
 ## Environment-variabler
 
-Alle environment-variabler som er prefix-et med `REACT_APP_` "injectes" i koden ved bygging av frontend. For utvikling lokalt settes disse i `./client/.env` (opprett fil selv), mens for bygg til dev, prod og gcp settes de i `./github/workflows/deploy-*.yml`. Liste over environment variabler som må settes:
-
--   REACT_APP_IS_GCP_LABS # Set only for instance running on gcp-labs
--   REACT_APP_SYKEFRAVAER_ROOT
--   REACT_APP_SYKMELDINGER_ROOT
--   REACT_APP_LOGINSERVICE_URL
--   REACT_APP_SYFOREST_ROOT
-
-Ved mangler i denne listen, gjør et søk i koden etter `REACT_APP_`
+Environment-variable settes på `window._env_` i brukerens browser via scriptet `/env-config.js`. Her blir variable som er definert i `.env`-filen ved root av dette repoet hentet fra environment variablene definert i poden. På denne holder det å bygge ett docker image selv om det skal deployes til flere miljøer. Se `nais-*.yaml` i root for finne ut hvilke varible som er satt i forskjellige miljø.
 
 ## Kjør lokalt
 
-Appen består av en `./client/`-mappe og en `./server/`-mappe, hvor henholdsvis frontend- og node-backend-applikasjonen lever. Node-backend bruker for å serve statiske filer.
-
-### Utvikling av frontend
-
 ```bash
-cd client
-npm install
-npm start # starter development-server med hot-reloading
+npm run dev
 ```
 
-### Utvikling av Node backend
+## Test-miljø
 
-```bash
-cd server
-npm install
-npm run dev # Starter Nodemon med hot-reloading
-```
-
-## Bygg til produksjon
-
-### Produksjonsbygg av frontend
-
-```bash
-cd client
-npm run build
-```
-
-Bygger statiske filer til `./client/build/`-mappen.
-
-### Produksjonsbygg av Node backend
-
-```bash
-cd client
-npm run build
-```
-
-Bygger statiske filer til `./server/build/`-mappen.
+[www-gcp.dev.nav.no/syk/sykmeldinger](www-gcp.dev.nav.no/syk/sykmeldinger) nås lokalt dersom man er pålogget Naisdevice.
