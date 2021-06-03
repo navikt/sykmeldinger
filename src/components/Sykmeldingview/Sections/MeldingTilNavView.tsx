@@ -3,7 +3,14 @@ import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import Section from '../Layout/Section/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
-const MeldingTilNavView: React.FC<{ meldingTilNav?: MeldingTilNAV }> = ({ meldingTilNav }) => {
+const MeldingTilNavView: React.FC<{ meldingTilNav?: MeldingTilNAV; arbeidsgiver?: boolean }> = ({
+    meldingTilNav,
+    arbeidsgiver = false,
+}) => {
+    if (arbeidsgiver) {
+        return null;
+    }
+
     if (!meldingTilNav || (meldingTilNav.bistandUmiddelbart === false && !meldingTilNav.beskrivBistand)) {
         return null;
     }
