@@ -116,6 +116,18 @@ describe('MedisinskVurdering', () => {
         expect(screen.getByText('Sykdommen er svangerskapsrelatert')).toBeInTheDocument();
     });
 
+    it('Does not render svangerskapsrelatert if it arbeidsgiver', () => {
+        const plainJson = {
+            biDiagnoser: [],
+            svangerskap: true,
+            yrkesskade: false,
+        };
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
+        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver />);
+
+        expect(screen.queryByText('Sykdommen er svangerskapsrelatert')).not.toBeInTheDocument();
+    });
+
     it('Renders yrkesskade if it exits', () => {
         const plainJson = {
             biDiagnoser: [],
