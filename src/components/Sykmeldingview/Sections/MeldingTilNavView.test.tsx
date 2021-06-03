@@ -39,16 +39,22 @@ describe('MeldingTilNavView', () => {
         expect(screen.getByText(plainJson.beskrivBistand)).toBeInTheDocument();
     });
 
+    it('Does not render if arbeidsgiver', () => {
+        const plainJson = {
+            bistandUmiddelbart: true,
+            beskrivBistand: 'beskrivelse av bistanden',
+        };
+        const meldingTilNav = new MeldingTilNAV(plainJson);
+        render(<MeldingTilNavView meldingTilNav={meldingTilNav} arbeidsgiver />);
+        expect(screen.queryByText('Melding til NAV')).not.toBeInTheDocument();
+        expect(screen.queryByText('Ønskes bistand fra NAV nå')).not.toBeInTheDocument();
+        expect(screen.queryByText('Nærmere beskrivelse')).not.toBeInTheDocument();
+    });
+
     it('Does not render section if object does not exist', () => {
         render(<MeldingTilNavView />);
-        expect(() => {
-            expect(screen.getByText('Melding til NAV'));
-        }).toThrow();
-        expect(() => {
-            screen.getByText('Ønskes bistand fra NAV nå');
-        }).toThrow();
-        expect(() => {
-            screen.getByText('Nærmere beskrivelse');
-        }).toThrow();
+        expect(screen.queryByText('Melding til NAV')).not.toBeInTheDocument();
+        expect(screen.queryByText('Ønskes bistand fra NAV nå')).not.toBeInTheDocument();
+        expect(screen.queryByText('Nærmere beskrivelse')).not.toBeInTheDocument();
     });
 });

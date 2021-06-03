@@ -48,9 +48,10 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                     tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
                     tiltakNAV={sykmelding.tiltakNAV}
                     andreTiltak={sykmelding.andreTiltak}
+                    arbeidsgiver={arbeidsgiver}
                 />
 
-                <MeldingTilNavView meldingTilNav={sykmelding.meldingTilNAV} />
+                <MeldingTilNavView meldingTilNav={sykmelding.meldingTilNAV} arbeidsgiver={arbeidsgiver} />
 
                 <MeldingTilArbeidsgiverView meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver} />
 

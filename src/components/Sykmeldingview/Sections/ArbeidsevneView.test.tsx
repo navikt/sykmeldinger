@@ -18,14 +18,22 @@ describe('ArbeidsevneView', () => {
 
     it('Does not render tiltak if then dont exist', () => {
         render(<ArbeidsevneView />);
-        expect(() => {
-            expect(screen.getByText('tiltak på arbeidsplassen'));
-        }).toThrow();
-        expect(() => {
-            expect(screen.getByText('tiltak nav'));
-        }).toThrow();
-        expect(() => {
-            expect(screen.getByText('andre tiltak'));
-        }).toThrow();
+        expect(screen.queryByText('tiltak på arbeidsplassen')).not.toBeInTheDocument();
+        expect(screen.queryByText('tiltak nav')).not.toBeInTheDocument();
+        expect(screen.queryByText('andre tiltak')).not.toBeInTheDocument();
+    });
+
+    it('Does not render tiltak nav and andre tiltak if arbeidsgiver', () => {
+        render(
+            <ArbeidsevneView
+                tiltakArbeidsplassen="tiltak på arbeidsplassen"
+                tiltakNAV="tiltak nav"
+                andreTiltak="andre tiltak"
+                arbeidsgiver
+            />,
+        );
+        expect(screen.getByText('tiltak på arbeidsplassen')).toBeInTheDocument();
+        expect(screen.queryByText('tiltak nav')).not.toBeInTheDocument();
+        expect(screen.queryByText('andre tiltak')).not.toBeInTheDocument();
     });
 });
