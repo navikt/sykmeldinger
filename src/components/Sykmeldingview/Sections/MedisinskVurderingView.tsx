@@ -48,7 +48,10 @@ const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering
                     small
                 />
             )}
-            <CheckboxEntry show={medisinskVurdering.svangerskap} checkboxText="Sykdommen er svangerskapsrelatert" />
+            <CheckboxEntry
+                show={!arbeidsgiver && medisinskVurdering.svangerskap}
+                checkboxText="Sykdommen er svangerskapsrelatert"
+            />
             <CheckboxEntry
                 show={medisinskVurdering.yrkesskade}
                 checkboxText="Sykdommen kan skyldes en yrkesskade/yrkessykdom"
