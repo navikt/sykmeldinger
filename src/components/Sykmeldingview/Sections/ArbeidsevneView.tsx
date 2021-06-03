@@ -5,8 +5,14 @@ interface ArbeidsevneViewProps {
     tiltakArbeidsplassen?: string;
     tiltakNAV?: string;
     andreTiltak?: string;
+    arbeidsgiver?: boolean;
 }
-const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }) => {
+const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({
+    tiltakArbeidsplassen,
+    tiltakNAV,
+    andreTiltak,
+    arbeidsgiver = false,
+}) => {
     if (!tiltakArbeidsplassen || !tiltakNAV || !andreTiltak) {
         return null;
     }
@@ -18,8 +24,10 @@ const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({ tiltakArbeidsplassen,
                     mainText={tiltakArbeidsplassen}
                 />
             )}
-            {!!tiltakNAV && <SykmeldingEntry title="Tiltak i regi av NAV" mainText={tiltakNAV} />}
-            {!!andreTiltak && <SykmeldingEntry title="Andre innspill til NAV" mainText={andreTiltak} />}
+            {!arbeidsgiver && !!tiltakNAV && <SykmeldingEntry title="Tiltak i regi av NAV" mainText={tiltakNAV} />}
+            {!arbeidsgiver && !!andreTiltak && (
+                <SykmeldingEntry title="Andre innspill til NAV" mainText={andreTiltak} />
+            )}
         </Section>
     );
 };
