@@ -29,8 +29,8 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
                             det er en gyldig grunn for tilbakedateringen.
                         </Normaltekst>
                         <Normaltekst className="merknad-banner__paragraph">
-                            Sykmeldingen din startet før du oppsøkte behandleren, og det er ikke oppgitt noen gyldig
-                            grunn. Derfor vil du ikke få sykepenger for disse dagene.
+                            Sykmeldingen din startet før du oppsøkte behandleren, og vi kan ikke godkjenne grunnen.
+                            Derfor vil du ikke få sykepenger for disse dagene.
                         </Normaltekst>
                     </div>
                     <Undertittel tag="h2" className="merknad-banner__title">
