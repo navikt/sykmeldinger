@@ -22,7 +22,8 @@ const StrengtFortroligInfo = () => (
             </Normaltekst>
         </Spacing>
         <Normaltekst>
-            For å levere sykmeldingen manuelt kan du ta kontakt med den som har sykmeldt deg for å få en utskrift.
+            For å levere sykmeldingen til arbeidsgiveren din kan du ta kontakt med den som har sykmeldt deg for å få en
+            utskrift.
         </Normaltekst>
     </AlertStripeAdvarsel>
 );
