@@ -86,6 +86,44 @@ describe('PeriodeView', () => {
         expect(screen.getByText(plainJson.aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse)).toBeInTheDocument();
     });
 
+    it('Does not render medisinsk arsak for arbeidsgiver view', () => {
+        const plainJson = {
+            fom: '2021-04-01',
+            tom: '2021-04-05',
+            type: 'AKTIVITET_IKKE_MULIG',
+            aktivitetIkkeMulig: {
+                medisinskArsak: {
+                    beskrivelse: 'medisinsk beskrivelse',
+                    arsak: ['TILSTAND_HINDRER_AKTIVITET'],
+                },
+                arbeidsrelatertArsak: {
+                    beskrivelse: 'arbeidsrelatert beskrivelse',
+                    arsak: ['MANGLENDE_TILRETTELEGGING'],
+                },
+            },
+            reisetilskudd: false,
+        };
+        const periode = new Periode(plainJson);
+
+        render(<PeriodeView perioder={[periode]} arbeidsgiver />);
+
+        expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
+        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('5 dager')).toBeInTheDocument();
+
+        expect(screen.queryByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).not.toBeInTheDocument();
+        expect(screen.queryByText('Helsetilstanden hindrer pasienten i å være i aktivitet')).not.toBeInTheDocument();
+        expect(screen.queryByText('Begrunnelse for vurdering av aktivitetskravet')).not.toBeInTheDocument();
+        expect(screen.queryByText(plainJson.aktivitetIkkeMulig.medisinskArsak.beskrivelse)).not.toBeInTheDocument();
+
+        expect(
+            screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
+        ).toBeInTheDocument();
+        expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument();
+        expect(screen.getByText('Nærmere beskrivelse')).toBeInTheDocument();
+        expect(screen.getByText(plainJson.aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse)).toBeInTheDocument();
+    });
+
     it('Renders gradert periode', () => {
         const plainJson = {
             fom: '2021-04-01',

@@ -25,7 +25,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
             <MedisinskVurderingView medisinskVurdering={sykmelding.medisinskVurdering} arbeidsgiver={arbeidsgiver} />
 
             <div style={{ marginBottom: '2rem' }}>
-                <PeriodeView perioder={sykmelding.sykmeldingsperioder} />
+                <PeriodeView perioder={sykmelding.sykmeldingsperioder} arbeidsgiver={arbeidsgiver} />
             </div>
 
             <FlereOpplysninger expandedDefault={arbeidsgiver}>

@@ -8,8 +8,14 @@ import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 import './PeriodeView.less';
 
-const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligPeriode }> = ({
+interface AktivitetIkkeMuligViewProps {
+    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode;
+    arbeidsgiver?: boolean;
+}
+
+const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({
     aktivitetIkkeMulig,
+    arbeidsgiver = false,
 }) => {
     if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
         return null;
@@ -17,7 +23,7 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
 
     return (
         <div className="aktivitet-ikke-mulig">
-            {!!aktivitetIkkeMulig.medisinskArsak && (
+            {!arbeidsgiver && !!aktivitetIkkeMulig.medisinskArsak && (
                 <div className="aktivitet-ikke-mulig__arsak">
                     {aktivitetIkkeMulig.medisinskArsak && (
                         <Element>Medisinske årsaker hindrer arbeidsrelatert aktivitet</Element>
@@ -65,7 +71,12 @@ const AktivitetIkkeMuligView: React.FC<{ aktivitetIkkeMulig: AktivitetIkkeMuligP
     );
 };
 
-const PeriodeView: React.FC<{ perioder: Periode[] }> = ({ perioder }) => {
+interface PeriodeViewProps {
+    perioder: Periode[];
+    arbeidsgiver?: boolean;
+}
+
+const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder, arbeidsgiver = false }) => {
     return (
         <div className="periode-view">
             {perioder.map((periode, index) => (
@@ -83,7 +94,10 @@ const PeriodeView: React.FC<{ perioder: Periode[] }> = ({ perioder }) => {
                         />
                     )}
                     {!!periode.aktivitetIkkeMulig && (
-                        <AktivitetIkkeMuligView aktivitetIkkeMulig={periode.aktivitetIkkeMulig} />
+                        <AktivitetIkkeMuligView
+                            aktivitetIkkeMulig={periode.aktivitetIkkeMulig}
+                            arbeidsgiver={arbeidsgiver}
+                        />
                     )}
                     <CheckboxEntry
                         show={Boolean(periode.gradert?.reisetilskudd)}
