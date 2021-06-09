@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import MedisinskVurdering from '../../../models/Sykmelding/MedisinskVurdering';
+import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding/MedisinskVurdering';
 import MedisinskVurderingView from './MedisinskVurderingView';
 
 describe('MedisinskVurdering', () => {
@@ -137,7 +137,7 @@ describe('MedisinskVurdering', () => {
         // AnnenFraversArsak
         expect(screen.queryByText('Annen lovfestet fraværsgrunn')).not.toBeInTheDocument();
         expect(
-            screen.queryByText('Når vedkommende er donor eller er under vurdering som donor'),
+            screen.queryByText(AnnenFraverGrunn[plainJson.annenFraversArsak.grunn[0] as keyof typeof AnnenFraverGrunn]),
         ).not.toBeInTheDocument();
         expect(screen.queryByText('Beskrivelse av fraværsgrunn')).not.toBeInTheDocument();
         expect(screen.queryByText(plainJson.annenFraversArsak.beskrivelse)).not.toBeInTheDocument();
