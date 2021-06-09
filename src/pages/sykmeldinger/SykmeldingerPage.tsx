@@ -15,9 +15,9 @@ const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
     useHotjarTrigger('SYKMELDING_LISTEVISNING');
 
-    const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
+    const { isLoading, isFetching, error, data: sykmeldinger } = useSykmeldinger();
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
         return (
             <Spacing>
                 <Spinner headline="Henter dine sykmeldinger" />
