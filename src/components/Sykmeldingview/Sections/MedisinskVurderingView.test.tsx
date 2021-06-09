@@ -114,6 +114,10 @@ describe('MedisinskVurdering', () => {
                     tekst: 'Farlig sykdom',
                 },
             ],
+            annenFraversArsak: {
+                beskrivelse: 'Dette er en beskrivelse',
+                grunn: ['DONOR'],
+            },
             svangerskap: true,
             yrkesskade: true,
             yrkesskadeDato: '2020-04-01',
@@ -130,10 +134,18 @@ describe('MedisinskVurdering', () => {
         expect(screen.queryByText(plainJson.biDiagnoser[0].tekst)).not.toBeInTheDocument();
         expect(screen.queryByText(plainJson.biDiagnoser[1].tekst)).not.toBeInTheDocument();
 
+        // AnnenFraversArsak
+        expect(screen.queryByText('Annen lovfestet fraværsgrunn')).not.toBeInTheDocument();
+        expect(
+            screen.queryByText('Når vedkommende er donor eller er under vurdering som donor'),
+        ).not.toBeInTheDocument();
+        expect(screen.queryByText('Beskrivelse av fraværsgrunn')).not.toBeInTheDocument();
+        expect(screen.queryByText(plainJson.annenFraversArsak.beskrivelse)).not.toBeInTheDocument();
+
         // Svangerskap
         expect(screen.queryByText('Sykdommen er svangerskapsrelatert')).not.toBeInTheDocument();
 
-        // ykresskade
+        // Yrkesskade
         expect(screen.queryByText('Skadedato')).not.toBeInTheDocument();
         expect(screen.queryByText('1. april 2020')).not.toBeInTheDocument();
     });
