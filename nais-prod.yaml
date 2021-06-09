@@ -33,7 +33,7 @@ spec:
     - name: SYKMELDINGER_ROOT
       value: "/syk/sykmeldinger"
     - name: SYKMELDINGER_BACKEND_PROXY_ROOT
-      value: "https://sykmeldinger-backend-proxy.nav.no"
+      value: "https://sykmelding-gateway.nav.no/sykmeldinger-backend"
     - name: FLEX_GATEWAY_ROOT
       value: "https://flex-gateway.nav.no"
     - name: LOGIN_SERVICE_URL
