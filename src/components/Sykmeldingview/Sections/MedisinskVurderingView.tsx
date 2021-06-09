@@ -12,6 +12,10 @@ const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering
     }
 
     if (arbeidsgiver) {
+        if (!medisinskVurdering.hovedDiagnose && medisinskVurdering.biDiagnoser.length === 0) {
+            return null;
+        }
+
         return (
             <div style={{ marginBottom: '2rem' }}>
                 {!!medisinskVurdering.hovedDiagnose?.tekst && (
