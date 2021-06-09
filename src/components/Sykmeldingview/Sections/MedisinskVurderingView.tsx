@@ -11,25 +11,30 @@ const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering
         return null;
     }
 
+    if (arbeidsgiver) {
+        return (
+            <div style={{ marginBottom: '2rem' }}>
+                {!!medisinskVurdering.hovedDiagnose?.tekst && (
+                    <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} sladd />
+                )}
+                {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
+                    if (bidiagnose.tekst) {
+                        return <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} sladd />;
+                    }
+                    return null;
+                })}
+            </div>
+        );
+    }
+
     return (
         <div style={{ marginBottom: '2rem' }}>
             {!!medisinskVurdering.hovedDiagnose?.tekst && (
-                <SykmeldingEntry
-                    title="Diagnose"
-                    mainText={medisinskVurdering?.hovedDiagnose?.tekst}
-                    sladd={arbeidsgiver === true}
-                />
+                <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} />
             )}
             {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
                 if (bidiagnose.tekst) {
-                    return (
-                        <SykmeldingEntry
-                            key={index}
-                            title="Bidiagnose"
-                            mainText={bidiagnose.tekst}
-                            sladd={arbeidsgiver === true}
-                        />
-                    );
+                    return <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} />;
                 }
                 return null;
             })}
@@ -48,10 +53,7 @@ const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering
                     small
                 />
             )}
-            <CheckboxEntry
-                show={!arbeidsgiver && medisinskVurdering.svangerskap}
-                checkboxText="Sykdommen er svangerskapsrelatert"
-            />
+            <CheckboxEntry show={medisinskVurdering.svangerskap} checkboxText="Sykdommen er svangerskapsrelatert" />
             <CheckboxEntry
                 show={medisinskVurdering.yrkesskade}
                 checkboxText="Sykdommen kan skyldes en yrkesskade/yrkessykdom"
