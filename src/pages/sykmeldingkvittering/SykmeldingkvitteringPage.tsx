@@ -17,9 +17,9 @@ const SykmeldingkvitteringPage: React.FC = () => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
     useHotjarTrigger('SYKMELDING_KVITTERING');
 
-    const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
+    const { isLoading, isFetching, error, data: sykmelding } = useSykmelding(sykmeldingId);
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
         return <Spinner headline="Laster kvittering" />;
     }
 
@@ -30,6 +30,7 @@ const SykmeldingkvitteringPage: React.FC = () => {
             </PageWrapper>
         );
     }
+
     if (sykmelding === undefined) {
         logger.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
@@ -45,9 +46,13 @@ const SykmeldingkvitteringPage: React.FC = () => {
         sykmelding.behandlingsutfall.status === 'INVALID' ||
         ['SENDT', 'BEKREFTET'].includes(sykmelding.sykmeldingStatus.statusEvent) === false
     ) {
+        logger.error(`Trying to display kvittering for sykmelding with id: ${sykmeldingId}, but the status is wrong`);
         return (
             <PageWrapper>
-                <Veilederpanel svg={<VeilederMaleSvg />}>Oisann! ser ut som du er på feil sted.</Veilederpanel>
+                <Veilederpanel svg={<VeilederMaleSvg />}>
+                    Beklager! En uventet feil har oppstått. Sannsynligvis jobber vi med saken allerede, men ta kontakt
+                    med oss hvis det ikke har løst seg til i morgen.
+                </Veilederpanel>
             </PageWrapper>
         );
     }

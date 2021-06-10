@@ -16,6 +16,7 @@ const App = () => {
             queries: {
                 retry: 1,
                 refetchOnWindowFocus: false,
+                staleTime: Infinity,
             },
         },
     });

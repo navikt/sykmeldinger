@@ -20,9 +20,9 @@ const SykmeldingPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
-    const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
+    const { isLoading, isFetching, error, data: sykmelding } = useSykmelding(sykmeldingId);
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
         return <Spinner headline="Henter sykmelding" />;
     }
 
