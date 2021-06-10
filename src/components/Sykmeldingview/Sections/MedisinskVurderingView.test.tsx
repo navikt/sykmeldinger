@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import MedisinskVurdering from '../../../models/Sykmelding/MedisinskVurdering';
+import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding/MedisinskVurdering';
 import MedisinskVurderingView from './MedisinskVurderingView';
 
 describe('MedisinskVurdering', () => {
@@ -47,43 +47,6 @@ describe('MedisinskVurdering', () => {
         expect(screen.getByText(plainJson.biDiagnoser[1].tekst)).toBeInTheDocument();
     });
 
-    it('Does not render diagnose for arbeidsgiver', () => {
-        const plainJson = {
-            hovedDiagnose: {
-                kode: 'tullekode',
-                system: 'icd-10',
-                tekst: 'Skummel sykdom',
-            },
-            biDiagnoser: [
-                {
-                    kode: 'tullekode1',
-                    system: 'icd-10',
-                    tekst: 'Skummel sykdom',
-                },
-                {
-                    kode: 'tullekode2',
-                    system: 'icd-10',
-                    tekst: 'Farlig sykdom',
-                },
-            ],
-            svangerskap: false,
-            yrkesskade: false,
-        };
-        const medisinskVurdering = new MedisinskVurdering(plainJson);
-        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver />);
-
-        expect(screen.getByText('Diagnose')).toBeInTheDocument();
-        expect(() => {
-            screen.getByText(plainJson.hovedDiagnose.tekst);
-        }).toThrow();
-        expect(() => {
-            screen.getByText(plainJson.biDiagnoser[0].tekst);
-        }).toThrow();
-        expect(() => {
-            screen.getByText(plainJson.biDiagnoser[1].tekst);
-        }).toThrow();
-    });
-
     it('Renders annenFraversArsak if it exits', () => {
         const plainJson = {
             biDiagnoser: [],
@@ -116,18 +79,6 @@ describe('MedisinskVurdering', () => {
         expect(screen.getByText('Sykdommen er svangerskapsrelatert')).toBeInTheDocument();
     });
 
-    it('Does not render svangerskapsrelatert if it arbeidsgiver', () => {
-        const plainJson = {
-            biDiagnoser: [],
-            svangerskap: true,
-            yrkesskade: false,
-        };
-        const medisinskVurdering = new MedisinskVurdering(plainJson);
-        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver />);
-
-        expect(screen.queryByText('Sykdommen er svangerskapsrelatert')).not.toBeInTheDocument();
-    });
-
     it('Renders yrkesskade if it exits', () => {
         const plainJson = {
             biDiagnoser: [],
@@ -142,5 +93,60 @@ describe('MedisinskVurdering', () => {
 
         expect(screen.getByText('Skadedato')).toBeInTheDocument();
         expect(screen.getByText('1. april 2020')).toBeInTheDocument();
+    });
+
+    it('Does not render anything if arbeidsgiver', () => {
+        const plainJson = {
+            hovedDiagnose: {
+                kode: 'tullekode',
+                system: 'icd-10',
+                tekst: 'Skummel sykdom',
+            },
+            biDiagnoser: [
+                {
+                    kode: 'tullekode1',
+                    system: 'icd-10',
+                    tekst: 'Skummel sykdom',
+                },
+                {
+                    kode: 'tullekode2',
+                    system: 'icd-10',
+                    tekst: 'Farlig sykdom',
+                },
+            ],
+            annenFraversArsak: {
+                beskrivelse: 'Dette er en beskrivelse',
+                grunn: ['DONOR'],
+            },
+            svangerskap: true,
+            yrkesskade: true,
+            yrkesskadeDato: '2020-04-01',
+        };
+        const medisinskVurdering = new MedisinskVurdering(plainJson);
+        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver />);
+
+        // Diagnose
+        expect(screen.getByText('Diagnose')).toBeInTheDocument();
+        expect(screen.queryByText(plainJson.hovedDiagnose.tekst)).not.toBeInTheDocument();
+
+        // Bidiagnoser
+        expect(screen.getAllByText('Bidiagnose').length).toBe(2);
+        expect(screen.queryByText(plainJson.biDiagnoser[0].tekst)).not.toBeInTheDocument();
+        expect(screen.queryByText(plainJson.biDiagnoser[1].tekst)).not.toBeInTheDocument();
+
+        // AnnenFraversArsak
+        expect(screen.queryByText('Annen lovfestet fraværsgrunn')).not.toBeInTheDocument();
+        expect(
+            screen.queryByText(AnnenFraverGrunn[plainJson.annenFraversArsak.grunn[0] as keyof typeof AnnenFraverGrunn]),
+        ).not.toBeInTheDocument();
+        expect(screen.queryByText('Beskrivelse av fraværsgrunn')).not.toBeInTheDocument();
+        expect(screen.queryByText(plainJson.annenFraversArsak.beskrivelse)).not.toBeInTheDocument();
+
+        // Svangerskap
+        expect(screen.queryByText('Sykdommen er svangerskapsrelatert')).not.toBeInTheDocument();
+
+        // Yrkesskade
+        expect(screen.queryByText('Skadedato')).not.toBeInTheDocument();
+        expect(screen.queryByText('1. april 2020')).not.toBeInTheDocument();
     });
 });

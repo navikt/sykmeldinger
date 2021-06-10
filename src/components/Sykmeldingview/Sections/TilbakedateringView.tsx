@@ -3,7 +3,12 @@ import DateFormatter from '../../../utils/DateFormatter';
 import Section from '../Layout/Section/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
-const TilbakedateringView: React.FC<{ kontaktMedPasient: KontaktMedPasient }> = ({ kontaktMedPasient }) => {
+interface TilbakedateringViewProps {
+    kontaktMedPasient: KontaktMedPasient;
+    arbeidsgiver?: boolean;
+}
+
+const TilbakedateringView: React.FC<TilbakedateringViewProps> = ({ kontaktMedPasient, arbeidsgiver = false }) => {
     if (!kontaktMedPasient.kontaktDato && !kontaktMedPasient.begrunnelseIkkeKontakt) {
         return null;
     }
@@ -16,7 +21,7 @@ const TilbakedateringView: React.FC<{ kontaktMedPasient: KontaktMedPasient }> = 
                     mainText={DateFormatter.toReadableDate(kontaktMedPasient.kontaktDato)}
                 />
             )}
-            {!!kontaktMedPasient.begrunnelseIkkeKontakt && (
+            {!arbeidsgiver && !!kontaktMedPasient.begrunnelseIkkeKontakt && (
                 <SykmeldingEntry
                     title="Begrunnelse for tilbakedatering"
                     mainText={kontaktMedPasient.begrunnelseIkkeKontakt}
