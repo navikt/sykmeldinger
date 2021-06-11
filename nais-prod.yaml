@@ -43,6 +43,6 @@ spec:
     - name: AMPLITUDE_ENABLED
       value: "true"
     - name: SYKEPENGESOKNAD_URL
-      value: "https://tjenester.nav.no/sykepengesoknad"
+      value: "https://www.nav.no/syk/sykepengesoknad"
     - name: SYKEFRAVAER_ROOT
       value: "https://tjenester.nav.no/sykefravaer"
