@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Pasient from '../../../models/Sykmelding/Pasient';
 import PasientView from './PasientView';
 
-describe('MeldingTilNavView', () => {
+describe('PasientView', () => {
     it('Does not render if NOT arbeidsgiver', () => {
         const plainJson = {
             fnr: '12345678901',
