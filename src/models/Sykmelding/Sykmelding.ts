@@ -12,6 +12,7 @@ import SykmeldingStatus from './SykmeldingStatus';
 import UtdypendeOpplysning from './UtdypendeOpplysninger';
 import { ArrayNotEmpty, IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
 import dayjs from 'dayjs';
+import Pasient from './Pasient';
 
 export class Sykmelding {
     @IsString()
@@ -104,6 +105,9 @@ export class Sykmelding {
     @ValidateNested({ each: true })
     readonly merknader?: Merknad[];
 
+    @ValidateNested()
+    readonly pasient: Pasient;
+
     constructor(data: any) {
         this.id = data.id;
         this.mottattTidspunkt = new Date(data.mottattTidspunkt);
@@ -130,6 +134,7 @@ export class Sykmelding {
         this.papirsykmelding = typeof data.papirsykmelding === 'boolean' ? data.papirsykmelding : undefined;
         this.harRedusertArbeidsgiverperiode = data.harRedusertArbeidsgiverperiode ?? undefined;
         this.merknader = data.merknader ? data.merknader.map((merknad: any) => new Merknad(merknad)) : undefined;
+        this.pasient = new Pasient(data.pasient);
     }
 
     private getUtdypendeOpplysninger(value: unknown): Map<string, Map<string, UtdypendeOpplysning>> {
