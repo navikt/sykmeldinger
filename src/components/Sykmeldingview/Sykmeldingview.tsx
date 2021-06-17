@@ -13,7 +13,6 @@ import PrognoseView from './Sections/PrognoseView';
 import AnnetView from './Sections/AnnetView';
 import Section from './Layout/Section/Section';
 import SykmeldingEntry from './Layout/SykmeldingEntry/SykmeldingEntry';
-import PasientView from './Sections/PasientView';
 
 interface SykmeldingviewProps {
     sykmelding: Sykmelding;
@@ -23,8 +22,6 @@ interface SykmeldingviewProps {
 const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgiver = false }) => {
     return (
         <>
-            <PasientView pasient={sykmelding.pasient} arbeidsgiver={arbeidsgiver} />
-
             <MedisinskVurderingView medisinskVurdering={sykmelding.medisinskVurdering} arbeidsgiver={arbeidsgiver} />
 
             <div style={{ marginBottom: '2rem' }}>

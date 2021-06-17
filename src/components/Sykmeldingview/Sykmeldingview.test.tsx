@@ -62,12 +62,6 @@ const minimalSykmelding = {
     papirsykmelding: null,
     harRedusertArbeidsgiverperiode: null,
     merknader: null,
-    pasient: {
-        fnr: '123456789',
-        fornavn: null,
-        mellomnavn: null,
-        etternavn: null,
-    },
 };
 
 describe('SykmeldingView', () => {

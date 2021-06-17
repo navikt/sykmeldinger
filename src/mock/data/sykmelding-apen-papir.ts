@@ -80,10 +80,4 @@ export const sykmeldingApenPapir = {
     egenmeldt: false,
     papirsykmelding: true,
     harRedusertArbeidsgiverperiode: false,
-    pasient: {
-        fnr: '12345678901',
-        fornavn: 'Ola',
-        mellomnavn: null,
-        etternavn: 'Nordmann',
-    },
 };
