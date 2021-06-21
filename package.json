@@ -98,6 +98,8 @@
         "@types/react-router-dom": "^5.1.7",
         "cypress": "^7.1.0",
         "fetch-mock": "^9.11.0",
+        "fetch-mock-jest": "^1.5.1",
+        "node-fetch": "^2.6.1",
         "prettier": "^2.2.1"
     }
 }
