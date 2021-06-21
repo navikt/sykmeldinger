@@ -84,4 +84,10 @@ export const sykmeldingUtgatt = {
     egenmeldt: false,
     papirsykmelding: false,
     harRedusertArbeidsgiverperiode: false,
+    pasient: {
+        fnr: '12345678901',
+        fornavn: 'Ola',
+        mellomnavn: null,
+        etternavn: 'Nordmann',
+    },
 };
