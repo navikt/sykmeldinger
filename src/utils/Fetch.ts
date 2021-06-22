@@ -26,7 +26,10 @@ class Fetch {
                         stack: error.stack,
                     });
                 } else {
-                    logger.error({ ...error, message: 'Unnamed error occured' });
+                    logger.error({
+                        ...error,
+                        message: error.message ?? `Error without message occurred in GET request to ${url}`,
+                    });
                 }
                 throw new Error(
                     'Beklager! En uventet feil har oppstått. Sannsynligvis jobber vi med saken allerede, men ta kontakt med oss hvis det ikke har løst seg til i morgen.',
