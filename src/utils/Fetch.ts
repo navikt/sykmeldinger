@@ -14,11 +14,11 @@ class Fetch {
      * @param {(data: unknown) => Promise<T>} cb - The function to call after res.json()
      * @return {Promise<T>} The data
      */
-    static async authenticatedGet<T>(url: string, cb: (data: unknown) => Promise<T>): Promise<T> {
+    static async authenticatedGet<T>(url: string, cb: (data: unknown, response: Response) => Promise<T>): Promise<T> {
         const res = await fetch(url, { credentials: 'include' });
         if (res.ok) {
             try {
-                return await cb(await res.json());
+                return await cb(await res.json(), res);
             } catch (error) {
                 if (error instanceof TypeError) {
                     logger.error({
