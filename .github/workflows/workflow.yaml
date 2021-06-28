@@ -81,7 +81,6 @@ jobs:
           path: cypress/screenshots
 
   deploy-to-q1-dev-gcp:
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
     name: Deploy to q1 dev-gcp
     needs: [build-and-publish, integration-test]
     runs-on: ubuntu-latest
@@ -121,7 +120,7 @@ jobs:
           RESOURCE: nais-prod.yaml
 
   deploy-to-labs-gcp:
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
+    if: github.ref == 'refs/heads/master'
     name: Deploy to labs-gcp (Demo)
     needs: [build-and-publish, integration-test]
     runs-on: ubuntu-latest
