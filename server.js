@@ -17,7 +17,11 @@ app.use((_req, res, next) => {
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
 
-app.use(`${PUBLIC_URL}`, (_req, res, next) => {
+app.use(`${PUBLIC_URL}/`, (_req, res, next) => {
+    if (_req.path !== '/') {
+        return next();
+    }
+
     // Verify that user is logged in, if not, redirect to login before page is loaded
     const cookie = _req.headers['cookie'];
     const hasAuthToken = cookie ? cookie.includes('selvbetjening-idtoken') : false;
@@ -28,6 +32,7 @@ app.use(`${PUBLIC_URL}`, (_req, res, next) => {
         return;
     }
 
+    console.log(`User logged in ${_req.originalUrl}`)
     next();
 });
 
