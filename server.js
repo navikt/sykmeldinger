@@ -4,8 +4,8 @@ const path = require('path');
 console.log('Starting server');
 const app = express();
 
-app.set('etag', false);
-app.set('x-powered-by', false);
+app.set('etag', false)
+app.set('x-powered-by', false)
 app.use((_req, res, next) => {
     // Disable caching
     res.setHeader('Pragma', 'no-cache');
@@ -16,20 +16,6 @@ app.use((_req, res, next) => {
 });
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
-
-app.use(`${PUBLIC_URL}`, (_req, res, next) => {
-    // Verify that user is logged in, if not, redirect to login before page is loaded
-    const cookie = _req.headers['cookie'];
-    const hasAuthToken = cookie ? cookie.includes('selvbetjening-idtoken') : false;
-
-    if (!hasAuthToken) {
-        console.log(`User not logged in, redirecting, ${_req.originalUrl}`);
-        res.redirect(302, `${process.env.LOGIN_SERVICE_URL}?redirect=${process.env.LOGIN_SERVICE_REDIRECT_URL}`);
-        return;
-    }
-
-    next();
-});
 
 app.get('/is_alive', (_req, res) => {
     res.status(200).send('Alive');
