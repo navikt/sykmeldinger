@@ -26,8 +26,6 @@ spec:
   readiness:
     path: /is_ready
   env:
-    - name: NODE_ENV
-      value: "production"
     - name: DECORATOR_URL
       value: "https://dekoratoren.dev.nav.no"
     - name: RUNTIME_ENVIRONMENT
