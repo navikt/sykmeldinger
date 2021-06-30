@@ -105,8 +105,9 @@ export class Sykmelding {
     @ValidateNested({ each: true })
     readonly merknader?: Merknad[];
 
+    @IsOptional()
     @ValidateNested()
-    readonly pasient: Pasient;
+    readonly pasient?: Pasient;
 
     constructor(data: any) {
         this.id = data.id;
@@ -134,7 +135,7 @@ export class Sykmelding {
         this.papirsykmelding = typeof data.papirsykmelding === 'boolean' ? data.papirsykmelding : undefined;
         this.harRedusertArbeidsgiverperiode = data.harRedusertArbeidsgiverperiode ?? undefined;
         this.merknader = data.merknader ? data.merknader.map((merknad: any) => new Merknad(merknad)) : undefined;
-        this.pasient = new Pasient(data.pasient);
+        this.pasient = data.pasient ? new Pasient(data.pasient) : undefined;
     }
 
     private getUtdypendeOpplysninger(value: unknown): Map<string, Map<string, UtdypendeOpplysning>> {
