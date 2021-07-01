@@ -18,7 +18,7 @@ export const sykmeldingAvvist = {
     },
     sykmeldingsperioder: [
         {
-            fom: '2020-02-10',
+            fom: '2020-02-08',
             tom: '2020-02-11',
             behandlingsdager: 2,
             reisetilskudd: false,
