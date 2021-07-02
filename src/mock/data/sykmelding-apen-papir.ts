@@ -11,8 +11,8 @@ export const sykmeldingApenPapir = {
     },
     sykmeldingsperioder: [
         {
-            fom: '2020-02-10',
-            tom: '2020-02-11',
+            fom: '2020-01-10',
+            tom: '2020-02-03',
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
             reisetilskudd: false,

@@ -28,9 +28,10 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
         [sykmeldinger],
     );
 
-    const sykmeldingerSortedByDate = useMemo(() => SykmeldingSorter.sortSykmeldingerByDate(sykmeldinger), [
-        sykmeldinger,
-    ]);
+    const sykmeldingerSortedByDate = useMemo(
+        () => SykmeldingSorter.sortSykmeldingerByDate(sykmeldinger),
+        [sykmeldinger],
+    );
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
     if (sykmeldinger.length === 0) {
@@ -44,9 +45,11 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
     }
 
     return (
-        <div className="lenkepanel-container">
+        <section aria-labelledby={type} className="lenkepanel-container">
             <header className="lenkepanel-container__header">
-                <Undertittel tag="h2">{title}</Undertittel>
+                <Undertittel id={type} tag="h2">
+                    {title}
+                </Undertittel>
                 {type === 'TIDLIGERE_SYKMELDINGER' && (
                     <Select
                         value={sortBy}
@@ -72,7 +75,7 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
                         </li>
                     ))}
             </ol>
-        </div>
+        </section>
     );
 };
 

@@ -16,6 +16,7 @@ class Fetch {
      */
     static async authenticatedGet<T>(url: string, cb: (data: unknown, response: Response) => Promise<T>): Promise<T> {
         const res = await fetch(url, { credentials: 'include' });
+
         if (res.ok) {
             try {
                 return await cb(await res.json(), res);
