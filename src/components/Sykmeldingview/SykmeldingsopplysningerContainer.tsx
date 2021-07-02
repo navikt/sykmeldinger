@@ -28,7 +28,11 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const title = arbeidsgiver ? 'Dette får arbeidsgiveren din se' : 'Din sykmelding';
 
     return (
-        <article ref={elementRef} className="sykmeldingsopplysninger">
+        <article
+            aria-labelledby={`sykmelding-${sykmelding.id}${arbeidsgiver ? '-arbeidsgiver' : ''}`}
+            ref={elementRef}
+            className="sykmeldingsopplysninger"
+        >
             {expandable === true ? (
                 <button
                     type="button"
@@ -48,7 +52,11 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     <div className="sykmeldingsopplysninger__icon">
                         {arbeidsgiver ? <ArbeidsgiverSvg /> : <PlasterSvg />}
                     </div>
-                    <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
+                    <Undertittel
+                        id={`sykmelding-${sykmelding.id}${arbeidsgiver ? '-arbeidsgiver' : ''}`}
+                        className="sykmeldingsopplysninger__text"
+                        tag="h2"
+                    >
                         {title}
                     </Undertittel>
                     <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
