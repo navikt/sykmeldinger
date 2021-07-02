@@ -1,17 +1,23 @@
 import { PropsWithChildren, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import { Route, Router } from 'react-router-dom';
+import { createMemoryHistory, History } from 'history';
 
 interface CustomProviderOptions {
     initialRouterEntries: string[];
+    renderPath: string;
+    history?: History;
 }
 
-function AllTheProviders({ children, initialRouterEntries }: PropsWithChildren<CustomProviderOptions>): JSX.Element {
-    const history = createMemoryHistory({
+function AllTheProviders({
+    children,
+    initialRouterEntries,
+    renderPath,
+    history = createMemoryHistory({
         initialEntries: initialRouterEntries,
-    });
+    }),
+}: PropsWithChildren<CustomProviderOptions>): JSX.Element {
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
@@ -22,7 +28,9 @@ function AllTheProviders({ children, initialRouterEntries }: PropsWithChildren<C
 
     return (
         <Router history={history}>
-            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+            <Route path={renderPath}>
+                <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+            </Route>
         </Router>
     );
 }
@@ -30,7 +38,12 @@ function AllTheProviders({ children, initialRouterEntries }: PropsWithChildren<C
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'> & CustomProviderOptions) =>
     render(ui, {
         wrapper: (props) => (
-            <AllTheProviders {...props} initialRouterEntries={options?.initialRouterEntries ?? ['/syk/sykmeldinger']} />
+            <AllTheProviders
+                {...props}
+                initialRouterEntries={options?.initialRouterEntries ?? ['/syk/sykmeldinger']}
+                renderPath={options?.renderPath ?? '/'}
+                history={options?.history}
+            />
         ),
         ...options,
     });
