@@ -54,8 +54,8 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
                         Behov for mer opplysninger
                     </Undertittel>
                     <Normaltekst className="merknad-banner__paragraph">
-                        Sykmeldingen din starter tidligere enn den dagen du var hos behandleren. Vi kontakter nå
-                        behandleren din for å få opplysninger om hvorfor sykmeldingen er datert tilbake.
+                        Sykmeldingen din starter tidligere enn den dagen du var hos behandleren. Vi innhenter
+                        opplysninger om hvorfor sykmeldingen er datert tilbake.
                     </Normaltekst>
                     <Normaltekst>Du kan likevel sende inn søknaden om sykepenger.</Normaltekst>
                 </Veilederpanel>
