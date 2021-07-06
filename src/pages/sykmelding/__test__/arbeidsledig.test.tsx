@@ -33,7 +33,21 @@ describe('Arbeidsledig', () => {
 
     it('should be able to submit form with work situation arbeidsledig', async () => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
-        apiNock.post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`).reply(200);
+        apiNock
+            .post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`, {
+                erOpplysningeneRiktige: {
+                    svar: 'JA',
+                    sporsmaltekst: 'Er opplysningene riktige?',
+                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                },
+                arbeidssituasjon: {
+                    svar: 'ARBEIDSLEDIG',
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    svartekster:
+                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                },
+            })
+            .reply(200);
         apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).reply(200, {
             ...sykmeldingApen,
             sykmeldingStatus: {
