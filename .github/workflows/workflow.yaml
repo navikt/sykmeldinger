@@ -51,39 +51,9 @@ jobs:
             docker build . -f Dockerfile.syk.sykmeldinger -t ${IMAGE_SYK_SYKMELDINGER}
             docker push ${IMAGE_SYK_SYKMELDINGER}
 
-  integration-test:
-    name: Run integration tests with Cypress
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-      - name: Cache Cypress binary
-        uses: actions/cache@v1
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            cypress-${{ runner.os }}-cypress-
-      - name: Install npm dependencies
-        run: npm ci
-      - name: Run cypress
-        uses: cypress-io/github-action@v2
-        with:
-          install: false
-          record: false
-          browser: chrome # fails with default (electron)
-          start: npm run start:integration-test
-          wait-on: http://localhost:8080
-      - uses: actions/upload-artifact@v1
-        if: ${{ failure() }}
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
   deploy-to-q1-dev-gcp:
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
     name: Deploy to q1 dev-gcp
-    needs: [build-and-publish, integration-test]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -103,7 +73,7 @@ jobs:
   deploy-to-prod-gcp:
     if: github.ref == 'refs/heads/master'
     name: Deploy to prod
-    needs: [build-and-publish, integration-test]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -121,9 +91,9 @@ jobs:
           RESOURCE: nais-prod.yaml
 
   deploy-to-labs-gcp:
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
+    if: github.ref == 'refs/heads/master'
     name: Deploy to labs-gcp (Demo)
-    needs: [build-and-publish, integration-test]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
