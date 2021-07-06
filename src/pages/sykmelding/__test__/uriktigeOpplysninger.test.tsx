@@ -1,7 +1,6 @@
 import nock from 'nock';
-import { createMemoryHistory } from 'history';
 import { sykmeldingApen } from '../../../mock/data/sykmelding-apen';
-import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
+import { render, screen, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
 import SykmeldingPage from '../SykmeldingPage';
 import userEvent from '@testing-library/user-event';
 
