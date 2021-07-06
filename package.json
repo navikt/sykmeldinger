@@ -97,7 +97,6 @@
         "@types/react-collapse": "^5.0.0",
         "@types/react-dom": "^16.9.11",
         "@types/react-router-dom": "^5.1.7",
-        "cypress": "^7.1.0",
         "fetch-mock": "^9.11.0",
         "fetch-mock-jest": "^1.5.1",
         "nock": "^13.1.0",
