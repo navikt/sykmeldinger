@@ -43,7 +43,7 @@ class Fetch {
             throw new Error('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
         }
         const textResponse = await res.text();
-        logger.error(`Request to ${url} resulted in statuscode: ${res.status} with message: ${textResponse}`);
+        logger.warn(`Request to ${url} resulted in statuscode: ${res.status} with message: ${textResponse}`);
         if (res.status === 400) {
             throw new Error(textResponse);
         }
@@ -75,7 +75,7 @@ class Fetch {
             logger.warn(`Session expired for request to ${url}`);
             throw new Error('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
         }
-        logger.error(`Request to ${url} resulted in statuscode: ${res.status} with message: ${textResponse}`);
+        logger.warn(`Request to ${url} resulted in statuscode: ${res.status} with message: ${textResponse}`);
         if (res.status === 400) {
             throw new Error(textResponse);
         }
