@@ -21,6 +21,10 @@ const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({
         return null;
     }
 
+    if (arbeidsgiver && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
+        return null;
+    }
+
     return (
         <div className="aktivitet-ikke-mulig">
             {!arbeidsgiver && !!aktivitetIkkeMulig.medisinskArsak && (
