@@ -4,7 +4,7 @@ import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 const UtdypendeOpplysningerView: React.FC<{
     utdypendeOpplysninger: Map<string, Map<string, UtdypendeOpplysning>>;
-    arbeidsgiver?: boolean;
+    arbeidsgiver: boolean;
 }> = ({ utdypendeOpplysninger, arbeidsgiver }) => {
     if (arbeidsgiver) {
         return null;

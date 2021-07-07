@@ -16,7 +16,7 @@ describe('MedisinskVurdering', () => {
             yrkesskade: false,
         };
         const medisinskVurdering = new MedisinskVurdering(plainJson);
-        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
+        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver={false} />);
 
         expect(screen.getByText('Diagnose')).toBeInTheDocument();
         expect(screen.getByText(plainJson.hovedDiagnose.tekst)).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('MedisinskVurdering', () => {
             yrkesskade: false,
         };
         const medisinskVurdering = new MedisinskVurdering(plainJson);
-        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
+        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver={false} />);
 
         expect(screen.getAllByText('Bidiagnose').length).toBe(2);
         expect(screen.getByText(plainJson.biDiagnoser[0].tekst)).toBeInTheDocument();
@@ -58,7 +58,7 @@ describe('MedisinskVurdering', () => {
             yrkesskade: false,
         };
         const medisinskVurdering = new MedisinskVurdering(plainJson);
-        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
+        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver={false} />);
 
         expect(screen.getByText('Annen lovfestet fraværsgrunn')).toBeInTheDocument();
         expect(screen.getByText('Når vedkommende er donor eller er under vurdering som donor')).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe('MedisinskVurdering', () => {
             yrkesskade: false,
         };
         const medisinskVurdering = new MedisinskVurdering(plainJson);
-        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
+        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver={false} />);
 
         expect(screen.getByText('Sykdommen er svangerskapsrelatert')).toBeInTheDocument();
     });
@@ -87,7 +87,7 @@ describe('MedisinskVurdering', () => {
             yrkesskadeDato: '2020-04-01',
         };
         const medisinskVurdering = new MedisinskVurdering(plainJson);
-        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} />);
+        render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver={false} />);
 
         expect(screen.getByText('Sykdommen kan skyldes en yrkesskade/yrkessykdom')).toBeInTheDocument();
 

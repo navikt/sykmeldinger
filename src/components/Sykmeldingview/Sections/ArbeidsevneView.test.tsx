@@ -9,6 +9,7 @@ describe('ArbeidsevneView', () => {
                 tiltakArbeidsplassen="tiltak på arbeidsplassen"
                 tiltakNAV="tiltak nav"
                 andreTiltak="andre tiltak"
+                arbeidsgiver={false}
             />,
         );
         expect(screen.getByText('tiltak på arbeidsplassen')).toBeInTheDocument();
@@ -17,7 +18,7 @@ describe('ArbeidsevneView', () => {
     });
 
     it('Does not render tiltak if then dont exist', () => {
-        render(<ArbeidsevneView />);
+        render(<ArbeidsevneView arbeidsgiver={false} />);
         expect(screen.queryByText('tiltak på arbeidsplassen')).not.toBeInTheDocument();
         expect(screen.queryByText('tiltak nav')).not.toBeInTheDocument();
         expect(screen.queryByText('andre tiltak')).not.toBeInTheDocument();

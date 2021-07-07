@@ -2,7 +2,12 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Pasient from '../../../models/Sykmelding/Pasient';
 import Section from '../Layout/Section/Section';
 
-const PasientView: React.FC<{ pasient?: Pasient; arbeidsgiver?: boolean }> = ({ pasient, arbeidsgiver = false }) => {
+interface PasientViewProps {
+    pasient?: Pasient;
+    arbeidsgiver: boolean;
+}
+
+const PasientView: React.FC<PasientViewProps> = ({ pasient, arbeidsgiver }) => {
     if (!arbeidsgiver || !pasient) {
         return null;
     }

@@ -12,7 +12,7 @@ describe('PasientView', () => {
             etternavn: 'Nordmann',
         };
         const pasient = new Pasient(plainJson);
-        render(<PasientView pasient={pasient} />);
+        render(<PasientView pasient={pasient} arbeidsgiver={false} />);
         expect(screen.queryByText('Ola Nordmann')).not.toBeInTheDocument();
         expect(screen.queryByText('12345678901')).not.toBeInTheDocument();
     });
@@ -25,7 +25,7 @@ describe('PasientView', () => {
             etternavn: null,
         };
         const pasient = new Pasient(plainJson);
-        render(<PasientView pasient={pasient} />);
+        render(<PasientView pasient={pasient} arbeidsgiver />);
         expect(screen.queryByText('Ola Nordmann')).not.toBeInTheDocument();
         expect(screen.queryByText('12345678901')).not.toBeInTheDocument();
     });

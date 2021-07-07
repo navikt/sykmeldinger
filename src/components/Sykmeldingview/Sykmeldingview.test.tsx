@@ -74,7 +74,7 @@ describe('SykmeldingView', () => {
     const sykmelding = new Sykmelding(minimalSykmelding);
 
     beforeEach(() => {
-        render(<Sykmeldingview sykmelding={sykmelding} />);
+        render(<Sykmeldingview sykmelding={sykmelding} arbeidsgiver={false} />);
     });
 
     it.skip('test', () => {});
