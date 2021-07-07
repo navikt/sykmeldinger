@@ -194,7 +194,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                 {maAvbryte === false && !erArbeidstakerMedStrengtFortroligAdressse && (
                     <Spacing>
                         <div style={{ textAlign: 'center' }}>
-                            <Knapp spinner={isSending} type="hoved" htmlType="submit">
+                            <Knapp disabled={isSending} spinner={isSending} type="hoved" htmlType="submit">
                                 {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
                             </Knapp>
                         </div>
