@@ -42,7 +42,9 @@ const AvbrytPanel: React.FC = () => {
 
                 {error && (
                     <Spacing direction="top">
-                        <AlertStripeFeil>{error.message}</AlertStripeFeil>
+                        <AlertStripeFeil role="alert" aria-live="polite">
+                            {error.message}
+                        </AlertStripeFeil>
                     </Spacing>
                 )}
             </div>
