@@ -65,7 +65,7 @@ const RiktigNarmesteLeder: React.FC<RiktigNarmesteLederProps> = ({ naermesteLede
 
             {watchRiktigNarmesteLeder?.svar === 'JA' && (
                 <Spacing direction="top" amount="small">
-                    <AlertStripe type="info">
+                    <AlertStripe type="info" role="alert" aria-live="polite">
                         Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no
                     </AlertStripe>
                 </Spacing>
@@ -73,7 +73,7 @@ const RiktigNarmesteLeder: React.FC<RiktigNarmesteLederProps> = ({ naermesteLede
 
             {watchRiktigNarmesteLeder?.svar === 'NEI' && (
                 <Spacing direction="top" amount="small">
-                    <AlertStripe type="info">
+                    <AlertStripe type="info" role="alert" aria-live="polite">
                         Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
                     </AlertStripe>
                 </Spacing>

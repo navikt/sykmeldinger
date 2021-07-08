@@ -25,8 +25,8 @@ const UriktigeOpplysningerInfo: React.FC<UriktigeOpplysningerInfoProps> = ({ uri
         return null;
 
     return (
-        <AlertStripeInfo>
-            Du kan fortsatt bruke sykmeldingen
+        <AlertStripeInfo role="alert" aria-live="polite">
+            Du kan fortsatt bruke sykmeldingen.
             <ul>
                 {uriktigeOpplysninger.map((opplysning, index) => (
                     <li key={index}>{uriktigOpplysningTekst[opplysning]}</li>

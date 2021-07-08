@@ -29,7 +29,9 @@ const SykmeldingPage: React.FC = () => {
     if (error) {
         return (
             <PageWrapper>
-                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
+                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                    {error.message}
+                </AlertStripeAdvarsel>
             </PageWrapper>
         );
     }
@@ -37,7 +39,7 @@ const SykmeldingPage: React.FC = () => {
         logger.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <PageWrapper>
-                <AlertStripeAdvarsel>
+                <AlertStripeAdvarsel role="alert" aria-live="polite">
                     En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
                 </AlertStripeAdvarsel>
             </PageWrapper>

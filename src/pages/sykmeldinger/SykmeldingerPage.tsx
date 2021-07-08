@@ -28,7 +28,9 @@ const SykmeldingerPage: React.FC = () => {
     if (error) {
         return (
             <PageWrapper>
-                <AlertStripeAdvarsel>{error.message}</AlertStripeAdvarsel>
+                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                    {error.message}
+                </AlertStripeAdvarsel>
             </PageWrapper>
         );
     }
@@ -36,7 +38,7 @@ const SykmeldingerPage: React.FC = () => {
         logger.error('Sykmeldinger is undefined');
         return (
             <PageWrapper>
-                <AlertStripeAdvarsel>
+                <AlertStripeAdvarsel role="alert" aria-live="polite">
                     En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
                 </AlertStripeAdvarsel>
             </PageWrapper>
