@@ -26,17 +26,17 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const elementRef = useRef<HTMLElement>(null);
 
     const title = arbeidsgiver ? 'Dette får arbeidsgiveren din se' : 'Din sykmelding';
+    const contentId = `sykmelding-${sykmelding.id}-content${arbeidsgiver ? '-arbeidsgiver' : ''}`;
+    const headerId = `sykmelding-${sykmelding.id}-header${arbeidsgiver ? '-arbeidsgiver' : ''}`;
 
     return (
-        <article
-            aria-labelledby={`sykmelding-${sykmelding.id}${arbeidsgiver ? '-arbeidsgiver' : ''}`}
-            ref={elementRef}
-            className="sykmeldingsopplysninger"
-        >
+        <article aria-labelledby={headerId} ref={elementRef} className="sykmeldingsopplysninger">
             {expandable === true ? (
                 <button
+                    id={headerId}
                     type="button"
                     aria-expanded={expanded}
+                    aria-controls={contentId}
                     onClick={() => {
                         if (!expanded) {
                             setTimeout(() => {
@@ -52,11 +52,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     <div className="sykmeldingsopplysninger__icon">
                         {arbeidsgiver ? <ArbeidsgiverSvg /> : <PlasterSvg />}
                     </div>
-                    <Undertittel
-                        id={`sykmelding-${sykmelding.id}${arbeidsgiver ? '-arbeidsgiver' : ''}`}
-                        className="sykmeldingsopplysninger__text"
-                        tag="h2"
-                    >
+                    <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
                         {title}
                     </Undertittel>
                     <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
@@ -72,6 +68,9 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                 </header>
             )}
             <div
+                id={contentId}
+                aria-labelledby={headerId}
+                aria-hidden={!expanded}
                 className={`sykmeldingsopplysninger__content ${
                     expanded ? '' : 'sykmeldingsopplysninger__content--hidden'
                 }`}
