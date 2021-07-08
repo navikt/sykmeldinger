@@ -50,7 +50,11 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                             <span>GJØR UTFYLLINGEN PÅ NYTT</span>
                         </Knapp>
                     </Spacing>
-                    {error && <AlertStripeFeil>{error.message}</AlertStripeFeil>}
+                    {error && (
+                        <AlertStripeFeil role="alert" aria-live="polite">
+                            {error.message}
+                        </AlertStripeFeil>
+                    )}
                 </Spacing>
             )}
 

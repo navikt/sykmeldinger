@@ -52,7 +52,11 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                             <span>gjør utfyllingen på nytt</span>
                         </Knapp>
                     </Spacing>
-                    {error && <AlertStripeFeil>{error.message}</AlertStripeFeil>}
+                    {error && (
+                        <AlertStripeFeil role="alert" aria-live="polite">
+                            {error.message}
+                        </AlertStripeFeil>
+                    )}
                 </Spacing>
             )}
 

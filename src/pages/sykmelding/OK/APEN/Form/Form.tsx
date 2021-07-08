@@ -114,7 +114,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     ) {
         return (
             <Spacing>
-                <AlertStripeFeil>
+                <AlertStripeFeil role="alert" aria-live="polite">
                     Vi klarte dessverre ikke å hente opp informasjonen som trengs for at du kan bruke sykmeldingen.
                     Vennligst prøv igjen senere.
                 </AlertStripeFeil>
@@ -182,7 +182,9 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
                     {errorSend && (
                         <Spacing amount="small">
-                            <AlertStripeFeil>{errorSend.message}</AlertStripeFeil>
+                            <AlertStripeFeil role="alert" aria-live="polite">
+                                {errorSend.message}
+                            </AlertStripeFeil>
                         </Spacing>
                     )}
                 </Spacing>

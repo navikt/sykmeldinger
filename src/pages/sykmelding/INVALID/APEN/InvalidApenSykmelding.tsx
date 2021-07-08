@@ -68,7 +68,9 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
 
                     {errorBekreft && (
                         <Spacing amount="small">
-                            <AlertStripeAdvarsel>{errorBekreft.message}</AlertStripeAdvarsel>
+                            <AlertStripeAdvarsel role="alert" aria-live="polite">
+                                {errorBekreft.message}
+                            </AlertStripeAdvarsel>
                         </Spacing>
                     )}
 

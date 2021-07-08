@@ -23,7 +23,7 @@ const AvbrytPanel: React.FC = () => {
 
     if (maAvbryte) {
         return (
-            <div className="avbryt-panel">
+            <div className="avbryt-panel" role="alert" aria-live="polite">
                 <Undertittel tag="h3" className="avbryt-panel__title">
                     Du kan ikke bruke denne sykmeldingen
                 </Undertittel>
@@ -42,7 +42,9 @@ const AvbrytPanel: React.FC = () => {
 
                 {error && (
                     <Spacing direction="top">
-                        <AlertStripeFeil>{error.message}</AlertStripeFeil>
+                        <AlertStripeFeil role="alert" aria-live="polite">
+                            {error.message}
+                        </AlertStripeFeil>
                     </Spacing>
                 )}
             </div>
@@ -70,7 +72,7 @@ const AvbrytPanel: React.FC = () => {
             </Spacing>
 
             {isOpen && (
-                <div className="avbryt-panel" ref={avbrytPanelRef}>
+                <div className="avbryt-panel" ref={avbrytPanelRef} role="alert" aria-live="polite">
                     <Xknapp
                         htmlType="button"
                         className="avbryt-panel__cross"
@@ -86,7 +88,7 @@ const AvbrytPanel: React.FC = () => {
 
                     {error && (
                         <Spacing direction="top">
-                            <AlertStripeFeil>
+                            <AlertStripeFeil role="alert" aria-live="polite">
                                 Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
                             </AlertStripeFeil>
                         </Spacing>
