@@ -26,8 +26,8 @@ export interface Egenmeldingsperiode {
 
 export enum UriktigeOpplysningerType {
     PERIODE = 'Periode',
-    SYKMELDINGSGRAD_FOR_HOY = 'Sykmeldingsgraden er for høy',
     SYKMELDINGSGRAD_FOR_LAV = 'Sykmeldingsgraden er for lav',
+    SYKMELDINGSGRAD_FOR_HOY = 'Sykmeldingsgraden er for høy',
     ARBEIDSGIVER = 'Arbeidsgiver',
     DIAGNOSE = 'Diagnose',
     ANDRE_OPPLYSNINGER = 'Andre opplysninger',

@@ -16,7 +16,7 @@ const UriktigeOpplysninger: React.FC = () => {
     const trengerNySykmelding = useMemo(() => {
         return (
             Boolean(watchUriktigeOpplysninger?.svar?.includes('PERIODE')) ||
-            Boolean(watchUriktigeOpplysninger?.svar?.includes('SYKMELDINGSGRAD_FOR_HOY'))
+            Boolean(watchUriktigeOpplysninger?.svar?.includes('SYKMELDINGSGRAD_FOR_LAV'))
         );
     }, [watchUriktigeOpplysninger]);
 

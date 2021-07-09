@@ -3,8 +3,8 @@ import { UriktigeOpplysningerType } from './Form';
 
 const uriktigOpplysningTekst: Record<keyof typeof UriktigeOpplysningerType, string> = {
     PERIODE: '',
-    SYKMELDINGSGRAD_FOR_HOY: '',
-    SYKMELDINGSGRAD_FOR_LAV:
+    SYKMELDINGSGRAD_FOR_LAV: '',
+    SYKMELDINGSGRAD_FOR_HOY:
         'Senere, når du skal fylle ut søknaden om sykepenger, skriver du bare inn hvor mye du faktisk jobbet.',
     ARBEIDSGIVER:
         'I neste trinn velger du riktig arbeidsgiver. Obs: Feilen vil være synlig for arbeidsgiveren du sender sykmeldingen til.',
@@ -21,7 +21,7 @@ interface UriktigeOpplysningerInfoProps {
 const UriktigeOpplysningerInfo: React.FC<UriktigeOpplysningerInfoProps> = ({ uriktigeOpplysninger }) => {
     if (!uriktigeOpplysninger || uriktigeOpplysninger.length === 0) return null;
 
-    if (uriktigeOpplysninger.includes('PERIODE') || uriktigeOpplysninger.includes('SYKMELDINGSGRAD_FOR_HOY'))
+    if (uriktigeOpplysninger.includes('PERIODE') || uriktigeOpplysninger.includes('SYKMELDINGSGRAD_FOR_LAV'))
         return null;
 
     return (
