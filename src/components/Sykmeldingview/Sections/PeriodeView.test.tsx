@@ -14,7 +14,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('Avventende sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
@@ -137,7 +137,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('20% sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
@@ -154,7 +154,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
         expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
@@ -171,7 +171,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();
         expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
@@ -195,7 +195,7 @@ describe('PeriodeView', () => {
         const reisetilskuddPeriode = new Periode(reisetilskuddJson);
         const behandlingsdagerPeriode = new Periode(behandlingsdagerJson);
 
-        render(<PeriodeView perioder={[reisetilskuddPeriode, behandlingsdagerPeriode]} />);
+        render(<PeriodeView perioder={[reisetilskuddPeriode, behandlingsdagerPeriode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
         expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();

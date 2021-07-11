@@ -5,10 +5,10 @@ import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 interface TilbakedateringViewProps {
     kontaktMedPasient: KontaktMedPasient;
-    arbeidsgiver?: boolean;
+    arbeidsgiver: boolean;
 }
 
-const TilbakedateringView: React.FC<TilbakedateringViewProps> = ({ kontaktMedPasient, arbeidsgiver = false }) => {
+const TilbakedateringView: React.FC<TilbakedateringViewProps> = ({ kontaktMedPasient, arbeidsgiver }) => {
     if (!kontaktMedPasient.kontaktDato && !kontaktMedPasient.begrunnelseIkkeKontakt) {
         return null;
     }

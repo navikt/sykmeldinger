@@ -3,10 +3,12 @@ import DateFormatter from '../../../utils/DateFormatter';
 import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
-const MedisinskVurderingView: React.FC<{ medisinskVurdering?: MedisinskVurdering; arbeidsgiver?: boolean }> = ({
-    medisinskVurdering,
-    arbeidsgiver = false,
-}) => {
+interface MedisinskVurderingViewProps {
+    medisinskVurdering?: MedisinskVurdering;
+    arbeidsgiver: boolean;
+}
+
+const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisinskVurdering, arbeidsgiver }) => {
     if (!medisinskVurdering) {
         return null;
     }

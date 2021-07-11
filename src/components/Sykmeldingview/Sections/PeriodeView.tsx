@@ -10,13 +10,10 @@ import './PeriodeView.less';
 
 interface AktivitetIkkeMuligViewProps {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode;
-    arbeidsgiver?: boolean;
+    arbeidsgiver: boolean;
 }
 
-const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({
-    aktivitetIkkeMulig,
-    arbeidsgiver = false,
-}) => {
+const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({ aktivitetIkkeMulig, arbeidsgiver }) => {
     if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
         return null;
     }
@@ -77,10 +74,10 @@ const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({
 
 interface PeriodeViewProps {
     perioder: Periode[];
-    arbeidsgiver?: boolean;
+    arbeidsgiver: boolean;
 }
 
-const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder, arbeidsgiver = false }) => {
+const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder, arbeidsgiver }) => {
     return (
         <div className="periode-view">
             {perioder.map((periode, index) => (

@@ -34,7 +34,7 @@ describe('PeriodeView', () => {
         utdypendeOpplysninger.set('6.2', new Map());
         utdypendeOpplysninger.get('6.2')?.set('6.2.1', utdypende3);
 
-        render(<UtdypendeOpplysningerView utdypendeOpplysninger={utdypendeOpplysninger} />);
+        render(<UtdypendeOpplysningerView utdypendeOpplysninger={utdypendeOpplysninger} arbeidsgiver={false} />);
 
         expect(screen.getByText('Utdypende opplysninger')).toBeInTheDocument();
         expect(screen.getByText(plainJson.sporsmal)).toBeInTheDocument();
