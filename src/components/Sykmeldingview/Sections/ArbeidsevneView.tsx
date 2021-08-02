@@ -5,13 +5,13 @@ interface ArbeidsevneViewProps {
     tiltakArbeidsplassen?: string;
     tiltakNAV?: string;
     andreTiltak?: string;
-    arbeidsgiver?: boolean;
+    arbeidsgiver: boolean;
 }
 const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({
     tiltakArbeidsplassen,
     tiltakNAV,
     andreTiltak,
-    arbeidsgiver = false,
+    arbeidsgiver,
 }) => {
     if (!tiltakArbeidsplassen || !tiltakNAV || !andreTiltak) {
         return null;

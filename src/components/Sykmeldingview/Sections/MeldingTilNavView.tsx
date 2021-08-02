@@ -3,10 +3,11 @@ import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import Section from '../Layout/Section/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
-const MeldingTilNavView: React.FC<{ meldingTilNav?: MeldingTilNAV; arbeidsgiver?: boolean }> = ({
-    meldingTilNav,
-    arbeidsgiver = false,
-}) => {
+interface MeldingTilNavViewProps {
+    meldingTilNav?: MeldingTilNAV;
+    arbeidsgiver: boolean;
+}
+const MeldingTilNavView: React.FC<MeldingTilNavViewProps> = ({ meldingTilNav, arbeidsgiver }) => {
     if (arbeidsgiver) {
         return null;
     }

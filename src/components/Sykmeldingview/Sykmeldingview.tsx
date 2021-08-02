@@ -17,7 +17,7 @@ import PasientView from './Sections/PasientView';
 
 interface SykmeldingviewProps {
     sykmelding: Sykmelding;
-    arbeidsgiver?: boolean;
+    arbeidsgiver: boolean;
 }
 
 const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgiver = false }) => {

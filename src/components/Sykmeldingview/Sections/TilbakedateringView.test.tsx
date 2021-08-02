@@ -9,7 +9,7 @@ describe('TilbakedateringView', () => {
             kontaktDato: '2021-04-01',
         };
         const kontaktMedPasient = new KontaktMedPasient(plainJson);
-        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />);
+        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} arbeidsgiver={false} />);
 
         expect(screen.getByText('Tilbakedatering')).toBeInTheDocument();
         expect(screen.getByText('Dato for dokumenterbar kontakt med pasienten')).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('TilbakedateringView', () => {
             begrunnelseIkkeKontakt: 'han var kjempesyk',
         };
         const kontaktMedPasient = new KontaktMedPasient(plainJson);
-        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />);
+        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} arbeidsgiver={false} />);
 
         expect(screen.getByText('Begrunnelse for tilbakedatering')).toBeInTheDocument();
         expect(screen.getByText(plainJson.begrunnelseIkkeKontakt)).toBeInTheDocument();
