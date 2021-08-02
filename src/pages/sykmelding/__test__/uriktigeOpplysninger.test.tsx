@@ -42,22 +42,22 @@ describe('Uriktige opplysninger', () => {
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument();
     });
 
-    it('should show error message when sykmeldingsgrad is to high', async () => {
+    it('should show error message when sykmeldingsgrad is to low', async () => {
         render(<SykmeldingPage />, renderOptions);
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for høy' }));
+        userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for lav' }));
         // TODO: look into aria announcements
         expect(await screen.findByText('Du kan ikke bruke denne sykmeldingen')).toBeInTheDocument();
         expect(screen.queryByText('Arbeidet du er sykmeldt fra')).not.toBeInTheDocument();
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument();
     });
 
-    it('should be able to continue when sykmeldingsgrad is to low', async () => {
+    it('should be able to continue when sykmeldingsgrad is too high', async () => {
         render(<SykmeldingPage />, renderOptions);
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for lav' }));
+        userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for høy' }));
         expect(
             await screen.findByText(
                 'Senere, når du skal fylle ut søknaden om sykepenger, skriver du bare inn hvor mye du faktisk jobbet.',
