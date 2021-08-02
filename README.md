@@ -11,11 +11,10 @@ Lever under:
 Tekniske valg:
 
 -   Laget med [Create React App](https://github.com/facebook/create-react-app)
--   Craco for konfigurasjon av utvidelser slik at man kan bruke craco-less for kompilering av less-filer. Dette forbi designbiblioteket bruker Less til styling.
+-   Craco for konfigurasjon av utvidelser slik at man kan bruke craco-less for kompilering av less-filer. Dette fordi designbiblioteket bruker Less til styling.
 -   React-query for håndtering av server state.
 -   Class-validator for validering av "ukjent" data fra diverse API.
 -   React-testing-library for enhetstesting av enkeltkomponenter.
--   Cypress for integrasjonstester.
 
 ## Environment-variabler
 

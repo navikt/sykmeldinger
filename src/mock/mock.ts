@@ -11,7 +11,7 @@ import { sykmeldingAvvistBekreftet } from './data/sykmelding-avvist-bekreftet';
 import { sykmeldingSendt2 } from './data/sykmelding-sendt-2';
 import { sykmeldingSendt3 } from './data/sykmelding-sendt-3';
 import fetchMock from 'fetch-mock';
-import {sykmeldingUgyldigTilbakedatering} from "./data/sykmelding-ugyldig-tilbakedatering";
+import { sykmeldingUgyldigTilbakedatering } from './data/sykmelding-ugyldig-tilbakedatering';
 
 // Redirect to basepath to make demo-app work by visiting ingress (sykmeldinger.labs.nais.io)
 if (window.location.pathname === '/') {
