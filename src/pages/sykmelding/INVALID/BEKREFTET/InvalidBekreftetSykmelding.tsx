@@ -23,7 +23,10 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
             </Spacing>
 
             <Spacing>
-                <AvvistVeileder sykmelding={sykmelding} />
+                <AvvistVeileder
+                    behandlerNavn={sykmelding.behandler.getName()}
+                    behandlingsutfall={sykmelding.behandlingsutfall}
+                />
             </Spacing>
 
             <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />

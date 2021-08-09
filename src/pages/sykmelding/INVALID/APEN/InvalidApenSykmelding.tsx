@@ -31,7 +31,10 @@ const InvalidApenSykmelding: React.FC<InvalidApenSykmeldingProps> = ({ sykmeldin
     return (
         <div className="sykmelding-container">
             <Spacing>
-                <AvvistVeileder sykmelding={sykmelding} />
+                <AvvistVeileder
+                    behandlerNavn={sykmelding.behandler.getName()}
+                    behandlingsutfall={sykmelding.behandlingsutfall}
+                />
             </Spacing>
 
             <Spacing>
