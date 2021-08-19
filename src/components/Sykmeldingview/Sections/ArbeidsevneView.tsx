@@ -13,9 +13,10 @@ const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({
     andreTiltak,
     arbeidsgiver,
 }) => {
-    if (!tiltakArbeidsplassen || !tiltakNAV || !andreTiltak) {
+    if (!tiltakArbeidsplassen && !tiltakNAV && !andreTiltak) {
         return null;
     }
+
     return (
         <Section title="Hva skal til for å bedre arbeidsevnen?">
             {!!tiltakArbeidsplassen && (
