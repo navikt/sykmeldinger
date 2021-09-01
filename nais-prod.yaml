@@ -45,4 +45,4 @@ spec:
     - name: SYKEPENGESOKNAD_URL
       value: "https://www.nav.no/syk/sykepengesoknad"
     - name: SYKEFRAVAER_ROOT
-      value: "https://tjenester.nav.no/sykefravaer"
+      value: "https://www.nav.no/syk/sykefravaer"
