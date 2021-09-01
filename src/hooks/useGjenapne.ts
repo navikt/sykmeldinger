@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from 'react-query';
-import Fetch from '../utils/Fetch';
+import { authenticatedPost } from '../utils/Fetch';
 
 function useGjenapne(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
         () =>
-            Fetch.authenticatedPost(
+            authenticatedPost(
                 `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/gjenapne`,
             ),
         {

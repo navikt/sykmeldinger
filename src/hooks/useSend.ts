@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormShape } from '../pages/sykmelding/OK/APEN/Form/Form';
-import Fetch from '../utils/Fetch';
+import { authenticatedPost } from '../utils/Fetch';
 
 function useSend(sykmeldingId: string) {
     const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ function useSend(sykmeldingId: string) {
 
     return useMutation<unknown, Error, FormShape>(
         (values: FormShape) =>
-            Fetch.authenticatedPost(
+            authenticatedPost(
                 `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v2/sykmeldinger/${sykmeldingId}/send`,
                 values,
             ),

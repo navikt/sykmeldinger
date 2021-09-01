@@ -1,4 +1,4 @@
-import Fetch from './Fetch';
+import { authenticatedGet } from './Fetch';
 import fetchMock from 'fetch-mock-jest';
 
 describe('Fetch', () => {
@@ -12,7 +12,7 @@ describe('Fetch', () => {
         fetchMock.get(testUrl, { status: 200, body: {} });
         const mockCallback = jest.fn();
 
-        await Fetch.authenticatedGet(testUrl, mockCallback);
+        await authenticatedGet(testUrl, mockCallback);
 
         expect(mockCallback).toBeCalledTimes(1);
     });
@@ -23,7 +23,7 @@ describe('Fetch', () => {
 
         expect.assertions(2);
         try {
-            await Fetch.authenticatedGet(testUrl, mockCallback);
+            await authenticatedGet(testUrl, mockCallback);
         } catch (e) {
             expect(e.message).toMatch('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
         }
