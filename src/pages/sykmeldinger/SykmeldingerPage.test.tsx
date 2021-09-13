@@ -52,7 +52,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         expect(await screen.findByText('Utgått'));
     });
 
-    it('should display only new sykmeldinger, sorted by descending date ', async () => {
+    it('should display only new sykmeldinger, sorted by ascending date ', async () => {
         apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen, sykmeldingApenPapir, sykmeldingAvvist]);
 
         render(<SykmeldingerPage />);
@@ -62,9 +62,9 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         const lenkepanelContainer = screen.getByRole('region', { name: 'Nye sykmeldinger' });
         const sykmeldinger = within(lenkepanelContainer).getAllByRole('link');
         expect(sykmeldinger).toHaveLength(3);
-        expect(sykmeldinger[0]).toHaveTextContent(/Sykmelding/);
+        expect(sykmeldinger[0]).toHaveTextContent(/Papirsykmelding/);
         expect(sykmeldinger[1]).toHaveTextContent(/Avvist av NAV/);
-        expect(sykmeldinger[2]).toHaveTextContent(/Papirsykmelding/);
+        expect(sykmeldinger[2]).toHaveTextContent(/Sykmelding/);
     });
 
     it('should display new and earlier sykmeldinger', async () => {
