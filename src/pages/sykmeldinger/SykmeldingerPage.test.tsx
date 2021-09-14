@@ -52,8 +52,8 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         expect(await screen.findByText('Utgått'));
     });
 
-    it('should display only new sykmeldinger, sorted by descending date ', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen, sykmeldingApenPapir, sykmeldingAvvist]);
+    it('should display only new sykmeldinger, sorted by ascending date ', async () => {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingApenPapir, sykmeldingAvvist]);
 
         render(<SykmeldingerPage />);
 
@@ -62,13 +62,24 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         const lenkepanelContainer = screen.getByRole('region', { name: 'Nye sykmeldinger' });
         const sykmeldinger = within(lenkepanelContainer).getAllByRole('link');
         expect(sykmeldinger).toHaveLength(3);
-        expect(sykmeldinger[0]).toHaveTextContent(/Sykmelding/);
+        expect(sykmeldinger[0]).toHaveTextContent(/Papirsykmelding/);
         expect(sykmeldinger[1]).toHaveTextContent(/Avvist av NAV/);
-        expect(sykmeldinger[2]).toHaveTextContent(/Papirsykmelding/);
+        expect(sykmeldinger[2]).toHaveTextContent(/Sykmelding/);
     });
 
     it('should display new and earlier sykmeldinger', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen, sykmeldingBekreftet]);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
+
+        render(<SykmeldingerPage />);
+
+        await waitForElementToBeRemoved(() => screen.getByText('Henter dine sykmeldinger'));
+        expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
+        expect(await screen.findByText('Nye sykmeldinger'));
+        expect(await screen.findByText('Tidligere sykmeldinger'));
+    });
+
+    it('should display APEN but older than 3 months sykemelding in tidligere section', async () => {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
 
         render(<SykmeldingerPage />);
 

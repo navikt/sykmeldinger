@@ -13,7 +13,7 @@ function useSykmeldingUtenforVentetid(sykmeldingId: string) {
                 return erUtenforVentetid;
             },
         ).then((value) => {
-            if (value.erUtenforVentetid === false && !value.oppfolgingsdato) {
+            if (!value.erUtenforVentetid && !value.oppfolgingsdato) {
                 console.warn(
                     `Expected oppfolgingsdato to be defined when sykmelding within ventetid, but was ${typeof value.oppfolgingsdato}. Sykmeldingid: ${sykmeldingId}`,
                 );

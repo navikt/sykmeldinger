@@ -1,6 +1,10 @@
+import dayjs from 'dayjs';
+
+const mottatt = dayjs().subtract(1, 'months');
+
 export const sykmeldingAvvist = {
     id: 'AVVIST',
-    mottattTidspunkt: '2020-01-10',
+    mottattTidspunkt: mottatt,
     behandlingsutfall: {
         status: 'INVALID',
         ruleHits: [
@@ -18,15 +22,15 @@ export const sykmeldingAvvist = {
     },
     sykmeldingsperioder: [
         {
-            fom: '2020-02-08',
-            tom: '2020-02-11',
+            fom: mottatt.add(2, 'days').format('YYYY-MM-DD'),
+            tom: mottatt.add(5, 'days').format('YYYY-MM-DD'),
             behandlingsdager: 2,
             reisetilskudd: false,
             type: 'BEHANDLINGSDAGER',
         },
         {
-            fom: '2020-02-12',
-            tom: '2020-02-15',
+            fom: mottatt.add(6, 'days').format('YYYY-MM-DD'),
+            tom: mottatt.add(10, 'days').format('YYYY-MM-DD'),
             type: 'AKTIVITET_IKKE_MULIG',
             aktivitetIkkeMulig: {
                 medisinskArsak: {
@@ -41,8 +45,8 @@ export const sykmeldingAvvist = {
             reisetilskudd: false,
         },
         {
-            fom: '2020-02-16',
-            tom: '2020-02-20',
+            fom: mottatt.add(11, 'days').format('YYYY-MM-DD'),
+            tom: mottatt.add(15, 'days').format('YYYY-MM-DD'),
             type: 'REISETILSKUDD',
             reisetilskudd: true,
         },

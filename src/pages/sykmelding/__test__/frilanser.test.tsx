@@ -4,18 +4,18 @@ import { sykmeldingApen } from '../../../mock/data/sykmelding-apen';
 import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
 import SykmeldingPage from '../SykmeldingPage';
 import userEvent from '@testing-library/user-event';
+import dayjs from 'dayjs';
 
 describe('Frilanser', () => {
     const apiNock = nock('http://localhost');
 
     const renderOptions = {
-        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingApen.id}`],
+        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingApen().id}`],
         renderPath: '/syk/sykmeldinger/:sykmeldingId',
     };
 
     beforeEach(() => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).times(1).reply(200, sykmeldingApen);
         apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
@@ -23,13 +23,10 @@ describe('Frilanser', () => {
     });
 
     describe('Within ventetid', () => {
-        beforeEach(() => {
-            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).times(1).reply(200, sykmeldingApen);
-        });
-
         it('should show details from sykmelding', async () => {
+            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
             render(<SykmeldingPage />, renderOptions);
 
@@ -38,11 +35,12 @@ describe('Frilanser', () => {
         });
 
         it('should be able to submit form', async () => {
+            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
             apiNock
-                .post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`, {
+                .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Er opplysningene riktige?',
@@ -95,16 +93,17 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
 
             await waitFor(() =>
-                expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen.id}/kvittering`),
+                expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen().id}/kvittering`),
             );
         });
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
+            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen(dayjs('2020-02-10')));
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: null });
             apiNock
-                .post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`, {
+                .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Er opplysningene riktige?',
@@ -157,19 +156,19 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
 
             await waitFor(() =>
-                expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen.id}/kvittering`),
+                expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen().id}/kvittering`),
             );
         });
     });
 
     describe('Outside ventetid', () => {
         beforeEach(() => {
-            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).times(1).reply(200, sykmeldingApen);
+            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: true });
             apiNock
-                .post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`, {
+                .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Er opplysningene riktige?',
@@ -206,7 +205,7 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
 
             await waitFor(() =>
-                expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen.id}/kvittering`),
+                expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen().id}/kvittering`),
             );
         });
     });

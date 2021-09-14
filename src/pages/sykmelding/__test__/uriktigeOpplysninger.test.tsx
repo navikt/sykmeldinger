@@ -8,19 +8,19 @@ describe('Uriktige opplysninger', () => {
     const apiNock = nock('http://localhost');
 
     const renderOptions = {
-        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingApen.id}`],
+        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingApen().id}`],
         renderPath: '/syk/sykmeldinger/:sykmeldingId',
     };
 
     beforeEach(() => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).times(1).reply(200, sykmeldingApen);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
         apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });
         apiNock
-            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`)
+            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true });
     });
 

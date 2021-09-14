@@ -1,6 +1,10 @@
+import dayjs from 'dayjs';
+
+const mottatt = dayjs().subtract(2, 'months');
+
 export const sykmeldingApenPapir = {
     id: 'APEN_PAPIR',
-    mottattTidspunkt: '2020-01-10',
+    mottattTidspunkt: mottatt.format('YYYY-MM-DD'),
     behandlingsutfall: {
         status: 'OK',
         ruleHits: [],
@@ -11,15 +15,15 @@ export const sykmeldingApenPapir = {
     },
     sykmeldingsperioder: [
         {
-            fom: '2020-01-10',
-            tom: '2020-02-03',
+            fom: mottatt.add(0, 'days').format('YYYY-MM-DD'),
+            tom: mottatt.add(4, 'days').format('YYYY-MM-DD'),
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
             reisetilskudd: false,
         },
     ],
     sykmeldingStatus: {
-        timestamp: '2020-01-01',
+        timestamp: mottatt,
         statusEvent: 'APEN',
         sporsmalOgSvarListe: [],
     },
@@ -61,7 +65,7 @@ export const sykmeldingApenPapir = {
         },
     },
     kontaktMedPasient: {},
-    behandletTidspunkt: '2020-01-01',
+    behandletTidspunkt: mottatt,
     behandler: {
         fornavn: 'Fornavn',
         mellomnavn: null,

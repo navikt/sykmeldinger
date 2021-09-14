@@ -28,10 +28,11 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
         [sykmeldinger],
     );
 
-    const sykmeldingerSortedByDate = useMemo(
-        () => SykmeldingSorter.sortSykmeldingerByDate(sykmeldinger),
-        [sykmeldinger],
-    );
+    const sykmeldingerSortedByDate = useMemo(() => {
+        const sykmeldings = SykmeldingSorter.sortSykmeldingerByDate(sykmeldinger);
+
+        return type === 'NYE_SYKMELDINGER' ? sykmeldings.reverse() : sykmeldings;
+    }, [sykmeldinger, type]);
     const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
     if (sykmeldinger.length === 0) {
@@ -65,13 +66,13 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
                 {sortBy === SortBy.DATE &&
                     sykmeldingerSortedByDate.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">
-                            <Lenkepanel sykmelding={sykmelding} />
+                            <Lenkepanel sykmelding={sykmelding} isNew={type === 'NYE_SYKMELDINGER'} />
                         </li>
                     ))}
                 {sortBy === SortBy.ARBEIDSGIVER &&
                     sykmeldingerSortedByArbeidsgiver.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">
-                            <Lenkepanel sykmelding={sykmelding} />
+                            <Lenkepanel sykmelding={sykmelding} isNew={type === 'NYE_SYKMELDINGER'} />
                         </li>
                     ))}
             </ol>
