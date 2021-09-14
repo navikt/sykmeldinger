@@ -66,13 +66,13 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
                 {sortBy === SortBy.DATE &&
                     sykmeldingerSortedByDate.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">
-                            <Lenkepanel sykmelding={sykmelding} />
+                            <Lenkepanel sykmelding={sykmelding} isNew={type === 'NYE_SYKMELDINGER'} />
                         </li>
                     ))}
                 {sortBy === SortBy.ARBEIDSGIVER &&
                     sykmeldingerSortedByArbeidsgiver.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">
-                            <Lenkepanel sykmelding={sykmelding} />
+                            <Lenkepanel sykmelding={sykmelding} isNew={type === 'NYE_SYKMELDINGER'} />
                         </li>
                     ))}
             </ol>

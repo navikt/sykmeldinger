@@ -21,7 +21,7 @@ if (window.location.pathname === '/') {
 fetchMock.config.fallbackToNetwork = true;
 
 const sykmeldinger = [
-    sykmeldingApen,
+    sykmeldingApen(),
     sykmeldingApenPapir,
     sykmeldingSendt,
     sykmeldingSendt2,

@@ -10,6 +10,8 @@ import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import Spacing from '../../components/Spacing/Spacing';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { logger } from '../../utils/logger';
+import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import dayjs from 'dayjs';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -45,8 +47,7 @@ const SykmeldingerPage: React.FC = () => {
         );
     }
 
-    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => sykmelding.sykmeldingStatus.statusEvent === 'APEN');
-    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => sykmelding.sykmeldingStatus.statusEvent !== 'APEN');
+    const { apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(sykmeldinger);
 
     return (
         <PageWrapper>
@@ -69,5 +70,22 @@ const SykmeldingerPage: React.FC = () => {
         </PageWrapper>
     );
 };
+
+function isPastSykmelding(sykmelding: Sykmelding) {
+    return (
+        sykmelding.sykmeldingStatus.statusEvent !== 'APEN' ||
+        dayjs(sykmelding.getSykmeldingEndDate()).isBefore(dayjs().subtract(3, 'months'))
+    );
+}
+
+function filterSykmeldinger(sykmeldinger: Sykmelding[]): {
+    apenSykmeldinger: Sykmelding[];
+    pastSykmeldinger: Sykmelding[];
+} {
+    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => !isPastSykmelding(sykmelding));
+    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => isPastSykmelding(sykmelding));
+
+    return { apenSykmeldinger, pastSykmeldinger };
+}
 
 export default SykmeldingerPage;

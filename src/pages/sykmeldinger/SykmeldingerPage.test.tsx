@@ -53,7 +53,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display only new sykmeldinger, sorted by ascending date ', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen, sykmeldingApenPapir, sykmeldingAvvist]);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingApenPapir, sykmeldingAvvist]);
 
         render(<SykmeldingerPage />);
 
@@ -68,7 +68,18 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display new and earlier sykmeldinger', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen, sykmeldingBekreftet]);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
+
+        render(<SykmeldingerPage />);
+
+        await waitForElementToBeRemoved(() => screen.getByText('Henter dine sykmeldinger'));
+        expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
+        expect(await screen.findByText('Nye sykmeldinger'));
+        expect(await screen.findByText('Tidligere sykmeldinger'));
+    });
+
+    it('should display APEN but older than 3 months sykemelding in tidligere section', async () => {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
 
         render(<SykmeldingerPage />);
 

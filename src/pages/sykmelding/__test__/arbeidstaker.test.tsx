@@ -10,14 +10,14 @@ describe('Arbeidstaker', () => {
     const apiNock = nock('http://localhost');
 
     const renderOptions = {
-        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingApen.id}`],
+        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingApen().id}`],
         renderPath: '/syk/sykmeldinger/:sykmeldingId',
     };
 
     beforeEach(() => {
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).times(1).reply(200, sykmeldingApen);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
         apiNock
-            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`)
+            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true });
     });
 
@@ -35,7 +35,7 @@ describe('Arbeidstaker', () => {
     it('should be able to submit form with active arbeidsgiver and nærmeste leder', async () => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
         apiNock
-            .post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`, {
+            .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Er opplysningene riktige?',
@@ -59,10 +59,10 @@ describe('Arbeidstaker', () => {
                 },
             })
             .reply(200);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).reply(200, {
-            ...sykmeldingApen,
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
+            ...sykmeldingApen(),
             sykmeldingStatus: {
-                ...sykmeldingApen.sykmeldingStatus,
+                ...sykmeldingApen().sykmeldingStatus,
                 statusEvent: 'BEKREFTET',
                 timestamp: '2020-01-01',
             },
@@ -88,14 +88,14 @@ describe('Arbeidstaker', () => {
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 
         await waitFor(() =>
-            expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen.id}/kvittering`),
+            expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen().id}/kvittering`),
         );
     });
 
     it('should be able to submit form with inactive arbeidsgiver', async () => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
         apiNock
-            .post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`, {
+            .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Er opplysningene riktige?',
@@ -114,10 +114,10 @@ describe('Arbeidstaker', () => {
                 },
             })
             .reply(200);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen.id}`).reply(200, {
-            ...sykmeldingApen,
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
+            ...sykmeldingApen(),
             sykmeldingStatus: {
-                ...sykmeldingApen.sykmeldingStatus,
+                ...sykmeldingApen().sykmeldingStatus,
                 statusEvent: 'BEKREFTET',
                 timestamp: '2020-01-01',
             },
@@ -141,13 +141,13 @@ describe('Arbeidstaker', () => {
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 
         await waitFor(() =>
-            expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen.id}/kvittering`),
+            expect(history.location.pathname).toBe(`/syk/sykmeldinger/${sykmeldingApen().id}/kvittering`),
         );
     });
 
     it('should show warning if user does not have any arbeidsforhold', async () => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
-        apiNock.post(`/api/v2/sykmeldinger/${sykmeldingApen.id}/send`).reply(200);
+        apiNock.post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`).reply(200);
         apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,

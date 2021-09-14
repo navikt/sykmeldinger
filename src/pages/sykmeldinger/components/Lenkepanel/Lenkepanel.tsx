@@ -9,9 +9,10 @@ import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 
 interface LenkepanelProps {
     sykmelding: Sykmelding;
+    isNew: boolean;
 }
 
-const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding }) => {
+const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
     const status = sykmelding.sykmeldingStatus.statusEvent;
     const behandlingsutfallStatus = sykmelding.behandlingsutfall.status;
     const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn;
@@ -31,7 +32,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding }) => {
                 history.push(linkToSykmelding);
                 window.scrollTo(0, 0);
             }}
-            className={status === 'APEN' ? 'lenkepanel--alert' : ''}
+            className={isNew ? 'lenkepanel--alert' : ''}
             border
         >
             <div className="lenkepanel-content">

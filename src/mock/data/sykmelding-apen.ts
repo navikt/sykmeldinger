@@ -1,6 +1,8 @@
-export const sykmeldingApen = {
+import dayjs from 'dayjs';
+
+export const sykmeldingApen = (mottatt = dayjs().subtract(2, 'days')) => ({
     id: 'APEN',
-    mottattTidspunkt: '2020-01-10',
+    mottattTidspunkt: mottatt.format('YYYY-MM-DD'),
     behandlingsutfall: {
         status: 'OK',
         ruleHits: [],
@@ -11,15 +13,15 @@ export const sykmeldingApen = {
     },
     sykmeldingsperioder: [
         {
-            fom: '2020-02-10',
-            tom: '2020-02-15',
+            fom: mottatt.format('YYYY-MM-DD'),
+            tom: mottatt.add(5, 'days').format('YYYY-MM-DD'),
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
             reisetilskudd: false,
         },
         {
-            fom: '2020-02-10',
-            tom: '2020-02-15',
+            fom: mottatt.format('YYYY-MM-DD'),
+            tom: mottatt.add(5, 'days').format('YYYY-MM-DD'),
             type: 'AKTIVITET_IKKE_MULIG',
             aktivitetIkkeMulig: {
                 medisinskArsak: {
@@ -34,8 +36,8 @@ export const sykmeldingApen = {
             reisetilskudd: false,
         },
         {
-            fom: '2020-02-16',
-            tom: '2020-02-20',
+            fom: mottatt.add(6, 'days').format('YYYY-MM-DD'),
+            tom: mottatt.add(11, 'days').format('YYYY-MM-DD'),
             type: 'GRADERT',
             gradert: {
                 grad: 20,
@@ -45,7 +47,7 @@ export const sykmeldingApen = {
         },
     ],
     sykmeldingStatus: {
-        timestamp: '2020-01-01',
+        timestamp: mottatt.format('YYYY-MM-DD'),
         statusEvent: 'APEN',
         sporsmalOgSvarListe: [],
     },
@@ -113,7 +115,7 @@ export const sykmeldingApen = {
         kontaktDato: '2020-04-01',
         begrunnelseIkkeKontakt: 'Han var kjempesyk',
     },
-    behandletTidspunkt: '2020-01-01',
+    behandletTidspunkt: mottatt.add(10, 'days'),
     behandler: {
         fornavn: 'Fornavn',
         mellomnavn: null,
@@ -138,4 +140,4 @@ export const sykmeldingApen = {
         mellomnavn: null,
         etternavn: 'Nordmann',
     },
-};
+});
