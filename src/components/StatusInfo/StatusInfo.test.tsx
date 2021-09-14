@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import Periode from '../../models/Sykmelding/Periode';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
 import StatusInfo from './StatusInfo';
+import Merknad from '../../models/Sykmelding/Merknad';
+import { Merknadtype } from '../InformationBanner/InformationBanner';
 
 describe('StatusInfo', () => {
     it('Renders nothing when status is not SENDT or BEKREFTET', () => {
@@ -13,7 +15,7 @@ describe('StatusInfo', () => {
             sporsmalOgSvarListe: [],
         };
         const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
-        render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[]} />);
+        render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[]} sykmeldingMerknader={[]} />);
         expect(screen.queryByTestId('status-info')).not.toBeInTheDocument();
     });
 
@@ -34,7 +36,13 @@ describe('StatusInfo', () => {
                 reisetilskudd: false,
             };
             const avventendePeriode = new Periode(plainPeriode);
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[avventendePeriode]} />);
+            render(
+                <StatusInfo
+                    sykmeldingStatus={sykmeldingStatus}
+                    sykmeldingsperioder={[avventendePeriode]}
+                    sykmeldingMerknader={[]}
+                />,
+            );
             expect(screen.getByText(/Du har sendt beskjed til arbeidsgiveren din/)).toBeInTheDocument();
             expect(
                 screen.getByText(/Husk at du har mulighet til å lage en digital oppfølgingsplan/),
@@ -57,8 +65,44 @@ describe('StatusInfo', () => {
                 reisetilskudd: false,
             };
             const avventendePeriode = new Periode(plainPeriode);
-            render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[avventendePeriode]} />);
+            render(
+                <StatusInfo
+                    sykmeldingStatus={sykmeldingStatus}
+                    sykmeldingsperioder={[avventendePeriode]}
+                    sykmeldingMerknader={[]}
+                />,
+            );
             expect(screen.queryByTestId('status-info')).not.toBeInTheDocument();
+        });
+    });
+
+    describe('Tilbakedatert under behandling', () => {
+        it('Renders under behandling info when status is SENDT and has merknad of type TILBAKEDATERING_UNDER_BEHANDLING', () => {
+            const sykmeldingStatus = new SykmeldingStatus({
+                statusEvent: 'SENDT',
+                timestamp: '2021-05-01',
+                arbeidsgiver: null,
+                sporsmalOgSvarListe: [],
+            });
+            const merknad = new Merknad({
+                type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
+                beskrivelse: null,
+            });
+            render(
+                <StatusInfo
+                    sykmeldingStatus={sykmeldingStatus}
+                    sykmeldingsperioder={[]}
+                    sykmeldingMerknader={[merknad]}
+                />,
+            );
+            expect(
+                screen.getByText(/Vanligvis fyller du ut en søknad om sykepenger når sykmeldingen er over/),
+            ).toBeInTheDocument();
+            expect(
+                screen.getByText(
+                    /Siden legen har skrevet at sykmeldingen startet før dere hadde kontakt, må NAV først vurdere om det var en gyldig grunn til dette/,
+                ),
+            ).toBeInTheDocument();
         });
     });
 
@@ -83,7 +127,13 @@ describe('StatusInfo', () => {
                     reisetilskudd: false,
                 };
                 const gradertPeriode = new Periode(plainPeriode);
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[gradertPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[gradertPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
                 expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
             });
@@ -112,6 +162,7 @@ describe('StatusInfo', () => {
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                        sykmeldingMerknader={[]}
                     />,
                 );
                 expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
@@ -151,6 +202,7 @@ describe('StatusInfo', () => {
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                        sykmeldingMerknader={[]}
                     />,
                 );
                 expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
@@ -190,6 +242,7 @@ describe('StatusInfo', () => {
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                        sykmeldingMerknader={[]}
                     />,
                 );
                 expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
@@ -217,7 +270,13 @@ describe('StatusInfo', () => {
                     reisetilskudd: false,
                 };
                 const gradertPeriode = new Periode(plainPeriode);
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[gradertPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[gradertPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
                 expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
             });
@@ -246,6 +305,7 @@ describe('StatusInfo', () => {
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
+                        sykmeldingMerknader={[]}
                     />,
                 );
                 expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
@@ -269,7 +329,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
             });
 
@@ -295,7 +361,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
@@ -322,7 +394,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
@@ -349,7 +427,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
@@ -371,7 +455,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
             });
 
@@ -397,7 +487,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
@@ -424,7 +520,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
@@ -451,7 +553,13 @@ describe('StatusInfo', () => {
                     type: 'REISETILSKUDD',
                     reisetilskudd: true,
                 });
-                render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[reisetilskuddPeriode]} />);
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
                 expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),

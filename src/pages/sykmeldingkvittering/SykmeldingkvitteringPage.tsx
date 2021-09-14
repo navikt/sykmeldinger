@@ -72,6 +72,7 @@ const SykmeldingkvitteringPage: React.FC = () => {
                 <StatusInfo
                     sykmeldingStatus={sykmelding.sykmeldingStatus}
                     sykmeldingsperioder={sykmelding.sykmeldingsperioder}
+                    sykmeldingMerknader={sykmelding.merknader ?? []}
                 />
             </Spacing>
 

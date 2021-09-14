@@ -26,6 +26,16 @@ describe('InformationBanner', () => {
         expect(screen.getByText('Behov for mer opplysninger')).toBeInTheDocument();
     });
 
+    it('Renders view for merknad TILBAKEDATERING_UNDER_BEHANDLING', () => {
+        const merknad = new Merknad({
+            type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
+        });
+        render(<InformationBanner merknader={[merknad]} />);
+        expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
+        expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
+        expect(screen.getByRole('heading')).toHaveTextContent('Viktig informasjon');
+    });
+
     it('Renders papirsinfo view if papirsykmelding is true', () => {
         render(<InformationBanner papirsykmelding />);
         expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument();

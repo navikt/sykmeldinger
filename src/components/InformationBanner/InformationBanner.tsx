@@ -7,6 +7,7 @@ import './InformationBanner.less';
 export enum Merknadtype {
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
     TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER = 'TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER',
+    TILBAKEDATERING_UNDER_BEHANDLING = 'UNDER_BEHANDLING',
 }
 
 interface InformationBannerProps {
@@ -58,6 +59,36 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
                         opplysninger om hvorfor sykmeldingen er datert tilbake.
                     </Normaltekst>
                     <Normaltekst>Du kan likevel sende inn søknaden om sykepenger.</Normaltekst>
+                </Veilederpanel>
+            </div>
+        );
+    }
+
+    if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING)) {
+        return (
+            <div data-testid="merknad-banner">
+                <Veilederpanel
+                    fargetema="advarsel"
+                    type="plakat"
+                    svg={<VeilederMaleSvg />}
+                    veilederProps={{ className: 'haha' }}
+                >
+                    <Undertittel tag="h2" className="merknad-banner__title">
+                        Viktig informasjon
+                    </Undertittel>
+                    <Normaltekst className="merknad-banner__paragraph">
+                        Vanligvis starter sykmeldingen fra den dagen du er hos legen. I ditt tilfelle har legen skrevet
+                        at den startet tidligere. NAV må derfor vurdere om det er en gyldig grunn for at sykmeldingen
+                        din starter før du var i kontakt med legen.
+                    </Normaltekst>
+                    <Normaltekst className="merknad-banner__paragraph">
+                        Du kan fortsatt sende inn sykmeldingen som vanlig.
+                    </Normaltekst>
+                    <hr className="merknad-banner__ruler" />
+                    <Normaltekst>
+                        Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
+                        Du velger selv om du vil bruke sykmeldingen.
+                    </Normaltekst>
                 </Veilederpanel>
             </div>
         );
