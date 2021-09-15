@@ -1,16 +1,23 @@
-# Base image
-FROM navikt/node-express:12.2.0-alpine
+FROM navikt/node-express:12
 
-COPY server.js .
-COPY /build ./build
-
-COPY ./env.sh .
-COPY ./process-index-html.sh .
-COPY ./start.sh .
-
-COPY .env .
-
+USER root
+# Temporary hack TODO rødde
 RUN apk add --no-cache bash
+RUN deluser --remove-home apprunner
+RUN addgroup --system --gid 1069 apprunner
+RUN adduser --system --uid 1069 --ingroup apprunner --home /var/server apprunner
+RUN chown apprunner:apprunner /var/server
+
+USER apprunner
+
+COPY --chown=apprunner:apprunner server.js .
+COPY --chown=apprunner:apprunner /build ./build
+
+COPY --chown=apprunner:apprunner ./env.sh .
+COPY --chown=apprunner:apprunner ./process-index-html.sh .
+COPY --chown=apprunner:apprunner ./start.sh .
+
+COPY --chown=apprunner:apprunner .env .
 
 RUN chmod +x env.sh
 RUN chmod +x process-index-html.sh
@@ -22,4 +29,4 @@ ENV BASE_NAME=/syk/sykmeldinger
 ENV PUBLIC_URL=/syk/sykmeldinger
 
 # https://stackoverflow.com/a/58805795/12159703
-CMD ["/bin/bash", "-c", "./start.sh"]
+CMD ["./start.sh"]
