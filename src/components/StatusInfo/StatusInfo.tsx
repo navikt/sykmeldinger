@@ -5,13 +5,18 @@ import Periode from '../../models/Sykmelding/Periode';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
 import Spacing from '../Spacing/Spacing';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
+import Merknad from '../../models/Sykmelding/Merknad';
+import { Merknadtype } from '../InformationBanner/InformationBanner';
+
+import styles from './StatusInfo.module.css';
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatus;
     sykmeldingsperioder: Periode[];
+    sykmeldingMerknader: Merknad[];
 }
 
-const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingsperioder }) => {
+const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingsperioder, sykmeldingMerknader }) => {
     const erAvventende = sykmeldingsperioder.some((p) => p.type === 'AVVENTENDE');
 
     const erGradertReisetilskudd = sykmeldingsperioder.some((p) => p.gradert?.reisetilskudd);
@@ -19,6 +24,10 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
         sykmeldingsperioder.some((p) => p.reisetilskudd === true) &&
         sykmeldingsperioder.some((p) => p.reisetilskudd === false);
     const maSokePapir = erGradertReisetilskudd || erReisetilskuddKombinert;
+
+    const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
+        (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
+    );
 
     const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe.find(
         (sporsmal) => sporsmal.shortName === 'ARBEIDSSITUASJON',
@@ -93,6 +102,31 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                         </Normaltekst>
                     </Spacing>
                     <Normaltekst>God bedring!</Normaltekst>
+                </Veilederpanel>
+            </div>
+        );
+    }
+
+    if (erUnderBehandlingTilbakedatert) {
+        return (
+            <div data-testid="status-info" className={styles.root}>
+                <Veilederpanel type="plakat" fargetema="advarsel" svg={<VeilederMaleSvg />}>
+                    <Spacing amount="small">
+                        <Normaltekst>
+                            Vanligvis fyller du ut en søknad om sykepenger når sykmeldingen er over.
+                        </Normaltekst>
+                    </Spacing>
+                    <Spacing amount="small">
+                        <Normaltekst>
+                            Siden legen har skrevet at sykmeldingen startet før dere hadde kontakt, må NAV først vurdere
+                            om det var en gyldig grunn til dette.
+                        </Normaltekst>
+                    </Spacing>
+                    <Spacing amount="small">
+                        <Normaltekst>
+                            Du får en melding fra oss når vurderingen er ferdig og søknaden er klar til utfylling.
+                        </Normaltekst>
+                    </Spacing>
                 </Veilederpanel>
             </div>
         );
