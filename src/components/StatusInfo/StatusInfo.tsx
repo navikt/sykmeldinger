@@ -1,5 +1,4 @@
-import Lenke from 'nav-frontend-lenker';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Periode from '../../models/Sykmelding/Periode';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
@@ -20,11 +19,6 @@ interface StatusInfoProps {
 const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingsperioder, sykmeldingMerknader }) => {
     const erAvventende = sykmeldingsperioder.some((p) => p.type === 'AVVENTENDE');
 
-    const erReisetilskuddKombinert =
-        sykmeldingsperioder.some((p) => p.reisetilskudd === true) &&
-        sykmeldingsperioder.some((p) => p.reisetilskudd === false);
-    const maSokePapir = erReisetilskuddKombinert;
-
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
         (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
     );
@@ -32,7 +26,6 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
     const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe.find(
         (sporsmal) => sporsmal.shortName === 'ARBEIDSSITUASJON',
     );
-    const erArbeidstaker = arbeidssituasjonSporsmal?.svar.svar === 'ARBEIDSTAKER';
     const erFlEllerSn =
         arbeidssituasjonSporsmal?.svar.svar === 'FRILANSER' ||
         arbeidssituasjonSporsmal?.svar.svar === 'NAERINGSDRIVENDE';
@@ -61,47 +54,6 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                     <a href="/oppfolgingsplan/oppfolgingsplaner" className="knapp">
                         Lag en oppfølgingsplan
                     </a>
-                </Veilederpanel>
-            </div>
-        );
-    }
-
-    if (maSokePapir) {
-        return (
-            <div data-testid="status-info">
-                <Veilederpanel type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
-                    <Spacing amount="small">
-                        <Element>Du må gjøre resten på papir</Element>
-                    </Spacing>
-                    <Spacing amount="small">
-                        <Normaltekst>
-                            Vi jobber med å digitalisere sykepengesøknaden for alle type sykmeldinger, men akkurat denne
-                            er vi ikke helt ferdige med.
-                        </Normaltekst>
-                    </Spacing>
-                    <Spacing amount="small">
-                        <Normaltekst>
-                            Skal du søke om sykepenger, fyller du ut del D av papirsykmeldingen du fikk hos legen. Hvis
-                            du ikke har fått papiret, må du be legen om å få det.
-                        </Normaltekst>
-                    </Spacing>
-                    {erArbeidstaker && (
-                        <Spacing amount="small">
-                            <Normaltekst>
-                                Hør med arbeidsgiveren din om du skal sende del D direkte til dem eller til NAV.
-                            </Normaltekst>
-                        </Spacing>
-                    )}
-                    <Spacing amount="small">
-                        <Normaltekst>
-                            Adressen til NAV finner du på en{' '}
-                            <Lenke href="https://www.nav.no/soknader/nb/person/helse/sykepenger/NAV%2008-07.04D/brev">
-                                egen førsteside
-                            </Lenke>{' '}
-                            som skal skrives ut og sendes sammen med papirene.
-                        </Normaltekst>
-                    </Spacing>
-                    <Normaltekst>God bedring!</Normaltekst>
                 </Veilederpanel>
             </div>
         );
