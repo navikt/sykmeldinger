@@ -108,36 +108,6 @@ describe('StatusInfo', () => {
 
     describe('Papirsøknad', () => {
         describe('SENDT', () => {
-            it('Gradert reisetilskudd renders papir info', () => {
-                const plainSykmeldingStatus = {
-                    statusEvent: 'SENDT',
-                    timestamp: '2021-05-01',
-                    arbeidsgiver: null,
-                    sporsmalOgSvarListe: [],
-                };
-                const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
-                const plainPeriode = {
-                    fom: '2021-05-01',
-                    tom: '2021-05-05',
-                    type: 'GRADERT',
-                    gradert: {
-                        grad: 80,
-                        reisetilskudd: true,
-                    },
-                    reisetilskudd: false,
-                };
-                const gradertPeriode = new Periode(plainPeriode);
-                render(
-                    <StatusInfo
-                        sykmeldingStatus={sykmeldingStatus}
-                        sykmeldingsperioder={[gradertPeriode]}
-                        sykmeldingMerknader={[]}
-                    />,
-                );
-                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
-                expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
-            });
-
             it('Reisetilskudd in combination with another period type renders papirinfo', () => {
                 const sykmeldingStatus = new SykmeldingStatus({
                     statusEvent: 'SENDT',
@@ -251,36 +221,6 @@ describe('StatusInfo', () => {
         });
 
         describe('BEKREFTET', () => {
-            it('Gradert reisetilskudd renders papirinfo', () => {
-                const plainSykmeldingStatus = {
-                    statusEvent: 'BEKREFTET',
-                    timestamp: '2021-05-01',
-                    arbeidsgiver: null,
-                    sporsmalOgSvarListe: [],
-                };
-                const sykmeldingStatus = new SykmeldingStatus(plainSykmeldingStatus);
-                const plainPeriode = {
-                    fom: '2021-05-01',
-                    tom: '2021-05-05',
-                    type: 'GRADERT',
-                    gradert: {
-                        grad: 80,
-                        reisetilskudd: true,
-                    },
-                    reisetilskudd: false,
-                };
-                const gradertPeriode = new Periode(plainPeriode);
-                render(
-                    <StatusInfo
-                        sykmeldingStatus={sykmeldingStatus}
-                        sykmeldingsperioder={[gradertPeriode]}
-                        sykmeldingMerknader={[]}
-                    />,
-                );
-                expect(screen.getByText('Du må gjøre resten på papir')).toBeInTheDocument();
-                expect(screen.queryByText(/Hør med arbeidsgiveren din/)).not.toBeInTheDocument();
-            });
-
             it('Reisetilskudd in combination with another period type renders papirinfor', () => {
                 const sykmeldingStatus = new SykmeldingStatus({
                     statusEvent: 'BEKREFTET',
@@ -439,6 +379,33 @@ describe('StatusInfo', () => {
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument();
             });
+
+            it('Gradert reisetilskudd renders standard info', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'SENDT',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [],
+                });
+                const gradertReisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'GRADERT',
+                    gradert: {
+                        grad: 80,
+                        reisetilskudd: true,
+                    },
+                    reisetilskudd: false,
+                });
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[gradertReisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+            });
         });
 
         describe('BEKREFTET', () => {
@@ -557,6 +524,82 @@ describe('StatusInfo', () => {
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
+                ).not.toBeInTheDocument();
+            });
+
+            it('Renders standard info with frilanser info for gradert reisetilskudd NAERINGSDRIVENDE', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'NAERINGSDRIVENDE',
+                            },
+                        },
+                    ],
+                });
+                const gradertReisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'GRADERT',
+                    gradert: {
+                        grad: 80,
+                        reisetilskudd: true,
+                    },
+                    reisetilskudd: false,
+                });
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[gradertReisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                );
+                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
+            });
+
+            it('Renders standard info without frilanser info for gradert reisetilskudd ARBEIDSLEDIG', () => {
+                const sykmeldingStatus = new SykmeldingStatus({
+                    statusEvent: 'BEKREFTET',
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            tekst: 'sporsmalstekst',
+                            shortName: 'ARBEIDSSITUASJON',
+                            svar: {
+                                svarType: 'ARBEIDSSITUASJON',
+                                svar: 'ARBEIDSLEDIG',
+                            },
+                        },
+                    ],
+                });
+                const gradertReisetilskuddPeriode = new Periode({
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: 'GRADERT',
+                    gradert: {
+                        grad: 80,
+                        reisetilskudd: true,
+                    },
+                    reisetilskudd: false,
+                });
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[gradertReisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
                 );

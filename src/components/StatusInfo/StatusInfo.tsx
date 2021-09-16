@@ -20,11 +20,10 @@ interface StatusInfoProps {
 const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingsperioder, sykmeldingMerknader }) => {
     const erAvventende = sykmeldingsperioder.some((p) => p.type === 'AVVENTENDE');
 
-    const erGradertReisetilskudd = sykmeldingsperioder.some((p) => p.gradert?.reisetilskudd);
     const erReisetilskuddKombinert =
         sykmeldingsperioder.some((p) => p.reisetilskudd === true) &&
         sykmeldingsperioder.some((p) => p.reisetilskudd === false);
-    const maSokePapir = erGradertReisetilskudd || erReisetilskuddKombinert;
+    const maSokePapir = erReisetilskuddKombinert;
 
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
         (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
