@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
+import env from '../utils/env';
 import { authenticatedPost } from '../utils/Fetch';
 
 function useAvbryt(sykmeldingId: string) {
@@ -7,7 +8,7 @@ function useAvbryt(sykmeldingId: string) {
     return useMutation<unknown, Error>(
         () =>
             authenticatedPost(
-                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/avbryt`,
+                `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/avbryt`,
             ),
         {
             onSuccess: () => {

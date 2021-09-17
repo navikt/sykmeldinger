@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { logger } from '../utils/logger';
+import env from "../utils/env";
 
 type TriggerType =
     | 'SYKMELDING_LISTEVISNING'
@@ -24,7 +25,7 @@ function isHotjarFunction(hj: unknown): hj is HotjarFunction {
 
 const useHotjarTrigger = (triggerType: TriggerType) => {
     useEffect(() => {
-        if (window._env_?.RUNTIME_ENVIRONMENT === 'production') {
+        if (env.RUNTIME_ENVIRONMENT === 'production') {
             setTimeout(() => {
                 const hotjarWindow = window as HotjarWindow;
 

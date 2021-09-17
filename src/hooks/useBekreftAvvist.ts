@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { authenticatedPost } from '../utils/Fetch';
+import env from "../utils/env";
 
 function useBekreftAvvist(sykmeldingId: string) {
     const queryClient = useQueryClient();
@@ -7,7 +8,7 @@ function useBekreftAvvist(sykmeldingId: string) {
     return useMutation<unknown, Error>(
         () =>
             authenticatedPost(
-                `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/bekreftAvvist`,
+                `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/bekreftAvvist`,
             ),
         {
             onSuccess: () => {

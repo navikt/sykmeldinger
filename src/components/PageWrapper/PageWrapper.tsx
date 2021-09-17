@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import env from '../../utils/env';
 import { logger } from '../../utils/logger';
 import Brodsmuler from '../Breadcrumbs/Breadcrumbs';
 import Header from '../Header/Header';
@@ -52,7 +53,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
                         breadcrumbs={[
                             {
                                 title: 'Sykmeldinger',
-                                path: window._env_?.SYKMELDINGER_ROOT || '#',
+                                path: env.SYKMELDINGER_ROOT || '#',
                             },
                             {
                                 title: sykmelding?.getSykmeldingTitle() ?? 'Sykmelding',
@@ -77,11 +78,11 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
                         breadcrumbs={[
                             {
                                 title: 'Sykmeldinger',
-                                path: window._env_?.SYKMELDINGER_ROOT || '#',
+                                path: env.SYKMELDINGER_ROOT || '#',
                             },
                             {
                                 title: sykmelding?.getSykmeldingTitle() ?? 'Sykmelding',
-                                path: window._env_?.SYKMELDINGER_ROOT + `/${sykmeldingId}` || '#',
+                                path: env.SYKMELDINGER_ROOT + `/${sykmeldingId}` || '#',
                             },
                             {
                                 title: 'Kvittering',

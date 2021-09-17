@@ -2,13 +2,14 @@ import { validateOrReject } from 'class-validator';
 import { useQuery } from 'react-query';
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 import { assert } from '../utils/Assert';
+import env from '../utils/env';
 import { authenticatedGet } from '../utils/Fetch';
 import { logger } from '../utils/logger';
 
 function useSykmeldinger() {
     return useQuery<Sykmelding[], Error>('sykmeldinger', () =>
         authenticatedGet(
-            `${window._env_?.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger`,
+            `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger`,
             async (maybeSykmeldinger, response) => {
                 assert(
                     Array.isArray(maybeSykmeldinger),

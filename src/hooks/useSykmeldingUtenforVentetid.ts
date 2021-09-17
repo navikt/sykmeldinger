@@ -1,12 +1,13 @@
 import { validateOrReject } from 'class-validator';
 import { useQuery } from 'react-query';
 import ErUtenforVentetid from '../models/ErUtenforVentetid';
+import env from '../utils/env';
 import { authenticatedGet } from '../utils/Fetch';
 
 function useSykmeldingUtenforVentetid(sykmeldingId: string) {
     return useQuery<ErUtenforVentetid, Error>(['erUtenforVentetid', sykmeldingId], () =>
         authenticatedGet(
-            `${window._env_?.FLEX_GATEWAY_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/v2/erUtenforVentetid`,
+            `${env.FLEX_GATEWAY_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/v2/erUtenforVentetid`,
             async (maybeErUtenforVentetid) => {
                 const erUtenforVentetid = new ErUtenforVentetid(maybeErUtenforVentetid);
                 await validateOrReject(erUtenforVentetid, { validationError: { target: false, value: false } });

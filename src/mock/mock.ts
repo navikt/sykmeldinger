@@ -13,10 +13,11 @@ import { sykmeldingSendt3 } from './data/sykmelding-sendt-3';
 import fetchMock from 'fetch-mock';
 import { sykmeldingUgyldigTilbakedatering } from './data/sykmelding-ugyldig-tilbakedatering';
 import { sykmeldingUnderbehandlingTilbakedatering } from './data/sykmelding-under-behandling-tilbakedatering';
+import env from '../utils/env';
 
 // Redirect to basepath to make demo-app work by visiting ingress (sykmeldinger.labs.nais.io)
 if (window.location.pathname === '/') {
-    window.location.pathname = window._env_?.SYKMELDINGER_ROOT || '/syk/sykmeldinger';
+    window.location.pathname = env.SYKMELDINGER_ROOT || '/syk/sykmeldinger';
 }
 
 fetchMock.config.fallbackToNetwork = true;
