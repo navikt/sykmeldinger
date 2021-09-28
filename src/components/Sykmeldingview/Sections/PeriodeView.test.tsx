@@ -142,7 +142,7 @@ describe('PeriodeView', () => {
         expect(screen.getByText('20% sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
-        expect(screen.getByText('Pasienten kan være i delvis arbeids ved bruk av reisetilskudd')).toBeInTheDocument();
+        expect(screen.getByText('Pasienten kan være i delvis arbeid ved bruk av reisetilskudd')).toBeInTheDocument();
     });
 
     it('Renders reisetilskudd periode', () => {

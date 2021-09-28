@@ -7,6 +7,7 @@ interface ArbeidsevneViewProps {
     andreTiltak?: string;
     arbeidsgiver: boolean;
 }
+
 const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({
     tiltakArbeidsplassen,
     tiltakNAV,

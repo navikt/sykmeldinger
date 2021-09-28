@@ -4,13 +4,13 @@ import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import Section from '../Layout/Section/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
-const PrognoseView: React.FC<{ prognose?: Prognose }> = ({ prognose }) => {
+const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = ({ prognose, arbeidsgiver }) => {
     if (!prognose) {
         return null;
     }
 
     if (
-        prognose.arbeidsforEtterPeriode === false &&
+        !prognose.arbeidsforEtterPeriode &&
         !prognose.erIArbeid &&
         !prognose.erIkkeIArbeid &&
         !prognose.hensynArbeidsplassen
@@ -31,7 +31,7 @@ const PrognoseView: React.FC<{ prognose?: Prognose }> = ({ prognose }) => {
                     small
                 />
             )}
-            {!!prognose.erIArbeid && (
+            {!arbeidsgiver && !!prognose.erIArbeid && (
                 <>
                     <CheckboxEntry
                         show={prognose.erIArbeid.egetArbeidPaSikt}
@@ -57,7 +57,7 @@ const PrognoseView: React.FC<{ prognose?: Prognose }> = ({ prognose }) => {
                     )}
                 </>
             )}
-            {!!prognose.erIkkeIArbeid && (
+            {!arbeidsgiver && !!prognose.erIkkeIArbeid && (
                 <>
                     <CheckboxEntry
                         show={prognose.erIkkeIArbeid.arbeidsforPaSikt}

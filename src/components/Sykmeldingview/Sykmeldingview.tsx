@@ -35,12 +35,13 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                 <Section>
                     <SykmeldingEntry
                         title="Dato sykmeldingen ble skrevet"
+                        //  TODO is this the correct field? Ref. slack thread
                         mainText={DateFormatter.toReadableDate(sykmelding.behandletTidspunkt)}
                     />
                     <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
                 </Section>
 
-                <PrognoseView prognose={sykmelding.prognose} />
+                <PrognoseView prognose={sykmelding.prognose} arbeidsgiver={arbeidsgiver} />
 
                 <UtdypendeOpplysningerView
                     utdypendeOpplysninger={sykmelding.utdypendeOpplysninger}
