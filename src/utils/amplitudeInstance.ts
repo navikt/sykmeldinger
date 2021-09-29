@@ -1,4 +1,5 @@
 import amplitude, { AmplitudeClient } from 'amplitude-js';
+import env from './env';
 
 // https://github.com/navikt/analytics-taxonomy
 type EventName =
@@ -21,7 +22,7 @@ class AmplitudeInstance {
     constructor() {
         this.instance = amplitude.getInstance();
 
-        const amplitudeKey = window._env_?.AMPLITUDE_ENABLED;
+        const amplitudeKey = env.AMPLITUDE_ENABLED;
         if (amplitudeKey === 'true') {
             this.instance.init('default', undefined, {
                 apiEndpoint: 'amplitude.nav.no/collect-auto',

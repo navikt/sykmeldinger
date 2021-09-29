@@ -9,6 +9,7 @@ import Merknad from '../../models/Sykmelding/Merknad';
 import { Merknadtype } from '../InformationBanner/InformationBanner';
 
 import styles from './StatusInfo.module.css';
+import env from '../../utils/env';
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatus;
@@ -156,7 +157,7 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                     <Normaltekst>God bedring!</Normaltekst>
                 </Spacing>
 
-                <a href={window._env_?.SYKEPENGESOKNAD_URL || '#'} className="knapp">
+                <a href={env.SYKEPENGESOKNAD_URL || '#'} className="knapp">
                     Gå til søknader
                 </a>
             </Veilederpanel>

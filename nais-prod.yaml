@@ -22,10 +22,12 @@ spec:
       cpu: 200m
       memory: 256Mi
   liveness:
-    path: /is_alive
+    path: /internal/is_alive
   readiness:
-    path: /is_ready
+    path: /internal/is_ready
   env:
+    - name: ENV
+      value: "prod"
     - name: DECORATOR_URL
       value: "https://www.nav.no/dekoratoren"
     - name: RUNTIME_ENVIRONMENT

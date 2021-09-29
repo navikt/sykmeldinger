@@ -7,10 +7,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import dayjs from 'dayjs';
 import { setupLogger } from './utils/logger';
+import env from './utils/env';
 
 dayjs.locale('nb');
 
-const runtimeEnvironment = window._env_?.RUNTIME_ENVIRONMENT;
+const runtimeEnvironment = env.RUNTIME_ENVIRONMENT;
 if (runtimeEnvironment === 'development' || runtimeEnvironment === 'labs-demo') {
     require('./mock/mock');
 }

@@ -12,6 +12,7 @@ import NotFoundPage from './pages/notFound/NotFoundPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import { logger } from './utils/logger';
 import ErrorFallback from './components/ErrorFallback/ErrorFallback';
+import env from './utils/env';
 
 const App = () => {
     const queryClient = new QueryClient({
@@ -34,17 +35,17 @@ const App = () => {
                 <BrowserRouter>
                     <Switch>
                         <Route
-                            path={window._env_?.SYKMELDINGER_ROOT || '/sykmeldinger'}
+                            path={env.SYKMELDINGER_ROOT || '/sykmeldinger'}
                             exact
                             component={SykmeldingerPage}
                         />
                         <Route
-                            path={`${window._env_?.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId`}
+                            path={`${env.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId`}
                             exact
                             component={SykmeldingPage}
                         />
                         <Route
-                            path={`${window._env_?.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId/kvittering`}
+                            path={`${env.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId/kvittering`}
                             exact
                             component={SykmeldingkvitteringPage}
                         />

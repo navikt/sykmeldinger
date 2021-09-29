@@ -1,6 +1,7 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import env from '../../utils/env';
 import './InfoOmDigitalSykmelding.less';
 
 const InfoSvg: React.FC = () => (
@@ -33,7 +34,7 @@ const InfoOmDigitalSykmelding: React.FC = () => (
         <section>
             <Normaltekst className="info-omdigital-sykmelding__paragraph" style={{ marginBottom: '1rem' }}>
                 NAV får alle sykmeldinger som blir skrevet i Norge. Den som er sykmeldt, finner den på{' '}
-                <Lenke href={window._env_?.SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Lenke>, der du er logget inn nå.
+                <Lenke href={env.SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Lenke>, der du er logget inn nå.
             </Normaltekst>
             <Normaltekst className="info-omdigital-sykmelding__paragraph">
                 Du kan kreve at NAV sletter sykmeldingen din. Da kan du bruke{' '}

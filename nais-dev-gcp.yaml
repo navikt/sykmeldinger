@@ -22,12 +22,12 @@ spec:
       cpu: 200m
       memory: 256Mi
   liveness:
-    path: /is_alive
+    path: /internal/is_alive
   readiness:
-    path: /is_ready
+    path: /internal/is_ready
   env:
-    - name: DECORATOR_URL
-      value: "https://dekoratoren.dev.nav.no"
+    - name: ENV
+      value: "q1"
     - name: RUNTIME_ENVIRONMENT
       value: "dev-gcp"
     - name: SYKMELDINGER_ROOT

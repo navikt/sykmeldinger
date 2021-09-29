@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
+import env from '../../utils/env';
 
 const PersonIcon = () => {
     return (
@@ -60,12 +61,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
             </div>
             <Normaltekst tag="ul" className="breadcrumbs__crumbs">
                 <li className="breadcrumbs__crumb">
-                    <Lenke href={window._env_?.DITT_NAV_ROOT || '#'} className="lenke">
+                    <Lenke href={env.DITT_NAV_ROOT || '#'} className="lenke">
                         Ditt NAV
                     </Lenke>
                 </li>
                 <li className="breadcrumbs__crumb">
-                    <Lenke href={window._env_?.SYKEFRAVAER_ROOT || '#'} className="lenke">
+                    <Lenke href={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
                         Sykefravær
                     </Lenke>
                 </li>

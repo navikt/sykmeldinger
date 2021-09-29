@@ -24,6 +24,9 @@ jobs:
           path: VERSION.txt
       - name: Install npm dependencies
         run: npm ci
+      - name: Install server npm dependencies
+        run: npm ci
+        working-directory: server
       # - name: Run audit
       #   run: npm audit --audit-level=moderate
       - name: Run lint
@@ -32,6 +35,9 @@ jobs:
         run: CI=true npm test
       - name: Build application
         run: npm run build
+      - name: Build server
+        run: npm run build
+        working-directory: server
       - name: Upload sources with sourcemaps
         if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v1
@@ -48,7 +54,7 @@ jobs:
         run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
       - name: Bygg og push Docker image hvor appen serves på /syk/sykmeldinger
         run: |
-            docker build . -f Dockerfile.syk.sykmeldinger -t ${IMAGE_SYK_SYKMELDINGER}
+            docker build . -t ${IMAGE_SYK_SYKMELDINGER}
             docker push ${IMAGE_SYK_SYKMELDINGER}
 
   deploy-to-q1-dev-gcp:

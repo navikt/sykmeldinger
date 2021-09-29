@@ -6,6 +6,7 @@ import LenkepanelIcon from './LenkepanelIcon';
 import LenkepanelEtikett from './LenkepanelEtikett';
 import './Lenkepanel.less';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import env from "../../../../utils/env";
 
 interface LenkepanelProps {
     sykmelding: Sykmelding;
@@ -19,7 +20,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
 
     const [isHoverState, setIsHoverState] = useState<boolean>(false);
 
-    const linkToSykmelding = `${window._env_?.SYKMELDINGER_ROOT}/${sykmelding.id}`;
+    const linkToSykmelding = `${env.SYKMELDINGER_ROOT}/${sykmelding.id}`;
     const history = useHistory();
 
     return (

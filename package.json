@@ -62,10 +62,8 @@
         "typescript": "4.1.5"
     },
     "scripts": {
-        "start:integration-test": "RUNTIME_ENVIRONMENT=test AMPLITUDE_ENABLED=false npm run generate-env-config && REACT_APP_DECORATOR_URL=https://www.nav.no/dekoratoren PORT=8080 BROWSER=none craco start",
-        "start": "npm run generate-env-config && PORT=8088 craco start",
-        "build": "CI=true PUBLIC_URL=##PUBLIC_URL## REACT_APP_DECORATOR_URL=##DECORATOR_URL## craco build",
-        "generate-env-config": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/",
+        "start": "PORT=8088 craco start",
+        "build": "CI=true PUBLIC_URL=/syk/sykmeldinger craco build",
         "test": "craco test",
         "eject": "react-scripts eject",
         "lint": "eslint 'src/**/**.{ts,tsx,js,jsx}'",

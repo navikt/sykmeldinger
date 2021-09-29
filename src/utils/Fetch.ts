@@ -1,6 +1,7 @@
+import env from './env';
 import { logger } from './logger';
 
-const loginServiceUrl = `${window._env_?.LOGIN_SERVICE_URL}?redirect=${window._env_?.LOGIN_SERVICE_REDIRECT_URL}`;
+const loginServiceUrl = `${env.LOGIN_SERVICE_URL}?redirect=${env.LOGIN_SERVICE_REDIRECT_URL}`;
 
 /**
  * Make a GET request for the specified resource
