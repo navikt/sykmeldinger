@@ -26,3 +26,5 @@ spec:
       value: 'false'
     - name: SYKEFRAVAER_ROOT
       value: "https://ditt-sykefravaer.labs.nais.io/syk/sykefravaer"
+    - name: SYKMELDINGER_ROOT
+      value: "/syk/sykmeldinger"
