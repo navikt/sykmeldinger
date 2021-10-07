@@ -38,6 +38,5 @@ describe('AvvistVeileder', () => {
         render(<AvvistVeileder behandlerNavn={'Doktor Legesen'} behandlingsutfall={behandlingsutfall} />);
         expect(screen.getByText('Sykmeldingen kan dessverre ikke brukes')).toBeInTheDocument();
         expect(screen.getByText(/Du trenger en ny sykmelding/)).toBeInTheDocument();
-        expect(screen.getByText(/Dessverre avvist/)).toBeInTheDocument();
     });
 });
