@@ -67,7 +67,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
                 </li>
                 <li className="breadcrumbs__crumb">
                     <Lenke href={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
-                        Sykefravær
+                        Ditt sykefravær
                     </Lenke>
                 </li>
                 {breadcrumbs.map(({ path, title }, index) => {
