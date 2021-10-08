@@ -102,7 +102,7 @@ const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder, arbeidsgiver }) => 
                     )}
                     <CheckboxEntry
                         show={Boolean(periode.gradert?.reisetilskudd)}
-                        checkboxText="Pasienten kan være i delvis arbeids ved bruk av reisetilskudd"
+                        checkboxText="Pasienten kan være i delvis arbeid ved bruk av reisetilskudd"
                     />
                 </div>
             ))}
