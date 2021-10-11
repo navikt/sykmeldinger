@@ -19,9 +19,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
     it('should display reason for rejection', async () => {
         render(<SykmeldingPage />, renderOptions);
 
-        expect(
-            await screen.findByText(sykmeldingAvvist.behandlingsutfall.ruleHits[0].messageForUser),
-        ).toBeInTheDocument();
+        expect(await screen.findByText(/Du trenger en ny sykmelding/)).toBeInTheDocument();
     });
 
     it('should show details from sykmelding', async () => {
