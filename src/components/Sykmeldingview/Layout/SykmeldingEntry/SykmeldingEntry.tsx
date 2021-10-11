@@ -19,6 +19,7 @@ const SykmeldingEntry: React.FC<SykmeldingEntryProps> = ({ title, mainText, subT
             </div>
         );
     }
+
     return (
         <div className="sykmelding-entry">
             <Element>{title}</Element>

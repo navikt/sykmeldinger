@@ -76,7 +76,7 @@ class ArbeidsrelatertArsak {
     @IsOptional()
     @IsIn(Object.keys(ArbeidsrelatertArsakType), { each: true })
     @IsArray()
-    arsak: (keyof typeof ArbeidsrelatertArsakType)[];
+    arsak?: (keyof typeof ArbeidsrelatertArsakType)[];
 
     constructor(data: any) {
         this.beskrivelse = data.beskrivelse ?? undefined;

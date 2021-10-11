@@ -1,7 +1,8 @@
 import { Normaltekst } from 'nav-frontend-typografi';
+import { SVGProps } from 'react';
 import './CheckboxEntry.less';
 
-const CheckboxSvg = () => (
+const CheckboxSvg = (props: SVGProps<SVGSVGElement>) => (
     <svg
         version="1.1"
         id="Outline_Version"
@@ -42,13 +43,13 @@ const CheckboxEntry: React.FC<CheckboxEntryProps> = ({ show, checkboxText }) => 
                 {Array.isArray(checkboxText) ? (
                     checkboxText.map((str, index) => (
                         <div key={index} className="checkbox-entry__checkbox">
-                            <CheckboxSvg />
+                            <CheckboxSvg aria-label="Hakemerke" />
                             <Normaltekst className="checkbox-entry__text">{str}</Normaltekst>
                         </div>
                     ))
                 ) : (
                     <div className="checkbox-entry__checkbox">
-                        <CheckboxSvg />
+                        <CheckboxSvg aria-label="Hakemerke" />
                         <Normaltekst className="checkbox-entry__text">{checkboxText}</Normaltekst>
                     </div>
                 )}
