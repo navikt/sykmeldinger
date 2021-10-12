@@ -1,14 +1,15 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
+import Lenke from 'nav-frontend-lenker';
 import Periode from '../../models/Sykmelding/Periode';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
 import Spacing from '../Spacing/Spacing';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 import Merknad from '../../models/Sykmelding/Merknad';
 import { Merknadtype } from '../InformationBanner/InformationBanner';
+import env from '../../utils/env';
 
 import styles from './StatusInfo.module.css';
-import env from '../../utils/env';
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatus;
@@ -94,7 +95,10 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                     </Normaltekst>
                 </Spacing>
                 <Spacing amount="small">
-                    <Normaltekst>Du kan kikke på det allerede nå i dine søknader.</Normaltekst>
+                    <Normaltekst>
+                        Du kan kikke på det allerede nå i{' '}
+                        <Lenke href={env.SYKEPENGESOKNAD_URL || '#'}>dine søknader</Lenke>.
+                    </Normaltekst>
                 </Spacing>
 
                 {erFlEllerSn && (
@@ -110,10 +114,6 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                 <Spacing amount="small">
                     <Normaltekst>God bedring!</Normaltekst>
                 </Spacing>
-
-                <a href={env.SYKEPENGESOKNAD_URL || '#'} className="knapp">
-                    Se dine søknader
-                </a>
             </Veilederpanel>
         </div>
     );
