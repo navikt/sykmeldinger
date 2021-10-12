@@ -128,7 +128,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
             });
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -158,7 +160,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
             });
 
             it('Arbeidstaker with reisetilskudd in combination with another period type renders standard info', () => {
@@ -197,7 +201,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
             });
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -229,7 +235,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
 
@@ -262,7 +270,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
 
@@ -295,7 +305,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument();
@@ -325,7 +337,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
             });
         });
 
@@ -350,7 +364,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
             });
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -380,7 +396,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
             });
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -412,7 +430,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
 
@@ -445,7 +465,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
 
@@ -478,7 +500,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument();
@@ -517,7 +541,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
             });
 
@@ -554,7 +580,9 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 );
-                expect(screen.getByText(/Neste steg blir å sende inn søknaden/)).toBeInTheDocument();
+                expect(
+                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                ).toBeInTheDocument();
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument();

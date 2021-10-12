@@ -89,9 +89,12 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
             <Veilederpanel type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
                 <Spacing amount="small">
                     <Normaltekst>
-                        Neste steg blir å sende inn søknaden. Denne, samt informasjon om sykepenger finner du under dine
-                        søknader.
+                        Når sykefraværet er over, får du en melding fra oss igjen. Da svarer du på noen spørsmål slik at
+                        vi kan beregne sykepengene dine riktig.
                     </Normaltekst>
+                </Spacing>
+                <Spacing amount="small">
+                    <Normaltekst>Du kan kikke på det allerede nå i dine søknader.</Normaltekst>
                 </Spacing>
 
                 {erFlEllerSn && (
@@ -109,7 +112,7 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                 </Spacing>
 
                 <a href={env.SYKEPENGESOKNAD_URL || '#'} className="knapp">
-                    Gå til søknader
+                    Se dine søknader
                 </a>
             </Veilederpanel>
         </div>
