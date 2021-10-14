@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ArrayMaxSize, IsArray, IsBoolean, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsBoolean, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class Diagnose {
     @IsString()
@@ -37,9 +37,9 @@ export class AnnenFraversArsak {
     @IsString()
     beskrivelse?: string;
 
-    // Can only have one entry
+    // TODO: Find out why it 'should' only have one entry
+    // @ArrayMaxSize(1)
     @IsArray()
-    @ArrayMaxSize(1)
     @IsIn(Object.keys(AnnenFraverGrunn), { each: true })
     grunn: (keyof typeof AnnenFraverGrunn)[];
 
