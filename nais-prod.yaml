@@ -48,3 +48,5 @@ spec:
       value: "https://www.nav.no/syk/sykepengesoknad"
     - name: SYKEFRAVAER_ROOT
       value: "https://www.nav.no/syk/sykefravaer"
+    - name: "DITT_NAV_ROOT"
+      value: "https://www.nav.no/person/dittnav"
