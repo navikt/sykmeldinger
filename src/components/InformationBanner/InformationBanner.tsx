@@ -1,5 +1,6 @@
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
+import Veileder from 'nav-frontend-veileder';
 import Merknad from '../../models/Sykmelding/Merknad';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 import './InformationBanner.less';
@@ -109,10 +110,14 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
     }
 
     return (
-        <Veilederpanel kompakt type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
-            Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om? Du
-            velger selv om du vil bruke sykmeldingen.
-        </Veilederpanel>
+        <div className="veileder-mottatt-sykmeldingen">
+            <Veileder storrelse="S"fargetema="info"><VeilederMaleSvg /></Veileder>
+            <Element>Vi har mottatt sykmeldingen din</Element>
+            <Normaltekst>
+                Hei, her ser du sykmeldingen din. Før du begynner å bruke den, sjekker du om alt er riktig. Stemmer det med
+                det dere ble enige om? Nederst på siden sender du den inn.
+            </Normaltekst>
+        </div>
     );
 };
 
