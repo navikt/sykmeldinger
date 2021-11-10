@@ -58,7 +58,7 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                 </Spacing>
             )}
 
-            <Sykmeldingsopplysninger expandedDefault sykmelding={sykmelding} />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} />
         </div>
     );
 };

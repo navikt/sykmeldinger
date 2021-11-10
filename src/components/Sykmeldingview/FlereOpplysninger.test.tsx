@@ -10,29 +10,21 @@ describe('Flere opplysninger', () => {
             </FlereOpplysninger>,
         );
         expect(screen.queryByText('Hello world')).not.toBeInTheDocument();
+        expect(screen.queryByText('Vis flere opplysninger')).toBeInTheDocument();
     });
 
-    it('Renders content when button is clicked', async () => {
+    it('Renders content and change button text when button is clicked', async () => {
         render(
             <FlereOpplysninger>
                 <p>Hello world</p>
             </FlereOpplysninger>,
         );
         expect(screen.queryByText('Hello world')).not.toBeInTheDocument();
-        fireEvent.click(screen.getByText('Flere opplysninger'));
+        fireEvent.click(screen.getByText('Vis flere opplysninger'));
         await screen.findByText('Hello world');
-    });
+        expect(screen.queryByText('Skjul flere opplysninger')).toBeInTheDocument();
 
-    it('Does not render content when flere opplysninger gets closed', async () => {
-        render(
-            <FlereOpplysninger>
-                <p>Hello world</p>
-            </FlereOpplysninger>,
-        );
-        expect(screen.queryByText('Hello world')).not.toBeInTheDocument();
-        fireEvent.click(screen.getByText('Flere opplysninger'));
-        await screen.findByText('Hello world');
-        fireEvent.click(screen.getByRole('button', { name: 'Lukk' }));
-        expect(screen.queryByRole('button', { name: 'Lukk' })).not.toBeInTheDocument();
+        fireEvent.click(screen.getByText('Skjul flere opplysninger'));
+        expect(screen.queryByText('Vis flere opplysninger')).toBeInTheDocument();
     });
 });

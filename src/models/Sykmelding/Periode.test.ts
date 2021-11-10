@@ -86,7 +86,7 @@ describe('Periode', () => {
     });
 
     describe('getReadablePeriod', () => {
-        it('Returns correct format', () => {
+        it('Returns month and year only once if fom and tom have the same month and year', () => {
             const periodeJson = {
                 fom: '2021-04-01',
                 tom: '2021-04-03',
@@ -98,7 +98,36 @@ describe('Periode', () => {
                 reisetilskudd: false,
             };
             const periode = new Periode(periodeJson);
-            expect(periode.getReadablePeriod()).toBe('1. april 2021 - 3. april 2021');
+            expect(periode.getReadablePeriod()).toBe('1. til 3. april 2021');
+        });
+
+        it('Returns both months if month is different and year is equal for fom and tom', () => {
+            const periodeJson = {
+                fom: '2021-01-01',
+                tom: '2021-04-03',
+                gradert: null,
+                behandlingsdager: null,
+                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
+                type: 'AVVENTENDE',
+                aktivitetIkkeMulig: null,
+                reisetilskudd: false,
+            };
+            const periode = new Periode(periodeJson);
+            expect(periode.getReadablePeriod()).toBe('1. jan. til 3. april 2021');
+        });
+        it('Returns both months and years if the month and year are different', () => {
+            const periodeJson = {
+                fom: '2020-12-01',
+                tom: '2021-02-03',
+                gradert: null,
+                behandlingsdager: null,
+                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
+                type: 'AVVENTENDE',
+                aktivitetIkkeMulig: null,
+                reisetilskudd: false,
+            };
+            const periode = new Periode(periodeJson);
+            expect(periode.getReadablePeriod()).toBe('1. des. 2020 til 3. feb. 2021');
         });
     });
 

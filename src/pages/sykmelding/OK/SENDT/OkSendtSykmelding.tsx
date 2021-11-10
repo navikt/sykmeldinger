@@ -23,10 +23,10 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
             </Spacing>
 
             <Spacing>
-                <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault />
+                <Sykmeldingsopplysninger sykmelding={sykmelding} />
             </Spacing>
 
-            <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} arbeidsgiver />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver />
         </div>
     );
 };

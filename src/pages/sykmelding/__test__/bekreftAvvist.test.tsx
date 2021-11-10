@@ -26,7 +26,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
         render(<SykmeldingPage />, renderOptions);
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-        expect(screen.getByRole('article', { name: 'Din sykmelding' }));
+        expect(screen.getByText('Opplysninger vi har mottatt fra behandleren din' )).toBeInTheDocument();
     });
 
     it('should get error message when trying to submit without checking checkbox', async () => {

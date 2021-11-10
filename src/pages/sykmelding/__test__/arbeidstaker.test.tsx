@@ -29,7 +29,7 @@ describe('Arbeidstaker', () => {
         render(<SykmeldingPage />, renderOptions);
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-        expect(screen.getByRole('article', { name: 'Din sykmelding' }));
+        expect(screen.getByText('Opplysninger vi har mottatt fra behandleren din' )).toBeInTheDocument();
     });
 
     it('should be able to submit form with active arbeidsgiver and nærmeste leder', async () => {
@@ -83,7 +83,7 @@ describe('Arbeidstaker', () => {
         const naermesteLederFieldset = screen.getByText(/som skal følge deg opp/i).closest('fieldset');
         userEvent.click(within(naermesteLederFieldset!).getByRole('radio', { name: 'Ja' }));
 
-        expect(await screen.findByRole('article', { name: 'Dette får arbeidsgiveren din se' })).toBeInTheDocument();
+        expect(screen.queryByText('Dette får arbeidsgiveren din se')).toBeInTheDocument();
 
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 
@@ -136,7 +136,7 @@ describe('Arbeidstaker', () => {
         userEvent.click(await screen.findByRole('radio', { name: 'arbeidstaker' }));
         userEvent.click(await screen.findByRole('radio', { name: arbeidsgivereMock[1].navn }));
 
-        expect(await screen.findByRole('article', { name: 'Dette får arbeidsgiveren din se' })).toBeInTheDocument();
+        expect(screen.queryByText('Dette får arbeidsgiveren din se')).toBeInTheDocument();
 
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 

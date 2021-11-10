@@ -44,6 +44,12 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                 }
                 return null;
             })}
+            {!!medisinskVurdering.yrkesskadeDato && (
+                <SykmeldingEntry
+                    title="Skadedato"
+                    mainText={DateFormatter.toReadableDate(medisinskVurdering.yrkesskadeDato)}
+                />
+            )}
             {!!(
                 medisinskVurdering.annenFraversArsak?.grunn && medisinskVurdering.annenFraversArsak?.grunn.length > 0
             ) && (
@@ -64,12 +70,6 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                 show={medisinskVurdering.yrkesskade}
                 checkboxText="Sykdommen kan skyldes en yrkesskade/yrkessykdom"
             />
-            {!!medisinskVurdering.yrkesskadeDato && (
-                <SykmeldingEntry
-                    title="Skadedato"
-                    mainText={DateFormatter.toReadableDate(medisinskVurdering.yrkesskadeDato)}
-                />
-            )}
         </div>
     );
 };

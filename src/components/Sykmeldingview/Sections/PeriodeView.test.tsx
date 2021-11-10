@@ -17,7 +17,7 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('Avventende sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
         expect(screen.getByText('Innspill til arbeidsgver om tilrettelegging')).toBeInTheDocument();
         expect(screen.getByText(plainJson.innspillTilArbeidsgiver)).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
 
         expect(screen.getByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
 
         expect(screen.getByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).toBeInTheDocument();
@@ -108,7 +108,7 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[periode]} arbeidsgiver />);
 
         expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
 
         expect(screen.queryByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).not.toBeInTheDocument();
@@ -140,7 +140,7 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('20% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
         expect(screen.getByText('Pasienten kan være i delvis arbeid ved bruk av reisetilskudd')).toBeInTheDocument();
     });
@@ -157,7 +157,7 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
     });
 
@@ -174,7 +174,7 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
 
         expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021 - 5. april 2021')).toBeInTheDocument();
+        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('3 behandlingsdager i løpet av 5 dager')).toBeInTheDocument();
     });
 

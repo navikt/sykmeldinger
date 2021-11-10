@@ -77,11 +77,11 @@ const SykmeldingkvitteringPage: React.FC = () => {
             </Spacing>
 
             <Spacing>
-                <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} arbeidsgiver={false} />
+                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver={false} />
             </Spacing>
 
             {sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
-                <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} arbeidsgiver />
+                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver />
             )}
         </PageWrapper>
     );

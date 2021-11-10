@@ -6,7 +6,7 @@ const ArbeidsgiverView: React.FC<{ arbeidsgiver?: ArbeidsgiverSykmelding }> = ({
         return null;
     }
 
-    return <SykmeldingEntry title="Arbeidsgiver som legen har skrevet inn" mainText={arbeidsgiver.navn} />;
+    return <SykmeldingEntry title="Arbeidsgiver" mainText={arbeidsgiver.navn} />;
 };
 
 export default ArbeidsgiverView;

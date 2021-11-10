@@ -4,18 +4,6 @@ import Behandler from '../../../models/Sykmelding/Behandler';
 import AnnetView from './AnnetView';
 
 describe('AnnetView', () => {
-    it('Renders behandler name', () => {
-        const rawBehandler = {
-            fornavn: 'Lege',
-            etternavn: 'Legesen',
-            adresse: {},
-        };
-        const behandler = new Behandler(rawBehandler);
-        render(<AnnetView behandler={behandler} />);
-        expect(screen.getByText('Lege/Sykmelder')).toBeInTheDocument();
-        expect(screen.getByText('Lege Legesen')).toBeInTheDocument();
-    });
-
     it('Renders behandler phone if it exist', () => {
         const rawBehandler = {
             fornavn: 'Lege',
@@ -25,7 +13,7 @@ describe('AnnetView', () => {
         };
         const behandler = new Behandler(rawBehandler);
         render(<AnnetView behandler={behandler} />);
-        expect(screen.getByText('Telefon til lege/sykmelder')).toBeInTheDocument();
+        expect(screen.getByText('Telefon til behandler')).toBeInTheDocument();
         expect(screen.getByText('12345678')).toBeInTheDocument();
     });
 
@@ -37,7 +25,7 @@ describe('AnnetView', () => {
         };
         const behandler = new Behandler(rawBehandler);
         render(<AnnetView behandler={behandler} />);
-        expect(screen.queryByText('Telefon til lege/sykmelder')).not.toBeInTheDocument();
+        expect(screen.queryByText('Telefon til behandler')).not.toBeInTheDocument();
         expect(screen.queryByText('12345678')).not.toBeInTheDocument();
     });
 });
