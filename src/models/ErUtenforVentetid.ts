@@ -1,4 +1,5 @@
 import { IsBoolean, IsDate, IsOptional } from 'class-validator';
+import { parseISO } from 'date-fns';
 
 class ErUtenforVentetid {
     @IsBoolean()
@@ -10,7 +11,7 @@ class ErUtenforVentetid {
 
     constructor(data: any) {
         this.erUtenforVentetid = data.erUtenforVentetid;
-        this.oppfolgingsdato = data.oppfolgingsdato ? new Date(data.oppfolgingsdato) : undefined;
+        this.oppfolgingsdato = data.oppfolgingsdato ? parseISO(data.oppfolgingsdato) : undefined;
     }
 }
 

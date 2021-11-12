@@ -1,4 +1,5 @@
 import { IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { parseISO } from 'date-fns';
 
 export class Arbeidsgiver {
     @IsString()
@@ -70,7 +71,7 @@ export class NaermesteLeder {
         this.organisasjonsnavn = data.organisasjonsnavn;
         this.epost = data.epost;
         this.mobil = data.mobil;
-        this.aktivTom = data.aktivTom ? new Date(data.aktivTom) : undefined;
+        this.aktivTom = data.aktivTom ? parseISO(data.aktivTom) : undefined;
         this.arbeidsgiverForskuttererLoenn = data.arbeidsgiverForskuttererLoenn;
     }
 }

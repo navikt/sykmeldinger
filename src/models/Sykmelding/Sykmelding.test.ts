@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import { Sykmelding } from './Sykmelding';
 
 const minimalSykmelding = {
@@ -84,7 +85,7 @@ describe('Sykmelding', () => {
                 ],
             };
             const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingStartDate()).toEqual(new Date('2021-04-01'));
+            expect(sykmelding.getSykmeldingStartDate()).toEqual(parseISO('2021-04-01'));
         });
     });
 
@@ -99,7 +100,7 @@ describe('Sykmelding', () => {
                 ],
             };
             const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingEndDate()).toEqual(new Date('2021-06-03'));
+            expect(sykmelding.getSykmeldingEndDate()).toEqual(parseISO('2021-06-03'));
         });
     });
 
@@ -115,9 +116,9 @@ describe('Sykmelding', () => {
             };
             const sykmelding = new Sykmelding(sykmeldingJson);
             expect(sykmelding.getSykmeldingperioderSorted()).toEqual([
-                { fom: new Date('2021-04-01'), tom: new Date('2021-04-03') },
-                { fom: new Date('2021-05-01'), tom: new Date('2021-05-03') },
-                { fom: new Date('2021-06-01'), tom: new Date('2021-06-03') },
+                { fom: parseISO('2021-04-01'), tom: parseISO('2021-04-03') },
+                { fom: parseISO('2021-05-01'), tom: parseISO('2021-05-03') },
+                { fom: parseISO('2021-06-01'), tom: parseISO('2021-06-03') },
             ]);
         });
     });

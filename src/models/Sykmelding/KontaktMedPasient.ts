@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { IsOptional, IsString } from 'class-validator';
+import { parseISO } from 'date-fns';
 
 class KontaktMedPasient {
     @IsOptional()
@@ -10,7 +11,7 @@ class KontaktMedPasient {
     begrunnelseIkkeKontakt?: string;
 
     constructor(data: any) {
-        this.kontaktDato = data.kontaktDato ? new Date(data.kontaktDato) : undefined;
+        this.kontaktDato = data.kontaktDato ? parseISO(data.kontaktDato) : undefined;
         this.begrunnelseIkkeKontakt = data.begrunnelseIkkeKontakt ?? undefined;
     }
 }

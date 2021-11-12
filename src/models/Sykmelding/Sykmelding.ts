@@ -13,6 +13,7 @@ import UtdypendeOpplysning from './UtdypendeOpplysninger';
 import { ArrayNotEmpty, IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
 import dayjs from 'dayjs';
 import Pasient from './Pasient';
+import { parseISO } from 'date-fns';
 
 export class Sykmelding {
     @IsString()
@@ -111,7 +112,7 @@ export class Sykmelding {
 
     constructor(data: any) {
         this.id = data.id;
-        this.mottattTidspunkt = new Date(data.mottattTidspunkt);
+        this.mottattTidspunkt = parseISO(data.mottattTidspunkt);
         this.behandlingsutfall = new Behandlingsutfall(data.behandlingsutfall);
         this.legekontorOrgnummer = data.legekontorOrgnummer ?? undefined;
         this.arbeidsgiver = data.arbeidsgiver ? new ArbeidsgiverSykmelding(data.arbeidsgiver) : undefined;
@@ -127,9 +128,9 @@ export class Sykmelding {
         this.meldingTilNAV = data.meldingTilNAV ? new MeldingTilNAV(data.meldingTilNAV) : undefined;
         this.meldingTilArbeidsgiver = data.meldingTilArbeidsgiver ?? undefined;
         this.kontaktMedPasient = new KontaktMedPasient(data.kontaktMedPasient);
-        this.behandletTidspunkt = new Date(data.behandletTidspunkt);
+        this.behandletTidspunkt = parseISO(data.behandletTidspunkt);
         this.behandler = new Behandler(data.behandler);
-        this.syketilfelleStartDato = data.syketilfelleStartDato ? new Date(data.syketilfelleStartDato) : undefined;
+        this.syketilfelleStartDato = data.syketilfelleStartDato ? parseISO(data.syketilfelleStartDato) : undefined;
         this.navnFastlege = data.navnFastlege ?? undefined;
         this.egenmeldt = typeof data.egenmeldt === 'boolean' ? data.egenmeldt : undefined;
         this.papirsykmelding = typeof data.papirsykmelding === 'boolean' ? data.papirsykmelding : undefined;
