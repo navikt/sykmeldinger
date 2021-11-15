@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { IsArray, IsBoolean, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { parseISO } from 'date-fns';
 
 export class Diagnose {
     @IsString()
@@ -78,7 +79,7 @@ class MedisinskVurdering {
         this.annenFraversArsak = data.annenFraversArsak ? new AnnenFraversArsak(data.annenFraversArsak) : undefined;
         this.svangerskap = data.svangerskap;
         this.yrkesskade = data.yrkesskade;
-        this.yrkesskadeDato = data.yrkesskadeDato ? new Date(data.yrkesskadeDato) : undefined;
+        this.yrkesskadeDato = data.yrkesskadeDato ? parseISO(data.yrkesskadeDato) : undefined;
     }
 }
 

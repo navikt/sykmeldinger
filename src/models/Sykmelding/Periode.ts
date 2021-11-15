@@ -13,6 +13,7 @@ import {
 } from 'class-validator';
 import 'dayjs/locale/nb';
 import dayjs from 'dayjs';
+import { parseISO } from 'date-fns';
 dayjs.locale('nb');
 
 enum Periodetype {
@@ -131,8 +132,8 @@ class Periode {
     reisetilskudd: boolean;
 
     constructor(data: any) {
-        this.fom = new Date(data.fom);
-        this.tom = new Date(data.tom);
+        this.fom = parseISO(data.fom);
+        this.tom = parseISO(data.tom);
         this.gradert = data.gradert ? new GradertPeriode(data.gradert) : undefined;
         this.behandlingsdager = data.behandlingsdager ?? undefined;
         this.innspillTilArbeidsgiver = data.innspillTilArbeidsgiver ?? undefined;

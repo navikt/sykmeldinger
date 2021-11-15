@@ -10,6 +10,7 @@
         "class-validator": "^0.13.1",
         "classnames": "^2.2.6",
         "craco-less": "^1.17.1",
+        "date-fns": "^2.25.0",
         "dayjs": "^1.10.4",
         "lodash.throttle": "^4.1.1",
         "nav-datovelger": "^11.0.0",

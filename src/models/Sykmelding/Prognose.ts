@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {parseISO} from "date-fns";
 
 class ErIArbeid {
     @IsBoolean()
@@ -19,8 +20,8 @@ class ErIArbeid {
     constructor(data: any) {
         this.egetArbeidPaSikt = data.egetArbeidPaSikt;
         this.annetArbeidPaSikt = data.annetArbeidPaSikt;
-        this.arbeidFOM = data.arbeidFOM ? new Date(data.arbeidFOM) : undefined;
-        this.vurderingsdato = data.vurderingsdato ? new Date(data.vurderingsdato) : undefined;
+        this.arbeidFOM = data.arbeidFOM ? parseISO(data.arbeidFOM) : undefined;
+        this.vurderingsdato = data.vurderingsdato ? parseISO(data.vurderingsdato) : undefined;
     }
 }
 
@@ -38,8 +39,8 @@ class ErIkkeIArbeid {
 
     constructor(data: any) {
         this.arbeidsforPaSikt = data.arbeidsforPaSikt;
-        this.arbeidsforFOM = data.arbeidsforFOM ? new Date(data.arbeidsforFOM) : undefined;
-        this.vurderingsdato = data.vurderingsdato ? new Date(data.vurderingsdato) : undefined;
+        this.arbeidsforFOM = data.arbeidsforFOM ? parseISO(data.arbeidsforFOM) : undefined;
+        this.vurderingsdato = data.vurderingsdato ? parseISO(data.vurderingsdato) : undefined;
     }
 }
 

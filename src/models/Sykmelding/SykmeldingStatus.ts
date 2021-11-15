@@ -1,4 +1,5 @@
 import { IsArray, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { parseISO } from 'date-fns';
 
 class ArbeidsgiverStatus {
     @IsString()
@@ -87,7 +88,7 @@ class SykmeldingStatus {
 
     constructor(data: any) {
         this.statusEvent = data.statusEvent;
-        this.timestamp = new Date(data.timestamp);
+        this.timestamp = parseISO(data.timestamp);
         this.arbeidsgiver = data.arbeidsgiver ? new ArbeidsgiverStatus(data.arbeidsgiver) : undefined;
         this.sporsmalOgSvarListe = data.sporsmalOgSvarListe.map((sporsmalSvar: any) => new Sporsmal(sporsmalSvar));
     }
