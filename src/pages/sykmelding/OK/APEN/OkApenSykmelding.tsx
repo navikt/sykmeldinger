@@ -6,7 +6,6 @@ import AvbrytPanel from './AvbrytPanel/AvbrytPanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../components/Spacing/Spacing';
-import InfoOmDigitalSykmelding from '../../../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
 import InformationBanner from '../../../../components/InformationBanner/InformationBanner';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../../components/Veileder/svg/VeilederMaleSvg';
@@ -48,10 +47,6 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
 
                 <Spacing amount="small">
                     <Sykmeldingsopplysninger sykmelding={sykmelding} />
-                </Spacing>
-
-                <Spacing amount="large">
-                    <InfoOmDigitalSykmelding />
                 </Spacing>
 
                 <Form sykmelding={sykmelding} />
