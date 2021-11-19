@@ -9,7 +9,7 @@ import useSykmeldingUtenforVentetid from '../../../../../hooks/useSykmeldingUten
 import useSend from '../../../../../hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import { useForm, FormProvider } from 'react-hook-form';
-import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
+import StemmerOpplysningene from './formComponents/StemmerOpplysningene';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import Sykmeldingsopplysninger from '../../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
@@ -34,7 +34,7 @@ export enum UriktigeOpplysningerType {
 }
 
 export enum ArbeidssituasjonType {
-    ARBEIDSTAKER = 'arbeidstaker',
+    ANSATT = 'ansatt',
     FRILANSER = 'frilanser',
     NAERINGSDRIVENDE = 'selvstendig næringsdrivende',
     ARBEIDSLEDIG = 'arbeidsledig eller permittert',
@@ -53,7 +53,7 @@ interface SporsmalSvar<Value> {
 }
 
 export interface FormShape {
-    erOpplysningeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    stemmerOpplysningene?: SporsmalSvar<keyof typeof JaEllerNeiType>;
     uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
     arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
     arbeidsgiverOrgnummer?: SporsmalSvar<string>;
@@ -89,12 +89,12 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const formMethods = useForm<FormShape>({ shouldFocusError: false });
     const { handleSubmit, watch, errors } = formMethods;
 
-    const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
-    const erArbeidstakerMedStrengtFortroligAdressse =
-        erArbeidstaker && brukerinformasjon?.strengtFortroligAdresse === true;
+    const erAnsatt = watch('arbeidssituasjon')?.svar === 'ANSATT';
+    const erAnsattMedStrengtFortroligAdressse =
+        erAnsatt && brukerinformasjon?.strengtFortroligAdresse === true;
     const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;
 
-    const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
+    const watchStemmerOpplysningene = watch('stemmerOpplysningene');
 
     const { maAvbryte } = useContext(AvbrytContext);
 
@@ -132,9 +132,9 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
             >
                 <Spacing>
                     <Spacing>
-                        <ErOpplysningeneRiktige />
+                        <StemmerOpplysningene />
 
-                        {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
+                        {Boolean(watchStemmerOpplysningene?.svar) && maAvbryte === false && (
                             <Arbeidssituasjon
                                 harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
                                     (sm) => sm.type === 'AVVENTENDE',
@@ -146,7 +146,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                         )}
                     </Spacing>
 
-                    {erArbeidstaker && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
+                    {erAnsatt && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
                         <>
                             <Spacing>
                                 <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
@@ -193,11 +193,11 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     <FeiloppsummeringContainer errors={errors} />
                 </Spacing>
 
-                {maAvbryte === false && !erArbeidstakerMedStrengtFortroligAdressse && (
+                {maAvbryte === false && !erAnsattMedStrengtFortroligAdressse && (
                     <Spacing>
                         <div style={{ textAlign: 'center' }}>
                             <Knapp disabled={isSending} spinner={isSending} type="hoved" htmlType="submit">
-                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
+                                {erAnsatt ? 'Send' : 'Bekreft'} sykmelding
                             </Knapp>
                         </div>
                     </Spacing>

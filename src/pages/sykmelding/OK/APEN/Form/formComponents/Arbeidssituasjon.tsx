@@ -79,7 +79,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
         <QuestionWrapper innrykk>
             <Spacing>
                 <Spacing amount="x-small">
-                    <Systemtittel tag="h2">Arbeidet du er sykmeldt fra</Systemtittel>
+                    <Systemtittel tag="h2">Din arbeidssituasjon</Systemtittel>
                 </Spacing>
                 <Spacing amount="x-small">
                     <Normaltekst>
@@ -105,7 +105,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                             label: label,
                             value: key,
                             id: index === 0 ? fieldName : undefined,
-                            disabled: harAvventendePeriode && label !== ArbeidssituasjonType.ARBEIDSTAKER,
+                            disabled: harAvventendePeriode && label !== ArbeidssituasjonType.ANSATT,
                         }))}
                         checked={value}
                         onChange={(_e, value) => onChange(value)}
@@ -113,13 +113,13 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                     />
                 )}
             />
-            {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && brukerinformasjon.strengtFortroligAdresse && (
+            {watchArbeidssituasjon?.svar === 'ANSATT' && brukerinformasjon.strengtFortroligAdresse && (
                 <Spacing direction="top">
                     <StrengtFortroligInfo />
                 </Spacing>
             )}
 
-            {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && !brukerinformasjon.strengtFortroligAdresse && (
+            {watchArbeidssituasjon?.svar === 'ANSATT' && !brukerinformasjon.strengtFortroligAdresse && (
                 <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} />
             )}
 

@@ -41,16 +41,16 @@ describe('Frilanser', () => {
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    erOpplysningeneRiktige: {
+                    stemmerOpplysningene: {
                         svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige?',
+                        sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                     arbeidssituasjon: {
                         svar: 'FRILANSER',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ANSATT":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',
@@ -104,16 +104,16 @@ describe('Frilanser', () => {
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: null });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    erOpplysningeneRiktige: {
+                    stemmerOpplysningene: {
                         svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige?',
+                        sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                     arbeidssituasjon: {
                         svar: 'FRILANSER',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ANSATT":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',
@@ -169,16 +169,16 @@ describe('Frilanser', () => {
                 .reply(200, { erUtenforVentetid: true });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    erOpplysningeneRiktige: {
+                    stemmerOpplysningene: {
                         svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige?',
+                        sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                     arbeidssituasjon: {
                         svar: 'FRILANSER',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ANSATT":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                 })
                 .reply(200);

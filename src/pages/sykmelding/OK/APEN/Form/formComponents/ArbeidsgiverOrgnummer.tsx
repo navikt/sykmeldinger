@@ -16,7 +16,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
     const { arbeidsgivere } = brukerinformasjon;
     const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'arbeidsgiverOrgnummer';
-    const sporsmaltekst = 'Min arbeidsgiver';
+    const sporsmaltekst = 'Velg arbeidsgiver';
     const watchArbeidsgiverOrgnummer = watch(fieldName);
 
     const harArbeidsgiver = arbeidsgivere.length > 0;
@@ -50,7 +50,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                 name={`${fieldName}.svar`}
                 defaultValue={null}
                 rules={{
-                    required: 'Arbeidsgiver må være valgt siden du har valgt at du er arbeidstaker',
+                    required: 'Arbeidsgiver må være valgt siden du har valgt at du er ansatt',
                 }}
                 render={({ onChange, value, name }) => (
                     <RadioPanelGruppe
