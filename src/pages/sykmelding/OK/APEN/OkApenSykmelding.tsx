@@ -45,10 +45,7 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
                     </Spacing>
                 )}
 
-                <Spacing amount="small">
-                    <Sykmeldingsopplysninger sykmelding={sykmelding} />
-                </Spacing>
-
+                <Sykmeldingsopplysninger sykmelding={sykmelding} />
                 <Form sykmelding={sykmelding} />
 
                 <AvbrytPanel />

@@ -1,0 +1,24 @@
+@import '../../../../../App.less';
+
+.har-valgt-arbeidsgiver-wrapper {
+    background-color: #e4edf2;
+    padding: 2rem 1.5rem;
+}
+
+@media (max-width: @desktopLimitWidth) {
+    .har-valgt-arbeidsgiver-wrapper {
+        padding: 2rem 0;
+        position: relative;
+    }
+
+    .har-valgt-arbeidsgiver-wrapper::before {
+        content: '';
+        background-color: #e4edf2;
+        position: absolute;
+        height: 100%;
+        width: 145vw;
+        top: 0;
+        left: -50vw;
+        z-index: -1;
+    }
+}

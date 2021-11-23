@@ -18,6 +18,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../../../components/Veileder/svg/VeilederMaleSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import './Form.less';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -131,23 +132,21 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                 })}
             >
                 <Spacing>
-                    <Spacing>
-                        <StemmerOpplysningene />
+                    <StemmerOpplysningene />
 
-                        {Boolean(watchStemmerOpplysningene?.svar) && maAvbryte === false && (
-                            <Arbeidssituasjon
-                                harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
-                                    (sm) => sm.type === 'AVVENTENDE',
-                                )}
-                                erUtenforVentetid={sykmeldingUtenforVentetid}
-                                brukerinformasjon={brukerinformasjon}
-                                sykmeldingFom={sykmelding.getSykmeldingStartDate()}
-                            />
-                        )}
-                    </Spacing>
+                    {Boolean(watchStemmerOpplysningene?.svar) && maAvbryte === false && (
+                        <Arbeidssituasjon
+                            harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
+                                (sm) => sm.type === 'AVVENTENDE',
+                            )}
+                            erUtenforVentetid={sykmeldingUtenforVentetid}
+                            brukerinformasjon={brukerinformasjon}
+                            sykmeldingFom={sykmelding.getSykmeldingStartDate()}
+                        />
+                    )}
 
                     {erAnsatt && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
-                        <>
+                        <div className="har-valgt-arbeidsgiver-wrapper">
                             <Spacing>
                                 <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
                                     <Element>Vi sender sykmeldingen til arbeidsgiverens innboks i Altinn</Element>
@@ -177,7 +176,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                     </Normaltekst>
                                 </Ekspanderbartpanel>
                             </Spacing>
-                        </>
+                        </div>
                     )}
 
                     {errorSend && (
