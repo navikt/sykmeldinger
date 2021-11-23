@@ -31,7 +31,10 @@ function useSykmeldinger() {
                             });
                         }
 
-                        await validateOrReject(sykmelding, { validationError: { target: false, value: false } });
+                        if (sykmelding.behandlingsutfall.status !== 'INVALID') {
+                            await validateOrReject(sykmelding, { validationError: { target: false, value: false } });
+                        }
+
                         return sykmelding;
                     }),
                 );

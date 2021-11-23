@@ -9,6 +9,7 @@ import { sykmeldingUtgatt } from '../../mock/data/sykmelding-utgatt';
 import { sykmeldingApen } from '../../mock/data/sykmelding-apen';
 import { sykmeldingApenPapir } from '../../mock/data/sykmelding-apen-papir';
 import { sykmeldingAvvist } from '../../mock/data/sykmelding-avvist';
+import { sykmeldingAvvistUgyldigData } from '../../mock/data/sykmelding-avvist-ugyldig-data';
 
 describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     const apiNock = nock('http://localhost');
@@ -87,5 +88,16 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
         expect(await screen.findByText('Nye sykmeldinger'));
         expect(await screen.findByText('Tidligere sykmeldinger'));
+    });
+
+    it('should not throw error when receiving a AVVIST sykmelding with invalid data', async () => {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingAvvistUgyldigData]);
+
+        render(<SykmeldingerPage />);
+
+        await waitForElementToBeRemoved(() => screen.getByText('Henter dine sykmeldinger'));
+        expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
+        expect(await screen.findByText('Nye sykmeldinger'));
+        expect(await screen.findByText('Avvist av NAV'));
     });
 });
