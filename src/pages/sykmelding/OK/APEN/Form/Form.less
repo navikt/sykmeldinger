@@ -3,6 +3,20 @@
 .har-valgt-arbeidsgiver-wrapper {
     background-color: #e4edf2;
     padding: 2rem 1.5rem;
+
+    .veileder-sender-sykmeldingen {
+        display: flex;
+        padding: 0 0.5rem 2rem 0;
+
+        .nav-veileder {
+            margin-right: 1rem;
+            align-self: flex-start;
+            
+            &__frame--info {
+                background-color: #ffffff;
+            }
+        }
+    }
 }
 
 @media (max-width: @desktopLimitWidth) {
@@ -20,5 +34,24 @@
         top: 0;
         left: -50vw;
         z-index: -1;
+    }
+}
+
+@media (max-width: @mobileWithMax) {
+    .har-valgt-arbeidsgiver-wrapper {
+        .veileder-sender-sykmeldingen {
+            display: block;
+            margin: 0 0.5rem 0 0.5rem;
+
+            .nav-veileder {
+                display: block;
+                margin-bottom: 1rem;
+            }
+
+            .typo-element {
+                display: block;
+                padding-bottom: 0.3rem;
+            }
+        }
     }
 }

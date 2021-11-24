@@ -14,11 +14,11 @@ import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import Sykmeldingsopplysninger from '../../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../../components/Spacing/Spacing';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../../../components/Veileder/svg/VeilederMaleSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import './Form.less';
+import Veileder from 'nav-frontend-veileder';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -147,16 +147,17 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
 
                     {erAnsatt && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
                         <div className="har-valgt-arbeidsgiver-wrapper">
-                            <Spacing>
-                                <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
+                            <div className="veileder-sender-sykmeldingen">
+                                <Veileder storrelse="S" fargetema="info"><VeilederMaleSvg /></Veileder>
+                                <div>
                                     <Element>Vi sender sykmeldingen til arbeidsgiverens innboks i Altinn</Element>
                                     <Normaltekst>
                                         Under ser du hva arbeidsgiveren din får se hvis du sender sykmeldingen. Det er
                                         bare disse opplysningene som blir sendt. Arbeidsgiveren din får for eksempel
                                         ikke se diagnosen.
                                     </Normaltekst>
-                                </Veilederpanel>
-                            </Spacing>
+                                </div>
+                            </div>
                             <Spacing amount="small">
                                 <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver />
                             </Spacing>
