@@ -83,7 +83,7 @@ describe('Ansatt', () => {
         const naermesteLederFieldset = screen.getByText(/som skal følge deg opp/i).closest('fieldset');
         userEvent.click(within(naermesteLederFieldset!).getByRole('radio', { name: 'Ja' }));
 
-        expect(screen.queryByText('Dette får arbeidsgiveren din se')).toBeInTheDocument();
+        expect(screen.queryByText('Dette vises til arbeidsgiveren din')).toBeInTheDocument();
 
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 
@@ -136,7 +136,7 @@ describe('Ansatt', () => {
         userEvent.click(await screen.findByRole('radio', { name: 'ansatt' }));
         userEvent.click(await screen.findByRole('radio', { name: arbeidsgivereMock[1].navn }));
 
-        expect(screen.queryByText('Dette får arbeidsgiveren din se')).toBeInTheDocument();
+        expect(screen.queryByText('Dette vises til arbeidsgiveren din')).toBeInTheDocument();
 
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 
