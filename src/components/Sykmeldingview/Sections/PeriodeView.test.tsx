@@ -14,114 +14,13 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
+        render(<PeriodeView perioder={[periode]} />);
 
         expect(screen.getByText('Avventende sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
         expect(screen.getByText('Innspill til arbeidsgver om tilrettelegging')).toBeInTheDocument();
         expect(screen.getByText(plainJson.innspillTilArbeidsgiver)).toBeInTheDocument();
-    });
-
-    it('Renders aktivitet ikke mulig periode', () => {
-        const plainJson = {
-            fom: '2021-04-01',
-            tom: '2021-04-05',
-            type: 'AKTIVITET_IKKE_MULIG',
-            aktivitetIkkeMulig: {
-                medisinskArsak: {},
-                arbeidsrelatertArsak: {},
-            },
-            reisetilskudd: false,
-        };
-        const periode = new Periode(plainJson);
-
-        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
-
-        expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
-        expect(screen.getByText('5 dager')).toBeInTheDocument();
-
-        expect(screen.getByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).toBeInTheDocument();
-        expect(
-            screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
-        ).toBeInTheDocument();
-    });
-
-    it('Renders aktivitet ikke mulig periode with specified medisinsk- and arbeidsrelatert arsak', () => {
-        const plainJson = {
-            fom: '2021-04-01',
-            tom: '2021-04-05',
-            type: 'AKTIVITET_IKKE_MULIG',
-            aktivitetIkkeMulig: {
-                medisinskArsak: {
-                    beskrivelse: 'medisinsk beskrivelse',
-                    arsak: ['TILSTAND_HINDRER_AKTIVITET'],
-                },
-                arbeidsrelatertArsak: {
-                    beskrivelse: 'arbeidsrelatert beskrivelse',
-                    arsak: ['MANGLENDE_TILRETTELEGGING'],
-                },
-            },
-            reisetilskudd: false,
-        };
-        const periode = new Periode(plainJson);
-
-        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
-
-        expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
-        expect(screen.getByText('5 dager')).toBeInTheDocument();
-
-        expect(screen.getByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).toBeInTheDocument();
-        expect(screen.getByText('Helsetilstanden hindrer pasienten i å være i aktivitet')).toBeInTheDocument();
-        expect(screen.getByText('Begrunnelse for vurdering av aktivitetskravet')).toBeInTheDocument();
-        expect(screen.getByText(plainJson.aktivitetIkkeMulig.medisinskArsak.beskrivelse)).toBeInTheDocument();
-
-        expect(
-            screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
-        ).toBeInTheDocument();
-        expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument();
-        expect(screen.getByText('Nærmere beskrivelse')).toBeInTheDocument();
-        expect(screen.getByText(plainJson.aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse)).toBeInTheDocument();
-    });
-
-    it('Does not render medisinsk arsak for arbeidsgiver view', () => {
-        const plainJson = {
-            fom: '2021-04-01',
-            tom: '2021-04-05',
-            type: 'AKTIVITET_IKKE_MULIG',
-            aktivitetIkkeMulig: {
-                medisinskArsak: {
-                    beskrivelse: 'medisinsk beskrivelse',
-                    arsak: ['TILSTAND_HINDRER_AKTIVITET'],
-                },
-                arbeidsrelatertArsak: {
-                    beskrivelse: 'arbeidsrelatert beskrivelse',
-                    arsak: ['MANGLENDE_TILRETTELEGGING'],
-                },
-            },
-            reisetilskudd: false,
-        };
-        const periode = new Periode(plainJson);
-
-        render(<PeriodeView perioder={[periode]} arbeidsgiver />);
-
-        expect(screen.getByText('100% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
-        expect(screen.getByText('5 dager')).toBeInTheDocument();
-
-        expect(screen.queryByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).not.toBeInTheDocument();
-        expect(screen.queryByText('Helsetilstanden hindrer pasienten i å være i aktivitet')).not.toBeInTheDocument();
-        expect(screen.queryByText('Begrunnelse for vurdering av aktivitetskravet')).not.toBeInTheDocument();
-        expect(screen.queryByText(plainJson.aktivitetIkkeMulig.medisinskArsak.beskrivelse)).not.toBeInTheDocument();
-
-        expect(
-            screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
-        ).toBeInTheDocument();
-        expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument();
-        expect(screen.getByText('Nærmere beskrivelse')).toBeInTheDocument();
-        expect(screen.getByText(plainJson.aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse)).toBeInTheDocument();
     });
 
     it('Renders gradert periode', () => {
@@ -137,7 +36,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
+        render(<PeriodeView perioder={[periode]} />);
 
         expect(screen.getByText('20% sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
@@ -154,7 +53,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
+        render(<PeriodeView perioder={[periode]} />);
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
         expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
@@ -171,7 +70,7 @@ describe('PeriodeView', () => {
         };
         const periode = new Periode(plainJson);
 
-        render(<PeriodeView perioder={[periode]} arbeidsgiver={false} />);
+        render(<PeriodeView perioder={[periode]} />);
 
         expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();
         expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
@@ -195,7 +94,7 @@ describe('PeriodeView', () => {
         const reisetilskuddPeriode = new Periode(reisetilskuddJson);
         const behandlingsdagerPeriode = new Periode(behandlingsdagerJson);
 
-        render(<PeriodeView perioder={[reisetilskuddPeriode, behandlingsdagerPeriode]} arbeidsgiver={false} />);
+        render(<PeriodeView perioder={[reisetilskuddPeriode, behandlingsdagerPeriode]} />);
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
         expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();

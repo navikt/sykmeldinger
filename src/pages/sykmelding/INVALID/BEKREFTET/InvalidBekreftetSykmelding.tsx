@@ -29,7 +29,7 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
                 />
             </Spacing>
 
-            <Sykmeldingsopplysninger sykmelding={sykmelding} />
+            <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />
         </div>
     );
 };

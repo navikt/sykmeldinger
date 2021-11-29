@@ -7,10 +7,10 @@
     border-radius: 4px;
 
     &__header {
-        // For positioning statusHeader on top of container border
-        position: relative;
-        z-index: 1;
         display: flex;
+        background-color: #fef9ef;
+        border: none;
+        border-radius: 4px;
         width: 100%;
         padding: 17px;
         align-items: center;
@@ -28,21 +28,16 @@
         }
     }
 
-    &__header--bg-orange {
-        background: @navOransjeLighten80;
+    &__header--expandable {
+        cursor: pointer;
     }
 
     &__content {
-        top: -7px; // Offset content border to overlap header seamlessly
-        position: relative;
-        padding: 0 1rem;
+        padding: 0 1rem 1.5rem 1rem;
+    }
+
+    &__content--hidden {
+        display: none;
     }
 }
 
-@media (max-width: @screen-sm) {
-    .sykmeldingsopplysninger {
-        &__content {
-            padding: 0 1rem 0 1rem;
-        }
-    }
-}

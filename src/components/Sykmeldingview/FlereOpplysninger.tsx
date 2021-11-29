@@ -10,15 +10,21 @@ const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ expandedDefault =
     const [expanded, setExpanded] = useState<boolean>(expandedDefault);
 
     return (
-        <Ekspanderbar
-            className="flere-opplysninger__toggle"
-            tittel={expanded ? 'Skjul flere opplysninger' : 'Vis flere opplysninger'}
-            apen={expanded}
-            onClick={() => setExpanded(!expanded)}
-            border={false}
-        >
-            {children}
-        </Ekspanderbar>
+        <>
+            {!expandedDefault ? (
+                <Ekspanderbar
+                    className="flere-opplysninger__toggle"
+                    tittel={expanded ? 'Skjul flere opplysninger' : 'Vis flere opplysninger'}
+                    apen={expanded}
+                    onClick={() => setExpanded(!expanded)}
+                    border={false}
+                >
+                    {children}
+                </Ekspanderbar>
+            ) : (
+                <>{children}</>
+            )}
+        </>
     );
 };
 

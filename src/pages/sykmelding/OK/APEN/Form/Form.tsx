@@ -16,7 +16,6 @@ import Sykmeldingsopplysninger from '../../../../../components/Sykmeldingview/Sy
 import Spacing from '../../../../../components/Spacing/Spacing';
 import VeilederMaleSvg from '../../../../../components/Veileder/svg/VeilederMaleSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import './Form.less';
 import Veileder from 'nav-frontend-veileder';
 
@@ -159,23 +158,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                 </div>
                             </div>
                             <Spacing amount="small">
-                                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver />
-                            </Spacing>
-                            <Spacing amount="large">
-                                <Ekspanderbartpanel tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
-                                    <Spacing amount="small">
-                                        <Normaltekst>
-                                            Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk,
-                                            enten den digitale sykmeldingen du finner her, eller papirsykmeldingen som
-                                            du kan få hos legen.
-                                        </Normaltekst>
-                                    </Spacing>
-                                    <Normaltekst>
-                                        Ønsker du ikke å sende den slik du ser den her, kan du snakke med legen om å få
-                                        en ny sykmelding. Da kan du ta stilling til om du vil gi den nye sykmeldingen
-                                        til arbeidsgiveren din i stedet.
-                                    </Normaltekst>
-                                </Ekspanderbartpanel>
+                                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver expandable={true} sendeSykmelding />
                             </Spacing>
                         </div>
                     )}
