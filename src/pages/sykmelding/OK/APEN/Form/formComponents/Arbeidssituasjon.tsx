@@ -106,7 +106,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                             label: label,
                             value: key,
                             id: index === 0 ? fieldName : undefined,
-                            disabled: harAvventendePeriode && label !== ArbeidssituasjonType.ANSATT,
+                            disabled: harAvventendePeriode && label !== ArbeidssituasjonType.ARBEIDSTAKER,
                         }))}
                         checked={value}
                         onChange={(_e, value) => onChange(value)}
@@ -119,13 +119,13 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                     selvstendig næringsdrivende, frilanser eller ansatt</Lenke>
                 </Normaltekst>
             </Spacing>
-            {watchArbeidssituasjon?.svar === 'ANSATT' && brukerinformasjon.strengtFortroligAdresse && (
+            {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && brukerinformasjon.strengtFortroligAdresse && (
                 <Spacing direction="top">
                     <StrengtFortroligInfo />
                 </Spacing>
             )}
 
-            {watchArbeidssituasjon?.svar === 'ANSATT' && !brukerinformasjon.strengtFortroligAdresse && (
+            {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && !brukerinformasjon.strengtFortroligAdresse && (
                 <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} />
             )}
 

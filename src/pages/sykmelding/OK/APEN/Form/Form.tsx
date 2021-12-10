@@ -34,7 +34,7 @@ export enum UriktigeOpplysningerType {
 }
 
 export enum ArbeidssituasjonType {
-    ANSATT = 'ansatt',
+    ARBEIDSTAKER = 'ansatt',
     FRILANSER = 'frilanser',
     NAERINGSDRIVENDE = 'selvstendig næringsdrivende',
     ARBEIDSLEDIG = 'arbeidsledig eller permittert',
@@ -89,7 +89,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const formMethods = useForm<FormShape>({ shouldFocusError: false });
     const { handleSubmit, watch, errors } = formMethods;
 
-    const erAnsatt = watch('arbeidssituasjon')?.svar === 'ANSATT';
+    const erAnsatt = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
     const erAnsattMedStrengtFortroligAdressse =
         erAnsatt && brukerinformasjon?.strengtFortroligAdresse === true;
     const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;

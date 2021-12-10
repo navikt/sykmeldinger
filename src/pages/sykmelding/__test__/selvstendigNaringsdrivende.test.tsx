@@ -50,7 +50,7 @@ describe('Selvstendig næringsdrivende', () => {
                         svar: 'NAERINGSDRIVENDE',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ANSATT":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',
@@ -116,7 +116,7 @@ describe('Selvstendig næringsdrivende', () => {
                         svar: 'NAERINGSDRIVENDE',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ANSATT":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',
@@ -181,7 +181,7 @@ describe('Selvstendig næringsdrivende', () => {
                         svar: 'NAERINGSDRIVENDE',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ANSATT":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                 })
                 .reply(200);

@@ -176,7 +176,7 @@ describe('StatusInfo', () => {
                             shortName: 'ARBEIDSSITUASJON',
                             svar: {
                                 svarType: 'ARBEIDSSITUASJON',
-                                svar: 'ANSATT',
+                                svar: 'ARBEIDSTAKER',
                             },
                         },
                     ],
