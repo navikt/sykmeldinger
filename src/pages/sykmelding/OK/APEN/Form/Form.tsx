@@ -9,7 +9,7 @@ import useSykmeldingUtenforVentetid from '../../../../../hooks/useSykmeldingUten
 import useSend from '../../../../../hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import { useForm, FormProvider } from 'react-hook-form';
-import StemmerOpplysningene from './formComponents/StemmerOpplysningene';
+import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import Sykmeldingsopplysninger from '../../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
@@ -53,7 +53,7 @@ interface SporsmalSvar<Value> {
 }
 
 export interface FormShape {
-    stemmerOpplysningene?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    erOpplysningeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
     uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
     arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
     arbeidsgiverOrgnummer?: SporsmalSvar<string>;
@@ -94,7 +94,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
         erAnsatt && brukerinformasjon?.strengtFortroligAdresse === true;
     const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;
 
-    const watchStemmerOpplysningene = watch('stemmerOpplysningene');
+    const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
 
     const { maAvbryte } = useContext(AvbrytContext);
 
@@ -131,9 +131,9 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                 })}
             >
                 <Spacing>
-                    <StemmerOpplysningene />
+                    <ErOpplysningeneRiktige />
 
-                    {Boolean(watchStemmerOpplysningene?.svar) && maAvbryte === false && (
+                    {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
                         <Arbeidssituasjon
                             harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
                                 (sm) => sm.type === 'AVVENTENDE',

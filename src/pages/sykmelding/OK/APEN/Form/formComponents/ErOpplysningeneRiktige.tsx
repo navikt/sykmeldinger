@@ -5,11 +5,11 @@ import { FormShape, JaEllerNeiType } from '../Form';
 import UriktigeOpplysninger from './UriktigeOpplysninger';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
-const StemmerOpplysningene: React.FC = () => {
+const ErOpplysningeneRiktige: React.FC = () => {
     const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'stemmerOpplysningene';
+    const fieldName: keyof FormShape = 'erOpplysningeneRiktige';
     const sporsmaltekst = 'Stemmer opplysningene?';
-    const watchStemmerOpplysningene = watch(fieldName);
+    const watchErOpplysningeneRiktige = watch(fieldName);
 
     useEffect(() => {
         register({
@@ -41,14 +41,14 @@ const StemmerOpplysningene: React.FC = () => {
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}
-                        feil={errors.stemmerOpplysningene?.svar?.message}
+                        feil={errors.erOpplysningeneRiktige?.svar?.message}
                     />
                 )}
             />
 
-            {watchStemmerOpplysningene?.svar === 'NEI' && <UriktigeOpplysninger />}
+            {watchErOpplysningeneRiktige?.svar === 'NEI' && <UriktigeOpplysninger />}
         </QuestionWrapper>
     );
 };
 
-export default StemmerOpplysningene;
+export default ErOpplysningeneRiktige;

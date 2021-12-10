@@ -36,7 +36,7 @@ describe('Ansatt', () => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
         apiNock
             .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                stemmerOpplysningene: {
+                erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Stemmer opplysningene?',
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
@@ -96,7 +96,7 @@ describe('Ansatt', () => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
         apiNock
             .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                stemmerOpplysningene: {
+                erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Stemmer opplysningene?',
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',

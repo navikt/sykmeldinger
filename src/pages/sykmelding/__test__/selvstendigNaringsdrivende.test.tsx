@@ -41,7 +41,7 @@ describe('Selvstendig næringsdrivende', () => {
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    stemmerOpplysningene: {
+                    erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
@@ -107,7 +107,7 @@ describe('Selvstendig næringsdrivende', () => {
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: null });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    stemmerOpplysningene: {
+                    erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
@@ -172,7 +172,7 @@ describe('Selvstendig næringsdrivende', () => {
                 .reply(200, { erUtenforVentetid: true });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    stemmerOpplysningene: {
+                    erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
