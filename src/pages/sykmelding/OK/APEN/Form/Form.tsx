@@ -89,9 +89,9 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
     const formMethods = useForm<FormShape>({ shouldFocusError: false });
     const { handleSubmit, watch, errors } = formMethods;
 
-    const erAnsatt = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
-    const erAnsattMedStrengtFortroligAdressse =
-        erAnsatt && brukerinformasjon?.strengtFortroligAdresse === true;
+    const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
+    const erArbeidstakerMedStrengtFortroligAdressse =
+        erArbeidstaker && brukerinformasjon?.strengtFortroligAdresse === true;
     const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;
 
     const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
@@ -144,7 +144,7 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                         />
                     )}
 
-                    {erAnsatt && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
+                    {erArbeidstaker && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
                         <div className="har-valgt-arbeidsgiver-wrapper">
                             <div className="veileder-sender-sykmeldingen">
                                 <Veileder storrelse="S" fargetema="info"><VeilederMaleSvg /></Veileder>
@@ -176,11 +176,11 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     <FeiloppsummeringContainer errors={errors} />
                 </Spacing>
 
-                {maAvbryte === false && !erAnsattMedStrengtFortroligAdressse && (
+                {maAvbryte === false && !erArbeidstakerMedStrengtFortroligAdressse && (
                     <Spacing>
                         <div style={{ textAlign: 'center' }}>
                             <Knapp disabled={isSending} spinner={isSending} type="hoved" htmlType="submit">
-                                {erAnsatt ? 'Send' : 'Bekreft'} sykmelding
+                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
                             </Knapp>
                         </div>
                     </Spacing>

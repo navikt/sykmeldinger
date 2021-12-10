@@ -6,7 +6,7 @@ import SykmeldingPage from '../SykmeldingPage';
 import userEvent from '@testing-library/user-event';
 import arbeidsgivereMock from '../../../mock/data/arbeidsgivereMock';
 
-describe('Ansatt', () => {
+describe('Arbeidstaker', () => {
     const apiNock = nock('http://localhost');
 
     const renderOptions = {
