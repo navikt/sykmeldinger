@@ -3,15 +3,15 @@ import { useState } from 'react';
 import './FlereOpplysninger.less';
 
 interface FlereOpplysningerProps {
-    expandedDefault?: boolean;
+    disableExpand?: boolean;
 }
 
-const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ expandedDefault = false, children }) => {
-    const [expanded, setExpanded] = useState<boolean>(expandedDefault);
+const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ disableExpand = false, children }) => {
+    const [expanded, setExpanded] = useState<boolean>(disableExpand);
 
     return (
         <>
-            {!expandedDefault ? (
+            {!disableExpand ? (
                 <Ekspanderbar
                     className="flere-opplysninger__toggle"
                     tittel={expanded ? 'Skjul flere opplysninger' : 'Vis flere opplysninger'}

@@ -34,7 +34,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
             <BehandlerView navnFastlege={sykmelding.navnFastlege} />
             <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
 
-            <FlereOpplysninger expandedDefault={arbeidsgiver}>
+            <FlereOpplysninger disableExpand={arbeidsgiver}>
                 <div className={`dato-sykmeldingen-ble-skrevet${arbeidsgiver ? '__arbeidsgiver' : ''}`}>
                     <SykmeldingEntry
                         title="Dato sykmeldingen ble skrevet"
