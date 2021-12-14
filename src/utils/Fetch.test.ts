@@ -24,7 +24,7 @@ describe('Fetch', () => {
         expect.assertions(2);
         try {
             await authenticatedGet(testUrl, mockCallback);
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toMatch('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
         }
 
