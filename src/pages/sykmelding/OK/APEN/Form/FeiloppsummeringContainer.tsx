@@ -33,7 +33,10 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
 
     const feiloppsummeringsfeil: FeiloppsummeringFeil[] = Object.entries(customErrors)
         .filter(([_key, value]) => value !== undefined)
-        .map(([key, value]) => ({ skjemaelementId: key, feilmelding: value }));
+        .map(([key, value]) => ({
+            skjemaelementId: key,
+            feilmelding: value as string,
+        }));
 
     if (feiloppsummeringsfeil.length === 0) {
         return null;

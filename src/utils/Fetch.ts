@@ -19,7 +19,7 @@ export async function authenticatedGet<T>(
     if (res.ok) {
         try {
             return await cb(await res.json(), res);
-        } catch (error) {
+        } catch (error: any) {
             if (error instanceof TypeError) {
                 logger.error({
                     message: `${error.name}: ${error.message}`,
