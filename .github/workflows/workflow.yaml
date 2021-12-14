@@ -15,7 +15,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --org=teamsykmelding --severity-threshold=high
+          args: --org=teamsykmelding --severity-threshold=high --all-projects
   build-and-publish:
     name: Bygg, test og push Docker image
     runs-on: ubuntu-latest
@@ -83,7 +83,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          args: --org=teamsykmelding --severity-threshold=high
+          args: --org=teamsykmelding --severity-threshold=high --all-projects
 
   deploy-to-q1-dev-gcp:
     name: Deploy to q1 dev-gcp
