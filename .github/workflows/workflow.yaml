@@ -3,6 +3,19 @@ on: push
 env:
   APP: sykmeldinger
 jobs:
+  snyk-test:
+    name: analyze dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --org=teamsykmelding --severity-threshold=high
   build-and-publish:
     name: Bygg, test og push Docker image
     runs-on: ubuntu-latest
@@ -57,9 +70,24 @@ jobs:
             docker build . -t ${IMAGE_SYK_SYKMELDINGER}
             docker push ${IMAGE_SYK_SYKMELDINGER}
 
+  snyk-monitor:
+    if: github.ref == 'refs/heads/master'
+    name: monitor dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --org=teamsykmelding --severity-threshold=high
+
   deploy-to-q1-dev-gcp:
     name: Deploy to q1 dev-gcp
-    needs: [build-and-publish]
+    needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -79,7 +107,7 @@ jobs:
   deploy-to-prod-gcp:
     if: github.ref == 'refs/heads/master'
     name: Deploy to prod
-    needs: [build-and-publish]
+    needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -99,7 +127,7 @@ jobs:
   deploy-to-labs-gcp:
     if: github.ref == 'refs/heads/master'
     name: Deploy to labs-gcp (Demo)
-    needs: [build-and-publish]
+    needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
