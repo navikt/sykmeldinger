@@ -14,7 +14,6 @@ import PrognoseView from './Sections/PrognoseView';
 import AnnetView from './Sections/AnnetView';
 import SykmeldingEntry from './Layout/SykmeldingEntry/SykmeldingEntry';
 import PasientView from './Sections/PasientView';
-import BehandlerView from './Sections/BehandlerView';
 import './Sykmeldingview.less';
 
 interface SykmeldingviewProps {
@@ -31,7 +30,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                 <PeriodeView perioder={sykmelding.getSykmeldingperioderSorted()} />
             </div>
 
-            <BehandlerView navnFastlege={sykmelding.navnFastlege} />
+            {sykmelding.navnFastlege && <SykmeldingEntry title="Behandler" mainText={sykmelding.navnFastlege} />}
             <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
 
             <FlereOpplysninger disableExpand={arbeidsgiver}>
