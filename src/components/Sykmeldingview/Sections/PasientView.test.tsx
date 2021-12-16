@@ -41,7 +41,7 @@ describe('PasientView', () => {
         };
         const pasient = new Pasient(plainJson);
         render(<PasientView pasient={pasient} arbeidsgiver />);
-        expect(screen.queryByText('Sykmeldingen gjelder')).toBeInTheDocument();
+        expect(screen.getByText('Sykmeldingen gjelder')).toBeInTheDocument();
         expect(screen.getByText('Ola Nordmann')).toBeInTheDocument();
         expect(screen.getByText('12345678901')).toBeInTheDocument();
     });

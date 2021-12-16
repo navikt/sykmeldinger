@@ -28,7 +28,7 @@ describe('Uriktige opplysninger', () => {
         render(<SykmeldingPage />, renderOptions);
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-        expect(screen.getByText('Opplysninger vi har mottatt fra behandleren din' )).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
     });
 
     it('should show error message when periode is wrong', async () => {

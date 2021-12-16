@@ -27,7 +27,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
 
         render(<SykmeldingPage />, renderOptions);
 
-        expect(await screen.findByText('Opplysninger vi har mottatt fra behandleren din')).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
         expect(await screen.findByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
     });
 
@@ -55,7 +55,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
 
         render(<SykmeldingPage />, renderOptions);
 
-        expect(await screen.findByText('Opplysninger vi har mottatt fra behandleren din')).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
         expect(await screen.findByText(/Vi klarte dessverre ikke å hente opp informasjonen/)).toBeInTheDocument();
     });
 
@@ -71,7 +71,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
 
         render(<SykmeldingPage />, renderOptions);
 
-        expect(await screen.findByText('Opplysninger vi har mottatt fra behandleren din' )).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
         expect(await screen.findByText(/Vi klarte dessverre ikke å hente opp informasjonen/)).toBeInTheDocument();
     });
 });
