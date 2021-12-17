@@ -10,6 +10,7 @@ import { sykmeldingApen } from '../../mock/data/sykmelding-apen';
 import { sykmeldingApenPapir } from '../../mock/data/sykmelding-apen-papir';
 import { sykmeldingAvvist } from '../../mock/data/sykmelding-avvist';
 import { sykmeldingAvvistUgyldigData } from '../../mock/data/sykmelding-avvist-ugyldig-data';
+import { sykmeldingUnderbehandlingTilbakedatering } from '../../mock/data/sykmelding-under-behandling-tilbakedatering';
 
 describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     const apiNock = nock('http://localhost');
@@ -66,6 +67,19 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         expect(sykmeldinger[0]).toHaveTextContent(/Papirsykmelding/);
         expect(sykmeldinger[1]).toHaveTextContent(/Avvist av NAV/);
         expect(sykmeldinger[2]).toHaveTextContent(/Sykmelding/);
+    });
+
+    it('should display under behandling in Nye sykmeldinger section ', async () => {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering]);
+
+        render(<SykmeldingerPage />);
+
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
+        expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
+        const lenkepanelContainer = screen.getByRole('region', { name: 'Nye sykmeldinger' });
+        const sykmeldinger = within(lenkepanelContainer).getAllByRole('link');
+        expect(sykmeldinger).toHaveLength(1);
+        expect(sykmeldinger[0]).toHaveTextContent(/Sendt til arbeidsgiver/);
     });
 
     it('should display new and earlier sykmeldinger', async () => {

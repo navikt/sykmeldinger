@@ -72,10 +72,14 @@ const SykmeldingerPage: React.FC = () => {
 };
 
 function isPastSykmelding(sykmelding: Sykmelding) {
-    return (
-        sykmelding.sykmeldingStatus.statusEvent !== 'APEN' ||
-        dayjs(sykmelding.getSykmeldingEndDate()).isBefore(dayjs().subtract(3, 'months'))
-    );
+    if (isUnderbehandling(sykmelding)) {
+        return false;
+    }
+
+    const isSykmeldingApen = sykmelding.sykmeldingStatus.statusEvent === 'APEN';
+    const isSykmelding3MonthsOld = dayjs(sykmelding.getSykmeldingEndDate()).isBefore(dayjs().subtract(3, 'months'));
+
+    return !isSykmeldingApen || isSykmelding3MonthsOld;
 }
 
 function filterSykmeldinger(sykmeldinger: Sykmelding[]): {
@@ -86,6 +90,13 @@ function filterSykmeldinger(sykmeldinger: Sykmelding[]): {
     const pastSykmeldinger = sykmeldinger.filter((sykmelding) => isPastSykmelding(sykmelding));
 
     return { apenSykmeldinger, pastSykmeldinger };
+}
+
+function isUnderbehandling(sykmelding: Sykmelding): boolean {
+    return (
+        sykmelding.sykmeldingStatus.statusEvent === 'SENDT' &&
+        sykmelding.merknader?.find((it) => it.type === 'UNDER_BEHANDLING') != null
+    );
 }
 
 export default SykmeldingerPage;
