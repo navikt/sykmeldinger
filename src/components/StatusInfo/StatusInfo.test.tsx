@@ -165,7 +165,7 @@ describe('StatusInfo', () => {
                 ).toBeInTheDocument();
             });
 
-            it('Arbeidstaker with reisetilskudd in combination with another period type renders standard info', () => {
+            it('Ansatt with reisetilskudd in combination with another period type renders standard info', () => {
                 const sykmeldingStatus = new SykmeldingStatus({
                     statusEvent: 'SENDT',
                     timestamp: '2021-05-01',

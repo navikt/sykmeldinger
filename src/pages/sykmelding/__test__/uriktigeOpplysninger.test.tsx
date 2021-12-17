@@ -28,7 +28,7 @@ describe('Uriktige opplysninger', () => {
         render(<SykmeldingPage />, renderOptions);
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-        expect(screen.getByRole('article', { name: 'Din sykmelding' }));
+        expect(screen.getByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
     });
 
     it('should show error message when periode is wrong', async () => {
@@ -38,7 +38,7 @@ describe('Uriktige opplysninger', () => {
         userEvent.click(await screen.findByRole('checkbox', { name: 'Periode' }));
         // TODO: look into aria announcements
         expect(await screen.findByText('Du kan ikke bruke denne sykmeldingen')).toBeInTheDocument();
-        expect(screen.queryByText('Arbeidet du er sykmeldt fra')).not.toBeInTheDocument();
+        expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument();
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument();
     });
 
@@ -49,7 +49,7 @@ describe('Uriktige opplysninger', () => {
         userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for lav' }));
         // TODO: look into aria announcements
         expect(await screen.findByText('Du kan ikke bruke denne sykmeldingen')).toBeInTheDocument();
-        expect(screen.queryByText('Arbeidet du er sykmeldt fra')).not.toBeInTheDocument();
+        expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument();
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument();
     });
 
@@ -63,7 +63,7 @@ describe('Uriktige opplysninger', () => {
                 'Senere, når du skal fylle ut søknaden om sykepenger, skriver du bare inn hvor mye du faktisk jobbet.',
             ),
         ).toBeInTheDocument();
-        expect(screen.getByText('Arbeidet du er sykmeldt fra')).toBeInTheDocument();
+        expect(screen.getByText('Din arbeidssituasjon')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
     });
 
@@ -77,7 +77,7 @@ describe('Uriktige opplysninger', () => {
                 'I neste trinn velger du riktig arbeidsgiver. Obs: Feilen vil være synlig for arbeidsgiveren du sender sykmeldingen til.',
             ),
         ).toBeInTheDocument();
-        expect(screen.getByText('Arbeidet du er sykmeldt fra')).toBeInTheDocument();
+        expect(screen.getByText('Din arbeidssituasjon')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
     });
 
@@ -91,7 +91,7 @@ describe('Uriktige opplysninger', () => {
                 'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at diagnosen er feil.',
             ),
         ).toBeInTheDocument();
-        expect(screen.getByText('Arbeidet du er sykmeldt fra')).toBeInTheDocument();
+        expect(screen.getByText('Din arbeidssituasjon')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
     });
 
@@ -105,7 +105,7 @@ describe('Uriktige opplysninger', () => {
                 'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at den inneholder feil.',
             ),
         ).toBeInTheDocument();
-        expect(screen.getByText('Arbeidet du er sykmeldt fra')).toBeInTheDocument();
+        expect(screen.getByText('Din arbeidssituasjon')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
     });
 });

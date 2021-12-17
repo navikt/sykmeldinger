@@ -10,7 +10,7 @@ describe('ArbeidsgiverView', () => {
         };
         const arbeidsgiver = new ArbeidsgiverSykmelding(plainJson);
         render(<ArbeidsgiverView arbeidsgiver={arbeidsgiver} />);
-        expect(screen.getByText('Arbeidsgiver som legen har skrevet inn')).toBeInTheDocument();
+        expect(screen.getByText('Arbeidsgiver')).toBeInTheDocument();
         expect(screen.getByText(plainJson.navn)).toBeInTheDocument();
     });
 
@@ -19,7 +19,7 @@ describe('ArbeidsgiverView', () => {
         const arbeidsgiver = new ArbeidsgiverSykmelding(plainJson);
         render(<ArbeidsgiverView arbeidsgiver={arbeidsgiver} />);
         expect(() => {
-            screen.getByText('Arbeidsgiver som legen har skrevet inn');
+            screen.getByText('Arbeidsgiver');
         }).toThrow();
     });
 });

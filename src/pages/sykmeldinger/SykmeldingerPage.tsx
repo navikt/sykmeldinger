@@ -12,6 +12,7 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { logger } from '../../utils/logger';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import dayjs from 'dayjs';
+import InfoOmDigitalSykmelding from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -52,6 +53,10 @@ const SykmeldingerPage: React.FC = () => {
     return (
         <PageWrapper>
             <LenkepanelContainer type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
+
+            <Spacing amount="small">
+                <InfoOmDigitalSykmelding />
+            </Spacing>
 
             <Ekspanderbartpanel tittel="Ser du ikke sykmeldingen din her?">
                 <Spacing amount="small">

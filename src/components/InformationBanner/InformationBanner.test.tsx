@@ -49,7 +49,7 @@ describe('InformationBanner', () => {
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
         expect(
             screen.getByText(
-                'Hei, her sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om? Du velger selv om du vil bruke sykmeldingen.',
+                'Hei, her ser du sykmeldingen din. Før du begynner å bruke den, sjekker du om alt er riktig. Stemmer det med det dere ble enige om? Nederst på siden sender du den inn.',
             ),
         ).toBeInTheDocument();
     });

@@ -168,7 +168,15 @@ class Periode {
      * @return {string} The period string
      */
     getReadablePeriod(): string {
-        return `${dayjs(this.fom).format('D. MMM YYYY')} - ${dayjs(this.tom).format('D. MMM YYYY')}`;
+        const sameMonthAndYear = dayjs(this.fom).get('month') === dayjs(this.tom).get('month') && dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
+        const sameYearNotMonth = dayjs(this.fom).get('month') !== dayjs(this.tom).get('month') && dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
+
+        if (sameMonthAndYear) {
+            return `${dayjs(this.fom).format('D.')} til ${dayjs(this.tom).format('D. MMM YYYY')}`;
+        } else if (sameYearNotMonth) {
+            return `${dayjs(this.fom).format('D. MMM')} til ${dayjs(this.tom).format('D. MMM YYYY')}`;
+        }
+        return `${dayjs(this.fom).format('D. MMM YYYY')} til ${dayjs(this.tom).format('D. MMM YYYY')}`;
     }
 
     /**

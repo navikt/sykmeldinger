@@ -1,20 +1,30 @@
-import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+import Ekspanderbar from 'nav-frontend-ekspanderbartpanel';
 import { useState } from 'react';
-import Lukknapp from '../Lukknapp/Lukknap';
 import './FlereOpplysninger.less';
 
 interface FlereOpplysningerProps {
-    expandedDefault?: boolean;
+    disableExpand?: boolean;
 }
 
-const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ expandedDefault = false, children }) => {
-    const [expanded, setExpanded] = useState<boolean>(expandedDefault);
+const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ disableExpand = false, children }) => {
+    const [expanded, setExpanded] = useState<boolean>(disableExpand);
 
     return (
-        <EkspanderbartpanelBase tittel="Flere opplysninger" apen={expanded} onClick={() => setExpanded(!expanded)}>
-            {children}
-            <Lukknapp onClick={() => setExpanded(!expanded)} />
-        </EkspanderbartpanelBase>
+        <>
+            {!disableExpand ? (
+                <Ekspanderbar
+                    className="flere-opplysninger__toggle"
+                    tittel={expanded ? 'Skjul flere opplysninger' : 'Vis flere opplysninger'}
+                    apen={expanded}
+                    onClick={() => setExpanded(!expanded)}
+                    border={false}
+                >
+                    {children}
+                </Ekspanderbar>
+            ) : (
+                <>{children}</>
+            )}
+        </>
     );
 };
 

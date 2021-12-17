@@ -6,14 +6,15 @@ import MedisinskVurderingView from './Sections/MedisinskVurderingView';
 import MeldingTilArbeidsgiverView from './Sections/MeldingTilArbeidsgiverView';
 import MeldingTilNavView from './Sections/MeldingTilNavView';
 import PeriodeView from './Sections/PeriodeView';
+import AktivitetIkkeMuligView from './Sections/AktivitetIkkeMuligView';
 import ArbeidsgiverView from './Sections/ArbeidsgiverView';
 import TilbakedateringView from './Sections/TilbakedateringView';
 import UtdypendeOpplysningerView from './Sections/UtdypendeOpplysningerView';
 import PrognoseView from './Sections/PrognoseView';
 import AnnetView from './Sections/AnnetView';
-import Section from './Layout/Section/Section';
 import SykmeldingEntry from './Layout/SykmeldingEntry/SykmeldingEntry';
 import PasientView from './Sections/PasientView';
+import './Sykmeldingview.less';
 
 interface SykmeldingviewProps {
     sykmelding: Sykmelding;
@@ -22,24 +23,37 @@ interface SykmeldingviewProps {
 
 const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgiver = false }) => {
     return (
-        <>
+        <div className={`sykmeldingsview${arbeidsgiver ? '__arbeidsgiver' : ''}`}>
             <PasientView pasient={sykmelding.pasient} arbeidsgiver={arbeidsgiver} />
 
-            <MedisinskVurderingView medisinskVurdering={sykmelding.medisinskVurdering} arbeidsgiver={arbeidsgiver} />
-
             <div style={{ marginBottom: '2rem' }}>
-                <PeriodeView perioder={sykmelding.sykmeldingsperioder} arbeidsgiver={arbeidsgiver} />
+                <PeriodeView perioder={sykmelding.getSykmeldingperioderSorted()} />
             </div>
 
-            <FlereOpplysninger expandedDefault={arbeidsgiver}>
-                <Section>
+            {sykmelding.navnFastlege && <SykmeldingEntry title="Behandler" mainText={sykmelding.navnFastlege} />}
+            <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
+
+            <FlereOpplysninger disableExpand={arbeidsgiver}>
+                <div className={`dato-sykmeldingen-ble-skrevet${arbeidsgiver ? '__arbeidsgiver' : ''}`}>
                     <SykmeldingEntry
                         title="Dato sykmeldingen ble skrevet"
                         //  TODO is this the correct field? Ref. slack thread
                         mainText={DateFormatter.toReadableDate(sykmelding.behandletTidspunkt)}
                     />
-                    <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
-                </Section>
+                </div>
+
+                <MedisinskVurderingView medisinskVurdering={sykmelding.medisinskVurdering} arbeidsgiver={arbeidsgiver} />
+
+                {sykmelding.sykmeldingsperioder?.map((periode, index) => (
+                    <div key={index}>
+                        {!!periode.aktivitetIkkeMulig && (
+                            <AktivitetIkkeMuligView
+                                aktivitetIkkeMulig={periode.aktivitetIkkeMulig}
+                                arbeidsgiver={arbeidsgiver}
+                            />
+                        )}
+                    </div>
+                ))}
 
                 <PrognoseView prognose={sykmelding.prognose} arbeidsgiver={arbeidsgiver} />
 
@@ -63,7 +77,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
 
                 <AnnetView behandler={sykmelding.behandler} />
             </FlereOpplysninger>
-        </>
+        </div>
     );
 };
 

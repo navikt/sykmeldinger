@@ -31,7 +31,7 @@ describe('Selvstendig næringsdrivende', () => {
             render(<SykmeldingPage />, renderOptions);
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('article', { name: 'Din sykmelding' }));
+            expect(screen.getByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
         });
 
         it('should be able to submit form', async () => {
@@ -43,14 +43,14 @@ describe('Selvstendig næringsdrivende', () => {
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige?',
+                        sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                     arbeidssituasjon: {
                         svar: 'NAERINGSDRIVENDE',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',
@@ -109,14 +109,14 @@ describe('Selvstendig næringsdrivende', () => {
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige?',
+                        sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                     arbeidssituasjon: {
                         svar: 'NAERINGSDRIVENDE',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                     harBruktEgenmelding: {
                         svar: 'JA',
@@ -174,14 +174,14 @@ describe('Selvstendig næringsdrivende', () => {
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
-                        sporsmaltekst: 'Er opplysningene riktige?',
+                        sporsmaltekst: 'Stemmer opplysningene?',
                         svartekster: '{"JA":"Ja","NEI":"Nei"}',
                     },
                     arbeidssituasjon: {
                         svar: 'NAERINGSDRIVENDE',
                         sporsmaltekst: 'Jeg er sykmeldt som',
                         svartekster:
-                            '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                     },
                 })
                 .reply(200);
@@ -191,7 +191,7 @@ describe('Selvstendig næringsdrivende', () => {
             render(<SykmeldingPage />, renderOptions);
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('article', { name: 'Din sykmelding' }));
+            expect(screen.getByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
         });
 
         it('should be able to submit form', async () => {

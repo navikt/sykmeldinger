@@ -29,7 +29,7 @@ describe('Arbeidstaker', () => {
         render(<SykmeldingPage />, renderOptions);
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-        expect(screen.getByRole('article', { name: 'Din sykmelding' }));
+        expect(screen.getByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
     });
 
     it('should be able to submit form with active arbeidsgiver and nærmeste leder', async () => {
@@ -38,18 +38,18 @@ describe('Arbeidstaker', () => {
             .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
-                    sporsmaltekst: 'Er opplysningene riktige?',
+                    sporsmaltekst: 'Stemmer opplysningene?',
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
                 },
                 arbeidssituasjon: {
                     svar: 'ARBEIDSTAKER',
                     sporsmaltekst: 'Jeg er sykmeldt som',
                     svartekster:
-                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                 },
                 arbeidsgiverOrgnummer: {
                     svar: arbeidsgivereMock[0].orgnummer,
-                    sporsmaltekst: 'Min arbeidsgiver',
+                    sporsmaltekst: 'Velg arbeidsgiver',
                     svartekster: `[{"navn":"${arbeidsgivereMock[0].navn}","orgnummer":"${arbeidsgivereMock[0].orgnummer}"},{"navn":"${arbeidsgivereMock[1].navn}","orgnummer":"${arbeidsgivereMock[1].orgnummer}"}]`,
                 },
                 riktigNarmesteLeder: {
@@ -78,12 +78,12 @@ describe('Arbeidstaker', () => {
         render(<SykmeldingPage />, { ...renderOptions, history });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-        userEvent.click(await screen.findByRole('radio', { name: 'arbeidstaker' }));
+        userEvent.click(await screen.findByRole('radio', { name: 'ansatt' }));
         userEvent.click(await screen.findByRole('radio', { name: arbeidsgivereMock[0].navn }));
         const naermesteLederFieldset = screen.getByText(/som skal følge deg opp/i).closest('fieldset');
         userEvent.click(within(naermesteLederFieldset!).getByRole('radio', { name: 'Ja' }));
 
-        expect(await screen.findByRole('article', { name: 'Dette får arbeidsgiveren din se' })).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Dette vises til arbeidsgiveren din' })).toBeInTheDocument();
 
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 
@@ -98,18 +98,18 @@ describe('Arbeidstaker', () => {
             .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
-                    sporsmaltekst: 'Er opplysningene riktige?',
+                    sporsmaltekst: 'Stemmer opplysningene?',
                     svartekster: '{"JA":"Ja","NEI":"Nei"}',
                 },
                 arbeidssituasjon: {
                     svar: 'ARBEIDSTAKER',
                     sporsmaltekst: 'Jeg er sykmeldt som',
                     svartekster:
-                        '{"ARBEIDSTAKER":"arbeidstaker","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
                 },
                 arbeidsgiverOrgnummer: {
                     svar: arbeidsgivereMock[1].orgnummer,
-                    sporsmaltekst: 'Min arbeidsgiver',
+                    sporsmaltekst: 'Velg arbeidsgiver',
                     svartekster: `[{"navn":"${arbeidsgivereMock[0].navn}","orgnummer":"${arbeidsgivereMock[0].orgnummer}"},{"navn":"${arbeidsgivereMock[1].navn}","orgnummer":"${arbeidsgivereMock[1].orgnummer}"}]`,
                 },
             })
@@ -133,10 +133,10 @@ describe('Arbeidstaker', () => {
         render(<SykmeldingPage />, { ...renderOptions, history });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-        userEvent.click(await screen.findByRole('radio', { name: 'arbeidstaker' }));
+        userEvent.click(await screen.findByRole('radio', { name: 'ansatt' }));
         userEvent.click(await screen.findByRole('radio', { name: arbeidsgivereMock[1].navn }));
 
-        expect(await screen.findByRole('article', { name: 'Dette får arbeidsgiveren din se' })).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Dette vises til arbeidsgiveren din' })).toBeInTheDocument();
 
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }));
 
@@ -159,7 +159,7 @@ describe('Arbeidstaker', () => {
         render(<SykmeldingPage />, { ...renderOptions, history });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-        userEvent.click(await screen.findByRole('radio', { name: 'arbeidstaker' }));
+        userEvent.click(await screen.findByRole('radio', { name: 'ansatt' }));
 
         expect(
             await screen.findByText(/Vi klarer ikke å finne noen arbeidsforhold registrert på deg/),
@@ -175,7 +175,7 @@ describe('Arbeidstaker', () => {
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
         userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-        userEvent.click(await screen.findByRole('radio', { name: 'arbeidstaker' }));
+        userEvent.click(await screen.findByRole('radio', { name: 'ansatt' }));
         expect(await screen.findByText(/Du er registrert med adressesperre/)).toBeInTheDocument();
         expect(screen.queryByRole('button', { name: 'Bekreft sykmelding' })).not.toBeInTheDocument();
     });

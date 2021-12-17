@@ -12,6 +12,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Spacing from '../../../../../../components/Spacing/Spacing';
 import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 import ErUtenforVentetid from '../../../../../../models/ErUtenforVentetid';
+import Lenke from 'nav-frontend-lenker';
 
 const StrengtFortroligInfo = () => (
     <AlertStripeAdvarsel>
@@ -79,7 +80,7 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
         <QuestionWrapper innrykk>
             <Spacing>
                 <Spacing amount="x-small">
-                    <Systemtittel tag="h2">Arbeidet du er sykmeldt fra</Systemtittel>
+                    <Systemtittel tag="h2">Din arbeidssituasjon</Systemtittel>
                 </Spacing>
                 <Spacing amount="x-small">
                     <Normaltekst>
@@ -113,6 +114,11 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                     />
                 )}
             />
+            <Spacing direction="top">
+                <Normaltekst>Sjekk om du er <Lenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/er-jeg-selvstendig-naeringsdrivende-frilanser-eller-arbeidstaker" target="_blank">
+                    selvstendig næringsdrivende, frilanser eller ansatt</Lenke>
+                </Normaltekst>
+            </Spacing>
             {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && brukerinformasjon.strengtFortroligAdresse && (
                 <Spacing direction="top">
                     <StrengtFortroligInfo />

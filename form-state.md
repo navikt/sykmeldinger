@@ -7,7 +7,7 @@
 graph TB
     %% STATES
     OK_APEN[åpen sykmelding]
-    OPPLYSNINGER{ Er opplysningene <br/> riktige? }
+    OPPLYSNINGER{ Stemmer opplysningene? }
     SYKMELDT_FRA{ Mitt arbeidsforhold <br/> for denne sykmeldingen}
     URIKTIGE_OPPLYSNINGER{ Hvilke opplysniger <br/> er ikke riktige? }
     VELG_ARBEIDSGIVER{ Velg arbeidsgiver }
@@ -33,7 +33,7 @@ graph TB
     URIKTIGE_OPPLYSNINGER -->|Periode| AVBRYT
     URIKTIGE_OPPLYSNINGER -->|Sykmeldingsgraden <br/> er for lav| AVBRYT
 
-    SYKMELDT_FRA -->|Arbeidstaker| VELG_ARBEIDSGIVER
+    SYKMELDT_FRA -->|Ansatt| VELG_ARBEIDSGIVER
     SYKMELDT_FRA -->|Selvstendig næringsdrivende| UTENFOR_VENTETID
     SYKMELDT_FRA -->|Frilanser| UTENFOR_VENTETID
     SYKMELDT_FRA -->|Arbeidsledig| BEKREFT

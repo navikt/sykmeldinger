@@ -28,14 +28,14 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Din sykmelding').should('be.visible');
+            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
                 .within(() => {
-                    cy.contains('Er opplysningene riktige?').should('be.visible');
+                    cy.contains('Stemmer opplysningene?').should('be.visible');
                     cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
@@ -103,14 +103,14 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Din sykmelding').should('be.visible');
+            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
                 .within(() => {
-                    cy.contains('Er opplysningene riktige?').should('be.visible');
+                    cy.contains('Stemmer opplysningene?').should('be.visible');
                     cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
@@ -178,14 +178,14 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Din sykmelding').should('be.visible');
+            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
                 .within(() => {
-                    cy.contains('Er opplysningene riktige?').should('be.visible');
+                    cy.contains('Stemmer opplysningene?').should('be.visible');
                     cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
@@ -233,14 +233,14 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Din sykmelding').should('be.visible');
+            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
                 .within(() => {
-                    cy.contains('Er opplysningene riktige?').should('be.visible');
+                    cy.contains('Stemmer opplysningene?').should('be.visible');
                     cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
@@ -289,14 +289,14 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Din sykmelding').should('be.visible');
+            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
                 .within(() => {
-                    cy.contains('Er opplysningene riktige?').should('be.visible');
+                    cy.contains('Stemmer opplysningene?').should('be.visible');
                     cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');
@@ -345,14 +345,14 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Din sykmelding').should('be.visible');
+            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
             cy.get('#apen-sykmelding-form')
                 .scrollIntoView()
                 .within(() => {
-                    cy.contains('Er opplysningene riktige?').should('be.visible');
+                    cy.contains('Stemmer opplysningene?').should('be.visible');
                     cy.get('input[name="erOpplysningeneRiktige.svar"][value=NEI]').click({ force: true });
 
                     cy.contains('Hvilke opplysninger stemmer ikke?').should('be.visible');

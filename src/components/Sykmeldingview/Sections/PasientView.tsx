@@ -1,4 +1,4 @@
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import Pasient from '../../../models/Sykmelding/Pasient';
 import Section from '../Layout/Section/Section';
 
@@ -20,8 +20,9 @@ const PasientView: React.FC<PasientViewProps> = ({ pasient, arbeidsgiver }) => {
 
     return (
         <Section>
-            <Systemtittel>{name}</Systemtittel>
-            {pasient.fnr && <Normaltekst>{pasient.fnr}</Normaltekst>}
+            <Element>Sykmeldingen gjelder</Element>
+            <Undertekst>{name}</Undertekst>
+            {pasient.fnr && <Undertekst>{pasient.fnr}</Undertekst>}
         </Section>
     );
 };

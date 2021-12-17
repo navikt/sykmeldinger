@@ -2,6 +2,7 @@ import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding
 import DateFormatter from '../../../utils/DateFormatter';
 import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
+import './MedisinskVurderingView.less';
 
 interface MedisinskVurderingViewProps {
     medisinskVurdering?: MedisinskVurdering;
@@ -19,7 +20,7 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
         }
 
         return (
-            <div style={{ marginBottom: '2rem' }}>
+            <div className="medisinsk-vurdering-view">
                 {!!medisinskVurdering.hovedDiagnose?.tekst && (
                     <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} sladd />
                 )}
@@ -34,16 +35,18 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
     }
 
     return (
-        <div style={{ marginBottom: '2rem' }}>
-            {!!medisinskVurdering.hovedDiagnose?.tekst && (
-                <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} />
-            )}
-            {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
-                if (bidiagnose.tekst) {
-                    return <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} />;
-                }
-                return null;
-            })}
+        <div className="medisinsk-vurdering-view">
+            <div className="diagnoser">
+                {!!medisinskVurdering.hovedDiagnose?.tekst && (
+                    <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} />
+                )}
+                {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
+                    if (bidiagnose.tekst) {
+                        return <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} />;
+                    }
+                    return null;
+                })}
+            </div>
             {!!(
                 medisinskVurdering.annenFraversArsak?.grunn && medisinskVurdering.annenFraversArsak?.grunn.length > 0
             ) && (

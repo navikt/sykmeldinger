@@ -14,10 +14,10 @@ import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import Sykmeldingsopplysninger from '../../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../../components/Spacing/Spacing';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../../../components/Veileder/svg/VeilederMaleSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import './Form.less';
+import Veileder from 'nav-frontend-veileder';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -34,7 +34,7 @@ export enum UriktigeOpplysningerType {
 }
 
 export enum ArbeidssituasjonType {
-    ARBEIDSTAKER = 'arbeidstaker',
+    ARBEIDSTAKER = 'ansatt',
     FRILANSER = 'frilanser',
     NAERINGSDRIVENDE = 'selvstendig næringsdrivende',
     ARBEIDSLEDIG = 'arbeidsledig eller permittert',
@@ -131,53 +131,36 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                 })}
             >
                 <Spacing>
-                    <Spacing>
-                        <ErOpplysningeneRiktige />
+                    <ErOpplysningeneRiktige />
 
-                        {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
-                            <Arbeidssituasjon
-                                harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
-                                    (sm) => sm.type === 'AVVENTENDE',
-                                )}
-                                erUtenforVentetid={sykmeldingUtenforVentetid}
-                                brukerinformasjon={brukerinformasjon}
-                                sykmeldingFom={sykmelding.getSykmeldingStartDate()}
-                            />
-                        )}
-                    </Spacing>
+                    {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
+                        <Arbeidssituasjon
+                            harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
+                                (sm) => sm.type === 'AVVENTENDE',
+                            )}
+                            erUtenforVentetid={sykmeldingUtenforVentetid}
+                            brukerinformasjon={brukerinformasjon}
+                            sykmeldingFom={sykmelding.getSykmeldingStartDate()}
+                        />
+                    )}
 
                     {erArbeidstaker && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
-                        <>
-                            <Spacing>
-                                <Veilederpanel kompakt fargetema="info" svg={<VeilederMaleSvg />}>
+                        <div className="har-valgt-arbeidsgiver-wrapper">
+                            <div className="veileder-sender-sykmeldingen">
+                                <Veileder storrelse="S" fargetema="info"><VeilederMaleSvg /></Veileder>
+                                <div>
                                     <Element>Vi sender sykmeldingen til arbeidsgiverens innboks i Altinn</Element>
                                     <Normaltekst>
                                         Under ser du hva arbeidsgiveren din får se hvis du sender sykmeldingen. Det er
                                         bare disse opplysningene som blir sendt. Arbeidsgiveren din får for eksempel
                                         ikke se diagnosen.
                                     </Normaltekst>
-                                </Veilederpanel>
-                            </Spacing>
+                                </div>
+                            </div>
                             <Spacing amount="small">
-                                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver />
+                                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver expandable={true} sendeSykmelding />
                             </Spacing>
-                            <Spacing amount="large">
-                                <Ekspanderbartpanel tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
-                                    <Spacing amount="small">
-                                        <Normaltekst>
-                                            Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk,
-                                            enten den digitale sykmeldingen du finner her, eller papirsykmeldingen som
-                                            du kan få hos legen.
-                                        </Normaltekst>
-                                    </Spacing>
-                                    <Normaltekst>
-                                        Ønsker du ikke å sende den slik du ser den her, kan du snakke med legen om å få
-                                        en ny sykmelding. Da kan du ta stilling til om du vil gi den nye sykmeldingen
-                                        til arbeidsgiveren din i stedet.
-                                    </Normaltekst>
-                                </Ekspanderbartpanel>
-                            </Spacing>
-                        </>
+                        </div>
                     )}
 
                     {errorSend && (
