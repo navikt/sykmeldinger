@@ -1,10 +1,9 @@
-import { Element } from 'nav-frontend-typografi';
 import {
     AktivitetIkkeMuligPeriode,
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
 } from '../../../models/Sykmelding/Periode';
-import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
+import ListEntry from '../Layout/ListEntry/ListEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 import './AktivitetIkkeMuligView.less';
 
@@ -26,13 +25,11 @@ const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({ aktivit
         <div className="aktivitet-ikke-mulig">
             {!arbeidsgiver && !!aktivitetIkkeMulig.medisinskArsak && (
                 <div className="aktivitet-ikke-mulig__arsak">
-                    {aktivitetIkkeMulig.medisinskArsak && (
-                        <Element>Medisinske årsaker hindrer arbeidsrelatert aktivitet</Element>
-                    )}
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
-                        <CheckboxEntry
+                        <ListEntry
                             show={Boolean(aktivitetIkkeMulig.medisinskArsak.arsak.length)}
-                            checkboxText={aktivitetIkkeMulig.medisinskArsak.arsak.map(
+                            listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
+                            listText={aktivitetIkkeMulig.medisinskArsak.arsak.map(
                                 (arsak) => MedisinskArsakType[arsak],
                             )}
                         />
@@ -48,13 +45,11 @@ const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({ aktivit
             )}
             {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
                 <div className="aktivitet-ikke-mulig__arsak">
-                    {aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                        <Element>Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet</Element>
-                    )}
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
-                        <CheckboxEntry
+                        <ListEntry
                             show={Boolean(aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.length)}
-                            checkboxText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(
+                            listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
+                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(
                                 (arsak) => ArbeidsrelatertArsakType[arsak],
                             )}
                         />

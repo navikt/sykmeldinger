@@ -1,5 +1,5 @@
 import Periode from '../../../models/Sykmelding/Periode';
-import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
+import JaEntry from '../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 import './PeriodeView.less';
 
@@ -24,9 +24,9 @@ const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder }) => {
                             small
                         />
                     )}
-                    <CheckboxEntry
+                    <JaEntry
                         show={Boolean(periode.gradert?.reisetilskudd)}
-                        checkboxText="Pasienten kan være i delvis arbeid ved bruk av reisetilskudd"
+                        title="Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?"
                     />
                 </div>
             ))}

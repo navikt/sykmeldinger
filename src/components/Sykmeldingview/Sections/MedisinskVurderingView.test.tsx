@@ -76,7 +76,7 @@ describe('MedisinskVurdering', () => {
         const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver={false} />);
 
-        expect(screen.getByText('Sykdommen er svangerskapsrelatert')).toBeInTheDocument();
+        expect(screen.getByText('Er sykdommen svangerskapsrelatert?')).toBeInTheDocument();
     });
 
     it('Renders yrkesskade if it exits', () => {
@@ -89,7 +89,7 @@ describe('MedisinskVurdering', () => {
         const medisinskVurdering = new MedisinskVurdering(plainJson);
         render(<MedisinskVurderingView medisinskVurdering={medisinskVurdering} arbeidsgiver={false} />);
 
-        expect(screen.getByText('Sykdommen kan skyldes en yrkesskade/yrkessykdom')).toBeInTheDocument();
+        expect(screen.getByText('Kan sykdommen skyldes en yrkesskade/yrkessykdom?')).toBeInTheDocument();
 
         expect(screen.getByText('Skadedato')).toBeInTheDocument();
         expect(screen.getByText('1. april 2020')).toBeInTheDocument();
@@ -143,7 +143,7 @@ describe('MedisinskVurdering', () => {
         expect(screen.queryByText(plainJson.annenFraversArsak.beskrivelse)).not.toBeInTheDocument();
 
         // Svangerskap
-        expect(screen.queryByText('Sykdommen er svangerskapsrelatert')).not.toBeInTheDocument();
+        expect(screen.queryByText('Er sykdommen svangerskapsrelatert?')).not.toBeInTheDocument();
 
         // Yrkesskade
         expect(screen.queryByText('Skadedato')).not.toBeInTheDocument();

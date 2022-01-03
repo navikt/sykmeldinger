@@ -1,6 +1,6 @@
 import Prognose from '../../../models/Sykmelding/Prognose';
 import DateFormatter from '../../../utils/DateFormatter';
-import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
+import JaEntry from '../Layout/JaEntry/JaEntry';
 import Section from '../Layout/Section/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
@@ -20,9 +20,9 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
 
     return (
         <Section title="Friskmelding/Prognose">
-            <CheckboxEntry
+            <JaEntry
                 show={prognose.arbeidsforEtterPeriode}
-                checkboxText="Pasienten er 100% arbeidsfør etter denne perioden"
+                title="Er pasienten 100% arbeidsfør etter denne perioden?"
             />
             {!!prognose.hensynArbeidsplassen && (
                 <SykmeldingEntry
@@ -33,13 +33,13 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
             )}
             {!arbeidsgiver && !!prognose.erIArbeid && (
                 <>
-                    <CheckboxEntry
+                    <JaEntry
                         show={prognose.erIArbeid.egetArbeidPaSikt}
-                        checkboxText="Pasienten antas å kunne komme tilbake til samme arbeidsgiver på sikt"
+                        title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?"
                     />
-                    <CheckboxEntry
+                    <JaEntry
                         show={prognose.erIArbeid.annetArbeidPaSikt}
-                        checkboxText="Pasienten antas å kunne komme tilbake til annen arbeidsgiver på sikt"
+                        title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?"
                     />
                     {!!prognose.erIArbeid.arbeidFOM && (
                         <SykmeldingEntry
@@ -59,9 +59,9 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
             )}
             {!arbeidsgiver && !!prognose.erIkkeIArbeid && (
                 <>
-                    <CheckboxEntry
+                    <JaEntry
                         show={prognose.erIkkeIArbeid.arbeidsforPaSikt}
-                        checkboxText="Pasienten antas å kunne komme i arbeid på sikt"
+                        title="Antas pasienten å kunne komme i arbeid på sikt?"
                     />
                     {!!prognose.erIkkeIArbeid.arbeidsforFOM && (
                         <SykmeldingEntry
