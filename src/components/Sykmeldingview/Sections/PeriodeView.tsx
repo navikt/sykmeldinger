@@ -24,10 +24,7 @@ const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder }) => {
                             small
                         />
                     )}
-                    <JaEntry
-                        show={Boolean(periode.gradert?.reisetilskudd)}
-                        title="Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?"
-                    />
+                    {periode.gradert?.reisetilskudd && <JaEntry title="Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?" />}
                 </div>
             ))}
         </div>

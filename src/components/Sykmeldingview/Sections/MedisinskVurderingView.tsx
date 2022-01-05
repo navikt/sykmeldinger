@@ -62,11 +62,8 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                     small
                 />
             )}
-            <JaEntry show={medisinskVurdering.svangerskap} title="Er sykdommen svangerskapsrelatert?" />
-            <JaEntry
-                show={medisinskVurdering.yrkesskade}
-                title="Kan sykdommen skyldes en yrkesskade/yrkessykdom?"
-            />
+            {medisinskVurdering.svangerskap && <JaEntry title="Er sykdommen svangerskapsrelatert?" />}
+            {medisinskVurdering.yrkesskade && <JaEntry title="Kan sykdommen skyldes en yrkesskade/yrkessykdom?" />}
             {!!medisinskVurdering.yrkesskadeDato && (
                 <SykmeldingEntry
                     title="Skadedato"

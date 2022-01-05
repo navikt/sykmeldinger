@@ -20,10 +20,7 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
 
     return (
         <Section title="Friskmelding/Prognose">
-            <JaEntry
-                show={prognose.arbeidsforEtterPeriode}
-                title="Er pasienten 100% arbeidsfør etter denne perioden?"
-            />
+            {prognose.arbeidsforEtterPeriode && <JaEntry title="Er pasienten 100% arbeidsfør etter denne perioden?" />}
             {!!prognose.hensynArbeidsplassen && (
                 <SykmeldingEntry
                     title="Hensyn som må tas på arbeidsplassen"
@@ -33,14 +30,8 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
             )}
             {!arbeidsgiver && !!prognose.erIArbeid && (
                 <>
-                    <JaEntry
-                        show={prognose.erIArbeid.egetArbeidPaSikt}
-                        title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?"
-                    />
-                    <JaEntry
-                        show={prognose.erIArbeid.annetArbeidPaSikt}
-                        title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?"
-                    />
+                    {prognose.erIArbeid.egetArbeidPaSikt && <JaEntry title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?" />}
+                    {prognose.erIArbeid.annetArbeidPaSikt && <JaEntry title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?" />}
                     {!!prognose.erIArbeid.arbeidFOM && (
                         <SykmeldingEntry
                             title="Pasienten anslås å være tilbake"
@@ -59,10 +50,7 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
             )}
             {!arbeidsgiver && !!prognose.erIkkeIArbeid && (
                 <>
-                    <JaEntry
-                        show={prognose.erIkkeIArbeid.arbeidsforPaSikt}
-                        title="Antas pasienten å kunne komme i arbeid på sikt?"
-                    />
+                    {prognose.erIkkeIArbeid.arbeidsforPaSikt && <JaEntry title="Antas pasienten å kunne komme i arbeid på sikt?" />}
                     {!!prognose.erIkkeIArbeid.arbeidsforFOM && (
                         <SykmeldingEntry
                             title="Pasienten anslås å vær være arbeidsfør"

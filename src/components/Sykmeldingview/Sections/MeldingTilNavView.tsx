@@ -18,7 +18,7 @@ const MeldingTilNavView: React.FC<MeldingTilNavViewProps> = ({ meldingTilNav, ar
 
     return (
         <Section title="Melding til NAV">
-            <JaEntry show={meldingTilNav.bistandUmiddelbart} title="Ønskes bistand fra NAV nå?" />
+            {meldingTilNav.bistandUmiddelbart && <JaEntry title="Ønskes bistand fra NAV nå?" />}
             {meldingTilNav.beskrivBistand && (
                 <SykmeldingEntry title="Nærmere beskrivelse" mainText={meldingTilNav.beskrivBistand} small />
             )}
