@@ -1,4 +1,4 @@
-import { Element } from 'nav-frontend-typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import styles from './JaEntry.module.css';
 
 interface JaEntryProps {
@@ -9,7 +9,7 @@ const JaEntry: React.FC<JaEntryProps> = ({ title }) => {
     return (
         <div className={styles.jaEntry}>
             <Element>{title}</Element>
-            <p className={styles.jaEntryText}>Ja</p>
+            <Undertekst className={styles.jaEntryText}>Ja</Undertekst>
         </div>
     );
 };

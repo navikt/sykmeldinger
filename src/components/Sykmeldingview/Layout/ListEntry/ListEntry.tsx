@@ -1,4 +1,4 @@
-import { Element } from 'nav-frontend-typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import styles from './ListEntry.module.css';
 
 interface ListEntryProps {
@@ -12,7 +12,7 @@ const ListEntry: React.FC<ListEntryProps> = ({ listText, listTitle }) => {
             <Element>{listTitle}</Element>
             <ul>
                 {listText.map((str, index) => (
-                    <li className={styles.listEntryText} key={index}>{str}</li>
+                    <li className={styles.listEntryText} key={index}><Undertekst>{str}</Undertekst></li>
                 ))}
             </ul>
         </div>
