@@ -4,25 +4,6 @@ import { AktivitetIkkeMuligPeriode } from '../../../models/Sykmelding/Periode';
 import AktivitetIkkeMuligView from './AktivitetIkkeMuligView';
 
 describe('AktivitetIkkeMuligView', () => {
-    it('Renders aktivitet ikke mulig periode', () => {
-        const plainJson = {
-            fom: '2021-04-01',
-            tom: '2021-04-05',
-            type: 'AKTIVITET_IKKE_MULIG',
-            aktivitetIkkeMulig: {
-                medisinskArsak: {},
-                arbeidsrelatertArsak: {}
-            },
-            reisetilskudd: false
-        };
-        const periode = new AktivitetIkkeMuligPeriode(plainJson.aktivitetIkkeMulig);
-
-        render(<AktivitetIkkeMuligView aktivitetIkkeMulig={periode} arbeidsgiver={false} />);
-
-        expect(screen.getByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).toBeInTheDocument();
-        expect(screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet')).toBeInTheDocument();
-    });
-
     it('Renders aktivitet ikke mulig periode with specified medisinsk- and arbeidsrelatert arsak', () => {
         const plainJson = {
             fom: '2021-04-01',

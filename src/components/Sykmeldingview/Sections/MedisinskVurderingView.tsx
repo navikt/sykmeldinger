@@ -1,6 +1,6 @@
 import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding/MedisinskVurdering';
 import DateFormatter from '../../../utils/DateFormatter';
-import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
+import JaEntry from '../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 import './MedisinskVurderingView.less';
 
@@ -62,11 +62,8 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                     small
                 />
             )}
-            <CheckboxEntry show={medisinskVurdering.svangerskap} checkboxText="Sykdommen er svangerskapsrelatert" />
-            <CheckboxEntry
-                show={medisinskVurdering.yrkesskade}
-                checkboxText="Sykdommen kan skyldes en yrkesskade/yrkessykdom"
-            />
+            {medisinskVurdering.svangerskap && <JaEntry title="Er sykdommen svangerskapsrelatert?" />}
+            {medisinskVurdering.yrkesskade && <JaEntry title="Kan sykdommen skyldes en yrkesskade/yrkessykdom?" />}
             {!!medisinskVurdering.yrkesskadeDato && (
                 <SykmeldingEntry
                     title="Skadedato"

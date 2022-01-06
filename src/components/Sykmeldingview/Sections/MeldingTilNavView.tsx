@@ -1,5 +1,5 @@
 import MeldingTilNAV from '../../../models/Sykmelding/MeldingTilNav';
-import CheckboxEntry from '../Layout/CheckboxEntry/CheckboxEntry';
+import JaEntry from '../Layout/JaEntry/JaEntry';
 import Section from '../Layout/Section/Section';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
@@ -18,7 +18,7 @@ const MeldingTilNavView: React.FC<MeldingTilNavViewProps> = ({ meldingTilNav, ar
 
     return (
         <Section title="Melding til NAV">
-            <CheckboxEntry show={meldingTilNav.bistandUmiddelbart} checkboxText="Ønskes bistand fra NAV nå" />
+            {meldingTilNav.bistandUmiddelbart && <JaEntry title="Ønskes bistand fra NAV nå?" />}
             {meldingTilNav.beskrivBistand && (
                 <SykmeldingEntry title="Nærmere beskrivelse" mainText={meldingTilNav.beskrivBistand} small />
             )}

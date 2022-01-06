@@ -35,7 +35,7 @@ describe('PrognoseView', () => {
             };
             const prognose = new Prognose(plainJson);
             render(<PrognoseView prognose={prognose} arbeidsgiver={false} />);
-            expect(screen.getByText('Pasienten er 100% arbeidsfør etter denne perioden')).toBeInTheDocument();
+            expect(screen.getByText('Er pasienten 100% arbeidsfør etter denne perioden?')).toBeInTheDocument();
         });
 
         it('Does not renders arbeidsforEtterPeriode if false', () => {
@@ -46,7 +46,7 @@ describe('PrognoseView', () => {
             const prognose = new Prognose(plainJson);
             render(<PrognoseView prognose={prognose} arbeidsgiver={false} />);
             expect(() => {
-                screen.getByText('Pasienten er 100% arbeidsfør etter denne perioden');
+                screen.getByText('Er pasienten 100% arbeidsfør etter denne perioden?');
             }).toThrow();
         });
 
@@ -75,10 +75,10 @@ describe('PrognoseView', () => {
             const prognose = new Prognose(plainJson);
             render(<PrognoseView prognose={prognose} arbeidsgiver={false} />);
             expect(
-                screen.getByText('Pasienten antas å kunne komme tilbake til samme arbeidsgiver på sikt'),
+                screen.getByText('Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?'),
             ).toBeInTheDocument();
             expect(() => {
-                screen.getByText('Pasienten antas å kunne komme tilbake til annen arbeidsgiver på sikt');
+                screen.getByText('Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?');
             }).toThrow();
 
             expect(screen.getByText('Pasienten anslås å være tilbake')).toBeInTheDocument();
@@ -102,10 +102,10 @@ describe('PrognoseView', () => {
             const prognose = new Prognose(plainJson);
             render(<PrognoseView prognose={prognose} arbeidsgiver={false} />);
             expect(
-                screen.getByText('Pasienten antas å kunne komme tilbake til annen arbeidsgiver på sikt'),
+                screen.getByText('Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?'),
             ).toBeInTheDocument();
             expect(() => {
-                screen.getByText('Pasienten antas å kunne komme tilbake til samme arbeidsgiver på sikt');
+                screen.getByText('Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?');
             }).toThrow();
 
             expect(screen.getByText('Pasienten anslås å være tilbake')).toBeInTheDocument();
@@ -127,7 +127,7 @@ describe('PrognoseView', () => {
             };
             const prognose = new Prognose(plainJson);
             render(<PrognoseView prognose={prognose} arbeidsgiver={false} />);
-            expect(screen.getByText('Pasienten antas å kunne komme i arbeid på sikt')).toBeInTheDocument();
+            expect(screen.getByText('Antas pasienten å kunne komme i arbeid på sikt?')).toBeInTheDocument();
 
             expect(screen.getByText('Pasienten anslås å vær være arbeidsfør')).toBeInTheDocument();
             expect(screen.getByText('10. april 2021')).toBeInTheDocument();
@@ -149,7 +149,7 @@ describe('PrognoseView', () => {
             render(<PrognoseView prognose={prognose} arbeidsgiver={false} />);
 
             expect(() => {
-                screen.getByText('Pasienten antas å kunne komme i arbeid på sikt');
+                screen.getByText('Antas pasienten å kunne komme i arbeid på sikt?');
             }).toThrow();
 
             expect(screen.getByText('Behandler kan gi tilbakemelding på dette')).toBeInTheDocument();
@@ -171,10 +171,10 @@ describe('PrognoseView', () => {
             render(<PrognoseView prognose={prognose} arbeidsgiver />);
 
             expect(
-                screen.queryByText('Pasienten antas å kunne komme tilbake til samme arbeidsgiver på sikt'),
+                screen.queryByText('Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?'),
             ).not.toBeInTheDocument();
             expect(
-                screen.queryByText('Pasienten antas å kunne komme tilbake til annen arbeidsgiver på sikt'),
+                screen.queryByText('Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?'),
             ).not.toBeInTheDocument();
         });
 
@@ -211,7 +211,7 @@ describe('PrognoseView', () => {
 
             render(<PrognoseView prognose={prognose} arbeidsgiver />);
 
-            expect(screen.queryByText('Pasienten antas å kunne komme i arbeid på sikt')).not.toBeInTheDocument();
+            expect(screen.queryByText('Antas pasienten å kunne komme i arbeid på sikt?')).not.toBeInTheDocument();
 
             expect(screen.queryByText('Pasienten anslås å vær være arbeidsfør')).not.toBeInTheDocument();
             expect(screen.queryByText('10. april 2021')).not.toBeInTheDocument();
