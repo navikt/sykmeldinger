@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import Sykmeldingview from './Sykmeldingview';
 
@@ -40,9 +40,9 @@ const minimalSykmelding = {
     },
     behandletTidspunkt: '2020-01-01',
     behandler: {
-        fornavn: 'Fornavn',
-        mellomnavn: null,
-        etternavn: 'Etternavn',
+        fornavn: 'Frida',
+        mellomnavn: 'Perma',
+        etternavn: 'Frost',
         aktoerId: '1234',
         fnr: '99999999999',
         hpr: null,
@@ -73,9 +73,9 @@ const minimalSykmelding = {
 describe('SykmeldingView', () => {
     const sykmelding = new Sykmelding(minimalSykmelding);
 
-    beforeEach(() => {
+    it('Behandler should use correct name correctly formatted', () => {
         render(<Sykmeldingview sykmelding={sykmelding} arbeidsgiver={false} />);
-    });
 
-    it.skip('test', () => {});
+        expect(screen.getByText(/Behandler/).parentElement).toHaveTextContent(/Frida Perma Frost/);
+    });
 });
