@@ -30,7 +30,7 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                 <PeriodeView perioder={sykmelding.getSykmeldingperioderSorted()} />
             </div>
 
-            {sykmelding.navnFastlege && <SykmeldingEntry title="Behandler" mainText={sykmelding.navnFastlege} />}
+            <SykmeldingEntry title="Behandler" mainText={sykmelding.behandler.getName()} />
             <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
 
             <FlereOpplysninger disableExpand={arbeidsgiver}>
