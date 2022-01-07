@@ -7,7 +7,7 @@
 
 .flereOpplysningerToggle :global(.ekspanderbartPanel__hode) {
     display: flex;
-    padding: 0 0 2rem 0;
+    padding: 0;
     color: #0056b4;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .flereOpplysningerToggle :global(.ekspanderbartPanel__innhold) {
-    padding: 0;
+    padding: 2rem 0 0 0;
 }
 
 .flereOpplysninger :global(.ekspanderbartPanel:hover),
