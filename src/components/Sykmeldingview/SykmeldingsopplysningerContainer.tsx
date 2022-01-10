@@ -69,7 +69,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     >
                         <Sykmeldingview sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
                         {sendeSykmelding &&
-                            <Ekspanderbartpanel tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
+                            <Ekspanderbartpanel className="ikke-sende-til-arbeidsgiver-panel" tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
                                 <Spacing amount="small">
                                     <Normaltekst>
                                         Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk,

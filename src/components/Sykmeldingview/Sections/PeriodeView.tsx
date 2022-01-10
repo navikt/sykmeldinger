@@ -19,7 +19,7 @@ const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder }) => {
                     />
                     {!!periode.innspillTilArbeidsgiver && (
                         <SykmeldingEntry
-                            title="Innspill til arbeidsgver om tilrettelegging"
+                            title="Innspill til arbeidsgiver om tilrettelegging"
                             mainText={periode.innspillTilArbeidsgiver}
                             small
                         />
