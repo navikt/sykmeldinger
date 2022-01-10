@@ -28,7 +28,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
+            cy.contains('Opplysninger fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
@@ -103,7 +103,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
+            cy.contains('Opplysninger fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
@@ -178,7 +178,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
+            cy.contains('Opplysninger fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
@@ -233,7 +233,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
+            cy.contains('Opplysninger fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
@@ -289,7 +289,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
+            cy.contains('Opplysninger fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {
@@ -345,7 +345,7 @@ describe('Uriktige opplysninger', () => {
         });
 
         it('Viser opplysninger fra sykmeldingen', () => {
-            cy.contains('Opplysninger vi har mottatt fra behandleren din').should('be.visible');
+            cy.contains('Opplysninger fra behandleren din').should('be.visible');
         });
 
         it('Fyller ut skjema', () => {

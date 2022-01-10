@@ -30,7 +30,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef<HTMLElement>(null);
 
-    const title = arbeidsgiver ? 'Dette vises til arbeidsgiveren din' : 'Opplysninger vi har mottatt fra behandleren din';
+    const title = arbeidsgiver ? 'Dette vises til arbeidsgiveren din' : 'Opplysninger fra behandleren din';
     const contentId = `sykmelding-${sykmelding.id}-content${arbeidsgiver ? '-arbeidsgiver' : ''}`;
     const headerId = `sykmelding-${sykmelding.id}-header${arbeidsgiver ? '-arbeidsgiver' : ''}`;
 
