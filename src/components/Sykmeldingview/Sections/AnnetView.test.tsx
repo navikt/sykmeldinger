@@ -17,7 +17,7 @@ describe('AnnetView', () => {
         expect(screen.getByText('12345678')).toBeInTheDocument();
     });
 
-    it('Does not render behandler phone if it does noe exist', () => {
+    it('Render hyphen if behandler phone does noe exist', () => {
         const rawBehandler = {
             fornavn: 'Lege',
             etternavn: 'Legesen',
@@ -25,7 +25,7 @@ describe('AnnetView', () => {
         };
         const behandler = new Behandler(rawBehandler);
         render(<AnnetView behandler={behandler} />);
-        expect(screen.queryByText('Telefon til behandler')).not.toBeInTheDocument();
-        expect(screen.queryByText('12345678')).not.toBeInTheDocument();
+        expect(screen.queryByText('Telefon til behandler')).toBeInTheDocument();
+        expect(screen.queryByText('—')).toBeInTheDocument();
     });
 });
