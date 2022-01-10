@@ -189,13 +189,15 @@ export class Sykmelding {
      * @return {Date} The end date
      */
     getSykmeldingEndDate(): Date {
-        return this.sykmeldingsperioder.reduce((acc, value) => {
-            if (dayjs(value.fom).isAfter(dayjs(acc.fom))) {
+        const latestSykmeldingPeriod = this.sykmeldingsperioder.reduce((acc, value) => {
+            if (dayjs(value.tom).isAfter(dayjs(acc.tom))) {
                 return value;
             }
 
             return acc;
-        }).tom;
+        });
+
+        return latestSykmeldingPeriod.tom;
     }
 
     /**

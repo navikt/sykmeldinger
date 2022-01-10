@@ -82,7 +82,7 @@ function isPastSykmelding(sykmelding: Sykmelding) {
     }
 
     const isSykmeldingApen = sykmelding.sykmeldingStatus.statusEvent === 'APEN';
-    const isSykmelding3MonthsOld = dayjs(sykmelding.getSykmeldingEndDate()).isBefore(dayjs().subtract(3, 'months'));
+    const isSykmelding3MonthsOld = dayjs(sykmelding.getSykmeldingEndDate()).isBefore(dayjs().subtract(4, 'months'));
 
     return !isSykmeldingApen || isSykmelding3MonthsOld;
 }

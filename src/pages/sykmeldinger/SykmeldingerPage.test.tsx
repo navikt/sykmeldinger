@@ -93,7 +93,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         expect(await screen.findByText('Tidligere sykmeldinger'));
     });
 
-    it('should display APEN but older than 3 months sykemelding in tidligere section', async () => {
+    it('should display APEN but older than 4 months sykemelding in tidligere section', async () => {
         apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
 
         render(<SykmeldingerPage />);
