@@ -1,4 +1,4 @@
-import './SykmeldingsopplysningerContainer.less';
+import styles from './SykmeldingsopplysningerContainer.module.css';
 
 import React, { useRef, useState } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -11,6 +11,7 @@ import Lukknapp from '../Lukknapp/Lukknap';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Spacing from '../Spacing/Spacing';
 import { Normaltekst } from 'nav-frontend-typografi';
+import cn from 'classnames';
 
 interface SykmeldingsopplysningerProps {
     sykmelding: Sykmelding;
@@ -35,7 +36,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const headerId = `sykmelding-${sykmelding.id}-header${arbeidsgiver ? '-arbeidsgiver' : ''}`;
 
     return (
-        <article aria-labelledby={headerId} ref={elementRef} className={`sykmeldingsopplysninger ${arbeidsgiver ? 'opplysninger-til-arbeidsgiver' : ''}`}>
+        <article aria-labelledby={headerId} ref={elementRef} className={cn(styles.sykmeldingsopplysninger, { [styles.opplysningerTilArbeidsgiver]: arbeidsgiver })}>
             {expandable ? (
                 <>
                     <button
@@ -51,12 +52,12 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                             }
                             setExpanded(!expanded);
                         }}
-                        className="sykmeldingsopplysninger__header sykmeldingsopplysninger__header--expandable"
+                        className={cn(styles.sykmeldingsopplysningerHeader, styles.sykmeldingsopplysningerHeaderExpandable)}
                     >
-                        <div className="sykmeldingsopplysninger__icon">
+                        <div className={styles.sykmeldingsopplysningerIcon}>
                             <ArbeidsgiverSvg />
                         </div>
-                        <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
+                        <Undertittel className={styles.sykmeldingsopplysningerText} tag="h2">
                             {title}
                         </Undertittel>
                         <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
@@ -64,12 +65,10 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     <div
                         id={contentId}
                         aria-labelledby={headerId}
-                        className={`sykmeldingsopplysninger__content ${expanded ? '' : 'sykmeldingsopplysninger__content--hidden'
-                            }`}
-                    >
+                        className={cn(styles.sykmeldingsopplysningerContent, { [styles.sykmeldingsopplysningerContentHidden]: !expanded })}>
                         <Sykmeldingview sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
                         {sendeSykmelding &&
-                            <Ekspanderbartpanel className="ikke-sende-til-arbeidsgiver-panel" tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
+                            <Ekspanderbartpanel className={styles.ikkeSendeTilArbeidsgiverPanel} tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
                                 <Spacing amount="small">
                                     <Normaltekst>
                                         Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk,
@@ -89,15 +88,15 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                 </>
             ) : (
                 <>
-                    <header className="sykmeldingsopplysninger__header">
-                        <div className="sykmeldingsopplysninger__icon">
+                    <header className={styles.sykmeldingsopplysningerHeader}>
+                        <div className={styles.sykmeldingsopplysningerIcon}>
                             {arbeidsgiver ? <ArbeidsgiverSvg /> : <LegeSvg />}
                         </div>
-                        <Undertittel className="sykmeldingsopplysninger__text" tag="h2">
+                        <Undertittel className={styles.sykmeldingsopplysningerText} tag="h2">
                             {title}
                         </Undertittel>
                     </header>
-                    <div id={contentId} aria-labelledby={headerId} className="sykmeldingsopplysninger__content">
+                    <div id={contentId} aria-labelledby={headerId} className={styles.sykmeldingsopplysningerContent}>
                         <Sykmeldingview sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
                     </div>
                 </>

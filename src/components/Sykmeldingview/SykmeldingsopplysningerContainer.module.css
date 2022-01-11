@@ -1,0 +1,50 @@
+.sykmeldingsopplysninger {
+    background-color: #ffffff;
+    border: 1px solid #78706a;
+    border-radius: 4px;
+}
+
+.sykmeldingsopplysninger .sykmeldingsopplysningerHeader {
+    display: flex;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    padding: 17px;
+    align-items: center;
+}
+
+.sykmeldingsopplysninger .sykmeldingsopplysningerHeader .sykmeldingsopplysningerIcon {
+    width: 1.5rem;
+    margin-right: 1.2rem;
+}
+
+.sykmeldingsopplysninger .sykmeldingsopplysningerHeader .sykmeldingsopplysningerText {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    text-align: start;
+}
+
+.sykmeldingsopplysninger .sykmeldingsopplysningerHeaderExpandable {
+    cursor: pointer;
+}
+
+.sykmeldingsopplysninger .sykmeldingsopplysningerContent {
+    padding: 0 1rem 1.5rem 1rem;
+}
+
+.sykmeldingsopplysninger .sykmeldingsopplysningerContentHidden {
+    display: none;
+}
+
+.sykmeldingsopplysninger .ikkeSendeTilArbeidsgiverPanel :global(.ekspanderbartPanel__tittel) {
+    font-size: 1.17rem;
+}
+
+.opplysningerTilArbeidsgiver {
+    background-color: #fef9ef;
+}
+
+.opplysningerTilArbeidsgiver .sykmeldingsopplysningerHeader {
+    background-color: #fef9ef;
+}
