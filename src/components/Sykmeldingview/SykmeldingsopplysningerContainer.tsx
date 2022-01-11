@@ -35,7 +35,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const headerId = `sykmelding-${sykmelding.id}-header${arbeidsgiver ? '-arbeidsgiver' : ''}`;
 
     return (
-        <article aria-labelledby={headerId} ref={elementRef} className="sykmeldingsopplysninger">
+        <article aria-labelledby={headerId} ref={elementRef} className={`sykmeldingsopplysninger ${arbeidsgiver ? 'opplysninger-til-arbeidsgiver' : ''}`}>
             {expandable ? (
                 <>
                     <button
