@@ -1,6 +1,6 @@
 import Ekspanderbar from 'nav-frontend-ekspanderbartpanel';
 import { useState } from 'react';
-import './FlereOpplysninger.less';
+import styles from './FlereOpplysninger.module.css';
 
 interface FlereOpplysningerProps {
     disableExpand?: boolean;
@@ -10,10 +10,10 @@ const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ disableExpand = f
     const [expanded, setExpanded] = useState<boolean>(disableExpand);
 
     return (
-        <>
+        <div className={styles.flereOpplysninger}>
             {!disableExpand ? (
                 <Ekspanderbar
-                    className="flere-opplysninger__toggle"
+                    className={styles.flereOpplysningerToggle}
                     tittel={expanded ? 'Skjul flere opplysninger' : 'Vis flere opplysninger'}
                     apen={expanded}
                     onClick={() => setExpanded(!expanded)}
@@ -24,7 +24,7 @@ const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ disableExpand = f
             ) : (
                 <>{children}</>
             )}
-        </>
+        </div>
     );
 };
 

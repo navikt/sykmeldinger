@@ -19,7 +19,7 @@ describe('PeriodeView', () => {
         expect(screen.getByText('Avventende sykmelding')).toBeInTheDocument();
         expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('5 dager')).toBeInTheDocument();
-        expect(screen.getByText('Innspill til arbeidsgver om tilrettelegging')).toBeInTheDocument();
+        expect(screen.getByText('Innspill til arbeidsgiver om tilrettelegging')).toBeInTheDocument();
         expect(screen.getByText(plainJson.innspillTilArbeidsgiver)).toBeInTheDocument();
     });
 

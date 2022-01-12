@@ -31,7 +31,7 @@ describe('Selvstendig næringsdrivende', () => {
             render(<SykmeldingPage />, renderOptions);
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
+            expect(screen.getByRole('heading', { name: 'Opplysninger fra behandleren din' })).toBeInTheDocument();
         });
 
         it('should be able to submit form', async () => {
@@ -191,7 +191,7 @@ describe('Selvstendig næringsdrivende', () => {
             render(<SykmeldingPage />, renderOptions);
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('heading', { name: 'Opplysninger vi har mottatt fra behandleren din' })).toBeInTheDocument();
+            expect(screen.getByRole('heading', { name: 'Opplysninger fra behandleren din' })).toBeInTheDocument();
         });
 
         it('should be able to submit form', async () => {

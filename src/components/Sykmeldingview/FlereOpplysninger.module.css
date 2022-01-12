@@ -1,0 +1,28 @@
+.flereOpplysningerToggle {
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.flereOpplysningerToggle :global(.ekspanderbartPanel__hode) {
+    display: flex;
+    padding: 0;
+    color: #0056b4;
+}
+
+.flereOpplysningerToggle :global(.ekspanderbartPanel__hode .ekspanderbartPanel__tittel) {
+    font-size: 1rem;
+    color: #0056b4;
+    text-decoration: none;
+    margin-right: 0.5rem;
+}
+
+.flereOpplysningerToggle :global(.ekspanderbartPanel__innhold) {
+    padding: 2rem 0 0 0;
+}
+
+.flereOpplysninger :global(.ekspanderbartPanel:hover),
+.flereOpplysninger :global(.ekspanderbartPanel__hode:focus) {
+    box-shadow: none;
+}

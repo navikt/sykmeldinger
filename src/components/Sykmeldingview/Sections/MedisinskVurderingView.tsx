@@ -36,40 +36,40 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
 
     return (
         <div className="medisinsk-vurdering-view">
-            <div className="diagnoser">
-                {!!medisinskVurdering.hovedDiagnose?.tekst && (
-                    <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} />
+            {!!medisinskVurdering.hovedDiagnose?.tekst && (
+                <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} />
+            )}
+            {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
+                if (bidiagnose.tekst) {
+                    return <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} />;
+                }
+                return null;
+            })}
+            <div className="fravaersgrunn">
+                {!!(
+                    medisinskVurdering.annenFraversArsak?.grunn && medisinskVurdering.annenFraversArsak?.grunn.length > 0
+                ) && (
+                    <SykmeldingEntry
+                        title="Annen lovfestet fraværsgrunn"
+                        mainText={AnnenFraverGrunn[medisinskVurdering.annenFraversArsak.grunn[0]]}
+                    />
                 )}
-                {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
-                    if (bidiagnose.tekst) {
-                        return <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} />;
-                    }
-                    return null;
-                })}
+                {!!medisinskVurdering.annenFraversArsak?.beskrivelse && (
+                    <SykmeldingEntry
+                        title="Beskrivelse av fraværsgrunn"
+                        mainText={medisinskVurdering.annenFraversArsak.beskrivelse}
+                        small
+                    />
+                )}
+                {medisinskVurdering.svangerskap && <JaEntry title="Er sykdommen svangerskapsrelatert?" />}
+                {medisinskVurdering.yrkesskade && <JaEntry title="Kan sykdommen skyldes en yrkesskade/yrkessykdom?" />}
+                {!!medisinskVurdering.yrkesskadeDato && (
+                    <SykmeldingEntry
+                        title="Skadedato"
+                        mainText={DateFormatter.toReadableDate(medisinskVurdering.yrkesskadeDato)}
+                    />
+                )}
             </div>
-            {!!(
-                medisinskVurdering.annenFraversArsak?.grunn && medisinskVurdering.annenFraversArsak?.grunn.length > 0
-            ) && (
-                <SykmeldingEntry
-                    title="Annen lovfestet fraværsgrunn"
-                    mainText={AnnenFraverGrunn[medisinskVurdering.annenFraversArsak.grunn[0]]}
-                />
-            )}
-            {!!medisinskVurdering.annenFraversArsak?.beskrivelse && (
-                <SykmeldingEntry
-                    title="Beskrivelse av fraværsgrunn"
-                    mainText={medisinskVurdering.annenFraversArsak.beskrivelse}
-                    small
-                />
-            )}
-            {medisinskVurdering.svangerskap && <JaEntry title="Er sykdommen svangerskapsrelatert?" />}
-            {medisinskVurdering.yrkesskade && <JaEntry title="Kan sykdommen skyldes en yrkesskade/yrkessykdom?" />}
-            {!!medisinskVurdering.yrkesskadeDato && (
-                <SykmeldingEntry
-                    title="Skadedato"
-                    mainText={DateFormatter.toReadableDate(medisinskVurdering.yrkesskadeDato)}
-                />
-            )}
         </div>
     );
 };

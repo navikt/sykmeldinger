@@ -5,7 +5,7 @@ import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 const AnnetView: React.FC<{ behandler: Behandler }> = ({ behandler }) => {
     return (
         <Section title="Annet">
-            {behandler.tlf && <SykmeldingEntry title="Telefon til behandler" mainText={behandler.tlf} />}
+            <SykmeldingEntry title="Telefon til behandler" mainText={behandler.tlf ? behandler.tlf : '—'} />
         </Section>
     );
 };
