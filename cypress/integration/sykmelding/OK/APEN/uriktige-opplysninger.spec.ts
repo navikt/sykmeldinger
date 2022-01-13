@@ -9,7 +9,7 @@ describe('Uriktige opplysninger', () => {
             cy.intercept('**/api/v1/brukerinformasjon', {
                 body: { arbeidsgivere: [], strengtFortroligAdresse: false },
             }).as('brukerinformasjon');
-            cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
+            cy.intercept(`**/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen.id}/erUtenforVentetid`, {
                 body: { erUtenforVentetid: true },
             }).as('ventetid');
         });
@@ -84,7 +84,7 @@ describe('Uriktige opplysninger', () => {
             cy.intercept('**/api/v1/brukerinformasjon', {
                 body: { arbeidsgivere: [], strengtFortroligAdresse: false },
             }).as('brukerinformasjon');
-            cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
+            cy.intercept(`**/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen.id}/erUtenforVentetid`, {
                 body: { erUtenforVentetid: true },
             }).as('ventetid');
         });
@@ -159,7 +159,7 @@ describe('Uriktige opplysninger', () => {
             cy.intercept('**/api/v1/brukerinformasjon', {
                 body: { arbeidsgivere: [], strengtFortroligAdresse: false },
             }).as('brukerinformasjon');
-            cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
+            cy.intercept(`**/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen.id}/erUtenforVentetid`, {
                 body: { erUtenforVentetid: true },
             }).as('ventetid');
         });
@@ -214,7 +214,7 @@ describe('Uriktige opplysninger', () => {
             cy.intercept('**/api/v1/brukerinformasjon', {
                 body: { arbeidsgivere: [], strengtFortroligAdresse: false },
             }).as('brukerinformasjon');
-            cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
+            cy.intercept(`**/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen.id}/erUtenforVentetid`, {
                 body: { erUtenforVentetid: true },
             }).as('ventetid');
         });
@@ -270,7 +270,7 @@ describe('Uriktige opplysninger', () => {
             cy.intercept('**/api/v1/brukerinformasjon', {
                 body: { arbeidsgivere: [], strengtFortroligAdresse: false },
             }).as('brukerinformasjon');
-            cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
+            cy.intercept(`**/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen.id}/erUtenforVentetid`, {
                 body: { erUtenforVentetid: true },
             }).as('ventetid');
         });
@@ -326,7 +326,7 @@ describe('Uriktige opplysninger', () => {
             cy.intercept('**/api/v1/brukerinformasjon', {
                 body: { arbeidsgivere: [], strengtFortroligAdresse: false },
             }).as('brukerinformasjon');
-            cy.intercept(`**/syfosoknad/api/sykmeldinger/${sykmeldingApen.id}/actions/v2/erUtenforVentetid`, {
+            cy.intercept(`**/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen.id}/erUtenforVentetid`, {
                 body: { erUtenforVentetid: true },
             }).as('ventetid');
         });

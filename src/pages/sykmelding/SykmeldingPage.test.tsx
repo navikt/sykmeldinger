@@ -22,7 +22,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
             strengtFortroligAdresse: false,
         });
         apiNock
-            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+            .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true });
 
         render(<SykmeldingPage />, renderOptions);
@@ -38,7 +38,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
             strengtFortroligAdresse: false,
         });
         apiNock
-            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+            .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true });
 
         render(<SykmeldingPage />, renderOptions);
@@ -50,7 +50,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
         apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
         apiNock.get('/api/v1/brukerinformasjon').reply(500);
         apiNock
-            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+            .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true });
 
         render(<SykmeldingPage />, renderOptions);
@@ -66,7 +66,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
             strengtFortroligAdresse: false,
         });
         apiNock
-            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+            .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
             .reply(500);
 
         render(<SykmeldingPage />, renderOptions);
