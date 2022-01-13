@@ -1,5 +1,6 @@
-import Ekspanderbar from 'nav-frontend-ekspanderbartpanel';
 import { useState } from 'react';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+import Lukknapp from '../Lukknapp/Lukknap';
 import styles from './FlereOpplysninger.module.css';
 
 interface FlereOpplysningerProps {
@@ -12,7 +13,7 @@ const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ disableExpand = f
     return (
         <div className={styles.flereOpplysninger}>
             {!disableExpand ? (
-                <Ekspanderbar
+                <EkspanderbartpanelBase
                     className={styles.flereOpplysningerToggle}
                     tittel={expanded ? 'Skjul flere opplysninger' : 'Vis flere opplysninger'}
                     apen={expanded}
@@ -20,7 +21,8 @@ const FlereOpplysninger: React.FC<FlereOpplysningerProps> = ({ disableExpand = f
                     border={false}
                 >
                     {children}
-                </Ekspanderbar>
+                    <Lukknapp onClick={() => setExpanded(false)} />
+                </EkspanderbartpanelBase>
             ) : (
                 <>{children}</>
             )}
