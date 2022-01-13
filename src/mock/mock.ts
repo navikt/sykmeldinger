@@ -69,7 +69,7 @@ fetchMock.get(
 
 // VENTETID
 fetchMock.get(
-    'end:/actions/v2/erUtenforVentetid',
+    'end:/erUtenforVentetid',
     { body: { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' } },
     { delay: 1000 },
 );

@@ -20,7 +20,7 @@ describe('Annet', () => {
             strengtFortroligAdresse: false,
         });
         apiNock
-            .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+            .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true });
     });
 
