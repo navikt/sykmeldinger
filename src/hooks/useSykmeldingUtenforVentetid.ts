@@ -7,7 +7,7 @@ import { authenticatedGet } from '../utils/Fetch';
 function useSykmeldingUtenforVentetid(sykmeldingId: string) {
     return useQuery<ErUtenforVentetid, Error>(['erUtenforVentetid', sykmeldingId], () =>
         authenticatedGet(
-            `${env.FLEX_GATEWAY_ROOT}/syfosoknad/api/sykmeldinger/${sykmeldingId}/actions/v2/erUtenforVentetid`,
+            `${env.FLEX_GATEWAY_ROOT}/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingId}/erUtenforVentetid`,
             async (maybeErUtenforVentetid) => {
                 const erUtenforVentetid = new ErUtenforVentetid(maybeErUtenforVentetid);
                 await validateOrReject(erUtenforVentetid, { validationError: { target: false, value: false } });

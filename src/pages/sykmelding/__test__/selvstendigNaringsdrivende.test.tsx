@@ -26,7 +26,7 @@ describe('Selvstendig næringsdrivende', () => {
         it('should show details from sykmelding', async () => {
             apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
             render(<SykmeldingPage />, renderOptions);
 
@@ -37,7 +37,7 @@ describe('Selvstendig næringsdrivende', () => {
         it('should be able to submit form', async () => {
             apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
@@ -103,7 +103,7 @@ describe('Selvstendig næringsdrivende', () => {
                 .times(1)
                 .reply(200, sykmeldingApen(dayjs('2020-02-10')));
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: null });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
@@ -168,7 +168,7 @@ describe('Selvstendig næringsdrivende', () => {
         beforeEach(() => {
             apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
             apiNock
-                .get(`/flex-gateway/syfosoknad/api/sykmeldinger/${sykmeldingApen().id}/actions/v2/erUtenforVentetid`)
+                .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: true });
             apiNock
                 .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
