@@ -9,12 +9,14 @@ import Spacing from '../../../../components/Spacing/Spacing';
 import InformationBanner from '../../../../components/InformationBanner/InformationBanner';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../../components/Veileder/svg/VeilederMaleSvg';
+import { Alert, BodyLong, Heading, Link } from '@navikt/ds-react';
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;
+    olderSykmeldingId: string | null;
 }
 
-const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
+const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding, olderSykmeldingId }) => {
     useHotjarTrigger('SYKMELDING_OK_APEN');
 
     if (sykmelding.egenmeldt) {
@@ -35,9 +37,14 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
     return (
         <AvbrytContextProvider>
             <div className="sykmelding-container">
-                <Spacing>
-                    <InformationBanner merknader={sykmelding.merknader} papirsykmelding={sykmelding.papirsykmelding} />
-                </Spacing>
+                {!olderSykmeldingId && (
+                    <Spacing>
+                        <InformationBanner
+                            merknader={sykmelding.merknader}
+                            papirsykmelding={sykmelding.papirsykmelding}
+                        />
+                    </Spacing>
+                )}
 
                 {Boolean(sykmelding.papirsykmelding) && (
                     <Spacing amount="large">
@@ -45,10 +52,28 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding }) => {
                     </Spacing>
                 )}
 
-                <Sykmeldingsopplysninger sykmelding={sykmelding} />
-                <Form sykmelding={sykmelding} />
+                <Spacing>
+                    <Sykmeldingsopplysninger sykmelding={sykmelding} />
+                </Spacing>
 
-                <AvbrytPanel />
+                {olderSykmeldingId && (
+                    <Alert variant="warning">
+                        <Heading spacing size="small" level="2">
+                            Du har en tidligere sykmelding du ikke har sendt inn enda.
+                        </Heading>
+                        <BodyLong>
+                            For å kunne sende inn denne sykmeldingen må du først sende inn eller avbryte tidligere
+                            sykmeldinger.
+                        </BodyLong>
+                        <BodyLong>
+                            <Link href={`/syk/sykmeldinger/${olderSykmeldingId}`}>Her</Link> finner du sykmeldingen du
+                            ikke har sendt inn.
+                        </BodyLong>
+                    </Alert>
+                )}
+
+                <Form sykmelding={sykmelding} disable={!!olderSykmeldingId} />
+                <AvbrytPanel disable={!!olderSykmeldingId} />
             </div>
         </AvbrytContextProvider>
     );

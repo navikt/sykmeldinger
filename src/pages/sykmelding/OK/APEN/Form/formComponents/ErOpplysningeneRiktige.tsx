@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+
 import { FormShape, JaEllerNeiType } from '../Form';
-import UriktigeOpplysninger from './UriktigeOpplysninger';
 import QuestionWrapper from '../layout/QuestionWrapper';
 
-const ErOpplysningeneRiktige: React.FC = () => {
+import UriktigeOpplysninger from './UriktigeOpplysninger';
+
+const fieldName: keyof FormShape = 'erOpplysningeneRiktige';
+const sporsmaltekst = 'Stemmer opplysningene?';
+
+const ErOpplysningeneRiktige: React.FC<{ disable: boolean }> = ({ disable }) => {
     const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'erOpplysningeneRiktige';
-    const sporsmaltekst = 'Stemmer opplysningene?';
     const watchErOpplysningeneRiktige = watch(fieldName);
 
     useEffect(() => {
@@ -22,7 +25,7 @@ const ErOpplysningeneRiktige: React.FC = () => {
         });
         return () =>
             unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [register, unregister, sporsmaltekst]);
+    }, [register, unregister]);
 
     return (
         <QuestionWrapper>
@@ -36,8 +39,8 @@ const ErOpplysningeneRiktige: React.FC = () => {
                         name={name}
                         legend={sporsmaltekst}
                         radios={[
-                            { label: JaEllerNeiType.JA, value: 'JA', id: fieldName },
-                            { label: JaEllerNeiType.NEI, value: 'NEI' },
+                            { label: JaEllerNeiType.JA, value: 'JA', id: fieldName, disabled: disable },
+                            { label: JaEllerNeiType.NEI, value: 'NEI', disabled: disable },
                         ]}
                         checked={value}
                         onChange={(e: any) => onChange(e.target.value)}
