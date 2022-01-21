@@ -3,6 +3,7 @@ import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Route, Router } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
+import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks';
 
 interface CustomProviderOptions {
     initialRouterEntries: string[];
@@ -48,6 +49,21 @@ const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'>
         ...options,
     });
 
+const customRenderHook = <TProps, TResult>(
+    hook: (props: TProps) => TResult,
+    options?: Omit<RenderHookOptions<TProps>, 'wrapper'> & CustomProviderOptions,
+): RenderHookResult<TProps, TResult> =>
+    renderHook(hook, {
+        wrapper: (props) => (
+            <AllTheProviders
+                {...props}
+                initialRouterEntries={options?.initialRouterEntries ?? ['/syk/sykmeldinger']}
+                renderPath={options?.renderPath ?? '/'}
+                history={options?.history}
+            />
+        ),
+    });
+
 export * from '@testing-library/react';
 
-export { customRender as render };
+export { customRender as render, customRenderHook as renderHook };

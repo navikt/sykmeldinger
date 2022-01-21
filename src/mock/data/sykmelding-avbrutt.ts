@@ -1,6 +1,8 @@
-export const sykmeldingAvbrutt = {
+import dayjs from 'dayjs';
+
+export const sykmeldingAvbrutt = (mottatt = dayjs().subtract(6, 'months')) => ({
     id: 'AVBRUTT',
-    mottattTidspunkt: '2020-01-10',
+    mottattTidspunkt: mottatt.format('YYYY-MM-DD'),
     behandlingsutfall: {
         status: 'OK',
         ruleHits: [],
@@ -11,15 +13,15 @@ export const sykmeldingAvbrutt = {
     },
     sykmeldingsperioder: [
         {
-            fom: '2020-02-10',
-            tom: '2020-02-11',
+            fom: mottatt.add(5, 'days').format('YYYY-MM-DD'),
+            tom: mottatt.add(15, 'days').format('YYYY-MM-DD'),
             behandlingsdager: 2,
             type: 'BEHANDLINGSDAGER',
             reisetilskudd: false,
         },
     ],
     sykmeldingStatus: {
-        timestamp: '2020-01-01',
+        timestamp: mottatt.format('YYYY-MM-DD'),
         statusEvent: 'AVBRUTT',
         sporsmalOgSvarListe: [],
     },
@@ -61,7 +63,7 @@ export const sykmeldingAvbrutt = {
         },
     },
     kontaktMedPasient: {},
-    behandletTidspunkt: '2020-01-01',
+    behandletTidspunkt: mottatt.format('YYYY-MM-DD'),
     behandler: {
         fornavn: 'Fornavn',
         mellomnavn: null,
@@ -75,7 +77,7 @@ export const sykmeldingAvbrutt = {
         },
         tlf: '900 00 000',
     },
-    syketilfelleStartDato: '2018-10-10',
+    syketilfelleStartDato: mottatt.format('YYYY-MM-DD'),
     navnFastlege: 'Doktor Legesen',
     egenmeldt: false,
     papirsykmelding: false,
@@ -86,4 +88,4 @@ export const sykmeldingAvbrutt = {
         mellomnavn: null,
         etternavn: 'Nordmann',
     },
-};
+});
