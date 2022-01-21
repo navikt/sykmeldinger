@@ -16,24 +16,24 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 import { logger } from '../../utils/logger';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
-import useHasOlderSykmelding from '../../hooks/useHasOlderSykmelding';
+import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId';
 
 const SykmeldingPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
     const { isLoading, isFetching, error, data: sykmelding } = useSykmelding(sykmeldingId);
-    const hasOlderSykmelding = useHasOlderSykmelding(sykmelding);
+    const olderSykmelding = useFindOlderSykmeldingId(sykmelding);
 
-    if (isLoading || isFetching || hasOlderSykmelding.isLoading) {
+    if (isLoading || isFetching || olderSykmelding.isLoading) {
         return <Spinner headline="Henter sykmelding" />;
     }
 
-    if (error || hasOlderSykmelding.error) {
+    if (error || olderSykmelding.error) {
         return (
             <PageWrapper>
                 <AlertStripeAdvarsel role="alert" aria-live="polite">
-                    {error?.message ?? hasOlderSykmelding.error?.message}
+                    {error?.message ?? olderSykmelding.error?.message}
                 </AlertStripeAdvarsel>
             </PageWrapper>
         );
@@ -51,7 +51,7 @@ const SykmeldingPage: React.FC = () => {
     }
     return (
         <PageWrapper sykmelding={sykmelding}>
-            <SykmeldingComponent sykmelding={sykmelding} olderSykmeldingId={hasOlderSykmelding.earliestSykmeldingId} />
+            <SykmeldingComponent sykmelding={sykmelding} olderSykmeldingId={olderSykmelding.earliestSykmeldingId} />
         </PageWrapper>
     );
 };

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-export const sykmeldingAvvist = (mottatt = dayjs().subtract(1, 'months')) => ({
+export const sykmeldingAvvist = (mottatt = dayjs().subtract(1, 'month')) => ({
     id: 'AVVIST',
     mottattTidspunkt: mottatt.format('YYYY-MM-DD'),
     behandlingsutfall: {

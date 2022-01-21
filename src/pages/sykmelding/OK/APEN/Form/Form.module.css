@@ -41,13 +41,13 @@
         margin: 0 0.5rem 0 0.5rem;
     }
 
+    .veilederSenderSykmeldingen :global(.typo-element) {
+        display: block;
+        padding-bottom: 0.3rem;
+    }
+
     .navVeileder {
         display: block;
         margin-bottom: 1rem;
-    }
-
-    .typoElement {
-        display: block;
-        padding-bottom: 0.3rem;
     }
 }

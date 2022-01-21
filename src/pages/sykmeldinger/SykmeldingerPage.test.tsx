@@ -70,7 +70,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display under behandling in Nye sykmeldinger section ', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering]);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering()]);
 
         render(<SykmeldingerPage />);
 

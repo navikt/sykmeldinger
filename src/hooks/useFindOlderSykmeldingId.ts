@@ -5,7 +5,7 @@ import { isInactiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtil
 
 import useSykmeldinger from './useSykmeldinger';
 
-function useHasOlderSykmelding(sykmelding: Sykmelding | undefined): {
+function useFindOlderSykmeldingId(sykmelding: Sykmelding | undefined): {
     earliestSykmeldingId: string | null;
     isLoading: boolean;
     error: Error | null;
@@ -37,4 +37,4 @@ function useHasOlderSykmelding(sykmelding: Sykmelding | undefined): {
     };
 }
 
-export default useHasOlderSykmelding;
+export default useFindOlderSykmeldingId;

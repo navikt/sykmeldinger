@@ -5,12 +5,12 @@ import { sykmeldingApen } from '../mock/data/sykmelding-apen';
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 import { renderHook } from '../utils/test/testUtils';
 
-import useHasOlderSykmelding from './useHasOlderSykmelding';
+import useFindOlderSykmeldingId from './useFindOlderSykmeldingId';
 import { sykmeldingAvvist } from '../mock/data/sykmelding-avvist';
 import { sykmeldingAvbrutt } from '../mock/data/sykmelding-avbrutt';
 import { sykmeldingUnderbehandlingTilbakedatering } from '../mock/data/sykmelding-under-behandling-tilbakedatering';
 
-describe('useHasOlderSykmelding', () => {
+describe('useFindOlderSykmeldingId', () => {
     const apiNock = nock('http://localhost');
 
     it('should find the earlier sykmelding when there is one APEN before', async () => {
@@ -22,7 +22,9 @@ describe('useHasOlderSykmelding', () => {
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
 
-        const { result, waitForNextUpdate } = renderHook(() => useHasOlderSykmelding(new Sykmelding(sykmeldinger[1])));
+        const { result, waitForNextUpdate } = renderHook(() =>
+            useFindOlderSykmeldingId(new Sykmelding(sykmeldinger[1])),
+        );
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
@@ -38,7 +40,9 @@ describe('useHasOlderSykmelding', () => {
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
 
-        const { result, waitForNextUpdate } = renderHook(() => useHasOlderSykmelding(new Sykmelding(sykmeldinger[2])));
+        const { result, waitForNextUpdate } = renderHook(() =>
+            useFindOlderSykmeldingId(new Sykmelding(sykmeldinger[2])),
+        );
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
@@ -54,7 +58,9 @@ describe('useHasOlderSykmelding', () => {
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
 
-        const { result, waitForNextUpdate } = renderHook(() => useHasOlderSykmelding(new Sykmelding(sykmeldinger[2])));
+        const { result, waitForNextUpdate } = renderHook(() =>
+            useFindOlderSykmeldingId(new Sykmelding(sykmeldinger[2])),
+        );
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
@@ -70,7 +76,9 @@ describe('useHasOlderSykmelding', () => {
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
 
-        const { result, waitForNextUpdate } = renderHook(() => useHasOlderSykmelding(new Sykmelding(sykmeldinger[2])));
+        const { result, waitForNextUpdate } = renderHook(() =>
+            useFindOlderSykmeldingId(new Sykmelding(sykmeldinger[2])),
+        );
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');

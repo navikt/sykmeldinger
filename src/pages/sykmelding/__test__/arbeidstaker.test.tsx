@@ -15,6 +15,7 @@ describe('Arbeidstaker', () => {
     };
 
     beforeEach(() => {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
         apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
         apiNock
             .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
