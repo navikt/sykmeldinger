@@ -34,7 +34,7 @@ const sykmeldinger = [
     sykmeldingAvbrutt(),
     sykmeldingUtgatt,
     sykmeldingEgenmeldt,
-    sykmeldingUnderbehandlingTilbakedatering,
+    sykmeldingUnderbehandlingTilbakedatering(),
     sykmeldingUgyldigTilbakedatering,
 ];
 

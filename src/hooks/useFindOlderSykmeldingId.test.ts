@@ -83,4 +83,37 @@ describe('useFindOlderSykmeldingId', () => {
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
     });
+
+    it('should allow two sykmeldinger with the exact same period', async () => {
+        const sykmeldinger = [
+            sykmeldingApen(dayjs().subtract(7, 'days'), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(7, 'days'), 'SYKME-2'),
+        ];
+
+        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+
+        const { result, waitForNextUpdate } = renderHook(() =>
+            useFindOlderSykmeldingId(new Sykmelding(sykmeldinger[1])),
+        );
+        await waitForNextUpdate();
+
+        expect(result.current.earliestSykmeldingId).toBeNull();
+    });
+
+    it('should still work with two sykmeldinger with equal date as first sykmeldings', async () => {
+        const sykmeldinger = [
+            sykmeldingApen(dayjs().subtract(7, 'days'), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(7, 'days'), 'SYKME-2'),
+            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-3'),
+        ];
+
+        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+
+        const { result, waitForNextUpdate } = renderHook(() =>
+            useFindOlderSykmeldingId(new Sykmelding(sykmeldinger[2])),
+        );
+        await waitForNextUpdate();
+
+        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
+    });
 });
