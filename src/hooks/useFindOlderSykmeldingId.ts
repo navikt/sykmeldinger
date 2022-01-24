@@ -21,20 +21,18 @@ function useFindOlderSykmeldingId(sykmelding: Sykmelding | undefined): {
     }
 
     const startDate: Date = sykmelding.getSykmeldingStartDate();
-    const endDate: Date = sykmelding.getSykmeldingEndDate();
     const relevantSykmeldinger = sykmeldinger
-        .filter((it) => !isInactiveSykmelding(it) && !isUnderbehandling(it) && it.id !== sykmelding.id)
-        .filter(
-            (it) => !(isEqual(it.getSykmeldingStartDate(), startDate) && isEqual(it.getSykmeldingEndDate(), endDate)),
-        );
-    const earliestSykmelding: Sykmelding | null = relevantSykmeldinger.length
-        ? relevantSykmeldinger.reduce((acc, value) =>
-              isBefore(value.getSykmeldingStartDate(), startDate) ? value : acc,
-          )
-        : null;
+        .filter((it) => !isInactiveSykmelding(it) && !isUnderbehandling(it))
+        .filter((it) => !isEqual(it.getSykmeldingStartDate(), startDate));
+
+    const earliestSykmelding: Sykmelding = relevantSykmeldinger.reduce(
+        (acc, value) => (isBefore(value.getSykmeldingStartDate(), acc.getSykmeldingStartDate()) ? value : acc),
+        sykmelding,
+    );
 
     return {
-        earliestSykmeldingId: earliestSykmelding ? earliestSykmelding.id : null,
+        // When the earliest sykmelding is the provided sykmelding, it's the very first
+        earliestSykmeldingId: earliestSykmelding.id === sykmelding.id ? null : earliestSykmelding.id,
         isLoading: false,
         error: null,
     };
