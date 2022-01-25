@@ -1,15 +1,18 @@
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import { Alert, BodyLong, Heading, Link } from '@navikt/ds-react';
+
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import Form from './Form/Form';
-import PapirInfoheader from './PapirInfoheader';
-import AvbrytContextProvider from './AvbrytContext';
-import AvbrytPanel from './AvbrytPanel/AvbrytPanel';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../components/Spacing/Spacing';
 import InformationBanner from '../../../../components/InformationBanner/InformationBanner';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import VeilederMaleSvg from '../../../../components/Veileder/svg/VeilederMaleSvg';
-import { Alert, BodyLong, Heading, Link } from '@navikt/ds-react';
+
+import AvbrytPanel from './AvbrytPanel/AvbrytPanel';
+import AvbrytContextProvider from './AvbrytContext';
+import PapirInfoheader from './PapirInfoheader';
+import Form from './Form/Form';
+
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding;

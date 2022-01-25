@@ -2,14 +2,14 @@ import './App.less';
 
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import SykmeldingPage from './pages/sykmelding/SykmeldingPage';
 import SykmeldingerPage from './pages/sykmeldinger/SykmeldingerPage';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import SykmeldingkvitteringPage from './pages/sykmeldingkvittering/SykmeldingkvitteringPage';
 import NotFoundPage from './pages/notFound/NotFoundPage';
-import { ErrorBoundary } from 'react-error-boundary';
 import { logger } from './utils/logger';
 import ErrorFallback from './components/ErrorFallback/ErrorFallback';
 import env from './utils/env';

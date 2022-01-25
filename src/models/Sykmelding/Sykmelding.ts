@@ -1,4 +1,8 @@
 import 'reflect-metadata';
+import { ArrayNotEmpty, IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
+import dayjs from 'dayjs';
+import { parseISO } from 'date-fns';
+
 import ArbeidsgiverSykmelding from './ArbeidsgiverSykmelding';
 import Behandler from './Behandler';
 import Behandlingsutfall from './Behandlingsutfall';
@@ -10,10 +14,8 @@ import Periode from './Periode';
 import Prognose from './Prognose';
 import SykmeldingStatus from './SykmeldingStatus';
 import UtdypendeOpplysning from './UtdypendeOpplysninger';
-import { ArrayNotEmpty, IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
-import dayjs from 'dayjs';
 import Pasient from './Pasient';
-import { parseISO } from 'date-fns';
+
 
 export class Sykmelding {
     @IsString()

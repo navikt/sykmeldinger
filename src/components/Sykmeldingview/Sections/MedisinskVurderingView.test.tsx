@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding/MedisinskVurdering';
+
 import MedisinskVurderingView from './MedisinskVurderingView';
 
 describe('MedisinskVurdering', () => {

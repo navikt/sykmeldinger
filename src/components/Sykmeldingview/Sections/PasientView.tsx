@@ -1,4 +1,5 @@
 import { Element, Undertekst } from 'nav-frontend-typografi';
+
 import Pasient from '../../../models/Sykmelding/Pasient';
 import Section from '../Layout/Section/Section';
 

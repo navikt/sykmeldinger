@@ -1,8 +1,9 @@
 import nock from 'nock';
+import userEvent from '@testing-library/user-event';
+
 import { sykmeldingApen } from '../../../mock/data/sykmelding-apen';
 import { render, screen, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
 import SykmeldingPage from '../SykmeldingPage';
-import userEvent from '@testing-library/user-event';
 
 describe('Uriktige opplysninger', () => {
     const apiNock = nock('http://localhost');

@@ -1,4 +1,5 @@
 import { Element, Undertekst } from 'nav-frontend-typografi';
+
 import styles from './ListEntry.module.css';
 
 interface ListEntryProps {

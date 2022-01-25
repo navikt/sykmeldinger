@@ -1,13 +1,15 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { AvbrytContext } from '../AvbrytContext';
-import useAvbryt from '../../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
-import Spacing from '../../../../../components/Spacing/Spacing';
-import CenterItems from '../../../../../components/CenterItems/CenterItems';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Button, Loader } from '@navikt/ds-react';
 import { Close } from '@navikt/ds-icons';
+
+import { AvbrytContext } from '../AvbrytContext';
+import useAvbryt from '../../../../../hooks/useAvbryt';
+import Spacing from '../../../../../components/Spacing/Spacing';
+import CenterItems from '../../../../../components/CenterItems/CenterItems';
+
 
 import styles from './AvbrytPanel.module.css';
 

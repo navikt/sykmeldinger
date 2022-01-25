@@ -1,6 +1,7 @@
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import React, { useEffect, useRef } from 'react';
 import { DeepMap, FieldErrors } from 'react-hook-form';
+
 import { FormShape } from './Form';
 
 interface FeiloppsummeringContainerProps {

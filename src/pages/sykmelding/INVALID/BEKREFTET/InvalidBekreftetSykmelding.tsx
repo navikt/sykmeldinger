@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import AvvistVeileder from '../../../../components/AvvistVeileder/AvvistVeileder';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';

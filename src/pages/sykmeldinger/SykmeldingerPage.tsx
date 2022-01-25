@@ -1,10 +1,10 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Spinner from '../../components/Spinner/Spinner';
-import LenkepanelContainer from './components/LenkepanelContainer';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
+
+import Spinner from '../../components/Spinner/Spinner';
 import useSykmeldinger from '../../hooks/useSykmeldinger';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import Spacing from '../../components/Spacing/Spacing';
@@ -13,6 +13,8 @@ import { logger } from '../../utils/logger';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import InfoOmDigitalSykmelding from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
 import { isInactiveSykmelding } from '../../utils/sykmeldingUtils';
+
+import LenkepanelContainer from './components/LenkepanelContainer';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';

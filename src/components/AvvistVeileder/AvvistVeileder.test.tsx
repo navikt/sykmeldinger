@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import Behandlingsutfall from '../../models/Sykmelding/Behandlingsutfall';
+
 import AvvistVeileder from './AvvistVeileder';
 
 describe('AvvistVeileder', () => {

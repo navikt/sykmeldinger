@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import { AktivitetIkkeMuligPeriode } from '../../../models/Sykmelding/Periode';
+
 import AktivitetIkkeMuligView from './AktivitetIkkeMuligView';
 
 describe('AktivitetIkkeMuligView', () => {

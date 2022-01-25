@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+
 import Sykmeldingview from './Sykmeldingview';
 
 const minimalSykmelding = {

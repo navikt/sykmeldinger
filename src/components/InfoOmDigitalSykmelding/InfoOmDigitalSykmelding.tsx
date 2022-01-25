@@ -1,6 +1,7 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+
 import env from '../../utils/env';
 import './InfoOmDigitalSykmelding.less';
 

@@ -1,6 +1,7 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Lenke from 'nav-frontend-lenker';
+
 import Periode from '../../models/Sykmelding/Periode';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
 import Spacing from '../Spacing/Spacing';

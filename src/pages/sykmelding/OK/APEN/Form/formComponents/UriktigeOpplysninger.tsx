@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect, useContext } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
+
 import { FormShape, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { AvbrytContext } from '../../AvbrytContext';

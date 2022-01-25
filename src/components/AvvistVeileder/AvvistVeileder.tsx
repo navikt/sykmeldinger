@@ -2,10 +2,11 @@ import './AvvistVeileder.less';
 
 import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-
 import Veilederpanel from 'nav-frontend-veilederpanel';
+
 import VeilederMaleNeurtralSvg from '../Veileder/svg/VeilederMaleNeutralSvg';
 import Behandlingsutfall from '../../models/Sykmelding/Behandlingsutfall';
+
 import ForklaringZDiagnose from './ForklaringZDiagnose';
 import ForklaringAndre from './ForklaringAndre';
 

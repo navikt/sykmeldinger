@@ -1,5 +1,6 @@
 import { validateOrReject } from 'class-validator';
 import { useQuery } from 'react-query';
+
 import ErUtenforVentetid from '../models/ErUtenforVentetid';
 import env from '../utils/env';
 import { authenticatedGet } from '../utils/Fetch';

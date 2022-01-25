@@ -1,5 +1,6 @@
 import { validateOrReject } from 'class-validator';
 import { useQuery } from 'react-query';
+
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 import { authenticatedGet } from '../utils/Fetch';
 import env from '../utils/env';

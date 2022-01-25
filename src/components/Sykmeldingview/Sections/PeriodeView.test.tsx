@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import Periode from '../../../models/Sykmelding/Periode';
+
 import PeriodeView from './PeriodeView';
 
 describe('PeriodeView', () => {

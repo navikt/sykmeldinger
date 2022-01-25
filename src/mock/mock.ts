@@ -1,3 +1,7 @@
+import fetchMock from 'fetch-mock';
+
+import env from '../utils/env';
+
 import arbeidsgivereMock from './data/arbeidsgivereMock';
 import { sykmeldingBekreftet } from './data/sykmelding-bekreftet';
 import { sykmeldingApen } from './data/sykmelding-apen';
@@ -10,10 +14,9 @@ import { sykmeldingApenPapir } from './data/sykmelding-apen-papir';
 import { sykmeldingAvvistBekreftet } from './data/sykmelding-avvist-bekreftet';
 import { sykmeldingSendt2 } from './data/sykmelding-sendt-2';
 import { sykmeldingSendt3 } from './data/sykmelding-sendt-3';
-import fetchMock from 'fetch-mock';
 import { sykmeldingUgyldigTilbakedatering } from './data/sykmelding-ugyldig-tilbakedatering';
 import { sykmeldingUnderbehandlingTilbakedatering } from './data/sykmelding-under-behandling-tilbakedatering';
-import env from '../utils/env';
+
 
 // Redirect to basepath to make demo-app work by visiting ingress (sykmeldinger.labs.nais.io)
 if (window.location.pathname === '/') {

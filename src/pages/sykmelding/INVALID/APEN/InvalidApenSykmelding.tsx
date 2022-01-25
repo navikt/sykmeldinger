@@ -1,13 +1,13 @@
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { useParams } from 'react-router-dom';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Controller, useForm } from 'react-hook-form';
 
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import AvvistVeileder from '../../../../components/AvvistVeileder/AvvistVeileder';
-import { useParams } from 'react-router-dom';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import useBekreftAvvist from '../../../../hooks/useBekreftAvvist';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import { Controller, useForm } from 'react-hook-form';
 import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../components/Spacing/Spacing';
 import CenterItems from '../../../../components/CenterItems/CenterItems';

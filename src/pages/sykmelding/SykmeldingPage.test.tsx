@@ -1,8 +1,11 @@
-import { render, screen } from '../../utils/test/testUtils';
 import nock from 'nock';
-import { sykmeldingApen } from '../../mock/data/sykmelding-apen';
-import SykmeldingPage from './SykmeldingPage';
 import dayjs from 'dayjs';
+
+import { render, screen } from '../../utils/test/testUtils';
+import { sykmeldingApen } from '../../mock/data/sykmelding-apen';
+
+import SykmeldingPage from './SykmeldingPage';
+
 
 describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     const apiNock = nock('http://localhost');

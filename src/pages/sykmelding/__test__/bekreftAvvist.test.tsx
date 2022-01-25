@@ -1,8 +1,9 @@
 import nock from 'nock';
+import userEvent from '@testing-library/user-event';
+
 import { sykmeldingAvvist } from '../../../mock/data/sykmelding-avvist';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
 import SykmeldingPage from '../SykmeldingPage';
-import userEvent from '@testing-library/user-event';
 
 describe('Bekreft avvist sykmelding som lest', () => {
     const apiNock = nock('http://localhost');

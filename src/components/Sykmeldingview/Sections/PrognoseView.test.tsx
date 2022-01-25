@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import Prognose from '../../../models/Sykmelding/Prognose';
+
 import PrognoseView from './PrognoseView';
 
 describe('PrognoseView', () => {

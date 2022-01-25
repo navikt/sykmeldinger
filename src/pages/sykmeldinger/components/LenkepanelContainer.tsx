@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
+
 import './LenkepanelContainer.less';
-import Lenkepanel from './Lenkepanel/Lenkepanel';
 import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import SykmeldingSorter from '../../../utils/SykmeldingSorter';
+
+import Lenkepanel from './Lenkepanel/Lenkepanel';
 
 export enum SortBy {
     DATE = 'DATE',

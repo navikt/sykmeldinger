@@ -1,17 +1,19 @@
-import styles from './SykmeldingsopplysningerContainer.module.css';
 
 import React, { useRef, useState } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Normaltekst } from 'nav-frontend-typografi';
+import cn from 'classnames';
+
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import Lukknapp from '../Lukknapp/Lukknap';
+import Spacing from '../Spacing/Spacing';
+
 import Sykmeldingview from './Sykmeldingview';
 import ArbeidsgiverSvg from './Svg/ArbeidsgiverSvg';
 import LegeSvg from './Svg/LegeSvg';
-import Lukknapp from '../Lukknapp/Lukknap';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import Spacing from '../Spacing/Spacing';
-import { Normaltekst } from 'nav-frontend-typografi';
-import cn from 'classnames';
+import styles from './SykmeldingsopplysningerContainer.module.css';
 
 interface SykmeldingsopplysningerProps {
     sykmelding: Sykmelding;

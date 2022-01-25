@@ -1,5 +1,6 @@
 import { AlertStripeInfo, AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { Element, Systemtittel } from 'nav-frontend-typografi';
+
 import Behandlingsutfall from '../../models/Sykmelding/Behandlingsutfall';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
 import DateFormatter from '../../utils/DateFormatter';

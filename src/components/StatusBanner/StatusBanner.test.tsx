@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import Behandlingsutfall from '../../models/Sykmelding/Behandlingsutfall';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
+
 import StatusBanner from './StatusBanner';
 
 describe('StatusBanner', () => {

@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import UtdypendeOpplysning from '../../../models/Sykmelding/UtdypendeOpplysninger';
+
 import UtdypendeOpplysningerView from './UtdypendeOpplysningerView';
 
 describe('PeriodeView', () => {

@@ -1,5 +1,6 @@
-import { authenticatedGet } from './Fetch';
 import fetchMock from 'fetch-mock-jest';
+
+import { authenticatedGet } from './Fetch';
 
 describe('Fetch', () => {
     const testUrl = 'test-url';

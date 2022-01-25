@@ -1,4 +1,5 @@
 import { Element, Undertekst, UndertekstBold } from 'nav-frontend-typografi';
+
 import SladdSvg from '../../Svg/SladdSvg';
 import './SykmeldingEntry.less';
 

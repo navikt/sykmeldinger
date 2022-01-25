@@ -1,4 +1,5 @@
 import Veilederpanel from 'nav-frontend-veilederpanel';
+
 import VeilederMaleNeurtralSvg from '../Veileder/svg/VeilederMaleNeutralSvg';
 
 const ErrorFallback = (): JSX.Element => {

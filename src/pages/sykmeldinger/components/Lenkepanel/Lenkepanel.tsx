@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { useHistory } from 'react-router-dom';
+
+import env from '../../../../utils/env';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+
 import LenkepanelIcon from './LenkepanelIcon';
 import LenkepanelEtikett from './LenkepanelEtikett';
+
 import './Lenkepanel.less';
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import env from '../../../../utils/env';
 
 interface LenkepanelProps {
     sykmelding: Sykmelding;

@@ -4,8 +4,9 @@ import 'reflect-metadata';
 import 'dayjs/locale/nb';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import dayjs from 'dayjs';
+
+import App from './App';
 import { setupLogger } from './utils/logger';
 import env from './utils/env';
 

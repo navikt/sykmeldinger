@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import Pasient from '../../../models/Sykmelding/Pasient';
+
 import PasientView from './PasientView';
 
 describe('PasientView', () => {

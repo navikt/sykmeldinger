@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import useAvbryt from '../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
-import Spacing from '../../../../components/Spacing/Spacing';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
+
+import useAvbryt from '../../../../hooks/useAvbryt';
+import Spacing from '../../../../components/Spacing/Spacing';
+
 
 const PapirInfoheader = () => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();

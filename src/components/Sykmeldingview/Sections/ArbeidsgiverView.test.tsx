@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import ArbeidsgiverSykmelding from '../../../models/Sykmelding/ArbeidsgiverSykmelding';
+
 import ArbeidsgiverView from './ArbeidsgiverView';
 
 describe('ArbeidsgiverView', () => {

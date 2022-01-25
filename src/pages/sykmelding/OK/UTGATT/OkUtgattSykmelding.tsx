@@ -1,7 +1,8 @@
 import React from 'react';
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Undertittel } from 'nav-frontend-typografi';
+
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import DateFormatter from '../../../../utils/DateFormatter';

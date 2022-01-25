@@ -4,11 +4,11 @@ import dayjs, { Dayjs } from 'dayjs';
 import { sykmeldingApen } from '../mock/data/sykmelding-apen';
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 import { renderHook } from '../utils/test/testUtils';
-
-import useFindOlderSykmeldingId from './useFindOlderSykmeldingId';
 import { sykmeldingAvvist } from '../mock/data/sykmelding-avvist';
 import { sykmeldingAvbrutt } from '../mock/data/sykmelding-avbrutt';
 import { sykmeldingUnderbehandlingTilbakedatering } from '../mock/data/sykmelding-under-behandling-tilbakedatering';
+
+import useFindOlderSykmeldingId from './useFindOlderSykmeldingId';
 
 describe('useFindOlderSykmeldingId', () => {
     const apiNock = nock('http://localhost');

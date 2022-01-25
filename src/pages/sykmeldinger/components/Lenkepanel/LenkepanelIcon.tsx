@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { RegelStatus } from '../../../../models/Sykmelding/Behandlingsutfall';
 
 interface Icon {

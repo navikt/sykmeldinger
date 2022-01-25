@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import env from '../../utils/env';
 import { logger } from '../../utils/logger';

@@ -1,4 +1,5 @@
 import { Element, Undertekst } from 'nav-frontend-typografi';
+
 import styles from './JaEntry.module.css';
 
 interface JaEntryProps {

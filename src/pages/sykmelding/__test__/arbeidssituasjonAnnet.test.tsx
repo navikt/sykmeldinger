@@ -1,9 +1,11 @@
 import nock from 'nock';
+import { createMemoryHistory } from 'history';
+import userEvent from '@testing-library/user-event';
+
 import { sykmeldingApen } from '../../../mock/data/sykmelding-apen';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
-import { createMemoryHistory } from 'history';
 import SykmeldingPage from '../SykmeldingPage';
-import userEvent from '@testing-library/user-event';
+
 
 describe('Annet', () => {
     const apiNock = nock('http://localhost');
