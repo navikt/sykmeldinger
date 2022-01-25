@@ -1,4 +1,5 @@
 import { parseISO } from 'date-fns';
+
 import { Sykmelding } from './Sykmelding';
 
 const minimalSykmelding = {

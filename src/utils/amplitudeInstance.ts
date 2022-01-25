@@ -1,4 +1,5 @@
 import amplitude, { AmplitudeClient } from 'amplitude-js';
+
 import env from './env';
 
 // https://github.com/navikt/analytics-taxonomy

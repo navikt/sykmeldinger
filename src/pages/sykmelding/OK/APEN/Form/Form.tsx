@@ -1,23 +1,24 @@
 import React, { useContext } from 'react';
 import { Button, Loader } from '@navikt/ds-react';
-import { Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
 import { useParams } from 'react-router-dom';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { useForm, FormProvider } from 'react-hook-form';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import Veileder from 'nav-frontend-veileder';
+
+import { Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import useBrukerinformasjon from '../../../../../hooks/useBrukerinformasjon';
 import useSykmeldingUtenforVentetid from '../../../../../hooks/useSykmeldingUtenforVentetid';
 import useSend from '../../../../../hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
-import { useForm, FormProvider } from 'react-hook-form';
-import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
-import FeiloppsummeringContainer from './FeiloppsummeringContainer';
-import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import Sykmeldingsopplysninger from '../../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../../components/Spacing/Spacing';
 import VeilederMaleSvg from '../../../../../components/Veileder/svg/VeilederMaleSvg';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Veileder from 'nav-frontend-veileder';
 
+import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
+import FeiloppsummeringContainer from './FeiloppsummeringContainer';
+import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import styles from './Form.module.css';
 
 export interface Egenmeldingsperiode {

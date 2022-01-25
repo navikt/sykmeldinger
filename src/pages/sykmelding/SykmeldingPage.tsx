@@ -1,9 +1,16 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+
 import Spinner from '../../components/Spinner/Spinner';
 import useSykmelding from '../../hooks/useSykmelding';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
+import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
+import { logger } from '../../utils/logger';
+import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId';
+
 import OkBekreftetSykmelding from './OK/BEKREFTET/OkBekreftetSykmelding';
 import OkAvbruttSykmelding from './OK/AVBRUTT/OkAvbruttSykmelding';
 import OkSendtSykmelding from './OK/SENDT/OkSendtSykmelding';
@@ -11,12 +18,6 @@ import OkUtgattSykmelding from './OK/UTGATT/OkUtgattSykmelding';
 import OkApenSykmelding from './OK/APEN/OkApenSykmelding';
 import InvalidApenSykmelding from './INVALID/APEN/InvalidApenSykmelding';
 import InvalidBekreftetSykmelding from './INVALID/BEKREFTET/InvalidBekreftetSykmelding';
-import PageWrapper from '../../components/PageWrapper/PageWrapper';
-import Veilederpanel from 'nav-frontend-veilederpanel';
-import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
-import { logger } from '../../utils/logger';
-import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
-import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId';
 
 const SykmeldingPage: React.FC = () => {
     document.title = 'Sykmelding - www.nav.no';

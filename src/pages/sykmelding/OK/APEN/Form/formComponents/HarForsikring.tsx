@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+
 import { FormShape, JaEllerNeiType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
 

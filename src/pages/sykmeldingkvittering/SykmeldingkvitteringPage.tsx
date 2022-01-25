@@ -1,6 +1,7 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import { useParams } from 'react-router-dom';
+
 import useSykmelding from '../../hooks/useSykmelding';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Spacing from '../../components/Spacing/Spacing';

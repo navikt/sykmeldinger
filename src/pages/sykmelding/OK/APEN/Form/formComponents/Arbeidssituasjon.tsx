@@ -1,18 +1,21 @@
 import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormShape, ArbeidssituasjonType } from '../Form';
-import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer';
-import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
-import HarBruktEgenmelding from './HarBruktEgenmelding';
-import HarForsikring from './HarForsikring';
-import QuestionWrapper from '../layout/QuestionWrapper';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
+
+import { FormShape, ArbeidssituasjonType } from '../Form';
+import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
+import QuestionWrapper from '../layout/QuestionWrapper';
 import Spacing from '../../../../../../components/Spacing/Spacing';
 import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 import ErUtenforVentetid from '../../../../../../models/ErUtenforVentetid';
-import Lenke from 'nav-frontend-lenker';
+
+import HarForsikring from './HarForsikring';
+import HarBruktEgenmelding from './HarBruktEgenmelding';
+import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer';
+
 
 const StrengtFortroligInfo = () => (
     <AlertStripeAdvarsel>

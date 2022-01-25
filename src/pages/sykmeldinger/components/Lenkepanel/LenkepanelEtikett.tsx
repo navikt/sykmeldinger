@@ -1,5 +1,6 @@
 import { EtikettAdvarsel, EtikettFokus, EtikettInfo, EtikettSuksess } from 'nav-frontend-etiketter';
 import React from 'react';
+
 import { RegelStatus } from '../../../../models/Sykmelding/Behandlingsutfall';
 import { StatusEvent } from '../../../../models/Sykmelding/SykmeldingStatus';
 

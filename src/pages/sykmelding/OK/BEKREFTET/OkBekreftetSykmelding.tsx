@@ -1,10 +1,10 @@
 import React from 'react';
-
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import { useParams } from 'react-router-dom';
-import useGjenapne from '../../../../hooks/useGjenapne';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+
+import useGjenapne from '../../../../hooks/useGjenapne';
+import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../../../components/Sykmeldingview/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../components/Spacing/Spacing';

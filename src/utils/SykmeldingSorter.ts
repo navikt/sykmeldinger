@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 
 /** Class with utility functions for sorting sykmeldinger. */

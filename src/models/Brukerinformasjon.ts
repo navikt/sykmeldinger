@@ -1,4 +1,5 @@
 import { IsArray, IsBoolean, ValidateNested } from 'class-validator';
+
 import { Arbeidsgiver } from './Arbeidsgiver';
 
 class Brukerinformasjon {

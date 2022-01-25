@@ -1,6 +1,7 @@
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Veileder from 'nav-frontend-veileder';
+
 import Merknad from '../../models/Sykmelding/Merknad';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 import './InformationBanner.less';

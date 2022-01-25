@@ -2,6 +2,7 @@ import React from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst } from 'nav-frontend-typografi';
+
 import env from '../../utils/env';
 import './TilHovedsiden.less';
 

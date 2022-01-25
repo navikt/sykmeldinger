@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { FormShape, JaEllerNeiType } from '../Form';
-import Egenmeldingsperioder from './Egenmeldingsperioder';
-import QuestionWrapper from '../layout/QuestionWrapper';
 import dayjs from 'dayjs';
-import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+
+import QuestionWrapper from '../layout/QuestionWrapper';
+import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
+import { FormShape, JaEllerNeiType } from '../Form';
 import Spacing from '../../../../../../components/Spacing/Spacing';
+
+import Egenmeldingsperioder from './Egenmeldingsperioder';
 
 interface HarBruktEgenmeldingProps {
     oppfolgingsdato: Date;

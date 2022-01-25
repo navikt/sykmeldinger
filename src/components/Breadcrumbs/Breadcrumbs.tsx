@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
+
 import env from '../../utils/env';
 
 const PersonIcon = () => {

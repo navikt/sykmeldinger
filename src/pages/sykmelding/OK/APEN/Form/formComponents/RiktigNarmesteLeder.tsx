@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import AlertStripe from 'nav-frontend-alertstriper';
+
 import { FormShape, JaEllerNeiType } from '../Form';
 import { NaermesteLeder } from '../../../../../../models/Arbeidsgiver';
 import QuestionWrapper from '../layout/QuestionWrapper';
-import AlertStripe from 'nav-frontend-alertstriper';
 import Spacing from '../../../../../../components/Spacing/Spacing';
 import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
 

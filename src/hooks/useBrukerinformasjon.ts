@@ -1,5 +1,6 @@
 import { validateOrReject } from 'class-validator';
 import { useQuery } from 'react-query';
+
 import Brukerinformasjon from '../models/Brukerinformasjon';
 import env from '../utils/env';
 import { authenticatedGet } from '../utils/Fetch';

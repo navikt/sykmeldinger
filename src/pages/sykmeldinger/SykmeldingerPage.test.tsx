@@ -1,6 +1,6 @@
-import { render, screen, waitForElementToBeRemoved, within } from '../../utils/test/testUtils';
-import SykmeldingerPage from './SykmeldingerPage';
 import nock from 'nock';
+
+import { render, screen, waitForElementToBeRemoved, within } from '../../utils/test/testUtils';
 import { sykmeldingBekreftet } from '../../mock/data/sykmelding-bekreftet';
 import { sykmeldingSendt } from '../../mock/data/sykmelding-sendt';
 import { sykmeldingAvbrutt } from '../../mock/data/sykmelding-avbrutt';
@@ -11,6 +11,8 @@ import { sykmeldingApenPapir } from '../../mock/data/sykmelding-apen-papir';
 import { sykmeldingAvvist } from '../../mock/data/sykmelding-avvist';
 import { sykmeldingAvvistUgyldigData } from '../../mock/data/sykmelding-avvist-ugyldig-data';
 import { sykmeldingUnderbehandlingTilbakedatering } from '../../mock/data/sykmelding-under-behandling-tilbakedatering';
+
+import SykmeldingerPage from './SykmeldingerPage';
 
 describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     const apiNock = nock('http://localhost');

@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import KontaktMedPasient from '../../../models/Sykmelding/KontaktMedPasient';
+
 import TilbakedateringView from './TilbakedateringView';
 
 describe('TilbakedateringView', () => {

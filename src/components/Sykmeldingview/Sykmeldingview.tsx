@@ -1,5 +1,6 @@
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import DateFormatter from '../../utils/DateFormatter';
+
 import FlereOpplysninger from './FlereOpplysninger';
 import ArbeidsevneView from './Sections/ArbeidsevneView';
 import MedisinskVurderingView from './Sections/MedisinskVurderingView';

@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import Periode from '../../models/Sykmelding/Periode';
 import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
-import StatusInfo from './StatusInfo';
 import Merknad from '../../models/Sykmelding/Merknad';
 import { Merknadtype } from '../InformationBanner/InformationBanner';
+
+import StatusInfo from './StatusInfo';
 
 describe('StatusInfo', () => {
     it('Renders nothing when status is not SENDT or BEKREFTET', () => {

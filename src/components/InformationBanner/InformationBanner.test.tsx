@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
 import Merknad from '../../models/Sykmelding/Merknad';
+
 import InformationBanner, { Merknadtype } from './InformationBanner';
 
 describe('InformationBanner', () => {

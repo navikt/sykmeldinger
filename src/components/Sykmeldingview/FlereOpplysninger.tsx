@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+
 import Lukknapp from '../Lukknapp/Lukknap';
+
 import styles from './FlereOpplysninger.module.css';
 
 interface FlereOpplysningerProps {

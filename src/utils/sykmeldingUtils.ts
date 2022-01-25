@@ -1,5 +1,6 @@
-import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 import dayjs from 'dayjs';
+
+import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 
 export function isInactiveSykmelding(sykmelding: Sykmelding) {
     if (isUnderbehandling(sykmelding)) {

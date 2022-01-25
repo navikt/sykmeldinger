@@ -1,4 +1,5 @@
 import { parseISO } from 'date-fns';
+
 import DateFormatter from './DateFormatter';
 
 describe('DateFormatter', () => {

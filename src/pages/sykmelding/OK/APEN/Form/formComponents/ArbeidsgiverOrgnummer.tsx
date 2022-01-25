@@ -1,12 +1,14 @@
 import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+
 import { FormShape } from '../Form';
 import Brukerinformasjon from '../../../../../../models/Brukerinformasjon';
-import RiktigNarmesteLeder from './RiktigNarmesteLeder';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Ekspanderbar from '../../../../../../components/Ekspanderbar/Ekspanderbar';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+
+import RiktigNarmesteLeder from './RiktigNarmesteLeder';
 
 interface ArbeidsgiverOrgnummerProps {
     brukerinformasjon: Brukerinformasjon;

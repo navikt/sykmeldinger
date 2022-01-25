@@ -1,4 +1,5 @@
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+
 import { UriktigeOpplysningerType } from './Form';
 
 const uriktigOpplysningTekst: Record<keyof typeof UriktigeOpplysningerType, string> = {

@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import { isValid, parseISO } from 'date-fns';
-import { FormShape, Egenmeldingsperiode } from '../Form';
 import { Label } from 'nav-frontend-skjema';
-import QuestionWrapper from '../layout/QuestionWrapper';
 import { Datepicker } from 'nav-datovelger';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import './Egenmeldingsperioder.less';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+
+import QuestionWrapper from '../layout/QuestionWrapper';
+import { FormShape, Egenmeldingsperiode } from '../Form';
 import IconButton from '../../../../../../components/IconButton/IconButton';
+
+import './Egenmeldingsperioder.less';
 
 dayjs.extend(isBetween);
 
