@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
-export const sykmeldingApen = (mottatt = dayjs().subtract(2, 'days')) => ({
-    id: 'APEN',
+export const sykmeldingApen = (mottatt = dayjs().subtract(2, 'days'), id: string = 'APEN') => ({
+    id,
     mottattTidspunkt: mottatt.format('YYYY-MM-DD'),
     behandlingsutfall: {
         status: 'OK',

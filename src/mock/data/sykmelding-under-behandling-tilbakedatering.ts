@@ -1,13 +1,15 @@
-export const sykmeldingUnderbehandlingTilbakedatering = {
+import dayjs from 'dayjs';
+
+export const sykmeldingUnderbehandlingTilbakedatering = (mottatt = dayjs().subtract(11, 'months')) => ({
     id: 'UNDER-BEAHNDLING-TILBAKEDATERING',
-    mottattTidspunkt: '2021-06-16T20:00:00Z',
+    mottattTidspunkt: mottatt.format('YYYY-MM-DD'),
     behandlingsutfall: { status: 'OK', ruleHits: [] },
     legekontorOrgnummer: '223456789',
     arbeidsgiver: { navn: 'LOMMEN BARNEHAVE', stillingsprosent: 100 },
     sykmeldingsperioder: [
         {
-            fom: '2021-05-17',
-            tom: '2021-05-25',
+            fom: mottatt.add(5, 'days').format('YYYY-MM-DD'),
+            tom: mottatt.add(17, 'days').format('YYYY-MM-DD'),
             gradert: null,
             behandlingsdager: null,
             innspillTilArbeidsgiver: null,
@@ -24,7 +26,7 @@ export const sykmeldingUnderbehandlingTilbakedatering = {
     ],
     sykmeldingStatus: {
         statusEvent: 'SENDT',
-        timestamp: '2021-06-17T07:31:16.870561Z',
+        timestamp: mottatt.add(3, 'days').format('YYYY-MM-DD'),
         arbeidsgiver: null,
         sporsmalOgSvarListe: [],
     },
@@ -79,7 +81,7 @@ export const sykmeldingUnderbehandlingTilbakedatering = {
     meldingTilNAV: null,
     meldingTilArbeidsgiver: null,
     kontaktMedPasient: { kontaktDato: null, begrunnelseIkkeKontakt: 'begrunnelse' },
-    behandletTidspunkt: '2021-06-17T00:00:00Z',
+    behandletTidspunkt: mottatt.add(2, 'days').format('YYYY-MM-DD'),
     behandler: {
         fornavn: 'Frida',
         mellomnavn: 'Perma',
@@ -100,4 +102,4 @@ export const sykmeldingUnderbehandlingTilbakedatering = {
     harRedusertArbeidsgiverperiode: false,
     merknader: [{ type: 'UNDER_BEHANDLING', beskrivelse: null }],
     pasient: { fnr: '06078104285', fornavn: 'KORRUPT', mellomnavn: null, etternavn: 'RISPBÆRBUSK' },
-};
+});

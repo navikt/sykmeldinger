@@ -29,12 +29,12 @@ const sykmeldinger = [
     sykmeldingSendt2,
     sykmeldingSendt3,
     sykmeldingBekreftet,
-    sykmeldingAvvist,
+    sykmeldingAvvist(),
     sykmeldingAvvistBekreftet,
-    sykmeldingAvbrutt,
+    sykmeldingAvbrutt(),
     sykmeldingUtgatt,
     sykmeldingEgenmeldt,
-    sykmeldingUnderbehandlingTilbakedatering,
+    sykmeldingUnderbehandlingTilbakedatering(),
     sykmeldingUgyldigTilbakedatering,
 ];
 

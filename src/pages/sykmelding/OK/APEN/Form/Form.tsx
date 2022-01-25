@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Knapp } from 'nav-frontend-knapper';
+import { Button, Loader } from '@navikt/ds-react';
 import { Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
 import { useParams } from 'react-router-dom';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
@@ -16,8 +16,9 @@ import Sykmeldingsopplysninger from '../../../../../components/Sykmeldingview/Sy
 import Spacing from '../../../../../components/Spacing/Spacing';
 import VeilederMaleSvg from '../../../../../components/Veileder/svg/VeilederMaleSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import './Form.less';
 import Veileder from 'nav-frontend-veileder';
+
+import styles from './Form.module.css';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -65,9 +66,10 @@ export interface FormShape {
 
 interface FormProps {
     sykmelding: Sykmelding;
+    disable: boolean;
 }
 
-const Form: React.FC<FormProps> = ({ sykmelding }) => {
+const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
     // DATA FETCHING
@@ -131,13 +133,11 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                 })}
             >
                 <Spacing>
-                    <ErOpplysningeneRiktige />
+                    <ErOpplysningeneRiktige disable={disable} />
 
-                    {Boolean(watchErOpplysningeneRiktige?.svar) && maAvbryte === false && (
+                    {Boolean(watchErOpplysningeneRiktige?.svar) && !maAvbryte && (
                         <Arbeidssituasjon
-                            harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
-                                (sm) => sm.type === 'AVVENTENDE',
-                            )}
+                            harAvventendePeriode={sykmelding.sykmeldingsperioder.some((sm) => sm.type === 'AVVENTENDE')}
                             erUtenforVentetid={sykmeldingUtenforVentetid}
                             brukerinformasjon={brukerinformasjon}
                             sykmeldingFom={sykmelding.getSykmeldingStartDate()}
@@ -145,9 +145,11 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     )}
 
                     {erArbeidstaker && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
-                        <div className="har-valgt-arbeidsgiver-wrapper">
-                            <div className="veileder-sender-sykmeldingen">
-                                <Veileder storrelse="S" fargetema="info"><VeilederMaleSvg /></Veileder>
+                        <div className={styles.harValgtArbeidsgiverWrapper}>
+                            <div className={styles.veilederSenderSykmeldingen}>
+                                <Veileder className={styles.navVeileder} storrelse="S" fargetema="info">
+                                    <VeilederMaleSvg />
+                                </Veileder>
                                 <div>
                                     <Element>Vi sender sykmeldingen til arbeidsgiverens innboks i Altinn</Element>
                                     <Normaltekst>
@@ -158,7 +160,12 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                                 </div>
                             </div>
                             <Spacing amount="small">
-                                <Sykmeldingsopplysninger sykmelding={sykmelding} arbeidsgiver expandable={true} sendeSykmelding />
+                                <Sykmeldingsopplysninger
+                                    sykmelding={sykmelding}
+                                    arbeidsgiver
+                                    expandable={true}
+                                    sendeSykmelding
+                                />
                             </Spacing>
                         </div>
                     )}
@@ -176,12 +183,12 @@ const Form: React.FC<FormProps> = ({ sykmelding }) => {
                     <FeiloppsummeringContainer errors={errors} />
                 </Spacing>
 
-                {maAvbryte === false && !erArbeidstakerMedStrengtFortroligAdressse && (
+                {!maAvbryte && !erArbeidstakerMedStrengtFortroligAdressse && (
                     <Spacing>
                         <div style={{ textAlign: 'center' }}>
-                            <Knapp disabled={isSending} spinner={isSending} type="hoved" htmlType="submit">
-                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
-                            </Knapp>
+                            <Button disabled={isSending || disable} variant="primary" type="submit">
+                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding {isSending && <Loader />}
+                            </Button>
                         </div>
                     </Spacing>
                 )}

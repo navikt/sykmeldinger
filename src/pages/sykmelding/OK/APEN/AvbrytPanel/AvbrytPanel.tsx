@@ -1,16 +1,17 @@
 import React, { useContext, useRef, useState } from 'react';
-import './AvbrytPanel.less';
-import { Xknapp } from 'nav-frontend-ikonknapper';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { Knapp } from 'nav-frontend-knapper';
 import { AvbrytContext } from '../AvbrytContext';
 import useAvbryt from '../../../../../hooks/useAvbryt';
 import { useParams } from 'react-router-dom';
 import Spacing from '../../../../../components/Spacing/Spacing';
 import CenterItems from '../../../../../components/CenterItems/CenterItems';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Button, Loader } from '@navikt/ds-react';
+import { Close } from '@navikt/ds-icons';
 
-const AvbrytPanel: React.FC = () => {
+import styles from './AvbrytPanel.module.css';
+
+const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
     const { sykmeldingId } = useParams<{ sykmeldingId: string }>();
 
     // maAvbryte overrules isOpen
@@ -23,22 +24,16 @@ const AvbrytPanel: React.FC = () => {
 
     if (maAvbryte) {
         return (
-            <div className="avbryt-panel" role="alert" aria-live="polite">
-                <Undertittel tag="h3" className="avbryt-panel__title">
+            <div className={styles.avbrytPanel} role="alert" aria-live="polite">
+                <Undertittel tag="h3" className={styles.avbrytPanelTitle}>
                     Du kan ikke bruke denne sykmeldingen
                 </Undertittel>
-                <Element className="avbryt-panel__info">
+                <Element className={styles.avbrytPanelInfo}>
                     Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
                 </Element>
-                <Knapp
-                    htmlType="button"
-                    type="fare"
-                    className="avbryt-panel__avbryt-knapp"
-                    spinner={isLoading}
-                    onClick={() => avbryt()}
-                >
-                    Avbryt sykmelding
-                </Knapp>
+                <Button variant="danger" className={styles.avbrytPanelAvbrytKnapp} onClick={() => avbryt()}>
+                    Avbryt sykmelding {isLoading && <Loader />}
+                </Button>
 
                 {error && (
                     <Spacing direction="top">
@@ -55,10 +50,10 @@ const AvbrytPanel: React.FC = () => {
         <>
             <Spacing amount="small">
                 <CenterItems horizontal>
-                    <Knapp
-                        htmlType="button"
-                        type="flat"
-                        mini
+                    <Button
+                        variant="tertiary"
+                        size="small"
+                        disabled={disable}
                         onClick={() => {
                             setIsOpen((prev) => !prev);
                             setTimeout(() => {
@@ -67,24 +62,26 @@ const AvbrytPanel: React.FC = () => {
                         }}
                     >
                         Jeg vil avbryte sykmeldingen
-                    </Knapp>
+                    </Button>
                 </CenterItems>
             </Spacing>
 
             {isOpen && (
-                <div className="avbryt-panel" ref={avbrytPanelRef} role="alert" aria-live="polite">
-                    <Xknapp
-                        htmlType="button"
-                        className="avbryt-panel__cross"
+                <div className={styles.avbrytPanel} ref={avbrytPanelRef} role="alert" aria-live="polite">
+                    <Button
+                        variant="tertiary"
+                        className={styles.avbrytPanelCross}
                         onClick={() => setIsOpen((prev) => !prev)}
-                    />
+                    >
+                        <Close />
+                    </Button>
 
-                    <Normaltekst className="avbryt-panel__er-du-sikker">
+                    <Normaltekst className={styles.avbrytPanelErDuSikker}>
                         Er du sikker på at du vil avbryte sykmeldingen?
                     </Normaltekst>
-                    <Knapp htmlType="button" type="fare" spinner={isLoading} onClick={() => avbryt()}>
-                        Ja, jeg er sikker
-                    </Knapp>
+                    <Button variant="danger" onClick={() => avbryt()}>
+                        Ja, jeg er sikker {isLoading && <Loader />}
+                    </Button>
 
                     {error && (
                         <Spacing direction="top">

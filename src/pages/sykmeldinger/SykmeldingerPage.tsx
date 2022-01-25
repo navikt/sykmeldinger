@@ -11,8 +11,8 @@ import Spacing from '../../components/Spacing/Spacing';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { logger } from '../../utils/logger';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
-import dayjs from 'dayjs';
 import InfoOmDigitalSykmelding from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
+import { isInactiveSykmelding } from '../../utils/sykmeldingUtils';
 
 const SykmeldingerPage: React.FC = () => {
     document.title = 'Sykmeldinger - www.nav.no';
@@ -76,32 +76,14 @@ const SykmeldingerPage: React.FC = () => {
     );
 };
 
-function isPastSykmelding(sykmelding: Sykmelding) {
-    if (isUnderbehandling(sykmelding)) {
-        return false;
-    }
-
-    const isSykmeldingApen = sykmelding.sykmeldingStatus.statusEvent === 'APEN';
-    const isSykmelding3MonthsOld = dayjs(sykmelding.getSykmeldingEndDate()).isBefore(dayjs().subtract(3, 'months'));
-
-    return !isSykmeldingApen || isSykmelding3MonthsOld;
-}
-
 function filterSykmeldinger(sykmeldinger: Sykmelding[]): {
     apenSykmeldinger: Sykmelding[];
     pastSykmeldinger: Sykmelding[];
 } {
-    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => !isPastSykmelding(sykmelding));
-    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => isPastSykmelding(sykmelding));
+    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => !isInactiveSykmelding(sykmelding));
+    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => isInactiveSykmelding(sykmelding));
 
     return { apenSykmeldinger, pastSykmeldinger };
-}
-
-function isUnderbehandling(sykmelding: Sykmelding): boolean {
-    return (
-        sykmelding.sykmeldingStatus.statusEvent === 'SENDT' &&
-        sykmelding.merknader?.find((it) => it.type === 'UNDER_BEHANDLING') != null
-    );
 }
 
 export default SykmeldingerPage;

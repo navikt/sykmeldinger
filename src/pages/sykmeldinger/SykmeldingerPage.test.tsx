@@ -37,7 +37,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             .reply(200, [
                 sykmeldingBekreftet,
                 sykmeldingSendt,
-                sykmeldingAvbrutt,
+                sykmeldingAvbrutt(),
                 sykmeldingAvvistBekreftet,
                 sykmeldingUtgatt,
             ]);
@@ -55,7 +55,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display only new sykmeldinger, sorted by ascending date ', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingApenPapir, sykmeldingAvvist]);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingApenPapir, sykmeldingAvvist()]);
 
         render(<SykmeldingerPage />);
 
@@ -70,7 +70,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display under behandling in Nye sykmeldinger section ', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering]);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering()]);
 
         render(<SykmeldingerPage />);
 

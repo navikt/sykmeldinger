@@ -8,12 +8,13 @@ describe('Bekreft avvist sykmelding som lest', () => {
     const apiNock = nock('http://localhost');
 
     const renderOptions = {
-        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingAvvist.id}`],
+        initialRouterEntries: [`/syk/sykmeldinger/${sykmeldingAvvist().id}`],
         renderPath: '/syk/sykmeldinger/:sykmeldingId',
     };
 
     beforeEach(() => {
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingAvvist.id}`).times(1).reply(200, sykmeldingAvvist);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingAvvist()]);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingAvvist().id}`).times(1).reply(200, sykmeldingAvvist());
     });
 
     it('should display reason for rejection', async () => {
@@ -72,11 +73,13 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
     it('should show confirmation after submitting', async () => {
         jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
-        apiNock.post(`/api/v1/sykmeldinger/${sykmeldingAvvist.id}/bekreftAvvist`).reply(203);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingAvvist.id}`).reply(200, {
-            ...sykmeldingAvvist,
+        const sykmelding = sykmeldingAvvist();
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmelding]);
+        apiNock.post(`/api/v1/sykmeldinger/${sykmelding.id}/bekreftAvvist`).reply(203);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmelding.id}`).reply(200, {
+            ...sykmelding,
             sykmeldingStatus: {
-                ...sykmeldingAvvist.sykmeldingStatus,
+                ...sykmelding.sykmeldingStatus,
                 statusEvent: 'BEKREFTET',
                 timestamp: '2020-01-01',
             },
