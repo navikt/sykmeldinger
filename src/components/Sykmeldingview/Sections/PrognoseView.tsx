@@ -30,8 +30,12 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
             )}
             {!arbeidsgiver && !!prognose.erIArbeid && (
                 <>
-                    {prognose.erIArbeid.egetArbeidPaSikt && <JaEntry title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?" />}
-                    {prognose.erIArbeid.annetArbeidPaSikt && <JaEntry title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?" />}
+                    {prognose.erIArbeid.egetArbeidPaSikt && (
+                        <JaEntry title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?" />
+                    )}
+                    {prognose.erIArbeid.annetArbeidPaSikt && (
+                        <JaEntry title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?" />
+                    )}
                     {!!prognose.erIArbeid.arbeidFOM && (
                         <SykmeldingEntry
                             title="Pasienten anslås å være tilbake"
@@ -50,7 +54,9 @@ const PrognoseView: React.FC<{ prognose?: Prognose; arbeidsgiver: boolean }> = (
             )}
             {!arbeidsgiver && !!prognose.erIkkeIArbeid && (
                 <>
-                    {prognose.erIkkeIArbeid.arbeidsforPaSikt && <JaEntry title="Antas pasienten å kunne komme i arbeid på sikt?" />}
+                    {prognose.erIkkeIArbeid.arbeidsforPaSikt && (
+                        <JaEntry title="Antas pasienten å kunne komme i arbeid på sikt?" />
+                    )}
                     {!!prognose.erIkkeIArbeid.arbeidsforFOM && (
                         <SykmeldingEntry
                             title="Pasienten anslås å vær være arbeidsfør"

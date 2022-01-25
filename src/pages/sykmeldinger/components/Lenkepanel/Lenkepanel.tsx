@@ -6,7 +6,7 @@ import LenkepanelIcon from './LenkepanelIcon';
 import LenkepanelEtikett from './LenkepanelEtikett';
 import './Lenkepanel.less';
 import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
-import env from "../../../../utils/env";
+import env from '../../../../utils/env';
 
 interface LenkepanelProps {
     sykmelding: Sykmelding;

@@ -32,7 +32,8 @@ const InfoOmDigitalSykmelding: React.FC = () => (
                 <Normaltekst>Ifølge folketrygdloven har den to formål:</Normaltekst>
                 <ul>
                     <Normaltekst tag="li">
-                        melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i jobb
+                        melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i
+                        jobb
                     </Normaltekst>
                     <Normaltekst tag="li">legge til rette for at du kan søke om sykepenger</Normaltekst>
                 </ul>

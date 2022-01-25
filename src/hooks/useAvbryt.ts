@@ -6,10 +6,7 @@ function useAvbryt(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
-        () =>
-            authenticatedPost(
-                `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/avbryt`,
-            ),
+        () => authenticatedPost(`${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/avbryt`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

@@ -168,8 +168,12 @@ class Periode {
      * @return {string} The period string
      */
     getReadablePeriod(): string {
-        const sameMonthAndYear = dayjs(this.fom).get('month') === dayjs(this.tom).get('month') && dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
-        const sameYearNotMonth = dayjs(this.fom).get('month') !== dayjs(this.tom).get('month') && dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
+        const sameMonthAndYear =
+            dayjs(this.fom).get('month') === dayjs(this.tom).get('month') &&
+            dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
+        const sameYearNotMonth =
+            dayjs(this.fom).get('month') !== dayjs(this.tom).get('month') &&
+            dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
 
         if (sameMonthAndYear) {
             return `${dayjs(this.fom).format('D.')} til ${dayjs(this.tom).format('D. MMM YYYY')}`;

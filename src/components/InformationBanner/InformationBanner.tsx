@@ -111,11 +111,13 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
 
     return (
         <div className="veileder-mottatt-sykmeldingen">
-            <Veileder storrelse="S"fargetema="info"><VeilederMaleSvg /></Veileder>
+            <Veileder storrelse="S" fargetema="info">
+                <VeilederMaleSvg />
+            </Veileder>
             <Element>Vi har mottatt sykmeldingen din</Element>
             <Normaltekst>
-                Hei, her ser du sykmeldingen din. Før du begynner å bruke den, sjekker du om alt er riktig. Stemmer det med
-                det dere ble enige om? Nederst på siden sender du den inn.
+                Hei, her ser du sykmeldingen din. Før du begynner å bruke den, sjekker du om alt er riktig. Stemmer det
+                med det dere ble enige om? Nederst på siden sender du den inn.
             </Normaltekst>
         </div>
     );

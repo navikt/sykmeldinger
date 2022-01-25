@@ -26,7 +26,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     expandable = false,
     expandedDefault = true,
     arbeidsgiver = false,
-    sendeSykmelding = false
+    sendeSykmelding = false,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef<HTMLElement>(null);
@@ -36,7 +36,11 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const headerId = `sykmelding-${sykmelding.id}-header${arbeidsgiver ? '-arbeidsgiver' : ''}`;
 
     return (
-        <article aria-labelledby={headerId} ref={elementRef} className={cn(styles.sykmeldingsopplysninger, { [styles.opplysningerTilArbeidsgiver]: arbeidsgiver })}>
+        <article
+            aria-labelledby={headerId}
+            ref={elementRef}
+            className={cn(styles.sykmeldingsopplysninger, { [styles.opplysningerTilArbeidsgiver]: arbeidsgiver })}
+        >
             {expandable ? (
                 <>
                     <button
@@ -52,7 +56,10 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                             }
                             setExpanded(!expanded);
                         }}
-                        className={cn(styles.sykmeldingsopplysningerHeader, styles.sykmeldingsopplysningerHeaderExpandable)}
+                        className={cn(
+                            styles.sykmeldingsopplysningerHeader,
+                            styles.sykmeldingsopplysningerHeaderExpandable,
+                        )}
                     >
                         <div className={styles.sykmeldingsopplysningerIcon}>
                             <ArbeidsgiverSvg />
@@ -65,24 +72,30 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                     <div
                         id={contentId}
                         aria-labelledby={headerId}
-                        className={cn(styles.sykmeldingsopplysningerContent, { [styles.sykmeldingsopplysningerContentHidden]: !expanded })}>
+                        className={cn(styles.sykmeldingsopplysningerContent, {
+                            [styles.sykmeldingsopplysningerContentHidden]: !expanded,
+                        })}
+                    >
                         <Sykmeldingview sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
-                        {sendeSykmelding &&
-                            <Ekspanderbartpanel className={styles.ikkeSendeTilArbeidsgiverPanel} tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver">
+                        {sendeSykmelding && (
+                            <Ekspanderbartpanel
+                                className={styles.ikkeSendeTilArbeidsgiverPanel}
+                                tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver"
+                            >
                                 <Spacing amount="small">
                                     <Normaltekst>
-                                        Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk,
-                                        enten den digitale sykmeldingen du finner her, eller papirsykmeldingen som
-                                        du kan få hos legen.
+                                        Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk, enten
+                                        den digitale sykmeldingen du finner her, eller papirsykmeldingen som du kan få
+                                        hos legen.
                                     </Normaltekst>
                                 </Spacing>
                                 <Normaltekst>
-                                    Ønsker du ikke å sende den slik du ser den her, kan du snakke med legen om å få
-                                    en ny sykmelding. Da kan du ta stilling til om du vil gi den nye sykmeldingen
-                                    til arbeidsgiveren din i stedet.
+                                    Ønsker du ikke å sende den slik du ser den her, kan du snakke med legen om å få en
+                                    ny sykmelding. Da kan du ta stilling til om du vil gi den nye sykmeldingen til
+                                    arbeidsgiveren din i stedet.
                                 </Normaltekst>
                             </Ekspanderbartpanel>
-                        }
+                        )}
                         <Lukknapp onClick={() => setExpanded(false)} />
                     </div>
                 </>

@@ -174,18 +174,14 @@ describe('useFindOlderSykmeldingId', () => {
         });
 
         it('newest should point to oldest', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useFindOlderSykmeldingId(new Sykmelding(newest)),
-            );
+            const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(new Sykmelding(newest)));
             await waitForNextUpdate();
 
             expect(result.current.earliestSykmeldingId).toEqual('SYKME-2');
         });
 
         it('oldest should NOT point to newest', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useFindOlderSykmeldingId(new Sykmelding(oldest)),
-            );
+            const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(new Sykmelding(oldest)));
             await waitForNextUpdate();
 
             expect(result.current.earliestSykmeldingId).toBeNull();

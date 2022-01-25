@@ -14,9 +14,9 @@ const ForklaringAndre: React.FC<ForklaringAndreProps> = ({ behandlerNavn }) => {
             </Normaltekst>
             <br />
             <Normaltekst>
-                Når du har fått ny sykmelding fra {behandlerNavn}, får du en ny beskjed fra oss om å logge deg
-                inn på nav.no slik at du kan sende inn sykmeldingen. Går det mange dager, bør du kontakte{' '}
-                {behandlerNavn} som skal skrive den nye sykmeldingen.
+                Når du har fått ny sykmelding fra {behandlerNavn}, får du en ny beskjed fra oss om å logge deg inn på
+                nav.no slik at du kan sende inn sykmeldingen. Går det mange dager, bør du kontakte {behandlerNavn} som
+                skal skrive den nye sykmeldingen.
             </Normaltekst>
         </>
     );

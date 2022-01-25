@@ -18,15 +18,9 @@ describe('ArbeidsevneView', () => {
     });
 
     it('Renders tiltakArbeidsplassen even if other tiltaks are null', () => {
-        render(
-            <ArbeidsevneView
-                tiltakArbeidsplassen="tiltak på arbeidsplassen"
-                arbeidsgiver={false}
-            />,
-        );
+        render(<ArbeidsevneView tiltakArbeidsplassen="tiltak på arbeidsplassen" arbeidsgiver={false} />);
         expect(screen.getByText('tiltak på arbeidsplassen')).toBeInTheDocument();
     });
-
 
     it('Does not render tiltak if then dont exist', () => {
         render(<ArbeidsevneView arbeidsgiver={false} />);

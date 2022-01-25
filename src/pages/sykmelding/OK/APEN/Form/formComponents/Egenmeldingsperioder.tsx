@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
-import { isValid, parseISO} from 'date-fns'
+import { isValid, parseISO } from 'date-fns';
 import { FormShape, Egenmeldingsperiode } from '../Form';
 import { Label } from 'nav-frontend-skjema';
 import QuestionWrapper from '../layout/QuestionWrapper';
@@ -60,7 +60,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 required: 'fom dato mangler.',
                                 validate: (fom) => {
                                     if (!isValid(parseISO(fom))) {
-                                        return 'Startdato må være på formatet dd.mm.yyyy'
+                                        return 'Startdato må være på formatet dd.mm.yyyy';
                                     }
 
                                     // Test max date
@@ -119,7 +119,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 required: 'tom dato mangler.',
                                 validate: (tom) => {
                                     if (!isValid(parseISO(tom))) {
-                                        return 'Sluttdato må være på formatet dd.mm.yyyy'
+                                        return 'Sluttdato må være på formatet dd.mm.yyyy';
                                     }
 
                                     // Test max date

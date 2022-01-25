@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { IsBoolean, IsDate, IsOptional, IsString, ValidateNested } from 'class-validator';
-import {parseISO} from "date-fns";
+import { parseISO } from 'date-fns';
 
 class ErIArbeid {
     @IsBoolean()

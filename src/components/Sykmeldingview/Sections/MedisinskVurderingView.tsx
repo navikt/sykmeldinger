@@ -47,7 +47,8 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
             })}
             <div className="fravaersgrunn">
                 {!!(
-                    medisinskVurdering.annenFraversArsak?.grunn && medisinskVurdering.annenFraversArsak?.grunn.length > 0
+                    medisinskVurdering.annenFraversArsak?.grunn &&
+                    medisinskVurdering.annenFraversArsak?.grunn.length > 0
                 ) && (
                     <SykmeldingEntry
                         title="Annen lovfestet fraværsgrunn"
