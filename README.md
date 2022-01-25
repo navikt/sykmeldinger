@@ -23,7 +23,7 @@ Environment-variable settes på `window._env_` i brukerens browser via scriptet 
 ## Kjør lokalt
 
 ```bash
-npm run dev
+npm start
 ```
 
 ## Test-miljø

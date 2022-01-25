@@ -4,5 +4,13 @@ module.exports = {
     singleQuote: true,
     printWidth: 120,
     tabWidth: 4,
-    //plugins: ['./node_modules/prettier-plugin-import-sort/src'],
+    overrides: [
+        {
+            files: ['*.yml', '*.yaml'],
+            options: {
+                bracketSpacing: false,
+                tabWidth: 2,
+            },
+        },
+    ],
 };
