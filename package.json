@@ -101,7 +101,7 @@
         "fetch-mock": "^9.11.0",
         "fetch-mock-jest": "^1.5.1",
         "nock": "^13.2.2",
-        "node-fetch": "^2.6.1",
+        "node-fetch": "^2.6.7",
         "prettier": "^2.5.1",
         "react-scripts": "^4.0.3"
     }
