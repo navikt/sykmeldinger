@@ -42,7 +42,10 @@ const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgive
                     />
                 </div>
 
-                <MedisinskVurderingView medisinskVurdering={sykmelding.medisinskVurdering} arbeidsgiver={arbeidsgiver} />
+                <MedisinskVurderingView
+                    medisinskVurdering={sykmelding.medisinskVurdering}
+                    arbeidsgiver={arbeidsgiver}
+                />
 
                 {sykmelding.sykmeldingsperioder?.map((periode, index) => (
                     <div key={index}>

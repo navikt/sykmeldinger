@@ -53,7 +53,9 @@ describe('AvvistVeileder', () => {
         };
         const behandlingsutfall = new Behandlingsutfall(plainBehandlingsutfall);
         render(<AvvistVeileder behandlerNavn={'Doktor Legesen'} behandlingsutfall={behandlingsutfall} />);
-        expect(screen.getByText(/Legen har skrevet en diagnose i sykmeldingen som ikke gir deg rett til å få sykepenger./)).toBeInTheDocument();
+        expect(
+            screen.getByText(/Legen har skrevet en diagnose i sykmeldingen som ikke gir deg rett til å få sykepenger./),
+        ).toBeInTheDocument();
     });
 
     it('Renders normal message for other rulehits', () => {

@@ -34,11 +34,7 @@ const App = () => {
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter>
                     <Switch>
-                        <Route
-                            path={env.SYKMELDINGER_ROOT || '/sykmeldinger'}
-                            exact
-                            component={SykmeldingerPage}
-                        />
+                        <Route path={env.SYKMELDINGER_ROOT || '/sykmeldinger'} exact component={SykmeldingerPage} />
                         <Route
                             path={`${env.SYKMELDINGER_ROOT || '/sykmeldinger'}/:sykmeldingId`}
                             exact

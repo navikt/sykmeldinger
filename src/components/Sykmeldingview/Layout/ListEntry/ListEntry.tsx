@@ -12,7 +12,9 @@ const ListEntry: React.FC<ListEntryProps> = ({ listText, listTitle }) => {
             <Element>{listTitle}</Element>
             <ul>
                 {listText.map((str, index) => (
-                    <li className={styles.listEntryText} key={index}><Undertekst>{str}</Undertekst></li>
+                    <li className={styles.listEntryText} key={index}>
+                        <Undertekst>{str}</Undertekst>
+                    </li>
                 ))}
             </ul>
         </div>

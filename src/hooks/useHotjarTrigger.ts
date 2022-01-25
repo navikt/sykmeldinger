@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { logger } from '../utils/logger';
-import env from "../utils/env";
+import env from '../utils/env';
 
 type TriggerType =
     | 'SYKMELDING_LISTEVISNING'

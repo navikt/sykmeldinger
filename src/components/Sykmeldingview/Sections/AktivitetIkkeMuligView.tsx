@@ -28,9 +28,7 @@ const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({ aktivit
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                         <ListEntry
                             listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.medisinskArsak.arsak.map(
-                                (arsak) => MedisinskArsakType[arsak],
-                            )}
+                            listText={aktivitetIkkeMulig.medisinskArsak.arsak.map((arsak) => MedisinskArsakType[arsak])}
                         />
                     )}
                     {aktivitetIkkeMulig.medisinskArsak?.beskrivelse && (

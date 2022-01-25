@@ -115,8 +115,14 @@ const Arbeidssituasjon: React.FC<ArbeidssituasjonProps> = ({
                 )}
             />
             <Spacing direction="top">
-                <Normaltekst>Sjekk om du er <Lenke href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/er-jeg-selvstendig-naeringsdrivende-frilanser-eller-arbeidstaker" target="_blank">
-                    selvstendig næringsdrivende, frilanser eller ansatt</Lenke>
+                <Normaltekst>
+                    Sjekk om du er{' '}
+                    <Lenke
+                        href="https://www.nav.no/no/person/innhold-til-person-forside/nyttig-a-vite/er-jeg-selvstendig-naeringsdrivende-frilanser-eller-arbeidstaker"
+                        target="_blank"
+                    >
+                        selvstendig næringsdrivende, frilanser eller ansatt
+                    </Lenke>
                 </Normaltekst>
             </Spacing>
             {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && brukerinformasjon.strengtFortroligAdresse && (

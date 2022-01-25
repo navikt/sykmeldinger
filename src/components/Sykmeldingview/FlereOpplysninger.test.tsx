@@ -44,7 +44,7 @@ it('Close panel if Lukk button is clicked', async () => {
     render(
         <FlereOpplysninger>
             <p>Information</p>
-        </FlereOpplysninger>
+        </FlereOpplysninger>,
     );
     expect(screen.queryByText('Information')).not.toBeInTheDocument();
     expect(screen.queryByText('Lukk')).not.toBeInTheDocument();

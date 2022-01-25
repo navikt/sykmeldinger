@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { authenticatedPost } from '../utils/Fetch';
-import env from "../utils/env";
+import env from '../utils/env';
 
 function useBekreftAvvist(sykmeldingId: string) {
     const queryClient = useQueryClient();

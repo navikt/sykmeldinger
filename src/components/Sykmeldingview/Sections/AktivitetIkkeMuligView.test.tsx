@@ -19,7 +19,7 @@ describe('AktivitetIkkeMuligView', () => {
                     arsak: ['MANGLENDE_TILRETTELEGGING'],
                 },
             },
-            reisetilskudd: false
+            reisetilskudd: false,
         };
         const periode = new AktivitetIkkeMuligPeriode(plainJson.aktivitetIkkeMulig);
 
@@ -29,7 +29,9 @@ describe('AktivitetIkkeMuligView', () => {
         expect(screen.getByText('Helsetilstanden hindrer pasienten i å være i aktivitet')).toBeInTheDocument();
         expect(screen.getByText(plainJson.aktivitetIkkeMulig.medisinskArsak.beskrivelse)).toBeInTheDocument();
 
-        expect(screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet')).toBeInTheDocument();
+        expect(
+            screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
+        ).toBeInTheDocument();
         expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument();
         expect(screen.getByText(plainJson.aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse)).toBeInTheDocument();
     });
@@ -59,7 +61,9 @@ describe('AktivitetIkkeMuligView', () => {
         expect(screen.queryByText('Helsetilstanden hindrer pasienten i å være i aktivitet')).not.toBeInTheDocument();
         expect(screen.queryByText(plainJson.aktivitetIkkeMulig.medisinskArsak.beskrivelse)).not.toBeInTheDocument();
 
-        expect(screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet')).toBeInTheDocument();
+        expect(
+            screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
+        ).toBeInTheDocument();
         expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument();
         expect(screen.getByText(plainJson.aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse)).toBeInTheDocument();
     });

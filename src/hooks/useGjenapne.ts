@@ -6,10 +6,7 @@ function useGjenapne(sykmeldingId: string) {
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
-        () =>
-            authenticatedPost(
-                `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/gjenapne`,
-            ),
+        () => authenticatedPost(`${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/gjenapne`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');
