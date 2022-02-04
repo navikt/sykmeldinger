@@ -35,7 +35,7 @@ export function startServer(): void {
 
         const referrer = req.get('Referrer');
         if (referrer) {
-            logger.info('Referer: ', referrer);
+            logger.info(`Referer: ${referrer}`);
         }
 
         getHtmlWithDecorator(`${STATIC_FILES_PATH}/index.html`)
