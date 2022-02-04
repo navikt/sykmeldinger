@@ -1,5 +1,6 @@
-import express, { Request, Response } from 'express';
 import path from 'path';
+
+import express, { Request, Response } from 'express';
 
 import getHtmlWithDecorator from './decorator';
 import { createClientEnv, disableCache } from './utils';
@@ -31,6 +32,8 @@ export function startServer(): void {
             res.send();
             return;
         }
+
+        logger.info("Referer: ", req.get('Referrer'))
 
         getHtmlWithDecorator(`${STATIC_FILES_PATH}/index.html`)
             .then((html) => {
