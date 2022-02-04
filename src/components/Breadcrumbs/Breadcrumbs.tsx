@@ -2,8 +2,8 @@ import './Breadcrumbs.less';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Link as DsLink } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Lenke from 'nav-frontend-lenker';
 
 import env from '../../utils/env';
 
@@ -62,14 +62,14 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
             </div>
             <Normaltekst tag="ul" className="breadcrumbs__crumbs">
                 <li className="breadcrumbs__crumb">
-                    <Lenke href={env.DITT_NAV_ROOT || '#'} className="lenke">
+                    <DsLink href={env.DITT_NAV_ROOT || '#'} className="lenke">
                         Ditt NAV
-                    </Lenke>
+                    </DsLink>
                 </li>
                 <li className="breadcrumbs__crumb">
-                    <Lenke href={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
+                    <DsLink as={Link} to={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
                         Ditt sykefravær
-                    </Lenke>
+                    </DsLink>
                 </li>
                 {breadcrumbs.map(({ path, title }, index) => {
                     return <Breadcrumb key={index} path={path} title={title} />;

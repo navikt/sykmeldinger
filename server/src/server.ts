@@ -33,9 +33,8 @@ export function startServer(): void {
             return;
         }
 
-        const referrer = req.get('Referrer');
-        if (referrer) {
-            logger.info(`Referer: ${referrer}`);
+        if (req.originalUrl === "/syk/sykmeldinger/null") {
+            logger.info(`Someone redirected to /syk/sykmeldinger/null, referrer: ${req.get('Referrer')}`);
         }
 
         getHtmlWithDecorator(`${STATIC_FILES_PATH}/index.html`)
