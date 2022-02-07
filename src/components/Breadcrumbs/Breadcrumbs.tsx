@@ -67,7 +67,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
                     </DsLink>
                 </li>
                 <li className="breadcrumbs__crumb">
-                    <DsLink as={Link} to={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
+                    <DsLink href={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
                         Ditt sykefravær
                     </DsLink>
                 </li>
