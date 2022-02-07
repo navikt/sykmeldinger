@@ -8,7 +8,7 @@ export function isInactiveSykmelding(sykmelding: Sykmelding) {
     }
 
     const isSykmeldingApen = sykmelding.sykmeldingStatus.statusEvent === 'APEN';
-    const isSykmelding3MonthsOld = dayjs(sykmelding.getSykmeldingEndDate()).isBefore(dayjs().subtract(3, 'months'));
+    const isSykmelding3MonthsOld = dayjs(sykmelding.mottattTidspunkt).isBefore(dayjs().subtract(3, 'months'));
 
     return !isSykmeldingApen || isSykmelding3MonthsOld;
 }
