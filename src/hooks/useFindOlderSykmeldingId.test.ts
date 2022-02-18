@@ -1,5 +1,6 @@
 import nock from 'nock';
 import dayjs, { Dayjs } from 'dayjs';
+import { formatISO, sub } from 'date-fns';
 
 import { sykmeldingApen } from '../mock/data/sykmelding-apen';
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
@@ -15,9 +16,9 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should find the earlier sykmelding when there is one APEN before', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-1'),
-            sykmeldingApen(dayjs().subtract(2, 'days'), 'SYKME-2'),
-            sykmeldingApen(dayjs().add(15, 'days'), 'SYKME-3'),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(2, 'days').format(), 'SYKME-2'),
+            sykmeldingApen(dayjs().add(15, 'days').format(), 'SYKME-3'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -30,12 +31,12 @@ describe('useFindOlderSykmeldingId', () => {
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
     });
 
-    it('should find the earlier sykmelding but disregard the sykmelding that is older than 3 months', async () => {
+    it('should find the earlier sykmelding but disregard the sykmelding that is older than 12 months', async () => {
         const sykmeldinger = [
-            sykmeldingAvvist(dayjs().subtract(3, 'months').subtract(16, 'day')),
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-1'),
-            sykmeldingApen(dayjs().subtract(2, 'days'), 'SYKME-2'),
-            sykmeldingApen(dayjs().add(15, 'days'), 'SYKME-3'),
+            sykmeldingAvvist(dayjs().subtract(12, 'months').subtract(16, 'day')),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(2, 'days').format(), 'SYKME-2'),
+            sykmeldingApen(dayjs().add(15, 'days').format(), 'SYKME-3'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -50,10 +51,10 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should find the earlier sykmelding but disregard the sykmelding that does not have APEN status', async () => {
         const sykmeldinger = [
-            sykmeldingAvbrutt(dayjs().subtract(40, 'days')),
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-1'),
-            sykmeldingApen(dayjs().subtract(2, 'days'), 'SYKME-2'),
-            sykmeldingApen(dayjs().add(15, 'days'), 'SYKME-3'),
+            sykmeldingAvbrutt(dayjs().subtract(40, 'days').format()),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(2, 'days').format(), 'SYKME-2'),
+            sykmeldingApen(dayjs().add(15, 'days').format(), 'SYKME-3'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -69,9 +70,9 @@ describe('useFindOlderSykmeldingId', () => {
     it('should do', async () => {
         const sykmeldinger = [
             // 2 dager siden
-            sykmeldingApen(dayjs().subtract(2, 'days'), 'this-sykmelding'),
+            sykmeldingApen(dayjs().subtract(2, 'days').format(), 'this-sykmelding'),
             // 30 dager siden
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'previous-sykmelding'),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'previous-sykmelding'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -86,10 +87,10 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should find the earlier sykmelding but disregard the sykmelding that is APEN but UNDER_BEHANDLING', async () => {
         const sykmeldinger = [
-            sykmeldingUnderbehandlingTilbakedatering(dayjs().subtract(40, 'days')),
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-1'),
-            sykmeldingApen(dayjs().subtract(2, 'days'), 'SYKME-2'),
-            sykmeldingApen(dayjs().add(15, 'days'), 'SYKME-3'),
+            sykmeldingUnderbehandlingTilbakedatering(formatISO(sub(new Date(), { days: 366 }))),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(2, 'days').format(), 'SYKME-2'),
+            sykmeldingApen(dayjs().add(15, 'days').format(), 'SYKME-3'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -104,9 +105,9 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should handle being the first sykmelding', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-1'),
-            sykmeldingApen(dayjs().subtract(15, 'days'), 'SYKME-2'),
-            sykmeldingApen(dayjs().subtract(2, 'days'), 'SYKME-3'),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(15, 'days').format(), 'SYKME-2'),
+            sykmeldingApen(dayjs().subtract(2, 'days').format(), 'SYKME-3'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -121,8 +122,8 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should allow two sykmeldinger with the exact same period', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dayjs().subtract(7, 'days'), 'SYKME-1'),
-            sykmeldingApen(dayjs().subtract(7, 'days'), 'SYKME-2'),
+            sykmeldingApen(dayjs().subtract(7, 'days').format(), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(7, 'days').format(), 'SYKME-2'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -137,9 +138,9 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should still work when the two first sykmeldinger has same date but the provided sykmelding is later', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-1'),
-            sykmeldingApen(dayjs().subtract(30, 'days'), 'SYKME-2'),
-            sykmeldingApen(dayjs().subtract(7, 'days'), 'SYKME-3'),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'SYKME-1'),
+            sykmeldingApen(dayjs().subtract(30, 'days').format(), 'SYKME-2'),
+            sykmeldingApen(dayjs().subtract(7, 'days').format(), 'SYKME-3'),
         ];
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
@@ -154,7 +155,7 @@ describe('useFindOlderSykmeldingId', () => {
 
     describe('should work when there is overlap between sykmeldinger', () => {
         const createSingle10PeriodApen = (date: Dayjs, id: string) => ({
-            ...sykmeldingApen(date, id),
+            ...sykmeldingApen(date.format(), id),
             sykmeldingsperioder: [
                 {
                     fom: date.format('YYYY-MM-DD'),

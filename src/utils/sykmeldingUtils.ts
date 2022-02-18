@@ -1,16 +1,14 @@
-import dayjs from 'dayjs';
+import { differenceInDays } from 'date-fns';
 
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 
-export function isInactiveSykmelding(sykmelding: Sykmelding) {
-    if (isUnderbehandling(sykmelding)) {
-        return false;
-    }
-
-    const isSykmeldingApen = sykmelding.sykmeldingStatus.statusEvent === 'APEN';
-    const isSykmelding3MonthsOld = dayjs(sykmelding.mottattTidspunkt).isBefore(dayjs().subtract(3, 'months'));
-
-    return !isSykmeldingApen || isSykmelding3MonthsOld;
+export function isActiveSykmelding(sykmelding: Sykmelding): boolean {
+    // Under behandling skal alltids vises, uansett hvor gammel
+    if (isUnderbehandling(sykmelding)) return true;
+    // Alt som ikke er APEN status, er inaktive
+    if (sykmelding.sykmeldingStatus.statusEvent !== 'APEN') return false;
+    // APEN sykmeldinger blir inaktive etter 12 måneder
+    return differenceInDays(new Date(), sykmelding.mottattTidspunkt) < 365;
 }
 
 export function isUnderbehandling(sykmelding: Sykmelding): boolean {

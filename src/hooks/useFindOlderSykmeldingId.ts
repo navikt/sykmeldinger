@@ -1,7 +1,7 @@
 import { isBefore, isEqual } from 'date-fns';
 
 import { Sykmelding } from '../models/Sykmelding/Sykmelding';
-import { isInactiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
+import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
 
 import useSykmeldinger from './useSykmeldinger';
 
@@ -22,7 +22,7 @@ function useFindOlderSykmeldingId(sykmelding: Sykmelding | undefined): {
 
     const startDate: Date = sykmelding.getSykmeldingStartDate();
     const relevantSykmeldinger = sykmeldinger
-        .filter((it) => !isInactiveSykmelding(it) && !isUnderbehandling(it))
+        .filter((it) => isActiveSykmelding(it) && !isUnderbehandling(it))
         .filter((it) => !isEqual(it.getSykmeldingStartDate(), startDate));
 
     const earliestSykmelding: Sykmelding = relevantSykmeldinger.reduce(

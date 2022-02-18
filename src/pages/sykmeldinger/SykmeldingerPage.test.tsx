@@ -38,7 +38,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             .get('/api/v1/sykmeldinger')
             .reply(200, [
                 sykmeldingBekreftet,
-                sykmeldingSendt,
+                sykmeldingSendt(),
                 sykmeldingAvbrutt(),
                 sykmeldingAvvistBekreftet,
                 sykmeldingUtgatt,
