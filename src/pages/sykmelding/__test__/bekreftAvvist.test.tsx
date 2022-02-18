@@ -41,7 +41,6 @@ describe('Bekreft avvist sykmelding som lest', () => {
         await waitFor(() =>
             expect(
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
-                // @ts-expect-error - Wrong typing in testing-library/jest-dom
             ).toHaveErrorMessage('Du må bekrefte at du har lest at sykmeldingen er avvist'),
         );
     });
@@ -56,7 +55,6 @@ describe('Bekreft avvist sykmelding som lest', () => {
         await waitFor(() =>
             expect(
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
-                // @ts-expect-error - Wrong typing in testing-library/jest-dom
             ).toHaveErrorMessage('Du må bekrefte at du har lest at sykmeldingen er avvist'),
         );
 
@@ -67,7 +65,6 @@ describe('Bekreft avvist sykmelding som lest', () => {
         await waitFor(() =>
             expect(
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
-                // @ts-expect-error - Wrong typing in testing-library/jest-dom
             ).not.toHaveErrorMessage('Du må bekrefte at du har lest at sykmeldingen er avvist'),
         );
     });

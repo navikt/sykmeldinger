@@ -20,7 +20,7 @@ ignore:
   SNYK-JS-CLASSVALIDATOR-1730566:
     - class-validator:
         reason: None given
-        expires: '2022-02-12T10:42:31.454Z'
+        expires: '2022-03-20T11:37:51.283Z'
   SNYK-JS-CSSWHAT-1298035:
     - react-scripts > @svgr/webpack > @svgr/plugin-svgo > svgo > css-select > css-what:
         reason: None given

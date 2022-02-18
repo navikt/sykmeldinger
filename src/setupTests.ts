@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 
+// @ts-expect-error window not typed for tests
 window._env_ = {
     RUNTIME_ENVIRONMENT: 'test',
     DITT_NAV_ROOT: '/dittnav',

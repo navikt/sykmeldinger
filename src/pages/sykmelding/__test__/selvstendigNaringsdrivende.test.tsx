@@ -1,7 +1,6 @@
 import nock from 'nock';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
-import dayjs from 'dayjs';
 
 import { sykmeldingApen } from '../../../mock/data/sykmelding-apen';
 import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
@@ -103,7 +102,7 @@ describe('Selvstendig næringsdrivende', () => {
             apiNock
                 .get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`)
                 .times(1)
-                .reply(200, sykmeldingApen(dayjs('2020-02-10')));
+                .reply(200, sykmeldingApen('2020-02-10'));
             apiNock
                 .get(`/flex-gateway/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: null });

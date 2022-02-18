@@ -28,7 +28,7 @@ fetchMock.config.fallbackToNetwork = true;
 const sykmeldinger = [
     sykmeldingApen(),
     sykmeldingApenPapir,
-    sykmeldingSendt,
+    sykmeldingSendt(),
     sykmeldingSendt2,
     sykmeldingSendt3,
     sykmeldingBekreftet,

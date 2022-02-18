@@ -12,7 +12,7 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { logger } from '../../utils/logger';
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import InfoOmDigitalSykmelding from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
-import { isInactiveSykmelding } from '../../utils/sykmeldingUtils';
+import { isActiveSykmelding } from '../../utils/sykmeldingUtils';
 
 import LenkepanelContainer from './components/LenkepanelContainer';
 
@@ -82,8 +82,8 @@ function filterSykmeldinger(sykmeldinger: Sykmelding[]): {
     apenSykmeldinger: Sykmelding[];
     pastSykmeldinger: Sykmelding[];
 } {
-    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => !isInactiveSykmelding(sykmelding));
-    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => isInactiveSykmelding(sykmelding));
+    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => isActiveSykmelding(sykmelding));
+    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => !isActiveSykmelding(sykmelding));
 
     return { apenSykmeldinger, pastSykmeldinger };
 }

@@ -40,8 +40,8 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     });
 
     it('should display warning and disable form when there is a unsent sykmelding on a previous date', async () => {
-        const thisSykmelding = sykmeldingApen(dayjs().subtract(2, 'days'), 'this-sykmelding');
-        const previousSykmelding = sykmeldingApen(dayjs().subtract(30, 'days'), 'previous-sykmelding');
+        const thisSykmelding = sykmeldingApen(dayjs().subtract(2, 'days').format(), 'this-sykmelding');
+        const previousSykmelding = sykmeldingApen(dayjs().subtract(30, 'days').format(), 'previous-sykmelding');
 
         apiNock.get('/api/v1/sykmeldinger').reply(200, [thisSykmelding, previousSykmelding]);
         apiNock.get(`/api/v1/sykmeldinger/${thisSykmelding.id}`).reply(200, thisSykmelding);
