@@ -74,7 +74,7 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
                             </div>
                         }
                         radios={arbeidsgivere.map((arbeidsgiver, index) => ({
-                            label: arbeidsgiver.navn,
+                            label: `${arbeidsgiver.navn} (org.nr: ${arbeidsgiver.orgnummer})`,
                             value: arbeidsgiver.orgnummer,
                             id: index === 0 ? fieldName : undefined,
                         }))}
