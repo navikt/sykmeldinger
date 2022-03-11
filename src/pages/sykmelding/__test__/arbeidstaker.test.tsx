@@ -81,7 +81,7 @@ describe('Arbeidstaker', () => {
 
         userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
         userEvent.click(await screen.findByRole('radio', { name: 'ansatt' }));
-        userEvent.click(await screen.findByRole('radio', { name: arbeidsgivereMock[0].navn }));
+        userEvent.click(await screen.findByRole('radio', { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})`}));
         const naermesteLederFieldset = screen.getByText(/som skal følge deg opp/i).closest('fieldset');
         userEvent.click(within(naermesteLederFieldset!).getByRole('radio', { name: 'Ja' }));
 
@@ -136,7 +136,7 @@ describe('Arbeidstaker', () => {
 
         userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
         userEvent.click(await screen.findByRole('radio', { name: 'ansatt' }));
-        userEvent.click(await screen.findByRole('radio', { name: arbeidsgivereMock[1].navn }));
+        userEvent.click(await screen.findByRole('radio', { name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`}));
 
         expect(await screen.findByRole('heading', { name: 'Dette vises til arbeidsgiveren din' })).toBeInTheDocument();
 
