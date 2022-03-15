@@ -47,4 +47,4 @@ spec:
     - name: SYKEFRAVAER_ROOT
       value: 'https://www-gcp.dev.nav.no/syk/sykefravaer'
     - name: 'DITT_NAV_ROOT'
-      value: 'https://www.nav.no/person/dittnav'
+      value: 'https://person.dev.nav.no/person/dittnav/'
