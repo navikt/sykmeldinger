@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.1
+version: v1.24.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-ANSIHTML-1296849:
@@ -20,7 +20,7 @@ ignore:
   SNYK-JS-CLASSVALIDATOR-1730566:
     - class-validator:
         reason: None given
-        expires: '2022-03-20T11:37:51.283Z'
+        expires: '2022-04-27T09:45:56.347Z'
   SNYK-JS-CSSWHAT-1298035:
     - react-scripts > @svgr/webpack > @svgr/plugin-svgo > svgo > css-select > css-what:
         reason: None given
@@ -60,4 +60,17 @@ ignore:
     - react-scripts > eslint-plugin-jsx-a11y > axe-core:
         reason: None given
         expires: '2022-01-13T08:53:44.555Z'
+  SNYK-JS-MINIMIST-2429795:
+    - latest-version > package-json > registry-auth-token > rc > minimist:
+        reason: None given
+        expires: '2022-04-27T09:45:56.347Z'
+    - latest-version > package-json > registry-url > rc > minimist:
+        reason: None given
+        expires: '2022-04-27T09:45:56.347Z'
+    - nodemon > update-notifier > latest-version > package-json > registry-auth-token > rc > minimist:
+        reason: None given
+        expires: '2022-04-27T09:45:56.347Z'
+    - nodemon > update-notifier > latest-version > package-json > registry-url > rc > minimist:
+        reason: None given
+        expires: '2022-04-27T09:45:56.347Z'
 patch: {}

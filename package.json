@@ -73,6 +73,7 @@
         "test": "craco test",
         "lint": "eslint 'src/**/**.{ts,tsx,js,jsx}'",
         "format": "prettier --write 'src/**/**.{ts,tsx,js,jsx}'",
+        "report-debt": "./debt.sh",
         "postinstall": "husky install"
     },
     "browserslist": {
