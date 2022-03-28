@@ -1,9 +1,9 @@
-.veiledercontent__title {
+.title {
     text-align: center;
     margin-top: 1rem;
 }
 
-.veiledercontent__underline {
+.underline {
     border: 0;
     border-top: 1px solid #8d8d8d;
     width: 40%;

@@ -1,14 +1,13 @@
-import './AvvistVeileder.less';
-
 import React from 'react';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
+import { BodyShort, Heading } from '@navikt/ds-react';
 
 import VeilederMaleNeurtralSvg from '../Veileder/svg/VeilederMaleNeutralSvg';
 import Behandlingsutfall from '../../models/Sykmelding/Behandlingsutfall';
 
 import ForklaringZDiagnose from './ForklaringZDiagnose';
 import ForklaringAndre from './ForklaringAndre';
+import styles from './AvvistVeileder.module.css';
 
 interface AvvistVeilederProps {
     behandlerNavn: string;
@@ -34,24 +33,26 @@ const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandli
 
     return (
         <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
-            <Undertittel className="veiledercontent__title">Sykmeldingen kan dessverre ikke brukes</Undertittel>
-            <hr aria-hidden className="veiledercontent__underline" />
-            <Normaltekst>Beklager at vi må bry deg mens du er syk.</Normaltekst>
+            <Heading size="small" className={styles.title}>
+                Sykmeldingen kan dessverre ikke brukes
+            </Heading>
+            <hr aria-hidden className={styles.underline} />
+            <BodyShort>Beklager at vi må bry deg mens du er syk.</BodyShort>
             <br />
             {isNotValidInHPR || isMissingAuthorization || isNotCorrectRole || isSuspended || isRoleOver12Weeks ? (
-                <Normaltekst>
+                <BodyShort>
                     Den som har skrevet sykmeldingen, har ikke autorisasjon til å gjøre det. Du må derfor få en annen
                     til å skrive sykmeldingen.
-                </Normaltekst>
+                </BodyShort>
             ) : isOver70 ? (
-                <Normaltekst>
+                <BodyShort>
                     Du har ikke rett til sykepenger fordi du er over 70 år. I stedet for sykmelding kan du be om en
                     skriftlig bekreftelse på at du er syk.
-                </Normaltekst>
+                </BodyShort>
             ) : isZDiagnosis ? (
                 <ForklaringZDiagnose />
             ) : (
-                <ForklaringAndre behandlerNavn={behandlerNavn} />
+                <ForklaringAndre behandlerNavn={behandlerNavn} ruleHits={behandlingsutfall.ruleHits} />
             )}
         </Veilederpanel>
     );
