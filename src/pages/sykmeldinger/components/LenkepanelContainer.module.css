@@ -1,0 +1,20 @@
+.lenkepanelContainer {
+    margin-bottom: 2rem;
+}
+
+.lenkepanelContainer .lenkepanelContainerHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+/* ordered list */
+.lenkepanelContainer .lenkepanelContainerSykmeldinger {
+    list-style-type: none;
+    padding: 0;
+}
+
+.lenkepanelContainer:not(:first-child) {
+    margin-top: 4rem;
+}

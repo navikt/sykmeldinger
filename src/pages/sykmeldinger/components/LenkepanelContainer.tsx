@@ -2,11 +2,11 @@ import React, { useMemo, useState } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 
-import './LenkepanelContainer.less';
 import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import SykmeldingSorter from '../../../utils/SykmeldingSorter';
 
 import Lenkepanel from './Lenkepanel/Lenkepanel';
+import styles from './LenkepanelContainer.module.css';
 
 export enum SortBy {
     DATE = 'DATE',
@@ -48,8 +48,8 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
     }
 
     return (
-        <section aria-labelledby={type} className="lenkepanel-container">
-            <header className="lenkepanel-container__header">
+        <section aria-labelledby={type} className={styles.lenkepanelContainer}>
+            <header className={styles.lenkepanelContainerHeader}>
                 <Undertittel id={type} tag="h2">
                     {title}
                 </Undertittel>
@@ -64,7 +64,7 @@ const LenkepanelContainer: React.FC<LenkepanelContainerProps> = ({
                     </Select>
                 )}
             </header>
-            <ol className="lenkepanel-container__sykmeldinger">
+            <ol className={styles.lenkepanelContainerSykmeldinger}>
                 {sortBy === SortBy.DATE &&
                     sykmeldingerSortedByDate.map((sykmelding, index) => (
                         <li key={index} className="lenkepanel-container__sykmelding">

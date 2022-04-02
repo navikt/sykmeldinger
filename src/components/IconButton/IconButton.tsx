@@ -1,5 +1,7 @@
 import { Element } from 'nav-frontend-typografi';
-import './IconButton.less';
+import cn from 'classnames';
+
+import styles from './IconButton.module.css';
 
 interface IconButtonProps {
     type: 'cross' | 'pluss';
@@ -10,7 +12,7 @@ interface IconButtonProps {
 
 const IconButton: React.FC<IconButtonProps> = ({ type, tekst, htmlType = 'button', onClick }) => {
     return (
-        <button className="iconbutton" onClick={onClick} type={htmlType}>
+        <button className={styles.iconbutton} onClick={onClick} type={htmlType}>
             {type === 'cross' && (
                 <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -31,7 +33,14 @@ const IconButton: React.FC<IconButtonProps> = ({ type, tekst, htmlType = 'button
                     ></path>
                 </svg>
             )}
-            <Element className={`iconbutton__tekst iconbutton__tekst--${type}`}>{tekst}</Element>
+            <Element
+                className={cn(styles.iconbuttonTekst, {
+                    [styles.iconbuttonTekstCross]: type === 'cross',
+                    [styles.iconbuttonTekstPluss]: type === 'pluss',
+                })}
+            >
+                {tekst}
+            </Element>
         </button>
     );
 };

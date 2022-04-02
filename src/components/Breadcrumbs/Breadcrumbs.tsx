@@ -1,11 +1,11 @@
-import './Breadcrumbs.less';
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Link as DsLink } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import env from '../../utils/env';
+
+import styles from './Breadcrumbs.module.css';
 
 const PersonIcon = () => {
     return (
@@ -35,7 +35,7 @@ export interface BreadcrumbProps {
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
     if (path) {
         return (
-            <li className="breadcrumbs__crumb">
+            <li className={styles.breadcrumbsCrumb}>
                 <Link to={path} className="lenke">
                     {title}
                 </Link>
@@ -44,7 +44,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
     }
 
     return (
-        <li className="breadcrumbs__crumb">
+        <li className={styles.breadcrumbsCrumb}>
             <span>{title}</span>
         </li>
     );
@@ -56,17 +56,17 @@ interface BreadcrumbsProps {
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
     return (
-        <nav className="breadcrumbs" aria-label="Du er her: ">
-            <div className="breadcrumbs__icon">
+        <nav className={styles.breadcrumbs} aria-label="Du er her: ">
+            <div className={styles.breadcrumbsIcon}>
                 <PersonIcon />
             </div>
-            <Normaltekst tag="ul" className="breadcrumbs__crumbs">
-                <li className="breadcrumbs__crumb">
+            <Normaltekst tag="ul" className={styles.breadcrumbsCrumbs}>
+                <li className={styles.breadcrumbsCrumb}>
                     <DsLink href={env.DITT_NAV_ROOT || '#'} className="lenke">
                         Ditt NAV
                     </DsLink>
                 </li>
-                <li className="breadcrumbs__crumb">
+                <li className={styles.breadcrumbsCrumb}>
                     <DsLink href={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
                         Ditt sykefravær
                     </DsLink>

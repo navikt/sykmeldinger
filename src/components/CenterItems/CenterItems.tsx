@@ -1,4 +1,6 @@
-import './CenterItems.less';
+import cn from 'classnames';
+
+import styles from './CenterItems.module.css';
 
 interface CenterItemsProps {
     vertical?: boolean;
@@ -8,9 +10,10 @@ interface CenterItemsProps {
 const CenterItems: React.FC<CenterItemsProps> = ({ vertical = false, horizontal = false, children }) => {
     return (
         <div
-            className={`center-items ${vertical ? 'center-items--vertical' : ''} ${
-                horizontal ? 'center-items--horizontal' : ''
-            }`}
+            className={cn(styles.centerItems, {
+                [styles.centerItemsVertical]: vertical,
+                [styles.centerItemsHorizontal]: horizontal,
+            })}
         >
             {children}
         </div>

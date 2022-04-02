@@ -3,31 +3,32 @@ import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import env from '../../utils/env';
-import './InfoOmDigitalSykmelding.less';
+
+import styles from './InfoOmDigitalSykmelding.module.css';
 
 const InfoOmDigitalSykmelding: React.FC = () => (
     <Ekspanderbartpanel
-        className="info-om-digital-sykmelding"
+        className={styles.infoOmDigitalSykmelding}
         tittel={
-            <div className="info-om-digital-sykmelding__title">
+            <div className={styles.infoOmDigitalSykmeldingTitle}>
                 <Undertittel tag="h2">Om den digitale sykmeldingen</Undertittel>
             </div>
         }
     >
-        <div className="info-om-digital-sykmelding__innhold">
+        <div className={styles.infoOmDigitalSykmeldingInnhold}>
             <section>
-                <Normaltekst className="info-omdigital-sykmelding__paragraph" style={{ marginBottom: '1rem' }}>
+                <Normaltekst className={styles.infoOmDigitalSykmeldingParagraph}>
                     NAV får alle sykmeldinger som blir skrevet i Norge. Den som er sykmeldt, finner den på{' '}
                     <Lenke href={env.SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Lenke>, der du er logget inn nå.
                 </Normaltekst>
-                <Normaltekst className="info-omdigital-sykmelding__paragraph">
+                <Normaltekst className={styles.infoOmDigitalSykmeldingParagraph} >
                     Du kan kreve at NAV sletter sykmeldingen din. Da kan du bruke{' '}
                     <Lenke href="https://nav.no/skrivtiloss">nav.no/skrivtiloss</Lenke> eller ringe 55 55 33 33.
                 </Normaltekst>
             </section>
 
             <section>
-                <Undertittel className="info-om-digital-sykmelding__subtitle" tag="h3">
+                <Undertittel className={styles.infoOmDigitalSykmeldingSubtitle} tag="h3">
                     Formålet med sykmeldingen
                 </Undertittel>
                 <Normaltekst>Ifølge folketrygdloven har den to formål:</Normaltekst>
@@ -41,7 +42,7 @@ const InfoOmDigitalSykmelding: React.FC = () => (
             </section>
 
             <section>
-                <Undertittel className="info-om-digital-sykmelding__subtitle" tag="h3">
+                <Undertittel className={styles.infoOmDigitalSykmeldingSubtitle} tag="h3">
                     Må jeg bruke den digitale sykmeldingen?
                 </Undertittel>
                 <Normaltekst>
