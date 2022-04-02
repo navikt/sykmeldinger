@@ -4,7 +4,8 @@ import Veileder from 'nav-frontend-veileder';
 
 import Merknad from '../../models/Sykmelding/Merknad';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
-import './InformationBanner.less';
+
+import styles from './InformationBanner.module.css';
 
 export enum Merknadtype {
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
@@ -22,21 +23,21 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
         return (
             <div data-testid="merknad-banner">
                 <Veilederpanel kompakt type="plakat" svg={<VeilederMaleSvg />}>
-                    <div className="merknad-banner__section">
-                        <Undertittel className="merknad-banner__title" tag="h2">
+                    <div className={styles.merknadBannerSection}>
+                        <Undertittel className={styles.title} tag="h2">
                             Tilbakedateringen kan ikke godkjennes
                         </Undertittel>
-                        <Normaltekst className="merknad-banner__paragraph">
+                        <Normaltekst className={styles.paragraph}>
                             Vanligvis starter sykmeldingen den datoen du er hos behandleren. I enkelte tilfeller kan
                             datoen i sykmeldingen settes tilbake i tid, det vi kaller tilbakedatering. NAV vurderer om
                             det er en gyldig grunn for tilbakedateringen.
                         </Normaltekst>
-                        <Normaltekst className="merknad-banner__paragraph">
+                        <Normaltekst className={styles.paragraph}>
                             Sykmeldingen din startet før du oppsøkte behandleren, og vi kan ikke godkjenne grunnen.
                             Derfor vil du ikke få sykepenger for disse dagene.
                         </Normaltekst>
                     </div>
-                    <Undertittel tag="h2" className="merknad-banner__title">
+                    <Undertittel tag="h2" className={styles.title}>
                         Hva gjør jeg nå?
                     </Undertittel>
                     <Normaltekst>
@@ -53,10 +54,10 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
         return (
             <div data-testid="merknad-banner">
                 <Veilederpanel kompakt type="plakat" svg={<VeilederMaleSvg />}>
-                    <Undertittel tag="h2" className="merknad-banner__title">
+                    <Undertittel tag="h2" className={styles.merknadBannerTitle}>
                         Behov for mer opplysninger
                     </Undertittel>
-                    <Normaltekst className="merknad-banner__paragraph">
+                    <Normaltekst className={styles.merknadBannerParagraph}>
                         Sykmeldingen din starter tidligere enn den dagen du var hos behandleren. Vi innhenter
                         opplysninger om hvorfor sykmeldingen er datert tilbake.
                     </Normaltekst>
@@ -73,20 +74,19 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
                     fargetema="advarsel"
                     type="plakat"
                     svg={<VeilederMaleSvg />}
-                    veilederProps={{ className: 'haha' }}
                 >
-                    <Undertittel tag="h2" className="merknad-banner__title">
+                    <Undertittel tag="h2" className={styles.merknadBannerTitle}>
                         Viktig informasjon
                     </Undertittel>
-                    <Normaltekst className="merknad-banner__paragraph">
+                    <Normaltekst className={styles.merknadBannerParagraph}>
                         Vanligvis starter sykmeldingen fra den dagen du er hos legen. I ditt tilfelle har legen skrevet
                         at den startet tidligere. NAV må derfor vurdere om det er en gyldig grunn for at sykmeldingen
                         din starter før du var i kontakt med legen.
                     </Normaltekst>
-                    <Normaltekst className="merknad-banner__paragraph">
+                    <Normaltekst className={styles.merknadBannerParagraph}>
                         Du kan fortsatt sende inn sykmeldingen som vanlig.
                     </Normaltekst>
-                    <hr className="merknad-banner__ruler" />
+                    <hr className={styles.merknadBannerRuler} />
                     <Normaltekst>
                         Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
                         Du velger selv om du vil bruke sykmeldingen.
@@ -111,7 +111,7 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
     }
 
     return (
-        <div className="veileder-mottatt-sykmeldingen">
+        <div className={styles.veilederMottattSykmeldingen}>
             <Veileder storrelse="S" fargetema="info">
                 <VeilederMaleSvg />
             </Veileder>

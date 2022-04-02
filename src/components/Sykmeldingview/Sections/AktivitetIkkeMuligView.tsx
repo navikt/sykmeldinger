@@ -5,7 +5,8 @@ import {
 } from '../../../models/Sykmelding/Periode';
 import ListEntry from '../Layout/ListEntry/ListEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
-import './AktivitetIkkeMuligView.less';
+
+import styles from './AktivitetIkkeMuligView.module.css';
 
 interface AktivitetIkkeMuligViewProps {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode;
@@ -22,9 +23,9 @@ const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({ aktivit
     }
 
     return (
-        <div className="aktivitet-ikke-mulig">
+        <div className={styles.aktivitetIkkeMulig}>
             {!arbeidsgiver && !!aktivitetIkkeMulig.medisinskArsak && (
-                <div className="aktivitet-ikke-mulig__arsak">
+                <div className={styles.aarsak}>
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                         <ListEntry
                             listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
@@ -41,7 +42,7 @@ const AktivitetIkkeMuligView: React.FC<AktivitetIkkeMuligViewProps> = ({ aktivit
                 </div>
             )}
             {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                <div className="aktivitet-ikke-mulig__arsak">
+                <div className={styles.aarsak}>
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
                         <ListEntry
                             listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"

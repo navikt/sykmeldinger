@@ -1,0 +1,9 @@
+.aktivitetIkkeMulig {
+    border-top: 1px solid var(--skillelinje-farge);
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.aktivitetIkkeMulig .aarsak:not(:last-of-type) {
+    margin-bottom: 2rem;
+}

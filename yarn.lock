@@ -1992,10 +1992,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:^0.12.14":
-  version: 0.12.14
-  resolution: "@navikt/ds-css@npm:0.12.14"
-  checksum: 5c961bbb3395a51bd333f9377c5b2362c68cfdea500ab823de26af6c8c858045bc87b1f57e0fff7e87be7fdf2da8a78aaedc2d2d5eb9fe33579241af92810281
+"@navikt/ds-css@npm:^0.16.15":
+  version: 0.16.15
+  resolution: "@navikt/ds-css@npm:0.16.15"
+  checksum: 0bcf8290eb497d67c9907f8b8a991ad1f7ebe4fb223204d771490abc225784524a7bb70fe93e970d9e8e974782bdbb8490868087cfeec8d307dbc37b1ec47844
   languageName: node
   linkType: hard
 
@@ -16474,7 +16474,7 @@ __metadata:
   resolution: "sykmeldinger@workspace:."
   dependencies:
     "@craco/craco": ^6.4.3
-    "@navikt/ds-css": ^0.12.14
+    "@navikt/ds-css": ^0.16.15
     "@navikt/ds-icons": ^0.7.3
     "@navikt/ds-react": ^0.14.15
     "@navikt/fnrvalidator": ^1.1.4

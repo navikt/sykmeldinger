@@ -8,8 +8,7 @@ import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
 
 import LenkepanelIcon from './LenkepanelIcon';
 import LenkepanelEtikett from './LenkepanelEtikett';
-
-import './Lenkepanel.less';
+import styles from './Lenkepanel.module.css';
 
 interface LenkepanelProps {
     sykmelding: Sykmelding;
@@ -36,18 +35,18 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
                 history.push(linkToSykmelding);
                 window.scrollTo(0, 0);
             }}
-            className={isNew ? 'lenkepanel--alert' : ''}
+            className={isNew ? styles.lenkepanelAlert : ''}
             border
         >
-            <div className="lenkepanel-content">
-                <div className="lenkepanel-content__icon">
+            <div className={styles.lenkepanelContent}>
+                <div className={styles.icon}>
                     <LenkepanelIcon
                         hover={isHoverState}
                         behandlingsutfall={behandlingsutfallStatus}
                         isPaper={Boolean(sykmelding.papirsykmelding)}
                     />
                 </div>
-                <div className="lenkepanel-content__main-content">
+                <div className={styles.mainContent}>
                     <Normaltekst tag="p">{sykmelding.getReadableSykmeldingLength()}</Normaltekst>
                     <Undertittel tag="h3">{sykmelding.getSykmeldingTitle()}</Undertittel>
                     <ul>
@@ -58,7 +57,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
                         ))}
                     </ul>
                 </div>
-                <div className="lenkepanel-content__status-text">
+                <div className={styles.statusText}>
                     <LenkepanelEtikett status={status} behandlingsutfall={behandlingsutfallStatus} />
                 </div>
             </div>

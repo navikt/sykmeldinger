@@ -1,0 +1,31 @@
+#egenmeldingsperioder {
+    margin-bottom: 1rem;
+}
+
+.egenmeldingsperiode {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+}
+
+.egenmeldingsperiode .periodeFom {
+    margin-right: 1rem;
+    padding: 0.5rem 0;
+}
+
+.egenmeldingsperiode .periodeTom {
+    margin-right: 1rem;
+    padding: 0.5rem 0;
+}
+
+.egenmeldingsperiode:not(:last-child) {
+    border-bottom: 1px solid grey;
+}
+
+@media (max-width: 672px) {
+    .egenmeldingsperiode {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

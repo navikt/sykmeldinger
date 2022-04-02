@@ -1,0 +1,9 @@
+.opplysningSection {
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--skillelinje-farge);
+    padding-top: 2rem;
+}
+
+.opplysningSection .title {
+    margin-bottom: 1rem;
+}
