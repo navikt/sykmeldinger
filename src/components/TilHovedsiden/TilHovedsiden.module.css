@@ -1,0 +1,9 @@
+.tilHovedsiden {
+    margin-top: 2rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.tilHovedsiden .tilHovedsidenChevron {
+    margin-right: 0.5rem;
+}

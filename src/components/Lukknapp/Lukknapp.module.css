@@ -10,12 +10,12 @@
     background: none;
     color: #0067c5;
     border: none;
-
-    .button-text {
-        margin-right: 0.5rem;
-    }
 }
 
 .lukknapp:hover {
     text-decoration: underline;
+}
+
+.lukknapp .buttonText {
+    margin-right: 0.5rem;
 }

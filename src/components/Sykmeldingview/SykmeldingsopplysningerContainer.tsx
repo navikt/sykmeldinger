@@ -7,7 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import cn from 'classnames';
 
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
-import Lukknapp from '../Lukknapp/Lukknap';
+import Lukknapp from '../Lukknapp/Lukknapp';
 import Spacing from '../Spacing/Spacing';
 
 import Sykmeldingview from './Sykmeldingview';

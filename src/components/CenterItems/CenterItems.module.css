@@ -1,13 +1,13 @@
-.center-items {
+.centerItems {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.center-items--vertical {
+.centerItemsVertical {
     justify-content: center;
 }
 
-.center-items--horizontal {
+.centerItemsHorizontal {
     align-items: center;
 }

@@ -4,12 +4,13 @@ import Lenke from 'nav-frontend-lenker';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import env from '../../utils/env';
-import './TilHovedsiden.less';
+
+import styles from './TilHovedsiden.module.css';
 
 const TilHovedsiden: React.FC = () => {
     return (
-        <Lenke href={env.SYKEFRAVAER_ROOT || '#'} className="til-hovedsiden">
-            <VenstreChevron className="til-hovedsiden__chevron" />
+        <Lenke href={env.SYKEFRAVAER_ROOT || '#'} className={styles.tilHovedsiden}>
+            <VenstreChevron className={styles.tilHovedsidenChevron} />
             <Normaltekst>Til hovedsiden ditt sykefravær</Normaltekst>
         </Lenke>
     );

@@ -5,23 +5,21 @@
     width: auto;
     overflow: visible;
     cursor: pointer;
-
     background: transparent;
-
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
+}
 
-    .iconbutton__tekst {
-        margin-left: 0.5rem;
-    }
+.iconbutton .iconbuttonTekst {
+    margin-left: 0.5rem;
+}
 
-    .iconbutton__tekst--cross {
-        color: #a13a28;
-    }
+.iconbutton .iconbuttonTekstCross {
+    color: #a13a28;
+}
 
-    .iconbutton__tekst--pluss {
-        color: #0067c5;
-    }
+.iconbutton .iconbuttonTekstPluss {
+    color: #0067c5;
 }
