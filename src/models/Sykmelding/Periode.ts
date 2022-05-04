@@ -7,8 +7,6 @@ import {
     IsInt,
     IsOptional,
     IsString,
-    Max,
-    Min,
     ValidateNested,
 } from 'class-validator';
 import 'dayjs/locale/nb';
@@ -26,8 +24,6 @@ enum Periodetype {
 
 class GradertPeriode {
     @IsInt()
-    @Min(0)
-    @Max(100)
     grad: number;
 
     @IsBoolean()
