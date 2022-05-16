@@ -1,9 +1,9 @@
-import Behandler from './Behandler';
+import { BehandlerSchema, Behandler, getBehandlerName } from './Behandler';
 
 describe('Behandler', () => {
     describe('getName', () => {
         it('Gets full name if mellomnavn is defined', () => {
-            const behandlerJson = {
+            const behandler: Behandler = BehandlerSchema.parse({
                 fornavn: 'Ola',
                 mellomnavn: 'Robert',
                 etternavn: 'Normann',
@@ -19,13 +19,13 @@ describe('Behandler', () => {
                     land: null,
                 },
                 tlf: null,
-            };
-            const behandler = new Behandler(behandlerJson);
-            expect(behandler.getName()).toBe('Ola Robert Normann');
+            });
+
+            expect(getBehandlerName(behandler)).toBe('Ola Robert Normann');
         });
 
         it('Gets partial name if mellomnavn is null', () => {
-            const behandlerJson = {
+            const behandler: Behandler = BehandlerSchema.parse({
                 fornavn: 'Ola',
                 mellomnavn: null,
                 etternavn: 'Normann',
@@ -41,9 +41,9 @@ describe('Behandler', () => {
                     land: null,
                 },
                 tlf: null,
-            };
-            const behandler = new Behandler(behandlerJson);
-            expect(behandler.getName()).toBe('Ola Normann');
+            });
+
+            expect(getBehandlerName(behandler)).toBe('Ola Normann');
         });
     });
 });

@@ -1,19 +1,15 @@
-import { validateOrReject } from 'class-validator';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
 
-import Brukerinformasjon from '../models/Brukerinformasjon';
-import env from '../utils/env';
+import { Brukerinformasjon, BrukerinformasjonSchema } from '../models/Brukerinformasjon';
+import { getPublicEnv } from '../utils/env';
 import { authenticatedGet } from '../utils/Fetch';
 
-function useBrukerinformasjon() {
-    return useQuery<Brukerinformasjon, Error>('brukerinformasjon', () =>
-        authenticatedGet(
-            `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/brukerinformasjon`,
-            async (maybeBrukerinformasjon) => {
-                const brukerinformasjon = new Brukerinformasjon(maybeBrukerinformasjon);
-                await validateOrReject(brukerinformasjon, { validationError: { target: false, value: false } });
-                return brukerinformasjon;
-            },
+const publicEnv = getPublicEnv();
+
+function useBrukerinformasjon(): UseQueryResult<Brukerinformasjon, Error> {
+    return useQuery('brukerinformasjon', () =>
+        authenticatedGet(`${publicEnv.publicPath}/api/proxy/v1/brukerinformasjon`, async (maybeBrukerinformasjon) =>
+            BrukerinformasjonSchema.parse(maybeBrukerinformasjon),
         ),
     );
 }

@@ -1,6 +1,8 @@
 import amplitude, { AmplitudeClient } from 'amplitude-js';
 
-import env from './env';
+import { getPublicEnv } from './env';
+
+const publicEnv = getPublicEnv();
 
 // https://github.com/navikt/analytics-taxonomy
 type EventName =
@@ -23,7 +25,7 @@ class AmplitudeInstance {
     constructor() {
         this.instance = amplitude.getInstance();
 
-        const amplitudeKey = env.AMPLITUDE_ENABLED;
+        const amplitudeKey = publicEnv.AMPLITUDE_ENABLED;
         if (amplitudeKey === 'true') {
             this.instance.init('default', undefined, {
                 apiEndpoint: 'amplitude.nav.no/collect-auto',
@@ -38,7 +40,7 @@ class AmplitudeInstance {
         }
     }
 
-    public logEvent(eventName: EventName, data: EventData) {
+    public logEvent(eventName: EventName, data: EventData): void {
         this.instance.logEvent(eventName, data);
     }
 }

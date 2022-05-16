@@ -10,17 +10,16 @@ Lever under:
 
 Tekniske valg:
 
--   Laget med [Create React App](https://github.com/facebook/create-react-app)
--   Craco for konfigurasjon av utvidelser slik at man kan bruke craco-less for kompilering av less-filer. Dette fordi designbiblioteket bruker Less til styling.
+-   NextJS
 -   React-query for håndtering av server state.
--   Class-validator for validering av "ukjent" data fra diverse API.
--   React-testing-library for enhetstesting av enkeltkomponenter.
-
-## Environment-variabler
-
-Environment-variable settes på `window._env_` i brukerens browser via scriptet `/env-config.js`. Her blir variable som er definert i `.env`-filen ved root av dette repoet hentet fra environment variablene definert i poden. På denne holder det å bygge ett docker image selv om det skal deployes til flere miljøer. Se `nais-*.yaml` i root for finne ut hvilke varible som er satt i forskjellige miljø.
+-   zod for validering av "ukjent" data fra diverse API.
+-   react-testing-library for enhetstesting av enkeltkomponenter.
 
 ## Kjør lokalt
+
+```bash
+yarn
+```
 
 ```bash
 yarn start

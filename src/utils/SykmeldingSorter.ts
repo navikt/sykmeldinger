@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { Sykmelding } from '../models/Sykmelding/Sykmelding';
+import { getSykmeldingStartDate, Sykmelding } from '../models/Sykmelding/Sykmelding';
 
 /** Class with utility functions for sorting sykmeldinger. */
 class SykmeldingSorter {
@@ -11,9 +11,9 @@ class SykmeldingSorter {
      */
     static sortSykmeldingerByDate(sykmeldinger: Sykmelding[]): Sykmelding[] {
         return [...sykmeldinger].sort((a, b) => {
-            if (dayjs(a.getSykmeldingStartDate()).isAfter(dayjs(b.getSykmeldingStartDate()))) {
+            if (dayjs(getSykmeldingStartDate(a)).isAfter(dayjs(getSykmeldingStartDate(b)))) {
                 return -1;
-            } else if (dayjs(a.getSykmeldingStartDate()).isBefore(b.getSykmeldingStartDate())) {
+            } else if (dayjs(getSykmeldingStartDate(a)).isBefore(getSykmeldingStartDate(b))) {
                 return 0;
             }
             return 1;

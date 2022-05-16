@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 
 import { logger } from '../utils/logger';
-import env from '../utils/env';
+import { getPublicEnv } from '../utils/env';
+
+const publicEnv = getPublicEnv();
 
 type TriggerType =
     | 'SYKMELDING_LISTEVISNING'
@@ -24,9 +26,9 @@ function isHotjarFunction(hj: unknown): hj is HotjarFunction {
     return typeof hj === 'function';
 }
 
-const useHotjarTrigger = (triggerType: TriggerType) => {
+const useHotjarTrigger = (triggerType: TriggerType): void => {
     useEffect(() => {
-        if (env.RUNTIME_ENVIRONMENT === 'production') {
+        if (publicEnv.RUNTIME_ENVIRONMENT === 'production') {
             setTimeout(() => {
                 const hotjarWindow = window as HotjarWindow;
 
@@ -37,7 +39,9 @@ const useHotjarTrigger = (triggerType: TriggerType) => {
                 }
             }, 500);
         } else {
-            console.info(`Not loading Hotjar ${triggerType} because the application is not in production`);
+            if (process.env.NODE_ENV !== 'test') {
+                console.info(`Not loading Hotjar ${triggerType} because the application is not in production`);
+            }
         }
     }, [triggerType]);
 };

@@ -1,30 +1,33 @@
-import { validateOrReject } from 'class-validator';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
 
-import { Sykmelding } from '../models/Sykmelding/Sykmelding';
+import {
+    getSykmeldingEndDate,
+    getSykmeldingStartDate,
+    Sykmelding,
+    SykmeldingSchema,
+} from '../models/Sykmelding/Sykmelding';
 import { authenticatedGet } from '../utils/Fetch';
-import env from '../utils/env';
+import { getPublicEnv } from '../utils/env';
 import { logger } from '../utils/logger';
 
-function useSykmelding(sykmeldingId: string) {
-    return useQuery<Sykmelding, Error>(['sykmelding', sykmeldingId], () =>
+const publicEnv = getPublicEnv();
+
+function useSykmelding(sykmeldingId: string): UseQueryResult<Sykmelding, Error> {
+    return useQuery(['sykmelding', sykmeldingId], () =>
         authenticatedGet(
-            `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}`,
+            `${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}`,
             async (maybeSykmelding) => {
-                const sykmelding = new Sykmelding(maybeSykmelding);
+                const sykmelding = SykmeldingSchema.parse(maybeSykmelding);
 
                 // Temporary log, probably doesn't happen, TODO: remove
                 if (sykmelding.id === 'null') {
                     logger.error(
-                        `Sykmelding with id "NULL" (not null), fom: ${sykmelding.getSykmeldingStartDate()} tom: ${sykmelding.getSykmeldingEndDate()}`,
+                        `Sykmelding with id "NULL" (not null), fom: ${getSykmeldingStartDate(
+                            sykmelding,
+                        )} tom: ${getSykmeldingEndDate(sykmelding)}`,
                     );
                 }
 
-                if (sykmelding.behandlingsutfall.status !== 'INVALID') {
-                    await validateOrReject(sykmelding, {
-                        validationError: { target: false, value: false },
-                    });
-                }
                 return sykmelding;
             },
         ),

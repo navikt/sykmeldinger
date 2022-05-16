@@ -1,47 +1,25 @@
-import { validateOrReject } from 'class-validator';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
+import { z } from 'zod';
 
-import { Sykmelding } from '../models/Sykmelding/Sykmelding';
-import { assert } from '../utils/Assert';
-import env from '../utils/env';
+import { Sykmelding, SykmeldingSchema } from '../models/Sykmelding/Sykmelding';
+import { getPublicEnv } from '../utils/env';
 import { authenticatedGet } from '../utils/Fetch';
 import { logger } from '../utils/logger';
 
-function useSykmeldinger() {
-    return useQuery<Sykmelding[], Error>('sykmeldinger', () =>
-        authenticatedGet(
-            `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger`,
-            async (maybeSykmeldinger, response) => {
-                assert(
-                    Array.isArray(maybeSykmeldinger),
-                    `Sykmeldinger of type ${typeof maybeSykmeldinger} is not of expected type Array`,
-                );
-                const sykmeldinger = await Promise.all(
-                    maybeSykmeldinger.map(async (sm) => {
-                        const sykmelding = new Sykmelding(sm);
+const publicEnv = getPublicEnv();
 
-                        if (!sykmelding.pasient) {
-                            const metadata = {
-                                correlationId: response.headers.get('x-correlation-id') ?? 'No correlation id',
-                                transationId: response.headers.get('x-global-transaction-id') ?? 'No transaction id',
-                            };
+function useSykmeldinger(): UseQueryResult<Sykmelding[], Error> {
+    return useQuery('sykmeldinger', () =>
+        authenticatedGet(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger`, async (maybeSykmeldinger) => {
+            const sykmeldinger = z.array(SykmeldingSchema).safeParse(maybeSykmeldinger);
 
-                            logger.error({
-                                message: 'Mysterious incomplete Sykemelding-objekt, missing pasient',
-                                metadata,
-                            });
-                        }
+            if (!sykmeldinger.success) {
+                logger.error(sykmeldinger.error.errors);
+                throw new Error('Unable to parse sykmeldinger');
+            }
 
-                        if (sykmelding.behandlingsutfall.status !== 'INVALID') {
-                            await validateOrReject(sykmelding, { validationError: { target: false, value: false } });
-                        }
-
-                        return sykmelding;
-                    }),
-                );
-                return sykmeldinger;
-            },
-        ),
+            return sykmeldinger.data;
+        }),
     );
 }
 

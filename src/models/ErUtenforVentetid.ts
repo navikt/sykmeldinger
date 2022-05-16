@@ -1,18 +1,9 @@
-import { IsBoolean, IsDate, IsOptional } from 'class-validator';
-import { parseISO } from 'date-fns';
+import { z } from 'zod';
 
-class ErUtenforVentetid {
-    @IsBoolean()
-    readonly erUtenforVentetid: boolean;
+import { LocalDateSchema } from './date';
 
-    @IsOptional()
-    @IsDate()
-    readonly oppfolgingsdato?: Date;
-
-    constructor(data: any) {
-        this.erUtenforVentetid = data.erUtenforVentetid;
-        this.oppfolgingsdato = data.oppfolgingsdato ? parseISO(data.oppfolgingsdato) : undefined;
-    }
-}
-
-export default ErUtenforVentetid;
+export type ErUtenforVentetid = z.infer<typeof ErUtenforVentetidSchema>;
+export const ErUtenforVentetidSchema = z.object({
+    erUtenforVentetid: z.boolean(),
+    oppfolgingsdato: LocalDateSchema.nullable(),
+});

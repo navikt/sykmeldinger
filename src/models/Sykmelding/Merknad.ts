@@ -1,17 +1,7 @@
-import { IsOptional, IsString } from 'class-validator';
+import { z } from 'zod';
 
-class Merknad {
-    @IsString()
-    type: string;
-
-    @IsOptional()
-    @IsString()
-    beskrivelse?: string;
-
-    constructor(data: any) {
-        this.type = data.type;
-        this.beskrivelse = data.beskrivelse ?? undefined;
-    }
-}
-
-export default Merknad;
+export type Merknad = z.infer<typeof MerknadSchema>;
+export const MerknadSchema = z.object({
+    type: z.string(),
+    beskrivelse: z.string().nullable(),
+});

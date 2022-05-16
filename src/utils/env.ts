@@ -1,44 +1,31 @@
-type EnvironmentKeys =
-    | 'RUNTIME_ENVIRONMENT'
-    | 'SYKMELDINGER_BACKEND_PROXY_ROOT'
-    | 'FLEX_GATEWAY_ROOT'
-    | 'DITT_NAV_ROOT'
-    | 'SYKMELDINGER_ROOT'
-    | 'SYKEFRAVAER_ROOT'
-    | 'LOGIN_SERVICE_URL'
-    | 'LOGIN_SERVICE_REDIRECT_URL'
-    | 'SYKEPENGESOKNAD_URL'
-    | 'AMPLITUDE_ENABLED';
+import getConfig from 'next/config';
 
-/**
- * Extend window object with the potential env object, but only for this file
- */
-interface WindowWithEnv extends Window {
-    _env_?: Record<string, unknown>;
+export interface PublicEnv {
+    publicPath: string | undefined;
+    RUNTIME_ENVIRONMENT: 'dev' | 'test' | 'local' | 'labs' | 'production';
+    DITT_NAV_ROOT: string;
+    SYKEFRAVAER_ROOT: string;
+    LOGIN_SERVICE_URL: string;
+    LOGIN_SERVICE_REDIRECT_URL: string;
+    SYKEPENGESOKNAD_URL: string;
+    AMPLITUDE_ENABLED: string;
 }
 
-declare const window: WindowWithEnv;
-
-function getEnv(): Record<EnvironmentKeys, string | undefined> {
-    // Both test and production pulls env from window._env_
-    if (process.env.NODE_ENV !== 'development') {
-        if (!window._env_) throw new Error('Unable to load client environment');
-        // TODO verify shape
-        return window._env_ as Record<EnvironmentKeys, string | undefined>;
-    }
-
-    return {
-        RUNTIME_ENVIRONMENT: 'development',
-        DITT_NAV_ROOT: '/dittnav',
-        SYKEFRAVAER_ROOT: '/sykefravaer',
-        SYKMELDINGER_ROOT: '/syk/sykmeldinger',
-        SYKEPENGESOKNAD_URL: '/sykepengesoknad',
-        LOGIN_SERVICE_URL: undefined,
-        LOGIN_SERVICE_REDIRECT_URL: undefined,
-        AMPLITUDE_ENABLED: 'true',
-        SYKMELDINGER_BACKEND_PROXY_ROOT: '/sykmeldinger-backend-proxy',
-        FLEX_GATEWAY_ROOT: '/flex-gateway',
-    };
+export interface ServerEnv {
+    SYKMELDINGER_BACKEND: string;
+    FLEX_GATEWAY_ROOT: string;
 }
 
-export default getEnv();
+export function getPublicEnv(): PublicEnv {
+    const { publicRuntimeConfig } = getConfig();
+
+    return publicRuntimeConfig;
+}
+
+export function getServerEnv(): ServerEnv {
+    const { serverRuntimeConfig } = getConfig();
+
+    return serverRuntimeConfig;
+}
+
+export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || getPublicEnv().RUNTIME_ENVIRONMENT === 'labs';

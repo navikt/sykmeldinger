@@ -1,18 +1,7 @@
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { z } from 'zod';
 
-class ArbeidsgiverSykmelding {
-    @IsOptional()
-    @IsString()
-    navn?: string;
-
-    @IsOptional()
-    @IsInt()
-    stillingsprosent?: number;
-
-    constructor(data: any) {
-        this.navn = data.navn ?? undefined;
-        this.stillingsprosent = data.stillingsprosent ?? undefined;
-    }
-}
-
-export default ArbeidsgiverSykmelding;
+export type ArbeidsgiverSykmelding = z.infer<typeof ArbeidsgiverSykmeldingSchema>;
+export const ArbeidsgiverSykmeldingSchema = z.object({
+    navn: z.string(),
+    stillingsprosent: z.number().nullable(),
+});

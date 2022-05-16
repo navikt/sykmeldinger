@@ -1,13 +1,15 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, UseMutationResult, useQueryClient } from 'react-query';
 
-import env from '../utils/env';
+import { getPublicEnv } from '../utils/env';
 import { authenticatedPost } from '../utils/Fetch';
 
-function useGjenapne(sykmeldingId: string) {
+const publicEnv = getPublicEnv();
+
+function useGjenapne(sykmeldingId: string): UseMutationResult<unknown, Error, void> {
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
-        () => authenticatedPost(`${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/gjenapne`),
+        () => authenticatedPost(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}/gjenapne`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

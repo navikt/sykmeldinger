@@ -2,15 +2,17 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Lenke from 'nav-frontend-lenker';
 
-import Periode from '../../models/Sykmelding/Periode';
-import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
+import { Periode, Periodetype } from '../../models/Sykmelding/Periode';
+import { SykmeldingStatus } from '../../models/Sykmelding/SykmeldingStatus';
 import Spacing from '../Spacing/Spacing';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
-import Merknad from '../../models/Sykmelding/Merknad';
+import { Merknad } from '../../models/Sykmelding/Merknad';
 import { Merknadtype } from '../InformationBanner/InformationBanner';
-import env from '../../utils/env';
+import { getPublicEnv } from '../../utils/env';
 
 import styles from './StatusInfo.module.css';
+
+const publicEnv = getPublicEnv();
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatus;
@@ -18,8 +20,12 @@ interface StatusInfoProps {
     sykmeldingMerknader: Merknad[];
 }
 
-const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingsperioder, sykmeldingMerknader }) => {
-    const erAvventende = sykmeldingsperioder.some((p) => p.type === 'AVVENTENDE');
+function StatusInfo({
+    sykmeldingStatus,
+    sykmeldingsperioder,
+    sykmeldingMerknader,
+}: StatusInfoProps): JSX.Element | null {
+    const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.AVVENTENDE);
 
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
         (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
@@ -98,7 +104,7 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
                 <Spacing amount="small">
                     <Normaltekst>
                         Du kan kikke på det allerede nå i{' '}
-                        <Lenke href={env.SYKEPENGESOKNAD_URL || '#'}>dine søknader</Lenke>.
+                        <Lenke href={publicEnv.SYKEPENGESOKNAD_URL || '#'}>dine søknader</Lenke>.
                     </Normaltekst>
                 </Spacing>
 
@@ -118,6 +124,6 @@ const StatusInfo: React.FC<StatusInfoProps> = ({ sykmeldingStatus, sykmeldingspe
             </Veilederpanel>
         </div>
     );
-};
+}
 
 export default StatusInfo;

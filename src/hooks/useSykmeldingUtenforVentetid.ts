@@ -1,19 +1,16 @@
-import { validateOrReject } from 'class-validator';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
 
-import ErUtenforVentetid from '../models/ErUtenforVentetid';
-import env from '../utils/env';
+import { ErUtenforVentetid, ErUtenforVentetidSchema } from '../models/ErUtenforVentetid';
+import { getPublicEnv } from '../utils/env';
 import { authenticatedGet } from '../utils/Fetch';
 
-function useSykmeldingUtenforVentetid(sykmeldingId: string) {
-    return useQuery<ErUtenforVentetid, Error>(['erUtenforVentetid', sykmeldingId], () =>
-        authenticatedGet(
-            `${env.FLEX_GATEWAY_ROOT}/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingId}/erUtenforVentetid`,
-            async (maybeErUtenforVentetid) => {
-                const erUtenforVentetid = new ErUtenforVentetid(maybeErUtenforVentetid);
-                await validateOrReject(erUtenforVentetid, { validationError: { target: false, value: false } });
-                return erUtenforVentetid;
-            },
+const publicEnv = getPublicEnv();
+
+function useSykmeldingUtenforVentetid(sykmeldingId: string): UseQueryResult<ErUtenforVentetid, Error> {
+    return useQuery(['erUtenforVentetid', sykmeldingId], () => {
+        return authenticatedGet(
+            `${publicEnv.publicPath}/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingId}/erUtenforVentetid`,
+            async (maybeErUtenforVentetid) => ErUtenforVentetidSchema.parse(maybeErUtenforVentetid),
         ).then((value) => {
             if (!value.erUtenforVentetid && !value.oppfolgingsdato) {
                 console.warn(
@@ -21,8 +18,8 @@ function useSykmeldingUtenforVentetid(sykmeldingId: string) {
                 );
             }
             return value;
-        }),
-    );
+        });
+    });
 }
 
 export default useSykmeldingUtenforVentetid;

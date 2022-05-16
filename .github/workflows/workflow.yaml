@@ -1,79 +1,9 @@
 name: Push
 on: push
 env:
-  APP: sykmeldinger
+  DOCKER_IMAGE: ghcr.io/navikt/sykmeldinger:${{ github.sha }}
+  NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 jobs:
-  snyk-test:
-    name: analyze dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --org=teamsykmelding --severity-threshold=high --all-projects
-  build-and-publish:
-    name: Bygg, test og push Docker image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Generer versjon og image navn
-        run: |
-          TIME=$(TZ="Europe/Oslo" date +%Y.%m.%d-%H.%M)
-          COMMIT=$(git rev-parse --short=8 HEAD)
-          VERSION=$TIME-$COMMIT
-          echo "IMAGE_SYK_SYKMELDINGER=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-      - run: echo $VERSION > VERSION.txt
-      - name: Last opp VERSION til neste job
-        uses: actions/upload-artifact@v1
-        with:
-          name: VERSION.txt
-          path: VERSION.txt
-      - name: Install dependencies
-        run: yarn --immutable
-      - name: Run lint
-        run: yarn lint
-      - name: Run tests
-        run: CI=true yarn test
-      - name: Build application
-        run: yarn build
-      - name: Build server
-        run: yarn workspace sykmeldinger-bff build
-      - name: Upload sources with sourcemaps
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v1
-        with:
-          name: sources-with-sourcemaps
-          path: build/static
-      - name: Slett sourcemaps
-        run: |
-          rm ./build/static/js/*.map
-          rm ./build/static/css/*.map
-      - name: Docker login
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-        run: docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-      - name: Bygg og push Docker image hvor appen serves på /syk/sykmeldinger
-        run: |
-          docker build . -t ${IMAGE_SYK_SYKMELDINGER}
-          docker push ${IMAGE_SYK_SYKMELDINGER}
-
   snyk-monitor:
     if: github.ref == 'refs/heads/master'
     name: monitor dependencies
@@ -88,45 +18,83 @@ jobs:
         with:
           command: monitor
           args: --org=teamsykmelding --severity-threshold=high --all-projects
+  snyk-test:
+    name: analyze dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --org=teamsykmelding --severity-threshold=high --all-projects
+  build-and-publish:
+    name: Bygg, test og push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - run: yarn --immutable
+      - run: yarn lint
+      - run: yarn test
+      - run: yarn build
+      - name: Report debt
+        run: ./scripts/debt.sh >> $GITHUB_STEP_SUMMARY
+      - name: Login GCP dev
+        uses: google-github-actions/auth@v0.7.1
+        with:
+          credentials_json: ${{ secrets.STATIC_FILES_DEV }}
+      - name: Upload static files to GCP bucket
+        uses: google-github-actions/upload-cloud-storage@v0.10.1
+        with:
+          path: .next/static
+          parent: false
+          destination: teamsykmelding-static-files-dev/sykmeldinger/_next/static
+      - name: Login GCP prod
+        if: github.ref == 'refs/heads/main'
+        uses: google-github-actions/auth@v0.7.1
+        with:
+          credentials_json: ${{ secrets.STATIC_FILES_PROD }}
+      - name: Upload static files to GCP prod bucket
+        if: github.ref == 'refs/heads/main'
+        uses: google-github-actions/upload-cloud-storage@v0.10.1
+        with:
+          path: .next/static
+          parent: false
+          destination: teamsykmelding-static-files-prod/sykmeldinger/_next/static
+      - name: Build and publish Docker image
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo ${GITHUB_TOKEN} | docker login ghcr.io --username ${GITHUB_REPOSITORY} --password-stdin
+          docker build --build-arg NPM_AUTH_TOKEN=${NPM_AUTH_TOKEN} --tag ${DOCKER_IMAGE} .
+          docker push ${DOCKER_IMAGE}
 
-  deploy-to-q1-dev-gcp:
-    name: Deploy to q1 dev-gcp
+  deploy-to-dev-gcp:
+    name: Deploy to dev-gcp
     needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/download-artifact@v1
-        with:
-          name: VERSION.txt
-          path: .
-      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
-      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
-      - name: Deploy to dev-gcp
-        uses: nais/deploy/actions/deploy@v1
+      - uses: actions/checkout@v3
+      - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais-dev-gcp.yaml
-
-  deploy-to-prod-gcp:
-    if: github.ref == 'refs/heads/master'
-    name: Deploy to prod
-    needs: [build-and-publish, snyk-test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/download-artifact@v1
-        with:
-          name: VERSION.txt
-          path: .
-      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
-      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
-      - name: Deploy to prod-gcp
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-gcp
-          RESOURCE: nais-prod.yaml
+          VAR: image=${{ env.DOCKER_IMAGE }},version=${{ github.sha }}
 
   deploy-to-labs-gcp:
     if: github.ref == 'refs/heads/master'
@@ -134,16 +102,24 @@ jobs:
     needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/download-artifact@v1
-        with:
-          name: VERSION.txt
-          path: .
-      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
-      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP-syk-sykmeldinger:$VERSION" >> $GITHUB_ENV
-      - name: Deploy to labs-gcp
-        uses: nais/deploy/actions/deploy@v1
+      - uses: actions/checkout@v3
+      - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: labs-gcp
           RESOURCE: nais-labs.yaml
+          VAR: image=${{ env.DOCKER_IMAGE }}
+
+  deploy-to-prod-gcp:
+    if: github.ref == 'refs/heads/master'
+    name: Deploy to prod
+    needs: [build-and-publish, snyk-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: nais-prod-gcp.yaml
+          VAR: image=${{ env.DOCKER_IMAGE }},version=${{ github.sha }}

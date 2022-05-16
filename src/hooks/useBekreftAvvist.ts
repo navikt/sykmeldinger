@@ -1,16 +1,16 @@
 import { useMutation, useQueryClient } from 'react-query';
+import { UseMutationResult } from 'react-query/types/react/types';
 
 import { authenticatedPost } from '../utils/Fetch';
-import env from '../utils/env';
+import { getPublicEnv } from '../utils/env';
 
-function useBekreftAvvist(sykmeldingId: string) {
+const publicEnv = getPublicEnv();
+
+function useBekreftAvvist(sykmeldingId: string): UseMutationResult<unknown, Error, void> {
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
-        () =>
-            authenticatedPost(
-                `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/bekreftAvvist`,
-            ),
+        () => authenticatedPost(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}/bekreftAvvist`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

@@ -1,0 +1,7 @@
+{
+    "rules": {
+        // These rules are disabled in these page tests only
+        "testing-library/no-node-access": "off",
+        "@typescript-eslint/no-non-null-assertion": "off"
+    }
+}

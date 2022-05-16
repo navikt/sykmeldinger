@@ -1,5 +1,4 @@
-import 'reflect-metadata';
-import Pasient from './Pasient';
+import { getPasientName } from './Pasient';
 
 describe('Pasient', () => {
     describe('getName', () => {
@@ -10,8 +9,7 @@ describe('Pasient', () => {
                 mellomnavn: 'Halvor',
                 etternavn: 'Nordmann',
             };
-            const pasient = new Pasient(plainJson);
-            expect(pasient.getName()).toEqual('Ola Halvor Nordmann');
+            expect(getPasientName(plainJson)).toEqual('Ola Halvor Nordmann');
         });
 
         it('Returns name without middle name', () => {
@@ -21,8 +19,7 @@ describe('Pasient', () => {
                 mellomnavn: null,
                 etternavn: 'Nordmann',
             };
-            const pasient = new Pasient(plainJson);
-            expect(pasient.getName()).toEqual('Ola Nordmann');
+            expect(getPasientName(plainJson)).toEqual('Ola Nordmann');
         });
 
         it('Returns undefined for missing fornavn', () => {
@@ -32,8 +29,7 @@ describe('Pasient', () => {
                 mellomnavn: null,
                 etternavn: 'Nordmann',
             };
-            const pasient = new Pasient(plainJson);
-            expect(pasient.getName()).toBeUndefined();
+            expect(getPasientName(plainJson)).toBeUndefined();
         });
     });
 });

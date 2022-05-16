@@ -1,14 +1,14 @@
 import { AlertStripeInfo, AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { Element, Systemtittel } from 'nav-frontend-typografi';
 
-import Behandlingsutfall from '../../models/Sykmelding/Behandlingsutfall';
-import SykmeldingStatus from '../../models/Sykmelding/SykmeldingStatus';
-import DateFormatter from '../../utils/DateFormatter';
+import { Behandlingsutfall } from '../../models/Sykmelding/Behandlingsutfall';
+import { SykmeldingStatus } from '../../models/Sykmelding/SykmeldingStatus';
+import { toReadableDate } from '../../utils/dateUtils';
 
 interface StatusBannerProps {
     sykmeldingStatus: SykmeldingStatus;
     behandlingsutfall: Behandlingsutfall;
-    egenmeldt?: boolean;
+    egenmeldt?: boolean | null;
 }
 
 const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlingsutfall, egenmeldt = false }) => {
@@ -17,7 +17,7 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlin
             return (
                 <AlertStripeInfo>
                     Du bekreftet at du har lest at sykmeldingen er avvist den{' '}
-                    {DateFormatter.toReadableDate(sykmeldingStatus.timestamp)}
+                    {toReadableDate(sykmeldingStatus.timestamp)}
                 </AlertStripeInfo>
             );
         }
@@ -29,7 +29,7 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlin
                 <Systemtittel tag="h2">
                     Sykmeldingen ble sendt til {sykmeldingStatus.arbeidsgiver?.orgNavn}
                 </Systemtittel>
-                <Element>{DateFormatter.toReadableDate(sykmeldingStatus.timestamp)}</Element>
+                <Element>{toReadableDate(sykmeldingStatus.timestamp)}</Element>
             </AlertStripeSuksess>
         );
     }
@@ -38,7 +38,7 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlin
         return (
             <AlertStripeSuksess>
                 <Systemtittel tag="h2">{egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble sendt til NAV</Systemtittel>
-                <Element>{DateFormatter.toReadableDate(sykmeldingStatus.timestamp)}</Element>
+                <Element>{toReadableDate(sykmeldingStatus.timestamp)}</Element>
             </AlertStripeSuksess>
         );
     }

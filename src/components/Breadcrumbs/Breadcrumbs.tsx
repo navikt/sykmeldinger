@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Link as DsLink } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import env from '../../utils/env';
+import { getPublicEnv } from '../../utils/env';
 
 import styles from './Breadcrumbs.module.css';
 
-const PersonIcon = () => {
+const publicEnv = getPublicEnv();
+
+const PersonIcon = (): JSX.Element => {
     return (
         <svg
             width="30"
@@ -17,7 +19,6 @@ const PersonIcon = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
         >
-            <defs></defs>
             <title>personikon</title>
             <path
                 className="cls-1"
@@ -36,8 +37,8 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
     if (path) {
         return (
             <li className={styles.breadcrumbsCrumb}>
-                <Link to={path} className="lenke">
-                    {title}
+                <Link href={path} passHref>
+                    <DsLink>{title}</DsLink>
                 </Link>
             </li>
         );
@@ -62,12 +63,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
             </div>
             <Normaltekst tag="ul" className={styles.breadcrumbsCrumbs}>
                 <li className={styles.breadcrumbsCrumb}>
-                    <DsLink href={env.DITT_NAV_ROOT || '#'} className="lenke">
+                    <DsLink href={publicEnv.DITT_NAV_ROOT || '#'} className="lenke">
                         Ditt NAV
                     </DsLink>
                 </li>
                 <li className={styles.breadcrumbsCrumb}>
-                    <DsLink href={env.SYKEFRAVAER_ROOT || '#'} className="lenke">
+                    <DsLink href={publicEnv.SYKEFRAVAER_ROOT || '#'} className="lenke">
                         Ditt sykefravær
                     </DsLink>
                 </li>

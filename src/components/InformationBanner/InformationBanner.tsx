@@ -2,7 +2,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Veileder from 'nav-frontend-veileder';
 
-import Merknad from '../../models/Sykmelding/Merknad';
+import { Merknad } from '../../models/Sykmelding/Merknad';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 
 import styles from './InformationBanner.module.css';
@@ -14,11 +14,11 @@ export enum Merknadtype {
 }
 
 interface InformationBannerProps {
-    merknader?: Merknad[];
-    papirsykmelding?: boolean;
+    merknader?: Merknad[] | null;
+    papirsykmelding?: boolean | null;
 }
 
-const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirsykmelding }) => {
+const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProps): JSX.Element => {
     if (merknader?.some((merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING)) {
         return (
             <div data-testid="merknad-banner">
@@ -54,10 +54,10 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
         return (
             <div data-testid="merknad-banner">
                 <Veilederpanel kompakt type="plakat" svg={<VeilederMaleSvg />}>
-                    <Undertittel tag="h2" className={styles.merknadBannerTitle}>
+                    <Undertittel tag="h2" className={styles.title}>
                         Behov for mer opplysninger
                     </Undertittel>
-                    <Normaltekst className={styles.merknadBannerParagraph}>
+                    <Normaltekst className={styles.paragraph}>
                         Sykmeldingen din starter tidligere enn den dagen du var hos behandleren. Vi innhenter
                         opplysninger om hvorfor sykmeldingen er datert tilbake.
                     </Normaltekst>
@@ -70,20 +70,16 @@ const InformationBanner: React.FC<InformationBannerProps> = ({ merknader, papirs
     if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING)) {
         return (
             <div data-testid="merknad-banner">
-                <Veilederpanel
-                    fargetema="advarsel"
-                    type="plakat"
-                    svg={<VeilederMaleSvg />}
-                >
-                    <Undertittel tag="h2" className={styles.merknadBannerTitle}>
+                <Veilederpanel fargetema="advarsel" type="plakat" svg={<VeilederMaleSvg />}>
+                    <Undertittel tag="h2" className={styles.title}>
                         Viktig informasjon
                     </Undertittel>
-                    <Normaltekst className={styles.merknadBannerParagraph}>
+                    <Normaltekst className={styles.paragraph}>
                         Vanligvis starter sykmeldingen fra den dagen du er hos legen. I ditt tilfelle har legen skrevet
                         at den startet tidligere. NAV må derfor vurdere om det er en gyldig grunn for at sykmeldingen
                         din starter før du var i kontakt med legen.
                     </Normaltekst>
-                    <Normaltekst className={styles.merknadBannerParagraph}>
+                    <Normaltekst className={styles.paragraph}>
                         Du kan fortsatt sende inn sykmeldingen som vanlig.
                     </Normaltekst>
                     <hr className={styles.merknadBannerRuler} />
