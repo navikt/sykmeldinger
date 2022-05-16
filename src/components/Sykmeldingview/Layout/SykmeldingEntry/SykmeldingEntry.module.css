@@ -1,3 +1,9 @@
 .sykmeldingEntry:not(:last-child) {
     margin-bottom: 2rem;
 }
+
+.borderTop {
+    border-top: 1px solid var(--skillelinje-farge);
+    margin-top: 2rem;
+    padding-top: 2rem;
+}

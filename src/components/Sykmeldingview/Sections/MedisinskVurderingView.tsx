@@ -46,7 +46,7 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                 }
                 return null;
             })}
-            <div className={styles.fravaersgrunn}>
+            <div>
                 {!!(
                     medisinskVurdering.annenFraversArsak?.grunn &&
                     medisinskVurdering.annenFraversArsak?.grunn.length > 0
@@ -69,6 +69,7 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                     <SykmeldingEntry
                         title="Skadedato"
                         mainText={DateFormatter.toReadableDate(medisinskVurdering.yrkesskadeDato)}
+                        borderTop
                     />
                 )}
             </div>

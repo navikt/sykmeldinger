@@ -20,10 +20,19 @@
     position: absolute;
     top: 5px;
     right: 5px;
+    margin-bottom: 2rem;
+}
+
+.bold span {
+    font-weight: 600;
 }
 
 .avbrytPanelAvbrytKnapp {
     margin-bottom: 2rem;
+}
+
+.avbrytPanelAvbrytKnapp span {
+    font-weight: 600;
 }
 
 .avbrytPanelErDuSikker {

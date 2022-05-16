@@ -1,4 +1,5 @@
 import { Element, Undertekst, UndertekstBold } from 'nav-frontend-typografi';
+import cn from 'classnames';
 
 import SladdSvg from '../../Svg/SladdSvg';
 
@@ -10,9 +11,17 @@ interface SykmeldingEntryProps {
     subText?: string;
     small?: boolean;
     sladd?: boolean;
+    borderTop?: boolean;
 }
 
-const SykmeldingEntry: React.FC<SykmeldingEntryProps> = ({ title, mainText, subText, small, sladd = false }) => {
+const SykmeldingEntry: React.FC<SykmeldingEntryProps> = ({
+    title,
+    mainText,
+    subText,
+    small,
+    sladd = false,
+    borderTop,
+}) => {
     if (small) {
         return (
             <div className={styles.sykmeldingEntry}>
@@ -23,7 +32,7 @@ const SykmeldingEntry: React.FC<SykmeldingEntryProps> = ({ title, mainText, subT
     }
 
     return (
-        <div className={styles.sykmeldingEntry}>
+        <div className={cn(styles.sykmeldingEntry, { [styles.borderTop]: borderTop })}>
             <Element>{title}</Element>
             {sladd ? <SladdSvg /> : <Undertekst>{mainText}</Undertekst>}
             {!!subText && <UndertekstBold>{subText}</UndertekstBold>}
