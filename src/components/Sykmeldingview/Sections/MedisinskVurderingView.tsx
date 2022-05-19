@@ -2,7 +2,8 @@ import MedisinskVurdering, { AnnenFraverGrunn } from '../../../models/Sykmelding
 import DateFormatter from '../../../utils/DateFormatter';
 import JaEntry from '../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
-import './MedisinskVurderingView.less';
+
+import styles from './MedisinskVurderingView.module.css';
 
 interface MedisinskVurderingViewProps {
     medisinskVurdering?: MedisinskVurdering;
@@ -20,7 +21,7 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
         }
 
         return (
-            <div className="medisinsk-vurdering-view">
+            <div className={styles.medisinskVurderingView}>
                 {!!medisinskVurdering.hovedDiagnose?.tekst && (
                     <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} sladd />
                 )}
@@ -35,7 +36,7 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
     }
 
     return (
-        <div className="medisinsk-vurdering-view">
+        <div className={styles.medisinskVurderingView}>
             {!!medisinskVurdering.hovedDiagnose?.tekst && (
                 <SykmeldingEntry title="Diagnose" mainText={medisinskVurdering?.hovedDiagnose?.tekst} />
             )}
@@ -45,7 +46,7 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                 }
                 return null;
             })}
-            <div className="fravaersgrunn">
+            <div>
                 {!!(
                     medisinskVurdering.annenFraversArsak?.grunn &&
                     medisinskVurdering.annenFraversArsak?.grunn.length > 0
@@ -68,6 +69,7 @@ const MedisinskVurderingView: React.FC<MedisinskVurderingViewProps> = ({ medisin
                     <SykmeldingEntry
                         title="Skadedato"
                         mainText={DateFormatter.toReadableDate(medisinskVurdering.yrkesskadeDato)}
+                        borderTop
                     />
                 )}
             </div>

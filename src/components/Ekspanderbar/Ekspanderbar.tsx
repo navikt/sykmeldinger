@@ -1,7 +1,9 @@
 import NavFrontendChevron from 'nav-frontend-chevron';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { useState } from 'react';
-import './Ekspanderbar.less';
+import cn from 'classnames';
+
+import styles from './Ekspanderbar.module.css';
 
 interface EkspanderbarProps {
     title: string;
@@ -11,19 +13,22 @@ const Ekspanderbar: React.FC<EkspanderbarProps> = ({ title, children }) => {
     const [expanded, setExpanded] = useState<boolean>(false);
 
     return (
-        <div className="ekspanderbar">
+        <div className={styles.ekspanderbar}>
             <button
                 type="button"
                 aria-expanded={expanded}
                 onClick={() => {
                     setExpanded((prev) => !prev);
                 }}
-                className="ekspanderbar__toggle"
+                className={styles.toggle}
             >
-                <Element className="toggle-text">{title}</Element>
+                <Element className={styles.text}>{title}</Element>
                 <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
             </button>
-            <div style={{ display: expanded ? '' : 'none' }} aria-hidden={!expanded} className="ekspanderbar__content">
+            <div
+                aria-hidden={!expanded}
+                className={cn(styles.content, { [styles.displayNone]: !expanded })}
+            >
                 {typeof children === 'string' ? <Normaltekst>{children}</Normaltekst> : children}
             </div>
         </div>

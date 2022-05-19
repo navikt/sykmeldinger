@@ -1,0 +1,23 @@
+@keyframes blink {
+    0% {
+        fill: var(--eyes-open-color);
+    }
+    25% {
+        fill: var(--eyes-open-color);
+    }
+    26% {
+        fill: var(--eyes-closed-color);
+    }
+    30% {
+        fill: var(--eyes-closed-color);
+    }
+    31% {
+        fill: var(--eyes-open-color);
+    }
+}
+
+.eyes {
+    animation-name: blink;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}

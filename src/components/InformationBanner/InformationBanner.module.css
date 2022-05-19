@@ -1,0 +1,45 @@
+.merknadBannerSection {
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    margin-bottom: 1rem;
+}
+
+.paragraph {
+    margin-bottom: 0.5rem;
+}
+
+.merknadBannerRuler {
+    opacity: 0.5;
+    margin: 22px 0;
+}
+
+.veilederMottattSykmeldingen {
+    display: flex;
+    margin: 0 6rem 0 6rem;
+}
+
+.veilederMottattSykmeldingen :global(.nav-veileder) {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+.veilederMottattSykmeldingen :global(.typo-element) {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .veilederMottattSykmeldingen {
+        display: block;
+        margin: 0 0.5rem 0 0.5rem;
+    }
+
+    .veilederMottattSykmeldingen :global(.nav-veileder) {
+        margin-bottom: 1rem;
+    }
+
+    .veilederMottattSykmeldingen :global(.typo-element) {
+        display: block;
+    }
+}

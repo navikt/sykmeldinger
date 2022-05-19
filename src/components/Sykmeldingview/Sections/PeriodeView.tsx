@@ -1,7 +1,8 @@
 import Periode from '../../../models/Sykmelding/Periode';
 import JaEntry from '../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
-import './PeriodeView.less';
+
+import styles from './PeriodeView.module.css';
 
 interface PeriodeViewProps {
     perioder: Periode[];
@@ -9,9 +10,9 @@ interface PeriodeViewProps {
 
 const PeriodeView: React.FC<PeriodeViewProps> = ({ perioder }) => {
     return (
-        <div className="periode-view">
+        <div className={styles.periodeView}>
             {perioder.map((periode, index) => (
-                <div key={index} className="periode-view__periode">
+                <div key={index} className={styles.periode}>
                     <SykmeldingEntry
                         title={periode.getPeriodTitle()}
                         mainText={periode.getReadablePeriod()}

@@ -1,5 +1,4 @@
-import React from 'react';
-import './veilederSvg.less';
+import styles from './VeilederSvg.module.css';
 
 const veilederFemaleSvg = () => (
     <svg width="54" height="80" viewBox="0 0 54 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,14 +21,14 @@ const veilederFemaleSvg = () => (
             fill="#C86151"
         />
         <path
-            className="eyes"
+            className={styles.eyes}
             fillRule="evenodd"
             clipRule="evenodd"
             d="M21.4802 33.747C20.4826 33.8275 20.2034 32.2537 20.504 31.2259C20.5605 31.0311 20.8908 30.1442 21.4754 30.1442C22.0594 30.1442 22.3172 30.629 22.3531 30.7124C22.7826 31.7143 22.5716 33.6585 21.4802 33.747Z"
             fill="#3E3832"
         />
         <path
-            className="eyes"
+            className={styles.eyes}
             fillRule="evenodd"
             clipRule="evenodd"
             d="M33.0508 33.747C34.0484 33.8275 34.3277 32.2537 34.0271 31.2259C33.9705 31.0311 33.6403 30.1442 33.0556 30.1442C32.4717 30.1442 32.2138 30.629 32.178 30.7124C31.7484 31.7143 31.9594 33.6585 33.0508 33.747Z"

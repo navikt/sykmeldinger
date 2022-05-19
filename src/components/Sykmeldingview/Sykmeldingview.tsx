@@ -1,3 +1,5 @@
+import cn from 'classnames';
+
 import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
 import DateFormatter from '../../utils/DateFormatter';
 
@@ -15,7 +17,7 @@ import PrognoseView from './Sections/PrognoseView';
 import AnnetView from './Sections/AnnetView';
 import SykmeldingEntry from './Layout/SykmeldingEntry/SykmeldingEntry';
 import PasientView from './Sections/PasientView';
-import './Sykmeldingview.less';
+import styles from './Sykmeldingview.module.css';
 
 interface SykmeldingviewProps {
     sykmelding: Sykmelding;
@@ -24,18 +26,26 @@ interface SykmeldingviewProps {
 
 const Sykmeldingview: React.FC<SykmeldingviewProps> = ({ sykmelding, arbeidsgiver = false }) => {
     return (
-        <div className={`sykmeldingsview${arbeidsgiver ? '__arbeidsgiver' : ''}`}>
+        <div
+            className={cn({
+                [styles.sykmeldingsview]: !arbeidsgiver,
+                [styles.arbeidsgiver]: arbeidsgiver,
+            })}
+        >
             <PasientView pasient={sykmelding.pasient} arbeidsgiver={arbeidsgiver} />
 
-            <div style={{ marginBottom: '2rem' }}>
-                <PeriodeView perioder={sykmelding.getSykmeldingperioderSorted()} />
-            </div>
+            <PeriodeView perioder={sykmelding.getSykmeldingperioderSorted()} />
 
             <SykmeldingEntry title="Behandler" mainText={sykmelding.behandler.getName()} />
             <ArbeidsgiverView arbeidsgiver={sykmelding.arbeidsgiver} />
 
             <FlereOpplysninger disableExpand={arbeidsgiver}>
-                <div className={`dato-sykmeldingen-ble-skrevet${arbeidsgiver ? '__arbeidsgiver' : ''}`}>
+                <div
+                    className={cn({
+                        [styles.datoSykmeldingenBleSkrevet]: !arbeidsgiver,
+                        [styles.datoSykmeldingenBleSkrevetArbeidsgiver]: arbeidsgiver,
+                    })}
+                >
                     <SykmeldingEntry
                         title="Dato sykmeldingen ble skrevet"
                         //  TODO is this the correct field? Ref. slack thread

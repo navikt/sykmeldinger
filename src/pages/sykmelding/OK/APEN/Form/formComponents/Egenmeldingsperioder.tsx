@@ -11,7 +11,7 @@ import QuestionWrapper from '../layout/QuestionWrapper';
 import { FormShape, Egenmeldingsperiode } from '../Form';
 import IconButton from '../../../../../../components/IconButton/IconButton';
 
-import './Egenmeldingsperioder.less';
+import styles from './Egenmeldingsperioder.module.css';
 
 dayjs.extend(isBetween);
 
@@ -53,7 +53,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
 
             <div id={fieldName}>
                 {fields.map((field, index) => (
-                    <div key={field.id} className="egenmeldingsperiode">
+                    <div key={field.id} className={styles.egenmeldingsperiode}>
                         <Controller
                             control={control}
                             name={`${fieldName}.svar[${index}].fom`}
@@ -92,7 +92,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 },
                             }}
                             render={({ onChange, value, name }) => (
-                                <div className="egenmeldingsperiode__fom">
+                                <div className={styles.periodeFom}>
                                     <Normaltekst>Fra og med:</Normaltekst>
                                     <Datepicker
                                         locale="nb"
@@ -151,7 +151,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 },
                             }}
                             render={({ onChange, value, name }) => (
-                                <div className="egenmeldingsperiode__tom">
+                                <div className={styles.periodeTom}>
                                     <Normaltekst>Til og med:</Normaltekst>
                                     <Datepicker
                                         locale="nb"

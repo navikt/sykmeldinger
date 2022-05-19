@@ -9,6 +9,8 @@ import Header from '../Header/Header';
 import Spacing from '../Spacing/Spacing';
 import TilHovedsiden from '../TilHovedsiden/TilHovedsiden';
 
+import styles from './PageWrapper.module.css';
+
 interface PageWrapperProps {
     sykmelding?: Sykmelding;
 }
@@ -28,7 +30,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
         return (
             <>
                 <Header title="Dine sykmeldinger" />
-                <div className="limit">
+                <div className={styles.limit}>
                     <Brodsmuler
                         breadcrumbs={[
                             {
@@ -49,7 +51,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
         return (
             <>
                 <Header title={sykmelding?.getSykmeldingTitle()} subTitle={sykmelding?.getReadableSykmeldingLength()} />
-                <div className="limit">
+                <div className={styles.limit}>
                     <Brodsmuler
                         breadcrumbs={[
                             {
@@ -74,7 +76,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, sykmelding }) => {
         return (
             <>
                 <Header title={sykmelding?.getSykmeldingTitle()} subTitle={sykmelding?.getReadableSykmeldingLength()} />
-                <div className="limit">
+                <div className={styles.limit}>
                     <Brodsmuler
                         breadcrumbs={[
                             {

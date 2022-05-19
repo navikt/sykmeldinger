@@ -81,7 +81,7 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
                     <Normaltekst className={styles.avbrytPanelErDuSikker}>
                         Er du sikker på at du vil avbryte sykmeldingen?
                     </Normaltekst>
-                    <Button variant="danger" onClick={() => avbryt()}>
+                    <Button className={styles.bold} variant="danger" onClick={() => avbryt()}>
                         Ja, jeg er sikker {isLoading && <Loader />}
                     </Button>
 

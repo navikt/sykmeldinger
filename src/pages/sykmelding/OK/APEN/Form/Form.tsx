@@ -187,7 +187,7 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
                 {!maAvbryte && !erArbeidstakerMedStrengtFortroligAdressse && (
                     <Spacing>
                         <div style={{ textAlign: 'center' }}>
-                            <Button disabled={isSending || disable} variant="primary" type="submit">
+                            <Button className={styles.sendBekreftButton} disabled={isSending || disable} variant="primary" type="submit">
                                 {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding {isSending && <Loader />}
                             </Button>
                         </div>
