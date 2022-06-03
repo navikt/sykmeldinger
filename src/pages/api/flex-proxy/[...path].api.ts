@@ -26,6 +26,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
         headers: getHeaders(req),
     });
 
+    if (result.status === 401) {
+        res.status(401).json({ message: 'Du har blitt logget ut' });
+        return;
+    }
+
     if (!result.ok) {
         logger.error(`Proxy request failed: ${result.status} ${result.statusText}`);
         res.status(result.status).json({ message: `Noe gikk galt: ${result.statusText}` });
