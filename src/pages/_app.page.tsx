@@ -25,14 +25,16 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 refetchOnWindowFocus: false,
                 staleTime: Infinity,
                 onError: (err) => {
-                    logger.error('Error in react-query-client, query');
-                    logger.error(err);
+                    logger.error(
+                        `Error in react-query-client, query, url: ${location.pathname}, Err: ${JSON.stringify(err)}`,
+                    );
                 },
             },
             mutations: {
                 onError: (err) => {
-                    logger.error('Error in react-query-client, mutation');
-                    logger.error(err);
+                    logger.error(
+                        `Error in react-query-client, mutation: ${location.pathname}, Err: ${JSON.stringify(err)}`,
+                    );
                 },
             },
         },

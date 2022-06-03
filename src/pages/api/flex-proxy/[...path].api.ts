@@ -39,9 +39,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
 
     const contentType: string | null = result.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
-        const jsonResponse = await result.json();
-        res.status(result.status).json(jsonResponse);
-        return;
+        try {
+            const jsonResponse = await result.json();
+            res.status(result.status).json(jsonResponse);
+            return;
+        } catch (e) {
+            logger.error(`Unable to JSON parse result from ${url} (${result.status} ${result.statusText})`);
+            logger.error(e);
+            res.status(500).json('Internal server error');
+            return;
+        }
     }
 
     res.status(result.status).json({ ok: 'ok' });
