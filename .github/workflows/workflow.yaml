@@ -121,5 +121,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: nais-prod-gcp.yaml
+          RESOURCE: nais-prod.yaml
           VAR: image=${{ env.DOCKER_IMAGE }},version=${{ github.sha }}
