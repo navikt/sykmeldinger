@@ -14,7 +14,7 @@ function useSykmeldinger(): UseQueryResult<Sykmelding[], Error> {
             const sykmeldinger = z.array(SykmeldingSchema).safeParse(maybeSykmeldinger);
 
             if (!sykmeldinger.success) {
-                logger.error(sykmeldinger.error.errors);
+                logger.error(sykmeldinger.error.message);
                 throw new Error('Unable to parse sykmeldinger');
             }
 

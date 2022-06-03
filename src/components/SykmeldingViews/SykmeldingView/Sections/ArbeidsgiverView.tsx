@@ -6,7 +6,7 @@ interface Props {
 }
 
 function ArbeidsgiverView({ arbeidsgiver }: Props): JSX.Element | null {
-    if (arbeidsgiver == null) {
+    if (arbeidsgiver?.navn == null) {
         return null;
     }
 
