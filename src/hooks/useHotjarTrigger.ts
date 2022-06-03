@@ -35,7 +35,7 @@ const useHotjarTrigger = (triggerType: TriggerType): void => {
                 if (isHotjarFunction(hotjarWindow.hj)) {
                     hotjarWindow.hj('trigger', triggerType);
                 } else {
-                    logger.warn('Hotjar was not found on window');
+                    logger.info('Hotjar was not found on window');
                 }
             }, 500);
         } else {

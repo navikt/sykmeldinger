@@ -40,7 +40,7 @@ export async function authenticatedGet<T>(
     }
     if (res.status === 401) {
         window.location.href = loginServiceUrl;
-        logger.warn(`Session expired for request to ${url}`);
+        logger.info(`Session expired for request to ${url}`);
         throw new Error('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
     }
     const textResponse = await res.text();

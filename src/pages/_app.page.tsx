@@ -24,12 +24,23 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 retry: 1,
                 refetchOnWindowFocus: false,
                 staleTime: Infinity,
+                onError: (err) => {
+                    logger.error('Error in react-query-client, query');
+                    logger.error(err);
+                },
+            },
+            mutations: {
+                onError: (err) => {
+                    logger.error('Error in react-query-client, mutation');
+                    logger.error(err);
+                },
             },
         },
     });
 
     const handleError = (error: Error, info: { componentStack: string }): void => {
-        logger.error({ message: error.message, ...info });
+        logger.error(`Error in boundary: ${JSON.stringify(info)}`);
+        logger.error(error);
     };
 
     return (
