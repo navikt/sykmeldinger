@@ -1,35 +1,47 @@
-import { parseISO } from 'date-fns';
+import {
+    getReadableSykmeldingLength,
+    getSykmeldingEndDate,
+    getSykmeldingperioderSorted,
+    getSykmeldingStartDate,
+    getSykmeldingTitle,
+    Sykmelding,
+    SykmeldingSchema,
+} from './Sykmelding';
+import { RegelStatus } from './Behandlingsutfall';
+import { StatusEvent } from './SykmeldingStatus';
+import { Periode, Periodetype } from './Periode';
 
-import { Sykmelding } from './Sykmelding';
-
-const minimalSykmelding = {
+const minimalSykmelding: Sykmelding = {
     id: 'APEN_PAPIR',
     mottattTidspunkt: '2020-01-10',
     behandlingsutfall: {
-        status: 'OK',
+        status: RegelStatus.OK,
         ruleHits: [],
     },
     arbeidsgiver: null,
     sykmeldingsperioder: [],
     sykmeldingStatus: {
         timestamp: '2020-01-01',
-        statusEvent: 'APEN',
+        statusEvent: StatusEvent.APEN,
         sporsmalOgSvarListe: [],
+        arbeidsgiver: null,
     },
     medisinskVurdering: null,
     skjermesForPasient: false,
     utdypendeOpplysninger: {},
-    kontaktMedPasient: {},
+    kontaktMedPasient: { kontaktDato: null, begrunnelseIkkeKontakt: null },
     behandletTidspunkt: '2020-01-01',
     behandler: {
         fornavn: 'Fornavn',
         mellomnavn: null,
         etternavn: 'Etternavn',
-        aktoerId: '1234',
-        fnr: '99999999999',
-        hpr: '321',
-        her: '123',
-        adresse: {},
+        adresse: {
+            gate: null,
+            postnummer: null,
+            kommune: null,
+            postboks: null,
+            land: null,
+        },
         tlf: '900 00 000',
     },
     syketilfelleStartDato: null,
@@ -44,132 +56,140 @@ const minimalSykmelding = {
         mellomnavn: null,
         etternavn: null,
     },
+    andreTiltak: null,
+    legekontorOrgnummer: null,
+    meldingTilArbeidsgiver: null,
+    meldingTilNAV: null,
+    prognose: null,
+    tiltakArbeidsplassen: null,
+    tiltakNAV: null,
 };
+
+const createSykmeldingPeriode = ({ fom, tom }: { fom: string; tom: string }): Periode => ({
+    fom,
+    tom,
+    gradert: null,
+    behandlingsdager: null,
+    innspillTilArbeidsgiver: null,
+    type: Periodetype.REISETILSKUDD,
+    aktivitetIkkeMulig: null,
+    reisetilskudd: false,
+});
 
 describe('Sykmelding', () => {
     describe('getSykmeldingTitle', () => {
         it('Gets standard sykmelding title', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingTitle()).toEqual('Sykmelding');
+            });
+            expect(getSykmeldingTitle(sykmelding)).toEqual('Sykmelding');
         });
 
         it('Gets papirsykmelding title', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 papirsykmelding: true,
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingTitle()).toEqual('Papirsykmelding');
+            });
+            expect(getSykmeldingTitle(sykmelding)).toEqual('Papirsykmelding');
         });
 
         it('Gets egenmeldt title', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 egenmeldt: true,
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingTitle()).toEqual('Egenmelding');
+            });
+            expect(getSykmeldingTitle(sykmelding)).toEqual('Egenmelding');
         });
     });
 
     describe('getSykmeldingStartDate', () => {
         it('Gets fom of the earliest period', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 sykmeldingsperioder: [
-                    { fom: '2021-05-01', tom: '2021-05-03' },
-                    { fom: '2021-04-01', tom: '2021-04-03' },
-                    { fom: '2021-06-01', tom: '2021-06-03' },
+                    createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
+                    createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
+                    createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
                 ],
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingStartDate()).toEqual(parseISO('2021-04-01'));
+            });
+            expect(getSykmeldingStartDate(sykmelding)).toEqual('2021-04-01');
         });
     });
 
     describe('getSykmeldingEndDate', () => {
         it('Gets tom of the latest period', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 sykmeldingsperioder: [
-                    { fom: '2021-06-01', tom: '2021-06-03' },
-                    { fom: '2021-05-01', tom: '2021-05-03' },
-                    { fom: '2021-04-01', tom: '2021-04-03' },
+                    createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
+                    createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
+                    createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
                 ],
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingEndDate()).toEqual(parseISO('2021-06-03'));
+            });
+            expect(getSykmeldingEndDate(sykmelding)).toEqual('2021-06-03');
         });
     });
 
     describe('getSykmeldingperioderSorted', () => {
         it('Gets tom of the latest period', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 sykmeldingsperioder: [
-                    { fom: '2021-06-01', tom: '2021-06-03' },
-                    { fom: '2021-05-01', tom: '2021-05-03' },
-                    { fom: '2021-04-01', tom: '2021-04-03' },
+                    createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
+                    createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
+                    createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
                 ],
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getSykmeldingperioderSorted()).toEqual([
-                { fom: parseISO('2021-04-01'), tom: parseISO('2021-04-03') },
-                { fom: parseISO('2021-05-01'), tom: parseISO('2021-05-03') },
-                { fom: parseISO('2021-06-01'), tom: parseISO('2021-06-03') },
+            });
+            expect(getSykmeldingperioderSorted(sykmelding).map((it) => ({ fom: it.fom, tom: it.tom }))).toEqual([
+                { fom: '2021-04-01', tom: '2021-04-03' },
+                { fom: '2021-05-01', tom: '2021-05-03' },
+                { fom: '2021-06-01', tom: '2021-06-03' },
             ]);
         });
     });
 
     describe('getReadableSykmeldingLength', () => {
         it('Lenght is one day', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
-                sykmeldingsperioder: [{ fom: '2021-06-01', tom: '2021-06-01' }],
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getReadableSykmeldingLength()).toBe('1. juni 2021');
+                sykmeldingsperioder: [createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-01' })],
+            });
+            expect(getReadableSykmeldingLength(sykmelding)).toBe('1. juni 2021');
         });
 
         it('Within same year', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 sykmeldingsperioder: [
-                    { fom: '2021-06-01', tom: '2021-06-03' },
-                    { fom: '2021-05-01', tom: '2021-05-03' },
-                    { fom: '2021-04-01', tom: '2021-04-03' },
+                    createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
+                    createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
+                    createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
                 ],
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getReadableSykmeldingLength()).toBe('1. april - 3. juni 2021');
+            });
+            expect(getReadableSykmeldingLength(sykmelding)).toBe('1. april - 3. juni 2021');
         });
 
         it('Within same year and month', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 sykmeldingsperioder: [
-                    { fom: '2021-06-20', tom: '2021-06-24' },
-                    { fom: '2021-06-01', tom: '2021-06-03' },
-                    { fom: '2021-06-06', tom: '2021-06-09' },
+                    createSykmeldingPeriode({ fom: '2021-06-20', tom: '2021-06-24' }),
+                    createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
+                    createSykmeldingPeriode({ fom: '2021-06-06', tom: '2021-06-09' }),
                 ],
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getReadableSykmeldingLength()).toBe('1. - 24. juni 2021');
+            });
+            expect(getReadableSykmeldingLength(sykmelding)).toBe('1. - 24. juni 2021');
         });
 
         it('Different years', () => {
-            const sykmeldingJson = {
+            const sykmelding: Sykmelding = SykmeldingSchema.parse({
                 ...minimalSykmelding,
                 sykmeldingsperioder: [
-                    { fom: '2020-12-25', tom: '2020-12-31' },
-                    { fom: '2021-01-01', tom: '2021-01-06' },
+                    createSykmeldingPeriode({ fom: '2020-12-25', tom: '2020-12-31' }),
+                    createSykmeldingPeriode({ fom: '2021-01-01', tom: '2021-01-06' }),
                 ],
-            };
-            const sykmelding = new Sykmelding(sykmeldingJson);
-            expect(sykmelding.getReadableSykmeldingLength()).toBe('25. desember 2020 - 6. januar 2021');
+            });
+            expect(getReadableSykmeldingLength(sykmelding)).toBe('25. desember 2020 - 6. januar 2021');
         });
     });
 });

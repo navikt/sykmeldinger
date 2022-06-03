@@ -1,15 +1,15 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
 metadata:
   name: sykmeldinger
   namespace: teamsykmelding
   labels:
     team: teamsykmelding
 spec:
-  image: {{ image }}
-  port: 8080
+  image: {{image}}
+  port: 3000
   ingresses:
-    - "https://www.nav.no/syk/sykmeldinger"
+    - 'https://www.nav.no/syk/sykmeldinger'
   replicas:
     min: 2
     max: 2
@@ -22,31 +22,29 @@ spec:
       cpu: 200m
       memory: 256Mi
   liveness:
-    path: /internal/is_alive
+    path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
-    path: /internal/is_ready
+    path: /syk/sykmeldinger/api/internal/is_ready
   env:
-    - name: ENV
-      value: "prod"
-    - name: DECORATOR_URL
-      value: "https://www.nav.no/dekoratoren"
+    - name: NEXT_PUBLIC_BASE_PATH
+      value: /syk/sykmeldinger
     - name: RUNTIME_ENVIRONMENT
-      value: "production"
-    - name: SYKMELDINGER_ROOT
-      value: "/syk/sykmeldinger"
-    - name: SYKMELDINGER_BACKEND_PROXY_ROOT
-      value: "https://sykmelding-gateway.nav.no/sykmeldinger-backend"
+      value: 'production'
+    - name: SYKMELDINGER_BACKEND
+      value: 'https://sykmelding-gateway.nav.no/sykmeldinger-backend'
     - name: FLEX_GATEWAY_ROOT
-      value: "https://flex-gateway.nav.no"
+      value: 'https://flex-gateway.nav.no'
     - name: LOGIN_SERVICE_URL
-      value: "https://loginservice.nav.no/login"
+      value: 'https://loginservice.nav.no/login'
     - name: LOGIN_SERVICE_REDIRECT_URL
-      value: "https://www.nav.no/syk/sykmeldinger"
+      value: 'https://www.nav.no/syk/sykmeldinger'
     - name: AMPLITUDE_ENABLED
-      value: "true"
+      value: 'true'
     - name: SYKEPENGESOKNAD_URL
-      value: "https://www.nav.no/syk/sykepengesoknad"
+      value: 'https://www.nav.no/syk/sykepengesoknad'
     - name: SYKEFRAVAER_ROOT
-      value: "https://www.nav.no/syk/sykefravaer"
-    - name: "DITT_NAV_ROOT"
-      value: "https://www.nav.no/person/dittnav"
+      value: 'https://www.nav.no/syk/sykefravaer'
+    - name: DITT_NAV_ROOT
+      value: 'https://www.nav.no/person/dittnav'
+    - name: ASSET_PREFIX
+      value: 'https://teamsykmelding-static-files.nav.no/sykmeldinger'

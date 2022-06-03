@@ -1,31 +1,33 @@
-import env from './env';
+import { getPublicEnv } from './env';
 import { logger } from './logger';
 
-const loginServiceUrl = `${env.LOGIN_SERVICE_URL}?redirect=${env.LOGIN_SERVICE_REDIRECT_URL}`;
+const publicEnv = getPublicEnv();
+
+const loginServiceUrl = `${publicEnv.LOGIN_SERVICE_URL}?redirect=${publicEnv.LOGIN_SERVICE_REDIRECT_URL}`;
 
 /**
  * Make a GET request for the specified resource
  * Redirects to Login Service if request contains a 401 response.
  * @param {string} url - The endpoint to call
- * @param {(data: unknown) => Promise<T>} cb - The function to call after res.json()
+ * @param {(data: unknown) => Promise<T>} callback - The function to call after res.json()
  * @return {Promise<T>} The data
  */
 export async function authenticatedGet<T>(
     url: string,
-    cb: (data: unknown, response: Response) => Promise<T>,
+    callback: (data: unknown, response: Response) => Promise<T>,
 ): Promise<T> {
     const res = await fetch(url, { credentials: 'include' });
 
     if (res.ok) {
         try {
-            return await cb(await res.json(), res);
-        } catch (error: any) {
+            return await callback(await res.json(), res);
+        } catch (error: unknown) {
             if (error instanceof TypeError) {
                 logger.error({
                     message: `${error.name}: ${error.message}`,
                     stack: error.stack,
                 });
-            } else {
+            } else if (error instanceof Error) {
                 logger.error({
                     ...error,
                     message: error.message ?? `Error without message occurred in GET request to ${url}`,

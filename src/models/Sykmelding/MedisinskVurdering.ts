@@ -1,86 +1,62 @@
-import 'reflect-metadata';
-import { IsArray, IsBoolean, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { parseISO } from 'date-fns';
+import { z } from 'zod';
 
-export class Diagnose {
-    @IsString()
-    kode: string;
+import { LocalDateSchema } from '../date';
 
-    @IsString()
-    system: string;
-
-    @IsOptional()
-    @IsString()
-    tekst?: string;
-
-    constructor(data: any) {
-        this.kode = data.kode;
-        this.system = data.system;
-        this.tekst = data.tekst ?? undefined;
-    }
-}
+const DiagnoseSchema = z.object({
+    kode: z.string(),
+    system: z.string(),
+    tekst: z.string().nullable(),
+});
 
 export enum AnnenFraverGrunn {
-    GODKJENT_HELSEINSTITUSJON = 'Når vedkommende er innlagt i en godkjent helseinstitusjon',
-    BEHANDLING_FORHINDRER_ARBEID = 'Når vedkommende er under behandling og legen erklærer at behandlingen gjør det nødvendig at vedkommende ikke arbeider',
-    ARBEIDSRETTET_TILTAK = 'Når vedkommende deltar på et arbeidsrettet tiltak',
-    MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND = 'Når vedkommende på grunn av sykdom, skade eller lyte får tilskott når vedkommende på grunn av sykdom, skade eller lyte får tilskott',
-    NODVENDIG_KONTROLLUNDENRSOKELSE = 'Når vedkommende er til nødvendig kontrollundersøkelse som krever minst 24 timers fravær, reisetid medregnet',
-    SMITTEFARE = 'Når vedkommende myndighet har nedlagt forbud mot at han eller hun arbeider på grunn av smittefare',
-    ABORT = 'Når vedkommende er arbeidsufør som følge av svangerskapsavbrudd',
-    UFOR_GRUNNET_BARNLOSHET = 'Når vedkommende er arbeidsufør som følge av behandling for barnløshet',
-    DONOR = 'Når vedkommende er donor eller er under vurdering som donor',
-    BEHANDLING_STERILISERING = 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering',
+    GODKJENT_HELSEINSTITUSJON = 'GODKJENT_HELSEINSTITUSJON',
+    BEHANDLING_FORHINDRER_ARBEID = 'BEHANDLING_FORHINDRER_ARBEID',
+    ARBEIDSRETTET_TILTAK = 'ARBEIDSRETTET_TILTAK',
+    MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND = 'MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND',
+    NODVENDIG_KONTROLLUNDENRSOKELSE = 'NODVENDIG_KONTROLLUNDENRSOKELSE',
+    SMITTEFARE = 'SMITTEFARE',
+    ABORT = 'ABORT',
+    UFOR_GRUNNET_BARNLOSHET = 'UFOR_GRUNNET_BARNLOSHET',
+    DONOR = 'DONOR',
+    BEHANDLING_STERILISERING = 'BEHANDLING_STERILISERING',
 }
 
-export class AnnenFraversArsak {
-    @IsOptional()
-    @IsString()
-    beskrivelse?: string;
-
-    // TODO: Find out why it 'should' only have one entry
-    // @ArrayMaxSize(1)
-    @IsArray()
-    @IsIn(Object.keys(AnnenFraverGrunn), { each: true })
-    grunn: (keyof typeof AnnenFraverGrunn)[];
-
-    constructor(data: any) {
-        this.beskrivelse = data.beskrivelse ?? undefined;
-        this.grunn = data.grunn;
+function annenFraverGrunnToText(value: AnnenFraverGrunn): string {
+    switch (value) {
+        case AnnenFraverGrunn.GODKJENT_HELSEINSTITUSJON:
+            return 'Når vedkommende er innlagt i en godkjent helseinstitusjon';
+        case AnnenFraverGrunn.BEHANDLING_FORHINDRER_ARBEID:
+            return 'Når vedkommende er under behandling og legen erklærer at behandlingen gjør det nødvendig at vedkommende ikke arbeider';
+        case AnnenFraverGrunn.ARBEIDSRETTET_TILTAK:
+            return 'Når vedkommende deltar på et arbeidsrettet tiltak';
+        case AnnenFraverGrunn.MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND:
+            return 'Når vedkommende på grunn av sykdom, skade eller lyte får tilskott når vedkommende på grunn av sykdom, skade eller lyte får tilskott';
+        case AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE:
+            return 'Når vedkommende er til nødvendig kontrollundersøkelse som krever minst 24 timers fravær, reisetid medregnet';
+        case AnnenFraverGrunn.SMITTEFARE:
+            return 'Når vedkommende myndighet har nedlagt forbud mot at han eller hun arbeider på grunn av smittefare';
+        case AnnenFraverGrunn.ABORT:
+            return 'Når vedkommende er arbeidsufør som følge av svangerskapsavbrudd';
+        case AnnenFraverGrunn.UFOR_GRUNNET_BARNLOSHET:
+            return 'Når vedkommende er arbeidsufør som følge av behandling for barnløshet';
+        case AnnenFraverGrunn.DONOR:
+            return 'Når vedkommende er donor eller er under vurdering som donor';
+        case AnnenFraverGrunn.BEHANDLING_STERILISERING:
+            return 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering';
     }
 }
 
-class MedisinskVurdering {
-    @IsOptional()
-    @ValidateNested()
-    hovedDiagnose?: Diagnose;
+const AnnenFraversArsakSchema = z.object({
+    beskrivelse: z.string().nullable(),
+    grunn: z.array(z.nativeEnum(AnnenFraverGrunn).transform(annenFraverGrunnToText)),
+});
 
-    @ValidateNested({ each: true })
-    @IsArray()
-    biDiagnoser: Diagnose[];
-
-    @IsOptional()
-    @ValidateNested()
-    annenFraversArsak?: AnnenFraversArsak;
-
-    @IsBoolean()
-    svangerskap: boolean;
-
-    @IsBoolean()
-    yrkesskade: boolean;
-
-    @IsOptional()
-    @IsDate()
-    yrkesskadeDato?: Date;
-
-    constructor(data: any) {
-        this.hovedDiagnose = data.hovedDiagnose ? new Diagnose(data.hovedDiagnose) : undefined;
-        this.biDiagnoser = data.biDiagnoser.map((bidiagnose: any) => new Diagnose(bidiagnose));
-        this.annenFraversArsak = data.annenFraversArsak ? new AnnenFraversArsak(data.annenFraversArsak) : undefined;
-        this.svangerskap = data.svangerskap;
-        this.yrkesskade = data.yrkesskade;
-        this.yrkesskadeDato = data.yrkesskadeDato ? parseISO(data.yrkesskadeDato) : undefined;
-    }
-}
-
-export default MedisinskVurdering;
+export type MedisinskVurdering = z.infer<typeof MedisinskVurderingSchema>;
+export const MedisinskVurderingSchema = z.object({
+    hovedDiagnose: DiagnoseSchema.nullable(),
+    biDiagnoser: z.array(DiagnoseSchema),
+    annenFraversArsak: AnnenFraversArsakSchema.nullable(),
+    svangerskap: z.boolean(),
+    yrkesskade: z.boolean(),
+    yrkesskadeDato: LocalDateSchema.nullable(),
+});

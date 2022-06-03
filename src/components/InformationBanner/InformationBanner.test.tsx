@@ -1,39 +1,42 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
-import Merknad from '../../models/Sykmelding/Merknad';
+import { MerknadSchema, Merknad } from '../../models/Sykmelding/Merknad';
 
 import InformationBanner, { Merknadtype } from './InformationBanner';
 
 describe('InformationBanner', () => {
-    it('Renders view for merknad UGYLDIG_TILBAKEDATERING', () => {
-        const plainJson = {
+    it('Renders view for merknad UGYLDIG_TILBAKEDATERING', async () => {
+        const merknad: Merknad = MerknadSchema.parse({
             type: Merknadtype.UGYLDIG_TILBAKEDATERING,
-        };
-        const merknad = new Merknad(plainJson);
+            beskrivelse: null,
+        });
+
         render(<InformationBanner merknader={[merknad]} />);
-        expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
+        expect(screen.getByTestId('merknad-banner')).toBeInTheDocument();
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
         expect(screen.getByText('Tilbakedateringen kan ikke godkjennes')).toBeInTheDocument();
     });
 
     it('Renders view for merknad TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER', () => {
-        const plainJson = {
+        const merknad: Merknad = MerknadSchema.parse({
             type: Merknadtype.TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER,
-        };
-        const merknad = new Merknad(plainJson);
+            beskrivelse: null,
+        });
+
         render(<InformationBanner merknader={[merknad]} />);
-        expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
+        expect(screen.getByTestId('merknad-banner')).toBeInTheDocument();
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
         expect(screen.getByText('Behov for mer opplysninger')).toBeInTheDocument();
     });
 
     it('Renders view for merknad TILBAKEDATERING_UNDER_BEHANDLING', () => {
-        const merknad = new Merknad({
+        const merknad = MerknadSchema.parse({
             type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
+            beskrivelse: null,
         });
+
         render(<InformationBanner merknader={[merknad]} />);
-        expect(screen.queryByTestId('merknad-banner')).toBeInTheDocument();
+        expect(screen.getByTestId('merknad-banner')).toBeInTheDocument();
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
         expect(screen.getByRole('heading')).toHaveTextContent('Viktig informasjon');
     });
@@ -41,7 +44,7 @@ describe('InformationBanner', () => {
     it('Renders papirsinfo view if papirsykmelding is true', () => {
         render(<InformationBanner papirsykmelding />);
         expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument();
-        expect(screen.queryByTestId('papir-banner')).toBeInTheDocument();
+        expect(screen.getByTestId('papir-banner')).toBeInTheDocument();
         expect(screen.getByText('Før du bruker sykmeldingen')).toBeInTheDocument();
     });
 

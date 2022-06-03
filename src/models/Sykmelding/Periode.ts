@@ -1,234 +1,169 @@
-import 'reflect-metadata';
-import {
-    IsArray,
-    IsBoolean,
-    IsDate,
-    IsIn,
-    IsInt,
-    IsOptional,
-    IsString,
-    ValidateNested,
-} from 'class-validator';
-import 'dayjs/locale/nb';
+import { z } from 'zod';
 import dayjs from 'dayjs';
-import { parseISO } from 'date-fns';
-dayjs.locale('nb');
 
-enum Periodetype {
-    AKTIVITET_IKKE_MULIG,
-    AVVENTENDE,
-    BEHANDLINGSDAGER,
-    GRADERT,
-    REISETILSKUDD,
+import { LocalDateSchema } from '../date';
+
+export enum Periodetype {
+    AKTIVITET_IKKE_MULIG = 'AKTIVITET_IKKE_MULIG',
+    AVVENTENDE = 'AVVENTENDE',
+    BEHANDLINGSDAGER = 'BEHANDLINGSDAGER',
+    GRADERT = 'GRADERT',
+    REISETILSKUDD = 'REISETILSKUDD',
 }
 
-class GradertPeriode {
-    @IsInt()
-    grad: number;
-
-    @IsBoolean()
-    reisetilskudd: boolean;
-
-    constructor(data: any) {
-        this.grad = data.grad;
-        this.reisetilskudd = data.reisetilskudd;
-    }
-}
+const GradertPeriodeSchema = z.object({
+    grad: z.number(),
+    reisetilskudd: z.boolean(),
+});
 
 export enum MedisinskArsakType {
-    TILSTAND_HINDRER_AKTIVITET = 'Helsetilstanden hindrer pasienten i å være i aktivitet',
-    AKTIVITET_FORVERRER_TILSTAND = 'Aktivitet vil forverre helsetilstanden',
-    AKTIVITET_FORHINDRER_BEDRING = 'Aktivitet vil hindre/forsinke bedring av helsetilstanden',
-    ANNET = 'Annet',
+    TILSTAND_HINDRER_AKTIVITET = 'TILSTAND_HINDRER_AKTIVITET',
+    AKTIVITET_FORVERRER_TILSTAND = 'AKTIVITET_FORVERRER_TILSTAND',
+    AKTIVITET_FORHINDRER_BEDRING = 'AKTIVITET_FORHINDRER_BEDRING',
+    ANNET = 'ANNET',
 }
 
-class MedisinskArsak {
-    @IsOptional()
-    @IsString()
-    beskrivelse?: string;
-
-    // TODO: not optional if beskrivelse exists
-    @IsOptional()
-    @IsIn(Object.keys(MedisinskArsakType), { each: true })
-    @IsArray()
-    arsak: (keyof typeof MedisinskArsakType)[];
-
-    constructor(data: any) {
-        this.beskrivelse = data.beskrivelse ?? undefined;
-        this.arsak = data.arsak;
+function medisinskArsakToText(value: MedisinskArsakType): string {
+    switch (value) {
+        case MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET:
+            return 'Helsetilstanden hindrer pasienten i å være i aktivitet';
+        case MedisinskArsakType.AKTIVITET_FORVERRER_TILSTAND:
+            return 'Aktivitet vil forverre helsetilstanden';
+        case MedisinskArsakType.AKTIVITET_FORHINDRER_BEDRING:
+            return 'Aktivitet vil hindre/forsinke bedring av helsetilstanden';
+        case MedisinskArsakType.ANNET:
+            return 'Annet';
     }
 }
+
+const MedisinskArsakSchema = z.object({
+    beskrivelse: z.string().nullable(),
+    arsak: z.array(z.nativeEnum(MedisinskArsakType).transform(medisinskArsakToText)),
+});
 
 export enum ArbeidsrelatertArsakType {
-    MANGLENDE_TILRETTELEGGING = 'Manglende tilrettelegging på arbeidsplassen',
-    ANNET = 'Annet',
+    MANGLENDE_TILRETTELEGGING = 'MANGLENDE_TILRETTELEGGING',
+    ANNET = 'ANNET',
 }
 
-class ArbeidsrelatertArsak {
-    @IsOptional()
-    @IsString()
-    beskrivelse?: string;
-
-    // TODO: not optional if beskrivelse exists
-    @IsOptional()
-    @IsIn(Object.keys(ArbeidsrelatertArsakType), { each: true })
-    @IsArray()
-    arsak?: (keyof typeof ArbeidsrelatertArsakType)[];
-
-    constructor(data: any) {
-        this.beskrivelse = data.beskrivelse ?? undefined;
-        this.arsak = data.arsak;
+function arbeidsrelatertArsakToText(value: ArbeidsrelatertArsakType): string {
+    switch (value) {
+        case ArbeidsrelatertArsakType.MANGLENDE_TILRETTELEGGING:
+            return 'Manglende tilrettelegging på arbeidsplassen';
+        case ArbeidsrelatertArsakType.ANNET:
+            return 'Annet';
     }
 }
 
-export class AktivitetIkkeMuligPeriode {
-    @IsOptional()
-    @ValidateNested()
-    medisinskArsak?: MedisinskArsak;
+const ArbeidsrelatertArsakSchema = z.object({
+    beskrivelse: z.string().nullable(),
+    arsak: z.array(z.nativeEnum(ArbeidsrelatertArsakType).transform(arbeidsrelatertArsakToText)),
+});
 
-    @IsOptional()
-    @ValidateNested()
-    arbeidsrelatertArsak?: ArbeidsrelatertArsak;
+export type AktivitetIkkeMuligPeriode = z.infer<typeof AktivitetIkkeMuligPeriodeSchema>;
+export const AktivitetIkkeMuligPeriodeSchema = z.object({
+    medisinskArsak: MedisinskArsakSchema.nullable(),
+    arbeidsrelatertArsak: ArbeidsrelatertArsakSchema.nullable(),
+});
 
-    constructor(data: any) {
-        this.medisinskArsak = data.medisinskArsak ? new MedisinskArsak(data.medisinskArsak) : undefined;
-        this.arbeidsrelatertArsak = data.arbeidsrelatertArsak
-            ? new ArbeidsrelatertArsak(data.arbeidsrelatertArsak)
-            : undefined;
+export type Periode = z.infer<typeof PeriodeSchema>;
+export const PeriodeSchema = z.object({
+    fom: LocalDateSchema,
+    tom: LocalDateSchema,
+    gradert: GradertPeriodeSchema.nullable(),
+    behandlingsdager: z.number().nullable(),
+    innspillTilArbeidsgiver: z.string().nullable(),
+    type: z.nativeEnum(Periodetype),
+    aktivitetIkkeMulig: AktivitetIkkeMuligPeriodeSchema.nullable(),
+    reisetilskudd: z.boolean(),
+});
+
+/**
+ * Get a text representation of the period type
+ * @return {string} The period string
+ */
+export function getPeriodTitle(period: Periode): string {
+    switch (period.type) {
+        case Periodetype.AVVENTENDE:
+            return 'Avventende sykmelding';
+        case Periodetype.AKTIVITET_IKKE_MULIG:
+            return '100% sykmelding';
+        case Periodetype.GRADERT:
+            return `${period.gradert?.grad}% sykmelding`;
+        case Periodetype.REISETILSKUDD:
+            return 'Reisetilskudd';
+        case Periodetype.BEHANDLINGSDAGER:
+            return Periodetype.BEHANDLINGSDAGER;
     }
 }
 
-class Periode {
-    @IsDate()
-    fom: Date;
+/**
+ * Get a text representation of the period fom to tom
+ * @return {string} The period string
+ */
+export function getReadablePeriod(period: Periode): string {
+    const sameMonthAndYear =
+        dayjs(period.fom).get('month') === dayjs(period.tom).get('month') &&
+        dayjs(period.fom).get('year') === dayjs(period.tom).get('year');
+    const sameYearNotMonth =
+        dayjs(period.fom).get('month') !== dayjs(period.tom).get('month') &&
+        dayjs(period.fom).get('year') === dayjs(period.tom).get('year');
 
-    @IsDate()
-    tom: Date;
-
-    @IsOptional()
-    @ValidateNested()
-    gradert?: GradertPeriode;
-
-    @IsOptional()
-    @IsInt()
-    behandlingsdager?: number;
-
-    @IsOptional()
-    @IsString()
-    innspillTilArbeidsgiver?: string;
-
-    @IsIn(Object.keys(Periodetype))
-    type: keyof typeof Periodetype;
-
-    @IsOptional()
-    @ValidateNested()
-    aktivitetIkkeMulig?: AktivitetIkkeMuligPeriode;
-
-    @IsBoolean()
-    reisetilskudd: boolean;
-
-    constructor(data: any) {
-        this.fom = parseISO(data.fom);
-        this.tom = parseISO(data.tom);
-        this.gradert = data.gradert ? new GradertPeriode(data.gradert) : undefined;
-        this.behandlingsdager = data.behandlingsdager ?? undefined;
-        this.innspillTilArbeidsgiver = data.innspillTilArbeidsgiver ?? undefined;
-        this.type = data.type;
-        this.aktivitetIkkeMulig = data.aktivitetIkkeMulig
-            ? new AktivitetIkkeMuligPeriode(data.aktivitetIkkeMulig)
-            : undefined;
-        this.reisetilskudd = data.reisetilskudd;
+    if (sameMonthAndYear) {
+        return `${dayjs(period.fom).format('D.')} til ${dayjs(period.tom).format('D. MMM YYYY')}`;
+    } else if (sameYearNotMonth) {
+        return `${dayjs(period.fom).format('D. MMM')} til ${dayjs(period.tom).format('D. MMM YYYY')}`;
     }
-
-    /**
-     * Get a text representation of the period type
-     * @return {string} The period string
-     */
-    getPeriodTitle(): string {
-        switch (this.type) {
-            case 'AVVENTENDE':
-                return 'Avventende sykmelding';
-            case 'AKTIVITET_IKKE_MULIG':
-                return '100% sykmelding';
-            case 'GRADERT':
-                return `${this.gradert?.grad}% sykmelding`;
-            case 'REISETILSKUDD':
-                return 'Reisetilskudd';
-            case 'BEHANDLINGSDAGER':
-                return 'Behandlingsdager';
-        }
-    }
-
-    /**
-     * Get a text representation of the period fom to tom
-     * @return {string} The period string
-     */
-    getReadablePeriod(): string {
-        const sameMonthAndYear =
-            dayjs(this.fom).get('month') === dayjs(this.tom).get('month') &&
-            dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
-        const sameYearNotMonth =
-            dayjs(this.fom).get('month') !== dayjs(this.tom).get('month') &&
-            dayjs(this.fom).get('year') === dayjs(this.tom).get('year');
-
-        if (sameMonthAndYear) {
-            return `${dayjs(this.fom).format('D.')} til ${dayjs(this.tom).format('D. MMM YYYY')}`;
-        } else if (sameYearNotMonth) {
-            return `${dayjs(this.fom).format('D. MMM')} til ${dayjs(this.tom).format('D. MMM YYYY')}`;
-        }
-        return `${dayjs(this.fom).format('D. MMM YYYY')} til ${dayjs(this.tom).format('D. MMM YYYY')}`;
-    }
-
-    /**
-     * Get the total length between fom and tom in days
-     * @return {number} The period length
-     */
-    getLength(): number {
-        return dayjs(this.tom).diff(dayjs(this.fom), 'day') + 1;
-    }
-
-    /**
-     * Get a text representation of the period length
-     * @return {string} The period string
-     */
-    getReadableLength(): string {
-        const length = this.getLength();
-        if (this.type === 'BEHANDLINGSDAGER') {
-            return `${this.behandlingsdager} behandlingsdag${
-                this.behandlingsdager && this.behandlingsdager > 1 ? 'er' : ''
-            } i løpet av ${length} dag${length > 1 ? 'er' : ''}`;
-        }
-        return `${length} dag${length === 1 ? '' : 'er'}`;
-    }
-
-    /**
-     * Get a text representation of the period based on the type of the period
-     * @return {string} The period discription
-     */
-    getDescription(arbeidsgiverNavn?: string): string {
-        const periodLength = this.getLength();
-
-        switch (this.type) {
-            case 'AKTIVITET_IKKE_MULIG':
-                return `100% sykmeldt${arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''} i ${periodLength} dag${
-                    periodLength > 1 ? 'er' : ''
-                }`;
-            case 'GRADERT':
-                return `${this.gradert?.grad}% sykmeldt${
-                    arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''
-                } i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
-            case 'BEHANDLINGSDAGER':
-                return `${this.behandlingsdager} behandlingsdag${
-                    this.behandlingsdager && this.behandlingsdager > 1 ? 'er' : ''
-                } i løpet av ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
-            case 'AVVENTENDE':
-                return `Avventende sykmelding i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
-            case 'REISETILSKUDD':
-                return `Reisetilskudd i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
-            default:
-                return '';
-        }
-    }
+    return `${dayjs(period.fom).format('D. MMM YYYY')} til ${dayjs(period.tom).format('D. MMM YYYY')}`;
 }
 
-export default Periode;
+/**
+ * Get the total length between fom and tom in days
+ * @return {number} The period length
+ */
+export function getLength(period: Periode): number {
+    return dayjs(period.tom).diff(dayjs(period.fom), 'day') + 1;
+}
+
+/**
+ * Get a text representation of the period length
+ * @return {string} The period string
+ */
+export function getReadableLength(period: Periode): string {
+    const length = getLength(period);
+    if (period.type === Periodetype.BEHANDLINGSDAGER) {
+        return `${period.behandlingsdager} behandlingsdag${
+            period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
+        } i løpet av ${length} dag${length > 1 ? 'er' : ''}`;
+    }
+    return `${length} dag${length === 1 ? '' : 'er'}`;
+}
+
+/**
+ * Get a text representation of the period based on the type of the period
+ * @return {string} The period discription
+ */
+export function getDescription(period: Periode, arbeidsgiverNavn?: string): string {
+    const periodLength = getLength(period);
+
+    switch (period.type) {
+        case Periodetype.AKTIVITET_IKKE_MULIG:
+            return `100% sykmeldt${arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''} i ${periodLength} dag${
+                periodLength > 1 ? 'er' : ''
+            }`;
+        case Periodetype.GRADERT:
+            return `${period.gradert?.grad}% sykmeldt${
+                arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''
+            } i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
+        case Periodetype.BEHANDLINGSDAGER:
+            return `${period.behandlingsdager} behandlingsdag${
+                period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
+            } i løpet av ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
+        case Periodetype.AVVENTENDE:
+            return `Avventende sykmelding i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
+        case Periodetype.REISETILSKUDD:
+            return `Reisetilskudd i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
+        default:
+            return '';
+    }
+}

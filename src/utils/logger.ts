@@ -1,17 +1,30 @@
-import {
-    createFrontendLogger,
-    createMockFrontendLogger,
-    DEFAULT_FRONTENDLOGGER_API_URL,
-    setUpErrorReporting,
-} from '@navikt/frontendlogger/lib';
+/* eslint-disable @typescript-eslint/no-var-requires */
+import pino from 'pino';
 
-export const logger =
-    process.env.NODE_ENV === 'production'
-        ? createFrontendLogger('sykmeldinger', DEFAULT_FRONTENDLOGGER_API_URL)
-        : createMockFrontendLogger('sykmeldinger');
+import { getPublicEnv } from './env';
 
-export function setupLogger() {
-    if (process.env.NODE_ENV === 'production') {
-        setUpErrorReporting(logger);
-    }
-}
+const publicEnv = getPublicEnv();
+
+const getFrontendLogger = (): pino.Logger =>
+    pino({
+        browser: {
+            transmit: {
+                send: async (level, logEvent) => {
+                    try {
+                        await fetch(`${publicEnv.publicPath ?? ''}/api/logger`, {
+                            method: 'POST',
+                            headers: { 'content-type': 'application/json' },
+                            body: JSON.stringify(logEvent),
+                        });
+                    } catch (e) {
+                        console.warn(e);
+                        console.warn('Unable to log to backend', logEvent);
+                    }
+                },
+            },
+        },
+    });
+
+const createBackendLogger = require('../../next-logger.config').logger;
+
+export const logger: pino.Logger = typeof window !== 'undefined' ? getFrontendLogger() : createBackendLogger();

@@ -1,19 +1,9 @@
-import { IsArray, IsBoolean, ValidateNested } from 'class-validator';
+import { z } from 'zod';
 
-import { Arbeidsgiver } from './Arbeidsgiver';
+import { ArbeidsgiverSchema } from './Arbeidsgiver';
 
-class Brukerinformasjon {
-    @IsBoolean()
-    readonly strengtFortroligAdresse: boolean;
-
-    @ValidateNested({ each: true })
-    @IsArray()
-    readonly arbeidsgivere: Arbeidsgiver[];
-
-    constructor(data: any) {
-        this.strengtFortroligAdresse = data.strengtFortroligAdresse;
-        this.arbeidsgivere = data.arbeidsgivere.map((ag: any) => new Arbeidsgiver(ag));
-    }
-}
-
-export default Brukerinformasjon;
+export type Brukerinformasjon = z.infer<typeof BrukerinformasjonSchema>;
+export const BrukerinformasjonSchema = z.object({
+    strengtFortroligAdresse: z.boolean(),
+    arbeidsgivere: z.array(ArbeidsgiverSchema),
+});

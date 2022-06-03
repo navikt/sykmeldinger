@@ -7,7 +7,7 @@ metadata:
     team: teamsykmelding
 spec:
   image: {{image}}
-  port: 8080
+  port: 3000
   ingresses:
     - 'https://www-gcp.dev.nav.no/syk/sykmeldinger'
   replicas:
@@ -22,17 +22,15 @@ spec:
       cpu: 200m
       memory: 256Mi
   liveness:
-    path: /internal/is_alive
+    path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
-    path: /internal/is_ready
+    path: /syk/sykmeldinger/api/internal/is_ready
   env:
-    - name: ENV
-      value: 'dev'
+    - name: NEXT_PUBLIC_BASE_PATH
+      value: /syk/sykmeldinger
     - name: RUNTIME_ENVIRONMENT
-      value: 'dev-gcp'
-    - name: SYKMELDINGER_ROOT
-      value: '/syk/sykmeldinger'
-    - name: SYKMELDINGER_BACKEND_PROXY_ROOT
+      value: 'dev'
+    - name: SYKMELDINGER_BACKEND
       value: 'https://sykmelding-gateway.dev.nav.no/sykmeldinger-backend'
     - name: FLEX_GATEWAY_ROOT
       value: 'https://flex-gateway.dev.nav.no'
@@ -46,5 +44,7 @@ spec:
       value: 'https://www-gcp.dev.nav.no/syk/sykepengesoknad'
     - name: SYKEFRAVAER_ROOT
       value: 'https://www-gcp.dev.nav.no/syk/sykefravaer'
-    - name: 'DITT_NAV_ROOT'
+    - name: DITT_NAV_ROOT
       value: 'https://person.dev.nav.no/person/dittnav/'
+    - name: ASSET_PREFIX
+      value: 'https://teamsykmelding-static-files.dev.nav.no/sykmeldinger'

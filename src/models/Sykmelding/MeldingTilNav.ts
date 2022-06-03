@@ -1,17 +1,7 @@
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { z } from 'zod';
 
-class MeldingTilNAV {
-    @IsBoolean()
-    bistandUmiddelbart: boolean;
-
-    @IsOptional()
-    @IsString()
-    beskrivBistand?: string;
-
-    constructor(data: any) {
-        this.bistandUmiddelbart = data.bistandUmiddelbart;
-        this.beskrivBistand = data.beskrivBistand ?? undefined;
-    }
-}
-
-export default MeldingTilNAV;
+export type MeldingTilNAV = z.infer<typeof MeldingTilNAVSchema>;
+export const MeldingTilNAVSchema = z.object({
+    bistandUmiddelbart: z.boolean(),
+    beskrivBistand: z.string().nullable(),
+});

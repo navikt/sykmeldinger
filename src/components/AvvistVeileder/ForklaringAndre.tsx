@@ -1,7 +1,7 @@
 import React from 'react';
 import { BodyLong, BodyShort, Label } from '@navikt/ds-react';
 
-import Behandlingsutfall from '../../models/Sykmelding/Behandlingsutfall';
+import { Behandlingsutfall } from '../../models/Sykmelding/Behandlingsutfall';
 
 import styles from './ForklaringAndre.module.css';
 

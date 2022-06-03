@@ -1,6 +1,6 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 
-const ForklaringZDiagnose = () => {
+function ForklaringZDiagnose(): JSX.Element {
     return (
         <>
             <Normaltekst>
@@ -13,6 +13,6 @@ const ForklaringZDiagnose = () => {
             </Normaltekst>
         </>
     );
-};
+}
 
 export default ForklaringZDiagnose;

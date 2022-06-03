@@ -1,27 +1,30 @@
+import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
-import { useHistory, useLocation } from 'react-router-dom';
+import { UseMutationResult } from 'react-query/types/react/types';
 
-import { FormShape } from '../pages/sykmelding/OK/APEN/Form/Form';
-import env from '../utils/env';
+import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form';
+import { getPublicEnv } from '../utils/env';
 import { authenticatedPost } from '../utils/Fetch';
 
-function useSend(sykmeldingId: string) {
+const publicEnv = getPublicEnv();
+
+function useSend(sykmeldingId: string): UseMutationResult<unknown, Error, FormShape> {
     const queryClient = useQueryClient();
-    const history = useHistory();
-    const { pathname } = useLocation();
+    const router = useRouter();
 
     return useMutation<unknown, Error, FormShape>(
         (values: FormShape) =>
-            authenticatedPost(
-                `${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v2/sykmeldinger/${sykmeldingId}/send`,
-                values,
-            ),
+            authenticatedPost(`${publicEnv.publicPath}/api/proxy/v2/sykmeldinger/${sykmeldingId}/send`, values),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');
                 queryClient.invalidateQueries(['sykmelding', sykmeldingId]);
-                history.push(pathname + '/kvittering');
+                router.push(`/${sykmeldingId}/kvittering`);
                 window.scrollTo(0, 0);
+            },
+            onError: (err) => {
+                console.log('ERROR!!!');
+                console.log(err);
             },
         },
     );

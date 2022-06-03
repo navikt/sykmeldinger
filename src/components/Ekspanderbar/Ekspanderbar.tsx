@@ -25,10 +25,7 @@ const Ekspanderbar: React.FC<EkspanderbarProps> = ({ title, children }) => {
                 <Element className={styles.text}>{title}</Element>
                 <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
             </button>
-            <div
-                aria-hidden={!expanded}
-                className={cn(styles.content, { [styles.displayNone]: !expanded })}
-            >
+            <div aria-hidden={!expanded} className={cn(styles.content, { [styles.displayNone]: !expanded })}>
                 {typeof children === 'string' ? <Normaltekst>{children}</Normaltekst> : children}
             </div>
         </div>

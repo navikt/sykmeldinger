@@ -1,13 +1,16 @@
 import { useMutation, useQueryClient } from 'react-query';
+import { UseMutationResult } from 'react-query/types/react/types';
 
-import env from '../utils/env';
+import { getPublicEnv } from '../utils/env';
 import { authenticatedPost } from '../utils/Fetch';
 
-function useAvbryt(sykmeldingId: string) {
+const publicEnv = getPublicEnv();
+
+function useAvbryt(sykmeldingId: string): UseMutationResult<unknown, Error, void> {
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
-        () => authenticatedPost(`${env.SYKMELDINGER_BACKEND_PROXY_ROOT}/api/v1/sykmeldinger/${sykmeldingId}/avbryt`),
+        () => authenticatedPost(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}/avbryt`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

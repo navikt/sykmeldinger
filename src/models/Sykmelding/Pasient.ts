@@ -1,36 +1,17 @@
-import { IsOptional, IsString } from 'class-validator';
+import { z } from 'zod';
 
-class Pasient {
-    @IsOptional()
-    @IsString()
-    readonly fnr?: string;
+export type Pasient = z.infer<typeof PasientSchema>;
+export const PasientSchema = z.object({
+    fnr: z.string().nullable(),
+    fornavn: z.string().nullable(),
+    mellomnavn: z.string().nullable(),
+    etternavn: z.string().nullable(),
+});
 
-    @IsOptional()
-    @IsString()
-    readonly fornavn?: string;
+export function getPasientName(pasient: Pasient): string | undefined {
+    if (!pasient.fornavn) return undefined;
 
-    @IsOptional()
-    @IsString()
-    readonly mellomnavn?: string;
-
-    @IsOptional()
-    @IsString()
-    readonly etternavn?: string;
-
-    constructor(data: any) {
-        this.fnr = data.fnr ?? undefined;
-        this.fornavn = data.fornavn ?? undefined;
-        this.mellomnavn = data.mellomnavn ?? undefined;
-        this.etternavn = data.etternavn ?? undefined;
-    }
-
-    getName(): string | undefined {
-        if (!this.fornavn) return undefined;
-
-        return `${this.fornavn}${this.mellomnavn ? ' ' + this.mellomnavn : ''}${
-            this.etternavn ? ' ' + this.etternavn : ''
-        }`;
-    }
+    return `${pasient.fornavn}${pasient.mellomnavn ? ' ' + pasient.mellomnavn : ''}${
+        pasient.etternavn ? ' ' + pasient.etternavn : ''
+    }`;
 }
-
-export default Pasient;

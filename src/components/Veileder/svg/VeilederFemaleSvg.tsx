@@ -1,6 +1,6 @@
 import styles from './VeilederSvg.module.css';
 
-const veilederFemaleSvg = () => (
+const veilederFemaleSvg = (): JSX.Element => (
     <svg width="54" height="80" viewBox="0 0 54 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
             fillRule="evenodd"

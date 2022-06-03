@@ -1,65 +1,22 @@
-import 'reflect-metadata';
-import { IsInt, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { z } from 'zod';
 
-class Adresse {
-    @IsOptional()
-    @IsString()
-    gate?: string;
+const AdresseSchema = z.object({
+    gate: z.string().nullable(),
+    postnummer: z.number().nullable(),
+    kommune: z.string().nullable(),
+    postboks: z.string().nullable(),
+    land: z.string().nullable(),
+});
 
-    @IsOptional()
-    @IsInt()
-    postnummer?: number;
+export type Behandler = z.infer<typeof BehandlerSchema>;
+export const BehandlerSchema = z.object({
+    fornavn: z.string(),
+    mellomnavn: z.string().nullable(),
+    etternavn: z.string(),
+    adresse: AdresseSchema,
+    tlf: z.string().nullable(),
+});
 
-    @IsOptional()
-    @IsString()
-    kommune?: string;
-
-    @IsOptional()
-    @IsString()
-    postboks?: string;
-
-    @IsOptional()
-    @IsString()
-    land?: string;
-
-    constructor(data: any) {
-        this.gate = data.gate ?? undefined;
-        this.postnummer = data.postnummer ?? undefined;
-        this.kommune = data.kommune ?? undefined;
-        this.postboks = data.postboks ?? undefined;
-        this.land = data.land ?? undefined;
-    }
+export function getBehandlerName(behandler: Behandler): string {
+    return `${behandler.fornavn}${behandler.mellomnavn ? ' ' + behandler.mellomnavn : ''} ${behandler.etternavn}`;
 }
-
-class Behandler {
-    @IsString()
-    fornavn: string;
-
-    @IsOptional()
-    @IsString()
-    mellomnavn?: string;
-
-    @IsString()
-    etternavn: string;
-
-    @ValidateNested()
-    adresse: Adresse;
-
-    @IsOptional()
-    @IsString()
-    tlf?: string;
-
-    constructor(data: any) {
-        this.fornavn = data.fornavn;
-        this.mellomnavn = data.mellomnavn ?? undefined;
-        this.etternavn = data.etternavn;
-        this.adresse = new Adresse(data.adresse);
-        this.tlf = data.tlf ?? undefined;
-    }
-
-    getName(): string {
-        return `${this.fornavn}${this.mellomnavn ? ' ' + this.mellomnavn : ''} ${this.etternavn}`;
-    }
-}
-
-export default Behandler;

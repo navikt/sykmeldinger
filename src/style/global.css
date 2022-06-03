@@ -1,0 +1,47 @@
+@import '~@navikt/ds-datepicker/lib/index.css';
+@import '~@navikt/ds-css';
+
+@import '~nav-frontend-alertstriper-style/dist/main.css';
+@import '~nav-frontend-chevron-style/dist/main.css';
+@import '~nav-frontend-ekspanderbartpanel-style/dist/main.css';
+@import '~nav-frontend-knapper-style/dist/main.css';
+@import '~nav-frontend-lenker-style/dist/main.css';
+@import '~nav-frontend-skjema-style/dist/main.css';
+@import '~nav-frontend-spinner-style/dist/main.css';
+@import '~nav-frontend-typografi-style/dist/main.css';
+@import '~nav-frontend-veileder-style/dist/main.css';
+@import '~nav-frontend-veilederpanel-style/dist/main.css';
+
+@import '~@navikt/ds-css';
+
+html {
+    --header-farge: #c2eaf7;
+    --skillelinje-farge: #c9c9c9;
+    --desktop-limit-width: 672px;
+    --eyes-open-color: #3e3832;
+    --eyes-closed-color: #e7e9e9;
+}
+
+html,
+body {
+    height: 100%;
+    background-color: white;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+ul li {
+    font-size: 1rem;
+}
+
+#root {
+    min-height: 50vh;
+}

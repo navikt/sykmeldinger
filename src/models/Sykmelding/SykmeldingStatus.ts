@@ -1,23 +1,12 @@
-import { IsArray, IsDate, IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { parseISO } from 'date-fns';
+import { z } from 'zod';
 
-class ArbeidsgiverStatus {
-    @IsString()
-    orgnummer: string;
+import { LocalDateSchema } from '../date';
 
-    @IsOptional()
-    @IsString()
-    juridiskOrgnummer?: string;
-
-    @IsString()
-    orgNavn: string;
-
-    constructor(data: any) {
-        this.orgnummer = data.orgnummer;
-        this.juridiskOrgnummer = data.juridiskOrgnummer ?? undefined;
-        this.orgNavn = data.orgNavn;
-    }
-}
+const ArbeidsgiverStatusSchema = z.object({
+    orgnummer: z.string(),
+    orgNavn: z.string(),
+    juridiskOrgnummer: z.string().nullable(),
+});
 
 enum ShortName {
     ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
@@ -33,35 +22,16 @@ enum Svartype {
     JA_NEI = 'JA_NEI',
 }
 
-class Svar {
-    @IsIn(Object.keys(Svartype))
-    svarType: keyof typeof Svartype;
+const SvarSchema = z.object({
+    svarType: z.nativeEnum(Svartype),
+    svar: z.string(),
+});
 
-    @IsString()
-    svar: string;
-
-    constructor(data: any) {
-        this.svarType = data.svarType;
-        this.svar = data.svar;
-    }
-}
-
-class Sporsmal {
-    @IsString()
-    tekst: string;
-
-    @IsIn(Object.keys(ShortName))
-    shortName: keyof typeof ShortName;
-
-    @ValidateNested()
-    svar: Svar;
-
-    constructor(data: any) {
-        this.tekst = data.tekst;
-        this.shortName = data.shortName;
-        this.svar = new Svar(data.svar);
-    }
-}
+const SporsmalSchema = z.object({
+    tekst: z.string(),
+    shortName: z.nativeEnum(ShortName),
+    svar: SvarSchema,
+});
 
 export enum StatusEvent {
     SENDT = 'SENDT',
@@ -71,27 +41,10 @@ export enum StatusEvent {
     BEKREFTET = 'BEKREFTET',
 }
 
-class SykmeldingStatus {
-    @IsIn(Object.keys(StatusEvent))
-    statusEvent: keyof typeof StatusEvent;
-
-    @IsDate()
-    timestamp: Date;
-
-    @IsOptional()
-    @ValidateNested()
-    arbeidsgiver?: ArbeidsgiverStatus;
-
-    @ValidateNested({ each: true })
-    @IsArray()
-    sporsmalOgSvarListe: Sporsmal[];
-
-    constructor(data: any) {
-        this.statusEvent = data.statusEvent;
-        this.timestamp = parseISO(data.timestamp);
-        this.arbeidsgiver = data.arbeidsgiver ? new ArbeidsgiverStatus(data.arbeidsgiver) : undefined;
-        this.sporsmalOgSvarListe = data.sporsmalOgSvarListe.map((sporsmalSvar: any) => new Sporsmal(sporsmalSvar));
-    }
-}
-
-export default SykmeldingStatus;
+export type SykmeldingStatus = z.infer<typeof SykmeldingStatusSchema>;
+export const SykmeldingStatusSchema = z.object({
+    statusEvent: z.nativeEnum(StatusEvent),
+    timestamp: LocalDateSchema,
+    arbeidsgiver: ArbeidsgiverStatusSchema.nullable(),
+    sporsmalOgSvarListe: z.array(SporsmalSchema),
+});

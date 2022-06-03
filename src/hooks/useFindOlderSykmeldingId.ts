@@ -1,6 +1,6 @@
-import { isBefore, isEqual } from 'date-fns';
+import { isBefore, parseISO } from 'date-fns';
 
-import { Sykmelding } from '../models/Sykmelding/Sykmelding';
+import { getSykmeldingStartDate, Sykmelding } from '../models/Sykmelding/Sykmelding';
 import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
 
 import useSykmeldinger from './useSykmeldinger';
@@ -20,13 +20,14 @@ function useFindOlderSykmeldingId(sykmelding: Sykmelding | undefined): {
         };
     }
 
-    const startDate: Date = sykmelding.getSykmeldingStartDate();
+    const startDate: string = getSykmeldingStartDate(sykmelding);
     const relevantSykmeldinger = sykmeldinger
         .filter((it) => isActiveSykmelding(it) && !isUnderbehandling(it))
-        .filter((it) => !isEqual(it.getSykmeldingStartDate(), startDate));
+        .filter((it) => getSykmeldingStartDate(it) !== startDate);
 
     const earliestSykmelding: Sykmelding = relevantSykmeldinger.reduce(
-        (acc, value) => (isBefore(value.getSykmeldingStartDate(), acc.getSykmeldingStartDate()) ? value : acc),
+        (acc, value) =>
+            isBefore(parseISO(getSykmeldingStartDate(value)), parseISO(getSykmeldingStartDate(acc))) ? value : acc,
         sykmelding,
     );
 

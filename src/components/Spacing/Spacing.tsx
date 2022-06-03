@@ -1,12 +1,20 @@
-import './Spacing.less';
+// TODO replace this component
+/* eslint-disable postcss-modules/no-unused-class */
+import { PropsWithChildren } from 'react';
+import cn from 'classnames';
+
+import styles from './Spacing.module.css';
+
+type Direction = 'top' | 'bottom';
+type Amount = 'x-small' | 'small' | 'medium' | 'large';
 
 interface SpacingProps {
-    direction?: 'top' | 'bottom';
-    amount?: 'x-small' | 'small' | 'medium' | 'large';
+    direction?: Direction;
+    amount?: Amount;
 }
 
-const Spacing: React.FC<SpacingProps> = ({ direction = 'bottom', amount = 'medium', children }) => {
-    return <div className={`spacing--${direction}-${amount}`}>{children}</div>;
-};
+function Spacing({ direction = 'bottom', amount = 'medium', children }: PropsWithChildren<SpacingProps>): JSX.Element {
+    return <div className={cn(styles[`${direction}-${amount}`])}>{children}</div>;
+}
 
 export default Spacing;

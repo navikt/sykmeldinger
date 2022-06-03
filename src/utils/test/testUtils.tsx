@@ -1,24 +1,9 @@
 import { PropsWithChildren, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Route, Router } from 'react-router-dom';
-import { createMemoryHistory, History } from 'history';
 import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks';
 
-interface CustomProviderOptions {
-    initialRouterEntries: string[];
-    renderPath: string;
-    history?: History;
-}
-
-function AllTheProviders({
-    children,
-    initialRouterEntries,
-    renderPath,
-    history = createMemoryHistory({
-        initialEntries: initialRouterEntries,
-    }),
-}: PropsWithChildren<CustomProviderOptions>): JSX.Element {
+function AllTheProviders({ children }: PropsWithChildren<unknown>): JSX.Element {
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
@@ -27,41 +12,22 @@ function AllTheProviders({
         },
     });
 
-    return (
-        <Router history={history}>
-            <Route path={renderPath}>
-                <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-            </Route>
-        </Router>
-    );
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
 
-const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'> & CustomProviderOptions) =>
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'>): ReturnType<typeof render> =>
     render(ui, {
-        wrapper: (props) => (
-            <AllTheProviders
-                {...props}
-                initialRouterEntries={options?.initialRouterEntries ?? ['/syk/sykmeldinger']}
-                renderPath={options?.renderPath ?? '/'}
-                history={options?.history}
-            />
-        ),
+        wrapper: (props) => <AllTheProviders {...props} />,
         ...options,
     });
 
 const customRenderHook = <TProps, TResult>(
     hook: (props: TProps) => TResult,
-    options?: Omit<RenderHookOptions<TProps>, 'wrapper'> & CustomProviderOptions,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    options?: Omit<RenderHookOptions<TProps>, 'wrapper'>,
 ): RenderHookResult<TProps, TResult> =>
     renderHook(hook, {
-        wrapper: (props) => (
-            <AllTheProviders
-                {...props}
-                initialRouterEntries={options?.initialRouterEntries ?? ['/syk/sykmeldinger']}
-                renderPath={options?.renderPath ?? '/'}
-                history={options?.history}
-            />
-        ),
+        wrapper: (props) => <AllTheProviders {...props} />,
     });
 
 export * from '@testing-library/react';
