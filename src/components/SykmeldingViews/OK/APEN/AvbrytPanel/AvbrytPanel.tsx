@@ -32,7 +32,12 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
                 <Element className={styles.avbrytPanelInfo}>
                     Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
                 </Element>
-                <Button variant="danger" className={styles.avbrytPanelAvbrytKnapp} onClick={() => avbryt()}>
+                <Button
+                    variant="danger"
+                    className={styles.avbrytPanelAvbrytKnapp}
+                    onClick={() => avbryt()}
+                    disabled={isLoading}
+                >
                     Avbryt sykmelding {isLoading && <Loader />}
                 </Button>
 

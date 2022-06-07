@@ -7,7 +7,7 @@ import { handleMockRequest } from './mock/mock';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     if (!Array.isArray(req.query.path)) {
-        res.status(400).json({ message: 'Invalid request' });
+        res.status(400).json({ message: 'Malformed parameter' });
         return;
     }
 

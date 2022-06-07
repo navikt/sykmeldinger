@@ -19,6 +19,15 @@ export async function authenticatedGet<T>(
     const res = await fetch(url, { credentials: 'include' });
 
     if (res.ok) {
+        const contentType: string | null = res.headers.get('content-type');
+        if (!contentType?.includes('application/json')) {
+            const errorMessage = `Response for "${url}" was OK, but is not 'application/json', but was '${
+                contentType ?? 'null'
+            }' instead`;
+            logger.error(errorMessage);
+            throw new Error(errorMessage);
+        }
+
         try {
             return await callback(await res.json(), res);
         } catch (error: unknown) {
