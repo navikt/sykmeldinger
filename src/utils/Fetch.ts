@@ -22,32 +22,38 @@ export async function authenticatedGet<T>(
         try {
             return await callback(await res.json(), res);
         } catch (error: unknown) {
-            if (error instanceof TypeError) {
-                logger.error({
-                    message: `${error.name}: ${error.message}`,
-                    stack: error.stack,
-                });
-            } else if (error instanceof Error) {
-                logger.error({
-                    ...error,
-                    message: error.message ?? `Error without message occurred in GET request to ${url}`,
-                });
+            let cause: Error | undefined = undefined;
+            if (error instanceof Error) {
+                if (!error.message) {
+                    logger.error(`Error without message occurred in GET request to ${url}`);
+                } else {
+                    logger.error(error);
+                }
+                cause = error;
+            } else {
+                logger.error(`Unknown error type: ${typeof error}`);
+                logger.error(error);
             }
+
             throw new Error(
                 'Beklager! En uventet feil har oppstått. Sannsynligvis jobber vi med saken allerede, men ta kontakt med oss hvis det ikke har løst seg til i morgen.',
+                { cause },
             );
         }
     }
+
     if (res.status === 401) {
         window.location.href = loginServiceUrl;
         logger.info(`Session expired for request to ${url}`);
         throw new Error('Sesjonen er utløpt. Vi videresender deg til innloggingssiden.');
     }
+
     const textResponse = await res.text();
     logger.error(`Request to ${url} resulted in statuscode: ${res.status} with message: ${textResponse}`);
     if (res.status === 400) {
         throw new Error(textResponse);
     }
+
     throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
 }
 
