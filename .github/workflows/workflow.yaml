@@ -51,6 +51,9 @@ jobs:
       - run: yarn lint
       - run: yarn test
       - run: yarn build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ENABLED: 'true'
       - name: Report debt
         run: ./scripts/debt.sh >> $GITHUB_STEP_SUMMARY
       - name: Login GCP dev
