@@ -1,7 +1,7 @@
 import 'next';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
-import 'next-router-mock/dynamic-routes';
+import 'next-router-mock/dynamic-routes/next-12';
 import 'dayjs/locale/nb';
 
 import { TextDecoder, TextEncoder } from 'util';
