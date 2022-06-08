@@ -2,6 +2,7 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+    reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.ASSET_PREFIX,
