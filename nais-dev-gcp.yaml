@@ -31,7 +31,7 @@ spec:
     - name: RUNTIME_ENVIRONMENT
       value: 'dev'
     - name: SYKMELDINGER_BACKEND
-      value: 'https://sykmelding-gateway.dev.nav.no/sykmeldinger-backend'
+      value: 'https://sykmeldinger-backend.dev.nav.no'
     - name: FLEX_GATEWAY_ROOT
       value: 'https://flex-gateway.dev.nav.no'
     - name: LOGIN_SERVICE_URL
