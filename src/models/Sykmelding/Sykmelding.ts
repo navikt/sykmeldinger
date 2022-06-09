@@ -46,23 +46,6 @@ export const SykmeldingSchema = z.object({
     pasient: PasientSchema.nullable(),
 });
 
-/*
-function getUtdypendeOpplysninger(value: unknown): Map<string, Map<string, UtdypendeOpplysning>> {
-    const outerMap = new Map<string, Map<string, UtdypendeOpplysning>>();
-    if (value && value instanceof Object) {
-        for (const [outerKey, outerValue] of Object.entries(value)) {
-            if (outerValue && outerValue instanceof Object) {
-                const innerMap = new Map<string, UtdypendeOpplysning>();
-                for (const [innerKey, innerValue] of Object.entries(outerValue)) {
-                    innerMap.set(innerKey, new UtdypendeOpplysning(innerValue));
-                }
-                outerMap.set(outerKey, innerMap);
-            }
-        }
-    }
-    return outerMap;
-}*/
-
 /**
  * Get the type of sykmelding
  * Used for displaying the title.

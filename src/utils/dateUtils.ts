@@ -19,6 +19,6 @@ export function toDateString(date: Date): string {
     return formatISO(date, { representation: 'date' });
 }
 
-export function toReadableDate(date: string | Date, options?: { withYear?: boolean }): string {
-    return format(toDate(date), `d. MMMM${options?.withYear === false ? '' : ' yyyy'}`, { locale: nbLocale });
+export function toReadableDate(date: string | Date): string {
+    return format(toDate(date), `d. MMMM yyyy`, { locale: nbLocale });
 }
