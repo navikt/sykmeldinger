@@ -48,3 +48,5 @@ spec:
       value: 'https://person.dev.nav.no/person/dittnav/'
     - name: ASSET_PREFIX
       value: 'https://teamsykmelding-static-files.dev.nav.no/sykmeldinger'
+    - name: SENTRY_ENABLED
+      value: 'true'
