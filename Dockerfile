@@ -8,16 +8,15 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-COPY package*.json /app/
+COPY package.json /app/
 COPY .yarn /app/.yarn
 COPY .yarnrc.yml /app/
+COPY *config* /app/
 COPY yarn.lock /app/
 COPY scripts /app/scripts
 
 RUN yarn --immutable
 
-COPY next.config.js /app/
-COPY next-logger.config.js /app/
 COPY .next /app/.next/
 COPY public /app/public/
 
