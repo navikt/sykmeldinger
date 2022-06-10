@@ -1,5 +1,9 @@
 .listEntry {
-    margin-bottom: 2rem;
+    margin-bottom: var(--navds-spacing-6);
+}
+
+.listEntry :global(.navds-body-short) {
+    font-size: var(--navds-font-size-medium);
 }
 
 .listEntryText {

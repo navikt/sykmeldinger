@@ -1,0 +1,14 @@
+.root {
+    display: flex;
+    align-items: center;
+    padding: var(--navds-spacing-4) 0 var(--navds-spacing-4) 0;
+}
+
+.root svg {
+    font-size: var(--navds-font-size-heading-medium);
+    margin-right: var(--navds-spacing-2);
+}
+
+.heading {
+    font-size: var(--navds-font-size-heading-xsmall);
+}

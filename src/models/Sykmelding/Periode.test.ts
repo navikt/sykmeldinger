@@ -100,7 +100,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            expect(getReadablePeriod(periodeJson)).toBe('1. til 3. april 2021');
+            expect(getReadablePeriod(periodeJson)).toBe('1. - 3. april 2021');
         });
 
         it('Returns both months if month is different and year is equal for fom and tom', () => {
@@ -114,7 +114,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            expect(getReadablePeriod(periodeJson)).toBe('1. jan. til 3. april 2021');
+            expect(getReadablePeriod(periodeJson)).toBe('1. jan. - 3. april 2021');
         });
         it('Returns both months and years if the month and year are different', () => {
             const periodeJson: Periode = {
@@ -127,7 +127,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            expect(getReadablePeriod(periodeJson)).toBe('1. des. 2020 til 3. feb. 2021');
+            expect(getReadablePeriod(periodeJson)).toBe('1. des. 2020 - 3. feb. 2021');
         });
     });
 
@@ -201,7 +201,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            expect(getReadableLength(periodeJson)).toBe('1 dag');
+            expect(getReadableLength(periodeJson)).toBe('(1 dag)');
         });
 
         it('Avventende periode', () => {
@@ -215,7 +215,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            expect(getReadableLength(periodeJson)).toBe('3 dager');
+            expect(getReadableLength(periodeJson)).toBe('(3 dager)');
         });
 
         it('100% periode', () => {
@@ -232,7 +232,7 @@ describe('Periode', () => {
                 },
                 reisetilskudd: false,
             };
-            expect(getReadableLength(periodeJson)).toBe('3 dager');
+            expect(getReadableLength(periodeJson)).toBe('(3 dager)');
         });
 
         it('Gradert periode', () => {
@@ -249,7 +249,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            expect(getReadableLength(periodeJson)).toBe('3 dager');
+            expect(getReadableLength(periodeJson)).toBe('(3 dager)');
         });
 
         it('Reisetilskudd periode', () => {
@@ -263,7 +263,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: true,
             };
-            expect(getReadableLength(periodeJson)).toBe('3 dager');
+            expect(getReadableLength(periodeJson)).toBe('(3 dager)');
         });
 
         it('1 behandlingsdag periode', () => {

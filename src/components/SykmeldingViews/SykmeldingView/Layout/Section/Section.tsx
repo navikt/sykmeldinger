@@ -1,11 +1,15 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 
 import styles from './Section.module.css';
 
 const Section: React.FC<{ title?: string }> = ({ title, children }) => {
     return (
         <div className={styles.opplysningSection}>
-            {title && <Undertittel className={styles.title}>{title}</Undertittel>}
+            {title && (
+                <Heading className={styles.title} size="small" level="3">
+                    {title}
+                </Heading>
+            )}
             {children}
         </div>
     );

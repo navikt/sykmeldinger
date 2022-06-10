@@ -1,17 +1,18 @@
 import React, { useRef, useState } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Normaltekst } from 'nav-frontend-typografi';
 import cn from 'classnames';
+import { BodyShort, Heading } from '@navikt/ds-react';
+import { Findout } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import Lukknapp from '../../Lukknapp/Lukknapp';
 import Spacing from '../../Spacing/Spacing';
+import { toReadableDate } from '../../../utils/dateUtils';
 
-import SykmeldingView from './SykmeldingView';
-import ArbeidsgiverSvg from './Svg/ArbeidsgiverSvg';
-import LegeSvg from './Svg/LegeSvg';
+import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver';
+import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt';
 import styles from './SykmeldingsopplysningerContainer.module.css';
 
 interface SykmeldingsopplysningerProps {
@@ -32,7 +33,6 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef<HTMLElement>(null);
 
-    const title = arbeidsgiver ? 'Dette vises til arbeidsgiveren din' : 'Opplysninger fra behandleren din';
     const contentId = `sykmelding-${sykmelding.id}-content${arbeidsgiver ? '-arbeidsgiver' : ''}`;
     const headerId = `sykmelding-${sykmelding.id}-header${arbeidsgiver ? '-arbeidsgiver' : ''}`;
 
@@ -62,56 +62,66 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                             styles.sykmeldingsopplysningerHeaderExpandable,
                         )}
                     >
-                        <div className={styles.sykmeldingsopplysningerIcon}>
-                            <ArbeidsgiverSvg />
+                        <div className={styles.arbeidsgiverHeader}>
+                            <div className={styles.sykmeldingsopplysningerIcon}>
+                                <Findout />
+                            </div>
+                            <Heading
+                                className={styles.sykmeldingsopplysningerText}
+                                size="small"
+                                level="2"
+                                id="sykmeldinger-panel-info-section"
+                            >
+                                Se hva som sendes til jobben din
+                            </Heading>
+                            <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
                         </div>
-                        <Undertittel className={styles.sykmeldingsopplysningerText} tag="h2">
-                            {title}
-                        </Undertittel>
-                        <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
                     </button>
                     <div
                         id={contentId}
                         aria-labelledby={headerId}
-                        className={cn(styles.sykmeldingsopplysningerContent, {
+                        className={cn({
                             [styles.sykmeldingsopplysningerContentHidden]: !expanded,
                         })}
                     >
-                        <SykmeldingView sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
-                        {sendeSykmelding && (
-                            <Ekspanderbartpanel
-                                className={styles.ikkeSendeTilArbeidsgiverPanel}
-                                tittel="Hvis du ikke ønsker å sende sykmeldingen til arbeidsgiver"
-                            >
-                                <Spacing amount="small">
-                                    <Normaltekst>
-                                        Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk, enten
-                                        den digitale sykmeldingen du finner her, eller papirsykmeldingen som du kan få
-                                        hos legen.
-                                    </Normaltekst>
-                                </Spacing>
-                                <Normaltekst>
-                                    Ønsker du ikke å sende den slik du ser den her, kan du snakke med legen om å få en
-                                    ny sykmelding. Da kan du ta stilling til om du vil gi den nye sykmeldingen til
-                                    arbeidsgiveren din i stedet.
-                                </Normaltekst>
-                            </Ekspanderbartpanel>
-                        )}
+                        <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
                         <Lukknapp onClick={() => setExpanded(false)} />
                     </div>
                 </>
             ) : (
                 <>
                     <header className={styles.sykmeldingsopplysningerHeader}>
-                        <div className={styles.sykmeldingsopplysningerIcon}>
-                            {arbeidsgiver ? <ArbeidsgiverSvg /> : <LegeSvg />}
-                        </div>
-                        <Undertittel className={styles.sykmeldingsopplysningerText} tag="h2">
-                            {title}
-                        </Undertittel>
+                        {!arbeidsgiver ? (
+                            <div className={styles.sykmeldtHeader}>
+                                <Heading size="small" level="2" id="sykmeldinger-panel-info-section">
+                                    Opplysninger fra sykmeldingen
+                                </Heading>
+                                <BodyShort className={styles.sendtDato} size="small">
+                                    {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
+                                </BodyShort>
+                            </div>
+                        ) : (
+                            <div className={styles.arbeidsgiverHeader}>
+                                <div className={styles.sykmeldingsopplysningerIcon}>
+                                    <Findout />
+                                </div>
+                                <Heading
+                                    className={styles.sykmeldingsopplysningerText}
+                                    size="small"
+                                    level="2"
+                                    id="sykmeldinger-panel-info-section"
+                                >
+                                    Se hva som sendes til jobben din
+                                </Heading>
+                            </div>
+                        )}
                     </header>
-                    <div id={contentId} aria-labelledby={headerId} className={styles.sykmeldingsopplysningerContent}>
-                        <SykmeldingView sykmelding={sykmelding} arbeidsgiver={arbeidsgiver} />
+                    <div id={contentId} aria-labelledby={headerId}>
+                        {arbeidsgiver ? (
+                            <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
+                        ) : (
+                            <SykmeldingViewSykmeldt sykmelding={sykmelding} />
+                        )}
                     </div>
                 </>
             )}

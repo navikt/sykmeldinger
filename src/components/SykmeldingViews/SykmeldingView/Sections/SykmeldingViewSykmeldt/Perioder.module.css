@@ -1,0 +1,31 @@
+.perioder {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--navds-spacing-4);
+}
+
+.perioder .periode {
+    flex-grow: 1;
+    margin-bottom: var(--navds-spacing-4);
+    background-color: var(--navds-global-color-blue-50);
+    padding: var(--navds-spacing-4);
+    border-radius: 4px;
+}
+
+.perioder .periode div {
+    margin-bottom: var(--navds-spacing-8);
+}
+
+.perioder .periode:nth-child(3n + 3) {
+    flex-basis: 100%;
+}
+
+.perioder .periode p:not(:last-of-type) {
+    margin-bottom: 0.3rem;
+    font-size: var(--navds-spacing-4);
+}
+
+.perioder .periode div:last-of-type,
+.perioder .periode p:last-of-type {
+    margin-bottom: 0;
+}

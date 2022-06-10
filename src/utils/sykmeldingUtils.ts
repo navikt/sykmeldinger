@@ -17,3 +17,7 @@ export function isUnderbehandling(sykmelding: Sykmelding): boolean {
         sykmelding.merknader?.find((it) => it.type === 'UNDER_BEHANDLING') != null
     );
 }
+
+export function getBirthday(fnr: string): string {
+    return fnr.substring(0, 6) + '*****';
+}

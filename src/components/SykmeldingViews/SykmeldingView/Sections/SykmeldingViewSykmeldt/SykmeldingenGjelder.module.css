@@ -1,0 +1,11 @@
+.sykmeldingenGjelder {
+    padding-bottom: var(--navds-spacing-4);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    padding: var(--navds-spacing-4);
+    background-color: var(--navds-global-color-gray-50);
+    border-radius: 4px;
+}

@@ -10,6 +10,7 @@
     background: none;
     color: #0067c5;
     border: none;
+    padding-bottom: var(--navds-spacing-4);
 }
 
 .lukknapp:hover {

@@ -1,0 +1,18 @@
+.periodeView .periode {
+    border-bottom: 1px solid var(--skillelinje-farge);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+.periodeView .periode div:not(:last-of-type) {
+    margin-bottom: var(--navds-spacing-8);
+}
+
+.periodeView .periode p:not(:last-of-type) {
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+}
+
+.periodeView .periode p:last-of-type {
+    margin-bottom: 0;
+}

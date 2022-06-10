@@ -1,0 +1,17 @@
+.info,
+.erIArbeid div,
+.erIkkeIArbeid div {
+    background-color: var(--navds-global-color-gray-50);
+    padding: var(--navds-spacing-4);
+    margin-bottom: var(--navds-spacing-3);
+}
+
+.info div {
+    margin: 0;
+}
+
+.info p:last-of-type,
+.erIArbeid p:last-of-type,
+.erIkkeIArbeid p:last-of-type {
+    margin-bottom: 0;
+}

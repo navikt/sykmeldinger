@@ -1,5 +1,5 @@
-.jaEntry {
-    margin-bottom: 2rem;
+.heading {
+    font-size: var(--navds-font-size-heading-xsmall);
 }
 
 .jaEntryText {
