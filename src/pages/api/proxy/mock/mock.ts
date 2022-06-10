@@ -39,9 +39,6 @@ export function handleMockRequest(req: NextApiRequest, res: NextApiResponse, pat
     } else if (path.length === 2 && path[1] === 'brukerinformasjon') {
         res.status(200).json({ strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock });
         return;
-    } else if (path.length === 2 && path[1] === 'brukerinformasjon') {
-        res.status(200).json({ strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock });
-        return;
     } else if (path.length === 3) {
         const relevantSykmelding = sykmeldinger.find((it) => it.id === path[2]);
         if (!relevantSykmelding) {

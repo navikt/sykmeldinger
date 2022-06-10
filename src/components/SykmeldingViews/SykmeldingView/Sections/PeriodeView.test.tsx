@@ -82,7 +82,7 @@ describe('PeriodeView', () => {
 
         render(<PeriodeView perioder={[periode]} />);
 
-        expect(screen.getByText(Periodetype.BEHANDLINGSDAGER)).toBeInTheDocument();
+        expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();
         expect(screen.getByText('1. til 5. april 2021')).toBeInTheDocument();
         expect(screen.getByText('3 behandlingsdager i løpet av 5 dager')).toBeInTheDocument();
     });
@@ -112,6 +112,6 @@ describe('PeriodeView', () => {
         render(<PeriodeView perioder={[reisetilskudd, behandlingsdager]} />);
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
-        expect(screen.getByText(Periodetype.BEHANDLINGSDAGER)).toBeInTheDocument();
+        expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();
     });
 });

@@ -84,7 +84,7 @@ describe('Periode', () => {
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             };
-            expect(getPeriodTitle(periodeJson)).toBe(Periodetype.BEHANDLINGSDAGER);
+            expect(getPeriodTitle(periodeJson)).toBe('Behandlingsdager');
         });
     });
 

@@ -11,7 +11,10 @@ ENV NODE_ENV production
 COPY package.json /app/
 COPY .yarn /app/.yarn
 COPY .yarnrc.yml /app/
-COPY *config* /app/
+COPY next-logger.config.js /app/
+COPY next.config.js /app/
+COPY sentry.client.config.js /app/
+COPY sentry.server.config.js /app/
 COPY yarn.lock /app/
 COPY scripts /app/scripts
 

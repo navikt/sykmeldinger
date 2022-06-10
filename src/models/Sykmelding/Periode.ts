@@ -93,7 +93,7 @@ export function getPeriodTitle(period: Periode): string {
         case Periodetype.REISETILSKUDD:
             return 'Reisetilskudd';
         case Periodetype.BEHANDLINGSDAGER:
-            return Periodetype.BEHANDLINGSDAGER;
+            return 'Behandlingsdager';
     }
 }
 

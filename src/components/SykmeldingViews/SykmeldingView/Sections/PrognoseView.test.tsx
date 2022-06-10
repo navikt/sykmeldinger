@@ -140,7 +140,7 @@ describe('PrognoseView', () => {
             expect(screen.getByText('15. april 2021')).toBeInTheDocument();
         });
 
-        it('Renders erIkkeIArbeid arbeidsforPaSikt true', () => {
+        it('Renders erIkkeIArbeid when arbeidsforPaSikt is false', () => {
             const prognose: Prognose = PrognoseSchema.parse({
                 arbeidsforEtterPeriode: true,
                 hensynArbeidsplassen: 'hensyn på arbeidsplassen',
