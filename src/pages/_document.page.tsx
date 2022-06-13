@@ -40,7 +40,7 @@ class MyDocument extends Document<Props> {
         const Decorator = await fetchDecoratorReact({
             env: createDecoratorEnv(ctx),
             chatbot: true,
-            context: 'arbeidsgiver',
+            context: 'privatperson',
         });
 
         const language = getDocumentParameter(initialProps, 'lang');
