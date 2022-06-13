@@ -27,10 +27,10 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
 
-    const { isLoading, isFetching, error, data: sykmelding } = useSykmelding(sykmeldingId);
+    const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
     const olderSykmelding = useFindOlderSykmeldingId(sykmelding);
 
-    if (isLoading || isFetching || olderSykmelding.isLoading) {
+    if (isLoading || olderSykmelding.isLoading) {
         return (
             <Spacing>
                 <Spinner headline="Henter sykmelding" />

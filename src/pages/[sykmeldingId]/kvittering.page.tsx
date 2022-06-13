@@ -24,9 +24,9 @@ function SykmeldingkvitteringPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_KVITTERING');
     const sykmeldingId = useGetSykmeldingIdParam();
 
-    const { isLoading, isFetching, error, data: sykmelding } = useSykmelding(sykmeldingId);
+    const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
 
-    if (isLoading || isFetching) {
+    if (isLoading) {
         return <Spinner headline="Laster kvittering" />;
     }
 

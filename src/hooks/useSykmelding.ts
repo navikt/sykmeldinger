@@ -13,24 +13,27 @@ import { logger } from '../utils/logger';
 const publicEnv = getPublicEnv();
 
 function useSykmelding(sykmeldingId: string): UseQueryResult<Sykmelding, Error> {
-    return useQuery(['sykmelding', sykmeldingId], () =>
-        authenticatedGet(
-            `${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}`,
-            async (maybeSykmelding) => {
-                const sykmelding = SykmeldingSchema.parse(maybeSykmelding);
+    return useQuery(
+        ['sykmelding', sykmeldingId],
+        () =>
+            authenticatedGet(
+                `${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}`,
+                async (maybeSykmelding) => {
+                    const sykmelding = SykmeldingSchema.parse(maybeSykmelding);
 
-                // Temporary log, probably doesn't happen, TODO: remove
-                if (sykmelding.id === 'null') {
-                    logger.error(
-                        `Sykmelding with id "NULL" (not null), fom: ${getSykmeldingStartDate(
-                            sykmelding,
-                        )} tom: ${getSykmeldingEndDate(sykmelding)}`,
-                    );
-                }
+                    // Temporary log, probably doesn't happen, TODO: remove
+                    if (sykmelding.id === 'null') {
+                        logger.error(
+                            `Sykmelding with id "NULL" (not null), fom: ${getSykmeldingStartDate(
+                                sykmelding,
+                            )} tom: ${getSykmeldingEndDate(sykmelding)}`,
+                        );
+                    }
 
-                return sykmelding;
-            },
-        ),
+                    return sykmelding;
+                },
+            ),
+        { refetchOnWindowFocus: true },
     );
 }
 
