@@ -29,7 +29,7 @@ export async function authenticatedGet<T>(
         }
 
         try {
-            return await callback(await res.json(), res);
+            return await callback(await res.text().then((it) => JSON.parse(it)), res);
         } catch (error: unknown) {
             let cause: Error | undefined = undefined;
             if (error instanceof Error) {

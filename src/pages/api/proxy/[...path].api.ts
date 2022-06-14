@@ -48,7 +48,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
         } catch (e) {
             logger.error(`Unable to JSON parse result from ${url} (${result.status} ${result.statusText})`);
             logger.error(e);
-            res.status(500).json('Internal server error');
+            res.status(500).json({ message: 'Internal server error' });
             return;
         }
     }
