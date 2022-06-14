@@ -4,9 +4,10 @@ import pino, { BaseLogger } from 'pino';
 import { logger } from '../../utils/logger';
 
 type LogLevels = Exclude<keyof BaseLogger, 'string' | 'level'>;
+type WithTrace = { x_trace?: string };
 
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
-    const { level, ts, ...rest }: pino.LogEvent = req.body;
+    const { level, ts, x_trace, ...rest }: pino.LogEvent & WithTrace = req.body;
 
     rest.messages.forEach((msg) => {
         const log = typeof msg === 'string' ? { msg } : msg;
@@ -26,11 +27,12 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
                 x_isFrontend: true,
                 x_isSquelched: true,
                 x_userAgent: req.headers['user-agent'],
+                x_trace,
             });
             return;
         }
 
-        logger[label]({ ...log, x_timestamp: ts, x_isFrontend: true, x_userAgent: req.headers['user-agent'] });
+        logger[label]({ ...log, x_timestamp: ts, x_isFrontend: true, x_userAgent: req.headers['user-agent'], x_trace });
     });
 
     res.status(200).json({ ok: `ok` });

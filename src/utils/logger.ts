@@ -14,7 +14,7 @@ const getFrontendLogger = (): pino.Logger =>
                         await fetch(`${publicEnv.publicPath ?? ''}/api/logger`, {
                             method: 'POST',
                             headers: { 'content-type': 'application/json' },
-                            body: JSON.stringify(logEvent),
+                            body: JSON.stringify({ ...logEvent, x_trace: new Error().stack }),
                         });
                     } catch (e) {
                         console.warn(e);
