@@ -36,6 +36,11 @@ export async function authenticatedGet<T>(
                 if (!error.message) {
                     logger.error(`Error without message occurred in GET request to ${url}`);
                 } else {
+                    logger.warn(
+                        `Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
+                            'content-type',
+                        )}. Content length is ${res.headers.get('content-length')}`,
+                    );
                     logger.error(error);
                 }
                 cause = error;
