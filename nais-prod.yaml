@@ -25,6 +25,15 @@ spec:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
     path: /syk/sykmeldinger/api/internal/is_ready
+  gcp:
+    buckets:
+      - name: sykmeldinger-prod-debug-bucket-todo-delete
+        retentionPeriodDays: 2
+        lifecycleCondition:
+          age: 7
+          createdBefore: 2020-01-01
+          numNewerVersions: 2
+          withState: ANY
   env:
     - name: NEXT_PUBLIC_BASE_PATH
       value: /syk/sykmeldinger
