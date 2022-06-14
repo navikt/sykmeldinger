@@ -59,3 +59,5 @@ spec:
       value: 'https://teamsykmelding-static-files.nav.no/sykmeldinger'
     - name: SENTRY_ENABLED
       value: 'true'
+    - name: GSC_BUCKET_NAME
+      value: sykmeldinger-prod-debug-bucket-todo-delete

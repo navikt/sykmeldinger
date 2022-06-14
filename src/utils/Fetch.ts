@@ -28,14 +28,17 @@ export async function authenticatedGet<T>(
             throw new Error(errorMessage);
         }
 
+        const resultAsText = await res.text();
         try {
-            return await callback(await res.text().then((it) => JSON.parse(it)), res);
+            return await callback(JSON.parse(resultAsText), res);
         } catch (error: unknown) {
             let cause: Error | undefined = undefined;
             if (error instanceof Error) {
                 if (!error.message) {
                     logger.error(`Error without message occurred in GET request to ${url}`);
                 } else {
+                    // TODO temporary, ignore promise on purpose
+                    fireAndforgetBucketDebug(resultAsText);
                     logger.warn(
                         `Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
                             'content-type',
@@ -69,6 +72,16 @@ export async function authenticatedGet<T>(
     }
 
     throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
+}
+
+/**
+ * TODO temporary
+ */
+async function fireAndforgetBucketDebug(resultAsText: string): Promise<void> {
+    await fetch(`${publicEnv.publicPath ?? ''}/api/buck-it`, {
+        method: 'POST',
+        body: resultAsText,
+    });
 }
 
 /**
