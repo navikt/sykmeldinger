@@ -43,7 +43,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
             const jsonResponse = await result.json();
             res.status(result.status).json(jsonResponse);
 
-            logger.info(`Proxy request to ${url} succeeded with a JSON response`);
+            logger.info(
+                `Proxy request to ${url} succeeded with a JSON response, headers: ${JSON.stringify(
+                    JSON.stringify(req.headers),
+                )}`,
+            );
             return;
         } catch (e) {
             logger.error(`Unable to JSON parse result from ${url} (${result.status} ${result.statusText})`);
@@ -53,7 +57,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
         }
     }
 
-    logger.info(`Proxy request to ${url} succeeded, but had no JSON response, instead was '${contentType ?? 'null'}'`);
+    logger.info(
+        `Proxy request to ${url} succeeded, but had no JSON response, instead was '${
+            contentType ?? 'no content-type'
+        }'`,
+    );
     res.status(result.status).json({ ok: 'ok' });
 };
 

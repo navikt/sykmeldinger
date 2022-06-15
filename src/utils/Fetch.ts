@@ -1,11 +1,11 @@
-import { byteLength } from 'next/dist/server/api-utils/web';
-
 import { getPublicEnv } from './env';
 import { logger } from './logger';
 
 const publicEnv = getPublicEnv();
 
 const loginServiceUrl = `${publicEnv.LOGIN_SERVICE_URL}?redirect=${publicEnv.LOGIN_SERVICE_REDIRECT_URL}`;
+
+const byteSize = (str: string): number => new Blob([str]).size;
 
 /**
  * Make a GET request for the specified resource
@@ -35,15 +35,17 @@ export async function authenticatedGet<T>(
         logger.info(
             `${myMiniTraceId}: Successfully fetched data, content-length is ${res.headers.get(
                 'content-length',
-            )}, body byte length is ${byteLength(resultAsText)}`,
+            )}, body byte length is ${byteSize(resultAsText)}`,
         );
+
         try {
             return await callback(JSON.parse(resultAsText), res);
         } catch (error: unknown) {
             let cause: Error | undefined = undefined;
             if (error instanceof Error) {
                 // TODO temporary, ignore promise on purpose
-                fireAndforgetBucketDebug(resultAsText);
+                // @ts-expect-error TODO remove
+                fireAndforgetBucketDebug(resultAsText, JSON.stringify(Object.fromEntries([...res.headers])));
                 logger.warn(
                     `${myMiniTraceId}: Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
                         'content-type',
@@ -81,10 +83,13 @@ export async function authenticatedGet<T>(
 /**
  * TODO temporary
  */
-async function fireAndforgetBucketDebug(resultAsText: string): Promise<void> {
+async function fireAndforgetBucketDebug(resultAsText: string, headers: string): Promise<void> {
     await fetch(`${publicEnv.publicPath ?? ''}/api/buck-it`, {
         method: 'POST',
-        body: resultAsText,
+        body: JSON.stringify({
+            result: resultAsText,
+            headers,
+        }),
     });
 }
 
