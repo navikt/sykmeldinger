@@ -1,5 +1,5 @@
 import { getPublicEnv } from './env';
-import { logger } from './logger';
+import { logErrorWithRequestId, logger, logInfoWithRequestId, logWarnWithRequestId } from './logger';
 
 const publicEnv = getPublicEnv();
 
@@ -20,6 +20,7 @@ export async function authenticatedGet<T>(
 ): Promise<T> {
     const myMiniTraceId = Math.random().toString(16).slice(2);
     const res = await fetch(url, { credentials: 'include' });
+    const requestId = res.headers.get('x-request-id');
 
     if (res.ok) {
         const contentType: string | null = res.headers.get('content-type');
@@ -27,15 +28,16 @@ export async function authenticatedGet<T>(
             const errorMessage = `${myMiniTraceId}: Response for "${url}" was OK, but is not 'application/json', but was '${
                 contentType ?? 'null'
             }' instead`;
-            logger.error(errorMessage);
+            logErrorWithRequestId(errorMessage, requestId);
             throw new Error(errorMessage);
         }
 
         const resultAsText = await res.text();
-        logger.info(
+        logInfoWithRequestId(
             `${myMiniTraceId}: Successfully fetched data, content-length is ${res.headers.get(
                 'content-length',
             )}, body byte length is ${byteSize(resultAsText)}`,
+            requestId,
         );
 
         try {
@@ -46,15 +48,16 @@ export async function authenticatedGet<T>(
                 // TODO temporary, ignore promise on purpose
                 // @ts-expect-error TODO remove
                 fireAndforgetBucketDebug(resultAsText, JSON.stringify(Object.fromEntries([...res.headers])));
-                logger.warn(
+                logWarnWithRequestId(
                     `${myMiniTraceId}: Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
                         'content-type',
                     )}. Content length is ${res.headers.get('content-length')}`,
+                    requestId,
                 );
                 logger.error(error);
                 cause = error;
             } else {
-                logger.error(`${myMiniTraceId}: Unknown error type: ${typeof error}`);
+                logErrorWithRequestId(`${myMiniTraceId}: Unknown error type: ${typeof error}`, requestId);
                 logger.error(error);
             }
 

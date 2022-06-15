@@ -27,4 +27,25 @@ const getFrontendLogger = (): pino.Logger =>
 
 const createBackendLogger = require('../../next-logger.config').logger;
 
+export function logInfoWithRequestId(msg: string, requestId: string | string[] | undefined | null): void {
+    logger.info({
+        msg,
+        'x-request-id': requestId,
+    });
+}
+
+export function logErrorWithRequestId(msg: string, requestId: string | string[] | undefined | null): void {
+    logger.error({
+        msg,
+        'x-request-id': requestId,
+    });
+}
+
+export function logWarnWithRequestId(msg: string, requestId: string | string[] | undefined | null): void {
+    logger.warn({
+        msg,
+        'x-request-id': requestId,
+    });
+}
+
 export const logger: pino.Logger = typeof window !== 'undefined' ? getFrontendLogger() : createBackendLogger();

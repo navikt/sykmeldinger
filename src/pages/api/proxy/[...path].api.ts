@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { logger } from '../../../utils/logger';
+import { logErrorWithRequestId, logger, logInfoWithRequestId } from '../../../utils/logger';
 import { getServerEnv, isLocalOrDemo } from '../../../utils/env';
 
 import { handleMockRequest } from './mock/mock';
@@ -19,7 +19,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     const path = req.query.path.join('/');
     const url = `${getServerEnv().SYKMELDINGER_BACKEND}/api/${path}`;
 
-    logger.info(`Proxying request to ${url}`);
+    const requestId = req.headers['x-request-id'];
+    res.setHeader('x-request-id', requestId ?? 'missing');
+
+    logInfoWithRequestId(`Proxying request to ${url}`, requestId);
     const result = await fetch(url, {
         method: req.method,
         body: getBody(req),
@@ -32,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     }
 
     if (!result.ok) {
-        logger.error(`Proxy request failed: ${result.status} ${result.statusText}`);
+        logErrorWithRequestId(`Proxy request failed: ${result.status} ${result.statusText}`, requestId);
         res.status(result.status).json({ message: `Noe gikk galt: ${result.statusText}` });
         return;
     }
@@ -43,24 +46,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
             const jsonResponse = await result.json();
             res.status(result.status).json(jsonResponse);
 
-            logger.info(
-                `Proxy request to ${url} succeeded with a JSON response, headers: ${JSON.stringify(
-                    JSON.stringify(req.headers),
-                )}`,
-            );
+            logInfoWithRequestId(`Proxy request to ${url} succeeded with a JSON response`, requestId);
             return;
         } catch (e) {
-            logger.error(`Unable to JSON parse result from ${url} (${result.status} ${result.statusText})`);
+            logErrorWithRequestId(
+                `Unable to JSON parse result from ${url} (${result.status} ${result.statusText})`,
+                requestId,
+            );
             logger.error(e);
             res.status(500).json({ message: 'Internal server error' });
             return;
         }
     }
 
-    logger.info(
+    logInfoWithRequestId(
         `Proxy request to ${url} succeeded, but had no JSON response, instead was '${
             contentType ?? 'no content-type'
         }'`,
+        requestId,
     );
     res.status(result.status).json({ ok: 'ok' });
 };
