@@ -51,7 +51,9 @@ export async function authenticatedGet<T>(
                 logWarnWithRequestId(
                     `${myMiniTraceId}: Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
                         'content-type',
-                    )}. Content length is ${res.headers.get('content-length')}`,
+                    )}. Content length is ${res.headers.get('content-length')}, response status is ${res.status} ${
+                        res.statusText
+                    }`,
                     requestId,
                 );
                 logger.error(error);
