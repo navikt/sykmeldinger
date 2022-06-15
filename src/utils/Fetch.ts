@@ -19,7 +19,7 @@ export async function authenticatedGet<T>(
     callback: (data: unknown, response: Response) => Promise<T>,
 ): Promise<T> {
     const myMiniTraceId = Math.random().toString(16).slice(2);
-    const res = await fetch(url, { credentials: 'include' });
+    const res = await fetch(url, { credentials: 'include', cache: 'no-store' });
     const requestId = res.headers.get('x-request-id');
 
     if (res.ok) {
