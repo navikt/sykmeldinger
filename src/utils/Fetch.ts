@@ -1,3 +1,5 @@
+import { byteLength } from 'next/dist/server/api-utils/web';
+
 import { getPublicEnv } from './env';
 import { logger } from './logger';
 
@@ -16,12 +18,13 @@ export async function authenticatedGet<T>(
     url: string,
     callback: (data: unknown, response: Response) => Promise<T>,
 ): Promise<T> {
+    const myMiniTraceId = Math.random().toString(16).slice(2);
     const res = await fetch(url, { credentials: 'include' });
 
     if (res.ok) {
         const contentType: string | null = res.headers.get('content-type');
         if (!contentType?.includes('application/json')) {
-            const errorMessage = `Response for "${url}" was OK, but is not 'application/json', but was '${
+            const errorMessage = `${myMiniTraceId}: Response for "${url}" was OK, but is not 'application/json', but was '${
                 contentType ?? 'null'
             }' instead`;
             logger.error(errorMessage);
@@ -29,26 +32,27 @@ export async function authenticatedGet<T>(
         }
 
         const resultAsText = await res.text();
+        logger.info(
+            `${myMiniTraceId}: Successfully fetched data, content-length is ${res.headers.get(
+                'content-length',
+            )}, body byte length is ${byteLength(resultAsText)}`,
+        );
         try {
             return await callback(JSON.parse(resultAsText), res);
         } catch (error: unknown) {
             let cause: Error | undefined = undefined;
             if (error instanceof Error) {
-                if (!error.message) {
-                    logger.error(`Error without message occurred in GET request to ${url}`);
-                } else {
-                    // TODO temporary, ignore promise on purpose
-                    fireAndforgetBucketDebug(resultAsText);
-                    logger.warn(
-                        `Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
-                            'content-type',
-                        )}. Content length is ${res.headers.get('content-length')}`,
-                    );
-                    logger.error(error);
-                }
+                // TODO temporary, ignore promise on purpose
+                fireAndforgetBucketDebug(resultAsText);
+                logger.warn(
+                    `${myMiniTraceId}: Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
+                        'content-type',
+                    )}. Content length is ${res.headers.get('content-length')}`,
+                );
+                logger.error(error);
                 cause = error;
             } else {
-                logger.error(`Unknown error type: ${typeof error}`);
+                logger.error(`${myMiniTraceId}: Unknown error type: ${typeof error}`);
                 logger.error(error);
             }
 
