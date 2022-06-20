@@ -23,9 +23,9 @@ import PageWrapper from '../components/PageWrapper/PageWrapper';
 const SykmeldingerPage: React.FC = () => {
     useHotjarTrigger('SYKMELDING_LISTEVISNING');
 
-    const { isLoading, isFetching, error, data: sykmeldinger } = useSykmeldinger();
+    const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
 
-    if (isLoading || isFetching) {
+    if (isLoading) {
         return (
             <Spacing>
                 <Spinner headline="Henter dine sykmeldinger" />

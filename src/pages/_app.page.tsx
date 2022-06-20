@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             queries: {
                 retry: 1,
                 refetchOnWindowFocus: false,
-                staleTime: Infinity,
             },
         },
     });
