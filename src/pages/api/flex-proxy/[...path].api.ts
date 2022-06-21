@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     }
 
     if (!result.ok) {
-        logger.error(`Flex Proxy request failed: ${result.status} ${result.statusText}`);
+        logger.error(`Proxy request failed: ${result.status} ${result.statusText}`);
         res.status(result.status).json({ message: `Noe gikk galt: ${result.statusText}` });
         return;
     }

@@ -17,7 +17,7 @@ function useSykmelding(sykmeldingId: string): UseQueryResult<Sykmelding, Error> 
         ['sykmelding', sykmeldingId],
         () =>
             authenticatedGet(
-                `${publicEnv.SYKMELDINGER_BACKEND}/api/v1/sykmeldinger/${sykmeldingId}`,
+                `${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}`,
                 async (maybeSykmelding) => {
                     const sykmelding = SykmeldingSchema.parse(maybeSykmelding);
 

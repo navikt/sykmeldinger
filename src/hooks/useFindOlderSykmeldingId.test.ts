@@ -22,7 +22,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[1])),
@@ -40,7 +40,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
@@ -58,7 +58,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
@@ -76,7 +76,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateSub(new Date(), { days: 30 }), 'previous-sykmelding'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[0])),
@@ -94,7 +94,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
@@ -111,7 +111,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateSub(new Date(), { days: 2 }), 'SYKME-3'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[0])),
@@ -127,7 +127,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateSub(new Date(), { days: 7 }), 'SYKME-2'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[1])),
@@ -144,7 +144,7 @@ describe('useFindOlderSykmeldingId', () => {
             sykmeldingApen(dateSub(new Date(), { days: 7 }), 'SYKME-3'),
         ];
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, sykmeldinger);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
 
         const { result, waitForNextUpdate } = renderHook(() =>
             useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
@@ -175,7 +175,7 @@ describe('useFindOlderSykmeldingId', () => {
         const oldest = createSingle10PeriodApen(dateSub(new Date(), { days: 7 }), 'SYKME-2');
 
         beforeEach(() => {
-            apiNock.get('/api/v1/sykmeldinger').reply(200, [newest, oldest]);
+            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [newest, oldest]);
         });
 
         it('newest should point to oldest', async () => {

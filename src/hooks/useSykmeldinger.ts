@@ -12,7 +12,7 @@ function useSykmeldinger(): UseQueryResult<Sykmelding[], Error> {
     return useQuery(
         'sykmeldinger',
         () =>
-            authenticatedGet(`${publicEnv.SYKMELDINGER_BACKEND}/api/v1/sykmeldinger`, async (maybeSykmeldinger) => {
+            authenticatedGet(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger`, async (maybeSykmeldinger) => {
                 const sykmeldinger = z.array(SykmeldingSchema).safeParse(maybeSykmeldinger);
 
                 if (!sykmeldinger.success) {

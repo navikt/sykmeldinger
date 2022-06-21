@@ -13,8 +13,8 @@ describe('Bekreft avvist sykmelding som lest', () => {
     beforeEach(() => {
         mockRouter.setCurrentUrl(`/${sykmeldingAvvist().id}`);
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingAvvist()]);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingAvvist().id}`).times(1).reply(200, sykmeldingAvvist());
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingAvvist()]);
+        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingAvvist().id}`).times(1).reply(200, sykmeldingAvvist());
     });
 
     it('should display reason for rejection', async () => {
@@ -70,9 +70,9 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
     it('should show confirmation after submitting', async () => {
         const sykmelding = sykmeldingAvvist();
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmelding]);
-        apiNock.post(`/api/v1/sykmeldinger/${sykmelding.id}/bekreftAvvist`).reply(203);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmelding.id}`).reply(200, {
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmelding]);
+        apiNock.post(`/api/proxy/v1/sykmeldinger/${sykmelding.id}/bekreftAvvist`).reply(203);
+        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmelding.id}`).reply(200, {
             ...sykmelding,
             sykmeldingStatus: {
                 ...sykmelding.sykmeldingStatus,
