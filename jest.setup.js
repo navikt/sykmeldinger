@@ -34,6 +34,7 @@ mockRouter.registerPaths(['/', '/[sykmeldingId]', '/[sykmeldingId]/kvittering', 
 jest.spyOn(window, 'scrollTo').mockImplementation(() => void 0);
 jest.mock('next/config', () => () => ({
     publicRuntimeConfig: {
+        SYKMELDINGER_BACKEND: 'http://localhost',
         publicPath: 'http://localhost',
         runtimeEnv: 'test',
     },

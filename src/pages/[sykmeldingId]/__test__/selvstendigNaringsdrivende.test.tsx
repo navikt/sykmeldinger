@@ -11,8 +11,8 @@ describe('Selvstendig næringsdrivende', () => {
 
     beforeEach(() => {
         mockRouter.setCurrentUrl(`/${sykmeldingApen().id}`);
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });
@@ -20,7 +20,7 @@ describe('Selvstendig næringsdrivende', () => {
 
     describe('Within ventetid', () => {
         it('should show details from sykmelding', async () => {
-            apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
+            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
             apiNock
                 .get(
                     `/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`,
@@ -33,14 +33,14 @@ describe('Selvstendig næringsdrivende', () => {
         });
 
         it('should be able to submit form', async () => {
-            apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(2).reply(200, sykmeldingApen());
+            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(2).reply(200, sykmeldingApen());
             apiNock
                 .get(
                     `/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`,
                 )
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
             apiNock
-                .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
+                .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Stemmer opplysningene?',
@@ -70,7 +70,7 @@ describe('Selvstendig næringsdrivende', () => {
                     },
                 })
                 .reply(200);
-            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+            apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
 
             render(<SykmeldingPage />);
 
@@ -96,7 +96,7 @@ describe('Selvstendig næringsdrivende', () => {
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
             apiNock
-                .get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`)
+                .get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`)
                 .times(2)
                 .reply(200, sykmeldingApen('2020-02-10'));
             apiNock
@@ -105,7 +105,7 @@ describe('Selvstendig næringsdrivende', () => {
                 )
                 .reply(200, { erUtenforVentetid: false, oppfolgingsdato: null });
             apiNock
-                .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
+                .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Stemmer opplysningene?',
@@ -135,7 +135,7 @@ describe('Selvstendig næringsdrivende', () => {
                     },
                 })
                 .reply(200);
-            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+            apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
 
             render(<SykmeldingPage />);
 
@@ -168,14 +168,14 @@ describe('Selvstendig næringsdrivende', () => {
 
     describe('Outside ventetid', () => {
         beforeEach(() => {
-            apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(2).reply(200, sykmeldingApen());
+            apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(2).reply(200, sykmeldingApen());
             apiNock
                 .get(
                     `/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`,
                 )
                 .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
             apiNock
-                .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
+                .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
                         svar: 'JA',
                         sporsmaltekst: 'Stemmer opplysningene?',
@@ -201,7 +201,7 @@ describe('Selvstendig næringsdrivende', () => {
         it('should be able to submit form', async () => {
             render(<SykmeldingPage />);
 
-            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+            apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
 

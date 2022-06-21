@@ -8,7 +8,7 @@ const publicEnv = getPublicEnv();
 
 function useBrukerinformasjon(): UseQueryResult<Brukerinformasjon, Error> {
     return useQuery('brukerinformasjon', () =>
-        authenticatedGet(`${publicEnv.publicPath}/api/proxy/v1/brukerinformasjon`, async (maybeBrukerinformasjon) =>
+        authenticatedGet(`${publicEnv.SYKMELDINGER_BACKEND}/api/v1/brukerinformasjon`, async (maybeBrukerinformasjon) =>
             BrukerinformasjonSchema.parse(maybeBrukerinformasjon),
         ),
     );
