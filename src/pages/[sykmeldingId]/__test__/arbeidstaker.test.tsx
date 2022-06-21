@@ -14,15 +14,15 @@ describe('Arbeidstaker', () => {
     beforeEach(() => {
         mockRouter.setCurrentUrl(`/${sykmeldingApen().id}`);
 
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
         apiNock
             .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
     });
 
     it('should show details from sykmelding', async () => {
-        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: arbeidsgivereMock,
             strengtFortroligAdresse: false,
         });
@@ -34,7 +34,7 @@ describe('Arbeidstaker', () => {
 
     it('should be able to submit form with active arbeidsgiver and nærmeste leder', async () => {
         apiNock
-            .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
+            .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Stemmer opplysningene?',
@@ -58,7 +58,7 @@ describe('Arbeidstaker', () => {
                 },
             })
             .reply(200);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
+        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
             ...sykmeldingApen(),
             sykmeldingStatus: {
                 ...sykmeldingApen().sykmeldingStatus,
@@ -66,11 +66,11 @@ describe('Arbeidstaker', () => {
                 timestamp: '2020-01-01',
             },
         });
-        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: arbeidsgivereMock,
             strengtFortroligAdresse: false,
         });
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
 
         render(<SykmeldingPage />);
 
@@ -94,7 +94,7 @@ describe('Arbeidstaker', () => {
 
     it('should be able to submit form with inactive arbeidsgiver', async () => {
         apiNock
-            .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
+            .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Stemmer opplysningene?',
@@ -113,7 +113,7 @@ describe('Arbeidstaker', () => {
                 },
             })
             .reply(200);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
+        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
             ...sykmeldingApen(),
             sykmeldingStatus: {
                 ...sykmeldingApen().sykmeldingStatus,
@@ -121,11 +121,11 @@ describe('Arbeidstaker', () => {
                 timestamp: '2020-01-01',
             },
         });
-        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: arbeidsgivereMock,
             strengtFortroligAdresse: false,
         });
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
 
         render(<SykmeldingPage />);
 
@@ -146,8 +146,8 @@ describe('Arbeidstaker', () => {
     });
 
     it('should show warning if user does not have any arbeidsforhold', async () => {
-        apiNock.post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`).reply(200);
-        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
+        apiNock.post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`).reply(200);
+        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });
@@ -163,7 +163,7 @@ describe('Arbeidstaker', () => {
     });
 
     it('should show information for people with diskresjonskode strengt fortrilig adresse', async () => {
-        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: true,
         });

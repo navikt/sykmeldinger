@@ -18,7 +18,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     const apiNock = nock('http://localhost');
 
     it('should fail with error message on API error', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(500, 'Fake body');
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(500, 'Fake body');
 
         render(<SykmeldingerPage />);
 
@@ -26,7 +26,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should not display any sykmeldinger', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, []);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, []);
 
         render(<SykmeldingerPage />);
 
@@ -35,7 +35,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
 
     it('should only display new sykmeldinger', async () => {
         apiNock
-            .get('/api/v1/sykmeldinger')
+            .get('/api/proxy/v1/sykmeldinger')
             .reply(200, [
                 sykmeldingBekreftet,
                 sykmeldingSendt(),
@@ -57,7 +57,9 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display only new sykmeldinger, sorted by ascending date ', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingApenPapir(), sykmeldingAvvist()]);
+        apiNock
+            .get('/api/proxy/v1/sykmeldinger')
+            .reply(200, [sykmeldingApen(), sykmeldingApenPapir(), sykmeldingAvvist()]);
 
         render(<SykmeldingerPage />);
 
@@ -72,7 +74,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display under behandling in Nye sykmeldinger section ', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering()]);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering()]);
 
         render(<SykmeldingerPage />);
 
@@ -85,7 +87,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display new and earlier sykmeldinger', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
 
         render(<SykmeldingerPage />);
 
@@ -96,7 +98,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display APEN but older than 3 months sykemelding in tidligere section', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
 
         render(<SykmeldingerPage />);
 
@@ -107,7 +109,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should not throw error when receiving a AVVIST sykmelding with invalid data', async () => {
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingAvvistUgyldigData]);
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingAvvistUgyldigData]);
 
         render(<SykmeldingerPage />);
 

@@ -9,7 +9,7 @@ function useGjenapne(sykmeldingId: string): UseMutationResult<unknown, Error, vo
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
-        () => authenticatedPost(`${publicEnv.SYKMELDINGER_BACKEND}/api/v1/sykmeldinger/${sykmeldingId}/gjenapne`),
+        () => authenticatedPost(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}/gjenapne`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

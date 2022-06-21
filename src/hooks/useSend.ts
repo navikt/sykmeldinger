@@ -14,7 +14,7 @@ function useSend(sykmeldingId: string): UseMutationResult<unknown, Error, FormSh
 
     return useMutation<unknown, Error, FormShape>(
         (values: FormShape) =>
-            authenticatedPost(`${publicEnv.SYKMELDINGER_BACKEND}/api/v2/sykmeldinger/${sykmeldingId}/send`, values),
+            authenticatedPost(`${publicEnv.publicPath}/api/proxy/v2/sykmeldinger/${sykmeldingId}/send`, values),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

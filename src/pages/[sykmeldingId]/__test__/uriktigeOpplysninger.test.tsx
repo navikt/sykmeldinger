@@ -11,9 +11,9 @@ describe('Uriktige opplysninger', () => {
 
     beforeEach(() => {
         mockRouter.setCurrentUrl(`/${sykmeldingApen().id}`);
-        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
-        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
+        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });

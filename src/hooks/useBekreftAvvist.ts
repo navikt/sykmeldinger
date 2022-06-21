@@ -10,7 +10,7 @@ function useBekreftAvvist(sykmeldingId: string): UseMutationResult<unknown, Erro
     const queryClient = useQueryClient();
 
     return useMutation<unknown, Error>(
-        () => authenticatedPost(`${publicEnv.SYKMELDINGER_BACKEND}/api/v1/sykmeldinger/${sykmeldingId}/bekreftAvvist`),
+        () => authenticatedPost(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger/${sykmeldingId}/bekreftAvvist`),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('sykmeldinger');

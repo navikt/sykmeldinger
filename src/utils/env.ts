@@ -9,7 +9,6 @@ export interface PublicEnv {
     LOGIN_SERVICE_REDIRECT_URL: string;
     SYKEPENGESOKNAD_URL: string;
     AMPLITUDE_ENABLED: string;
-    SYKMELDINGER_BACKEND: string;
 }
 
 export interface ServerEnv {
