@@ -34,6 +34,7 @@ const nextConfig = {
         SYKEPENGESOKNAD_URL: process.env.SYKEPENGESOKNAD_URL,
         SYKEFRAVAER_ROOT: process.env.SYKEFRAVAER_ROOT,
         DITT_NAV_ROOT: process.env.DITT_NAV_ROOT,
+        SYKMELDINGER_BACKEND: process.env.SYKMELDINGER_BACKEND,
     },
 };
 

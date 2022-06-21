@@ -19,9 +19,9 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     });
 
     it('should display sykmelding and form when all requests are successful', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
+        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });
@@ -44,11 +44,9 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
 
         mockRouter.setCurrentUrl(`/${thisSykmelding.id}`);
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [thisSykmelding, previousSykmelding]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${thisSykmelding.id}`).reply(200, thisSykmelding);
-        apiNock
-            .get('/api/proxy/v1/brukerinformasjon')
-            .reply(200, { arbeidsgivere: [], strengtFortroligAdresse: false });
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [thisSykmelding, previousSykmelding]);
+        apiNock.get(`/api/v1/sykmeldinger/${thisSykmelding.id}`).reply(200, thisSykmelding);
+        apiNock.get('/api/v1/brukerinformasjon').reply(200, { arbeidsgivere: [], strengtFortroligAdresse: false });
         apiNock
             .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${thisSykmelding.id}/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
@@ -65,9 +63,9 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     });
 
     it('should fail with error message when sykmelding cant be fetched', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(500);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(500);
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/v1/sykmeldinger').reply(500);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(500);
+        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });
@@ -81,9 +79,9 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     });
 
     it('should show sykmelding, but not form, when brukerinformasjon cant be fetched', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(500);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
+        apiNock.get('/api/v1/brukerinformasjon').reply(500);
         apiNock
             .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
             .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
@@ -95,9 +93,9 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     });
 
     it('should show sykmelding, but not form, when erUtenforVentetid cant be fetched', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
+        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });

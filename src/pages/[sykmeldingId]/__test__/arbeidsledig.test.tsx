@@ -13,9 +13,9 @@ describe('Arbeidsledig', () => {
     beforeEach(() => {
         mockRouter.setCurrentUrl(`/${sykmeldingApen().id}`);
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
+        apiNock.get('/api/v1/brukerinformasjon').reply(200, {
             arbeidsgivere: [],
             strengtFortroligAdresse: false,
         });
@@ -33,7 +33,7 @@ describe('Arbeidsledig', () => {
 
     it('should be able to submit form with work situation arbeidsledig', async () => {
         apiNock
-            .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
+            .post(`/api/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                 erOpplysningeneRiktige: {
                     svar: 'JA',
                     sporsmaltekst: 'Stemmer opplysningene?',
@@ -47,7 +47,7 @@ describe('Arbeidsledig', () => {
                 },
             })
             .reply(200);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
+        apiNock.get(`/api/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, {
             ...sykmeldingApen(),
             sykmeldingStatus: {
                 ...sykmeldingApen().sykmeldingStatus,
@@ -55,7 +55,7 @@ describe('Arbeidsledig', () => {
                 timestamp: '2020-01-01',
             },
         });
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+        apiNock.get('/api/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
 
         render(<SykmeldingPage />);
 
