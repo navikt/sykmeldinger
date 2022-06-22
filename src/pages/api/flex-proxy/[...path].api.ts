@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { logger } from '../../../utils/logger';
 import { getServerEnv, isLocalOrDemo } from '../../../utils/env';
+import { getBody, getHeaders, getRequestLogger } from '../../../server/proxyUtils';
 
 import { handleFlexMockRequest } from './mock/flexMock';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+    const logger = getRequestLogger(req, res);
+
     if (!Array.isArray(req.query.path)) {
         res.status(400).json({ message: 'Invalid request' });
         return;
@@ -32,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     }
 
     if (!result.ok) {
-        logger.error(`Proxy request failed: ${result.status} ${result.statusText}`);
+        logger.error(`Flex Proxy request failed: ${result.status} ${result.statusText}`);
         res.status(result.status).json({ message: `Noe gikk galt: ${result.statusText}` });
         return;
     }
@@ -53,29 +55,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
 
     res.status(result.status).json({ ok: 'ok' });
 };
-
-function getBody(req: NextApiRequest): string | undefined {
-    if (req.method === 'GET' || req.method === 'DELETE') {
-        return undefined;
-    }
-
-    return req.body ? JSON.stringify(req.body) : undefined;
-}
-
-function getHeaders(req: NextApiRequest): Record<string, string> {
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-    };
-
-    if (req.headers['sykmeldt-fnr']) {
-        headers['Sykmeldt-Fnr'] = req.headers['sykmeldt-fnr'] as string;
-    }
-
-    if (req.headers['cookie']) {
-        headers['Cookie'] = req.headers['cookie'] as string;
-    }
-
-    return headers;
-}
 
 export default handler;

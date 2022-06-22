@@ -1,5 +1,5 @@
 import { getPublicEnv } from './env';
-import { logErrorWithRequestId, logger, logInfoWithRequestId, logWarnWithRequestId } from './logger';
+import { logger } from './logger';
 
 const publicEnv = getPublicEnv();
 
@@ -18,26 +18,14 @@ export async function authenticatedGet<T>(
     url: string,
     callback: (data: unknown, response: Response) => Promise<T>,
 ): Promise<T> {
-    const myMiniTraceId = Math.random().toString(16).slice(2);
     const res = await fetch(url, { credentials: 'include', cache: 'no-store' });
-    const requestId = res.headers.get('x-request-id');
 
     if (res.ok) {
-        const contentType: string | null = res.headers.get('content-type');
-        if (!contentType?.includes('application/json')) {
-            const errorMessage = `${myMiniTraceId}: Response for "${url}" was OK, but is not 'application/json', but was '${
-                contentType ?? 'null'
-            }' instead`;
-            logErrorWithRequestId(errorMessage, requestId);
-            throw new Error(errorMessage);
-        }
-
         const resultAsText = await res.text();
-        logInfoWithRequestId(
-            `${myMiniTraceId}: Successfully fetched data, content-length is ${res.headers.get(
+        logger.info(
+            `Successfully fetched data, content-length is ${res.headers.get(
                 'content-length',
             )}, body byte length is ${byteSize(resultAsText)}`,
-            requestId,
         );
 
         try {
@@ -45,21 +33,17 @@ export async function authenticatedGet<T>(
         } catch (error: unknown) {
             let cause: Error | undefined = undefined;
             if (error instanceof Error) {
-                // TODO temporary, ignore promise on purpose
-                // @ts-expect-error TODO remove
-                fireAndforgetBucketDebug(resultAsText, JSON.stringify(Object.fromEntries([...res.headers])));
-                logWarnWithRequestId(
-                    `${myMiniTraceId}: Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
+                logger.warn(
+                    `Error occured in fetch try-catch for '${url}'. Content type is ${res.headers.get(
                         'content-type',
                     )}. Content length is ${res.headers.get('content-length')}, response status is ${res.status} ${
                         res.statusText
                     }`,
-                    requestId,
                 );
                 logger.error(error);
                 cause = error;
             } else {
-                logErrorWithRequestId(`${myMiniTraceId}: Unknown error type: ${typeof error}`, requestId);
+                logger.error(`Unknown error type: ${typeof error}`);
                 logger.error(error);
             }
 
@@ -83,19 +67,6 @@ export async function authenticatedGet<T>(
     }
 
     throw new Error('Vi har problemer med baksystemene for øyeblikket. Vennligst prøv igjen senere.');
-}
-
-/**
- * TODO temporary
- */
-async function fireAndforgetBucketDebug(resultAsText: string, headers: string): Promise<void> {
-    await fetch(`${publicEnv.publicPath ?? ''}/api/buck-it`, {
-        method: 'POST',
-        body: JSON.stringify({
-            result: resultAsText,
-            headers,
-        }),
-    });
 }
 
 /**
