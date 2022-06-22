@@ -18,7 +18,7 @@ interface Props {
 
 function Perioder({ perioder }: Props): JSX.Element {
     return (
-        <>
+        <div>
             <SykmeldtHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
             <div className={styles.perioder}>
                 {perioder.map((periode, index) => (
@@ -46,7 +46,7 @@ function Perioder({ perioder }: Props): JSX.Element {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 }
 

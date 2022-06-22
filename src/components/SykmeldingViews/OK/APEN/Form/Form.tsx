@@ -130,6 +130,7 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
         <FormProvider {...formMethods}>
             <form
                 id="apen-sykmelding-form"
+                className="hide-on-print"
                 onSubmit={handleSubmit((data) => {
                     send(data);
                 })}

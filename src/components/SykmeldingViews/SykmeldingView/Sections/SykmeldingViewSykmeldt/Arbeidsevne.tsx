@@ -17,7 +17,7 @@ function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): J
     }
 
     return (
-        <>
+        <div>
             <SykmeldtHeading title="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands} />
             {!!tiltakArbeidsplassen && (
                 <div className={styles.info}>
@@ -29,16 +29,16 @@ function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): J
                 </div>
             )}
             {!!tiltakNAV && (
-                <div className={styles.info}>
+                <div className={styles.tiltakNAV}>
                     <SykmeldingEntry title="Tiltak i regi av NAV" mainText={tiltakNAV} headingLevel="4" />
                 </div>
             )}
             {!!andreTiltak && (
-                <div className={styles.info}>
+                <div className={styles.andreTiltak}>
                     <SykmeldingEntry title="Andre innspill til NAV" mainText={andreTiltak} headingLevel="4" />
                 </div>
             )}
-        </>
+        </div>
     );
 }
 

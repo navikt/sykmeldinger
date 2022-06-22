@@ -1,4 +1,5 @@
-.info,
+.arbeidsforEtterPeriode div,
+.hensynArbeidsplassen div,
 .erIArbeid div,
 .erIkkeIArbeid div {
     background-color: var(--navds-global-color-gray-50);
@@ -6,12 +7,29 @@
     margin-bottom: var(--navds-spacing-3);
 }
 
-.info div {
-    margin: 0;
-}
-
-.info p:last-of-type,
+.arbeidsforEtterPeriode p:last-of-type,
+.hensynArbeidsplassen p:last-of-type,
 .erIArbeid p:last-of-type,
 .erIkkeIArbeid p:last-of-type {
     margin-bottom: 0;
+}
+
+@media print {
+    .erIArbeid,
+    .erIkkeIArbeid {
+        display: none;
+    }
+
+    .info {
+        padding-bottom: var(--navds-spacing-8);
+    }
+
+    .info div {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .info .hensynArbeidsplassen {
+        margin-bottom: var(--navds-spacing-4);
+    }
 }

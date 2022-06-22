@@ -16,7 +16,7 @@ function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
     if (!medisinskVurdering) return null;
 
     return (
-        <>
+        <div className={styles.root}>
             <SykmeldtHeading title="Medisinsk tilstand" Icon={Bandage} />
             <div className={styles.medisinskTilstand}>
                 {medisinskVurdering.hovedDiagnose?.tekst && (
@@ -86,7 +86,7 @@ function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 

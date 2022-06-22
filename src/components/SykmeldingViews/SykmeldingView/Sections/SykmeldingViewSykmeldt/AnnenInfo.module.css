@@ -20,3 +20,14 @@
 .info :global(p.navds-body-short:not(:last-of-type)) {
     margin-bottom: 0.3rem;
 }
+
+@media print {
+    .annenInfo {
+        padding-bottom: var(--navds-spacing-8);
+    }
+
+    .info {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+}

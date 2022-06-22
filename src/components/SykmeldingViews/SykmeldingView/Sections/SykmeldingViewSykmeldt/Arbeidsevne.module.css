@@ -1,5 +1,18 @@
-.info {
+.info,
+.tiltakNAV,
+.andreTiltak {
     background-color: var(--navds-global-color-gray-50);
     padding: var(--navds-spacing-4);
     margin-bottom: var(--navds-spacing-3);
+}
+
+@media print {
+    .tiltakNAV,
+    .andreTiltak {
+        display: none;
+    }
+
+    .info {
+        padding-bottom: var(--navds-spacing-8);
+    }
 }

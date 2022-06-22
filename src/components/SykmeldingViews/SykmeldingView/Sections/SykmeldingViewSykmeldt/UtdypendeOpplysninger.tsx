@@ -14,7 +14,7 @@ function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): JSX.Element | 
     if (Object.keys(utdypendeOpplysninger).length === 0) return null;
 
     return (
-        <>
+        <div className={styles.utdypendeOpplysninger}>
             <SykmeldtHeading title="Utdypende opplysninger" Icon={FileContent} />
             {Array.from(Object.values(utdypendeOpplysninger)).map((innerMap) => {
                 return Array.from(
@@ -34,7 +34,7 @@ function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): JSX.Element | 
                     }),
                 );
             })}
-        </>
+        </div>
     );
 }
 

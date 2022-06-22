@@ -14,7 +14,7 @@ interface SpacingProps {
 }
 
 function Spacing({ direction = 'bottom', amount = 'medium', children }: PropsWithChildren<SpacingProps>): JSX.Element {
-    return <div className={cn(styles[`${direction}-${amount}`])}>{children}</div>;
+    return <div className={cn(styles.spacing, styles[`${direction}-${amount}`])}>{children}</div>;
 }
 
 export default Spacing;

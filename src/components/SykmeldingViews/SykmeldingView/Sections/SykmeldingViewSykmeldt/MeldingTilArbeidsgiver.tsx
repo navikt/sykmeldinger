@@ -13,7 +13,7 @@ function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): JSX.Element 
     if (!meldingTilArbeidsgiver) return null;
 
     return (
-        <>
+        <div>
             <SykmeldtHeading title="Melding til arbeidsgiver" Icon={Employer} />
             <div className={styles.info}>
                 <SykmeldingEntry
@@ -22,7 +22,7 @@ function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): JSX.Element 
                     headingLevel="4"
                 />
             </div>
-        </>
+        </div>
     );
 }
 

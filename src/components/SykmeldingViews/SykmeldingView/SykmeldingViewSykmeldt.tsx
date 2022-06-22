@@ -13,6 +13,7 @@ import Prognose from './Sections/SykmeldingViewSykmeldt/Prognose';
 import Arbeidsevne from './Sections/SykmeldingViewSykmeldt/Arbeidsevne';
 import MeldingTilArbeidsgiver from './Sections/SykmeldingViewSykmeldt/MeldingTilArbeidsgiver';
 import Tilbakedatering from './Sections/SykmeldingViewSykmeldt/Tilbakedatering';
+import styles from './SykmeldingViewSykmeldt.module.css';
 
 interface Props {
     sykmelding: Sykmelding;
@@ -20,7 +21,7 @@ interface Props {
 
 const SykmeldingViewSykmeldt: React.FC<Props> = ({ sykmelding }) => {
     return (
-        <>
+        <div className={styles.sykmeldingViewSykmeldt}>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
             <Perioder perioder={getSykmeldingperioderSorted(sykmelding)} />
             <AnnenInfo sykmelding={sykmelding} />
@@ -44,7 +45,7 @@ const SykmeldingViewSykmeldt: React.FC<Props> = ({ sykmelding }) => {
                 <MeldingTilArbeidsgiver meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver} />
                 <Tilbakedatering kontaktMedPasient={sykmelding.kontaktMedPasient} />
             </FlereOpplysninger>
-        </>
+        </div>
     );
 };
 

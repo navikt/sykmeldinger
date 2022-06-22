@@ -13,3 +13,9 @@
 .behandlerOgArbeidsgiver {
     margin-bottom: var(--navds-spacing-8);
 }
+
+@media print {
+    .sykmeldingViewArbeidsgiver {
+        display: none;
+    }
+}

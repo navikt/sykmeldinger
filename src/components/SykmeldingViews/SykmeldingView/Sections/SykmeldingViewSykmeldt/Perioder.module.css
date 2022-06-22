@@ -29,3 +29,23 @@
 .perioder .periode p:last-of-type {
     margin-bottom: 0;
 }
+
+@media print {
+    .perioder {
+        display: block;
+        margin-bottom: var(--navds-spacing-4);
+        padding-bottom: var(--navds-spacing-8);
+    }
+
+    .perioder .periode {
+        padding-bottom: 0;
+    }
+
+    .perioder .periode div {
+        margin-bottom: var(--navds-spacing-4);
+    }
+
+    .perioder .periode:not(:last-of-type) {
+        margin: 0;
+    }
+}

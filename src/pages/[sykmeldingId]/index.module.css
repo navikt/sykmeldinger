@@ -1,0 +1,9 @@
+.logoForPrint {
+    display: none;
+}
+
+@media print {
+    .logoForPrint {
+        display: block;
+    }
+}

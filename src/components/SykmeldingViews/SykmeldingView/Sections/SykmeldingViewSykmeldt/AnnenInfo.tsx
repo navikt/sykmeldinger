@@ -15,7 +15,7 @@ interface Props {
 
 function AnnenInfo({ sykmelding }: Props): JSX.Element {
     return (
-        <>
+        <div>
             <SykmeldtHeading title="Annen info" Icon={Information} />
             <div className={styles.annenInfo}>
                 <div className={styles.info}>
@@ -43,7 +43,7 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 

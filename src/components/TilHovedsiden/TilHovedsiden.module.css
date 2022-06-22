@@ -7,3 +7,9 @@
 .tilHovedsiden .tilHovedsidenChevron {
     margin-right: 0.5rem;
 }
+
+@media print {
+    .tilHovedsiden {
+        display: none;
+    }
+}

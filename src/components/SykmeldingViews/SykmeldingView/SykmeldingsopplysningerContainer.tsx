@@ -3,8 +3,8 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Normaltekst } from 'nav-frontend-typografi';
 import cn from 'classnames';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { Findout } from '@navikt/ds-icons';
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Findout, Print } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import Lukknapp from '../../Lukknapp/Lukknapp';
@@ -96,9 +96,18 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                                 <Heading size="small" level="2" id="sykmeldinger-panel-info-section">
                                     Opplysninger fra sykmeldingen
                                 </Heading>
-                                <BodyShort className={styles.sendtDato} size="small">
-                                    {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
-                                </BodyShort>
+                                <div className={styles.sentDateAndPrint}>
+                                    <BodyShort className={styles.sendtDato} size="small">
+                                        {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
+                                    </BodyShort>
+                                    <Button
+                                        onClick={() => window.print()}
+                                        variant="tertiary"
+                                        className={styles.printButton}
+                                    >
+                                        <Print />
+                                    </Button>
+                                </div>
                             </div>
                         ) : (
                             <div className={styles.arbeidsgiverHeader}>

@@ -17,27 +17,29 @@ function TilbakedateringSykmeldt({ kontaktMedPasient }: Props): JSX.Element | nu
     }
 
     return (
-        <>
+        <div>
             <SykmeldtHeading title="Tilbakedatering" Icon={Historic} />
-            {!!kontaktMedPasient.kontaktDato && (
-                <div className={styles.info}>
-                    <SykmeldingEntry
-                        title="Dato for dokumenterbar kontakt med pasienten"
-                        mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
-                        headingLevel="4"
-                    />
-                </div>
-            )}
-            {!!kontaktMedPasient.begrunnelseIkkeKontakt && (
-                <div className={styles.info}>
-                    <SykmeldingEntry
-                        title="Begrunnelse for tilbakedatering"
-                        mainText={kontaktMedPasient.begrunnelseIkkeKontakt}
-                        headingLevel="4"
-                    />
-                </div>
-            )}
-        </>
+            <div className={styles.info}>
+                {!!kontaktMedPasient.kontaktDato && (
+                    <div className={styles.kontaktDato}>
+                        <SykmeldingEntry
+                            title="Dato for dokumenterbar kontakt med pasienten"
+                            mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
+                            headingLevel="4"
+                        />
+                    </div>
+                )}
+                {!!kontaktMedPasient.begrunnelseIkkeKontakt && (
+                    <div className={styles.begrunnelseIkkeKontakt}>
+                        <SykmeldingEntry
+                            title="Begrunnelse for tilbakedatering"
+                            mainText={kontaktMedPasient.begrunnelseIkkeKontakt}
+                            headingLevel="4"
+                        />
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }
 

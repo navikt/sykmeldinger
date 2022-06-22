@@ -70,3 +70,42 @@
 .opplysningerTilArbeidsgiver .sykmeldingsopplysningerHeader {
     background-color: #fef9ef;
 }
+
+.sentDateAndPrint {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--navds-global-color-gray-500);
+}
+
+.printButton {
+    position: relative;
+    bottom: var(--navds-spacing-2);
+    padding: var(--navds-spacing-1);
+    right: -0.8rem;
+}
+
+.printButton svg {
+    height: 1.3rem;
+}
+
+@media print {
+    .printButton,
+    .sykmeldingsopplysningerHeader .arbeidsgiverHeader {
+        display: none;
+    }
+
+    .opplysningerTilArbeidsgiver,
+    .sentDateAndPrint {
+        border: none;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .printButton {
+        display: none;
+    }
+
+    .sendtDato {
+        padding-bottom: var(--navds-spacing-2);
+    }
+}

@@ -1,5 +1,15 @@
+.utdypendeOpplysninger {
+    padding: 0;
+}
+
 .info {
     background-color: var(--navds-global-color-gray-50);
     padding: var(--navds-spacing-4);
     margin-bottom: var(--navds-spacing-3);
+}
+
+@media print {
+    .utdypendeOpplysninger {
+        display: none;
+    }
 }

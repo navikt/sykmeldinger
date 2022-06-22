@@ -29,3 +29,9 @@
 .bottom-large {
     margin-bottom: 4rem;
 }
+
+@media print {
+    .spacing {
+        margin: 0;
+    }
+}

@@ -17,10 +17,10 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
     }
 
     return (
-        <>
+        <div>
             <SykmeldtHeading title="Aktivitet på arbeidsplassen" Icon={Office2} />
             {!!aktivitetIkkeMulig.medisinskArsak && (
-                <div className={styles.aarsak}>
+                <div className={styles.medisinskArsak}>
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                         <ListEntry
                             listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
@@ -38,7 +38,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
                 </div>
             )}
             {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                <div className={styles.aarsak}>
+                <div className={styles.arbeidsrelatertArsak}>
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
                         <ListEntry
                             listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
@@ -55,7 +55,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
                     )}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

@@ -23,6 +23,9 @@ import Spacing from '../../components/Spacing/Spacing';
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden';
 import { withAuthenticatedPage } from '../../auth/withAuthentication';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
+import NavLogoRedSvg from '../../components/SykmeldingViews/SykmeldingView/Svg/NavLogoRedSvg';
+
+import styles from './index.module.css';
 
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
@@ -122,6 +125,9 @@ function SykmeldingerWrapper({ sykmelding, children }: PropsWithChildren<{ sykme
             <Head>
                 <title>Sykmelding - www.nav.no</title>
             </Head>
+            <div className={styles.logoForPrint}>
+                <NavLogoRedSvg />
+            </div>
             <Header
                 title={sykmelding ? getSykmeldingTitle(sykmelding) : undefined}
                 subTitle={sykmelding ? getReadableSykmeldingLength(sykmelding) : undefined}
