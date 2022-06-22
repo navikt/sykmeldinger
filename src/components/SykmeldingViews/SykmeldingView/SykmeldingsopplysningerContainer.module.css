@@ -53,14 +53,6 @@
     display: none;
 }
 
-.ikkeSendeTilArbeidsgiverPanel {
-    margin: 0 var(--navds-spacing-4) 0 var(--navds-spacing-4);
-}
-
-.ikkeSendeTilArbeidsgiverPanel :global(.ekspanderbartPanel__tittel) {
-    font-size: 1.17rem;
-}
-
 .opplysningerTilArbeidsgiver {
     background-color: #fef9ef;
     border: 1px solid #78706a;

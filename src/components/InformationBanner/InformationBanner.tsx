@@ -1,4 +1,5 @@
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { BodyLong, Label } from '@navikt/ds-react';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Veileder from 'nav-frontend-veileder';
 
@@ -6,6 +7,7 @@ import { Merknad } from '../../models/Sykmelding/Merknad';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 
 import styles from './InformationBanner.module.css';
+import Bubble from './Bubble';
 
 export enum Merknadtype {
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
@@ -96,7 +98,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
         return (
             <div data-testid="papir-banner">
                 <Veilederpanel kompakt type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
-                    <Element>Før du bruker sykmeldingen</Element>
+                    <Label>Før du bruker sykmeldingen</Label>
                     <Normaltekst>
                         Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik
                         at du kan gjøre resten digitalt.
@@ -111,11 +113,16 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
             <Veileder storrelse="S" fargetema="info">
                 <VeilederMaleSvg />
             </Veileder>
-            <Element>Vi har mottatt sykmeldingen din</Element>
-            <Normaltekst>
-                Hei, her ser du sykmeldingen din. Før du begynner å bruke den, sjekker du om alt er riktig. Stemmer det
-                med det dere ble enige om? Nederst på siden sender du den inn.
-            </Normaltekst>
+            <div className={styles.mottattSykmeldingTekst}>
+                <Bubble>
+                    <Label>Vi har mottatt sykmeldingen din</Label>
+                    <BodyLong>
+                        Under ser du opplysningene vi har fått fra behandleren din. Stemmer dette med det dere ble enige
+                        om?
+                    </BodyLong>
+                    <BodyLong>Når du er ferdig sender du sykmeldingen, nederst på siden.</BodyLong>
+                </Bubble>
+            </div>
         </div>
     );
 };

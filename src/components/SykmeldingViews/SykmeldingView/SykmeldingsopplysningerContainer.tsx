@@ -1,14 +1,11 @@
 import React, { useRef, useState } from 'react';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Normaltekst } from 'nav-frontend-typografi';
 import cn from 'classnames';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { Findout, Print } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import Lukknapp from '../../Lukknapp/Lukknapp';
-import Spacing from '../../Spacing/Spacing';
 import { toReadableDate } from '../../../utils/dateUtils';
 
 import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver';
@@ -20,7 +17,6 @@ interface SykmeldingsopplysningerProps {
     expandable?: boolean;
     expandedDefault?: boolean;
     arbeidsgiver?: boolean;
-    sendeSykmelding?: boolean;
 }
 
 const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
@@ -28,7 +24,6 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
     expandable = false,
     expandedDefault = true,
     arbeidsgiver = false,
-    sendeSykmelding = false,
 }: SykmeldingsopplysningerProps) => {
     const [expanded, setExpanded] = useState(expandedDefault);
     const elementRef = useRef<HTMLElement>(null);
