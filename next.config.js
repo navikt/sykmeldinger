@@ -13,7 +13,6 @@ const sentryWebpackPluginOptions = {
  */
 const nextConfig = {
     reactStrictMode: true,
-    compress: false,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.ASSET_PREFIX,
