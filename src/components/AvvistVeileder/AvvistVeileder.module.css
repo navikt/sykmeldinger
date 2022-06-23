@@ -9,3 +9,7 @@
     width: 40%;
     margin-bottom: 2rem;
 }
+
+.over12Weeks :global(.navds-body-long:first-of-type) {
+    padding-bottom: var(--navds-spacing-5);
+}
