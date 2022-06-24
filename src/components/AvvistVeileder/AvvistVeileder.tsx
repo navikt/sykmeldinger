@@ -1,6 +1,6 @@
 import React from 'react';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 
 import VeilederMaleNeurtralSvg from '../Veileder/svg/VeilederMaleNeutralSvg';
 import { Behandlingsutfall } from '../../models/Sykmelding/Behandlingsutfall';
@@ -25,7 +25,7 @@ const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandli
         (regel) => regel.ruleName === 'BEHANDLER_IKKE_LE_KI_MT_TL_FT_I_HPR',
     );
     const isSuspended = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'BEHANDLER_SUSPENDERT');
-    const isRoleOver12Weeks = behandlingsutfall.ruleHits.some(
+    const isOver12Weeks = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_MT_FT_KI_OVER_12_UKER',
     );
     const isOver70 = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'PASIENT_ELDRE_ENN_70');
@@ -39,11 +39,19 @@ const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandli
             <hr aria-hidden className={styles.underline} />
             <BodyShort>Beklager at vi må bry deg mens du er syk.</BodyShort>
             <br />
-            {isNotValidInHPR || isMissingAuthorization || isNotCorrectRole || isSuspended || isRoleOver12Weeks ? (
+            {isNotValidInHPR || isMissingAuthorization || isNotCorrectRole || isSuspended ? (
                 <BodyShort>
                     Den som har skrevet sykmeldingen, har ikke autorisasjon til å gjøre det. Du må derfor få en annen
                     til å skrive sykmeldingen.
                 </BodyShort>
+            ) : isOver12Weeks ? (
+                <div className={styles.over12Weeks}>
+                    <BodyLong>
+                        Kiropraktorer og manuellterapeuter har ikke lov til å skrive en sykmelding som gjør at det
+                        totale sykefraværet ditt blir lenger enn 12 uker.
+                    </BodyLong>
+                    <BodyLong>Du må få en lege til å skrive sykmeldingen.</BodyLong>
+                </div>
             ) : isOver70 ? (
                 <BodyShort>
                     Du har ikke rett til sykepenger fordi du er over 70 år. I stedet for sykmelding kan du be om en
