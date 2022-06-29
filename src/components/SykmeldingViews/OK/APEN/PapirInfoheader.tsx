@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
@@ -8,11 +8,26 @@ import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
+import { useAmplitude } from '../../../../amplitude/amplitude';
+
+const skjemanavn = 'avbryt åpen papirsykmelding';
 
 function PapirInfoheader(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
-    const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(sykmeldingId, SykmeldingChangeStatus.Avbryt);
+    const logEvent = useAmplitude();
+    const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
+        sykmeldingId,
+        SykmeldingChangeStatus.Avbryt,
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+    );
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
+
+    useEffect(() => {
+        if (harGittVidere) {
+            logEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
+        }
+    }, [harGittVidere, logEvent]);
 
     return (
         <div className="hide-on-print">
@@ -25,6 +40,9 @@ function PapirInfoheader(): JSX.Element {
                 ]}
                 checked={!!harGittVidere ? 'Ja' : harGittVidere === false ? 'Nei' : undefined}
                 onChange={(_event, value) => {
+                    if (!harGittVidere)
+                        logEvent({ eventName: 'skjema startet', data: { skjemanavn } }, { 'har gitt videre': value });
+
                     if (value === 'Ja') {
                         setHarGittVidere(true);
                     } else {
@@ -53,7 +71,7 @@ function PapirInfoheader(): JSX.Element {
                         </AlertStripeInfo>
                     </Spacing>
 
-                    <Knapp spinner={loading} onClick={() => avbryt()}>
+                    <Knapp spinner={loading} disabled={loading} onClick={() => avbryt()}>
                         Avbryt sykmeldingen
                     </Knapp>
 

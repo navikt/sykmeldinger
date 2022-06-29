@@ -10,15 +10,25 @@ import { toReadableDate } from '../../../../utils/dateUtils';
 import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
+const skjemanavn = 'gjenåpne avbrutt sykmelding';
+
 const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding }) => {
+    const logEvent = useAmplitude();
     useHotjarTrigger('SYKMELDING_OK_AVBRUTT');
+    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
     const sykmeldingId = useGetSykmeldingIdParam();
-    const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(sykmeldingId, SykmeldingChangeStatus.Gjenapne);
+    const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(
+        sykmeldingId,
+        SykmeldingChangeStatus.Gjenapne,
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+    );
 
     return (
         <div className="sykmelding-container">
@@ -31,7 +41,7 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                 </AlertStripe>
             </Spacing>
 
-            {Boolean(sykmelding.egenmeldt) === false && (
+            {!Boolean(sykmelding.egenmeldt) && (
                 <div className="hide-on-print">
                     <Spacing>
                         <Spacing amount="small">

@@ -12,6 +12,7 @@ import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdPara
 import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils';
 import { Periodetype, SykmeldingFragment } from '../../../../../fetching/graphql.generated';
 import { useSubmitSykmelding } from '../../../../../hooks/useMutations';
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../../amplitude/amplitude';
 
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
@@ -69,10 +70,22 @@ interface FormProps {
 }
 
 function Form({ sykmelding, disable }: FormProps): JSX.Element {
+    const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding';
+
+    const logEvent = useAmplitude();
+    useLogAmplitudeEvent(
+        { eventName: 'skjema åpnet', data: { skjemanavn } },
+        { 'har eldre sykmelding': disable ? 'Ja' : 'Nei' },
+    );
+
     const sykmeldingId = useGetSykmeldingIdParam();
 
     const { data, error, loading } = useExtraFormData(sykmeldingId);
-    const [{ loading: fetchingSend, error: errorSend }, send] = useSubmitSykmelding(sykmeldingId);
+    const [{ loading: fetchingSend, error: errorSend }, send] = useSubmitSykmelding(
+        sykmeldingId,
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+    );
 
     const formMethods = useForm<FormShape>({ shouldFocusError: false });
     const { handleSubmit, watch, errors } = formMethods;

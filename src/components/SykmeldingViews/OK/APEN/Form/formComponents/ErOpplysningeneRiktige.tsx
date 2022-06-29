@@ -4,6 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 
 import { FormShape, JaEllerNeiType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
+import { useAmplitude } from '../../../../../../amplitude/amplitude';
 
 import UriktigeOpplysninger from './UriktigeOpplysninger';
 
@@ -11,6 +12,7 @@ const fieldName: keyof FormShape = 'erOpplysningeneRiktige';
 const sporsmaltekst = 'Stemmer opplysningene?';
 
 const ErOpplysningeneRiktige: React.FC<{ disable: boolean }> = ({ disable }) => {
+    const logEvent = useAmplitude();
     const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
     const watchErOpplysningeneRiktige = watch(fieldName);
 
@@ -45,7 +47,10 @@ const ErOpplysningeneRiktige: React.FC<{ disable: boolean }> = ({ disable }) => 
                         checked={value}
                         // TODO type better
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        onChange={(e: any) => onChange(e.target.value)}
+                        onChange={(e: any) => {
+                            logEvent({ eventName: 'skjema startet', data: { skjemanavn: 'åpen sykmelding' } });
+                            onChange(e.target.value);
+                        }}
                         feil={errors.erOpplysningeneRiktige?.svar?.message}
                     />
                 )}
