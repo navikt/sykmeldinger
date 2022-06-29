@@ -5,3 +5,12 @@
     padding: 1rem;
     padding-bottom: var(--navds-spacing-32);
 }
+
+@media print {
+    .limit {
+        padding-bottom: 0;
+        width: 100%;
+        margin-right: var(--navds-spacing-4);
+        padding: 0;
+    }
+}

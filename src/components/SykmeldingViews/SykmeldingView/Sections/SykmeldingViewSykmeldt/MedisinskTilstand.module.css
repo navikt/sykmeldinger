@@ -1,0 +1,35 @@
+.root,
+.medisinskTilstand {
+    padding: 0;
+}
+
+.heading {
+    font-size: var(--navds-font-size-heading-xsmall);
+}
+
+.underHeading {
+    font-size: var(--navds-font-size-medium);
+    margin-top: var(--navds-spacing-4);
+}
+
+.info {
+    background-color: var(--navds-global-color-gray-50);
+    padding: var(--navds-spacing-4);
+    margin-bottom: var(--navds-spacing-3);
+    border-radius: 4px;
+}
+
+.info h4,
+.info h5 {
+    margin-top: 0;
+}
+
+.info :global(.navds-body-short) {
+    margin-top: var(--navds-spacing-2);
+}
+
+@media print {
+    .root {
+        display: none;
+    }
+}

@@ -1,0 +1,9 @@
+.sykmeldingViewSykmeldt {
+    padding: 0;
+}
+
+@media print {
+    .sykmeldingViewSykmeldt div {
+        break-inside: avoid;
+    }
+}

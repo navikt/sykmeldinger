@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import { Button, Loader } from '@navikt/ds-react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useForm, FormProvider } from 'react-hook-form';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Veileder from 'nav-frontend-veileder';
 
 import { getSykmeldingStartDate, Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
 import Spinner from '../../../../Spinner/Spinner';
@@ -13,7 +11,6 @@ import useSend from '../../../../../hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import Sykmeldingsopplysninger from '../../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../Spacing/Spacing';
-import VeilederMaleSvg from '../../../../Veileder/svg/VeilederMaleSvg';
 import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam';
 import { Periodetype } from '../../../../../models/Sykmelding/Periode';
 
@@ -21,6 +18,7 @@ import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
 import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
 import styles from './Form.module.css';
+import VeilederSenderSykmeldingen from './formComponents/VeilederSenderSykmeldingen';
 
 export interface Egenmeldingsperiode {
     fom: string;
@@ -130,6 +128,7 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
         <FormProvider {...formMethods}>
             <form
                 id="apen-sykmelding-form"
+                className="hide-on-print"
                 onSubmit={handleSubmit((data) => {
                     send(data);
                 })}
@@ -150,27 +149,13 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
 
                     {erArbeidstaker && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
                         <div className={styles.harValgtArbeidsgiverWrapper}>
-                            <div className={styles.veilederSenderSykmeldingen}>
-                                <Veileder className={styles.navVeileder} storrelse="S" fargetema="info">
-                                    <VeilederMaleSvg />
-                                </Veileder>
-                                <div>
-                                    <Element>Vi sender sykmeldingen til arbeidsgiverens innboks i Altinn</Element>
-                                    <Normaltekst>
-                                        Under ser du hva arbeidsgiveren din får se hvis du sender sykmeldingen. Det er
-                                        bare disse opplysningene som blir sendt. Arbeidsgiveren din får for eksempel
-                                        ikke se diagnosen.
-                                    </Normaltekst>
-                                </div>
-                            </div>
-                            <Spacing amount="small">
-                                <Sykmeldingsopplysninger
-                                    sykmelding={sykmelding}
-                                    arbeidsgiver
-                                    expandable={true}
-                                    sendeSykmelding
-                                />
-                            </Spacing>
+                            <VeilederSenderSykmeldingen />
+                            <Sykmeldingsopplysninger
+                                sykmelding={sykmelding}
+                                arbeidsgiver
+                                expandable={true}
+                                expandedDefault={false}
+                            />
                         </div>
                     )}
 

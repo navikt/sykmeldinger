@@ -110,11 +110,11 @@ export function getReadablePeriod(period: Periode): string {
         dayjs(period.fom).get('year') === dayjs(period.tom).get('year');
 
     if (sameMonthAndYear) {
-        return `${dayjs(period.fom).format('D.')} til ${dayjs(period.tom).format('D. MMM YYYY')}`;
+        return `${dayjs(period.fom).format('D.')} - ${dayjs(period.tom).format('D. MMM YYYY')}`;
     } else if (sameYearNotMonth) {
-        return `${dayjs(period.fom).format('D. MMM')} til ${dayjs(period.tom).format('D. MMM YYYY')}`;
+        return `${dayjs(period.fom).format('D. MMM')} - ${dayjs(period.tom).format('D. MMM YYYY')}`;
     }
-    return `${dayjs(period.fom).format('D. MMM YYYY')} til ${dayjs(period.tom).format('D. MMM YYYY')}`;
+    return `${dayjs(period.fom).format('D. MMM YYYY')} - ${dayjs(period.tom).format('D. MMM YYYY')}`;
 }
 
 /**
@@ -136,7 +136,7 @@ export function getReadableLength(period: Periode): string {
             period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
         } i løpet av ${length} dag${length > 1 ? 'er' : ''}`;
     }
-    return `${length} dag${length === 1 ? '' : 'er'}`;
+    return `(${length} dag${length === 1 ? ')' : 'er)'}`;
 }
 
 /**

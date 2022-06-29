@@ -1,0 +1,22 @@
+.medisinskArsak,
+.arbeidsrelatertArsak {
+    background-color: var(--navds-global-color-gray-50);
+    padding: var(--navds-spacing-4);
+    margin-bottom: var(--navds-spacing-3);
+}
+
+@media print {
+    .medisinskArsak {
+        display: none;
+    }
+}
+
+@media print {
+    .arbeidsrelatertArsak {
+        padding-bottom: var(--navds-spacing-8);
+    }
+
+    .arbeidsrelatertArsak div {
+        margin-bottom: var(--navds-spacing-4);
+    }
+}

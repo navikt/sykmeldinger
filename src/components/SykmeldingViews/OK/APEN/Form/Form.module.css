@@ -1,20 +1,6 @@
 .harValgtArbeidsgiverWrapper {
     background-color: #e4edf2;
-    padding: 2rem 1.5rem;
-}
-
-.veilederSenderSykmeldingen {
-    display: flex;
-    padding: 0 0.5rem 2rem 0;
-}
-
-.navVeileder {
-    margin-right: 1rem;
-    align-self: flex-start;
-}
-
-.navVeileder :global(.nav-veileder__frame--info) {
-    background-color: var(--navds-global-color-white);
+    padding: 0 var(--navds-spacing-8) var(--navds-spacing-12) var(--navds-spacing-8);
 }
 
 .sendBekreftButton span {
@@ -23,7 +9,7 @@
 
 @media (max-width: 672px) {
     .harValgtArbeidsgiverWrapper {
-        padding: 2rem 0;
+        padding: var(--navds-spacing-8) 0;
         position: relative;
     }
 
@@ -36,22 +22,5 @@
         top: 0;
         left: -50vw;
         z-index: -1;
-    }
-}
-
-@media (max-width: 480px) {
-    .veilederSenderSykmeldingen {
-        display: block;
-        margin: 0 0.5rem 0 0.5rem;
-    }
-
-    .veilederSenderSykmeldingen :global(.typo-element) {
-        display: block;
-        padding-bottom: 0.3rem;
-    }
-
-    .navVeileder {
-        display: block;
-        margin-bottom: 1rem;
     }
 }

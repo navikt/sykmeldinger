@@ -43,6 +43,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
             </Spacing>
 
             <form
+                className="hide-on-print"
                 onSubmit={handleSubmit(() => {
                     bekreft();
                 })}

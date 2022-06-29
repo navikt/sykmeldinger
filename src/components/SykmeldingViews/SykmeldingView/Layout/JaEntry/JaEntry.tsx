@@ -1,16 +1,21 @@
-import { Element, Undertekst } from 'nav-frontend-typografi';
+import { BodyShort, Heading } from '@navikt/ds-react';
 
 import styles from './JaEntry.module.css';
 
 interface JaEntryProps {
     title: string;
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
 }
 
-const JaEntry: React.FC<JaEntryProps> = ({ title }) => {
+const JaEntry: React.FC<JaEntryProps> = ({ title, headingLevel = '3' }) => {
     return (
-        <div className={styles.jaEntry}>
-            <Element>{title}</Element>
-            <Undertekst className={styles.jaEntryText}>Ja</Undertekst>
+        <div>
+            <Heading className={styles.heading} size="small" level={headingLevel}>
+                {title}
+            </Heading>
+            <BodyShort size="small" className={styles.jaEntryText}>
+                Ja
+            </BodyShort>
         </div>
     );
 };

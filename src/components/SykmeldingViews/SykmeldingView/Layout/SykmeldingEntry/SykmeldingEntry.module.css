@@ -1,9 +1,7 @@
 .sykmeldingEntry:not(:last-child) {
-    margin-bottom: 2rem;
+    margin-bottom: var(--navds-spacing-3);
 }
 
-.borderTop {
-    border-top: 1px solid var(--skillelinje-farge);
-    margin-top: 2rem;
-    padding-top: 2rem;
+.heading {
+    font-size: var(--navds-font-size-heading-xsmall);
 }

@@ -1,0 +1,21 @@
+.sykmeldingViewArbeidsgiver {
+    border-top: 0;
+    padding-top: 0;
+    padding: 0 var(--navds-spacing-4) 0 var(--navds-spacing-4);
+}
+
+.datoSykmeldingenBleSkrevet {
+    margin-bottom: var(--navds-spacing-8);
+    border-top: 1px solid var(--skillelinje-farge);
+    padding-top: var(--navds-spacing-8);
+}
+
+.behandlerOgArbeidsgiver {
+    margin-bottom: var(--navds-spacing-8);
+}
+
+@media print {
+    .sykmeldingViewArbeidsgiver {
+        display: none;
+    }
+}

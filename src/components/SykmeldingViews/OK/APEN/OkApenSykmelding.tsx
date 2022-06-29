@@ -41,12 +41,14 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding, olderSy
         <AvbrytContextProvider>
             <div className="sykmelding-container">
                 {!olderSykmeldingId && (
-                    <Spacing>
-                        <InformationBanner
-                            merknader={sykmelding.merknader}
-                            papirsykmelding={sykmelding.papirsykmelding}
-                        />
-                    </Spacing>
+                    <div className="hide-on-print">
+                        <Spacing>
+                            <InformationBanner
+                                merknader={sykmelding.merknader}
+                                papirsykmelding={sykmelding.papirsykmelding}
+                            />
+                        </Spacing>
+                    </div>
                 )}
 
                 {Boolean(sykmelding.papirsykmelding) && (
@@ -58,27 +60,27 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding, olderSy
                 <Spacing>
                     <Sykmeldingsopplysninger sykmelding={sykmelding} />
                 </Spacing>
-
-                {olderSykmeldingId && (
-                    <Alert variant="warning">
-                        <Heading spacing size="small" level="2">
-                            Du har en tidligere sykmelding du ikke har sendt inn enda.
-                        </Heading>
-                        <BodyLong>
-                            For å kunne sende inn denne sykmeldingen må du først sende inn eller avbryte tidligere
-                            sykmeldinger.
-                        </BodyLong>
-                        <BodyLong>
-                            <Link href={`/${olderSykmeldingId}`} passHref>
-                                <DsLink>Her</DsLink>
-                            </Link>{' '}
-                            finner du sykmeldingen du ikke har sendt inn.
-                        </BodyLong>
-                    </Alert>
-                )}
-
-                <Form sykmelding={sykmelding} disable={!!olderSykmeldingId} />
-                <AvbrytPanel disable={!!olderSykmeldingId} />
+                <div className="hide-on-print">
+                    {olderSykmeldingId && (
+                        <Alert variant="warning">
+                            <Heading spacing size="small" level="2">
+                                Du har en tidligere sykmelding du ikke har sendt inn enda.
+                            </Heading>
+                            <BodyLong>
+                                For å kunne sende inn denne sykmeldingen må du først sende inn eller avbryte tidligere
+                                sykmeldinger.
+                            </BodyLong>
+                            <BodyLong>
+                                <Link href={`/${olderSykmeldingId}`} passHref>
+                                    <DsLink>Her</DsLink>
+                                </Link>{' '}
+                                finner du sykmeldingen du ikke har sendt inn.
+                            </BodyLong>
+                        </Alert>
+                    )}
+                    <Form sykmelding={sykmelding} disable={!!olderSykmeldingId} />
+                    <AvbrytPanel disable={!!olderSykmeldingId} />
+                </div>
             </div>
         </AvbrytContextProvider>
     );

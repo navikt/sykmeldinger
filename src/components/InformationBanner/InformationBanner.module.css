@@ -1,13 +1,13 @@
 .merknadBannerSection {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--navds-spacing-6);
 }
 
 .title {
-    margin-bottom: 1rem;
+    margin-bottom: var(--navds-spacing-4);
 }
 
 .paragraph {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--navds-spacing-2);
 }
 
 .merknadBannerRuler {
@@ -17,26 +17,34 @@
 
 .veilederMottattSykmeldingen {
     display: flex;
-    margin: 0 6rem 0 6rem;
+    margin: 0 var(--navds-spacing-12) 0 var(--navds-spacing-12);
 }
 
 .veilederMottattSykmeldingen :global(.nav-veileder) {
-    display: inline-block;
-    margin-right: 1rem;
+    margin-right: var(--navds-spacing-4);
 }
 
-.veilederMottattSykmeldingen :global(.typo-element) {
-    display: none;
+.mottattSykmeldingTekst p {
+    font-size: var(--navds-font-size-medium);
+}
+
+.mottattSykmeldingTekst :global(.navds-label) {
+    padding-bottom: var(--navds-spacing-2);
+}
+
+.mottattSykmeldingTekst :global(.navds-body-long:not(:last-of-type)) {
+    padding-bottom: var(--navds-spacing-3);
 }
 
 @media (max-width: 480px) {
     .veilederMottattSykmeldingen {
         display: block;
-        margin: 0 0.5rem 0 0.5rem;
+        margin: 0 var(--navds-spacing-2) 0 var(--navds-spacing-2);
     }
 
     .veilederMottattSykmeldingen :global(.nav-veileder) {
-        margin-bottom: 1rem;
+        display: block;
+        margin: 0 0 var(--navds-spacing-4) 0;
     }
 
     .veilederMottattSykmeldingen :global(.typo-element) {

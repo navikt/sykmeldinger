@@ -27,10 +27,6 @@ body {
     height: 100%;
     background-color: white;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-        'Droid Sans', 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 ul {
@@ -44,4 +40,38 @@ ul li {
 
 #root {
     min-height: 50vh;
+}
+
+.hide-on-print {
+    padding: 0;
+}
+
+@media print {
+    @page {
+        size: 210mm 297mm;
+        margin-top: 20mm;
+        margin-left: 10mm;
+        margin-right: 10mm;
+    }
+
+    html {
+        font-size: 16px;
+    }
+
+    #decorator-header,
+    #decorator-footer,
+    ._hj_feedback_container,
+    .alertstripe,
+    .nav-veilederpanel,
+    .hide-on-print {
+        display: none;
+    }
+
+    #decorator-header .header-linje {
+        border: 0;
+    }
+
+    .navds-content-container {
+        max-width: unset;
+    }
 }

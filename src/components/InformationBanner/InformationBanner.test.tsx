@@ -52,10 +52,12 @@ describe('InformationBanner', () => {
         render(<InformationBanner />);
         expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument();
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument();
+        expect(screen.getByText('Vi har mottatt sykmeldingen din')).toBeInTheDocument();
         expect(
             screen.getByText(
-                'Hei, her ser du sykmeldingen din. Før du begynner å bruke den, sjekker du om alt er riktig. Stemmer det med det dere ble enige om? Nederst på siden sender du den inn.',
+                'Under ser du opplysningene vi har fått fra behandleren din. Stemmer dette med det dere ble enige om?',
             ),
         ).toBeInTheDocument();
+        expect(screen.getByText('Når du er ferdig sender du sykmeldingen, nederst på siden.')).toBeInTheDocument();
     });
 });

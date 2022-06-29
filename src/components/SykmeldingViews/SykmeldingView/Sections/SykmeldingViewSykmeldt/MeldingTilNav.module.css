@@ -1,0 +1,31 @@
+.bistandUmiddelbart,
+.beskrivBistand {
+    background-color: var(--navds-global-color-gray-50);
+    padding: var(--navds-spacing-4);
+    margin-bottom: var(--navds-spacing-3);
+}
+
+.bistandUmiddelbart div,
+.beskrivBistand div {
+    margin: 0;
+}
+
+.bistandUmiddelbart p:last-of-type,
+.beskrivBistand p:last-of-type {
+    margin-bottom: 0;
+}
+
+@media print {
+    .info {
+        padding-bottom: var(--navds-spacing-8);
+    }
+
+    .info div {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .info .beskrivBistand {
+        margin-bottom: var(--navds-spacing-4);
+    }
+}

@@ -15,7 +15,7 @@ function PapirInfoheader(): JSX.Element {
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
 
     return (
-        <div>
+        <div className="hide-on-print">
             <RadioPanelGruppe
                 name="harDuGittPapirsykmeldingenVidere"
                 legend="Har du allerede gitt papirsykmeldingen videre?"

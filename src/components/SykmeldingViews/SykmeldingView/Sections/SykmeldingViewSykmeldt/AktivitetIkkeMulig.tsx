@@ -1,0 +1,62 @@
+import { Office2 } from '@navikt/ds-icons';
+
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { AktivitetIkkeMuligPeriode } from '../../../../../models/Sykmelding/Periode';
+import ListEntry from '../../Layout/ListEntry/ListEntry';
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
+
+import styles from './AktivitetIkkeMulig.module.css';
+
+interface Props {
+    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode;
+}
+
+const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null => {
+    if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
+        return null;
+    }
+
+    return (
+        <div>
+            <SykmeldtHeading title="Aktivitet på arbeidsplassen" Icon={Office2} />
+            {!!aktivitetIkkeMulig.medisinskArsak && (
+                <div className={styles.medisinskArsak}>
+                    {aktivitetIkkeMulig.medisinskArsak?.arsak && (
+                        <ListEntry
+                            listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
+                            listText={aktivitetIkkeMulig.medisinskArsak.arsak}
+                            headingLevel="4"
+                        />
+                    )}
+                    {aktivitetIkkeMulig.medisinskArsak?.beskrivelse && (
+                        <SykmeldingEntry
+                            title="Beskrivelse"
+                            mainText={aktivitetIkkeMulig.medisinskArsak.beskrivelse}
+                            headingLevel="4"
+                        />
+                    )}
+                </div>
+            )}
+            {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
+                <div className={styles.arbeidsrelatertArsak}>
+                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
+                        <ListEntry
+                            listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
+                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak}
+                            headingLevel="4"
+                        />
+                    )}
+                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (
+                        <SykmeldingEntry
+                            title="Beskrivelse"
+                            mainText={aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
+                            headingLevel="4"
+                        />
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default AktivitetIkkeMulig;

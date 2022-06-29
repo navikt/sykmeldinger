@@ -1,0 +1,9 @@
+.pasientView {
+    margin-bottom: var(--navds-spacing-8);
+    border-top: 1px solid var(--skillelinje-farge);
+    padding-top: var(--navds-spacing-8);
+}
+
+.pasientView p:first-of-type {
+    margin-bottom: var(--navds-spacing-1);
+}
