@@ -1,27 +1,27 @@
 import { isBefore, parseISO } from 'date-fns';
 
-import { getSykmeldingStartDate, Sykmelding } from '../models/Sykmelding/Sykmelding';
-import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
+import { Sykmelding } from '../fetching/graphql.generated';
+import { getSykmeldingStartDate, isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
 
 import useSykmeldinger from './useSykmeldinger';
 
 function useFindOlderSykmeldingId(sykmelding: Sykmelding | undefined): {
     earliestSykmeldingId: string | null;
     isLoading: boolean;
-    error: Error | null;
+    error: Error | undefined;
 } {
-    const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
+    const { data, error, loading } = useSykmeldinger();
 
-    if (sykmelding == null || isLoading || error || sykmeldinger == null) {
+    if (sykmelding == null || loading || error || data?.sykmeldinger == null) {
         return {
             earliestSykmeldingId: null,
-            isLoading,
+            isLoading: loading,
             error,
         };
     }
 
     const startDate: string = getSykmeldingStartDate(sykmelding);
-    const relevantSykmeldinger = sykmeldinger
+    const relevantSykmeldinger = data?.sykmeldinger
         .filter((it) => isActiveSykmelding(it) && !isUnderbehandling(it))
         .filter((it) => getSykmeldingStartDate(it) !== startDate);
 
@@ -35,7 +35,7 @@ function useFindOlderSykmeldingId(sykmelding: Sykmelding | undefined): {
         // When the earliest sykmelding is the provided sykmelding, it's the very first
         earliestSykmeldingId: earliestSykmelding.id === sykmelding.id ? null : earliestSykmelding.id,
         isLoading: false,
-        error: null,
+        error: undefined,
     };
 }
 

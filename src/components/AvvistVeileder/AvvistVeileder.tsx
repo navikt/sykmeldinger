@@ -3,7 +3,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 
 import VeilederMaleNeurtralSvg from '../Veileder/svg/VeilederMaleNeutralSvg';
-import { Behandlingsutfall } from '../../models/Sykmelding/Behandlingsutfall';
+import { Behandlingsutfall } from '../../fetching/graphql.generated';
 
 import ForklaringZDiagnose from './ForklaringZDiagnose';
 import ForklaringAndre from './ForklaringAndre';

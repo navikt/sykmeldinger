@@ -1,8 +1,8 @@
-import { ArbeidsgiverSykmelding } from '../../../../../models/Sykmelding/ArbeidsgiverSykmelding';
+import { ArbeidsgiverSykmelding } from '../../../../../fetching/graphql.generated';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
 
 interface Props {
-    arbeidsgiver: ArbeidsgiverSykmelding | null;
+    arbeidsgiver: ArbeidsgiverSykmelding | null | undefined;
 }
 
 function ArbeidsgiverView({ arbeidsgiver }: Props): JSX.Element | null {

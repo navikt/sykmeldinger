@@ -1,12 +1,11 @@
 import React from 'react';
 import { Tag } from '@navikt/ds-react';
 
-import { RegelStatus } from '../../../models/Sykmelding/Behandlingsutfall';
-import { StatusEvent } from '../../../models/Sykmelding/SykmeldingStatus';
+import { RegelStatus, StatusEvent } from '../../../fetching/graphql.generated';
 
 interface LenkepanelEtikettProps {
-    status: keyof typeof StatusEvent;
-    behandlingsutfall: keyof typeof RegelStatus;
+    status: StatusEvent;
+    behandlingsutfall: RegelStatus;
 }
 
 const LenkepanelEtikett: React.FC<LenkepanelEtikettProps> = ({ status, behandlingsutfall }) => {

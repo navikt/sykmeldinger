@@ -1,4 +1,4 @@
-import { Behandler } from '../../../../../models/Sykmelding/Behandler';
+import { Behandler } from '../../../../../fetching/graphql.generated';
 import Section from '../../Layout/Section/Section';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
 

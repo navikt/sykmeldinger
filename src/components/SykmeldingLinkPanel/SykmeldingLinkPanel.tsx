@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 
-import { Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import { SykmeldingFragment } from '../../fetching/graphql.generated';
 import SykmeldingSorter from '../../utils/SykmeldingSorter';
 
 import Lenkepanel from './Lenkepanel/Lenkepanel';
@@ -14,7 +14,7 @@ export enum SortBy {
 }
 
 interface LenkepanelContainerProps {
-    sykmeldinger: Sykmelding[];
+    sykmeldinger: SykmeldingFragment[];
     type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER';
     defaultSortBy?: SortBy;
 }

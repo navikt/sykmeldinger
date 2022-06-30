@@ -7,7 +7,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import useSykmelding from '../../hooks/useSykmelding';
 import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 import { logger } from '../../utils/logger';
-import { getReadableSykmeldingLength, getSykmeldingTitle, Sykmelding } from '../../models/Sykmelding/Sykmelding';
+import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils';
 import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId';
 import OkBekreftetSykmelding from '../../components/SykmeldingViews/OK/BEKREFTET/OkBekreftetSykmelding';
 import OkAvbruttSykmelding from '../../components/SykmeldingViews/OK/AVBRUTT/OkAvbruttSykmelding';
@@ -23,6 +23,7 @@ import Spacing from '../../components/Spacing/Spacing';
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden';
 import { withAuthenticatedPage } from '../../auth/withAuthentication';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
+import { Sykmelding } from '../../fetching/graphql.generated';
 import NavLogoRedSvg from '../../components/SykmeldingViews/SykmeldingView/Svg/NavLogoRedSvg';
 
 import styles from './index.module.css';
@@ -30,10 +31,10 @@ import styles from './index.module.css';
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
 
-    const { isLoading, error, data: sykmelding } = useSykmelding(sykmeldingId);
-    const olderSykmelding = useFindOlderSykmeldingId(sykmelding);
+    const { data, error, loading } = useSykmelding(sykmeldingId);
+    const olderSykmelding = useFindOlderSykmeldingId(data?.sykmelding);
 
-    if (isLoading || olderSykmelding.isLoading) {
+    if (loading || olderSykmelding.isLoading) {
         return (
             <Spacing>
                 <Spinner headline="Henter sykmelding" />
@@ -45,13 +46,13 @@ function SykmeldingPage(): JSX.Element {
         return (
             <SykmeldingerWrapper>
                 <AlertStripeAdvarsel role="alert" aria-live="polite">
-                    {error?.message ?? olderSykmelding.error?.message}
+                    Vi har problemer med baksystemene for øyeblikket.
                 </AlertStripeAdvarsel>
             </SykmeldingerWrapper>
         );
     }
 
-    if (sykmelding === undefined) {
+    if (data?.sykmelding === undefined) {
         logger.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <SykmeldingerWrapper>
@@ -62,8 +63,11 @@ function SykmeldingPage(): JSX.Element {
         );
     }
     return (
-        <SykmeldingerWrapper sykmelding={sykmelding}>
-            <SykmeldingComponent sykmelding={sykmelding} olderSykmeldingId={olderSykmelding.earliestSykmeldingId} />
+        <SykmeldingerWrapper sykmelding={data?.sykmelding}>
+            <SykmeldingComponent
+                sykmelding={data?.sykmelding}
+                olderSykmeldingId={olderSykmelding.earliestSykmeldingId}
+            />
         </SykmeldingerWrapper>
     );
 }

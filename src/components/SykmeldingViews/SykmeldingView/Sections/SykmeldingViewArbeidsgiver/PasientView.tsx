@@ -1,6 +1,7 @@
 import { BodyShort, Heading } from '@navikt/ds-react';
 
-import { getPasientName, Pasient } from '../../../../../models/Sykmelding/Pasient';
+import { Pasient } from '../../../../../fetching/graphql.generated';
+import { getPasientName } from '../../../../../utils/pasientUtils';
 
 import styles from './PasientView.module.css';
 

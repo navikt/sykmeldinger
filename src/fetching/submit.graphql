@@ -1,0 +1,11 @@
+mutation ChangeSykmeldingStatus($sykmeldingId: ID!, $status: SykmeldingChangeStatus!) {
+    changeSykmeldingStatus(sykmeldingId: $sykmeldingId, status: $status) {
+        ...Sykmelding
+    }
+}
+
+mutation SubmitSykmelding($sykmeldingId: ID!, $values: JSON!) {
+    submitSykmelding(sykmeldingId: $sykmeldingId, values: $values) {
+        ...Sykmelding
+    }
+}

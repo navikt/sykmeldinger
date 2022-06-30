@@ -1,4 +1,4 @@
-import { KontaktMedPasient } from '../../../../../models/Sykmelding/KontaktMedPasient';
+import { KontaktMedPasient } from '../../../../../fetching/graphql.generated';
 import { toReadableDate } from '../../../../../utils/dateUtils';
 import Section from '../../Layout/Section/Section';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';

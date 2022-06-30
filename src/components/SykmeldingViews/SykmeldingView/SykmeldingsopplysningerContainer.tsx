@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { Findout, Print } from '@navikt/ds-icons';
 
-import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
+import { SykmeldingFragment } from '../../../fetching/graphql.generated';
 import Lukknapp from '../../Lukknapp/Lukknapp';
 import { toReadableDate } from '../../../utils/dateUtils';
 
@@ -13,7 +13,7 @@ import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt';
 import styles from './SykmeldingsopplysningerContainer.module.css';
 
 interface SykmeldingsopplysningerProps {
-    sykmelding: Sykmelding;
+    sykmelding: SykmeldingFragment;
     expandable?: boolean;
     expandedDefault?: boolean;
     arbeidsgiver?: boolean;

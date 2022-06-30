@@ -1,6 +1,6 @@
 import { Historic } from '@navikt/ds-icons';
 
-import { KontaktMedPasient } from '../../../../../models/Sykmelding/KontaktMedPasient';
+import { KontaktMedPasient } from '../../../../../fetching/graphql.generated';
 import { toReadableDate } from '../../../../../utils/dateUtils';
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';

@@ -1,8 +1,7 @@
 import { AlertStripeInfo, AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { Element, Systemtittel } from 'nav-frontend-typografi';
 
-import { Behandlingsutfall } from '../../models/Sykmelding/Behandlingsutfall';
-import { SykmeldingStatus } from '../../models/Sykmelding/SykmeldingStatus';
+import { Behandlingsutfall, SykmeldingStatus } from '../../fetching/graphql.generated';
 import { toReadableDate } from '../../utils/dateUtils';
 
 interface StatusBannerProps {
@@ -11,7 +10,11 @@ interface StatusBannerProps {
     egenmeldt?: boolean | null;
 }
 
-const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlingsutfall, egenmeldt = false }) => {
+function StatusBanner({
+    sykmeldingStatus,
+    behandlingsutfall,
+    egenmeldt = false,
+}: StatusBannerProps): JSX.Element | null {
     if (behandlingsutfall.status === 'INVALID') {
         if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
             return (
@@ -44,6 +47,6 @@ const StatusBanner: React.FC<StatusBannerProps> = ({ sykmeldingStatus, behandlin
     }
 
     return null;
-};
+}
 
 export default StatusBanner;

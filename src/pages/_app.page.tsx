@@ -1,16 +1,16 @@
 import '../style/global.css';
 
 import { AppProps } from 'next/app';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ApolloProvider } from '@apollo/client';
 import { ErrorBoundary } from 'react-error-boundary';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import isBetween from 'dayjs/plugin/isBetween';
 
 import ErrorFallback from '../components/ErrorFallback/ErrorFallback';
 import { logger } from '../utils/logger';
+import { createApolloClient } from '../fetching/apollo';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     useEffect(() => {
@@ -18,13 +18,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         dayjs.extend(isBetween);
     }, []);
 
-    const queryClient = new QueryClient({
-        defaultOptions: {
-            queries: {
-                retry: 1,
-                refetchOnWindowFocus: false,
-            },
-        },
+    const [apolloClient] = useState(() => {
+        return createApolloClient();
     });
 
     const handleError = (error: Error, info: { componentStack: string }): void => {
@@ -34,11 +29,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
     return (
         <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
-            <QueryClientProvider client={queryClient}>
+            <ApolloProvider client={apolloClient}>
                 <Component {...pageProps} />
-                {/* devtools are automatically removed in production build */}
-                <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
+            </ApolloProvider>
         </ErrorBoundary>
     );
 }

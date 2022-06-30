@@ -1,0 +1,158 @@
+fragment Periode on Periode {
+    fom
+    tom
+    gradert {
+        grad
+        reisetilskudd
+    }
+    behandlingsdager
+    innspillTilArbeidsgiver
+    type
+    aktivitetIkkeMulig {
+        medisinskArsak {
+            beskrivelse
+            arsak
+        }
+        arbeidsrelatertArsak {
+            beskrivelse
+            arsak
+        }
+    }
+    reisetilskudd
+}
+
+fragment SykmeldingStatus on SykmeldingStatus {
+    statusEvent
+    timestamp
+    arbeidsgiver {
+        orgnummer
+        orgNavn
+        juridiskOrgnummer
+    }
+    sporsmalOgSvarListe {
+        tekst
+        shortName
+        svar {
+            svar
+            svarType
+        }
+    }
+}
+
+fragment MedisinskVurdering on MedisinskVurdering {
+    hovedDiagnose {
+        tekst
+        kode
+        system
+    }
+    biDiagnoser {
+        tekst
+        kode
+        system
+    }
+    annenFraversArsak {
+        grunn
+        beskrivelse
+    }
+    svangerskap
+    yrkesskade
+    yrkesskadeDato
+}
+
+fragment Sykmelding on Sykmelding {
+    id
+    mottattTidspunkt
+    behandlingsutfall {
+        status
+        ruleHits {
+            messageForSender
+            messageForUser
+            ruleName
+            ruleStatus
+        }
+    }
+    legekontorOrgnummer
+    arbeidsgiver {
+        navn
+        stillingsprosent
+    }
+    sykmeldingsperioder {
+        ...Periode
+    }
+    sykmeldingStatus {
+        ...SykmeldingStatus
+    }
+    medisinskVurdering {
+        ...MedisinskVurdering
+    }
+    skjermesForPasient
+    prognose {
+        arbeidsforEtterPeriode
+        hensynArbeidsplassen
+        erIArbeid {
+            egetArbeidPaSikt
+            annetArbeidPaSikt
+            arbeidFOM
+            vurderingsdato
+        }
+        erIkkeIArbeid {
+            arbeidsforPaSikt
+            arbeidsforFOM
+            vurderingsdato
+        }
+    }
+    utdypendeOpplysninger
+    tiltakArbeidsplassen
+    tiltakNAV
+    andreTiltak
+    meldingTilNAV {
+        beskrivBistand
+        bistandUmiddelbart
+    }
+    meldingTilArbeidsgiver
+    kontaktMedPasient {
+        begrunnelseIkkeKontakt
+        kontaktDato
+    }
+    behandletTidspunkt
+    behandler {
+        fornavn
+        mellomnavn
+        etternavn
+        tlf
+        adresse {
+            gate
+            postnummer
+            kommune
+            postboks
+            land
+        }
+    }
+    syketilfelleStartDato
+    navnFastlege
+    egenmeldt
+    papirsykmelding
+    harRedusertArbeidsgiverperiode
+    merknader {
+        beskrivelse
+        type
+    }
+    pasient {
+        fnr
+        fornavn
+        mellomnavn
+        etternavn
+    }
+}
+
+query Sykmeldinger {
+    sykmeldinger {
+        ...Sykmelding
+    }
+}
+
+query Sykmelding($id: ID!) {
+    sykmelding(id: $id) {
+        ...Sykmelding
+    }
+}

@@ -3,14 +3,14 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 import { Information } from '@navikt/ds-icons';
 
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
+import { SykmeldingFragment } from '../../../../../fetching/graphql.generated';
 import { toReadableDate } from '../../../../../utils/dateUtils';
-import { getBehandlerName } from '../../../../../models/Sykmelding/Behandler';
+import { getBehandlerName } from '../../../../../utils/behandlerUtils';
 
 import styles from './AnnenInfo.module.css';
 
 interface Props {
-    sykmelding: Sykmelding;
+    sykmelding: SykmeldingFragment;
 }
 
 function AnnenInfo({ sykmelding }: Props): JSX.Element {

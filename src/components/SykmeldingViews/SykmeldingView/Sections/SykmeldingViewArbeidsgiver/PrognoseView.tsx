@@ -1,4 +1,4 @@
-import { Prognose } from '../../../../../models/Sykmelding/Prognose';
+import { Prognose } from '../../../../../fetching/graphql.generated';
 import JaEntry from '../../Layout/JaEntry/JaEntry';
 import Section from '../../Layout/Section/Section';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';

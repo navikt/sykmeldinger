@@ -1,5 +1,5 @@
-import { getSykmeldingperioderSorted, Sykmelding } from '../../../models/Sykmelding/Sykmelding';
-import { Periode } from '../../../models/Sykmelding/Periode';
+import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated';
+import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils';
 
 import FlereOpplysninger from './FlereOpplysninger';
 import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav';
@@ -16,10 +16,10 @@ import Tilbakedatering from './Sections/SykmeldingViewSykmeldt/Tilbakedatering';
 import styles from './SykmeldingViewSykmeldt.module.css';
 
 interface Props {
-    sykmelding: Sykmelding;
+    sykmelding: SykmeldingFragment;
 }
 
-const SykmeldingViewSykmeldt: React.FC<Props> = ({ sykmelding }) => {
+function SykmeldingViewSykmeldt({ sykmelding }: Props): JSX.Element {
     return (
         <div className={styles.sykmeldingViewSykmeldt}>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
@@ -35,7 +35,11 @@ const SykmeldingViewSykmeldt: React.FC<Props> = ({ sykmelding }) => {
                         ),
                 )}
                 <Prognose prognose={sykmelding.prognose} />
-                <UtdypendeOpplysninger utdypendeOpplysninger={sykmelding.utdypendeOpplysninger} />
+                <UtdypendeOpplysninger
+                    utdypendeOpplysninger={
+                        sykmelding.utdypendeOpplysninger as Record<string, Record<string, UtdypendeOpplysning>>
+                    }
+                />
                 <Arbeidsevne
                     tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
                     tiltakNAV={sykmelding.tiltakNAV}
@@ -47,6 +51,6 @@ const SykmeldingViewSykmeldt: React.FC<Props> = ({ sykmelding }) => {
             </FlereOpplysninger>
         </div>
     );
-};
+}
 
 export default SykmeldingViewSykmeldt;

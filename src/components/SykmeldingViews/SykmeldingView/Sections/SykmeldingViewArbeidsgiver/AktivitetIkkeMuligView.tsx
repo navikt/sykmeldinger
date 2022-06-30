@@ -1,6 +1,7 @@
-import { AktivitetIkkeMuligPeriode } from '../../../../../models/Sykmelding/Periode';
+import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated';
 import ListEntry from '../../Layout/ListEntry/ListEntry';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
+import { arbeidsrelatertArsakToText } from '../../../../../utils/periodeUtils';
 
 import styles from './AktivitetIkkeMuligView.module.css';
 
@@ -18,7 +19,7 @@ const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewPr
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
                         <ListEntry
                             listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak}
+                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}
                         />
                     )}
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (

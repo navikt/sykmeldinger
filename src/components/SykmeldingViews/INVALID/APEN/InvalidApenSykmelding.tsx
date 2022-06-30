@@ -3,15 +3,15 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Controller, useForm } from 'react-hook-form';
 
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
-import useBekreftAvvist from '../../../../hooks/useBekreftAvvist';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
 import CenterItems from '../../../CenterItems/CenterItems';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
-import { getBehandlerName } from '../../../../models/Sykmelding/Behandler';
+import { getBehandlerName } from '../../../../utils/behandlerUtils';
+import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -26,8 +26,10 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
     useHotjarTrigger('SYKMELDING_INVALID_APEN');
 
     const { handleSubmit, control, errors } = useForm<FormData>();
-
-    const { mutate: bekreft, isLoading: isLoadingBekreft, error: errorBekreft } = useBekreftAvvist(sykmeldingId);
+    const [{ loading: fetchingBekreft, error: errorBekreft }, bekreft] = useChangeSykmeldingStatus(
+        sykmeldingId,
+        SykmeldingChangeStatus.BekreftAvvist,
+    );
 
     return (
         <div className="sykmelding-container">
@@ -79,7 +81,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                         </Spacing>
                     )}
 
-                    <Hovedknapp htmlType="submit" disabled={isLoadingBekreft} spinner={isLoadingBekreft}>
+                    <Hovedknapp htmlType="submit" disabled={fetchingBekreft} spinner={fetchingBekreft}>
                         Bekreft
                     </Hovedknapp>
                 </CenterItems>

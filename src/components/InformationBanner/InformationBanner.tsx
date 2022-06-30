@@ -3,7 +3,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Veileder from 'nav-frontend-veileder';
 
-import { Merknad } from '../../models/Sykmelding/Merknad';
+import { Merknad } from '../../fetching/graphql.generated';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 
 import styles from './InformationBanner.module.css';
@@ -16,7 +16,7 @@ export enum Merknadtype {
 }
 
 interface InformationBannerProps {
-    merknader?: Merknad[] | null;
+    merknader?: readonly Merknad[] | null;
     papirsykmelding?: boolean | null;
 }
 

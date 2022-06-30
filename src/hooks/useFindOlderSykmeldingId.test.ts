@@ -1,32 +1,24 @@
-import nock from 'nock';
 import { formatISO, sub } from 'date-fns';
+import { MockedResponse } from '@apollo/client/testing';
 
-import { sykmeldingApen } from '../utils/test/mockData/sykmelding-apen';
-import { Sykmelding, SykmeldingSchema } from '../models/Sykmelding/Sykmelding';
 import { renderHook } from '../utils/test/testUtils';
-import { sykmeldingAvvist } from '../utils/test/mockData/sykmelding-avvist';
-import { sykmeldingAvbrutt } from '../utils/test/mockData/sykmelding-avbrutt';
-import { sykmeldingUnderbehandlingTilbakedatering } from '../utils/test/mockData/sykmelding-under-behandling-tilbakedatering';
-import { Periodetype } from '../models/Sykmelding/Periode';
-import { dateSub, dateAdd } from '../utils/dateUtils';
+import { dateAdd, dateSub } from '../utils/dateUtils';
+import { createMock, createSykmelding, createUnderBehandlingMerknad } from '../utils/test/dataUtils';
+import { Periodetype, StatusEvent, Sykmelding, SykmeldingerDocument } from '../fetching/graphql.generated';
 
 import useFindOlderSykmeldingId from './useFindOlderSykmeldingId';
 
 describe('useFindOlderSykmeldingId', () => {
-    const apiNock = nock('http://localhost');
-
     it('should find the earlier sykmelding when there is one APEN before', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'SYKME-1'),
-            sykmeldingApen(dateSub(new Date(), { days: 2 }), 'SYKME-2'),
-            sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
+            createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[1])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[1]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
@@ -34,17 +26,15 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should find the earlier sykmelding but disregard the sykmelding that is older than 12 months', async () => {
         const sykmeldinger = [
-            sykmeldingAvvist(dateSub(new Date(), { months: 12, days: 16 })),
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'SYKME-1'),
-            sykmeldingApen(dateSub(new Date(), { days: 2 }), 'SYKME-2'),
-            sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { months: 12, days: 16 }), id: 'SYKME-0' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
+            createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
@@ -52,35 +42,34 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should find the earlier sykmelding but disregard the sykmelding that does not have APEN status', async () => {
         const sykmeldinger = [
-            sykmeldingAvbrutt(dateSub(new Date(), { days: 40 })),
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'SYKME-1'),
-            sykmeldingApen(dateSub(new Date(), { days: 2 }), 'SYKME-2'),
-            sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
+            createSykmelding(
+                { mottattTidspunkt: dateSub(new Date(), { days: 40 }), id: 'SYKME-0' },
+                StatusEvent.Avbrutt,
+            ),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
+            createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
     });
 
-    it('should do', async () => {
+    it('should find the earliest sykmelding', async () => {
         const sykmeldinger = [
             // 2 dager siden
-            sykmeldingApen(dateSub(new Date(), { days: 2 }), 'this-sykmelding'),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'this-sykmelding' }),
             // 30 dager siden
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'previous-sykmelding'),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'previous-sykmelding' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[0])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[0]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('previous-sykmelding');
@@ -88,17 +77,19 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should find the earlier sykmelding but disregard the sykmelding that is APEN but UNDER_BEHANDLING', async () => {
         const sykmeldinger = [
-            sykmeldingUnderbehandlingTilbakedatering(formatISO(sub(new Date(), { days: 366 }))),
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'SYKME-1'),
-            sykmeldingApen(dateSub(new Date(), { days: 2 }), 'SYKME-2'),
-            sykmeldingApen(dateAdd(new Date(), { days: 15 }), 'SYKME-3'),
+            createSykmelding({
+                mottattTidspunkt: formatISO(sub(new Date(), { days: 366 })),
+                id: 'SYKME-0',
+                ...createUnderBehandlingMerknad(),
+            }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
+            createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
@@ -106,16 +97,14 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should handle being the first sykmelding', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'SYKME-1'),
-            sykmeldingApen(dateSub(new Date(), { days: 15 }), 'SYKME-2'),
-            sykmeldingApen(dateSub(new Date(), { days: 2 }), 'SYKME-3'),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 15 }), id: 'SYKME-2' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-3' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[0])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[0]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toBeNull();
@@ -123,15 +112,13 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should allow two sykmeldinger with the exact same period', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dateSub(new Date(), { days: 7 }), 'SYKME-1'),
-            sykmeldingApen(dateSub(new Date(), { days: 7 }), 'SYKME-2'),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 7 }), id: 'SYKME-1' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 7 }), id: 'SYKME-2' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[1])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[1]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toBeNull();
@@ -139,16 +126,14 @@ describe('useFindOlderSykmeldingId', () => {
 
     it('should still work when the two first sykmeldinger has same date but the provided sykmelding is later', async () => {
         const sykmeldinger = [
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'SYKME-1'),
-            sykmeldingApen(dateSub(new Date(), { days: 30 }), 'SYKME-2'),
-            sykmeldingApen(dateSub(new Date(), { days: 7 }), 'SYKME-3'),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-2' }),
+            createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 7 }), id: 'SYKME-3' }),
         ];
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, sykmeldinger);
-
-        const { result, waitForNextUpdate } = renderHook(() =>
-            useFindOlderSykmeldingId(SykmeldingSchema.parse(sykmeldinger[2])),
-        );
+        const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        });
         await waitForNextUpdate();
 
         expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
@@ -156,12 +141,13 @@ describe('useFindOlderSykmeldingId', () => {
 
     describe('should work when there is overlap between sykmeldinger', () => {
         const createSingle10PeriodApen = (date: string, id: string): Sykmelding => ({
-            ...sykmeldingApen(date, id),
+            ...createSykmelding({ mottattTidspunkt: date, id }),
             sykmeldingsperioder: [
                 {
+                    __typename: 'Periode',
                     fom: date,
                     tom: dateAdd(date, { days: 10 }),
-                    type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    type: Periodetype.AktivitetIkkeMulig,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: false,
                     gradert: null,
@@ -174,26 +160,34 @@ describe('useFindOlderSykmeldingId', () => {
         const newest = createSingle10PeriodApen(dateSub(new Date(), { days: 1 }), 'SYKME-1');
         const oldest = createSingle10PeriodApen(dateSub(new Date(), { days: 7 }), 'SYKME-2');
 
-        beforeEach(() => {
-            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [newest, oldest]);
-        });
-
         it('newest should point to oldest', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useFindOlderSykmeldingId(SykmeldingSchema.parse(newest)),
-            );
+            const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(newest), {
+                mocks: [sykmeldingerMock([newest, oldest])],
+            });
             await waitForNextUpdate();
 
             expect(result.current.earliestSykmeldingId).toEqual('SYKME-2');
         });
 
         it('oldest should NOT point to newest', async () => {
-            const { result, waitForNextUpdate } = renderHook(() =>
-                useFindOlderSykmeldingId(SykmeldingSchema.parse(oldest)),
-            );
+            const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(oldest), {
+                mocks: [sykmeldingerMock([newest, oldest])],
+            });
             await waitForNextUpdate();
 
             expect(result.current.earliestSykmeldingId).toBeNull();
         });
     });
 });
+
+function sykmeldingerMock(sykmeldinger: Sykmelding[]): MockedResponse {
+    return createMock({
+        request: { query: SykmeldingerDocument },
+        result: {
+            data: {
+                __typename: 'Query',
+                sykmeldinger,
+            },
+        },
+    });
+}

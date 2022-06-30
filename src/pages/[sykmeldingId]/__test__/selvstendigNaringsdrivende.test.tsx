@@ -1,78 +1,108 @@
-import nock from 'nock';
 import userEvent from '@testing-library/user-event';
 import mockRouter from 'next-router-mock';
 
-import { sykmeldingApen } from '../../../utils/test/mockData/sykmelding-apen';
 import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
 import SykmeldingPage from '../index.page';
+import { createMock, createSykmelding } from '../../../utils/test/dataUtils';
+import {
+    StatusEvent,
+    SubmitSykmeldingDocument,
+    SykmeldingDocument,
+    SykmeldingerDocument,
+} from '../../../fetching/graphql.generated';
+
+import { createExtraFormDataMock } from './mockUtils';
 
 describe('Selvstendig næringsdrivende', () => {
-    const apiNock = nock('http://localhost');
-
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/${sykmeldingApen().id}`);
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
-            arbeidsgivere: [],
-            strengtFortroligAdresse: false,
-        });
+        mockRouter.setCurrentUrl(`/sykmelding-id`);
     });
+
+    const baseMocks = [
+        createMock({
+            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            result: { data: { __typename: 'Query', sykmelding: createSykmelding({ id: 'sykmelding-id' }) } },
+        }),
+        createMock({
+            request: { query: SykmeldingerDocument },
+            result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
+        }),
+    ];
 
     describe('Within ventetid', () => {
         it('should show details from sykmelding', async () => {
-            apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
-            apiNock
-                .get(
-                    `/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`,
-                )
-                .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
-            render(<SykmeldingPage />);
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
+                    }),
+                ],
+            });
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
             expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
         });
 
         it('should be able to submit form', async () => {
-            apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(2).reply(200, sykmeldingApen());
-            apiNock
-                .get(
-                    `/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`,
-                )
-                .reply(200, { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' });
-            apiNock
-                .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    erOpplysningeneRiktige: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Stemmer opplysningene?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    arbeidssituasjon: {
-                        svar: 'NAERINGSDRIVENDE',
-                        sporsmaltekst: 'Jeg er sykmeldt som',
-                        svartekster:
-                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
-                    },
-                    harBruktEgenmelding: {
-                        svar: 'JA',
-                        sporsmaltekst:
-                            'Vi har registrert at du ble syk 1. januar 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    harForsikring: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    egenmeldingsperioder: {
-                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 1. januar 2021?',
-                        svartekster: '"Fom, Tom"',
-                        svar: [{ fom: '2020-12-20', tom: '2020-12-27' }],
-                    },
-                })
-                .reply(200);
-            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-
-            render(<SykmeldingPage />);
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
+                    }),
+                    createMock({
+                        request: {
+                            query: SubmitSykmeldingDocument,
+                            variables: {
+                                sykmeldingId: 'sykmelding-id',
+                                values: {
+                                    erOpplysningeneRiktige: {
+                                        svar: 'JA',
+                                        sporsmaltekst: 'Stemmer opplysningene?',
+                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                                    },
+                                    arbeidssituasjon: {
+                                        svar: 'NAERINGSDRIVENDE',
+                                        sporsmaltekst: 'Jeg er sykmeldt som',
+                                        svartekster:
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                    },
+                                    harBruktEgenmelding: {
+                                        svar: 'JA',
+                                        sporsmaltekst:
+                                            'Vi har registrert at du ble syk 1. januar 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                                    },
+                                    harForsikring: {
+                                        svar: 'JA',
+                                        sporsmaltekst:
+                                            'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
+                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                                    },
+                                    egenmeldingsperioder: {
+                                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 1. januar 2021?',
+                                        svartekster: '"Fom, Tom"',
+                                        svar: [{ fom: '2020-12-20', tom: '2020-12-27' }],
+                                    },
+                                },
+                            },
+                        },
+                        result: {
+                            data: {
+                                __typename: 'Mutation',
+                                submitSykmelding: createSykmelding({
+                                    sykmeldingStatus: {
+                                        ...createSykmelding().sykmeldingStatus,
+                                        statusEvent: StatusEvent.Sendt,
+                                        timestamp: '2020-01-01',
+                                    },
+                                }),
+                            },
+                        },
+                    }),
+                ],
+            });
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
 
@@ -91,53 +121,80 @@ describe('Selvstendig næringsdrivende', () => {
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toBe(sykmeldingApen().id);
+            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
         });
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
-            apiNock
-                .get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`)
-                .times(2)
-                .reply(200, sykmeldingApen('2020-02-10'));
-            apiNock
-                .get(
-                    `/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`,
-                )
-                .reply(200, { erUtenforVentetid: false, oppfolgingsdato: null });
-            apiNock
-                .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    erOpplysningeneRiktige: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Stemmer opplysningene?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    arbeidssituasjon: {
-                        svar: 'NAERINGSDRIVENDE',
-                        sporsmaltekst: 'Jeg er sykmeldt som',
-                        svartekster:
-                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
-                    },
-                    harBruktEgenmelding: {
-                        svar: 'JA',
-                        sporsmaltekst:
-                            'Vi har registrert at du ble syk 10. februar 2020. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    harForsikring: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    egenmeldingsperioder: {
-                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 10. februar 2020?',
-                        svartekster: '"Fom, Tom"',
-                        svar: [{ fom: '2019-12-20', tom: '2019-12-27' }],
-                    },
-                })
-                .reply(200);
-            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+            const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' });
+            render(<SykmeldingPage />, {
+                mocks: [
+                    createMock({
+                        request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                        result: {
+                            data: { __typename: 'Query', sykmelding: sykmelding },
+                        },
+                    }),
+                    createMock({
+                        request: { query: SykmeldingerDocument },
+                        result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
+                    }),
 
-            render(<SykmeldingPage />);
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: null },
+                    }),
+                    createMock({
+                        request: {
+                            query: SubmitSykmeldingDocument,
+                            variables: {
+                                sykmeldingId: 'sykmelding-id',
+                                values: {
+                                    erOpplysningeneRiktige: {
+                                        svar: 'JA',
+                                        sporsmaltekst: 'Stemmer opplysningene?',
+                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                                    },
+                                    arbeidssituasjon: {
+                                        svar: 'NAERINGSDRIVENDE',
+                                        sporsmaltekst: 'Jeg er sykmeldt som',
+                                        svartekster:
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                    },
+                                    harBruktEgenmelding: {
+                                        svar: 'JA',
+                                        sporsmaltekst:
+                                            'Vi har registrert at du ble syk 10. februar 2020. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                                    },
+                                    harForsikring: {
+                                        svar: 'JA',
+                                        sporsmaltekst:
+                                            'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
+                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                                    },
+                                    egenmeldingsperioder: {
+                                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 10. februar 2020?',
+                                        svartekster: '"Fom, Tom"',
+                                        svar: [{ fom: '2019-12-20', tom: '2019-12-27' }],
+                                    },
+                                },
+                            },
+                        },
+                        result: {
+                            data: {
+                                __typename: 'Mutation',
+                                submitSykmelding: {
+                                    ...sykmelding,
+                                    sykmeldingStatus: {
+                                        ...sykmelding.sykmeldingStatus,
+                                        statusEvent: StatusEvent.Sendt,
+                                        timestamp: '2020-01-01',
+                                    },
+                                },
+                            },
+                        },
+                    }),
+                ],
+            });
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
 
@@ -162,18 +219,13 @@ describe('Selvstendig næringsdrivende', () => {
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toBe(sykmeldingApen().id);
+            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
         });
     });
 
     describe('Outside ventetid', () => {
         beforeEach(() => {
-            apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(2).reply(200, sykmeldingApen());
-            apiNock
-                .get(
-                    `/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`,
-                )
-                .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
+            /*
             apiNock
                 .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
                     erOpplysningeneRiktige: {
@@ -189,19 +241,57 @@ describe('Selvstendig næringsdrivende', () => {
                     },
                 })
                 .reply(200);
+
+             */
         });
 
         it('should show details from sykmelding', async () => {
-            render(<SykmeldingPage />);
+            render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
             expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
         });
 
         it('should be able to submit form', async () => {
-            render(<SykmeldingPage />);
-
-            apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock(),
+                    createMock({
+                        request: {
+                            query: SubmitSykmeldingDocument,
+                            variables: {
+                                sykmeldingId: 'sykmelding-id',
+                                values: {
+                                    erOpplysningeneRiktige: {
+                                        svar: 'JA',
+                                        sporsmaltekst: 'Stemmer opplysningene?',
+                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
+                                    },
+                                    arbeidssituasjon: {
+                                        svar: 'NAERINGSDRIVENDE',
+                                        sporsmaltekst: 'Jeg er sykmeldt som',
+                                        svartekster:
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                    },
+                                },
+                            },
+                        },
+                        result: {
+                            data: {
+                                __typename: 'Mutation',
+                                submitSykmelding: createSykmelding({
+                                    sykmeldingStatus: {
+                                        ...createSykmelding().sykmeldingStatus,
+                                        statusEvent: StatusEvent.Sendt,
+                                        timestamp: '2020-01-01',
+                                    },
+                                }),
+                            },
+                        },
+                    }),
+                ],
+            });
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
 
@@ -210,7 +300,7 @@ describe('Selvstendig næringsdrivende', () => {
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toEqual(sykmeldingApen().id);
+            expect(mockRouter.query.sykmeldingId).toEqual('sykmelding-id');
         });
     });
 });

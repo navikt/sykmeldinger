@@ -41,6 +41,7 @@ const apolloServer = new ApolloServer({
             ? ApolloServerPluginLandingPageDisabled()
             : ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
+    cache: 'bounded',
     logger,
 });
 

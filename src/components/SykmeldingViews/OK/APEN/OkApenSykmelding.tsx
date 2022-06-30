@@ -2,7 +2,7 @@ import Veilederpanel from 'nav-frontend-veilederpanel';
 import { Alert, BodyLong, Heading, Link as DsLink } from '@navikt/ds-react';
 import Link from 'next/link';
 
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import { Sykmelding } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';

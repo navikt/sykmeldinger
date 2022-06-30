@@ -1,15 +1,16 @@
 import { render, screen } from '@testing-library/react';
 
-import { KontaktMedPasient, KontaktMedPasientSchema } from '../../../../../models/Sykmelding/KontaktMedPasient';
+import { KontaktMedPasient } from '../../../../../fetching/graphql.generated';
 
 import TilbakedateringView from './TilbakedateringView';
 
 describe('TilbakedateringView', () => {
     it('Renders kontaktdato', () => {
-        const kontaktMedPasient: KontaktMedPasient = KontaktMedPasientSchema.parse({
+        const kontaktMedPasient: KontaktMedPasient = {
+            __typename: 'KontaktMedPasient',
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: null,
-        });
+        };
         render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />);
 
         expect(screen.getByText('Tilbakedatering')).toBeInTheDocument();
@@ -18,10 +19,11 @@ describe('TilbakedateringView', () => {
     });
 
     it('Renders begrunnelse', () => {
-        const kontaktMedPasient: KontaktMedPasient = KontaktMedPasientSchema.parse({
+        const kontaktMedPasient: KontaktMedPasient = {
+            __typename: 'KontaktMedPasient',
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: 'han var kjempesyk',
-        });
+        };
         render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />);
 
         expect(screen.queryByText('Begrunnelse for tilbakedatering')).not.toBeInTheDocument();

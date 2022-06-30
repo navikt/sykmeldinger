@@ -1,11 +1,7 @@
-import {
-    getPeriodTitle,
-    getReadableLength,
-    getReadablePeriod,
-    Periode,
-} from '../../../../../models/Sykmelding/Periode';
 import JaEntry from '../../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
+import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../../../utils/periodeUtils';
+import { Periode } from '../../../../../fetching/graphql.generated';
 
 import styles from './PeriodeView.module.css';
 

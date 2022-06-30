@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RegelStatus } from '../../../models/Sykmelding/Behandlingsutfall';
+import { RegelStatus } from '../../../fetching/graphql.generated';
 
 interface Icon {
     hover?: boolean;
@@ -94,7 +94,7 @@ function StethoscopeIcon({ hover = false }: Icon): JSX.Element {
 }
 
 interface LenkepanelIconProps extends Icon {
-    behandlingsutfall: keyof typeof RegelStatus;
+    behandlingsutfall: RegelStatus;
     isPaper: boolean;
 }
 

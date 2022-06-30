@@ -1,20 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import arbeidsgivereMock from '../../../../utils/test/mockData/arbeidsgivereMock';
-import { sykmeldingBekreftet } from '../../../../utils/test/mockData/sykmelding-bekreftet';
-import { sykmeldingApen } from '../../../../utils/test/mockData/sykmelding-apen';
-import { sykmeldingSendt } from '../../../../utils/test/mockData/sykmelding-sendt';
-import { sykmeldingAvvist } from '../../../../utils/test/mockData/sykmelding-avvist';
-import { sykmeldingAvbrutt } from '../../../../utils/test/mockData/sykmelding-avbrutt';
-import { sykmeldingUtgatt } from '../../../../utils/test/mockData/sykmelding-utgatt';
-import { sykmeldingEgenmeldt } from '../../../../utils/test/mockData/sykmelding-egenmeldt';
-import { sykmeldingApenPapir } from '../../../../utils/test/mockData/sykmelding-apen-papir';
-import { sykmeldingAvvistBekreftet } from '../../../../utils/test/mockData/sykmelding-avvist-bekreftet';
-import { sykmeldingSendt2 } from '../../../../utils/test/mockData/sykmelding-sendt-2';
-import { sykmeldingSendt3 } from '../../../../utils/test/mockData/sykmelding-sendt-3';
-import { sykmeldingUgyldigTilbakedatering } from '../../../../utils/test/mockData/sykmelding-ugyldig-tilbakedatering';
-import { sykmeldingUnderbehandlingTilbakedatering } from '../../../../utils/test/mockData/sykmelding-under-behandling-tilbakedatering';
-import { StatusEvent } from '../../../../models/Sykmelding/SykmeldingStatus';
+import arbeidsgivereMock from '../../../../server/graphql/mockData/arbeidsgivereMock';
+import { sykmeldingApen } from '../../../../server/graphql/mockData/sykmelding-apen';
+import { sykmeldingApenPapir } from '../../../../server/graphql/mockData/sykmelding-apen-papir';
+import { sykmeldingSendt } from '../../../../server/graphql/mockData/sykmelding-sendt';
+import { sykmeldingSendt2 } from '../../../../server/graphql/mockData/sykmelding-sendt-2';
+import { sykmeldingSendt3 } from '../../../../server/graphql/mockData/sykmelding-sendt-3';
+import { sykmeldingBekreftet } from '../../../../server/graphql/mockData/sykmelding-bekreftet';
+import { sykmeldingAvvist } from '../../../../server/graphql/mockData/sykmelding-avvist';
+import { sykmeldingAvvistBekreftet } from '../../../../server/graphql/mockData/sykmelding-avvist-bekreftet';
+import { sykmeldingAvbrutt } from '../../../../server/graphql/mockData/sykmelding-avbrutt';
+import { sykmeldingUtgatt } from '../../../../server/graphql/mockData/sykmelding-utgatt';
+import { sykmeldingEgenmeldt } from '../../../../server/graphql/mockData/sykmelding-egenmeldt';
+import { sykmeldingUnderbehandlingTilbakedatering } from '../../../../server/graphql/mockData/sykmelding-under-behandling-tilbakedatering';
+import { sykmeldingUgyldigTilbakedatering } from '../../../../server/graphql/mockData/sykmelding-ugyldig-tilbakedatering';
+import { StatusEvent } from '../../../../server/graphql/resolver-types.generated';
 
 const sykmeldinger = [
     sykmeldingApen(),
@@ -63,13 +63,13 @@ export function handleMockRequest(req: NextApiRequest, res: NextApiResponse, pat
 function pathParamToStatusEvent(path: string): StatusEvent {
     switch (path) {
         case 'send':
-            return StatusEvent.SENDT;
+            return StatusEvent.Sendt;
         case 'bekreftAvvist':
-            return StatusEvent.BEKREFTET;
+            return StatusEvent.Bekreftet;
         case 'avbryt':
-            return StatusEvent.AVBRUTT;
+            return StatusEvent.Avbrutt;
         case 'gjenapne':
-            return StatusEvent.APEN;
+            return StatusEvent.Apen;
         default:
             throw new Error(`Unknown path ${path}`);
     }

@@ -1,37 +1,66 @@
-import nock from 'nock';
 import userEvent from '@testing-library/user-event';
 import mockRouter from 'next-router-mock';
 
-import { sykmeldingAvvist } from '../../../utils/test/mockData/sykmelding-avvist';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
-import { StatusEvent } from '../../../models/Sykmelding/SykmeldingStatus';
+import {
+    ChangeSykmeldingStatusDocument,
+    RegelStatus,
+    StatusEvent,
+    SykmeldingChangeStatus,
+    SykmeldingDocument,
+    SykmeldingerDocument,
+} from '../../../fetching/graphql.generated';
 import SykmeldingPage from '../index.page';
+import { createMock, createSykmelding } from '../../../utils/test/dataUtils';
 
 describe('Bekreft avvist sykmelding som lest', () => {
-    const apiNock = nock('http://localhost');
-
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/${sykmeldingAvvist().id}`);
-
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingAvvist()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingAvvist().id}`).times(1).reply(200, sykmeldingAvvist());
+        mockRouter.setCurrentUrl(`/avvist-sykmelding`);
     });
 
+    const avvistSykmelding = createSykmelding({
+        id: 'avvist-sykmelding',
+        behandlingsutfall: {
+            __typename: 'Behandlingsutfall',
+            status: RegelStatus.Invalid,
+            ruleHits: [
+                {
+                    __typename: 'RegelInfo',
+                    messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
+                    messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
+                    ruleName: 'tilbakedatering',
+                    ruleStatus: RegelStatus.Invalid,
+                },
+            ],
+        },
+    });
+
+    const baseMocks = [
+        createMock({
+            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            result: { data: { __typename: 'Query', sykmelding: avvistSykmelding } },
+        }),
+        createMock({
+            request: { query: SykmeldingerDocument },
+            result: { data: { __typename: 'Query', sykmeldinger: [avvistSykmelding] } },
+        }),
+    ];
+
     it('should display reason for rejection', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks] });
 
         expect(await screen.findByText(/Du trenger en ny sykmelding/)).toBeInTheDocument();
     });
 
     it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks] });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
         expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
     });
 
     it('should get error message when trying to submit without checking checkbox', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks] });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
 
@@ -45,7 +74,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
     });
 
     it('should remove error message after clicking checkbox', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks] });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
 
@@ -69,19 +98,33 @@ describe('Bekreft avvist sykmelding som lest', () => {
     });
 
     it('should show confirmation after submitting', async () => {
-        const sykmelding = sykmeldingAvvist();
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmelding]);
-        apiNock.post(`/api/proxy/v1/sykmeldinger/${sykmelding.id}/bekreftAvvist`).reply(203);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmelding.id}`).reply(200, {
-            ...sykmelding,
-            sykmeldingStatus: {
-                ...sykmelding.sykmeldingStatus,
-                statusEvent: StatusEvent.BEKREFTET,
-                timestamp: '2020-01-01',
-            },
+        render(<SykmeldingPage />, {
+            mocks: [
+                ...baseMocks,
+                createMock({
+                    request: {
+                        query: ChangeSykmeldingStatusDocument,
+                        variables: {
+                            sykmeldingId: 'avvist-sykmelding',
+                            status: SykmeldingChangeStatus.BekreftAvvist,
+                        },
+                    },
+                    result: {
+                        data: {
+                            __typename: 'Mutation',
+                            changeSykmeldingStatus: {
+                                ...avvistSykmelding,
+                                sykmeldingStatus: {
+                                    ...avvistSykmelding.sykmeldingStatus,
+                                    statusEvent: StatusEvent.Bekreftet,
+                                    timestamp: '2020-01-01',
+                                },
+                            },
+                        },
+                    },
+                }),
+            ],
         });
-
-        render(<SykmeldingPage />);
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
 

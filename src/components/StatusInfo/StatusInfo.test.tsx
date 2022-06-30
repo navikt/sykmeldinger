@@ -1,20 +1,27 @@
 import { render, screen } from '@testing-library/react';
 
-import { Periode, PeriodeSchema, Periodetype } from '../../models/Sykmelding/Periode';
-import { StatusEvent, SykmeldingStatus, SykmeldingStatusSchema } from '../../models/Sykmelding/SykmeldingStatus';
-import { Merknad, MerknadSchema } from '../../models/Sykmelding/Merknad';
+import {
+    Merknad,
+    Periode,
+    Periodetype,
+    ShortName,
+    StatusEvent,
+    Svartype,
+    SykmeldingStatus,
+} from '../../fetching/graphql.generated';
 import { Merknadtype } from '../InformationBanner/InformationBanner';
 
 import StatusInfo from './StatusInfo';
 
 describe('StatusInfo', () => {
     it('Renders nothing when status is not SENDT or BEKREFTET', () => {
-        const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-            statusEvent: StatusEvent.APEN,
+        const sykmeldingStatus: SykmeldingStatus = {
+            __typename: 'SykmeldingStatus',
+            statusEvent: StatusEvent.Apen,
             timestamp: '2021-05-01',
             arbeidsgiver: null,
             sporsmalOgSvarListe: [],
-        });
+        };
 
         render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[]} sykmeldingMerknader={[]} />);
         expect(screen.queryByTestId('status-info')).not.toBeInTheDocument();
@@ -22,22 +29,24 @@ describe('StatusInfo', () => {
 
     describe('Avventende', () => {
         it('Renders avventende info when status is SENDT and periode is AVVENTENDE', () => {
-            const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                statusEvent: StatusEvent.SENDT,
+            const sykmeldingStatus: SykmeldingStatus = {
+                __typename: 'SykmeldingStatus',
+                statusEvent: StatusEvent.Sendt,
                 timestamp: '2021-05-01',
                 arbeidsgiver: null,
                 sporsmalOgSvarListe: [],
-            });
-            const avventendePeriode: Periode = PeriodeSchema.parse({
+            };
+            const avventendePeriode: Periode = {
+                __typename: 'Periode',
                 fom: '2021-05-01',
                 tom: '2021-05-05',
                 innspillTilArbeidsgiver: 'dette er et innspill',
-                type: 'AVVENTENDE',
+                type: Periodetype.Avventende,
                 reisetilskudd: false,
                 gradert: null,
                 behandlingsdager: null,
                 aktivitetIkkeMulig: null,
-            });
+            };
 
             render(
                 <StatusInfo
@@ -53,22 +62,24 @@ describe('StatusInfo', () => {
         });
 
         it('Renders nothing when status is BEKREFTET and periode is AVVENTENDE', () => {
-            const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                statusEvent: StatusEvent.BEKREFTET,
+            const sykmeldingStatus: SykmeldingStatus = {
+                __typename: 'SykmeldingStatus',
+                statusEvent: StatusEvent.Bekreftet,
                 timestamp: '2021-05-01',
                 arbeidsgiver: null,
                 sporsmalOgSvarListe: [],
-            });
-            const avventendePeriode: Periode = PeriodeSchema.parse({
+            };
+            const avventendePeriode: Periode = {
+                __typename: 'Periode',
                 fom: '2021-05-01',
                 tom: '2021-05-05',
                 innspillTilArbeidsgiver: 'dette er et innspill',
-                type: 'AVVENTENDE',
+                type: Periodetype.Avventende,
                 reisetilskudd: false,
                 gradert: null,
                 behandlingsdager: null,
                 aktivitetIkkeMulig: null,
-            });
+            };
             render(
                 <StatusInfo
                     sykmeldingStatus={sykmeldingStatus}
@@ -82,16 +93,18 @@ describe('StatusInfo', () => {
 
     describe('Tilbakedatert under behandling', () => {
         it('Renders under behandling info when status is SENDT and has merknad of type TILBAKEDATERING_UNDER_BEHANDLING', () => {
-            const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                statusEvent: StatusEvent.SENDT,
+            const sykmeldingStatus: SykmeldingStatus = {
+                __typename: 'SykmeldingStatus',
+                statusEvent: StatusEvent.Sendt,
                 timestamp: '2021-05-01',
                 arbeidsgiver: null,
                 sporsmalOgSvarListe: [],
-            });
-            const merknad: Merknad = MerknadSchema.parse({
+            };
+            const merknad: Merknad = {
+                __typename: 'Merknad',
                 type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
                 beskrivelse: null,
-            });
+            };
             render(
                 <StatusInfo
                     sykmeldingStatus={sykmeldingStatus}
@@ -113,22 +126,24 @@ describe('StatusInfo', () => {
     describe('Standard digital søknad', () => {
         describe('SENDT', () => {
             it('Single reisetilskudd periode not in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.SENDT,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Sendt,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     reisetilskudd: true,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -142,35 +157,39 @@ describe('StatusInfo', () => {
             });
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.SENDT,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Sendt,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
-                const aktivitetIkkeMuligPeriode: Periode = PeriodeSchema.parse({
+                };
+                const aktivitetIkkeMuligPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    type: Periodetype.AktivitetIkkeMulig,
                     reisetilskudd: false,
                     aktivitetIkkeMulig: {
+                        __typename: 'AktivitetIkkeMuligPeriode',
                         medisinskArsak: null,
                         arbeidsrelatertArsak: null,
                     },
                     gradert: null,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -184,44 +203,50 @@ describe('StatusInfo', () => {
             });
 
             it('Ansatt with reisetilskudd in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.SENDT,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Sendt,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'ARBEIDSTAKER',
                             },
                         },
                     ],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
-                const aktivitetIkkeMuligPeriode: Periode = PeriodeSchema.parse({
+                };
+                const aktivitetIkkeMuligPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    type: Periodetype.AktivitetIkkeMulig,
                     reisetilskudd: false,
                     aktivitetIkkeMulig: {
+                        __typename: 'AktivitetIkkeMuligPeriode',
                         medisinskArsak: null,
                         arbeidsrelatertArsak: null,
                     },
                     gradert: null,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -235,31 +260,35 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.SENDT,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Sendt,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'FRILANSER',
                             },
                         },
                     ],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -274,31 +303,35 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.SENDT,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Sendt,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'NAERINGSDRIVENDE',
                             },
                         },
                     ],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -313,31 +346,35 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.SENDT,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Sendt,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'ARBEIDSLEDIG',
                             },
                         },
                     ],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -354,17 +391,20 @@ describe('StatusInfo', () => {
             });
 
             it('Gradert reisetilskudd renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.SENDT,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Sendt,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                });
-                const gradertReisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const gradertReisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.GRADERT,
+                    type: Periodetype.Gradert,
                     gradert: {
+                        __typename: 'GradertPeriode',
                         grad: 80,
                         reisetilskudd: true,
                     },
@@ -372,7 +412,7 @@ describe('StatusInfo', () => {
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     aktivitetIkkeMulig: null,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -388,22 +428,24 @@ describe('StatusInfo', () => {
 
         describe('BEKREFTET', () => {
             it('Single reisetilskudd periode not in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.BEKREFTET,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Bekreftet,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -417,35 +459,39 @@ describe('StatusInfo', () => {
             });
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.BEKREFTET,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Bekreftet,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
-                const aktivitetIkkeMuligPeriode: Periode = PeriodeSchema.parse({
+                };
+                const aktivitetIkkeMuligPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    type: Periodetype.AktivitetIkkeMulig,
                     reisetilskudd: false,
                     aktivitetIkkeMulig: {
+                        __typename: 'AktivitetIkkeMuligPeriode',
                         medisinskArsak: null,
                         arbeidsrelatertArsak: null,
                     },
                     gradert: null,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -459,31 +505,35 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.BEKREFTET,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Bekreftet,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'FRILANSER',
                             },
                         },
                     ],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -498,31 +548,35 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.BEKREFTET,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Bekreftet,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'NAERINGSDRIVENDE',
                             },
                         },
                     ],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -537,31 +591,35 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.BEKREFTET,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Bekreftet,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'ARBEIDSLEDIG',
                             },
                         },
                     ],
-                });
-                const reisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
+                    type: Periodetype.Reisetilskudd,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -578,26 +636,31 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info with frilanser info for gradert reisetilskudd NAERINGSDRIVENDE', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.BEKREFTET,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Bekreftet,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'NAERINGSDRIVENDE',
                             },
                         },
                     ],
-                });
-                const gradertReisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const gradertReisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.GRADERT,
+                    type: Periodetype.Gradert,
                     gradert: {
+                        __typename: 'GradertPeriode',
                         grad: 80,
                         reisetilskudd: true,
                     },
@@ -605,7 +668,7 @@ describe('StatusInfo', () => {
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     aktivitetIkkeMulig: null,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
@@ -620,26 +683,31 @@ describe('StatusInfo', () => {
             });
 
             it('Renders standard info without frilanser info for gradert reisetilskudd ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatus = SykmeldingStatusSchema.parse({
-                    statusEvent: StatusEvent.BEKREFTET,
+                const sykmeldingStatus: SykmeldingStatus = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.Bekreftet,
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [
                         {
+                            __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: 'ARBEIDSSITUASJON',
+                            shortName: ShortName.Arbeidssituasjon,
                             svar: {
-                                svarType: 'ARBEIDSSITUASJON',
+                                __typename: 'Svar',
+                                svarType: Svartype.Arbeidssituasjon,
                                 svar: 'ARBEIDSLEDIG',
                             },
                         },
                     ],
-                });
-                const gradertReisetilskuddPeriode: Periode = PeriodeSchema.parse({
+                };
+                const gradertReisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
                     fom: '2021-05-01',
                     tom: '2021-05-05',
-                    type: Periodetype.GRADERT,
+                    type: Periodetype.Gradert,
                     gradert: {
+                        __typename: 'GradertPeriode',
                         grad: 80,
                         reisetilskudd: true,
                     },
@@ -647,7 +715,7 @@ describe('StatusInfo', () => {
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     aktivitetIkkeMulig: null,
-                });
+                };
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}

@@ -4,12 +4,13 @@ import { Bandage } from '@navikt/ds-icons';
 
 import { toReadableDate } from '../../../../../utils/dateUtils';
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { MedisinskVurdering } from '../../../../../models/Sykmelding/MedisinskVurdering';
+import { MedisinskVurdering } from '../../../../../fetching/graphql.generated';
+import { annenFraverGrunnToText } from '../../../../../utils/periodeUtils';
 
 import styles from './MedisinskTilstand.module.css';
 
 interface Props {
-    medisinskVurdering: MedisinskVurdering | null;
+    medisinskVurdering: MedisinskVurdering | null | undefined;
 }
 
 function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
@@ -49,7 +50,9 @@ function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
                             <Heading className={styles.heading} size="small" level="4">
                                 Annen lovfestet fraværsgrunn
                             </Heading>
-                            <BodyShort size="small">{medisinskVurdering.annenFraversArsak.grunn.join('. ')}</BodyShort>
+                            <BodyShort size="small">
+                                {medisinskVurdering.annenFraversArsak.grunn.map(annenFraverGrunnToText).join('. ')}
+                            </BodyShort>
                         </div>
                     )}
                     {!!medisinskVurdering.annenFraversArsak?.beskrivelse && (
