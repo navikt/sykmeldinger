@@ -1,11 +1,7 @@
 import { Calender } from '@navikt/ds-icons';
 
-import {
-    getPeriodTitle,
-    getReadableLength,
-    getReadablePeriod,
-    Periode,
-} from '../../../../../models/Sykmelding/Periode';
+import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../../../utils/periodeUtils';
+import { Periode } from '../../../../../fetching/graphql.generated';
 import JaEntry from '../../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';

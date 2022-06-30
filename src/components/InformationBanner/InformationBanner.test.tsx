@@ -1,15 +1,16 @@
 import { render, screen } from '@testing-library/react';
 
-import { MerknadSchema, Merknad } from '../../models/Sykmelding/Merknad';
+import { Merknad } from '../../fetching/graphql.generated';
 
 import InformationBanner, { Merknadtype } from './InformationBanner';
 
 describe('InformationBanner', () => {
     it('Renders view for merknad UGYLDIG_TILBAKEDATERING', async () => {
-        const merknad: Merknad = MerknadSchema.parse({
+        const merknad: Merknad = {
+            __typename: 'Merknad',
             type: Merknadtype.UGYLDIG_TILBAKEDATERING,
             beskrivelse: null,
-        });
+        };
 
         render(<InformationBanner merknader={[merknad]} />);
         expect(screen.getByTestId('merknad-banner')).toBeInTheDocument();
@@ -18,10 +19,11 @@ describe('InformationBanner', () => {
     });
 
     it('Renders view for merknad TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER', () => {
-        const merknad: Merknad = MerknadSchema.parse({
+        const merknad: Merknad = {
+            __typename: 'Merknad',
             type: Merknadtype.TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER,
             beskrivelse: null,
-        });
+        };
 
         render(<InformationBanner merknader={[merknad]} />);
         expect(screen.getByTestId('merknad-banner')).toBeInTheDocument();
@@ -30,10 +32,11 @@ describe('InformationBanner', () => {
     });
 
     it('Renders view for merknad TILBAKEDATERING_UNDER_BEHANDLING', () => {
-        const merknad = MerknadSchema.parse({
+        const merknad: Merknad = {
+            __typename: 'Merknad',
             type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
             beskrivelse: null,
-        });
+        };
 
         render(<InformationBanner merknader={[merknad]} />);
         expect(screen.getByTestId('merknad-banner')).toBeInTheDocument();

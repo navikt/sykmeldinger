@@ -2,8 +2,9 @@ import { People } from '@navikt/ds-icons';
 import { BodyShort } from '@navikt/ds-react';
 
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { getPasientName, Pasient } from '../../../../../models/Sykmelding/Pasient';
+import { Pasient } from '../../../../../fetching/graphql.generated';
 import { getBirthday } from '../../../../../utils/sykmeldingUtils';
+import { getPasientName } from '../../../../../utils/pasientUtils';
 
 import styles from './SykmeldingenGjelder.module.css';
 

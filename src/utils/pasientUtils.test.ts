@@ -1,35 +1,40 @@
-import { getPasientName } from './Pasient';
+import { Pasient } from '../fetching/graphql.generated';
 
-describe('Pasient', () => {
+import { getPasientName } from './pasientUtils';
+
+describe('pasientUtils', () => {
     describe('getName', () => {
         it('Returns full name', () => {
-            const plainJson = {
+            const pasient: Pasient = {
+                __typename: 'Pasient',
                 fnr: '12345678901',
                 fornavn: 'Ola',
                 mellomnavn: 'Halvor',
                 etternavn: 'Nordmann',
             };
-            expect(getPasientName(plainJson)).toEqual('Ola Halvor Nordmann');
+            expect(getPasientName(pasient)).toEqual('Ola Halvor Nordmann');
         });
 
         it('Returns name without middle name', () => {
-            const plainJson = {
+            const pasient: Pasient = {
+                __typename: 'Pasient',
                 fnr: '12345678901',
                 fornavn: 'Ola',
                 mellomnavn: null,
                 etternavn: 'Nordmann',
             };
-            expect(getPasientName(plainJson)).toEqual('Ola Nordmann');
+            expect(getPasientName(pasient)).toEqual('Ola Nordmann');
         });
 
         it('Returns undefined for missing fornavn', () => {
-            const plainJson = {
+            const pasient: Pasient = {
+                __typename: 'Pasient',
                 fnr: '12345678901',
                 fornavn: null,
                 mellomnavn: null,
                 etternavn: 'Nordmann',
             };
-            expect(getPasientName(plainJson)).toBeUndefined();
+            expect(getPasientName(pasient)).toBeUndefined();
         });
     });
 });

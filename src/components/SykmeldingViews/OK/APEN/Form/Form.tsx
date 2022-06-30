@@ -3,16 +3,15 @@ import { Button, Loader } from '@navikt/ds-react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { getSykmeldingStartDate, Sykmelding } from '../../../../../models/Sykmelding/Sykmelding';
+import useExtraFormData from '../../../../../hooks/useExtraFormData';
 import Spinner from '../../../../Spinner/Spinner';
-import useBrukerinformasjon from '../../../../../hooks/useBrukerinformasjon';
-import useSykmeldingUtenforVentetid from '../../../../../hooks/useSykmeldingUtenforVentetid';
-import useSend from '../../../../../hooks/useSend';
 import { AvbrytContext } from '../AvbrytContext';
 import Sykmeldingsopplysninger from '../../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam';
-import { Periodetype } from '../../../../../models/Sykmelding/Periode';
+import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils';
+import { Periodetype, SykmeldingFragment } from '../../../../../fetching/graphql.generated';
+import { useSubmitSykmelding } from '../../../../../hooks/useMutations';
 
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
@@ -65,42 +64,29 @@ export interface FormShape {
 }
 
 interface FormProps {
-    sykmelding: Sykmelding;
+    sykmelding: SykmeldingFragment;
     disable: boolean;
 }
 
-const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
+function Form({ sykmelding, disable }: FormProps): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
 
-    // DATA FETCHING
-    const {
-        isLoading: isLoadingBrukerinformasjon,
-        error: errorBrukerinformasjon,
-        data: brukerinformasjon,
-    } = useBrukerinformasjon();
-
-    const {
-        isLoading: isLoadingSykmeldingUtenforVentetid,
-        error: errorSykmeldingUtenforVentetid,
-        data: sykmeldingUtenforVentetid,
-    } = useSykmeldingUtenforVentetid(sykmeldingId);
-
-    // DATA PERSISTING
-    const { mutate: send, isLoading: isSending, error: errorSend } = useSend(sykmeldingId);
+    const { data, error, loading } = useExtraFormData(sykmeldingId);
+    const [{ loading: fetchingSend, error: errorSend }, send] = useSubmitSykmelding(sykmeldingId);
 
     const formMethods = useForm<FormShape>({ shouldFocusError: false });
     const { handleSubmit, watch, errors } = formMethods;
 
     const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
     const erArbeidstakerMedStrengtFortroligAdressse =
-        erArbeidstaker && brukerinformasjon?.strengtFortroligAdresse === true;
+        erArbeidstaker && data?.brukerinformasjon?.strengtFortroligAdresse === true;
     const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;
 
     const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
 
     const { maAvbryte } = useContext(AvbrytContext);
 
-    if (isLoadingBrukerinformasjon || isLoadingSykmeldingUtenforVentetid) {
+    if (loading) {
         return (
             <Spacing amount="large">
                 <Spinner headline="Henter arbeidsforhold" />
@@ -108,12 +94,7 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
         );
     }
 
-    if (
-        errorBrukerinformasjon ||
-        errorSykmeldingUtenforVentetid ||
-        brukerinformasjon === undefined ||
-        sykmeldingUtenforVentetid === undefined
-    ) {
+    if (error || data?.brukerinformasjon == null || data?.sykmeldingUtenforVentetid == null) {
         return (
             <Spacing>
                 <AlertStripeFeil role="alert" aria-live="polite">
@@ -139,15 +120,15 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
                     {Boolean(watchErOpplysningeneRiktige?.svar) && !maAvbryte && (
                         <Arbeidssituasjon
                             harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
-                                (sm) => sm.type === Periodetype.AVVENTENDE,
+                                (sm) => sm.type === Periodetype.Avventende,
                             )}
-                            erUtenforVentetid={sykmeldingUtenforVentetid}
-                            brukerinformasjon={brukerinformasjon}
+                            erUtenforVentetid={data.sykmeldingUtenforVentetid}
+                            brukerinformasjon={data.brukerinformasjon}
                             sykmeldingFom={getSykmeldingStartDate(sykmelding)}
                         />
                     )}
 
-                    {erArbeidstaker && harValgtArbeidsgiver && !brukerinformasjon.strengtFortroligAdresse && (
+                    {erArbeidstaker && harValgtArbeidsgiver && !data.brukerinformasjon.strengtFortroligAdresse && (
                         <div className={styles.harValgtArbeidsgiverWrapper}>
                             <VeilederSenderSykmeldingen />
                             <Sykmeldingsopplysninger
@@ -177,11 +158,11 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
                         <div style={{ textAlign: 'center' }}>
                             <Button
                                 className={styles.sendBekreftButton}
-                                disabled={isSending || disable}
+                                disabled={fetchingSend || disable}
                                 variant="primary"
                                 type="submit"
                             >
-                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding {isSending && <Loader />}
+                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding {fetchingSend && <Loader />}
                             </Button>
                         </div>
                     </Spacing>
@@ -189,6 +170,6 @@ const Form: React.FC<FormProps> = ({ sykmelding, disable }) => {
             </form>
         </FormProvider>
     );
-};
+}
 
 export default Form;

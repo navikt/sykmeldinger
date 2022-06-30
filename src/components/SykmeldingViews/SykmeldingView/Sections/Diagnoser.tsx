@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MedisinskVurdering } from '../../../../models/Sykmelding/MedisinskVurdering';
+import { MedisinskVurdering } from '../../../../fetching/graphql.generated';
 import SykmeldingEntry from '../Layout/SykmeldingEntry/SykmeldingEntry';
 
 import styles from './Diagnoser.module.css';

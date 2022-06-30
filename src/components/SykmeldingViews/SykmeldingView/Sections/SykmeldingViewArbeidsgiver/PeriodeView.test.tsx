@@ -1,21 +1,22 @@
 import { render, screen } from '@testing-library/react';
 
-import { PeriodeSchema, Periode, Periodetype } from '../../../../../models/Sykmelding/Periode';
+import { Periode, Periodetype } from '../../../../../fetching/graphql.generated';
 
 import PeriodeView from './PeriodeView';
 
 describe('PeriodeView', () => {
     it('Renders avventende periode', () => {
-        const periode: Periode = PeriodeSchema.parse({
+        const periode: Periode = {
+            __typename: 'Periode',
             fom: '2021-04-01',
             tom: '2021-04-05',
             innspillTilArbeidsgiver: 'innspill til arbeidsgiver',
-            type: 'AVVENTENDE',
+            type: Periodetype.Avventende,
             reisetilskudd: false,
             gradert: null,
             behandlingsdager: null,
             aktivitetIkkeMulig: null,
-        });
+        };
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -27,11 +28,13 @@ describe('PeriodeView', () => {
     });
 
     it('Renders gradert periode', () => {
-        const periode: Periode = PeriodeSchema.parse({
+        const periode: Periode = {
+            __typename: 'Periode',
             fom: '2021-04-01',
             tom: '2021-04-05',
-            type: Periodetype.GRADERT,
+            type: Periodetype.Gradert,
             gradert: {
+                __typename: 'GradertPeriode',
                 grad: 20,
                 reisetilskudd: true,
             },
@@ -39,7 +42,7 @@ describe('PeriodeView', () => {
             behandlingsdager: null,
             innspillTilArbeidsgiver: null,
             aktivitetIkkeMulig: null,
-        });
+        };
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -50,16 +53,17 @@ describe('PeriodeView', () => {
     });
 
     it('Renders reisetilskudd periode', () => {
-        const periode: Periode = PeriodeSchema.parse({
+        const periode: Periode = {
+            __typename: 'Periode',
             fom: '2021-04-01',
             tom: '2021-04-05',
-            type: Periodetype.REISETILSKUDD,
+            type: Periodetype.Reisetilskudd,
             reisetilskudd: true,
             behandlingsdager: null,
             innspillTilArbeidsgiver: null,
             gradert: null,
             aktivitetIkkeMulig: null,
-        });
+        };
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -69,16 +73,17 @@ describe('PeriodeView', () => {
     });
 
     it('Renders behandlingsdager periode', () => {
-        const periode: Periode = PeriodeSchema.parse({
+        const periode: Periode = {
+            __typename: 'Periode',
             fom: '2021-04-01',
             tom: '2021-04-05',
-            type: Periodetype.BEHANDLINGSDAGER,
+            type: Periodetype.Behandlingsdager,
             behandlingsdager: 3,
             reisetilskudd: false,
             gradert: null,
             innspillTilArbeidsgiver: null,
             aktivitetIkkeMulig: null,
-        });
+        };
 
         render(<PeriodeView perioder={[periode]} />);
 
@@ -88,26 +93,28 @@ describe('PeriodeView', () => {
     });
 
     it('Renders more than one period', () => {
-        const reisetilskudd: Periode = PeriodeSchema.parse({
+        const reisetilskudd: Periode = {
+            __typename: 'Periode',
             fom: '2021-04-01',
             tom: '2021-04-05',
-            type: Periodetype.REISETILSKUDD,
+            type: Periodetype.Reisetilskudd,
             reisetilskudd: true,
             behandlingsdager: null,
             innspillTilArbeidsgiver: null,
             gradert: null,
             aktivitetIkkeMulig: null,
-        });
-        const behandlingsdager: Periode = PeriodeSchema.parse({
+        };
+        const behandlingsdager: Periode = {
+            __typename: 'Periode',
             fom: '2021-04-01',
             tom: '2021-04-05',
-            type: Periodetype.BEHANDLINGSDAGER,
+            type: Periodetype.Behandlingsdager,
             behandlingsdager: 3,
             reisetilskudd: false,
             gradert: null,
             innspillTilArbeidsgiver: null,
             aktivitetIkkeMulig: null,
-        });
+        };
 
         render(<PeriodeView perioder={[reisetilskudd, behandlingsdager]} />);
 

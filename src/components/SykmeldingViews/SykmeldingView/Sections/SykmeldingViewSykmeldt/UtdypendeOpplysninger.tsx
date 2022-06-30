@@ -1,6 +1,6 @@
 import { FileContent } from '@navikt/ds-icons';
 
-import { UtdypendeOpplysning } from '../../../../../models/Sykmelding/UtdypendeOpplysninger';
+import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
 

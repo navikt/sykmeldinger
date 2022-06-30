@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 
-import { getSykmeldingStartDate, Sykmelding } from '../models/Sykmelding/Sykmelding';
+import { Sykmelding } from '../fetching/graphql.generated';
+
+import { getSykmeldingStartDate } from './sykmeldingUtils';
 
 /** Class with utility functions for sorting sykmeldinger. */
 class SykmeldingSorter {

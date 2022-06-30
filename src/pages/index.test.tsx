@@ -1,67 +1,115 @@
-import nock from 'nock';
+import { GraphQLError } from 'graphql';
 
 import { render, screen, waitForElementToBeRemoved, within } from '../utils/test/testUtils';
-import { sykmeldingBekreftet } from '../utils/test/mockData/sykmelding-bekreftet';
-import { sykmeldingSendt } from '../utils/test/mockData/sykmelding-sendt';
-import { sykmeldingAvbrutt } from '../utils/test/mockData/sykmelding-avbrutt';
-import { sykmeldingAvvistBekreftet } from '../utils/test/mockData/sykmelding-avvist-bekreftet';
-import { sykmeldingUtgatt } from '../utils/test/mockData/sykmelding-utgatt';
-import { sykmeldingApen } from '../utils/test/mockData/sykmelding-apen';
-import { sykmeldingApenPapir } from '../utils/test/mockData/sykmelding-apen-papir';
-import { sykmeldingAvvist } from '../utils/test/mockData/sykmelding-avvist';
-import { sykmeldingAvvistUgyldigData } from '../utils/test/mockData/sykmelding-avvist-ugyldig-data';
-import { sykmeldingUnderbehandlingTilbakedatering } from '../utils/test/mockData/sykmelding-under-behandling-tilbakedatering';
+import { StatusEvent, SykmeldingerDocument } from '../fetching/graphql.generated';
+import {
+    createAvvistBehandlingsutfall,
+    createMock,
+    createSykmelding,
+    createUnderBehandlingMerknad,
+} from '../utils/test/dataUtils';
+import { dateSub } from '../utils/dateUtils';
 
 import SykmeldingerPage from './index.page';
 
 describe('SykmeldingerPage: /syk/sykmeldinger', () => {
-    const apiNock = nock('http://localhost');
-
     it('should fail with error message on API error', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(500, 'Fake body');
-
-        render(<SykmeldingerPage />);
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                }),
+            ],
+        });
 
         expect(await screen.findByText(/Vi har problemer med baksystemene for øyeblikket./));
     });
 
     it('should not display any sykmeldinger', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, []);
-
-        render(<SykmeldingerPage />);
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: { data: { __typename: 'Query', sykmeldinger: [] } },
+                }),
+            ],
+        });
 
         expect(await screen.findByText('Du har ingen nye sykmeldinger'));
     });
 
     it('should only display new sykmeldinger', async () => {
-        apiNock
-            .get('/api/proxy/v1/sykmeldinger')
-            .reply(200, [
-                sykmeldingBekreftet,
-                sykmeldingSendt(),
-                sykmeldingAvbrutt(),
-                sykmeldingAvvistBekreftet,
-                sykmeldingUtgatt,
-            ]);
-
-        render(<SykmeldingerPage />);
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [
+                                createSykmelding({ id: 'sykme-1' }, StatusEvent.Bekreftet),
+                                createSykmelding({ id: 'sykme-2' }, StatusEvent.Sendt),
+                                createSykmelding({ id: 'sykme-3' }, StatusEvent.Avbrutt),
+                                createSykmelding(
+                                    { id: 'sykme-4', ...createAvvistBehandlingsutfall() },
+                                    StatusEvent.Bekreftet,
+                                ),
+                                createSykmelding({ id: 'sykme-5' }, StatusEvent.Utgatt),
+                            ],
+                        },
+                    },
+                }),
+            ],
+        });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
+
         expect(await screen.findByText('Du har ingen nye sykmeldinger'));
         expect(await screen.findByText('Tidligere sykmeldinger'));
-        expect(await screen.findByText('Sendt til NAV'));
-        expect(await screen.findByText('Sendt til arbeidsgiver'));
-        expect(await screen.findByText('Avbrutt av deg'));
-        expect(await screen.findByText('Avvist av NAV'));
-        expect(await screen.findByText('Utgått'));
+
+        expect(screen.getByRole('link', { name: /Sendt til NAV/ }));
+        expect(screen.getByRole('link', { name: /Sendt til arbeidsgiver/ }));
+        expect(screen.getByRole('link', { name: /Avbrutt av deg/ }));
+        expect(screen.getByRole('link', { name: /Avvist av NAV/ }));
+        expect(screen.getByRole('link', { name: /Utgått/ }));
     });
 
     it('should display only new sykmeldinger, sorted by ascending date ', async () => {
-        apiNock
-            .get('/api/proxy/v1/sykmeldinger')
-            .reply(200, [sykmeldingApen(), sykmeldingApenPapir(), sykmeldingAvvist()]);
-
-        render(<SykmeldingerPage />);
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [
+                                createSykmelding(
+                                    { id: 'sykme-1', mottattTidspunkt: dateSub(new Date(), { days: 2 }) },
+                                    StatusEvent.Apen,
+                                ),
+                                createSykmelding(
+                                    {
+                                        id: 'sykme-2',
+                                        mottattTidspunkt: dateSub(new Date(), { days: 6 }),
+                                        papirsykmelding: true,
+                                    },
+                                    StatusEvent.Apen,
+                                ),
+                                createSykmelding(
+                                    {
+                                        id: 'sykme-3',
+                                        mottattTidspunkt: dateSub(new Date(), { days: 4 }),
+                                        ...createAvvistBehandlingsutfall(),
+                                    },
+                                    StatusEvent.Apen,
+                                ),
+                            ],
+                        },
+                    },
+                }),
+            ],
+        });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
@@ -74,9 +122,24 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display under behandling in Nye sykmeldinger section ', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingUnderbehandlingTilbakedatering()]);
-
-        render(<SykmeldingerPage />);
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [
+                                createSykmelding(
+                                    { id: 'sykme-1', ...createUnderBehandlingMerknad() },
+                                    StatusEvent.Sendt,
+                                ),
+                            ],
+                        },
+                    },
+                }),
+            ],
+        });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
@@ -87,36 +150,83 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     });
 
     it('should display new and earlier sykmeldinger', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
-
-        render(<SykmeldingerPage />);
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [
+                                createSykmelding({ id: 'sykme-1' }, StatusEvent.Apen),
+                                createSykmelding({ id: 'sykme-2' }, StatusEvent.Bekreftet),
+                            ],
+                        },
+                    },
+                }),
+            ],
+        });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
-        expect(await screen.findByText('Nye sykmeldinger'));
-        expect(await screen.findByText('Tidligere sykmeldinger'));
+
+        const newSection = screen.getByRole('region', { name: 'Nye sykmeldinger' });
+        const previousSection = screen.getByRole('region', { name: 'Tidligere sykmeldinger' });
+
+        expect(within(newSection).getAllByRole('link')).toHaveLength(1);
+        expect(within(previousSection).getAllByRole('link')).toHaveLength(1);
     });
 
-    it('should display APEN but older than 3 months sykemelding in tidligere section', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen(), sykmeldingBekreftet]);
-
-        render(<SykmeldingerPage />);
+    it('should display APEN but older than 12 months sykemelding in tidligere section', async () => {
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [
+                                createSykmelding(
+                                    { id: 'sykme-1', mottattTidspunkt: dateSub(new Date(), { months: 12 }) },
+                                    StatusEvent.Apen,
+                                ),
+                                createSykmelding({ id: 'sykme-2' }, StatusEvent.Bekreftet),
+                            ],
+                        },
+                    },
+                }),
+            ],
+        });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
-        expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
-        expect(await screen.findByText('Nye sykmeldinger'));
-        expect(await screen.findByText('Tidligere sykmeldinger'));
+        expect(screen.getByText('Du har ingen nye sykmeldinger')).toBeInTheDocument();
+
+        const previousSection = screen.getByRole('region', { name: 'Tidligere sykmeldinger' });
+        expect(within(previousSection).getAllByRole('link')).toHaveLength(2);
     });
 
     it('should not throw error when receiving a AVVIST sykmelding with invalid data', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingAvvistUgyldigData]);
-
-        render(<SykmeldingerPage />);
+        render(<SykmeldingerPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [
+                                createSykmelding({ id: 'sykme-1', ...createAvvistBehandlingsutfall('Dårlig data') }),
+                            ],
+                        },
+                    },
+                }),
+            ],
+        });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
 
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
-        expect(await screen.findByText('Nye sykmeldinger'));
-        expect(await screen.findByText('Avvist av NAV'));
+
+        const newSection = screen.getByRole('region', { name: 'Nye sykmeldinger' });
+        expect(within(newSection).getByRole('link', { name: /Avvist av NAV/ })).toBeInTheDocument();
     });
 });

@@ -1,7 +1,8 @@
 import { Office2 } from '@navikt/ds-icons';
 
+import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated';
+import { arbeidsrelatertArsakToText, medisinskArsakToText } from '../../../../../utils/periodeUtils';
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { AktivitetIkkeMuligPeriode } from '../../../../../models/Sykmelding/Periode';
 import ListEntry from '../../Layout/ListEntry/ListEntry';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
 
@@ -24,7 +25,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                         <ListEntry
                             listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.medisinskArsak.arsak}
+                            listText={aktivitetIkkeMulig.medisinskArsak.arsak.map(medisinskArsakToText)}
                             headingLevel="4"
                         />
                     )}
@@ -42,7 +43,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
                         <ListEntry
                             listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak}
+                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}
                             headingLevel="4"
                         />
                     )}

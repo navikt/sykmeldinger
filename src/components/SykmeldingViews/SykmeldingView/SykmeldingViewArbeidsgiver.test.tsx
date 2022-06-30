@@ -1,27 +1,27 @@
 import { render, screen } from '@testing-library/react';
 
-import { Sykmelding, SykmeldingSchema } from '../../../models/Sykmelding/Sykmelding';
-import { Periodetype } from '../../../models/Sykmelding/Periode';
-import { RegelStatus } from '../../../models/Sykmelding/Behandlingsutfall';
-import { StatusEvent } from '../../../models/Sykmelding/SykmeldingStatus';
+import { Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../../../fetching/graphql.generated';
 
 import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver';
 
 const minimalSykmelding: Sykmelding = {
+    __typename: 'Sykmelding',
     id: '123',
     mottattTidspunkt: '2020-01-10',
     behandlingsutfall: {
-        status: RegelStatus.OK,
+        __typename: 'Behandlingsutfall',
+        status: RegelStatus.Ok,
         ruleHits: [],
     },
     legekontorOrgnummer: null,
     arbeidsgiver: null,
     sykmeldingsperioder: [
         {
+            __typename: 'Periode',
             fom: '2020-02-10',
             tom: '2020-02-15',
             behandlingsdager: 2,
-            type: Periodetype.BEHANDLINGSDAGER,
+            type: Periodetype.Behandlingsdager,
             reisetilskudd: false,
             gradert: null,
             innspillTilArbeidsgiver: null,
@@ -29,8 +29,9 @@ const minimalSykmelding: Sykmelding = {
         },
     ],
     sykmeldingStatus: {
+        __typename: 'SykmeldingStatus',
         timestamp: '2020-01-01',
-        statusEvent: StatusEvent.APEN,
+        statusEvent: StatusEvent.Apen,
         sporsmalOgSvarListe: [],
         arbeidsgiver: null,
     },
@@ -44,15 +45,18 @@ const minimalSykmelding: Sykmelding = {
     meldingTilNAV: null,
     meldingTilArbeidsgiver: null,
     kontaktMedPasient: {
+        __typename: 'KontaktMedPasient',
         kontaktDato: '2020-04-01',
         begrunnelseIkkeKontakt: 'Han var kjempesyk',
     },
     behandletTidspunkt: '2020-01-01',
     behandler: {
+        __typename: 'Behandler',
         fornavn: 'Frida',
         mellomnavn: 'Perma',
         etternavn: 'Frost',
         adresse: {
+            __typename: 'Adresse',
             gate: null,
             postnummer: null,
             kommune: null,
@@ -68,6 +72,7 @@ const minimalSykmelding: Sykmelding = {
     harRedusertArbeidsgiverperiode: null,
     merknader: null,
     pasient: {
+        __typename: 'Pasient',
         fnr: '123456789',
         fornavn: null,
         mellomnavn: null,
@@ -76,10 +81,8 @@ const minimalSykmelding: Sykmelding = {
 };
 
 describe('SykmeldingViewArbeidsgiver', () => {
-    const sykmelding = SykmeldingSchema.parse(minimalSykmelding);
-
     it('Behandler should use correct name correctly formatted', () => {
-        render(<SykmeldingViewArbeidsgiver sykmelding={sykmelding} />);
+        render(<SykmeldingViewArbeidsgiver sykmelding={minimalSykmelding} />);
 
         // eslint-disable-next-line testing-library/no-node-access
         expect(screen.getByText(/Behandler/).parentElement).toHaveTextContent(/Frida Perma Frost/);

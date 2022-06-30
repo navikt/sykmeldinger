@@ -1,36 +1,38 @@
-import nock from 'nock';
 import userEvent from '@testing-library/user-event';
 import mockRouter from 'next-router-mock';
 
-import { sykmeldingApen } from '../../../utils/test/mockData/sykmelding-apen';
 import { render, screen, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
 import SykmeldingPage from '../index.page';
+import { createMock, createSykmelding } from '../../../utils/test/dataUtils';
+import { SykmeldingDocument, SykmeldingerDocument } from '../../../fetching/graphql.generated';
+
+import { createExtraFormDataMock } from './mockUtils';
 
 describe('Uriktige opplysninger', () => {
-    const apiNock = nock('http://localhost');
-
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/${sykmeldingApen().id}`);
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).times(1).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
-            arbeidsgivere: [],
-            strengtFortroligAdresse: false,
-        });
-        apiNock
-            .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
-            .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
+        mockRouter.setCurrentUrl(`/sykmelding-id`);
     });
 
+    const baseMocks = [
+        createMock({
+            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            result: { data: { __typename: 'Query', sykmelding: createSykmelding({ id: 'sykmelding-id' }) } },
+        }),
+        createMock({
+            request: { query: SykmeldingerDocument },
+            result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
+        }),
+    ];
+
     it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
         expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
     });
 
     it('should show error message when periode is wrong', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Periode' }));
@@ -41,7 +43,7 @@ describe('Uriktige opplysninger', () => {
     });
 
     it('should show error message when sykmeldingsgrad is to low', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for lav' }));
@@ -52,7 +54,7 @@ describe('Uriktige opplysninger', () => {
     });
 
     it('should be able to continue when sykmeldingsgrad is too high', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for høy' }));
@@ -66,7 +68,7 @@ describe('Uriktige opplysninger', () => {
     });
 
     it('should be able to continue when arbeidsgiver is wrong', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Arbeidsgiver' }));
@@ -80,7 +82,7 @@ describe('Uriktige opplysninger', () => {
     });
 
     it('should be able to continue when diagnose is wrong', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Diagnose' }));
@@ -94,7 +96,7 @@ describe('Uriktige opplysninger', () => {
     });
 
     it('should be able to continue when andre opplysninger is wrong', async () => {
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Andre opplysninger' }));

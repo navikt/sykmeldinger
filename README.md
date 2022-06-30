@@ -11,9 +11,27 @@ Lever under:
 Tekniske valg:
 
 -   NextJS
--   React-query for håndtering av server state.
+-   apollo-server for GraphQL API.
+-   apollo-client for håndtering av fetching og server state.
 -   zod for validering av "ukjent" data fra diverse API.
 -   react-testing-library for enhetstesting av enkeltkomponenter.
+
+Data-flyt:
+
+```mermaid
+graph TD
+  browser[Browser] --> apollo
+  subgraph next[NextJS App]
+    apollo[Apollo Server] --> gql
+    gql[GraphQL resolvers] --> ss.ts & fs.ts
+  end
+  ss.ts[sykmeldingerService.ts] --> sb
+  fs.ts[flesService.ts] --> fg
+  subgraph ext[External Services]
+    sb[sykmeldinger-backend]
+    fg[flex-gateway]
+  end
+```
 
 ## Kjør lokalt
 

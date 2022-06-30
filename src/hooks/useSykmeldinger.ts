@@ -1,29 +1,25 @@
-import { useQuery, UseQueryResult } from 'react-query';
-import { z } from 'zod';
+import { QueryResult, useApolloClient, useQuery } from '@apollo/client';
 
-import { Sykmelding, SykmeldingSchema } from '../models/Sykmelding/Sykmelding';
-import { getPublicEnv } from '../utils/env';
-import { authenticatedGet } from '../utils/Fetch';
-import { logger } from '../utils/logger';
+import {
+    SykmeldingDocument,
+    SykmeldingerDocument,
+    SykmeldingerQuery,
+    SykmeldingerQueryVariables,
+} from '../fetching/graphql.generated';
 
-const publicEnv = getPublicEnv();
-
-function useSykmeldinger(): UseQueryResult<Sykmelding[], Error> {
-    return useQuery(
-        'sykmeldinger',
-        () =>
-            authenticatedGet(`${publicEnv.publicPath}/api/proxy/v1/sykmeldinger`, async (maybeSykmeldinger) => {
-                const sykmeldinger = z.array(SykmeldingSchema).safeParse(maybeSykmeldinger);
-
-                if (!sykmeldinger.success) {
-                    logger.error(sykmeldinger.error.message);
-                    throw new Error('Unable to parse sykmeldinger');
-                }
-
-                return sykmeldinger.data;
-            }),
-        { refetchOnWindowFocus: true },
-    );
+export function useSykmeldinger(): QueryResult<SykmeldingerQuery, SykmeldingerQueryVariables> {
+    const client = useApolloClient();
+    return useQuery(SykmeldingerDocument, {
+        onCompleted: (result) => {
+            result.sykmeldinger?.forEach((sykmelding) => {
+                client.writeQuery({
+                    query: SykmeldingDocument,
+                    variables: { id: sykmelding.id },
+                    data: { __typename: 'Query', sykmelding },
+                });
+            });
+        },
+    });
 }
 
 export default useSykmeldinger;

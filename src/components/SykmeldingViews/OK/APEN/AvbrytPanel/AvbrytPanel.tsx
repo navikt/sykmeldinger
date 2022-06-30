@@ -5,10 +5,11 @@ import { Button, Loader } from '@navikt/ds-react';
 import { Close } from '@navikt/ds-icons';
 
 import { AvbrytContext } from '../AvbrytContext';
-import useAvbryt from '../../../../../hooks/useAvbryt';
 import Spacing from '../../../../Spacing/Spacing';
 import CenterItems from '../../../../CenterItems/CenterItems';
 import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam';
+import { useChangeSykmeldingStatus } from '../../../../../hooks/useMutations';
+import { SykmeldingChangeStatus } from '../../../../../fetching/graphql.generated';
 
 import styles from './AvbrytPanel.module.css';
 
@@ -21,7 +22,7 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
 
     const avbrytPanelRef = useRef<HTMLDivElement>(null);
 
-    const { isLoading, mutate: avbryt, error } = useAvbryt(sykmeldingId);
+    const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(sykmeldingId, SykmeldingChangeStatus.Avbryt);
 
     if (maAvbryte) {
         return (
@@ -36,15 +37,15 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
                     variant="danger"
                     className={styles.avbrytPanelAvbrytKnapp}
                     onClick={() => avbryt()}
-                    disabled={isLoading}
+                    disabled={loading}
                 >
-                    Avbryt sykmelding {isLoading && <Loader />}
+                    Avbryt sykmelding {loading && <Loader />}
                 </Button>
 
                 {error && (
                     <Spacing direction="top">
                         <AlertStripeFeil role="alert" aria-live="polite">
-                            {error.message}
+                            En feil oppsto som som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
                         </AlertStripeFeil>
                     </Spacing>
                 )}
@@ -85,8 +86,8 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
                     <Normaltekst className={styles.avbrytPanelErDuSikker}>
                         Er du sikker på at du vil avbryte sykmeldingen?
                     </Normaltekst>
-                    <Button className={styles.bold} variant="danger" onClick={() => avbryt()} disabled={isLoading}>
-                        Ja, jeg er sikker {isLoading && <Loader />}
+                    <Button className={styles.bold} variant="danger" onClick={() => avbryt()} disabled={loading}>
+                        Ja, jeg er sikker {loading && <Loader />}
                     </Button>
 
                     {error && (

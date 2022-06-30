@@ -1,22 +1,24 @@
 import { render, screen } from '@testing-library/react';
 
-import { BehandlingsutfallSchema, Behandlingsutfall, RegelStatus } from '../../models/Sykmelding/Behandlingsutfall';
+import { Behandlingsutfall, RegelStatus } from '../../fetching/graphql.generated';
 
 import AvvistVeileder from './AvvistVeileder';
 
 describe('AvvistVeileder', () => {
     it('Renders custom message if the therapist is missing authorization', () => {
-        const behandlingsutfall: Behandlingsutfall = BehandlingsutfallSchema.parse({
-            status: RegelStatus.INVALID,
+        const behandlingsutfall: Behandlingsutfall = {
+            __typename: 'Behandlingsutfall',
+            status: RegelStatus.Invalid,
             ruleHits: [
                 {
+                    __typename: 'RegelInfo',
                     messageForSender: '',
                     messageForUser: '',
                     ruleName: 'BEHANDLER_MANGLER_AUTORISASJON_I_HPR',
-                    ruleStatus: RegelStatus.INVALID,
+                    ruleStatus: RegelStatus.Invalid,
                 },
             ],
-        });
+        };
 
         render(<AvvistVeileder behandlerNavn={'Doktor Legesen'} behandlingsutfall={behandlingsutfall} />);
 
@@ -24,17 +26,19 @@ describe('AvvistVeileder', () => {
     });
 
     it('Renders custom message for people over 70', () => {
-        const behandlingsutfall: Behandlingsutfall = BehandlingsutfallSchema.parse({
-            status: RegelStatus.INVALID,
+        const behandlingsutfall: Behandlingsutfall = {
+            __typename: 'Behandlingsutfall',
+            status: RegelStatus.Invalid,
             ruleHits: [
                 {
+                    __typename: 'RegelInfo',
                     messageForSender: '',
                     messageForUser: '',
                     ruleName: 'PASIENT_ELDRE_ENN_70',
-                    ruleStatus: RegelStatus.INVALID,
+                    ruleStatus: RegelStatus.Invalid,
                 },
             ],
-        });
+        };
         render(<AvvistVeileder behandlerNavn={'Doktor Legesen'} behandlingsutfall={behandlingsutfall} />);
 
         expect(screen.getByText('Sykmeldingen kan dessverre ikke brukes')).toBeInTheDocument();
@@ -42,17 +46,19 @@ describe('AvvistVeileder', () => {
     });
 
     it('Renders custom message if z diagnose', () => {
-        const behandlingsutfall: Behandlingsutfall = BehandlingsutfallSchema.parse({
-            status: RegelStatus.INVALID,
+        const behandlingsutfall: Behandlingsutfall = {
+            __typename: 'Behandlingsutfall',
+            status: RegelStatus.Invalid,
             ruleHits: [
                 {
+                    __typename: 'RegelInfo',
                     messageForSender: '',
                     messageForUser: '',
                     ruleName: 'ICPC_2_Z_DIAGNOSE',
-                    ruleStatus: RegelStatus.INVALID,
+                    ruleStatus: RegelStatus.Invalid,
                 },
             ],
-        });
+        };
         render(<AvvistVeileder behandlerNavn={'Doktor Legesen'} behandlingsutfall={behandlingsutfall} />);
 
         expect(
@@ -61,17 +67,19 @@ describe('AvvistVeileder', () => {
     });
 
     it('Renders normal message for other rulehits', () => {
-        const behandlingsutfall: Behandlingsutfall = BehandlingsutfallSchema.parse({
-            status: RegelStatus.INVALID,
+        const behandlingsutfall: Behandlingsutfall = {
+            __typename: 'Behandlingsutfall',
+            status: RegelStatus.Invalid,
             ruleHits: [
                 {
+                    __typename: 'RegelInfo',
                     messageForSender: '',
                     messageForUser: 'Dessverre avvist',
                     ruleName: 'SOMETHING_ELSE',
-                    ruleStatus: RegelStatus.INVALID,
+                    ruleStatus: RegelStatus.Invalid,
                 },
             ],
-        });
+        };
         render(<AvvistVeileder behandlerNavn={'Doktor Legesen'} behandlingsutfall={behandlingsutfall} />);
 
         expect(screen.getByText('Sykmeldingen kan dessverre ikke brukes')).toBeInTheDocument();

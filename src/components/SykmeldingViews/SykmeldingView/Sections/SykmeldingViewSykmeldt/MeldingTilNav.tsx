@@ -1,6 +1,6 @@
 import { PeopleDialogOutline } from '@navikt/ds-icons';
 
-import { MeldingTilNAV } from '../../../../../models/Sykmelding/MeldingTilNav';
+import { MeldingTilNav } from '../../../../../fetching/graphql.generated';
 import JaEntry from '../../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
@@ -8,7 +8,7 @@ import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
 import styles from './MeldingTilNav.module.css';
 
 interface Props {
-    meldingTilNav?: MeldingTilNAV | null;
+    meldingTilNav?: MeldingTilNav | null;
 }
 
 function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {

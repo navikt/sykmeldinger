@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
-import useAvbryt from '../../../../hooks/useAvbryt';
 import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
+import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
+import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 
 function PapirInfoheader(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
-    const { isLoading, mutate: avbryt, error } = useAvbryt(sykmeldingId);
-
+    const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(sykmeldingId, SykmeldingChangeStatus.Avbryt);
     const [harGittVidere, setHarGittVidere] = useState<boolean | undefined>(undefined);
 
     return (
@@ -53,13 +53,15 @@ function PapirInfoheader(): JSX.Element {
                         </AlertStripeInfo>
                     </Spacing>
 
-                    <Knapp spinner={isLoading} onClick={() => avbryt()}>
+                    <Knapp spinner={loading} onClick={() => avbryt()}>
                         Avbryt sykmeldingen
                     </Knapp>
 
                     {error && (
                         <Spacing direction="top">
-                            <AlertStripeFeil>{error.message}</AlertStripeFeil>
+                            <AlertStripeFeil>
+                                En feil oppstod som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
+                            </AlertStripeFeil>
                         </Spacing>
                     )}
                 </Spacing>

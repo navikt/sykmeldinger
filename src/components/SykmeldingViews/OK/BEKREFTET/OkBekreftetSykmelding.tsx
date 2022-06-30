@@ -2,13 +2,13 @@ import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
-import useGjenapne from '../../../../hooks/useGjenapne';
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
 import StatusBanner from '../../../StatusBanner/StatusBanner';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
+import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -17,7 +17,7 @@ interface OkBekreftetSykmeldingProps {
 const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmelding }) => {
     useHotjarTrigger('SYKMELDING_OK_BEKREFTET');
     const sykmeldingId = useGetSykmeldingIdParam();
-    const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
+    const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(sykmeldingId, SykmeldingChangeStatus.Gjenapne);
 
     return (
         <div className="sykmelding-container">
@@ -33,7 +33,7 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                 <div className="hide-on-print">
                     <Spacing>
                         <Spacing amount="small">
-                            <Knapp mini spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
+                            <Knapp mini spinner={loading} disabled={loading} onClick={() => gjenapne()}>
                                 <svg
                                     width="17"
                                     height="18"
@@ -53,7 +53,7 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                         </Spacing>
                         {error && (
                             <AlertStripeFeil role="alert" aria-live="polite">
-                                {error.message}
+                                En feil oppstod som gjorde at sykmeldingen ikke kunne gjenapnes. Prøv igjen senere.
                             </AlertStripeFeil>
                         )}
                     </Spacing>

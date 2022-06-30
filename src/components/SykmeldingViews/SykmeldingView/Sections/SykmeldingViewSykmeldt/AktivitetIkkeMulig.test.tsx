@@ -2,25 +2,27 @@ import { render, screen } from '@testing-library/react';
 
 import {
     AktivitetIkkeMuligPeriode,
-    AktivitetIkkeMuligPeriodeSchema,
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
-} from '../../../../../models/Sykmelding/Periode';
+} from '../../../../../fetching/graphql.generated';
 
 import AktivitetIkkeMulig from './AktivitetIkkeMulig';
 
 describe('AktivitetIkkeMulig', () => {
     it('Renders aktivitet ikke mulig periode with specified medisinsk- and arbeidsrelatert arsak', () => {
-        const periode: AktivitetIkkeMuligPeriode = AktivitetIkkeMuligPeriodeSchema.parse({
+        const periode: AktivitetIkkeMuligPeriode = {
+            __typename: 'AktivitetIkkeMuligPeriode',
             medisinskArsak: {
+                __typename: 'MedisinskArsak',
                 beskrivelse: 'medisinsk beskrivelse',
-                arsak: [MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET],
+                arsak: [MedisinskArsakType.TilstandHindrerAktivitet],
             },
             arbeidsrelatertArsak: {
+                __typename: 'ArbeidsrelatertArsak',
                 beskrivelse: 'arbeidsrelatert beskrivelse',
-                arsak: [ArbeidsrelatertArsakType.MANGLENDE_TILRETTELEGGING],
+                arsak: [ArbeidsrelatertArsakType.ManglendeTilrettelegging],
             },
-        });
+        };
 
         render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} />);
 

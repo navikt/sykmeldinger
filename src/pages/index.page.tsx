@@ -10,7 +10,6 @@ import useSykmeldinger from '../hooks/useSykmeldinger';
 import useHotjarTrigger from '../hooks/useHotjarTrigger';
 import Spacing from '../components/Spacing/Spacing';
 import { logger } from '../utils/logger';
-import { Sykmelding } from '../models/Sykmelding/Sykmelding';
 import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
 import { isActiveSykmelding } from '../utils/sykmeldingUtils';
 import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel';
@@ -19,13 +18,14 @@ import Brodsmuler from '../components/Breadcrumbs/Breadcrumbs';
 import TilHovedsiden from '../components/TilHovedsiden/TilHovedsiden';
 import { withAuthenticatedPage } from '../auth/withAuthentication';
 import PageWrapper from '../components/PageWrapper/PageWrapper';
+import { SykmeldingFragment } from '../fetching/graphql.generated';
 
 const SykmeldingerPage: React.FC = () => {
     useHotjarTrigger('SYKMELDING_LISTEVISNING');
 
-    const { isLoading, error, data: sykmeldinger } = useSykmeldinger();
+    const { data, error, loading } = useSykmeldinger();
 
-    if (isLoading) {
+    if (loading) {
         return (
             <Spacing>
                 <Spinner headline="Henter dine sykmeldinger" />
@@ -37,12 +37,12 @@ const SykmeldingerPage: React.FC = () => {
         return (
             <IndexWrapper>
                 <AlertStripeAdvarsel role="alert" aria-live="polite">
-                    {error.message}
+                    Vi har problemer med baksystemene for øyeblikket.
                 </AlertStripeAdvarsel>
             </IndexWrapper>
         );
     }
-    if (sykmeldinger === undefined) {
+    if (data?.sykmeldinger == null) {
         logger.error('Sykmeldinger is undefined');
         return (
             <IndexWrapper>
@@ -53,7 +53,7 @@ const SykmeldingerPage: React.FC = () => {
         );
     }
 
-    const { apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(sykmeldinger);
+    const { apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(data.sykmeldinger);
 
     return (
         <IndexWrapper>
@@ -105,9 +105,9 @@ function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
     );
 }
 
-function filterSykmeldinger(sykmeldinger: Sykmelding[]): {
-    apenSykmeldinger: Sykmelding[];
-    pastSykmeldinger: Sykmelding[];
+function filterSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]): {
+    apenSykmeldinger: SykmeldingFragment[];
+    pastSykmeldinger: SykmeldingFragment[];
 } {
     const apenSykmeldinger = sykmeldinger.filter((sykmelding) => isActiveSykmelding(sykmelding));
     const pastSykmeldinger = sykmeldinger.filter((sykmelding) => !isActiveSykmelding(sykmelding));

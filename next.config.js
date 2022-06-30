@@ -1,5 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const { withSentryConfig } = require('@sentry/nextjs');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+});
 
 /**
  * @type {@sentry/nextjs.SentryWebpackPluginOptions}
@@ -11,7 +15,7 @@ const sentryWebpackPluginOptions = {
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig = {
+const nextConfig = withBundleAnalyzer({
     reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
@@ -34,7 +38,7 @@ const nextConfig = {
         SYKEFRAVAER_ROOT: process.env.SYKEFRAVAER_ROOT,
         DITT_NAV_ROOT: process.env.DITT_NAV_ROOT,
     },
-};
+});
 
 module.exports =
     process.env.SENTRY_ENABLED === 'true' ? withSentryConfig(nextConfig, sentryWebpackPluginOptions) : nextConfig;

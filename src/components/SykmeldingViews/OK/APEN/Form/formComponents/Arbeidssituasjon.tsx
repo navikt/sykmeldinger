@@ -6,11 +6,13 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 
 import { FormShape, ArbeidssituasjonType } from '../Form';
-import { Brukerinformasjon } from '../../../../../../models/Brukerinformasjon';
+import {
+    BrukerinformasjonFragment,
+    SykmeldingUtenforVentetidFragment,
+} from '../../../../../../fetching/graphql.generated';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Spacing from '../../../../../Spacing/Spacing';
 import Ekspanderbar from '../../../../../Ekspanderbar/Ekspanderbar';
-import { ErUtenforVentetid } from '../../../../../../models/ErUtenforVentetid';
 
 import HarForsikring from './HarForsikring';
 import HarBruktEgenmelding from './HarBruktEgenmelding';
@@ -33,8 +35,8 @@ const StrengtFortroligInfo = (): JSX.Element => (
 
 interface ArbeidssituasjonProps {
     harAvventendePeriode: boolean;
-    erUtenforVentetid: ErUtenforVentetid;
-    brukerinformasjon: Brukerinformasjon;
+    erUtenforVentetid: SykmeldingUtenforVentetidFragment;
+    brukerinformasjon: BrukerinformasjonFragment;
     sykmeldingFom: string;
 }
 

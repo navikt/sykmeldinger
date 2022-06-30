@@ -1,6 +1,6 @@
 import { Historic } from '@navikt/ds-icons';
 
-import { Prognose } from '../../../../../models/Sykmelding/Prognose';
+import { Prognose } from '../../../../../fetching/graphql.generated';
 import { toReadableDate } from '../../../../../utils/dateUtils';
 import JaEntry from '../../Layout/JaEntry/JaEntry';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';

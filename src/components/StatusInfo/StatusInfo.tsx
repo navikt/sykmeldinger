@@ -2,11 +2,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Lenke from 'nav-frontend-lenker';
 
-import { Periode, Periodetype } from '../../models/Sykmelding/Periode';
-import { SykmeldingStatus } from '../../models/Sykmelding/SykmeldingStatus';
+import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated';
 import Spacing from '../Spacing/Spacing';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
-import { Merknad } from '../../models/Sykmelding/Merknad';
 import { Merknadtype } from '../InformationBanner/InformationBanner';
 import { getPublicEnv } from '../../utils/env';
 
@@ -16,8 +14,8 @@ const publicEnv = getPublicEnv();
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatus;
-    sykmeldingsperioder: Periode[];
-    sykmeldingMerknader: Merknad[];
+    sykmeldingsperioder: readonly Periode[];
+    sykmeldingMerknader: readonly Merknad[];
 }
 
 function StatusInfo({
@@ -25,7 +23,7 @@ function StatusInfo({
     sykmeldingsperioder,
     sykmeldingMerknader,
 }: StatusInfoProps): JSX.Element | null {
-    const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.AVVENTENDE);
+    const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.Avventende);
 
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
         (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,

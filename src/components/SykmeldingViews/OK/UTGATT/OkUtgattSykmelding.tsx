@@ -2,7 +2,7 @@ import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import { Sykmelding } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import { toReadableDate } from '../../../../utils/dateUtils';

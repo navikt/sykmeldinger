@@ -1,82 +1,54 @@
-import { z } from 'zod';
 import dayjs from 'dayjs';
 
-import { LocalDateSchema } from '../date';
+import { ArbeidsrelatertArsakType, MedisinskArsakType, Periode, Periodetype } from '../fetching/graphql.generated';
+import { AnnenFraverGrunn } from '../server/graphql/resolver-types.generated';
 
-export enum Periodetype {
-    AKTIVITET_IKKE_MULIG = 'AKTIVITET_IKKE_MULIG',
-    AVVENTENDE = 'AVVENTENDE',
-    BEHANDLINGSDAGER = 'BEHANDLINGSDAGER',
-    GRADERT = 'GRADERT',
-    REISETILSKUDD = 'REISETILSKUDD',
-}
-
-const GradertPeriodeSchema = z.object({
-    grad: z.number(),
-    reisetilskudd: z.boolean(),
-});
-
-export enum MedisinskArsakType {
-    TILSTAND_HINDRER_AKTIVITET = 'TILSTAND_HINDRER_AKTIVITET',
-    AKTIVITET_FORVERRER_TILSTAND = 'AKTIVITET_FORVERRER_TILSTAND',
-    AKTIVITET_FORHINDRER_BEDRING = 'AKTIVITET_FORHINDRER_BEDRING',
-    ANNET = 'ANNET',
-}
-
-function medisinskArsakToText(value: MedisinskArsakType): string {
+export function medisinskArsakToText(value: MedisinskArsakType): string {
     switch (value) {
-        case MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET:
+        case MedisinskArsakType.TilstandHindrerAktivitet:
             return 'Helsetilstanden hindrer pasienten i å være i aktivitet';
-        case MedisinskArsakType.AKTIVITET_FORVERRER_TILSTAND:
+        case MedisinskArsakType.AktivitetForverrerTilstand:
             return 'Aktivitet vil forverre helsetilstanden';
-        case MedisinskArsakType.AKTIVITET_FORHINDRER_BEDRING:
+        case MedisinskArsakType.AktivitetForhindrerBedring:
             return 'Aktivitet vil hindre/forsinke bedring av helsetilstanden';
-        case MedisinskArsakType.ANNET:
+        case MedisinskArsakType.Annet:
             return 'Annet';
     }
 }
 
-const MedisinskArsakSchema = z.object({
-    beskrivelse: z.string().nullable(),
-    arsak: z.array(z.nativeEnum(MedisinskArsakType).transform(medisinskArsakToText)),
-});
-
-export enum ArbeidsrelatertArsakType {
-    MANGLENDE_TILRETTELEGGING = 'MANGLENDE_TILRETTELEGGING',
-    ANNET = 'ANNET',
-}
-
-function arbeidsrelatertArsakToText(value: ArbeidsrelatertArsakType): string {
+export function arbeidsrelatertArsakToText(value: ArbeidsrelatertArsakType): string {
     switch (value) {
-        case ArbeidsrelatertArsakType.MANGLENDE_TILRETTELEGGING:
+        case ArbeidsrelatertArsakType.ManglendeTilrettelegging:
             return 'Manglende tilrettelegging på arbeidsplassen';
-        case ArbeidsrelatertArsakType.ANNET:
+        case ArbeidsrelatertArsakType.Annet:
             return 'Annet';
     }
 }
 
-const ArbeidsrelatertArsakSchema = z.object({
-    beskrivelse: z.string().nullable(),
-    arsak: z.array(z.nativeEnum(ArbeidsrelatertArsakType).transform(arbeidsrelatertArsakToText)),
-});
-
-export type AktivitetIkkeMuligPeriode = z.infer<typeof AktivitetIkkeMuligPeriodeSchema>;
-export const AktivitetIkkeMuligPeriodeSchema = z.object({
-    medisinskArsak: MedisinskArsakSchema.nullable(),
-    arbeidsrelatertArsak: ArbeidsrelatertArsakSchema.nullable(),
-});
-
-export type Periode = z.infer<typeof PeriodeSchema>;
-export const PeriodeSchema = z.object({
-    fom: LocalDateSchema,
-    tom: LocalDateSchema,
-    gradert: GradertPeriodeSchema.nullable(),
-    behandlingsdager: z.number().nullable(),
-    innspillTilArbeidsgiver: z.string().nullable(),
-    type: z.nativeEnum(Periodetype),
-    aktivitetIkkeMulig: AktivitetIkkeMuligPeriodeSchema.nullable(),
-    reisetilskudd: z.boolean(),
-});
+export function annenFraverGrunnToText(value: AnnenFraverGrunn): string {
+    switch (value) {
+        case AnnenFraverGrunn.GodkjentHelseinstitusjon:
+            return 'Når vedkommende er innlagt i en godkjent helseinstitusjon';
+        case AnnenFraverGrunn.BehandlingForhindrerArbeid:
+            return 'Når vedkommende er under behandling og legen erklærer at behandlingen gjør det nødvendig at vedkommende ikke arbeider';
+        case AnnenFraverGrunn.ArbeidsrettetTiltak:
+            return 'Når vedkommende deltar på et arbeidsrettet tiltak';
+        case AnnenFraverGrunn.MottarTilskuddGrunnetHelsetilstand:
+            return 'Når vedkommende på grunn av sykdom, skade eller lyte får tilskott når vedkommende på grunn av sykdom, skade eller lyte får tilskott';
+        case AnnenFraverGrunn.NodvendigKontrollundenrsokelse:
+            return 'Når vedkommende er til nødvendig kontrollundersøkelse som krever minst 24 timers fravær, reisetid medregnet';
+        case AnnenFraverGrunn.Smittefare:
+            return 'Når vedkommende myndighet har nedlagt forbud mot at han eller hun arbeider på grunn av smittefare';
+        case AnnenFraverGrunn.Abort:
+            return 'Når vedkommende er arbeidsufør som følge av svangerskapsavbrudd';
+        case AnnenFraverGrunn.UforGrunnetBarnloshet:
+            return 'Når vedkommende er arbeidsufør som følge av behandling for barnløshet';
+        case AnnenFraverGrunn.Donor:
+            return 'Når vedkommende er donor eller er under vurdering som donor';
+        case AnnenFraverGrunn.BehandlingSterilisering:
+            return 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering';
+    }
+}
 
 /**
  * Get a text representation of the period type
@@ -84,15 +56,15 @@ export const PeriodeSchema = z.object({
  */
 export function getPeriodTitle(period: Periode): string {
     switch (period.type) {
-        case Periodetype.AVVENTENDE:
+        case Periodetype.Avventende:
             return 'Avventende sykmelding';
-        case Periodetype.AKTIVITET_IKKE_MULIG:
+        case Periodetype.AktivitetIkkeMulig:
             return '100% sykmelding';
-        case Periodetype.GRADERT:
+        case Periodetype.Gradert:
             return `${period.gradert?.grad}% sykmelding`;
-        case Periodetype.REISETILSKUDD:
+        case Periodetype.Reisetilskudd:
             return 'Reisetilskudd';
-        case Periodetype.BEHANDLINGSDAGER:
+        case Periodetype.Behandlingsdager:
             return 'Behandlingsdager';
     }
 }
@@ -131,7 +103,7 @@ export function getLength(period: Periode): number {
  */
 export function getReadableLength(period: Periode): string {
     const length = getLength(period);
-    if (period.type === Periodetype.BEHANDLINGSDAGER) {
+    if (period.type === Periodetype.Behandlingsdager) {
         return `${period.behandlingsdager} behandlingsdag${
             period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
         } i løpet av ${length} dag${length > 1 ? 'er' : ''}`;
@@ -147,21 +119,21 @@ export function getDescription(period: Periode, arbeidsgiverNavn?: string): stri
     const periodLength = getLength(period);
 
     switch (period.type) {
-        case Periodetype.AKTIVITET_IKKE_MULIG:
+        case Periodetype.AktivitetIkkeMulig:
             return `100% sykmeldt${arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''} i ${periodLength} dag${
                 periodLength > 1 ? 'er' : ''
             }`;
-        case Periodetype.GRADERT:
+        case Periodetype.Gradert:
             return `${period.gradert?.grad}% sykmeldt${
                 arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''
             } i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
-        case Periodetype.BEHANDLINGSDAGER:
+        case Periodetype.Behandlingsdager:
             return `${period.behandlingsdager} behandlingsdag${
                 period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
             } i løpet av ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
-        case Periodetype.AVVENTENDE:
+        case Periodetype.Avventende:
             return `Avventende sykmelding i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
-        case Periodetype.REISETILSKUDD:
+        case Periodetype.Reisetilskudd:
             return `Reisetilskudd i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`;
         default:
             return '';

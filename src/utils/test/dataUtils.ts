@@ -1,21 +1,40 @@
-import { formatISO, sub } from 'date-fns';
+import { MockedResponse } from '@apollo/client/testing';
+import { TypedDocumentNode } from '@apollo/client';
+import { FetchResult } from '@apollo/client/link/core';
+import { ResultFunction } from '@apollo/client/testing/core/mocking/mockLink';
 
-import { Sykmelding } from '../../../models/Sykmelding/Sykmelding';
-import { RegelStatus } from '../../../models/Sykmelding/Behandlingsutfall';
-import { ArbeidsrelatertArsakType, MedisinskArsakType, Periodetype } from '../../../models/Sykmelding/Periode';
-import { StatusEvent } from '../../../models/Sykmelding/SykmeldingStatus';
-import { AnnenFraverGrunn } from '../../../models/Sykmelding/MedisinskVurdering';
-import { dateAdd } from '../../dateUtils';
+import {
+    AnnenFraverGrunn,
+    ArbeidsrelatertArsakType,
+    MedisinskArsakType,
+    Periodetype,
+    RegelStatus,
+    StatusEvent,
+    Sykmelding,
+} from '../../fetching/graphql.generated';
+import { dateAdd, dateSub } from '../dateUtils';
 
-export function sykmeldingApen(mottatt: string = formatISO(sub(new Date(), { days: 2 })), id = 'APEN'): Sykmelding {
+export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = StatusEvent.Apen): Sykmelding {
+    const mottatt = overrides?.mottattTidspunkt ?? dateSub(new Date(), { days: 2 });
+
     return {
-        id,
+        __typename: 'Sykmelding',
+        id: 'test-sykmelding',
         mottattTidspunkt: mottatt,
+        sykmeldingStatus: {
+            __typename: 'SykmeldingStatus',
+            timestamp: mottatt,
+            statusEvent,
+            sporsmalOgSvarListe: [],
+            arbeidsgiver: null,
+        },
         behandlingsutfall: {
-            status: RegelStatus.OK,
+            __typename: 'Behandlingsutfall',
+            status: RegelStatus.Ok,
             ruleHits: [],
         },
         arbeidsgiver: {
+            __typename: 'ArbeidsgiverSykmelding',
             navn: 'Navn Navnesen',
             stillingsprosent: 100,
         },
@@ -24,39 +43,46 @@ export function sykmeldingApen(mottatt: string = formatISO(sub(new Date(), { day
         meldingTilArbeidsgiver: null,
         sykmeldingsperioder: [
             {
+                __typename: 'Periode',
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
                 behandlingsdager: 2,
-                type: Periodetype.BEHANDLINGSDAGER,
+                type: Periodetype.Behandlingsdager,
                 reisetilskudd: false,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
                 aktivitetIkkeMulig: null,
             },
             {
+                __typename: 'Periode',
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
-                type: Periodetype.AKTIVITET_IKKE_MULIG,
+                type: Periodetype.AktivitetIkkeMulig,
                 behandlingsdager: null,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
                 aktivitetIkkeMulig: {
+                    __typename: 'AktivitetIkkeMuligPeriode',
                     medisinskArsak: {
-                        arsak: [MedisinskArsakType.ANNET, MedisinskArsakType.AKTIVITET_FORVERRER_TILSTAND],
+                        __typename: 'MedisinskArsak',
+                        arsak: [MedisinskArsakType.Annet, MedisinskArsakType.AktivitetForverrerTilstand],
                         beskrivelse: 'Dette er en beskrivelse av den medisinske årsaken.',
                     },
                     arbeidsrelatertArsak: {
-                        arsak: [ArbeidsrelatertArsakType.ANNET],
+                        __typename: 'ArbeidsrelatertArsak',
+                        arsak: [ArbeidsrelatertArsakType.Annet],
                         beskrivelse: 'Dette er en beskrivelse av den arbeidsrelaterte årsaken',
                     },
                 },
                 reisetilskudd: false,
             },
             {
+                __typename: 'Periode',
                 fom: dateAdd(mottatt, { days: 6 }),
                 tom: dateAdd(mottatt, { days: 11 }),
-                type: Periodetype.GRADERT,
+                type: Periodetype.Gradert,
                 gradert: {
+                    __typename: 'GradertPeriode',
                     grad: 20,
                     reisetilskudd: false,
                 },
@@ -66,25 +92,23 @@ export function sykmeldingApen(mottatt: string = formatISO(sub(new Date(), { day
                 innspillTilArbeidsgiver: null,
             },
         ],
-        sykmeldingStatus: {
-            timestamp: mottatt,
-            statusEvent: StatusEvent.APEN,
-            sporsmalOgSvarListe: [],
-            arbeidsgiver: null,
-        },
         medisinskVurdering: {
+            __typename: 'MedisinskVurdering',
             hovedDiagnose: {
+                __typename: 'Diagnose',
                 system: '2.16.578.1.12.4.1.1.7170',
                 kode: 'K24',
                 tekst: 'Rar sykdom',
             },
             biDiagnoser: [
                 {
+                    __typename: 'Diagnose',
                     system: '2.16.578.1.12.4.1.1.7170',
                     kode: '-57',
                     tekst: 'Rar sykdom',
                 },
                 {
+                    __typename: 'Diagnose',
                     system: '2.16.578.1.12.4.1.1.7170',
                     kode: '-59',
                     tekst: 'Sykdom0',
@@ -94,12 +118,14 @@ export function sykmeldingApen(mottatt: string = formatISO(sub(new Date(), { day
             yrkesskade: true,
             yrkesskadeDato: '2018-10-18',
             annenFraversArsak: {
+                __typename: 'AnnenFraversArsak',
                 beskrivelse:
                     'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-                grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
+                grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
             },
         },
         prognose: {
+            __typename: 'Prognose',
             arbeidsforEtterPeriode: true,
             hensynArbeidsplassen: 'Du må ta det rolig på jobben',
             erIArbeid: null,
@@ -131,19 +157,23 @@ export function sykmeldingApen(mottatt: string = formatISO(sub(new Date(), { day
         tiltakNAV: 'Tiltak NAV',
         andreTiltak: 'Du må gjøre andre tiltak',
         meldingTilNAV: {
+            __typename: 'MeldingTilNAV',
             bistandUmiddelbart: true,
             beskrivBistand: 'Trenger hjelp med penger',
         },
         kontaktMedPasient: {
+            __typename: 'KontaktMedPasient',
             kontaktDato: '2020-04-01',
             begrunnelseIkkeKontakt: 'Han var kjempesyk',
         },
         behandletTidspunkt: dateAdd(mottatt, { days: 10 }),
         behandler: {
+            __typename: 'Behandler',
             fornavn: 'Fornavn',
             mellomnavn: null,
             etternavn: 'Etternavn',
             adresse: {
+                __typename: 'Adresse',
                 gate: 'Gateveien 4',
                 postnummer: 1001,
                 kommune: 'Oslo',
@@ -158,10 +188,46 @@ export function sykmeldingApen(mottatt: string = formatISO(sub(new Date(), { day
         papirsykmelding: false,
         harRedusertArbeidsgiverperiode: false,
         pasient: {
+            __typename: 'Pasient',
             fnr: '12345678901',
             fornavn: 'Ola',
             mellomnavn: null,
             etternavn: 'Nordmann',
         },
+        ...overrides,
     };
+}
+
+export function createUnderBehandlingMerknad(): Pick<Sykmelding, 'merknader'> {
+    return { merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }] };
+}
+
+export function createAvvistBehandlingsutfall(
+    reason = 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
+): Pick<Sykmelding, 'behandlingsutfall'> {
+    return {
+        behandlingsutfall: {
+            __typename: 'Behandlingsutfall',
+            status: RegelStatus.Invalid,
+            ruleHits: [
+                {
+                    __typename: 'RegelInfo',
+                    messageForSender: reason,
+                    messageForUser: reason,
+                    ruleName: 'tilbakedatering',
+                    ruleStatus: RegelStatus.Invalid,
+                },
+            ],
+        },
+    };
+}
+
+export function createMock<Query, Variables>(mockedResponse: {
+    request: { query: TypedDocumentNode<Query, Variables>; variables?: Variables };
+    result?: FetchResult<Query> | ResultFunction<FetchResult<Query>>;
+    error?: Error;
+    delay?: number;
+    newData?: ResultFunction<FetchResult>;
+}): MockedResponse<Query> {
+    return mockedResponse;
 }

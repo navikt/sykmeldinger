@@ -1,26 +1,29 @@
 import { render, screen } from '@testing-library/react';
 
-import { UtdypendeOpplysning, UtdypendeOpplysningSchema } from '../../../../../models/Sykmelding/UtdypendeOpplysninger';
+import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated';
 
 import UtdypendeOpplysninger from './UtdypendeOpplysninger';
 
 describe('PeriodeView', () => {
     it('Renders utdypende opplysninger', () => {
-        const utdypende: UtdypendeOpplysning = UtdypendeOpplysningSchema.parse({
+        const utdypende: UtdypendeOpplysning = {
+            __typename: 'UtdypendeOpplysning',
             sporsmal: 'dette er det første spørsmålet',
             svar: 'dette er det første svaret',
             restriksjoner: [],
-        });
-        const utdypende2: UtdypendeOpplysning = UtdypendeOpplysningSchema.parse({
+        };
+        const utdypende2: UtdypendeOpplysning = {
+            __typename: 'UtdypendeOpplysning',
             sporsmal: 'dette er det andre spørsmålet',
             svar: 'dette er det andre svaret',
             restriksjoner: [],
-        });
-        const utdypende3: UtdypendeOpplysning = UtdypendeOpplysningSchema.parse({
+        };
+        const utdypende3: UtdypendeOpplysning = {
+            __typename: 'UtdypendeOpplysning',
             sporsmal: 'dette er det tredje spørsmålet',
             svar: 'dette er det tredje svaret',
             restriksjoner: [],
-        });
+        };
 
         const utdypendeOpplysninger: Record<string, Record<string, UtdypendeOpplysning>> = {
             '6.1': {

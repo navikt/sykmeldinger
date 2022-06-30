@@ -4,13 +4,13 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import { FormShape, JaEllerNeiType } from '../Form';
-import { NaermesteLeder } from '../../../../../../models/Arbeidsgiver';
+import { NaermesteLederFragment } from '../../../../../../fetching/graphql.generated';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Spacing from '../../../../../Spacing/Spacing';
 import Ekspanderbar from '../../../../../Ekspanderbar/Ekspanderbar';
 
 interface RiktigNarmesteLederProps {
-    naermesteLeder: NaermesteLeder;
+    naermesteLeder: NaermesteLederFragment;
 }
 
 function RiktigNarmesteLeder({ naermesteLeder }: RiktigNarmesteLederProps): JSX.Element {

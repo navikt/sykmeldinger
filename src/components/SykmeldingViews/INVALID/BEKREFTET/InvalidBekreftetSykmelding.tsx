@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import { Sykmelding } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
 import StatusBanner from '../../../StatusBanner/StatusBanner';
-import { getBehandlerName } from '../../../../models/Sykmelding/Behandler';
+import { getBehandlerName } from '../../../../utils/behandlerUtils';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;

@@ -1,22 +1,24 @@
 import { render, screen } from '@testing-library/react';
 
-import { MedisinskVurderingSchema, MedisinskVurdering } from '../../../../../models/Sykmelding/MedisinskVurdering';
+import { AnnenFraverGrunn, MedisinskVurdering } from '../../../../../fetching/graphql.generated';
 
 import MedisinskTilstand from './MedisinskTilstand';
 
 describe('MedisinskTilstand', () => {
     it('Renders annenFraversArsak if it exits', () => {
-        const medisinskVurdering: MedisinskVurdering = MedisinskVurderingSchema.parse({
+        const medisinskVurdering: MedisinskVurdering = {
+            __typename: 'MedisinskVurdering',
             hovedDiagnose: null,
             biDiagnoser: [],
             annenFraversArsak: {
+                __typename: 'AnnenFraversArsak',
                 beskrivelse: 'Dette er en beskrivelse',
-                grunn: ['DONOR'],
+                grunn: [AnnenFraverGrunn.Donor],
             },
             svangerskap: false,
             yrkesskade: false,
             yrkesskadeDato: null,
-        });
+        };
         render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getByText('Annen lovfestet fraværsgrunn')).toBeInTheDocument();
@@ -27,28 +29,30 @@ describe('MedisinskTilstand', () => {
     });
 
     it('Renders svangerskapsrelatert if it exits', () => {
-        const medisinskVurdering: MedisinskVurdering = MedisinskVurderingSchema.parse({
+        const medisinskVurdering: MedisinskVurdering = {
+            __typename: 'MedisinskVurdering',
             hovedDiagnose: null,
             biDiagnoser: [],
             svangerskap: true,
             yrkesskade: false,
             yrkesskadeDato: null,
             annenFraversArsak: null,
-        });
+        };
         render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getByText('Er sykdommen svangerskapsrelatert?')).toBeInTheDocument();
     });
 
     it('Renders yrkesskade if it exits', () => {
-        const medisinskVurdering: MedisinskVurdering = MedisinskVurderingSchema.parse({
+        const medisinskVurdering: MedisinskVurdering = {
+            __typename: 'MedisinskVurdering',
             hovedDiagnose: null,
             biDiagnoser: [],
             svangerskap: false,
             yrkesskade: true,
             yrkesskadeDato: '2020-04-01',
             annenFraversArsak: null,
-        });
+        };
         render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
 
         expect(screen.getByText('Kan sykdommen skyldes en yrkesskade/yrkessykdom?')).toBeInTheDocument();

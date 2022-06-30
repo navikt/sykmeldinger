@@ -1,15 +1,16 @@
 import { render, screen } from '@testing-library/react';
 
-import { ArbeidsgiverSykmeldingSchema } from '../../../../../models/Sykmelding/ArbeidsgiverSykmelding';
+import { ArbeidsgiverSykmelding } from '../../../../../fetching/graphql.generated';
 
 import ArbeidsgiverView from './ArbeidsgiverView';
 
 describe('ArbeidsgiverView', () => {
     it('Renders arbeidsgiver navn if it exists', () => {
-        const arbeidsgiver = ArbeidsgiverSykmeldingSchema.parse({
+        const arbeidsgiver: ArbeidsgiverSykmelding = {
+            __typename: 'ArbeidsgiverSykmelding',
             navn: 'Arbeidsgiveren AS',
             stillingsprosent: null,
-        });
+        };
 
         render(<ArbeidsgiverView arbeidsgiver={arbeidsgiver} />);
         expect(screen.getByText('Arbeidsgiver')).toBeInTheDocument();

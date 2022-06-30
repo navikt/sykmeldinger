@@ -1,35 +1,35 @@
-import nock from 'nock';
 import mockRouter from 'next-router-mock';
+import { GraphQLError } from 'graphql';
 
 import { render, screen } from '../../utils/test/testUtils';
-import { sykmeldingApen } from '../../utils/test/mockData/sykmelding-apen';
 import { dateSub } from '../../utils/dateUtils';
+import { createMock, createSykmelding } from '../../utils/test/dataUtils';
+import { ExtraFormDataDocument, SykmeldingDocument, SykmeldingerDocument } from '../../fetching/graphql.generated';
 
 import SykmeldingPage from './index.page';
+import { createExtraFormDataMock } from './__test__/mockUtils';
 
 describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
-    const apiNock = nock('http://localhost');
-
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/${sykmeldingApen().id}`);
-    });
-
-    afterEach(() => {
-        nock.cleanAll();
+        mockRouter.setCurrentUrl(`/sykmelding-id`);
     });
 
     it('should display sykmelding and form when all requests are successful', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
-            arbeidsgivere: [],
-            strengtFortroligAdresse: false,
-        });
-        apiNock
-            .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
-            .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
+        const sykmelding = createSykmelding({ id: 'sykmelding-id' });
 
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                    result: { data: { __typename: 'Query', sykmelding: sykmelding } },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
+                }),
+                createExtraFormDataMock(),
+            ],
+        });
 
         expect(await screen.findByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
         expect(await screen.findByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
@@ -39,21 +39,30 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     });
 
     it('should display warning and disable form when there is a unsent sykmelding on a previous date', async () => {
-        const thisSykmelding = sykmeldingApen(dateSub(new Date(), { days: 2 }), 'this-sykmelding');
-        const previousSykmelding = sykmeldingApen(dateSub(new Date(), { days: 30 }), 'previous-sykmelding');
+        const thisSykmelding = createSykmelding({
+            mottattTidspunkt: dateSub(new Date(), { days: 2 }),
+            id: 'this-sykmelding',
+        });
+        const previousSykmelding = createSykmelding({
+            mottattTidspunkt: dateSub(new Date(), { days: 30 }),
+            id: 'previous-sykmelding',
+        });
 
         mockRouter.setCurrentUrl(`/${thisSykmelding.id}`);
 
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [thisSykmelding, previousSykmelding]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${thisSykmelding.id}`).reply(200, thisSykmelding);
-        apiNock
-            .get('/api/proxy/v1/brukerinformasjon')
-            .reply(200, { arbeidsgivere: [], strengtFortroligAdresse: false });
-        apiNock
-            .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${thisSykmelding.id}/erUtenforVentetid`)
-            .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
-
-        render(<SykmeldingPage />);
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingDocument, variables: { id: 'this-sykmelding' } },
+                    result: { data: { __typename: 'Query', sykmelding: thisSykmelding } },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: { data: { __typename: 'Query', sykmeldinger: [thisSykmelding, previousSykmelding] } },
+                }),
+                createExtraFormDataMock({ sykmeldingId: 'this-sykmelding' }),
+            ],
+        });
 
         expect(await screen.findByText('Stemmer opplysningene?')).toBeInTheDocument();
         expect(
@@ -65,47 +74,42 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     });
 
     it('should fail with error message when sykmelding cant be fetched', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(500);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(500);
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
-            arbeidsgivere: [],
-            strengtFortroligAdresse: false,
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                }),
+                createExtraFormDataMock(),
+            ],
         });
-        apiNock
-            .get(`/api/flex-proxyø/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
-            .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
-
-        render(<SykmeldingPage />);
 
         expect(await screen.findByText(/Vi har problemer med baksystemene for øyeblikket./));
     });
 
     it('should show sykmelding, but not form, when brukerinformasjon cant be fetched', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(500);
-        apiNock
-            .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
-            .reply(200, { erUtenforVentetid: true, oppfolgingsdato: null });
+        const sykmelding = createSykmelding({ id: 'sykmelding-id' });
 
-        render(<SykmeldingPage />);
-
-        expect(await screen.findByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
-        expect(await screen.findByText(/Vi klarte dessverre ikke å hente opp informasjonen/)).toBeInTheDocument();
-    });
-
-    it('should show sykmelding, but not form, when erUtenforVentetid cant be fetched', async () => {
-        apiNock.get('/api/proxy/v1/sykmeldinger').reply(200, [sykmeldingApen()]);
-        apiNock.get(`/api/proxy/v1/sykmeldinger/${sykmeldingApen().id}`).reply(200, sykmeldingApen());
-        apiNock.get('/api/proxy/v1/brukerinformasjon').reply(200, {
-            arbeidsgivere: [],
-            strengtFortroligAdresse: false,
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                    result: { data: { __typename: 'Query', sykmelding: sykmelding } },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
+                }),
+                createMock({
+                    request: { query: ExtraFormDataDocument, variables: { sykmeldingId: 'sykmelding-id' } },
+                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                }),
+            ],
         });
-        apiNock
-            .get(`/api/flex-proxy/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingApen().id}/erUtenforVentetid`)
-            .reply(500);
-
-        render(<SykmeldingPage />);
 
         expect(await screen.findByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
         expect(await screen.findByText(/Vi klarte dessverre ikke å hente opp informasjonen/)).toBeInTheDocument();

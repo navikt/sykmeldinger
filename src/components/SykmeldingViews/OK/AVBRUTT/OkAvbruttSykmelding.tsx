@@ -3,13 +3,13 @@ import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 
-import useGjenapne from '../../../../hooks/useGjenapne';
-import { Sykmelding } from '../../../../models/Sykmelding/Sykmelding';
+import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import { toReadableDate } from '../../../../utils/dateUtils';
 import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
+import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
@@ -18,7 +18,7 @@ interface OkAvbruttSykmeldingProps {
 const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding }) => {
     useHotjarTrigger('SYKMELDING_OK_AVBRUTT');
     const sykmeldingId = useGetSykmeldingIdParam();
-    const { mutate: gjenapne, isLoading, error } = useGjenapne(sykmeldingId);
+    const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(sykmeldingId, SykmeldingChangeStatus.Gjenapne);
 
     return (
         <div className="sykmelding-container">
@@ -35,7 +35,7 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                 <div className="hide-on-print">
                     <Spacing>
                         <Spacing amount="small">
-                            <Knapp mini spinner={isLoading} disabled={isLoading} onClick={() => gjenapne()}>
+                            <Knapp mini spinner={loading} disabled={loading} onClick={() => gjenapne()}>
                                 <svg
                                     width="17"
                                     height="18"
@@ -55,7 +55,7 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                         </Spacing>
                         {error && (
                             <AlertStripeFeil role="alert" aria-live="polite">
-                                {error.message}
+                                En feil oppsto som gjorde at vi ikke kunne gjenåpne sykmeldingen. Prøv igjen senere.
                             </AlertStripeFeil>
                         )}
                     </Spacing>

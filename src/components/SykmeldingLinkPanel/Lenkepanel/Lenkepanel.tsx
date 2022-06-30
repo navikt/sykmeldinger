@@ -4,8 +4,9 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { LinkPanel } from '@navikt/ds-react';
 import cn from 'classnames';
 
-import { getReadableSykmeldingLength, getSykmeldingTitle, Sykmelding } from '../../../models/Sykmelding/Sykmelding';
-import { getDescription } from '../../../models/Sykmelding/Periode';
+import { Sykmelding } from '../../../fetching/graphql.generated';
+import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../../utils/sykmeldingUtils';
+import { getDescription } from '../../../utils/periodeUtils';
 
 import LenkepanelIcon from './LenkepanelIcon';
 import LenkepanelEtikett from './LenkepanelEtikett';

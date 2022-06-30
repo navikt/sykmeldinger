@@ -1,6 +1,7 @@
-import { getSykmeldingperioderSorted, Sykmelding } from '../../../models/Sykmelding/Sykmelding';
 import { toReadableDate } from '../../../utils/dateUtils';
-import { getBehandlerName } from '../../../models/Sykmelding/Behandler';
+import { SykmeldingFragment } from '../../../fetching/graphql.generated';
+import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils';
+import { getBehandlerName } from '../../../utils/behandlerUtils';
 
 import ArbeidsevneView from './Sections/SykmeldingViewArbeidsgiver/ArbeidsevneView';
 import MeldingTilArbeidsgiverView from './Sections/SykmeldingViewArbeidsgiver/MeldingTilArbeidsgiverView';
@@ -16,10 +17,10 @@ import Diagnoser from './Sections/Diagnoser';
 import styles from './SykmeldingViewArbeidsgiver.module.css';
 
 interface SykmeldingviewProps {
-    sykmelding: Sykmelding;
+    sykmelding: SykmeldingFragment;
 }
 
-const SykmeldingViewArbeidsgiver: React.FC<SykmeldingviewProps> = ({ sykmelding }) => {
+function SykmeldingViewArbeidsgiver({ sykmelding }: SykmeldingviewProps): JSX.Element {
     return (
         <div className={styles.sykmeldingViewArbeidsgiver}>
             <PasientView pasient={sykmelding.pasient} />
@@ -60,6 +61,6 @@ const SykmeldingViewArbeidsgiver: React.FC<SykmeldingviewProps> = ({ sykmelding 
             <AnnetView behandler={sykmelding.behandler} />
         </div>
     );
-};
+}
 
 export default SykmeldingViewArbeidsgiver;

@@ -4,17 +4,17 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 import { FormShape } from '../Form';
-import { Brukerinformasjon } from '../../../../../../models/Brukerinformasjon';
+import { BrukerinformasjonFragment } from '../../../../../../fetching/graphql.generated';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Ekspanderbar from '../../../../../Ekspanderbar/Ekspanderbar';
 
 import RiktigNarmesteLeder from './RiktigNarmesteLeder';
 
 interface ArbeidsgiverOrgnummerProps {
-    brukerinformasjon: Brukerinformasjon;
+    brukerinformasjon: BrukerinformasjonFragment;
 }
 
-const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinformasjon }) => {
+function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps): JSX.Element {
     const { arbeidsgivere } = brukerinformasjon;
     const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'arbeidsgiverOrgnummer';
@@ -99,6 +99,6 @@ const ArbeidsgiverOrgnummer: React.FC<ArbeidsgiverOrgnummerProps> = ({ brukerinf
             )}
         </QuestionWrapper>
     );
-};
+}
 
 export default ArbeidsgiverOrgnummer;
