@@ -1,0 +1,30 @@
+type Brukerinformasjon {
+    strengtFortroligAdresse: Boolean!
+    arbeidsgivere: [Arbeidsgiver!]!
+}
+
+type Arbeidsgiver {
+    orgnummer: String!
+    juridiskOrgnummer: String!
+    navn: String!
+    stillingsprosent: String!
+    stilling: String!
+    aktivtArbeidsforhold: Boolean!
+    naermesteLeder: NaermesteLeder
+}
+
+type NaermesteLeder {
+    aktoerId: String!
+    navn: String!
+    orgnummer: String!
+    organisasjonsnavn: String!
+    epost: String
+    mobil: String
+    aktivTom: Date
+    arbeidsgiverForskuttererLoenn: Boolean
+}
+
+type UtenforVentetid {
+    erUtenforVentetid: Boolean!
+    oppfolgingsdato: Date
+}

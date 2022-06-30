@@ -17,6 +17,7 @@ COPY sentry.client.config.js /app/
 COPY sentry.server.config.js /app/
 COPY yarn.lock /app/
 COPY scripts /app/scripts
+COPY src/**/**/**/*.graphqls /app/
 
 RUN yarn --immutable
 

@@ -1,0 +1,45 @@
+enum ShortName {
+    ARBEIDSSITUASJON
+    NY_NARMESTE_LEDER
+    FRAVAER
+    PERIODE
+    FORSIKRING
+}
+
+enum Svartype {
+    ARBEIDSSITUASJON
+    PERIODER
+    JA_NEI
+}
+
+enum StatusEvent {
+    SENDT
+    APEN
+    AVBRUTT
+    UTGATT
+    BEKREFTET
+}
+
+type ArbeidsgiverStatus {
+    orgnummer: String!
+    orgNavn: String!
+    juridiskOrgnummer: String
+}
+
+type Svar {
+    svarType: Svartype!
+    svar: String!
+}
+
+type Sporsmal {
+    tekst: String!
+    shortName: ShortName!
+    svar: Svar!
+}
+
+type SykmeldingStatus {
+    statusEvent: StatusEvent!
+    timestamp: Date!
+    arbeidsgiver: ArbeidsgiverStatus
+    sporsmalOgSvarListe: [Sporsmal!]!
+}
