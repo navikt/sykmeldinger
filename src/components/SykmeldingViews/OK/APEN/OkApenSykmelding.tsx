@@ -1,13 +1,15 @@
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import { Alert, BodyLong, Heading, Link as DsLink } from '@navikt/ds-react';
 import Link from 'next/link';
+import { WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
-import InformationBanner from '../../../InformationBanner/InformationBanner';
+import InformationBanner, { Merknadtype } from '../../../InformationBanner/InformationBanner';
 import VeilederMaleSvg from '../../../Veileder/svg/VeilederMaleSvg';
+import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 
 import AvbrytPanel from './AvbrytPanel/AvbrytPanel';
 import AvbrytContextProvider from './AvbrytContext';
@@ -49,6 +51,13 @@ const OkApenSykmelding: React.FC<OkApenSykmeldingProps> = ({ sykmelding, olderSy
                             />
                         </Spacing>
                     </div>
+                )}
+                {sykmelding.merknader?.some((merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING) && (
+                    <SykmeldingStatusPrint
+                        title="Avvist sykmelding"
+                        Icon={WarningFilled}
+                        list={sykmelding.behandlingsutfall.ruleHits}
+                    />
                 )}
 
                 {Boolean(sykmelding.papirsykmelding) && (

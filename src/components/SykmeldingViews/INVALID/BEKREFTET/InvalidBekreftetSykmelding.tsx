@@ -1,4 +1,5 @@
 import React from 'react';
+import { WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
@@ -7,6 +8,7 @@ import Sykmeldingsopplysninger from '../../SykmeldingView/Sykmeldingsopplysninge
 import Spacing from '../../../Spacing/Spacing';
 import StatusBanner from '../../../StatusBanner/StatusBanner';
 import { getBehandlerName } from '../../../../utils/behandlerUtils';
+import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -30,6 +32,11 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
                     behandlingsutfall={sykmelding.behandlingsutfall}
                 />
             </Spacing>
+            <SykmeldingStatusPrint
+                title="Avvist sykmelding"
+                Icon={WarningFilled}
+                list={sykmelding.behandlingsutfall.ruleHits}
+            />
 
             <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />
         </div>

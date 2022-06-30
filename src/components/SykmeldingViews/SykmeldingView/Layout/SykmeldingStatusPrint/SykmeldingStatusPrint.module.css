@@ -1,0 +1,21 @@
+@media print {
+    .root {
+        display: block;
+        margin: var(--navds-spacing-8) 0 var(--navds-spacing-6) 0;
+    }
+
+    .sykmeldingStatusPrint {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--navds-spacing-4);
+    }
+
+    .sykmeldingStatusPrint svg {
+        font-size: var(--navds-font-size-xlarge);
+        margin-right: var(--navds-spacing-2);
+    }
+
+    .list li {
+        margin-top: var(--navds-spacing-2);
+    }
+}

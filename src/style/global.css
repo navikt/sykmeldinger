@@ -46,6 +46,10 @@ ul li {
     padding: 0;
 }
 
+.sykmelding-status-print {
+    display: none;
+}
+
 @media print {
     @page {
         size: 210mm 297mm;
