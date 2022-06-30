@@ -32,40 +32,19 @@ ul li {
     min-height: 50vh;
 }
 
-.hide-on-print {
-    padding: 0;
-}
-
-.sykmelding-status-print {
-    display: none;
-}
-
 @media print {
     @page {
-        size: 210mm 297mm;
-        margin-top: 20mm;
-        margin-left: 10mm;
-        margin-right: 10mm;
+        margin: 0mm;
     }
 
-    html {
-        font-size: 16px;
+    html > body #index-page {
+        height: 100%;
+        overflow: hidden;
     }
 
     #decorator-header,
     #decorator-footer,
-    ._hj_feedback_container,
-    .navds-alert,
-    .navds-guide-panel,
-    .hide-on-print {
+    ._hj_feedback_container {
         display: none;
-    }
-
-    #decorator-header .header-linje {
-        border: 0;
-    }
-
-    .navds-content-container {
-        max-width: unset;
     }
 }

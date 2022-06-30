@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Alert, GuidePanel } from '@navikt/ds-react';
+import { Alert, BodyLong, GuidePanel, Heading } from '@navikt/ds-react';
 import Head from 'next/head';
 
 import Spinner from '../../components/Spinner/Spinner';
@@ -22,7 +22,7 @@ import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden';
 import { withAuthenticatedPage } from '../../auth/withAuthentication';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { Sykmelding } from '../../fetching/graphql.generated';
-import NavLogoRedSvg from '../../components/SykmeldingViews/SykmeldingView/Svg/NavLogoRedSvg';
+import { getPublicEnv } from '../../utils/env';
 
 import styles from './index.module.css';
 
@@ -124,31 +124,46 @@ const SykmeldingComponent = ({
 };
 
 function SykmeldingerWrapper({ sykmelding, children }: PropsWithChildren<{ sykmelding?: Sykmelding }>): JSX.Element {
+    const publicEnv = getPublicEnv();
+
+    addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            window.open(`${publicEnv.publicPath}/${sykmelding.id}/pdf`, '_ blank');
+        }
+    });
+
     return (
-        <>
-            <Head>
-                <title>Sykmelding - www.nav.no</title>
-            </Head>
-            <div className={styles.logoForPrint}>
-                <NavLogoRedSvg />
+        <div id="index-page">
+            <div className={styles.browserPrintMessage}>
+                <Heading level="1" size="large">
+                    Det er ikke mulig å printe på denne måten.
+                </Heading>
+                <BodyLong>Vennligst bruk printknappen øverst til høyre for sykmeldingen for å printe.</BodyLong>
             </div>
-            <Header
-                title={sykmelding ? getSykmeldingTitle(sykmelding) : undefined}
-                subTitle={sykmelding ? getReadableSykmeldingLength(sykmelding) : undefined}
-            />
-            <PageWrapper>
-                <Brodsmuler
-                    breadcrumbs={[
-                        { title: 'Sykmeldinger', path: '/' },
-                        { title: sykmelding ? getSykmeldingTitle(sykmelding) : 'Sykmelding' },
-                    ]}
+            <div className={styles.hideOnBrowserPrint}>
+                <Head>
+                    <title>Sykmelding - www.nav.no</title>
+                </Head>
+                <Header
+                    title={sykmelding ? getSykmeldingTitle(sykmelding) : undefined}
+                    subTitle={sykmelding ? getReadableSykmeldingLength(sykmelding) : undefined}
                 />
-                {children}
-                <Spacing direction="top" amount="large">
-                    <TilHovedsiden />
-                </Spacing>
-            </PageWrapper>
-        </>
+                <PageWrapper>
+                    <Brodsmuler
+                        breadcrumbs={[
+                            { title: 'Sykmeldinger', path: '/' },
+                            { title: sykmelding ? getSykmeldingTitle(sykmelding) : 'Sykmelding' },
+                        ]}
+                    />
+                    {children}
+                    <Spacing direction="top" amount="large">
+                        <TilHovedsiden />
+                    </Spacing>
+                </PageWrapper>
+            </div>
+        </div>
     );
 }
 

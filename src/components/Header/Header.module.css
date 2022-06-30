@@ -7,9 +7,3 @@
     display: flex;
     flex-direction: column;
 }
-
-@media print {
-    .locationHeader {
-        display: none;
-    }
-}

@@ -27,9 +27,3 @@
 .info :global(.navds-body-short) {
     margin-top: var(--navds-spacing-2);
 }
-
-@media print {
-    .root {
-        display: none;
-    }
-}

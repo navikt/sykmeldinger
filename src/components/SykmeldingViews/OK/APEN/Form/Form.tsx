@@ -127,7 +127,7 @@ function Form({ sykmelding }: FormProps): JSX.Element {
 
     return (
         <FormProvider {...formMethods}>
-            <form id="apen-sykmelding-form" className="hide-on-print" onSubmit={handleSubmit(onSubmit)}>
+            <form id="apen-sykmelding-form" onSubmit={handleSubmit(onSubmit)}>
                 <Spacing>
                     <ErOpplysningeneRiktige />
 

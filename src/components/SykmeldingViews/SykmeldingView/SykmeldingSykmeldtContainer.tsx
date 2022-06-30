@@ -4,6 +4,7 @@ import { Print } from '@navikt/ds-icons';
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated';
 import { toReadableDate } from '../../../utils/dateUtils';
+import { getPublicEnv } from '../../../utils/env';
 
 import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt';
 import styles from './SykmeldingSykmeldtContainer.module.css';
@@ -11,6 +12,8 @@ import styles from './SykmeldingSykmeldtContainer.module.css';
 interface Props {
     sykmelding: SykmeldingFragment;
 }
+
+const publicEnv = getPublicEnv();
 
 const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => {
     return (
@@ -24,7 +27,14 @@ const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => 
                         <BodyShort className={styles.sendtDato} size="small">
                             {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
                         </BodyShort>
-                        <Button onClick={() => window.print()} variant="tertiary" className={styles.printButton}>
+                        <Button
+                            as="a"
+                            href={`${publicEnv.publicPath}/${sykmelding.id}/pdf`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            variant="tertiary"
+                            className={styles.printButton}
+                        >
                             <Print />
                         </Button>
                     </div>

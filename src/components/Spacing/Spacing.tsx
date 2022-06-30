@@ -1,7 +1,6 @@
 // TODO replace this component
 /* eslint-disable postcss-modules/no-unused-class */
 import { PropsWithChildren } from 'react';
-import cn from 'classnames';
 
 import styles from './Spacing.module.css';
 
@@ -14,7 +13,7 @@ interface SpacingProps {
 }
 
 function Spacing({ direction = 'bottom', amount = 'medium', children }: PropsWithChildren<SpacingProps>): JSX.Element {
-    return <div className={cn(styles.spacing, styles[`${direction}-${amount}`])}>{children}</div>;
+    return <div className={styles[`${direction}-${amount}`]}>{children}</div>;
 }
 
 export default Spacing;

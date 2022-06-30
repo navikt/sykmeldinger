@@ -21,17 +21,3 @@
     border: 0;
     background-color: transparent;
 }
-
-@media print {
-    .flereOpplysninger button {
-        display: none;
-    }
-
-    .flereOpplysninger :global(.navds-accordion__content) {
-        border-bottom: 0;
-    }
-
-    .content {
-        padding: 0;
-    }
-}

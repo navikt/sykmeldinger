@@ -13,23 +13,3 @@
 .erIkkeIArbeid p:last-of-type {
     margin-bottom: 0;
 }
-
-@media print {
-    .erIArbeid,
-    .erIkkeIArbeid {
-        display: none;
-    }
-
-    .info {
-        padding-bottom: var(--navds-spacing-8);
-    }
-
-    .info div {
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-
-    .info .hensynArbeidsplassen {
-        margin-bottom: var(--navds-spacing-4);
-    }
-}

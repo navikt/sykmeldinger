@@ -40,22 +40,20 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
             </Spacing>
 
             {!Boolean(sykmelding.egenmeldt) && (
-                <div className="hide-on-print">
-                    <Spacing>
-                        <Spacing amount="small">
-                            <Button size="small" variant="secondary" disabled={loading} onClick={() => gjenapne()}>
-                                <FillForms />
-                                <span>GJØR UTFYLLINGEN PÅ NYTT</span>
-                                {loading && <Loader size="xsmall" />}
-                            </Button>
-                        </Spacing>
-                        {error && (
-                            <Alert variant="error" role="alert" aria-live="polite">
-                                En feil oppstod som gjorde at sykmeldingen ikke kunne gjenapnes. Prøv igjen senere.
-                            </Alert>
-                        )}
+                <Spacing>
+                    <Spacing amount="small">
+                        <Button size="small" variant="secondary" disabled={loading} onClick={() => gjenapne()}>
+                            <FillForms />
+                            <span>GJØR UTFYLLINGEN PÅ NYTT</span>
+                            {loading && <Loader size="xsmall" />}
+                        </Button>
                     </Spacing>
-                </div>
+                    {error && (
+                        <Alert variant="error" role="alert" aria-live="polite">
+                            En feil oppstod som gjorde at sykmeldingen ikke kunne gjenapnes. Prøv igjen senere.
+                        </Alert>
+                    )}
+                </Spacing>
             )}
 
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />

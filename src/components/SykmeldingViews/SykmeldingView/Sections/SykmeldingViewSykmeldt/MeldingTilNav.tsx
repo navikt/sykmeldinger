@@ -19,23 +19,21 @@ function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {
     return (
         <div>
             <SykmeldtHeading title="Melding til NAV" Icon={PeopleDialogOutline} />
-            <div className={styles.info}>
-                {meldingTilNav.bistandUmiddelbart && (
-                    <div className={styles.bistandUmiddelbart}>
-                        <JaEntry title="Ønskes bistand fra NAV nå?" headingLevel="4" />
-                    </div>
-                )}
-                {meldingTilNav.beskrivBistand && (
-                    <div className={styles.beskrivBistand}>
-                        <SykmeldingEntry
-                            title="Nærmere beskrivelse"
-                            mainText={meldingTilNav.beskrivBistand}
-                            small
-                            headingLevel="4"
-                        />
-                    </div>
-                )}
-            </div>
+            {meldingTilNav.bistandUmiddelbart && (
+                <div className={styles.bistandUmiddelbart}>
+                    <JaEntry title="Ønskes bistand fra NAV nå?" headingLevel="4" />
+                </div>
+            )}
+            {meldingTilNav.beskrivBistand && (
+                <div className={styles.beskrivBistand}>
+                    <SykmeldingEntry
+                        title="Nærmere beskrivelse"
+                        mainText={meldingTilNav.beskrivBistand}
+                        small
+                        headingLevel="4"
+                    />
+                </div>
+            )}
         </div>
     );
 }
