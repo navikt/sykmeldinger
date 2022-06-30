@@ -56,6 +56,10 @@ export async function changeSykmeldingStatus(
         );
         return getSykmelding(sykmeldingId, selvbetjeningToken);
     } catch (e) {
+        if (e instanceof AuthenticationError) {
+            throw e;
+        }
+
         logger.error(e);
         throw new Error(`Failed to change sykmelding for ${sykmeldingId} to ${statusToEndpoint(status)}`);
     }
@@ -76,6 +80,10 @@ export async function submitSykmelding(
         );
         return getSykmelding(sykmeldingId, selvbetjeningToken);
     } catch (e) {
+        if (e instanceof AuthenticationError) {
+            throw e;
+        }
+
         logger.error(e);
         throw new Error(`Failed to submit sykmelding for ${sykmeldingId}`);
     }
