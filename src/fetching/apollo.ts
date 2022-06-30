@@ -27,8 +27,10 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
-        graphQLErrors.forEach(({ message, locations, path }) => {
-            logger.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+        graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+            if (extensions?.code !== 'UNAUTHENTICATED') {
+                logger.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+            }
         });
 
     if (networkError) {

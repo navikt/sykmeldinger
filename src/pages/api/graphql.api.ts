@@ -14,7 +14,10 @@ import { isLocalOrDemo } from '../../utils/env';
 const apolloServer = new ApolloServer({
     schema,
     formatError: (error) => {
-        logger.error(error);
+        if (error.extensions?.code !== 'UNAUTHENTICATED') {
+            logger.error(error);
+        }
+
         return error;
     },
     formatResponse: (response, context) => {

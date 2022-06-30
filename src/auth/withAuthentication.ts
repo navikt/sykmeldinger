@@ -37,8 +37,7 @@ export function withAuthenticatedPage(handler: PageHandler = async () => ({ prop
 }
 
 /**
- * Used to authenticate Next.JS pages. Assumes application is behind
- * Wonderwall (https://doc.nais.io/security/auth/idporten/sidecar/). Will deny requests if Wonderwall cookie is missing.
+ * Used to authenticate Next.JS pages.
  */
 export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
     return async function withBearerTokenHandler(req, res, ...rest) {
@@ -48,7 +47,7 @@ export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
 
         const selvbetjeningsToken: string | null | undefined = req.cookies['selvbetjening-idtoken'];
         if (!selvbetjeningsToken) {
-            res.status(403).json({ message: 'Access denied' });
+            res.status(401).json({ message: 'Access denied' });
             return;
         }
 
