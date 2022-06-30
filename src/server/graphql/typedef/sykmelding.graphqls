@@ -1,0 +1,82 @@
+type Sykmelding {
+    id: String!
+    mottattTidspunkt: Date!
+    behandlingsutfall: Behandlingsutfall!
+    legekontorOrgnummer: String
+    arbeidsgiver: ArbeidsgiverSykmelding
+    sykmeldingsperioder: [Periode!]!
+    sykmeldingStatus: SykmeldingStatus!
+    medisinskVurdering: MedisinskVurdering
+    skjermesForPasient: Boolean!
+    prognose: Prognose
+    utdypendeOpplysninger: JSON!
+    tiltakArbeidsplassen: String
+    tiltakNAV: String
+    andreTiltak: String
+    meldingTilNAV: MeldingTilNAV
+    meldingTilArbeidsgiver: String
+    kontaktMedPasient: KontaktMedPasient!
+    behandletTidspunkt: Date!
+    behandler: Behandler!
+    syketilfelleStartDato: Date
+    navnFastlege: String
+    egenmeldt: Boolean
+    papirsykmelding: Boolean
+    harRedusertArbeidsgiverperiode: Boolean
+    merknader: [Merknad!]
+    pasient: Pasient
+}
+
+type ArbeidsgiverSykmelding {
+    navn: String
+    stillingsprosent: Float
+}
+
+type MeldingTilNAV {
+    bistandUmiddelbart: Boolean!
+    beskrivBistand: String
+}
+
+type KontaktMedPasient {
+    kontaktDato: Date
+    begrunnelseIkkeKontakt: String
+}
+
+type Adresse {
+    gate: String
+    postnummer: Int
+    kommune: String
+    postboks: String
+    land: String
+}
+
+type Behandler {
+    fornavn: String!
+    mellomnavn: String
+    etternavn: String!
+    adresse: Adresse
+    tlf: String
+}
+
+type Merknad {
+    type: String!
+    beskrivelse: String
+}
+
+type Pasient {
+    fnr: String
+    fornavn: String
+    mellomnavn: String
+    etternavn: String
+}
+
+enum SvarRestriksjon {
+    SKJERMET_FOR_ARBEIDSGIVER
+    SKJERMET_FOR_NAV
+}
+
+type UtdypendeOpplysning {
+    sporsmal: String
+    svar: String!
+    restriksjoner: [SvarRestriksjon!]!
+}

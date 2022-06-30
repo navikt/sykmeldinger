@@ -1,0 +1,32 @@
+enum AnnenFraverGrunn {
+    GODKJENT_HELSEINSTITUSJON
+    BEHANDLING_FORHINDRER_ARBEID
+    ARBEIDSRETTET_TILTAK
+    MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND
+    NODVENDIG_KONTROLLUNDENRSOKELSE
+    SMITTEFARE
+    ABORT
+    UFOR_GRUNNET_BARNLOSHET
+    DONOR
+    BEHANDLING_STERILISERING
+}
+
+type Diagnose {
+    kode: String!
+    system: String!
+    tekst: String
+}
+
+type AnnenFraversArsak {
+    beskrivelse: String
+    grunn: [AnnenFraverGrunn!]!
+}
+
+type MedisinskVurdering {
+    hovedDiagnose: Diagnose
+    biDiagnoser: [Diagnose!]!
+    annenFraversArsak: AnnenFraversArsak
+    svangerskap: Boolean!
+    yrkesskade: Boolean!
+    yrkesskadeDato: Date
+}

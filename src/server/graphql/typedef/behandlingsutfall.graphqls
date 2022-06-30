@@ -1,0 +1,17 @@
+enum RegelStatus {
+    OK
+    MANUAL_PROCESSING
+    INVALID
+}
+
+type RegelInfo {
+    messageForSender: String!
+    messageForUser: String!
+    ruleName: String!
+    ruleStatus: RegelStatus!
+}
+
+type Behandlingsutfall {
+    status: RegelStatus!
+    ruleHits: [RegelInfo!]!
+}

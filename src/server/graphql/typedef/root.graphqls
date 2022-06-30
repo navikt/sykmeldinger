@@ -1,0 +1,17 @@
+type Query {
+    sykmeldinger: [Sykmelding!]!
+    sykmelding(id: ID!): Sykmelding!
+    brukerinformasjon: Brukerinformasjon!
+    sykmeldingUtenforVentetid(id: ID!): UtenforVentetid!
+}
+
+type Mutation {
+    changeSykmeldingStatus(sykmeldingId: ID!, status: SykmeldingChangeStatus!): Sykmelding!
+    submitSykmelding(sykmeldingId: ID!, values: JSON!): Sykmelding!
+}
+
+enum SykmeldingChangeStatus {
+    AVBRYT
+    BEKREFT_AVVIST
+    GJENAPNE
+}

@@ -1,0 +1,19 @@
+type ErIArbeid {
+    egetArbeidPaSikt: Boolean!
+    annetArbeidPaSikt: Boolean!
+    arbeidFOM: Date
+    vurderingsdato: Date
+}
+
+type ErIkkeIArbeid {
+    arbeidsforPaSikt: Boolean!
+    arbeidsforFOM: Date
+    vurderingsdato: Date
+}
+
+type Prognose {
+    arbeidsforEtterPeriode: Boolean!
+    hensynArbeidsplassen: String
+    erIArbeid: ErIArbeid
+    erIkkeIArbeid: ErIkkeIArbeid
+}
