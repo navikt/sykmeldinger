@@ -11,6 +11,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 import ErrorFallback from '../components/ErrorFallback/ErrorFallback';
 import { logger } from '../utils/logger';
 import { createApolloClient } from '../fetching/apollo';
+import { AmplitudeProvider } from '../amplitude/amplitude';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     useEffect(() => {
@@ -29,9 +30,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
     return (
         <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
-            <ApolloProvider client={apolloClient}>
-                <Component {...pageProps} />
-            </ApolloProvider>
+            <AmplitudeProvider>
+                <ApolloProvider client={apolloClient}>
+                    <Component {...pageProps} />
+                </ApolloProvider>
+            </AmplitudeProvider>
         </ErrorBoundary>
     );
 }

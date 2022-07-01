@@ -13,6 +13,8 @@ import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form';
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,
     status: SykmeldingChangeStatus,
+    onCompleted: () => void,
+    onError: () => void,
 ): [MutationResult<ChangeSykmeldingStatusMutation>, () => void] {
     const [submit, result] = useMutation(ChangeSykmeldingStatusDocument, {
         variables: {
@@ -20,7 +22,11 @@ export function useChangeSykmeldingStatus(
             status,
         },
         onCompleted: () => {
+            onCompleted();
             window.scrollTo(0, 0);
+        },
+        onError: () => {
+            onError();
         },
     });
 
@@ -29,12 +35,18 @@ export function useChangeSykmeldingStatus(
 
 export function useSubmitSykmelding(
     sykmeldingId: string,
+    onCompleted: () => void,
+    onError: () => void,
 ): [MutationResult<SubmitSykmeldingMutation>, (values: FormShape) => void] {
     const router = useRouter();
     const [submit, result] = useMutation(SubmitSykmeldingDocument, {
         onCompleted: () => {
+            onCompleted();
             window.scrollTo(0, 0);
             router.push(`/${sykmeldingId}/kvittering`);
+        },
+        onError: () => {
+            onError();
         },
     });
 

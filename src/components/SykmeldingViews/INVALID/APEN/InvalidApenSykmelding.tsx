@@ -2,6 +2,7 @@ import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Controller, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
@@ -12,6 +13,7 @@ import CenterItems from '../../../CenterItems/CenterItems';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
 import { getBehandlerName } from '../../../../utils/behandlerUtils';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -21,15 +23,27 @@ interface FormData {
     bekreftetLest: boolean;
 }
 
+const skjemanavn = 'invalid åpen sykmelding';
+
 function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
+    const logEvent = useAmplitude();
     useHotjarTrigger('SYKMELDING_INVALID_APEN');
+    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
 
     const { handleSubmit, control, errors } = useForm<FormData>();
     const [{ loading: fetchingBekreft, error: errorBekreft }, bekreft] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.BekreftAvvist,
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     );
+
+    useEffect(() => {
+        if (errors.bekreftetLest) {
+            logEvent({ eventName: 'skjema validering feilet', data: { skjemanavn } });
+        }
+    }, [errors.bekreftetLest, logEvent]);
 
     return (
         <div className="sykmelding-container">
@@ -66,6 +80,14 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                                     checked={value}
                                     feil={errors.bekreftetLest?.message}
                                     onChange={() => {
+                                        logEvent({
+                                            eventName: 'skjema spørsmål besvart',
+                                            data: {
+                                                skjemanavn,
+                                                [`spørsmål`]: 'bekreftet lest',
+                                                svar: value ? 'Ja' : 'Nei',
+                                            },
+                                        });
                                         onChange(!value);
                                     }}
                                 />
