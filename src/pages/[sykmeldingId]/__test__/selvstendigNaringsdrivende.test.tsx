@@ -66,7 +66,7 @@ describe('Selvstendig næringsdrivende', () => {
                                         svar: 'NAERINGSDRIVENDE',
                                         sporsmaltekst: 'Jeg er sykmeldt som',
                                         svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                     },
                                     harBruktEgenmelding: {
                                         svar: 'JA',
@@ -157,7 +157,7 @@ describe('Selvstendig næringsdrivende', () => {
                                         svar: 'NAERINGSDRIVENDE',
                                         sporsmaltekst: 'Jeg er sykmeldt som',
                                         svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                     },
                                     harBruktEgenmelding: {
                                         svar: 'JA',
@@ -224,27 +224,6 @@ describe('Selvstendig næringsdrivende', () => {
     });
 
     describe('Outside ventetid', () => {
-        beforeEach(() => {
-            /*
-            apiNock
-                .post(`/api/proxy/v2/sykmeldinger/${sykmeldingApen().id}/send`, {
-                    erOpplysningeneRiktige: {
-                        svar: 'JA',
-                        sporsmaltekst: 'Stemmer opplysningene?',
-                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                    },
-                    arbeidssituasjon: {
-                        svar: 'NAERINGSDRIVENDE',
-                        sporsmaltekst: 'Jeg er sykmeldt som',
-                        svartekster:
-                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
-                    },
-                })
-                .reply(200);
-
-             */
-        });
-
         it('should show details from sykmelding', async () => {
             render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
 
@@ -272,7 +251,7 @@ describe('Selvstendig næringsdrivende', () => {
                                         svar: 'NAERINGSDRIVENDE',
                                         sporsmaltekst: 'Jeg er sykmeldt som',
                                         svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                     },
                                 },
                             },
