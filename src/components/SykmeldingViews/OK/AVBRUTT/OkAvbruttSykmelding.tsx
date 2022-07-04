@@ -12,6 +12,7 @@ import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
+import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding';
 import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 
 interface OkAvbruttSykmeldingProps {
@@ -20,7 +21,7 @@ interface OkAvbruttSykmeldingProps {
 
 const skjemanavn = 'gjenåpne avbrutt sykmelding';
 
-const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding }) => {
+function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Element {
     const logEvent = useAmplitude();
     useHotjarTrigger('SYKMELDING_OK_AVBRUTT');
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
@@ -78,8 +79,10 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                 </div>
             )}
             <Sykmeldingsopplysninger sykmelding={sykmelding} />
+
+            <HintToNextOlderSykmelding />
         </div>
     );
-};
+}
 
 export default OkAvbruttSykmelding;

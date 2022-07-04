@@ -34,11 +34,11 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
         expect(await screen.findByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
         expect(await screen.findByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
         expect(
-            screen.queryByRole('heading', { name: 'Du har en tidligere sykmelding du ikke har sendt inn enda.' }),
+            screen.queryByRole('heading', { name: /du må velge om du skal bruke, før du kan bruke denne/ }),
         ).not.toBeInTheDocument();
     });
 
-    it('should display warning and disable form when there is a unsent sykmelding on a previous date', async () => {
+    it('should display force user to send inn unsent sykmelding if there is an older one', async () => {
         const thisSykmelding = createSykmelding({
             mottattTidspunkt: dateSub(new Date(), { days: 2 }),
             id: 'this-sykmelding',
@@ -64,13 +64,10 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
             ],
         });
 
-        expect(await screen.findByText('Stemmer opplysningene?')).toBeInTheDocument();
         expect(
-            await screen.findByRole('heading', { name: 'Du har en tidligere sykmelding du ikke har sendt inn enda.' }),
+            await screen.findByText(`Du har 1 sykmelding du må velge om du skal bruke, før du kan bruke denne.`),
         ).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Bekreft sykmelding' })).toBeDisabled();
-        expect(screen.getByRole('radio', { name: 'Ja' })).toBeDisabled();
-        expect(screen.getByRole('radio', { name: 'Nei' })).toBeDisabled();
+        expect(screen.queryByRole('button', { name: 'Bekreft sykmelding' })).not.toBeInTheDocument();
     });
 
     it('should fail with error message when sykmelding cant be fetched', async () => {

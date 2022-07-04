@@ -1,6 +1,5 @@
-import { BodyLong, Label } from '@navikt/ds-react';
+import { BodyLong, GuidePanel, Label } from '@navikt/ds-react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import Veileder from 'nav-frontend-veileder';
 
 import { Merknad } from '../../fetching/graphql.generated';
@@ -24,7 +23,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     if (merknader?.some((merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING)) {
         return (
             <div data-testid="merknad-banner">
-                <Veilederpanel kompakt type="plakat" svg={<VeilederMaleSvg />}>
+                <GuidePanel poster>
                     <div className={styles.merknadBannerSection}>
                         <Undertittel className={styles.title} tag="h2">
                             Tilbakedateringen kan ikke godkjennes
@@ -47,7 +46,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                         Når søknaden er behandlet, vil du få en begrunnelse for hvorfor du ikke kan få sykepenger for de
                         tilbakedaterte dagene, og du får samtidig mulighet til å klage.
                     </Normaltekst>
-                </Veilederpanel>
+                </GuidePanel>
             </div>
         );
     }
@@ -55,7 +54,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER)) {
         return (
             <div data-testid="merknad-banner">
-                <Veilederpanel kompakt type="plakat" svg={<VeilederMaleSvg />}>
+                <GuidePanel poster>
                     <Undertittel tag="h2" className={styles.title}>
                         Behov for mer opplysninger
                     </Undertittel>
@@ -64,7 +63,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                         opplysninger om hvorfor sykmeldingen er datert tilbake.
                     </Normaltekst>
                     <Normaltekst>Du kan likevel sende inn søknaden om sykepenger.</Normaltekst>
-                </Veilederpanel>
+                </GuidePanel>
             </div>
         );
     }
@@ -72,7 +71,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING)) {
         return (
             <div data-testid="merknad-banner">
-                <Veilederpanel fargetema="advarsel" type="plakat" svg={<VeilederMaleSvg />}>
+                <GuidePanel poster>
                     <Undertittel tag="h2" className={styles.title}>
                         Viktig informasjon
                     </Undertittel>
@@ -89,7 +88,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                         Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
                         Du velger selv om du vil bruke sykmeldingen.
                     </Normaltekst>
-                </Veilederpanel>
+                </GuidePanel>
             </div>
         );
     }
@@ -97,13 +96,13 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     if (papirsykmelding === true) {
         return (
             <div data-testid="papir-banner">
-                <Veilederpanel kompakt type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
+                <GuidePanel poster>
                     <Label>Før du bruker sykmeldingen</Label>
-                    <Normaltekst>
+                    <BodyLong>
                         Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik
                         at du kan gjøre resten digitalt.
-                    </Normaltekst>
-                </Veilederpanel>
+                    </BodyLong>
+                </GuidePanel>
             </div>
         );
     }

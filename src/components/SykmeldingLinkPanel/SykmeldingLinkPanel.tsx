@@ -3,7 +3,7 @@ import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Select } from 'nav-frontend-skjema';
 
 import { SykmeldingFragment } from '../../fetching/graphql.generated';
-import SykmeldingSorter from '../../utils/SykmeldingSorter';
+import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/SykmeldingSorter';
 
 import Lenkepanel from './Lenkepanel/Lenkepanel';
 import styles from './SykmeldingLinkPanel.module.css';
@@ -26,12 +26,12 @@ const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
 }) => {
     const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy);
     const sykmeldingerSortedByArbeidsgiver = useMemo(
-        () => SykmeldingSorter.sortSykmeldingerByArbeidsgiver(sykmeldinger),
+        () => sortSykmeldingerByArbeidsgiver(sykmeldinger),
         [sykmeldinger],
     );
 
     const sykmeldingerSortedByDate = useMemo(() => {
-        const sykmeldings = SykmeldingSorter.sortSykmeldingerByDate(sykmeldinger);
+        const sykmeldings = [...sykmeldinger].sort(sykmeldingByDateAsc).reverse();
 
         return type === 'NYE_SYKMELDINGER' ? sykmeldings.reverse() : sykmeldings;
     }, [sykmeldinger, type]);

@@ -1,7 +1,9 @@
-import { differenceInDays, parseISO } from 'date-fns';
+import { differenceInDays, isAfter, parseISO } from 'date-fns';
 import dayjs from 'dayjs';
 
 import { StatusEvent, Sykmelding, Periode, SykmeldingFragment } from '../fetching/graphql.generated';
+
+import { toDate } from './dateUtils';
 
 export function isActiveSykmelding(sykmelding: SykmeldingFragment): boolean {
     // Under behandling skal alltids vises, uansett hvor gammel
@@ -47,6 +49,12 @@ export function getSykmeldingStartDate(sykmelding: Sykmelding): string {
         return acc;
     }).fom;
 }
+
+/**
+ * Used by reduce to get the latest tom date
+ */
+export const toLatestTom = (previousValue: Periode, currentValue: Periode): Periode =>
+    isAfter(toDate(previousValue.tom), toDate(currentValue.tom)) ? previousValue : currentValue;
 
 /**
  * Get the last tom date of the last sykmelding period

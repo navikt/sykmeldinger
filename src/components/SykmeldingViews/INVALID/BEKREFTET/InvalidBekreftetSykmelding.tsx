@@ -8,6 +8,7 @@ import Sykmeldingsopplysninger from '../../SykmeldingView/Sykmeldingsopplysninge
 import Spacing from '../../../Spacing/Spacing';
 import StatusBanner from '../../../StatusBanner/StatusBanner';
 import { getBehandlerName } from '../../../../utils/behandlerUtils';
+import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding';
 import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 
 interface InvalidBekreftetSykmeldingProps {
@@ -39,6 +40,8 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
             />
 
             <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />
+
+            <HintToNextOlderSykmelding />
         </div>
     );
 };

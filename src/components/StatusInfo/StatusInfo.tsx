@@ -1,6 +1,7 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Lenke from 'nav-frontend-lenker';
+import { GuidePanel } from '@navikt/ds-react';
 
 import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated';
 import Spacing from '../Spacing/Spacing';
@@ -43,7 +44,7 @@ function StatusInfo({
     if (erAvventende) {
         return (
             <div data-testid="status-info">
-                <Veilederpanel type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
+                <GuidePanel poster>
                     <Spacing amount="small">
                         <Normaltekst>
                             Du har sendt beskjed til arbeidsgiveren din om at det er mulig å unngå sykmelding hvis det
@@ -60,7 +61,7 @@ function StatusInfo({
                     <a href="/oppfolgingsplan/oppfolgingsplaner" className="knapp">
                         Lag en oppfølgingsplan
                     </a>
-                </Veilederpanel>
+                </GuidePanel>
             </div>
         );
     }
@@ -68,7 +69,7 @@ function StatusInfo({
     if (erUnderBehandlingTilbakedatert) {
         return (
             <div data-testid="status-info" className={styles.root}>
-                <Veilederpanel type="plakat" fargetema="advarsel" svg={<VeilederMaleSvg />}>
+                <GuidePanel poster>
                     <Spacing amount="small">
                         <Normaltekst>
                             Vanligvis fyller du ut en søknad om sykepenger når sykmeldingen er over.
@@ -85,7 +86,7 @@ function StatusInfo({
                             Du får en melding fra oss når vurderingen er ferdig og søknaden er klar til utfylling.
                         </Normaltekst>
                     </Spacing>
-                </Veilederpanel>
+                </GuidePanel>
             </div>
         );
     }

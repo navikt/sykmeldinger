@@ -1,5 +1,3 @@
-import { formatISO, sub } from 'date-fns';
-
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
 import {
     AnnenFraverGrunn,
@@ -9,9 +7,9 @@ import {
     RegelStatus,
     StatusEvent,
 } from '../resolver-types.generated';
-import { dateAdd } from '../../../utils/dateUtils';
+import { dateAdd, dateSub } from '../../../utils/dateUtils';
 
-export function sykmeldingApen(mottatt: string = formatISO(sub(new Date(), { days: 2 })), id = 'APEN'): Sykmelding {
+export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }), id = 'APEN'): Sykmelding {
     return {
         id,
         mottattTidspunkt: mottatt,

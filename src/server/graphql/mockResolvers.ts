@@ -1,6 +1,7 @@
 import { GraphQLJSON } from 'graphql-scalars';
 
 import { logger } from '../../utils/logger';
+import { dateSub } from '../../utils/dateUtils';
 
 import {
     MutationResolvers,
@@ -26,6 +27,7 @@ import arbeidsgivereMock from './mockData/arbeidsgivereMock';
 
 export const sykmeldinger = [
     sykmeldingApen(),
+    sykmeldingApen(dateSub(new Date(), { hours: 1 }), 'APENNI'),
     sykmeldingApenPapir(),
     sykmeldingSendt(),
     sykmeldingSendt2,

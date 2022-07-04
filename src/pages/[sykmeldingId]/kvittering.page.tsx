@@ -1,13 +1,12 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import Head from 'next/head';
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
+import { GuidePanel } from '@navikt/ds-react';
 
 import useSykmeldinger from '../../hooks/useSykmelding';
 import Spacing from '../../components/Spacing/Spacing';
 import Spinner from '../../components/Spinner/Spinner';
 import StatusBanner from '../../components/StatusBanner/StatusBanner';
-import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 import StatusInfo from '../../components/StatusInfo/StatusInfo';
 import Sykmeldingsopplysninger from '../../components/SykmeldingViews/SykmeldingView/SykmeldingsopplysningerContainer';
 import { logger } from '../../utils/logger';
@@ -20,6 +19,7 @@ import { withAuthenticatedPage } from '../../auth/withAuthentication';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils';
 import { RegelStatus, StatusEvent, SykmeldingFragment } from '../../fetching/graphql.generated';
+import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding';
 
 function SykmeldingkvitteringPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_KVITTERING');
@@ -61,10 +61,10 @@ function SykmeldingkvitteringPage(): JSX.Element {
         );
         return (
             <KvitteringWrapper>
-                <Veilederpanel svg={<VeilederMaleSvg />}>
+                <GuidePanel poster>
                     Beklager! En uventet feil har oppstått. Sannsynligvis jobber vi med saken allerede, men ta kontakt
                     med oss hvis det ikke har løst seg til i morgen.
-                </Veilederpanel>
+                </GuidePanel>
             </KvitteringWrapper>
         );
     }
@@ -93,6 +93,8 @@ function SykmeldingkvitteringPage(): JSX.Element {
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
                 <Sykmeldingsopplysninger sykmelding={data.sykmelding} expandedDefault={false} arbeidsgiver />
             )}
+
+            <HintToNextOlderSykmelding />
         </KvitteringWrapper>
     );
 }
