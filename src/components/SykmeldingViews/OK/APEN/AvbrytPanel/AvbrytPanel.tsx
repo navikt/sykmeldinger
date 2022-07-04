@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Button, Loader } from '@navikt/ds-react';
+import { Alert, Button, Loader } from '@navikt/ds-react';
 import { Close } from '@navikt/ds-icons';
 
 import { AvbrytContext } from '../AvbrytContext';
@@ -53,9 +52,9 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
 
                 {error && (
                     <Spacing direction="top">
-                        <AlertStripeFeil role="alert" aria-live="polite">
+                        <Alert variant="error" role="alert" aria-live="polite">
                             En feil oppsto som som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
-                        </AlertStripeFeil>
+                        </Alert>
                     </Spacing>
                 )}
             </div>
@@ -101,9 +100,9 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
 
                     {error && (
                         <Spacing direction="top">
-                            <AlertStripeFeil role="alert" aria-live="polite">
+                            <Alert variant="error" role="alert" aria-live="polite">
                                 Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
-                            </AlertStripeFeil>
+                            </Alert>
                         </Spacing>
                     )}
                 </div>

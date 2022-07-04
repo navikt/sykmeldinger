@@ -2,7 +2,7 @@ import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import Lenke from 'nav-frontend-lenker';
 
 import { FormShape, ArbeidssituasjonType } from '../Form';
@@ -19,7 +19,7 @@ import HarBruktEgenmelding from './HarBruktEgenmelding';
 import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer';
 
 const StrengtFortroligInfo = (): JSX.Element => (
-    <AlertStripeAdvarsel>
+    <Alert variant="warning">
         <Spacing amount="small">
             <Normaltekst>
                 Du er registrert med adressesperre strengt fortrolig. Du kan derfor ikke sende sykmeldingen til
@@ -30,7 +30,7 @@ const StrengtFortroligInfo = (): JSX.Element => (
             For å levere sykmeldingen til arbeidsgiveren din kan du ta kontakt med den som har sykmeldt deg for å få en
             utskrift.
         </Normaltekst>
-    </AlertStripeAdvarsel>
+    </Alert>
 );
 
 interface ArbeidssituasjonProps {

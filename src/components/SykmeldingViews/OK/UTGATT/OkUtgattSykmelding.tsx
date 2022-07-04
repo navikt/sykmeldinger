@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import { InformationFilled } from '@navikt/ds-icons';
 
@@ -20,10 +20,10 @@ function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Elemen
     return (
         <div className="sykmelding-container">
             <Spacing>
-                <AlertStripeInfo>
+                <Alert variant="info">
                     <Undertittel>Sykmeldingen er utgått</Undertittel>
                     <Element>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
-                </AlertStripeInfo>
+                </Alert>
             </Spacing>
             <SykmeldingStatusPrint
                 title={`Utgått sykmelding: ${toReadableDate(sykmelding.sykmeldingStatus.timestamp)}`}

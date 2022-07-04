@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 
 import { UriktigeOpplysningerType } from './Form';
 
@@ -19,22 +19,23 @@ interface UriktigeOpplysningerInfoProps {
     uriktigeOpplysninger?: (keyof typeof UriktigeOpplysningerType)[];
 }
 
-const UriktigeOpplysningerInfo: React.FC<UriktigeOpplysningerInfoProps> = ({ uriktigeOpplysninger }) => {
+function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysningerInfoProps): JSX.Element | null {
     if (!uriktigeOpplysninger || uriktigeOpplysninger.length === 0) return null;
 
-    if (uriktigeOpplysninger.includes('PERIODE') || uriktigeOpplysninger.includes('SYKMELDINGSGRAD_FOR_LAV'))
+    if (uriktigeOpplysninger.includes('PERIODE') || uriktigeOpplysninger.includes('SYKMELDINGSGRAD_FOR_LAV')) {
         return null;
+    }
 
     return (
-        <AlertStripeInfo role="alert" aria-live="polite">
+        <Alert variant="info" role="alert" aria-live="polite">
             Du kan fortsatt bruke sykmeldingen.
             <ul>
                 {uriktigeOpplysninger.map((opplysning, index) => (
                     <li key={index}>{uriktigOpplysningTekst[opplysning]}</li>
                 ))}
             </ul>
-        </AlertStripeInfo>
+        </Alert>
     );
-};
+}
 
 export default UriktigeOpplysningerInfo;
