@@ -19,10 +19,6 @@ export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
     );
 }
 
-export function getBirthday(fnr: string): string {
-    return fnr.substring(0, 6) + '*****';
-}
-
 /**
  * Get the type of sykmelding
  * Used for displaying the title.

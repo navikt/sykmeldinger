@@ -37,7 +37,7 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
                 {sykmelding.arbeidsgiver && sykmelding.arbeidsgiver?.navn && (
                     <div className={styles.info}>
                         <Heading className={styles.heading} size="small" level="4">
-                            Arbeidsgiver som er oppgått i sykmeldingen
+                            Arbeidsgiver som er oppgitt i sykmeldingen
                         </Heading>
                         <BodyShort size="small">{sykmelding.arbeidsgiver.navn}</BodyShort>
                     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
+import { WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
@@ -11,6 +12,7 @@ import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
+import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
@@ -40,6 +42,10 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                     <Element>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
                 </AlertStripe>
             </Spacing>
+            <SykmeldingStatusPrint
+                title={`Sykmeldingen ble avbrutt av deg ${toReadableDate(sykmelding.sykmeldingStatus.timestamp)}`}
+                Icon={WarningFilled}
+            />
 
             {!Boolean(sykmelding.egenmeldt) && (
                 <div className="hide-on-print">
@@ -71,7 +77,6 @@ const OkAvbruttSykmelding: React.FC<OkAvbruttSykmeldingProps> = ({ sykmelding })
                     </Spacing>
                 </div>
             )}
-
             <Sykmeldingsopplysninger sykmelding={sykmelding} />
         </div>
     );

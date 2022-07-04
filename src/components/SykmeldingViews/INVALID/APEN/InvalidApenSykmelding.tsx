@@ -3,6 +3,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import { WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
@@ -14,6 +15,7 @@ import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
 import { getBehandlerName } from '../../../../utils/behandlerUtils';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
+import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -53,6 +55,11 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                     behandlingsutfall={sykmelding.behandlingsutfall}
                 />
             </Spacing>
+            <SykmeldingStatusPrint
+                title="Avvist sykmelding"
+                Icon={WarningFilled}
+                list={sykmelding.behandlingsutfall.ruleHits}
+            />
 
             <Spacing>
                 <Sykmeldingsopplysninger sykmelding={sykmelding} />
