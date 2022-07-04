@@ -62,11 +62,13 @@ function SykmeldingPage(): JSX.Element {
             </SykmeldingerWrapper>
         );
     }
+
     return (
         <SykmeldingerWrapper sykmelding={data?.sykmelding}>
             <SykmeldingComponent
                 sykmelding={data?.sykmelding}
                 olderSykmeldingId={olderSykmelding.earliestSykmeldingId}
+                olderSykmeldingCount={olderSykmelding.olderSykmeldingCount}
             />
         </SykmeldingerWrapper>
     );
@@ -75,9 +77,11 @@ function SykmeldingPage(): JSX.Element {
 const SykmeldingComponent = ({
     sykmelding,
     olderSykmeldingId,
+    olderSykmeldingCount,
 }: {
     sykmelding: Sykmelding;
     olderSykmeldingId: string | null;
+    olderSykmeldingCount: number;
 }): JSX.Element | null => {
     const behandlingsutfall = sykmelding.behandlingsutfall.status;
     const status = sykmelding.sykmeldingStatus.statusEvent;
@@ -87,7 +91,13 @@ const SykmeldingComponent = ({
         case 'MANUAL_PROCESSING':
             switch (status) {
                 case 'APEN':
-                    return <OkApenSykmelding sykmelding={sykmelding} olderSykmeldingId={olderSykmeldingId} />;
+                    return (
+                        <OkApenSykmelding
+                            sykmelding={sykmelding}
+                            olderSykmeldingId={olderSykmeldingId}
+                            olderSykmeldingCount={olderSykmeldingCount}
+                        />
+                    );
                 case 'BEKREFTET':
                     return <OkBekreftetSykmelding sykmelding={sykmelding} />;
                 case 'SENDT':

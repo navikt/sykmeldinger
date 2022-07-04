@@ -136,5 +136,8 @@ describe('Bekreft avvist sykmelding som lest', () => {
         expect(
             await screen.findByText('Du bekreftet at du har lest at sykmeldingen er avvist den 1. januar 2020'),
         ).toBeInTheDocument();
+
+        // There are no more unsent sykmeldinger, should show Ferdig link to ditt sykefravær
+        expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument();
     });
 });

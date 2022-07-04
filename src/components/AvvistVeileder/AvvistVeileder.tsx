@@ -1,8 +1,6 @@
 import React from 'react';
-import Veilederpanel from 'nav-frontend-veilederpanel';
-import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
+import { BodyLong, BodyShort, GuidePanel, Heading } from '@navikt/ds-react';
 
-import VeilederMaleNeurtralSvg from '../Veileder/svg/VeilederMaleNeutralSvg';
 import { Behandlingsutfall } from '../../fetching/graphql.generated';
 
 import ForklaringZDiagnose from './ForklaringZDiagnose';
@@ -32,7 +30,7 @@ const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandli
     const isZDiagnosis = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'ICPC_2_Z_DIAGNOSE');
 
     return (
-        <Veilederpanel type="plakat" kompakt fargetema="normal" svg={<VeilederMaleNeurtralSvg />}>
+        <GuidePanel poster>
             <Heading size="small" className={styles.title}>
                 Sykmeldingen kan dessverre ikke brukes
             </Heading>
@@ -62,7 +60,7 @@ const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandli
             ) : (
                 <ForklaringAndre behandlerNavn={behandlerNavn} ruleHits={behandlingsutfall.ruleHits} />
             )}
-        </Veilederpanel>
+        </GuidePanel>
     );
 };
 
