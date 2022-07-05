@@ -48,7 +48,9 @@ const UriktigeOpplysninger: React.FC = () => {
                 defaultValue={null}
                 rules={{
                     validate: (val: [] | undefined) =>
-                        (val && val.length > 0) || 'Du må svare på hvilke opplysninger som ikke stemmer.',
+                        val == null || val.length <= 0
+                            ? 'Du må svare på hvilke opplysninger som ikke stemmer.'
+                            : undefined,
                 }}
                 render={({ onChange: onCheckboxChange, value }) => (
                     <CheckboksPanelGruppe
@@ -66,7 +68,8 @@ const UriktigeOpplysninger: React.FC = () => {
                                 : [...(oldValues ?? []), checkedValue];
                             onCheckboxChange(newVals);
                         }}
-                        feil={errors.uriktigeOpplysninger?.svar?.[0]?.message}
+                        // @ts-expect-error Shape of errors is wrong when field is an array
+                        feil={errors.uriktigeOpplysninger?.svar?.message}
                     />
                 )}
             />
