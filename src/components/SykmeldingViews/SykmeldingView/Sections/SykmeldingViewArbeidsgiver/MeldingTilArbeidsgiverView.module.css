@@ -1,5 +1,4 @@
-.aarsak {
-    margin-bottom: var(--navds-spacing-3);
+.info {
     background-color: var(--sykmelding-view-arbeidsgiver);
     padding: var(--navds-spacing-4);
     border-radius: 4px;

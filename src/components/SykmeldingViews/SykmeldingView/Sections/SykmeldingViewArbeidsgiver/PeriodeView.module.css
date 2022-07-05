@@ -1,18 +1,31 @@
-.periodeView .periode {
-    border-bottom: 1px solid var(--skillelinje-farge);
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
+.perioder {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--navds-spacing-4);
 }
 
-.periodeView .periode div:not(:last-of-type) {
+.perioder .periode {
+    flex-grow: 1;
+    margin-bottom: var(--navds-spacing-3);
+    background-color: var(--sykmelding-view-arbeidsgiver);
+    padding: var(--navds-spacing-4);
+    border-radius: 4px;
+}
+
+.perioder .periode div {
     margin-bottom: var(--navds-spacing-8);
 }
 
-.periodeView .periode p:not(:last-of-type) {
-    margin-bottom: 0.3rem;
-    font-size: 1rem;
+.perioder .periode:nth-child(3n + 3) {
+    flex-basis: 100%;
 }
 
-.periodeView .periode p:last-of-type {
+.perioder .periode p:not(:last-of-type) {
+    margin-bottom: 0.3rem;
+    font-size: var(--navds-spacing-4);
+}
+
+.perioder .periode div:last-of-type,
+.perioder .periode p:last-of-type {
     margin-bottom: 0;
 }

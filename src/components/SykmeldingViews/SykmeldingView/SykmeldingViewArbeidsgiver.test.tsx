@@ -85,6 +85,6 @@ describe('SykmeldingViewArbeidsgiver', () => {
         render(<SykmeldingViewArbeidsgiver sykmelding={minimalSykmelding} />);
 
         // eslint-disable-next-line testing-library/no-node-access
-        expect(screen.getByText(/Behandler/).parentElement).toHaveTextContent(/Frida Perma Frost/);
+        expect(screen.getByText(/Sykmeldingen ble skrevet av/).parentElement).toHaveTextContent(/Frida Perma Frost/);
     });
 });

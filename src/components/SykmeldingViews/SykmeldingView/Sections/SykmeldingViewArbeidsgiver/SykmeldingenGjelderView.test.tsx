@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 
 import { Pasient } from '../../../../../fetching/graphql.generated';
 
-import PasientView from './PasientView';
+import SykmeldingenGjelderView from './SykmeldingenGjelderView';
 
-describe('PasientView', () => {
+describe('SykmeldingenGjelderView', () => {
     it('Does not render if name is undefined', () => {
         const pasient: Pasient = {
             __typename: 'Pasient',
@@ -13,7 +13,7 @@ describe('PasientView', () => {
             mellomnavn: null,
             etternavn: null,
         };
-        render(<PasientView pasient={pasient} />);
+        render(<SykmeldingenGjelderView pasient={pasient} />);
         expect(screen.queryByText('Sykmeldingen gjelder')).not.toBeInTheDocument();
         expect(screen.queryByText('Ola Nordmann')).not.toBeInTheDocument();
         expect(screen.queryByText('12345678901')).not.toBeInTheDocument();
@@ -27,9 +27,9 @@ describe('PasientView', () => {
             mellomnavn: null,
             etternavn: 'Nordmann',
         };
-        render(<PasientView pasient={pasient} />);
+        render(<SykmeldingenGjelderView pasient={pasient} />);
         expect(screen.getByText('Sykmeldingen gjelder')).toBeInTheDocument();
         expect(screen.getByText('Ola Nordmann')).toBeInTheDocument();
-        expect(screen.getByText('12345678901')).toBeInTheDocument();
+        expect(screen.getByText('Fødselsnr: 12345678901')).toBeInTheDocument();
     });
 });

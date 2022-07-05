@@ -14,7 +14,7 @@ describe('PrognoseView', () => {
             erIkkeIArbeid: null,
         };
         render(<PrognoseView prognose={prognose} />);
-        expect(screen.getByText('Friskmelding/Prognose')).toBeInTheDocument();
+        expect(screen.getByText('Prognose')).toBeInTheDocument();
     });
 
     it('Renders arbeidsforEtterPeriode if true', () => {

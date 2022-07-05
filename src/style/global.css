@@ -7,6 +7,9 @@ html {
     --desktop-limit-width: 672px;
     --eyes-open-color: #3e3832;
     --eyes-closed-color: #e7e9e9;
+    --sykmelding-view-sykmeldt: var(--navds-global-color-blue-50);
+    --sykmelding-view-flere-opplysninger: var(--navds-global-color-gray-50);
+    --sykmelding-view-arbeidsgiver: #fef9ef; /*TODO: fix color var(--navds-global-color-gray-50); */
 }
 
 html,

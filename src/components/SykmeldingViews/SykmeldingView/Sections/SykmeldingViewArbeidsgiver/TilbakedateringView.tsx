@@ -1,7 +1,11 @@
+import { Historic } from '@navikt/ds-icons';
+
 import { KontaktMedPasient } from '../../../../../fetching/graphql.generated';
 import { toReadableDate } from '../../../../../utils/dateUtils';
-import Section from '../../Layout/Section/Section';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+
+import styles from './TilbakedateringView.module.css';
 
 interface TilbakedateringViewProps {
     kontaktMedPasient: KontaktMedPasient;
@@ -13,12 +17,15 @@ function TilbakedateringView({ kontaktMedPasient }: TilbakedateringViewProps): J
     }
 
     return (
-        <Section title="Tilbakedatering">
-            <SykmeldingEntry
-                title="Dato for dokumenterbar kontakt med pasienten"
-                mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
-            />
-        </Section>
+        <div>
+            <SykmeldtHeading title="Tilbakedatering" Icon={Historic} />
+            <div className={styles.tilbakedatering}>
+                <SykmeldingEntry
+                    title="Dato for dokumenterbar kontakt med pasienten"
+                    mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
+                />
+            </div>
+        </div>
     );
 }
 

@@ -1,11 +1,18 @@
-.sykmeldingsopplysninger {
-    background-color: #ffffff;
+.opplysningerTilArbeidsgiver {
+    background-color: #fef9ef;
+}
+
+.sykmeldingsopplysninger :global(.navds-accordion__content) {
+    padding: var(--navds-spacing-3) 0 var(--navds-spacing-2) 0;
+}
+
+.expandeblePanel {
+    background-color: transparent;
 }
 
 .sykmeldingsopplysningerHeader {
     display: flex;
     border: none;
-    border-radius: 4px;
     width: 100%;
     align-items: center;
 }
@@ -19,13 +26,19 @@
     display: flex;
     flex-direction: column;
     margin-bottom: var(--navds-spacing-2);
-    padding: var(--navds-spacing-4) var(--navds-spacing-4) var(--navds-spacing-4) 0;
+    padding: var(--navds-spacing-4) 0 var(--navds-spacing-4) 0;
     width: 100%;
 }
 
 .arbeidsgiverHeader {
     display: flex;
     padding: var(--navds-spacing-4);
+    align-items: flex-start;
+}
+
+.expendableHeader {
+    display: flex;
+    padding: 0;
     align-items: flex-start;
 }
 
@@ -43,20 +56,6 @@
     display: flex;
     flex: 1;
     text-align: start;
-}
-
-.sykmeldingsopplysningerHeaderExpandable {
-    cursor: pointer;
-}
-
-.sykmeldingsopplysningerContentHidden {
-    display: none;
-}
-
-.opplysningerTilArbeidsgiver {
-    background-color: #fef9ef;
-    border: 1px solid #78706a;
-    border-radius: 4px;
 }
 
 .opplysningerTilArbeidsgiver .sykmeldingsopplysningerHeader {

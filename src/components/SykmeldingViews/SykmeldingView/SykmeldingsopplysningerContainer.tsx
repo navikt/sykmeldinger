@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import cn from 'classnames';
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { Collapse, Expand, Findout, Print } from '@navikt/ds-icons';
+import { Accordion, BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Findout, Print } from '@navikt/ds-icons';
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated';
 import Lukknapp from '../../Lukknapp/Lukknapp';
@@ -38,94 +38,91 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
         >
             {expandable ? (
                 <>
-                    <button
-                        id={headerId}
-                        type="button"
-                        aria-expanded={expanded}
-                        aria-controls={contentId}
-                        onClick={() => {
-                            if (!expanded) {
-                                setTimeout(() => {
-                                    elementRef.current?.scrollIntoView({ behavior: 'smooth' });
-                                }, 200);
-                            }
-                            setExpanded(!expanded);
-                        }}
-                        className={cn(
-                            styles.sykmeldingsopplysningerHeader,
-                            styles.sykmeldingsopplysningerHeaderExpandable,
-                        )}
-                    >
-                        <div className={styles.arbeidsgiverHeader}>
-                            <div className={styles.sykmeldingsopplysningerIcon}>
-                                <Findout />
-                            </div>
-                            <Heading
-                                className={styles.sykmeldingsopplysningerText}
-                                size="small"
-                                level="2"
-                                id="sykmeldinger-panel-info-section"
+                    <Accordion className={styles.expandeblePanel}>
+                        <Accordion.Item open={expanded}>
+                            <Accordion.Header
+                                id={headerId}
+                                className={styles.sykmeldingsopplysningerHeader}
+                                type="button"
+                                onClick={() => {
+                                    if (!expanded) {
+                                        setTimeout(() => {
+                                            elementRef.current?.scrollIntoView({ behavior: 'smooth' });
+                                        }, 200);
+                                    }
+                                    setExpanded(!expanded);
+                                }}
                             >
-                                Se hva som sendes til jobben din
-                            </Heading>
-                            {expanded ? <Collapse /> : <Expand />}
-                        </div>
-                    </button>
-                    <div
-                        id={contentId}
-                        aria-labelledby={headerId}
-                        className={cn({
-                            [styles.sykmeldingsopplysningerContentHidden]: !expanded,
-                        })}
-                    >
-                        <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
-                        <Lukknapp onClick={() => setExpanded(false)} />
-                    </div>
+                                <div className={styles.expendableHeader}>
+                                    <div className={styles.sykmeldingsopplysningerIcon}>
+                                        <Findout />
+                                    </div>
+                                    <Heading
+                                        className={styles.sykmeldingsopplysningerText}
+                                        size="small"
+                                        level="2"
+                                        id="sykmeldinger-panel-info-section"
+                                    >
+                                        Se hva som sendes til jobben din
+                                    </Heading>
+                                </div>
+                            </Accordion.Header>
+                            <Accordion.Content id={contentId} aria-labelledby={headerId}>
+                                <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
+                                <Lukknapp onClick={() => setExpanded(false)} />
+                            </Accordion.Content>
+                        </Accordion.Item>
+                    </Accordion>
                 </>
             ) : (
                 <>
-                    <header className={styles.sykmeldingsopplysningerHeader}>
-                        {!arbeidsgiver ? (
-                            <div className={styles.sykmeldtHeader}>
-                                <Heading size="small" level="2" id="sykmeldinger-panel-info-section">
-                                    Opplysninger fra sykmeldingen
-                                </Heading>
-                                <div className={styles.sentDateAndPrint}>
-                                    <BodyShort className={styles.sendtDato} size="small">
-                                        {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
-                                    </BodyShort>
-                                    <Button
-                                        onClick={() => window.print()}
-                                        variant="tertiary"
-                                        className={styles.printButton}
+                    {!arbeidsgiver ? (
+                        <>
+                            <header className={styles.sykmeldingsopplysningerHeader}>
+                                <div className={styles.sykmeldtHeader}>
+                                    <Heading size="small" level="2" id="sykmeldinger-panel-info-section">
+                                        Opplysninger fra sykmeldingen
+                                    </Heading>
+                                    <div className={styles.sentDateAndPrint}>
+                                        <BodyShort className={styles.sendtDato} size="small">
+                                            {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
+                                        </BodyShort>
+                                        <Button
+                                            onClick={() => window.print()}
+                                            variant="tertiary"
+                                            className={styles.printButton}
+                                        >
+                                            <Print />
+                                        </Button>
+                                    </div>
+                                </div>
+                            </header>
+                            <div id={contentId} aria-labelledby={headerId}>
+                                <SykmeldingViewSykmeldt sykmelding={sykmelding} />
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <header className={styles.sykmeldingsopplysningerHeader}>
+                                <div className={styles.arbeidsgiverHeader}>
+                                    <div className={styles.sykmeldingsopplysningerIcon}>
+                                        <Findout />
+                                    </div>
+                                    <Heading
+                                        className={styles.sykmeldingsopplysningerText}
+                                        size="small"
+                                        level="2"
+                                        id="sykmeldinger-panel-info-section"
                                     >
-                                        <Print />
-                                    </Button>
+                                        Se hva som sendes til jobben din
+                                    </Heading>
                                 </div>
+                            </header>
+                            <div id={contentId} aria-labelledby={headerId}>
+                                <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
                             </div>
-                        ) : (
-                            <div className={styles.arbeidsgiverHeader}>
-                                <div className={styles.sykmeldingsopplysningerIcon}>
-                                    <Findout />
-                                </div>
-                                <Heading
-                                    className={styles.sykmeldingsopplysningerText}
-                                    size="small"
-                                    level="2"
-                                    id="sykmeldinger-panel-info-section"
-                                >
-                                    Se hva som sendes til jobben din
-                                </Heading>
-                            </div>
-                        )}
-                    </header>
-                    <div id={contentId} aria-labelledby={headerId}>
-                        {arbeidsgiver ? (
-                            <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
-                        ) : (
-                            <SykmeldingViewSykmeldt sykmelding={sykmelding} />
-                        )}
-                    </div>
+                        </>
+                    )}
                 </>
             )}
         </article>
