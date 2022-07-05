@@ -66,7 +66,7 @@ describe('Frilanser', () => {
                                         svar: 'FRILANSER',
                                         sporsmaltekst: 'Jeg er sykmeldt som',
                                         svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                     },
                                     harBruktEgenmelding: {
                                         svar: 'JA',
@@ -155,7 +155,7 @@ describe('Frilanser', () => {
                                         svar: 'FRILANSER',
                                         sporsmaltekst: 'Jeg er sykmeldt som',
                                         svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                     },
                                     harBruktEgenmelding: {
                                         svar: 'JA',
@@ -247,7 +247,7 @@ describe('Frilanser', () => {
                                         svar: 'FRILANSER',
                                         sporsmaltekst: 'Jeg er sykmeldt som',
                                         svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                     },
                                 },
                             },

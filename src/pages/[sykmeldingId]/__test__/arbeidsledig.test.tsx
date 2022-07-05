@@ -57,7 +57,7 @@ describe('Arbeidsledig', () => {
                                 svar: 'ARBEIDSLEDIG',
                                 sporsmaltekst: 'Jeg er sykmeldt som',
                                 svartekster:
-                                    '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                    '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                             },
                         },
                     },
@@ -80,7 +80,7 @@ describe('Arbeidsledig', () => {
         render(<SykmeldingPage />, { mocks });
 
         userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-        userEvent.click(await screen.findByRole('radio', { name: 'arbeidsledig eller permittert' }));
+        userEvent.click(await screen.findByRole('radio', { name: 'arbeidsledig' }));
         userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));

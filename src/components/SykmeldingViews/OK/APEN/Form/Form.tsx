@@ -37,7 +37,8 @@ export enum ArbeidssituasjonType {
     ARBEIDSTAKER = 'ansatt',
     FRILANSER = 'frilanser',
     NAERINGSDRIVENDE = 'selvstendig næringsdrivende',
-    ARBEIDSLEDIG = 'arbeidsledig eller permittert',
+    ARBEIDSLEDIG = 'arbeidsledig',
+    PERMITTERT = 'permittert',
     ANNET = 'annet',
 }
 
@@ -117,15 +118,16 @@ function Form({ sykmelding, disable }: FormProps): JSX.Element {
         );
     }
 
+    function onSubmit(data: FormShape): void {
+        if (data?.arbeidssituasjon?.svar === 'PERMITTERT') {
+            data.arbeidssituasjon.svar = 'ARBEIDSLEDIG';
+        }
+        send(data);
+    }
+
     return (
         <FormProvider {...formMethods}>
-            <form
-                id="apen-sykmelding-form"
-                className="hide-on-print"
-                onSubmit={handleSubmit((data) => {
-                    send(data);
-                })}
-            >
+            <form id="apen-sykmelding-form" className="hide-on-print" onSubmit={handleSubmit(onSubmit)}>
                 <Spacing>
                     <ErOpplysningeneRiktige disable={disable} />
 

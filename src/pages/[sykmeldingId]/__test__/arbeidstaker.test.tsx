@@ -59,7 +59,7 @@ describe('Arbeidstaker', () => {
                                     svar: 'ARBEIDSTAKER',
                                     sporsmaltekst: 'Jeg er sykmeldt som',
                                     svartekster:
-                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                 },
                                 arbeidsgiverOrgnummer: {
                                     svar: arbeidsgivereMock[0].orgnummer,
@@ -128,7 +128,7 @@ describe('Arbeidstaker', () => {
                                     svar: 'ARBEIDSTAKER',
                                     sporsmaltekst: 'Jeg er sykmeldt som',
                                     svartekster:
-                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig eller permittert","ANNET":"annet"}',
+                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
                                 },
                                 arbeidsgiverOrgnummer: {
                                     svar: arbeidsgivereMock[1].orgnummer,
