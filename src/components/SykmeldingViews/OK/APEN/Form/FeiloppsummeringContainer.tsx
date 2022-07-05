@@ -19,7 +19,8 @@ const FeiloppsummeringContainer: React.FC<FeiloppsummeringContainerProps> = ({ e
 
     const customErrors: CustomErrors = {
         erOpplysningeneRiktige: errors.erOpplysningeneRiktige?.svar?.message,
-        uriktigeOpplysninger: errors.uriktigeOpplysninger?.svar?.[0]?.message,
+        // @ts-expect-error Shape of errors is wrong when field is an array
+        uriktigeOpplysninger: errors.uriktigeOpplysninger?.svar?.message,
         arbeidssituasjon: errors.arbeidssituasjon?.svar?.message,
         arbeidsgiverOrgnummer: errors.arbeidsgiverOrgnummer?.svar?.message,
         riktigNarmesteLeder: errors.riktigNarmesteLeder?.svar?.message,
