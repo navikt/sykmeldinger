@@ -1,6 +1,5 @@
+import { Heading, Loader } from '@navikt/ds-react';
 import React from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 
 import styles from './Spinner.module.css';
 
@@ -10,8 +9,10 @@ interface SpinnerProps {
 
 const Spinner: React.FC<SpinnerProps> = ({ headline }) => (
     <div className={styles.spinnerContainer}>
-        <Undertittel className={styles.undertitle}>{headline}</Undertittel>
-        <NavFrontendSpinner />
+        <Heading size="medium" className={styles.undertitle}>
+            {headline}
+        </Heading>
+        <Loader />
     </div>
 );
 

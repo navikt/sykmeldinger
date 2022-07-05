@@ -1,6 +1,6 @@
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { WarningFilled } from '@navikt/ds-icons';
@@ -104,9 +104,9 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
 
                     {errorBekreft && (
                         <Spacing amount="small">
-                            <AlertStripeAdvarsel role="alert" aria-live="polite">
+                            <Alert variant="error" role="alert" aria-live="polite">
                                 {errorBekreft.message}
-                            </AlertStripeAdvarsel>
+                            </Alert>
                         </Spacing>
                     )}
 

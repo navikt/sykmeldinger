@@ -1,7 +1,6 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Head from 'next/head';
 import React, { PropsWithChildren } from 'react';
-import { GuidePanel } from '@navikt/ds-react';
+import { Alert, GuidePanel } from '@navikt/ds-react';
 
 import useSykmeldinger from '../../hooks/useSykmelding';
 import Spacing from '../../components/Spacing/Spacing';
@@ -34,9 +33,9 @@ function SykmeldingkvitteringPage(): JSX.Element {
     if (error) {
         return (
             <KvitteringWrapper>
-                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                <Alert variant="error" role="alert" aria-live="polite">
                     Sykmeldingen kunne ikke hentes. Prøv igjen senere.
-                </AlertStripeAdvarsel>
+                </Alert>
             </KvitteringWrapper>
         );
     }
@@ -45,9 +44,9 @@ function SykmeldingkvitteringPage(): JSX.Element {
         logger.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <KvitteringWrapper>
-                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                <Alert variant="error" role="alert" aria-live="polite">
                     En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
-                </AlertStripeAdvarsel>
+                </Alert>
             </KvitteringWrapper>
         );
     }

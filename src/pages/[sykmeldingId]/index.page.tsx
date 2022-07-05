@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import Veilederpanel from 'nav-frontend-veilederpanel';
 import Head from 'next/head';
 
@@ -45,9 +45,9 @@ function SykmeldingPage(): JSX.Element {
     if (error || olderSykmelding.error) {
         return (
             <SykmeldingerWrapper>
-                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                <Alert variant="error" role="alert" aria-live="polite">
                     Vi har problemer med baksystemene for øyeblikket.
-                </AlertStripeAdvarsel>
+                </Alert>
             </SykmeldingerWrapper>
         );
     }
@@ -56,9 +56,9 @@ function SykmeldingPage(): JSX.Element {
         logger.error(`Sykmelding with id ${sykmeldingId} is undefined`);
         return (
             <SykmeldingerWrapper>
-                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                <Alert variant="error" role="alert" aria-live="polite">
                     En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
-                </AlertStripeAdvarsel>
+                </Alert>
             </SykmeldingerWrapper>
         );
     }

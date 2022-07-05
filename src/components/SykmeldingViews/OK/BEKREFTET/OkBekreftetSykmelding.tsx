@@ -1,6 +1,6 @@
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
@@ -39,7 +39,7 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                 />
             </Spacing>
 
-            {Boolean(sykmelding.egenmeldt) === false && (
+            {!Boolean(sykmelding.egenmeldt) && (
                 <div className="hide-on-print">
                     <Spacing>
                         <Spacing amount="small">
@@ -62,9 +62,9 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
                             </Knapp>
                         </Spacing>
                         {error && (
-                            <AlertStripeFeil role="alert" aria-live="polite">
+                            <Alert variant="error" role="alert" aria-live="polite">
                                 En feil oppstod som gjorde at sykmeldingen ikke kunne gjenapnes. Prøv igjen senere.
-                            </AlertStripeFeil>
+                            </Alert>
                         )}
                     </Spacing>
                 </div>

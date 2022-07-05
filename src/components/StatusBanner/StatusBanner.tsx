@@ -1,5 +1,5 @@
-import { AlertStripeInfo, AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { Element, Systemtittel } from 'nav-frontend-typografi';
+import { Alert } from '@navikt/ds-react';
 
 import { Behandlingsutfall, SykmeldingStatus } from '../../fetching/graphql.generated';
 import { toReadableDate } from '../../utils/dateUtils';
@@ -18,31 +18,31 @@ function StatusBanner({
     if (behandlingsutfall.status === 'INVALID') {
         if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
             return (
-                <AlertStripeInfo>
+                <Alert variant="info">
                     Du bekreftet at du har lest at sykmeldingen er avvist den{' '}
                     {toReadableDate(sykmeldingStatus.timestamp)}
-                </AlertStripeInfo>
+                </Alert>
             );
         }
     }
 
     if (sykmeldingStatus.statusEvent === 'SENDT') {
         return (
-            <AlertStripeSuksess>
+            <Alert variant="success">
                 <Systemtittel tag="h2">
                     Sykmeldingen ble sendt til {sykmeldingStatus.arbeidsgiver?.orgNavn}
                 </Systemtittel>
                 <Element>{toReadableDate(sykmeldingStatus.timestamp)}</Element>
-            </AlertStripeSuksess>
+            </Alert>
         );
     }
 
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
         return (
-            <AlertStripeSuksess>
+            <Alert variant="success">
                 <Systemtittel tag="h2">{egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble sendt til NAV</Systemtittel>
                 <Element>{toReadableDate(sykmeldingStatus.timestamp)}</Element>
-            </AlertStripeSuksess>
+            </Alert>
         );
     }
 

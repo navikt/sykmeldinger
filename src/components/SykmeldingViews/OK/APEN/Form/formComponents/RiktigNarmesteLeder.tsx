@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 
 import { FormShape, JaEllerNeiType } from '../Form';
 import { NaermesteLederFragment } from '../../../../../../fetching/graphql.generated';
@@ -68,17 +68,17 @@ function RiktigNarmesteLeder({ naermesteLeder }: RiktigNarmesteLederProps): JSX.
 
             {watchRiktigNarmesteLeder?.svar === 'JA' && (
                 <Spacing direction="top" amount="small">
-                    <AlertStripe type="info" role="alert" aria-live="polite">
+                    <Alert variant="info" role="alert" aria-live="polite">
                         Vi sender sykmeldingen til {naermesteLeder.navn}, som finner den ved å logge inn på nav.no
-                    </AlertStripe>
+                    </Alert>
                 </Spacing>
             )}
 
             {watchRiktigNarmesteLeder?.svar === 'NEI' && (
                 <Spacing direction="top" amount="small">
-                    <AlertStripe type="info" role="alert" aria-live="polite">
+                    <Alert variant="info" role="alert" aria-live="polite">
                         Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.
-                    </AlertStripe>
+                    </Alert>
                 </Spacing>
             )}
         </QuestionWrapper>

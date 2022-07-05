@@ -8,7 +8,7 @@ import { AvbrytContext } from '../../AvbrytContext';
 import Spacing from '../../../../../Spacing/Spacing';
 import UriktigeOpplysningerInfo from '../UriktigeOpplysningerInfo';
 
-const UriktigeOpplysninger: React.FC = () => {
+function UriktigeOpplysninger(): JSX.Element {
     const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
     const fieldName: keyof FormShape = 'uriktigeOpplysninger';
     const watchUriktigeOpplysninger = watch(fieldName);
@@ -79,6 +79,6 @@ const UriktigeOpplysninger: React.FC = () => {
             </Spacing>
         </QuestionWrapper>
     );
-};
+}
 
 export default UriktigeOpplysninger;

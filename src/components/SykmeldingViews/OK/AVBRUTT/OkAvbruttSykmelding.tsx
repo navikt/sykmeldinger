@@ -1,5 +1,5 @@
 import React from 'react';
-import AlertStripe, { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import { WarningFilled } from '@navikt/ds-icons';
@@ -36,12 +36,12 @@ function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Elem
     return (
         <div className="sykmelding-container">
             <Spacing amount="small">
-                <AlertStripe type="info">
+                <Alert variant="info">
                     <Undertittel tag="h2">
                         {sykmelding.egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble avbrutt av deg
                     </Undertittel>
                     <Element>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
-                </AlertStripe>
+                </Alert>
             </Spacing>
             <SykmeldingStatusPrint
                 title={`Sykmeldingen ble avbrutt av deg ${toReadableDate(sykmelding.sykmeldingStatus.timestamp)}`}
@@ -71,9 +71,9 @@ function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Elem
                             </Knapp>
                         </Spacing>
                         {error && (
-                            <AlertStripeFeil role="alert" aria-live="polite">
+                            <Alert variant="error" role="alert" aria-live="polite">
                                 En feil oppsto som gjorde at vi ikke kunne gjenåpne sykmeldingen. Prøv igjen senere.
-                            </AlertStripeFeil>
+                            </Alert>
                         )}
                     </Spacing>
                 </div>

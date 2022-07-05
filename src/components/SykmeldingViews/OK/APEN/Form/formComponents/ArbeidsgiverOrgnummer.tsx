@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 
 import { FormShape } from '../Form';
 import { BrukerinformasjonFragment } from '../../../../../../fetching/graphql.generated';
@@ -88,10 +88,10 @@ function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps
             />
 
             {!harArbeidsgiver && (
-                <AlertStripeAdvarsel>
+                <Alert variant="warning">
                     Vi klarer ikke å finne noen arbeidsforhold registrert på deg. Be arbeidsgiveren din om å registrere
                     deg i A-meldingen. Da blir det oppdatert her slik at du kan få sendt den til arbeidsgiveren.
-                </AlertStripeAdvarsel>
+                </Alert>
             )}
 
             {valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder && (

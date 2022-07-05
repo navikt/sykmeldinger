@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import Head from 'next/head';
@@ -36,9 +36,9 @@ const SykmeldingerPage: React.FC = () => {
     if (error) {
         return (
             <IndexWrapper>
-                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                <Alert variant="error" role="alert" aria-live="polite">
                     Vi har problemer med baksystemene for øyeblikket.
-                </AlertStripeAdvarsel>
+                </Alert>
             </IndexWrapper>
         );
     }
@@ -46,9 +46,9 @@ const SykmeldingerPage: React.FC = () => {
         logger.error('Sykmeldinger is undefined');
         return (
             <IndexWrapper>
-                <AlertStripeAdvarsel role="alert" aria-live="polite">
+                <Alert variant="error" role="alert" aria-live="polite">
                     En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
-                </AlertStripeAdvarsel>
+                </Alert>
             </IndexWrapper>
         );
     }

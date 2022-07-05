@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 
 import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
@@ -54,7 +54,7 @@ function PapirInfoheader(): JSX.Element {
             {harGittVidere === true && (
                 <Spacing direction="top">
                     <Spacing amount="small">
-                        <AlertStripeInfo>
+                        <Alert variant="info">
                             <Spacing amount="small">
                                 <Normaltekst>
                                     Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i
@@ -68,7 +68,7 @@ function PapirInfoheader(): JSX.Element {
                                 Hvis du får ja fra arbeidsgiveren din kan du fortsette utfyllingen på denne siden. Hvis
                                 du i stedet skal fortsette med papiret må du avbryte denne sykmeldingen.
                             </Element>
-                        </AlertStripeInfo>
+                        </Alert>
                     </Spacing>
 
                     <Knapp spinner={loading} disabled={loading} onClick={() => avbryt()}>
@@ -77,9 +77,9 @@ function PapirInfoheader(): JSX.Element {
 
                     {error && (
                         <Spacing direction="top">
-                            <AlertStripeFeil>
+                            <Alert variant="error">
                                 En feil oppstod som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
-                            </AlertStripeFeil>
+                            </Alert>
                         </Spacing>
                     )}
                 </Spacing>
@@ -87,13 +87,13 @@ function PapirInfoheader(): JSX.Element {
 
             {harGittVidere === false && (
                 <Spacing direction="top">
-                    <AlertStripeInfo>
+                    <Alert variant="info">
                         <Element>Da kan du sende sykmeldingen herfra</Element>
                         <Normaltekst>
                             Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
                             om? Du velger selv om du vil bruke sykmeldingen.
                         </Normaltekst>
-                    </AlertStripeInfo>
+                    </Alert>
                 </Spacing>
             )}
         </div>

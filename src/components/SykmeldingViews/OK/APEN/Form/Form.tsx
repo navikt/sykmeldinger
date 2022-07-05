@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Loader } from '@navikt/ds-react';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert, Button, Loader } from '@navikt/ds-react';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import useExtraFormData from '../../../../../hooks/useExtraFormData';
@@ -110,10 +109,10 @@ function Form({ sykmelding, disable }: FormProps): JSX.Element {
     if (error || data?.brukerinformasjon == null || data?.sykmeldingUtenforVentetid == null) {
         return (
             <Spacing>
-                <AlertStripeFeil role="alert" aria-live="polite">
+                <Alert variant="error" role="alert" aria-live="polite">
                     Vi klarte dessverre ikke å hente opp informasjonen som trengs for at du kan bruke sykmeldingen.
                     Vennligst prøv igjen senere.
-                </AlertStripeFeil>
+                </Alert>
             </Spacing>
         );
     }
@@ -155,9 +154,9 @@ function Form({ sykmelding, disable }: FormProps): JSX.Element {
 
                     {errorSend && (
                         <Spacing amount="small">
-                            <AlertStripeFeil role="alert" aria-live="polite">
+                            <Alert variant="error" role="alert" aria-live="polite">
                                 {errorSend.message}
-                            </AlertStripeFeil>
+                            </Alert>
                         </Spacing>
                     )}
                 </Spacing>
