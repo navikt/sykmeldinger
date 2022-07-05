@@ -13,6 +13,7 @@ import {
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Spacing from '../../../../../Spacing/Spacing';
 import Ekspanderbar from '../../../../../Ekspanderbar/Ekspanderbar';
+import { useAmplitude } from '../../../../../../amplitude/amplitude';
 
 import HarForsikring from './HarForsikring';
 import HarBruktEgenmelding from './HarBruktEgenmelding';
@@ -50,6 +51,8 @@ const Arbeidssituasjon = ({
     const fieldName: keyof FormShape = 'arbeidssituasjon';
     const sporsmaltekst = 'Jeg er sykmeldt som';
     const watchArbeidssituasjon = watch(fieldName);
+
+    const logEvent = useAmplitude();
 
     useEffect(() => {
         register({
@@ -113,7 +116,13 @@ const Arbeidssituasjon = ({
                             disabled: harAvventendePeriode && label !== ArbeidssituasjonType.ARBEIDSTAKER,
                         }))}
                         checked={value}
-                        onChange={(_e, value) => onChange(value)}
+                        onChange={(_e, value) => {
+                            logEvent({
+                                eventName: 'skjema spørsmål besvart',
+                                data: { skjemanavn: 'arbeidssituasjon', spørsmål: 'Jeg er sykmeldt som', svar: value },
+                            });
+                            onChange(value);
+                        }}
                         feil={errors.arbeidssituasjon?.svar?.message}
                     />
                 )}
