@@ -22,9 +22,9 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
         if (dontShowYet) return;
 
         if (isDone) {
-            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'hint til neste eldre sykmelding' } });
-        } else {
             logEvent({ eventName: 'guidepanel vist', data: { komponent: 'ingen flere sykmeldinger å sende inn' } });
+        } else {
+            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'hint til neste eldre sykmelding' } });
         }
     }, [dontShowYet, isDone, logEvent]);
 
