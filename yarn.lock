@@ -2384,10 +2384,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:^0.18.15, @navikt/ds-css@npm:^0.18.26":
-  version: 0.18.26
-  resolution: "@navikt/ds-css@npm:0.18.26::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F0.18.26%2F7e202469000f728ae39944103a861c0e65a9dc83617cf7f714aa24986153d4f3"
-  checksum: 3f7d061d9321550fa437c90d24e37a7c4ee62b7177f9eb67b39ffe7510fdb4d98b95b913ce2109ff5411ba2e8103a5f886ecfdfa3c7c21c6bc9480d3b13e4331
+"@navikt/ds-css@npm:^0.18.15, @navikt/ds-css@npm:^0.18.27":
+  version: 0.18.27
+  resolution: "@navikt/ds-css@npm:0.18.27::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F0.18.27%2F09aef1ba9b86cb9ca987e4f9427beb008f0ff9d44f670537e5afbf38f3aca761"
+  checksum: 36e8aabff0732d0afa771cb3e7594db16d15109863955ce68b3ed2194a95f580ac6b7f286c78b13ccd2dfd94a28be2798a274cf816a4ba3514462f05ad3cbd8f
   languageName: node
   linkType: hard
 
@@ -2423,7 +2423,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-react@npm:^0.19.14, @navikt/ds-react@npm:^0.19.19":
+"@navikt/ds-react@npm:^0.19.14":
   version: 0.19.19
   resolution: "@navikt/ds-react@npm:0.19.19::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F0.19.19%2Fc963f8ab2058bcae1f4aada1173eeb751e94548b4ff85ff8561e9bf60e7295b4"
   dependencies:
@@ -2443,6 +2443,29 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: 8b022a020e74f952bbc18454a9365b7a44439b50d046af5fd3860792f4a13fe934b9f8a609bb056813f475154193167028bc992ebeb35675855b0c65483735f9
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-react@npm:^0.19.21":
+  version: 0.19.21
+  resolution: "@navikt/ds-react@npm:0.19.21::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F0.19.21%2F296dd0599e413beb1b3e0a6f591f79edfdb3298d97146cb2ed7bf15abab3bd9a"
+  dependencies:
+    "@floating-ui/react-dom": 0.6.0
+    "@material-ui/core": ^4.12.3
+    "@navikt/ds-icons": ^0.8.18
+    "@popperjs/core": ^2.10.1
+    "@radix-ui/react-tabs": 0.1.5
+    "@radix-ui/react-toggle-group": 0.1.5
+    classnames: ^2.2.6
+    react-collapse: ^5.1.0
+    react-merge-refs: ^1.1.0
+    react-modal: 3.14.3
+    react-popper: ^2.2.5
+    uuid: ^8.3.2
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: 98bea5c621e32ac1456f584bf0b5fb956c947fd109f03d60165d7abcffbb531d66ad66b1dc1b56d0e1d930412125151e3e909f4e5f98a4b94fbe203c8a9372fc
   languageName: node
   linkType: hard
 
@@ -2941,15 +2964,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/browser@npm:7.5.0"
+"@sentry/browser@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/browser@npm:7.5.1"
   dependencies:
-    "@sentry/core": 7.5.0
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/core": 7.5.1
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     tslib: ^1.9.3
-  checksum: f101baa03953d1d544a8f007b8cdc14a67531cddeb3db2bade4537031bd49a5f8fb9e1dec1bc28c08a8591f1ec901c24cc7cd34fd14cd091b5e931f5a068f352
+  checksum: c29e848a7dc315bd6afeb5c245726e1f9a2989d9b65151677932a8c7ebeebe58e379ec2c4ca8450dacd7ccfad83d3decda024e0d389b2aa3af1b2e2f2f7549d1
   languageName: node
   linkType: hard
 
@@ -2970,53 +2993,53 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/core@npm:7.5.0"
+"@sentry/core@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/core@npm:7.5.1"
   dependencies:
-    "@sentry/hub": 7.5.0
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/hub": 7.5.1
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     tslib: ^1.9.3
-  checksum: 34582f87acd33a70c45ffc13498c08679994172ecb595c4fd1ce34656f7a968abab6a04eecb7983a8a35675f7b61a530756aa4f1be3858aaaeb710c4a7ffcd0f
+  checksum: 90613800c95bd17075b33ed8f76a2cf18a2fd03e9c1b244ee7a846f0e0b738b84a199bc7c085d62c8e9043913024169e45cb925a03b36cf77d064caf8e7e05fd
   languageName: node
   linkType: hard
 
-"@sentry/hub@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/hub@npm:7.5.0"
+"@sentry/hub@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/hub@npm:7.5.1"
   dependencies:
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     tslib: ^1.9.3
-  checksum: d3786bef554a145e1e9292a2faa9cee314d78a6a672ee13798d51e61ebd90a3c26bc9dd4b7aac108ac78990a18af6ac0a560d25b52334083de7fce2d3171eee4
+  checksum: 6b00f2ef5fb12f94d5844f3abef9a84ec79d4f19d8347e8e8b8c06719c2d84d06963bb94e09305deb76640231ca1ed34dd4b2c63ff447fdb8fa16c22ac022484
   languageName: node
   linkType: hard
 
-"@sentry/integrations@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/integrations@npm:7.5.0"
+"@sentry/integrations@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/integrations@npm:7.5.1"
   dependencies:
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     localforage: ^1.8.1
     tslib: ^1.9.3
-  checksum: 66959e79a173cb70dc49871ccf61d074fc2b46f46ea1056e6dffb2ffc939d8741a45dd00b53785986e1d4eee7e1c0bda7c11e279b24ed6109f20c0afb3f1acb8
+  checksum: 13b4cb068e09f5208fbb750aa569453956a7f5cc4093e4e3485a92bac74b0c77a056c39b51395a2bc307cbb02cbde3b989bb985aaa849d87eed6ee853bfd33b6
   languageName: node
   linkType: hard
 
-"@sentry/nextjs@npm:^7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/nextjs@npm:7.5.0"
+"@sentry/nextjs@npm:^7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/nextjs@npm:7.5.1"
   dependencies:
-    "@sentry/core": 7.5.0
-    "@sentry/hub": 7.5.0
-    "@sentry/integrations": 7.5.0
-    "@sentry/node": 7.5.0
-    "@sentry/react": 7.5.0
-    "@sentry/tracing": 7.5.0
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/core": 7.5.1
+    "@sentry/hub": 7.5.1
+    "@sentry/integrations": 7.5.1
+    "@sentry/node": 7.5.1
+    "@sentry/react": 7.5.1
+    "@sentry/tracing": 7.5.1
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     "@sentry/webpack-plugin": 1.18.9
     tslib: ^1.9.3
   peerDependencies:
@@ -3026,67 +3049,67 @@ __metadata:
   peerDependenciesMeta:
     webpack:
       optional: true
-  checksum: 512dc5a2508355e1551d49008e91a04c1feea93679144508b24eb32ab61d1d5f65874bd0aa8e9619e13760de82fd7ffc01a6b9090d46bbf5dca80015d2b4c0b1
+  checksum: ca7f791075e6406af4ae3b7d25d359dbccb255b8b2f88a123056ac346a93a40926351ccb75d5b76e228215c98d85f7876d7fa3a0539f224ca895682f017c25d6
   languageName: node
   linkType: hard
 
-"@sentry/node@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/node@npm:7.5.0"
+"@sentry/node@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/node@npm:7.5.1"
   dependencies:
-    "@sentry/core": 7.5.0
-    "@sentry/hub": 7.5.0
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/core": 7.5.1
+    "@sentry/hub": 7.5.1
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     cookie: ^0.4.1
     https-proxy-agent: ^5.0.0
     lru_map: ^0.3.3
     tslib: ^1.9.3
-  checksum: 497d279d9aea84608d75aabe61ae5e2260ad05f3c0cd0a6f9d84021eb7b688d9ab6c7d056f7d89ed211d71a16aef4b10452aeed773fe1bc85432269f73bf1062
+  checksum: a8caa39edb923952a551a9609afb933c1753e5e6cf1a8eccb9b1f4adb6567356d3077d3319b266e502a3183f1cf402847ade0967217522a408f9c1640a220f02
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/react@npm:7.5.0"
+"@sentry/react@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/react@npm:7.5.1"
   dependencies:
-    "@sentry/browser": 7.5.0
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/browser": 7.5.1
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     hoist-non-react-statics: ^3.3.2
     tslib: ^1.9.3
   peerDependencies:
     react: 15.x || 16.x || 17.x || 18.x
-  checksum: 9edfb748f8a8520c681deaf22f03e22717a31dd67f97f63212f439de5113927ff399966f3df3885949f7486888ac0f3b6d46744b5a922acc2e45cbd28d12fd6b
+  checksum: c2346e2a30902c82f3caeedb5fd933bce8bb73f3228847d3729a88d30c5bad9d18bd8090cd2be421b000fa00e459098b7ba2a949675f424a2911ceedaa0f2c16
   languageName: node
   linkType: hard
 
-"@sentry/tracing@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/tracing@npm:7.5.0"
+"@sentry/tracing@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/tracing@npm:7.5.1"
   dependencies:
-    "@sentry/hub": 7.5.0
-    "@sentry/types": 7.5.0
-    "@sentry/utils": 7.5.0
+    "@sentry/hub": 7.5.1
+    "@sentry/types": 7.5.1
+    "@sentry/utils": 7.5.1
     tslib: ^1.9.3
-  checksum: 61655a6e5e2bf7ff3bd1587a745341ef59b584893def1e9d83f6cc83b9d0de01e57091901bf03bc6f918d8afbad6dd528cfacbefeb04b12039d934b3b6f4fa1b
+  checksum: cf70120946a1d4a337e05b2035ab7a2b00755f638006250d003dbf6badf1fba066f0abfc19689b60d4e6143e99616f4ada0d564376aec2d48a5171c6b9c871c8
   languageName: node
   linkType: hard
 
-"@sentry/types@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/types@npm:7.5.0"
-  checksum: ec049818c382cf46c3b66b8df2487b90411fe89ca0ad978e5d40bd6de4f0ae75af77afaf729662f9218fb0c33967e6a1ac71f7911697afa3d5e87c1ccd8d15f5
+"@sentry/types@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/types@npm:7.5.1"
+  checksum: 2ff669f0e6c6ea5020c117a15012ec55147033faebbc0708c1a772aabf9cf6e283d69556903a9213e96b188b0a5f7030ded7006ad8805b2a89a6442d36202b21
   languageName: node
   linkType: hard
 
-"@sentry/utils@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@sentry/utils@npm:7.5.0"
+"@sentry/utils@npm:7.5.1":
+  version: 7.5.1
+  resolution: "@sentry/utils@npm:7.5.1"
   dependencies:
-    "@sentry/types": 7.5.0
+    "@sentry/types": 7.5.1
     tslib: ^1.9.3
-  checksum: 6af3f247160bbd8106163867e481b538c6918906a0600d8914588800d7d80a958510e747203b8a0f157e9a31a2c90c0f6a53a5778056aec0c3dbe16d0fb8919d
+  checksum: 567fdba09fdbfc62b0e50f5099d82b075f4e5ebd7dace67c4379a9f65c12e7191aad526fbc955ee681da757c8332807bda74a50880c4576c4c39d97c2c49e91d
   languageName: node
   linkType: hard
 
@@ -3236,10 +3259,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/amplitude-js@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "@types/amplitude-js@npm:7.0.1"
-  checksum: 3295944e6d3e4088b1f53e4d4d25be2fc36bbd32afdb77d65219b8a61a62335c6430fa875256cd9b7a7aa819ab200d1e8c52b637f77c8f36703aaeb542ace11c
+"@types/amplitude-js@npm:^8.16.1":
+  version: 8.16.1
+  resolution: "@types/amplitude-js@npm:8.16.1"
+  checksum: 965a114096bd45cca80efec0a89be22007a9f799d47aa1ba97c90d7be1cfdc6a20257a4ddc416ac9f3ee2396c3f1c1562fb8e34a4558d6dc8f0a24e58c5b7fe1
   languageName: node
   linkType: hard
 
@@ -9649,164 +9672,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-core@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "nav-frontend-core@npm:5.1.1"
-  checksum: cf61746b73aef2b73a53729a6d672eb030a239985aad1f4a880430be46743adf0f4539fb40044142267f42243ecd26157b0f0abee8f7621a071dd39cf6380e0e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel-style@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "nav-frontend-ekspanderbartpanel-style@npm:1.1.2"
-  peerDependencies:
-    nav-frontend-chevron-style: ^1.0.3
-    nav-frontend-core: ^5.0.11
-    nav-frontend-paneler-style: ^1.0.0
-    nav-frontend-typografi-style: ^1.0.33
-  checksum: 5ffa92afe104baa9d8871c95970cb4eec57229867e33178b7042ac84db2dc0b28526c7475da465dfe12ec9d383bfb60801bdb4cceca1eb6634245893acf6eb58
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "nav-frontend-ekspanderbartpanel@npm:3.1.4"
-  peerDependencies:
-    "@types/react-collapse": ^5.0.0
-    classnames: ^2.2.5
-    nav-frontend-ekspanderbartpanel-style: ^1.0.38
-    nav-frontend-js-utils: ^1.0.16
-    react: ^16.8.0 || ^17.0.0
-    react-collapse: ^5.0.0
-  checksum: 14518f596b4be0a46c24913320a64ed84c4dbd87b4f44e97d157cd887d5131624e1fcb18c5f21a724f8d20a0f190aecd7fd1fa548f8ff0419ca1db2eaa7243c8
-  languageName: node
-  linkType: hard
-
-"nav-frontend-js-utils@npm:^1.0.20":
-  version: 1.0.20
-  resolution: "nav-frontend-js-utils@npm:1.0.20"
-  dependencies:
-    lodash.throttle: ^4.1.1
-  peerDependencies:
-    lodash.throttle: ^4.1.1
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-knapper-style@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "nav-frontend-knapper-style@npm:1.1.2"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-    nav-frontend-typografi-style: ^1.0.33
-  checksum: a55a2204291f933cf51accd87ecab9af32b984008af0b330174c8600f71be524d149a903def66911ee5762ec3ab6f40c68eb71cf6853431d176c72e105a51d23
-  languageName: node
-  linkType: hard
-
-"nav-frontend-knapper@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "nav-frontend-knapper@npm:2.1.4"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.16
-    nav-frontend-knapper-style: ^1.0.15
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: f53b0e6eba217e9df66ac05bccf9d30bd738f58baf618d7c27b575c6eb0cf34dcbc6a92aaedfb768c382a8467c0245d3153790c90b79cf1b326f3522929c7c18
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker-style@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "nav-frontend-lenker-style@npm:1.1.1"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-  checksum: 6094ccf72e694641011fbaaf42087f481e33d855d26f1fac23e5de41a4d8c4233e724820839ce27876d06077cafe2c99cba08d2e701ee3143c4424ffbf6894fb
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "nav-frontend-lenker@npm:1.1.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenker-style: ^1.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 44bde7115493106f5b2c2ad2c6a68e0bb566ce90837740bd55b113871e0e72760371158ebf817b8e6cb4b8b31ba4db5e112d6db7f2db6136eb13a84eeca0829e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-typografi-style@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "nav-frontend-typografi-style@npm:1.1.1"
-  dependencies:
-    nav-frontend-core: ^5.1.1
-  checksum: 3d10dcdcf9375597535b85b73c3499baacee4d1e3052734d4140f97ee5be36a9be2256914473ae8abda2272169f09dc00418e83e93ba494655e450885629d24d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-typografi@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "nav-frontend-typografi@npm:3.1.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^5.0.11
-    nav-frontend-typografi-style: ^1.0.33
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: ddd48ae6c0a5cf9521f9a19340bccbc01346ae51754b172945c63d6e9d3d5eac1100d8d21b1a9dc8c4c1979921f036c36293e430e74af270996c5639865ee94f
-  languageName: node
-  linkType: hard
-
-"nav-frontend-veileder-style@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "nav-frontend-veileder-style@npm:2.1.2"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-  checksum: d370224d8fe31e82bb7cb0fddb3e14d18ae693f0acf8245f16351d93e69105beb35052ae0fd6a274e5fc029d898d58126ad57577981edde84a96a5113a0cbe81
-  languageName: node
-  linkType: hard
-
-"nav-frontend-veileder@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "nav-frontend-veileder@npm:2.1.4"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.16
-    nav-frontend-veileder-style: ^2.0.28
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: b753f87cc1568f21b45b58a632da9547a2705c1ace6e717b98670d00c03a5739bdf95229d5593d06133332efb208ef2a3b1f5847c8db6f1f665082ca75caf9a3
-  languageName: node
-  linkType: hard
-
-"nav-frontend-veilederpanel-style@npm:1.1.1":
-  version: 1.1.1
-  resolution: "nav-frontend-veilederpanel-style@npm:1.1.1"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-    nav-frontend-paneler-style: ^1.0.0
-    nav-frontend-typografi-style: ^1.0.33
-  checksum: aaa341ec3552b5d8f8e0ef737fd646130e03128f8247d96edec682fab2f25e60d2a225136b84fb145d7994512f0a9ef96fd17dff5b5c0e2c83969b76641b308e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-veilederpanel@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "nav-frontend-veilederpanel@npm:1.1.4"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-veileder: ^2.0.39
-    nav-frontend-veilederpanel-style: ^1.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 9b0735567efb2e998469360b41fbf618d3224dfcc601d6ac1e0f56ac250110a7bc46f93a3ad373b5550206ddaa9ac283e4d1eeb67ee4c451f8db44b74dc3e837
-  languageName: node
-  linkType: hard
-
 "needle@npm:^3.1.0":
   version: 3.1.0
   resolution: "needle@npm:3.1.0"
@@ -12298,20 +12163,20 @@ __metadata:
     "@graphql-tools/load": ^7.7.0
     "@graphql-tools/schema": ^8.5.0
     "@graphql-typed-document-node/core": ^3.1.1
-    "@navikt/ds-css": ^0.18.26
+    "@navikt/ds-css": ^0.18.27
     "@navikt/ds-datepicker": ^2.1.8
     "@navikt/ds-icons": ^0.8.18
-    "@navikt/ds-react": ^0.19.19
+    "@navikt/ds-react": ^0.19.21
     "@navikt/eslint-config-teamsykmelding": ^0.18.0
     "@navikt/fnrvalidator": ^1.3.0
     "@navikt/nav-dekoratoren-moduler": ^1.6.17
     "@next/bundle-analyzer": ^12.2.0
-    "@sentry/nextjs": ^7.5.0
+    "@sentry/nextjs": ^7.5.1
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^12.1.5
     "@testing-library/react-hooks": ^8.0.1
     "@testing-library/user-event": ^13.5.0
-    "@types/amplitude-js": ^7.0.1
+    "@types/amplitude-js": ^8.16.1
     "@types/node": ^17.0.45
     "@types/react": ^17.0.47
     "@types/react-collapse": ^5.0.1
@@ -12330,20 +12195,6 @@ __metadata:
     lint-staged: ^13.0.3
     lodash.throttle: ^4.1.1
     micro: ^9.3.4
-    nav-frontend-core: ^5.1.1
-    nav-frontend-ekspanderbartpanel: ^3.1.4
-    nav-frontend-ekspanderbartpanel-style: ^1.1.2
-    nav-frontend-js-utils: ^1.0.20
-    nav-frontend-knapper: ^2.1.4
-    nav-frontend-knapper-style: ^1.1.2
-    nav-frontend-lenker: ^1.1.2
-    nav-frontend-lenker-style: ^1.1.1
-    nav-frontend-typografi: ^3.1.2
-    nav-frontend-typografi-style: ^1.1.1
-    nav-frontend-veileder: ^2.1.4
-    nav-frontend-veileder-style: ^2.1.2
-    nav-frontend-veilederpanel: ^1.1.4
-    nav-frontend-veilederpanel-style: 1.1.1
     next: 12.2.0
     next-logger: ^3.0.1
     next-router-mock: ^0.6.10

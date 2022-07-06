@@ -1,5 +1,5 @@
 import React from 'react';
-import { Undertittel, Innholdstittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 
 import styles from './Header.module.css';
 interface HeaderProps {
@@ -14,8 +14,12 @@ const Header: React.FC<HeaderProps> = ({ title, subTitle }) => {
 
     return (
         <div className={styles.locationHeader}>
-            <Innholdstittel tag="h1">{title}</Innholdstittel>
-            {subTitle ? <Undertittel tag="h2">{subTitle}</Undertittel> : null}
+            <Heading size="large">{title}</Heading>
+            {subTitle ? (
+                <Heading size="medium" level="2">
+                    {subTitle}
+                </Heading>
+            ) : null}
         </div>
     );
 };

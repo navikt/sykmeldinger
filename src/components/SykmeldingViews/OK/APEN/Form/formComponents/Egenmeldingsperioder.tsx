@@ -3,11 +3,11 @@ import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import { isValid, parseISO } from 'date-fns';
 import { Datepicker } from '@navikt/ds-datepicker';
 import dayjs from 'dayjs';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { BodyShort, Button, Label } from '@navikt/ds-react';
+import { Add, Close } from '@navikt/ds-icons';
 
 import QuestionWrapper from '../layout/QuestionWrapper';
 import { FormShape } from '../Form';
-import IconButton from '../../../../../IconButton/IconButton';
 
 import styles from './Egenmeldingsperioder.module.css';
 
@@ -164,16 +164,25 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 </div>
                             )}
                         />
-                        {index > 0 && <IconButton type="cross" tekst="Fjern periode" onClick={() => remove(index)} />}
+                        {index > 0 && (
+                            <Button variant="tertiary" size="small" type="button" onClick={() => remove(index)}>
+                                <Close />
+                                Fjern periode
+                            </Button>
+                        )}
                     </div>
                 ))}
             </div>
 
-            <IconButton
-                type="pluss"
-                tekst="Legg til ekstra periode"
+            <Button
+                variant="tertiary"
+                size="small"
+                type="button"
                 onClick={() => append({ fom: undefined, tom: undefined })}
-            />
+            >
+                <Add />
+                Legg til ekstra periode
+            </Button>
         </QuestionWrapper>
     );
 };

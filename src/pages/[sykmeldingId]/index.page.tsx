@@ -1,11 +1,9 @@
 import React, { PropsWithChildren } from 'react';
-import { Alert } from '@navikt/ds-react';
-import Veilederpanel from 'nav-frontend-veilederpanel';
+import { Alert, GuidePanel } from '@navikt/ds-react';
 import Head from 'next/head';
 
 import Spinner from '../../components/Spinner/Spinner';
 import useSykmelding from '../../hooks/useSykmelding';
-import VeilederMaleSvg from '../../components/Veileder/svg/VeilederMaleSvg';
 import { logger } from '../../utils/logger';
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils';
 import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId';
@@ -108,11 +106,7 @@ const SykmeldingComponent = ({
                     return <OkUtgattSykmelding sykmelding={sykmelding} />;
                 default:
                     logger.error(`${behandlingsutfall} sykmelding with unsupported status: ${status}`);
-                    return (
-                        <Veilederpanel svg={<VeilederMaleSvg />}>
-                            Oisann! Det har oppstått en feil i baksystemene.
-                        </Veilederpanel>
-                    );
+                    return <GuidePanel>Oisann! Det har oppstått en feil i baksystemene.</GuidePanel>;
             }
         case 'INVALID':
             switch (status) {
@@ -122,11 +116,7 @@ const SykmeldingComponent = ({
                     return <InvalidBekreftetSykmelding sykmelding={sykmelding} />;
                 default:
                     logger.error(`Avvist sykmelding with unsupported status: ${status}`);
-                    return (
-                        <Veilederpanel svg={<VeilederMaleSvg />}>
-                            Oisann! Det har oppstått en feil i baksystemene.
-                        </Veilederpanel>
-                    );
+                    return <GuidePanel>Oisann! Det har oppstått en feil i baksystemene.</GuidePanel>;
             }
     }
 
