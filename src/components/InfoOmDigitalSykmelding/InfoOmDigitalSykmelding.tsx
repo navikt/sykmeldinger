@@ -1,5 +1,5 @@
+import { Link } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { getPublicEnv } from '../../utils/env';
@@ -21,11 +21,11 @@ const InfoOmDigitalSykmelding = (): JSX.Element => (
             <section>
                 <Normaltekst className={styles.infoOmDigitalSykmeldingParagraph}>
                     NAV får alle sykmeldinger som blir skrevet i Norge. Den som er sykmeldt, finner den på{' '}
-                    <Lenke href={publicEnv.SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Lenke>, der du er logget inn nå.
+                    <Link href={publicEnv.SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Link>, der du er logget inn nå.
                 </Normaltekst>
                 <Normaltekst className={styles.infoOmDigitalSykmeldingParagraph}>
                     Du kan kreve at NAV sletter sykmeldingen din. Da kan du bruke{' '}
-                    <Lenke href="https://nav.no/skrivtiloss">nav.no/skrivtiloss</Lenke> eller ringe 55 55 33 33.
+                    <Link href="https://nav.no/skrivtiloss">nav.no/skrivtiloss</Link> eller ringe 55 55 33 33.
                 </Normaltekst>
             </section>
 

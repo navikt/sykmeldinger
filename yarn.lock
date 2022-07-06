@@ -9695,27 +9695,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-lenker-style@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "nav-frontend-lenker-style@npm:1.1.1"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-  checksum: 6094ccf72e694641011fbaaf42087f481e33d855d26f1fac23e5de41a4d8c4233e724820839ce27876d06077cafe2c99cba08d2e701ee3143c4424ffbf6894fb
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "nav-frontend-lenker@npm:1.1.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenker-style: ^1.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 44bde7115493106f5b2c2ad2c6a68e0bb566ce90837740bd55b113871e0e72760371158ebf817b8e6cb4b8b31ba4db5e112d6db7f2db6136eb13a84eeca0829e
-  languageName: node
-  linkType: hard
-
 "nav-frontend-typografi-style@npm:^1.1.1":
   version: 1.1.1
   resolution: "nav-frontend-typografi-style@npm:1.1.1"
@@ -12311,8 +12290,6 @@ __metadata:
     nav-frontend-ekspanderbartpanel: ^3.1.4
     nav-frontend-ekspanderbartpanel-style: ^1.1.2
     nav-frontend-js-utils: ^1.0.20
-    nav-frontend-lenker: ^1.1.2
-    nav-frontend-lenker-style: ^1.1.1
     nav-frontend-typografi: ^3.1.2
     nav-frontend-typografi-style: ^1.1.1
     nav-frontend-veileder: ^2.1.4

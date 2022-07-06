@@ -1,7 +1,6 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import Veilederpanel from 'nav-frontend-veilederpanel';
-import Lenke from 'nav-frontend-lenker';
-import { GuidePanel } from '@navikt/ds-react';
+import { GuidePanel, Link } from '@navikt/ds-react';
 
 import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated';
 import Spacing from '../Spacing/Spacing';
@@ -103,7 +102,7 @@ function StatusInfo({
                 <Spacing amount="small">
                     <Normaltekst>
                         Du kan kikke på det allerede nå i{' '}
-                        <Lenke href={publicEnv.SYKEPENGESOKNAD_URL || '#'}>dine søknader</Lenke>.
+                        <Link href={publicEnv.SYKEPENGESOKNAD_URL || '#'}>dine søknader</Link>.
                     </Normaltekst>
                 </Spacing>
 

@@ -1,8 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Alert } from '@navikt/ds-react';
+import { Alert, Link } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import Lenke from 'nav-frontend-lenker';
 import Head from 'next/head';
 
 import Spinner from '../components/Spinner/Spinner';
@@ -71,9 +70,9 @@ const SykmeldingerPage: React.FC = () => {
                     </Normaltekst>
                 </Spacing>
 
-                <Lenke href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
+                <Link href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
                     Mer informasjon om papirsykmelding finner du her.
-                </Lenke>
+                </Link>
             </Ekspanderbartpanel>
 
             <SykmeldingLinkPanel type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
