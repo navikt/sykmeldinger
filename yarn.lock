@@ -9649,25 +9649,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-chevron-style@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "nav-frontend-chevron-style@npm:1.0.4"
-  checksum: c4c4e8c63a9d9802060fbc451f8d82fa48ced9763b2820c0ff6e0801b5e9c8624a92d83ccb8c914f65cb29ed78dedf7ed92ce8c42c91fc6ffe29421f1a788630
-  languageName: node
-  linkType: hard
-
-"nav-frontend-chevron@npm:^1.0.30":
-  version: 1.0.30
-  resolution: "nav-frontend-chevron@npm:1.0.30"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-chevron-style: ^1.0.4
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 3f587f8abc5c2c00e1d14d9e188ca7417d074d024f5ead095b75029bb3a2ffdb157a514e0172d9ce12ce17c87320c2e333cb1f6f7c0d70dca33af0979c006a3d
-  languageName: node
-  linkType: hard
-
 "nav-frontend-core@npm:^5.1.1":
   version: 5.1.1
   resolution: "nav-frontend-core@npm:5.1.1"
@@ -9698,13 +9679,6 @@ __metadata:
     react: ^16.8.0 || ^17.0.0
     react-collapse: ^5.0.0
   checksum: 14518f596b4be0a46c24913320a64ed84c4dbd87b4f44e97d157cd887d5131624e1fcb18c5f21a724f8d20a0f190aecd7fd1fa548f8ff0419ca1db2eaa7243c8
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ikoner-assets@npm:^2.0.10":
-  version: 2.0.10
-  resolution: "nav-frontend-ikoner-assets@npm:2.0.10"
-  checksum: 9ff98d4fb10d6eaae72e9110176b50b7189cd4b19f44648a793c05f051b1e021ecd026f374db9674a3ca7f04f5f68d0132d1843c6f8354db46f4ea102e58941f
   languageName: node
   linkType: hard
 
@@ -9762,33 +9736,6 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: 44bde7115493106f5b2c2ad2c6a68e0bb566ce90837740bd55b113871e0e72760371158ebf817b8e6cb4b8b31ba4db5e112d6db7f2db6136eb13a84eeca0829e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema-style@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "nav-frontend-skjema-style@npm:2.2.3"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-    nav-frontend-paneler-style: ^1.0.0
-    nav-frontend-typografi-style: ^1.0.33
-  checksum: 47aacaa7c51cf50af66e1f827693e96c221738f6c9ed0838beb9c5fd051784a9bc735d0e7d969a0a23e00a02bcd6e44237fdc51bee2635cf7c95d3f304051faf
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema@npm:^3.2.6":
-  version: 3.2.6
-  resolution: "nav-frontend-skjema@npm:3.2.6"
-  peerDependencies:
-    "@navikt/fnrvalidator": ^1.1.0
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.16
-    nav-frontend-lenker: ^1.0.58
-    nav-frontend-skjema-style: ^2.1.0
-    nav-frontend-typografi: ^3.0.2
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 8750a83a09dea75ee30c2b79fcdfa61eafc5372afef940169617954c32ff9cffa08ac0417737f5252803b1246c834d224db381ae56384b2174132aec2a8df73e
   languageName: node
   linkType: hard
 
@@ -11131,12 +11078,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^6.15.8":
-  version: 6.15.8
-  resolution: "react-hook-form@npm:6.15.8"
+"react-hook-form@npm:^7.33.1":
+  version: 7.33.1
+  resolution: "react-hook-form@npm:7.33.1"
   peerDependencies:
-    react: ^16.8.0 || ^17
-  checksum: 867d0f8ab1c1a449ebe7027ce56c8b382e7ea516b60c9dcb1484cea1f7e6968b2ad5746e2113fdf5a8454d3759abf34fe65fbbea03babe2baa9eae4a96662b06
+    react: ^16.8.0 || ^17 || ^18
+  checksum: ec8f938b5af32148956edc9a87b6a0a99cc305617925608961cf4352ad1a786daea9fdc4d15106aea2821937d27367a69ab525882f07c0bb7ea45fba5dbf8ff2
   languageName: node
   linkType: hard
 
@@ -12383,19 +12330,14 @@ __metadata:
     lint-staged: ^13.0.3
     lodash.throttle: ^4.1.1
     micro: ^9.3.4
-    nav-frontend-chevron: ^1.0.30
-    nav-frontend-chevron-style: ^1.0.4
     nav-frontend-core: ^5.1.1
     nav-frontend-ekspanderbartpanel: ^3.1.4
     nav-frontend-ekspanderbartpanel-style: ^1.1.2
-    nav-frontend-ikoner-assets: ^2.0.10
     nav-frontend-js-utils: ^1.0.20
     nav-frontend-knapper: ^2.1.4
     nav-frontend-knapper-style: ^1.1.2
     nav-frontend-lenker: ^1.1.2
     nav-frontend-lenker-style: ^1.1.1
-    nav-frontend-skjema: ^3.2.6
-    nav-frontend-skjema-style: ^2.2.3
     nav-frontend-typografi: ^3.1.2
     nav-frontend-typografi-style: ^1.1.1
     nav-frontend-veileder: ^2.1.4
@@ -12414,7 +12356,7 @@ __metadata:
     react-day-picker: ^7.4.10
     react-dom: ^17.0.2
     react-error-boundary: ^3.1.4
-    react-hook-form: ^6.15.8
+    react-hook-form: ^7.33.1
     typescript: ^4.7.4
     zod: ^3.17.3
   languageName: unknown

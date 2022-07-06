@@ -15,7 +15,7 @@ import styles from './AvbrytPanel.module.css';
 
 const skjemanavn = 'avbryt åpen sykmelding';
 
-const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
+function AvbrytPanel(): JSX.Element {
     const logEvent = useAmplitude();
     const sykmeldingId = useGetSykmeldingIdParam();
 
@@ -68,7 +68,6 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
                     <Button
                         variant="tertiary"
                         size="small"
-                        disabled={disable}
                         onClick={() => {
                             setIsOpen((prev) => !prev);
                             setTimeout(() => {
@@ -109,6 +108,6 @@ const AvbrytPanel: React.FC<{ disable: boolean }> = ({ disable }) => {
             )}
         </>
     );
-};
+}
 
 export default AvbrytPanel;

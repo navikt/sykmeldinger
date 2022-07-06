@@ -78,8 +78,8 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                     <Sykmeldingsopplysninger sykmelding={sykmelding} />
                 </Spacing>
                 <div className="hide-on-print">
-                    <Form sykmelding={sykmelding} disable={!!olderSykmeldingId} />
-                    <AvbrytPanel disable={!!olderSykmeldingId} />
+                    <Form sykmelding={sykmelding} />
+                    <AvbrytPanel />
                 </div>
             </div>
         </AvbrytContextProvider>

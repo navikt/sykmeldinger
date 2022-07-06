@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
 import { isValid, parseISO } from 'date-fns';
-import { Label } from 'nav-frontend-skjema';
 import { Datepicker } from '@navikt/ds-datepicker';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
+import { BodyShort, Label } from '@navikt/ds-react';
 
 import QuestionWrapper from '../layout/QuestionWrapper';
-import { FormShape, Egenmeldingsperiode } from '../Form';
+import { FormShape } from '../Form';
 import IconButton from '../../../../../IconButton/IconButton';
 
 import styles from './Egenmeldingsperioder.module.css';
@@ -16,13 +15,14 @@ interface EgenmeldingsperioderProps {
     oppfolgingsdato: string;
 }
 
+const fieldName = 'egenmeldingsperioder';
+
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgingsdato }) => {
-    const fieldName: keyof FormShape = 'egenmeldingsperioder';
     const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(oppfolgingsdato).format('D. MMMM YYYY')}?`;
     const maxDate = dayjs(oppfolgingsdato).subtract(1, 'day');
 
-    const { errors, control, register, getValues, unregister } = useFormContext<FormShape>();
-    const { fields, append, remove } = useFieldArray<Egenmeldingsperiode>({
+    const { control, register, getValues, unregister } = useFormContext<FormShape>();
+    const { fields, append, remove } = useFieldArray({
         control,
         name: `${fieldName}.svar`,
     });
@@ -32,33 +32,31 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
     }, [append]);
 
     useEffect(() => {
-        register({
-            name: `${fieldName}.sporsmaltekst`,
+        register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
         });
-        register({
-            name: `${fieldName}.svartekster`,
+        register(`${fieldName}.svartekster`, {
             value: JSON.stringify('Fom, Tom'),
         });
+
         return () =>
             unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [register, unregister, sporsmaltekst]);
 
     return (
         <QuestionWrapper>
-            <Label htmlFor={fieldName}>{sporsmaltekst}</Label>
-
+            <label htmlFor={fieldName}>{sporsmaltekst}</label>
             <div id={fieldName} className={styles.egenmeldingsperioder}>
                 {fields.map((field, index) => (
                     <div key={field.id} className={styles.egenmeldingsperiode}>
                         <Controller
                             control={control}
-                            name={`${fieldName}.svar[${index}].fom`}
+                            name={`${fieldName}.svar.${index}.fom`}
                             defaultValue={null}
                             rules={{
                                 required: 'fom dato mangler.',
                                 validate: (fom) => {
-                                    if (!isValid(parseISO(fom))) {
+                                    if (fom && !isValid(parseISO(fom))) {
                                         return 'Startdato må være på formatet dd.mm.yyyy';
                                     }
 
@@ -68,9 +66,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                     }
 
                                     // Test current peirod
-                                    const tom = getValues<string, string | undefined>(
-                                        `${fieldName}.svar[${index}].tom`,
-                                    );
+                                    const tom: string | null = getValues(`${fieldName}.svar.${index}.tom`);
                                     if (tom && dayjs(tom).isBefore(fom)) {
                                         return 'Startdato kan ikke være etter sluttdato.';
                                     }
@@ -88,24 +84,24 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                     return true;
                                 },
                             }}
-                            render={({ onChange, value, name }) => (
+                            render={({ field, fieldState }) => (
                                 <div className={styles.periodeFom}>
-                                    <Normaltekst>Fra og med:</Normaltekst>
+                                    <BodyShort>Fra og med:</BodyShort>
                                     <Datepicker
                                         locale="nb"
                                         inputLabel=""
-                                        value={value ? value : undefined}
-                                        onChange={onChange}
+                                        value={field.value ? field.value : undefined}
+                                        onChange={field.onChange}
                                         limitations={{
                                             maxDate: maxDate.format('YYYY-MM-DD'),
                                         }}
-                                        inputProps={{ name, placeholder: 'dd.mm.åååå' }}
+                                        inputProps={{ name: field.name, placeholder: 'dd.mm.åååå' }}
                                         dayPickerProps={{ initialMonth: maxDate.toDate() }}
                                     />
-                                    {errors[fieldName]?.svar?.[index]?.fom?.message && (
-                                        <Element style={{ color: 'darkred', maxWidth: '12rem' }}>
-                                            {errors[fieldName]?.svar?.[index]?.fom?.message}
-                                        </Element>
+                                    {fieldState.error?.message && (
+                                        <Label style={{ color: 'darkred', maxWidth: '12rem' }}>
+                                            {fieldState.error?.message}
+                                        </Label>
                                     )}
                                 </div>
                             )}
@@ -113,12 +109,12 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
 
                         <Controller
                             control={control}
-                            name={`${fieldName}.svar[${index}].tom`}
+                            name={`${fieldName}.svar.${index}.tom`}
                             defaultValue={null}
                             rules={{
                                 required: 'tom dato mangler.',
                                 validate: (tom) => {
-                                    if (!isValid(parseISO(tom))) {
+                                    if (tom && !isValid(parseISO(tom))) {
                                         return 'Sluttdato må være på formatet dd.mm.yyyy';
                                     }
 
@@ -128,9 +124,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                     }
 
                                     // Test current peirod
-                                    const fom = getValues<string, string | undefined>(
-                                        `${fieldName}.svar[${index}].fom`,
-                                    );
+                                    const fom: string | null = getValues(`${fieldName}.svar.${index}.fom`);
                                     if (fom && dayjs(fom).isAfter(tom)) {
                                         return 'Sluttdato kan ikke være før startdato.';
                                     }
@@ -148,24 +142,24 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                     return true;
                                 },
                             }}
-                            render={({ onChange, value, name }) => (
+                            render={({ field, fieldState }) => (
                                 <div className={styles.periodeTom}>
-                                    <Normaltekst>Til og med:</Normaltekst>
+                                    <BodyShort>Til og med:</BodyShort>
                                     <Datepicker
                                         locale="nb"
-                                        value={value ? value : undefined}
+                                        value={field.value ? field.value : undefined}
                                         inputLabel=""
-                                        onChange={onChange}
+                                        onChange={field.onChange}
                                         limitations={{
                                             maxDate: maxDate.format('YYYY-MM-DD'),
                                         }}
-                                        inputProps={{ name, placeholder: 'dd.mm.åååå' }}
+                                        inputProps={{ name: field.name, placeholder: 'dd.mm.åååå' }}
                                         dayPickerProps={{ initialMonth: maxDate.toDate() }}
                                     />
-                                    {errors[fieldName]?.svar?.[index]?.tom?.message && (
-                                        <Element style={{ color: 'darkred', maxWidth: '11rem' }}>
-                                            {errors[fieldName]?.svar?.[index]?.tom?.message}
-                                        </Element>
+                                    {fieldState.error?.message && (
+                                        <Label style={{ color: 'darkred', maxWidth: '11rem' }}>
+                                            {fieldState.error?.message}
+                                        </Label>
                                     )}
                                 </div>
                             )}

@@ -1,5 +1,5 @@
-import NavFrontendChevron from 'nav-frontend-chevron';
-import { Element } from 'nav-frontend-typografi';
+import { Collapse } from '@navikt/ds-icons';
+import { Label } from '@navikt/ds-react';
 
 import styles from './Lukknapp.module.css';
 
@@ -7,10 +7,12 @@ interface LukknappProps {
     onClick?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
-const Lukknapp: React.FC<LukknappProps> = ({ onClick }) => (
+const Lukknapp = ({ onClick }: LukknappProps): JSX.Element => (
     <button type="button" onClick={onClick} className={styles.lukknapp}>
-        <Element className={styles.buttonText}>Lukk</Element>
-        <NavFrontendChevron type="opp" />
+        <Label size="small" className={styles.buttonText}>
+            Lukk
+        </Label>
+        <Collapse />
     </button>
 );
 

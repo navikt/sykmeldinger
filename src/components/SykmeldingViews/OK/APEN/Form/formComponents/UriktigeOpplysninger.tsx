@@ -1,6 +1,6 @@
-import React, { useMemo, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 import { FormShape, UriktigeOpplysningerType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
@@ -8,32 +8,29 @@ import { AvbrytContext } from '../../AvbrytContext';
 import Spacing from '../../../../../Spacing/Spacing';
 import UriktigeOpplysningerInfo from '../UriktigeOpplysningerInfo';
 
+const fieldName = 'uriktigeOpplysninger';
+
 function UriktigeOpplysninger(): JSX.Element {
-    const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'uriktigeOpplysninger';
+    const { register, unregister, control, watch } = useFormContext<FormShape>();
     const watchUriktigeOpplysninger = watch(fieldName);
     const { setMaAvbryte } = useContext(AvbrytContext);
 
-    const trengerNySykmelding = useMemo(() => {
-        return (
-            Boolean(watchUriktigeOpplysninger?.svar?.includes('PERIODE')) ||
-            Boolean(watchUriktigeOpplysninger?.svar?.includes('SYKMELDINGSGRAD_FOR_LAV'))
-        );
-    }, [watchUriktigeOpplysninger]);
+    const uriktigeOpplysinger = watchUriktigeOpplysninger?.svar ?? [];
+    const trengerNySykmelding =
+        uriktigeOpplysinger.includes('PERIODE') || uriktigeOpplysinger.includes('SYKMELDINGSGRAD_FOR_LAV');
 
     useEffect(() => {
         setMaAvbryte(trengerNySykmelding);
     }, [trengerNySykmelding, setMaAvbryte]);
 
     useEffect(() => {
-        register({
-            name: 'uriktigeOpplysninger.sporsmaltekst',
+        register('uriktigeOpplysninger.sporsmaltekst', {
             value: 'Hvilke opplysninger stemmer ikke?',
         });
-        register({
-            name: 'uriktigeOpplysninger.svartekster',
+        register('uriktigeOpplysninger.svartekster', {
             value: JSON.stringify(UriktigeOpplysningerType),
         });
+
         return () => {
             unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
             setMaAvbryte(false);
@@ -45,32 +42,27 @@ function UriktigeOpplysninger(): JSX.Element {
             <Controller
                 name={`${fieldName}.svar`}
                 control={control}
-                defaultValue={null}
+                defaultValue={[]}
                 rules={{
-                    validate: (val: [] | undefined) =>
-                        val == null || val.length <= 0
+                    validate: (value) =>
+                        value == null || value.length <= 0
                             ? 'Du må svare på hvilke opplysninger som ikke stemmer.'
                             : undefined,
                 }}
-                render={({ onChange: onCheckboxChange, value }) => (
-                    <CheckboksPanelGruppe
+                render={({ field, fieldState }) => (
+                    <CheckboxGroup
+                        {...field}
+                        id={fieldName}
                         legend="Hvilke opplysninger stemmer ikke?"
-                        checkboxes={Object.entries(UriktigeOpplysningerType).map(([key, label], index) => ({
-                            label: label,
-                            value: key,
-                            checked: value?.includes(key),
-                            id: index === 0 ? fieldName : undefined,
-                        }))}
-                        onChange={(_e, checkedValue) => {
-                            const oldValues = value as (keyof typeof UriktigeOpplysningerType)[] | undefined;
-                            const newVals = oldValues?.includes(checkedValue)
-                                ? oldValues.filter((vals) => vals !== checkedValue)
-                                : [...(oldValues ?? []), checkedValue];
-                            onCheckboxChange(newVals);
-                        }}
-                        // @ts-expect-error Shape of errors is wrong when field is an array
-                        feil={errors.uriktigeOpplysninger?.svar?.message}
-                    />
+                        onChange={(value: (keyof typeof UriktigeOpplysningerType)[]) => field.onChange(value)}
+                        error={fieldState.error?.message}
+                    >
+                        {Object.entries(UriktigeOpplysningerType).map(([key, label]) => (
+                            <Checkbox key={key} value={key}>
+                                {label}
+                            </Checkbox>
+                        ))}
+                    </CheckboxGroup>
                 )}
             />
 
