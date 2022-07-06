@@ -9695,29 +9695,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-knapper-style@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "nav-frontend-knapper-style@npm:1.1.2"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-    nav-frontend-typografi-style: ^1.0.33
-  checksum: a55a2204291f933cf51accd87ecab9af32b984008af0b330174c8600f71be524d149a903def66911ee5762ec3ab6f40c68eb71cf6853431d176c72e105a51d23
-  languageName: node
-  linkType: hard
-
-"nav-frontend-knapper@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "nav-frontend-knapper@npm:2.1.4"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.16
-    nav-frontend-knapper-style: ^1.0.15
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: f53b0e6eba217e9df66ac05bccf9d30bd738f58baf618d7c27b575c6eb0cf34dcbc6a92aaedfb768c382a8467c0245d3153790c90b79cf1b326f3522929c7c18
-  languageName: node
-  linkType: hard
-
 "nav-frontend-lenker-style@npm:^1.1.1":
   version: 1.1.1
   resolution: "nav-frontend-lenker-style@npm:1.1.1"
@@ -12334,8 +12311,6 @@ __metadata:
     nav-frontend-ekspanderbartpanel: ^3.1.4
     nav-frontend-ekspanderbartpanel-style: ^1.1.2
     nav-frontend-js-utils: ^1.0.20
-    nav-frontend-knapper: ^2.1.4
-    nav-frontend-knapper-style: ^1.1.2
     nav-frontend-lenker: ^1.1.2
     nav-frontend-lenker-style: ^1.1.1
     nav-frontend-typografi: ^3.1.2
