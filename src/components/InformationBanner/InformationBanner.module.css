@@ -24,18 +24,6 @@
     margin-right: var(--navds-spacing-4);
 }
 
-.mottattSykmeldingTekst p {
-    font-size: var(--navds-font-size-medium);
-}
-
-.mottattSykmeldingTekst :global(.navds-label) {
-    padding-bottom: var(--navds-spacing-2);
-}
-
-.mottattSykmeldingTekst :global(.navds-body-long:not(:last-of-type)) {
-    padding-bottom: var(--navds-spacing-3);
-}
-
 @media (max-width: 480px) {
     .veilederMottattSykmeldingen {
         display: block;

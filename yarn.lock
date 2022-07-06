@@ -9695,52 +9695,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-veileder-style@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "nav-frontend-veileder-style@npm:2.1.2"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-  checksum: d370224d8fe31e82bb7cb0fddb3e14d18ae693f0acf8245f16351d93e69105beb35052ae0fd6a274e5fc029d898d58126ad57577981edde84a96a5113a0cbe81
-  languageName: node
-  linkType: hard
-
-"nav-frontend-veileder@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "nav-frontend-veileder@npm:2.1.4"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.16
-    nav-frontend-veileder-style: ^2.0.28
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: b753f87cc1568f21b45b58a632da9547a2705c1ace6e717b98670d00c03a5739bdf95229d5593d06133332efb208ef2a3b1f5847c8db6f1f665082ca75caf9a3
-  languageName: node
-  linkType: hard
-
-"nav-frontend-veilederpanel-style@npm:1.1.1":
-  version: 1.1.1
-  resolution: "nav-frontend-veilederpanel-style@npm:1.1.1"
-  peerDependencies:
-    nav-frontend-core: ^5.0.11
-    nav-frontend-paneler-style: ^1.0.0
-    nav-frontend-typografi-style: ^1.0.33
-  checksum: aaa341ec3552b5d8f8e0ef737fd646130e03128f8247d96edec682fab2f25e60d2a225136b84fb145d7994512f0a9ef96fd17dff5b5c0e2c83969b76641b308e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-veilederpanel@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "nav-frontend-veilederpanel@npm:1.1.4"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-veileder: ^2.0.39
-    nav-frontend-veilederpanel-style: ^1.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 9b0735567efb2e998469360b41fbf618d3224dfcc601d6ac1e0f56ac250110a7bc46f93a3ad373b5550206ddaa9ac283e4d1eeb67ee4c451f8db44b74dc3e837
-  languageName: node
-  linkType: hard
-
 "needle@npm:^3.1.0":
   version: 3.1.0
   resolution: "needle@npm:3.1.0"
@@ -12268,10 +12222,6 @@ __metadata:
     nav-frontend-ekspanderbartpanel: ^3.1.4
     nav-frontend-ekspanderbartpanel-style: ^1.1.2
     nav-frontend-js-utils: ^1.0.20
-    nav-frontend-veileder: ^2.1.4
-    nav-frontend-veileder-style: ^2.1.2
-    nav-frontend-veilederpanel: ^1.1.4
-    nav-frontend-veilederpanel-style: 1.1.1
     next: 12.2.0
     next-logger: ^3.0.1
     next-router-mock: ^0.6.10

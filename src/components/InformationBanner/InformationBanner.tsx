@@ -1,11 +1,9 @@
-import { BodyLong, GuidePanel, Heading, Label } from '@navikt/ds-react';
-import Veileder from 'nav-frontend-veileder';
+import { BodyLong, GuidePanel, Heading, Label, SpeechBubble } from '@navikt/ds-react';
 
 import { Merknad } from '../../fetching/graphql.generated';
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 
 import styles from './InformationBanner.module.css';
-import Bubble from './Bubble';
 
 export enum Merknadtype {
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
@@ -106,19 +104,16 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
 
     return (
         <div className={styles.veilederMottattSykmeldingen}>
-            <Veileder storrelse="S" fargetema="info">
-                <VeilederMaleSvg />
-            </Veileder>
-            <div className={styles.mottattSykmeldingTekst}>
-                <Bubble>
+            <SpeechBubble illustration={<VeilederMaleSvg />} position="left">
+                <SpeechBubble.Bubble>
                     <Label>Vi har mottatt sykmeldingen din</Label>
                     <BodyLong>
                         Under ser du opplysningene vi har fått fra behandleren din. Stemmer dette med det dere ble enige
                         om?
                     </BodyLong>
                     <BodyLong>Når du er ferdig sender du sykmeldingen, nederst på siden.</BodyLong>
-                </Bubble>
-            </div>
+                </SpeechBubble.Bubble>
+            </SpeechBubble>
         </div>
     );
 };

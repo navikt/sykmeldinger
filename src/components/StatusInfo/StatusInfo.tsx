@@ -1,9 +1,7 @@
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import { BodyLong, BodyShort, GuidePanel, Link } from '@navikt/ds-react';
 
 import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated';
 import Spacing from '../Spacing/Spacing';
-import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
 import { Merknadtype } from '../InformationBanner/InformationBanner';
 import { getPublicEnv } from '../../utils/env';
 
@@ -89,7 +87,7 @@ function StatusInfo({
 
     return (
         <div data-testid="status-info">
-            <Veilederpanel type="plakat" fargetema="info" svg={<VeilederMaleSvg />}>
+            <GuidePanel poster>
                 <Spacing amount="small">
                     <BodyLong>
                         Når sykefraværet er over, får du en melding fra oss igjen. Da svarer du på noen spørsmål slik at
@@ -116,7 +114,7 @@ function StatusInfo({
                 <Spacing amount="small">
                     <BodyShort>God bedring!</BodyShort>
                 </Spacing>
-            </Veilederpanel>
+            </GuidePanel>
         </div>
     );
 }
