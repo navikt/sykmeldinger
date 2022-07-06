@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Alert, Link } from '@navikt/ds-react';
+import { Alert, BodyShort, Link } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Head from 'next/head';
 
@@ -64,10 +63,10 @@ const SykmeldingerPage: React.FC = () => {
 
             <Ekspanderbartpanel tittel="Ser du ikke sykmeldingen din her?">
                 <Spacing amount="small">
-                    <Normaltekst>
+                    <BodyShort>
                         Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
                         papirsykmeldingen i stedet.
-                    </Normaltekst>
+                    </BodyShort>
                 </Spacing>
 
                 <Link href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">

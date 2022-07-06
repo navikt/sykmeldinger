@@ -36,7 +36,6 @@ describe('Uriktige opplysninger', () => {
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Periode' }));
-        // TODO: look into aria announcements
         expect(await screen.findByText('Du kan ikke bruke denne sykmeldingen')).toBeInTheDocument();
         expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument();
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument();
@@ -47,7 +46,6 @@ describe('Uriktige opplysninger', () => {
 
         userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
         userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for lav' }));
-        // TODO: look into aria announcements
         expect(await screen.findByText('Du kan ikke bruke denne sykmeldingen')).toBeInTheDocument();
         expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument();
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument();

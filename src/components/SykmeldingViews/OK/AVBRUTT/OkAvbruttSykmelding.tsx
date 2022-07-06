@@ -1,6 +1,5 @@
 import React from 'react';
-import { Alert, Button, Loader } from '@navikt/ds-react';
-import { Undertittel, Element } from 'nav-frontend-typografi';
+import { Alert, Button, Detail, Heading, Loader } from '@navikt/ds-react';
 import { FillForms, WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
@@ -36,10 +35,10 @@ function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Elem
         <div className="sykmelding-container">
             <Spacing amount="small">
                 <Alert variant="info">
-                    <Undertittel tag="h2">
+                    <Heading size="medium" level="2">
                         {sykmelding.egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble avbrutt av deg
-                    </Undertittel>
-                    <Element>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
+                    </Heading>
+                    <Detail>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Detail>
                 </Alert>
             </Spacing>
             <SykmeldingStatusPrint

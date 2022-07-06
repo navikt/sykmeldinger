@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { LinkPanel } from '@navikt/ds-react';
+import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
 import cn from 'classnames';
 
 import { Sykmelding } from '../../../fetching/graphql.generated';
@@ -41,12 +40,14 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
                         />
                     </div>
                     <div className={styles.mainContent}>
-                        <Normaltekst tag="p">{getReadableSykmeldingLength(sykmelding)}</Normaltekst>
-                        <Undertittel tag="h3">{getSykmeldingTitle(sykmelding)}</Undertittel>
+                        <BodyShort>{getReadableSykmeldingLength(sykmelding)}</BodyShort>
+                        <Heading size="small" level="3">
+                            {getSykmeldingTitle(sykmelding)}
+                        </Heading>
                         <ul>
                             {sykmelding.sykmeldingsperioder.map((periode, index) => (
                                 <li key={index}>
-                                    <Normaltekst>{getDescription(periode, arbeidsgiverNavn)}</Normaltekst>
+                                    <BodyShort>{getDescription(periode, arbeidsgiverNavn)}</BodyShort>
                                 </li>
                             ))}
                         </ul>

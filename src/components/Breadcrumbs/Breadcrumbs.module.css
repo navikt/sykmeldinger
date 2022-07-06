@@ -30,6 +30,10 @@
     display: none;
 }
 
+.breadcrumbs .breadcrumbsIcon svg {
+    font-size: var(--navds-font-size-heading-large);
+}
+
 @media (min-width: 24em) {
     .breadcrumbs {
         display: flex;
@@ -39,8 +43,10 @@
     .breadcrumbs .breadcrumbsIcon {
         width: 2em;
         height: 2em;
-        display: inline-block;
+        display: inline-flex;
         margin-right: 1em;
+        justify-content: center;
+        align-items: center;
     }
 }
 

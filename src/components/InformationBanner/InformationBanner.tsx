@@ -1,5 +1,4 @@
-import { BodyLong, GuidePanel, Label } from '@navikt/ds-react';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { BodyLong, GuidePanel, Heading, Label } from '@navikt/ds-react';
 import Veileder from 'nav-frontend-veileder';
 
 import { Merknad } from '../../fetching/graphql.generated';
@@ -25,27 +24,27 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
             <div data-testid="merknad-banner">
                 <GuidePanel poster>
                     <div className={styles.merknadBannerSection}>
-                        <Undertittel className={styles.title} tag="h2">
+                        <Heading className={styles.title} level="2" size="small">
                             Tilbakedateringen kan ikke godkjennes
-                        </Undertittel>
-                        <Normaltekst className={styles.paragraph}>
+                        </Heading>
+                        <BodyLong className={styles.paragraph}>
                             Vanligvis starter sykmeldingen den datoen du er hos behandleren. I enkelte tilfeller kan
                             datoen i sykmeldingen settes tilbake i tid, det vi kaller tilbakedatering. NAV vurderer om
                             det er en gyldig grunn for tilbakedateringen.
-                        </Normaltekst>
-                        <Normaltekst className={styles.paragraph}>
+                        </BodyLong>
+                        <BodyLong className={styles.paragraph}>
                             Sykmeldingen din startet før du oppsøkte behandleren, og vi kan ikke godkjenne grunnen.
                             Derfor vil du ikke få sykepenger for disse dagene.
-                        </Normaltekst>
+                        </BodyLong>
                     </div>
-                    <Undertittel tag="h2" className={styles.title}>
+                    <Heading level="2" size="small" className={styles.title}>
                         Hva gjør jeg nå?
-                    </Undertittel>
-                    <Normaltekst>
+                    </Heading>
+                    <BodyLong>
                         Du kan likevel sende inn sykmeldingen. Når perioden er over, sender du søknaden om sykepenger.
                         Når søknaden er behandlet, vil du få en begrunnelse for hvorfor du ikke kan få sykepenger for de
                         tilbakedaterte dagene, og du får samtidig mulighet til å klage.
-                    </Normaltekst>
+                    </BodyLong>
                 </GuidePanel>
             </div>
         );
@@ -55,14 +54,14 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
         return (
             <div data-testid="merknad-banner">
                 <GuidePanel poster>
-                    <Undertittel tag="h2" className={styles.title}>
+                    <Heading level="2" size="small" className={styles.title}>
                         Behov for mer opplysninger
-                    </Undertittel>
-                    <Normaltekst className={styles.paragraph}>
+                    </Heading>
+                    <BodyLong className={styles.paragraph}>
                         Sykmeldingen din starter tidligere enn den dagen du var hos behandleren. Vi innhenter
                         opplysninger om hvorfor sykmeldingen er datert tilbake.
-                    </Normaltekst>
-                    <Normaltekst>Du kan likevel sende inn søknaden om sykepenger.</Normaltekst>
+                    </BodyLong>
+                    <BodyLong>Du kan likevel sende inn søknaden om sykepenger.</BodyLong>
                 </GuidePanel>
             </div>
         );
@@ -72,22 +71,20 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
         return (
             <div data-testid="merknad-banner">
                 <GuidePanel poster>
-                    <Undertittel tag="h2" className={styles.title}>
+                    <Heading level="2" size="small" className={styles.title}>
                         Viktig informasjon
-                    </Undertittel>
-                    <Normaltekst className={styles.paragraph}>
+                    </Heading>
+                    <BodyLong className={styles.paragraph}>
                         Vanligvis starter sykmeldingen fra den dagen du er hos legen. I ditt tilfelle har legen skrevet
                         at den startet tidligere. NAV må derfor vurdere om det er en gyldig grunn for at sykmeldingen
                         din starter før du var i kontakt med legen.
-                    </Normaltekst>
-                    <Normaltekst className={styles.paragraph}>
-                        Du kan fortsatt sende inn sykmeldingen som vanlig.
-                    </Normaltekst>
+                    </BodyLong>
+                    <BodyLong className={styles.paragraph}>Du kan fortsatt sende inn sykmeldingen som vanlig.</BodyLong>
                     <hr className={styles.merknadBannerRuler} />
-                    <Normaltekst>
+                    <BodyLong>
                         Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
                         Du velger selv om du vil bruke sykmeldingen.
-                    </Normaltekst>
+                    </BodyLong>
                 </GuidePanel>
             </div>
         );
