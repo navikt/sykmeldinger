@@ -1,8 +1,6 @@
 @import '~@navikt/ds-datepicker/lib/index.css';
 @import '~@navikt/ds-css';
 
-@import '~nav-frontend-ekspanderbartpanel-style/dist/main.css';
-
 html {
     --header-farge: #c2eaf7;
     --skillelinje-farge: #c9c9c9;

@@ -9649,52 +9649,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-core@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "nav-frontend-core@npm:5.1.1"
-  checksum: cf61746b73aef2b73a53729a6d672eb030a239985aad1f4a880430be46743adf0f4539fb40044142267f42243ecd26157b0f0abee8f7621a071dd39cf6380e0e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel-style@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "nav-frontend-ekspanderbartpanel-style@npm:1.1.2"
-  peerDependencies:
-    nav-frontend-chevron-style: ^1.0.3
-    nav-frontend-core: ^5.0.11
-    nav-frontend-paneler-style: ^1.0.0
-    nav-frontend-typografi-style: ^1.0.33
-  checksum: 5ffa92afe104baa9d8871c95970cb4eec57229867e33178b7042ac84db2dc0b28526c7475da465dfe12ec9d383bfb60801bdb4cceca1eb6634245893acf6eb58
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "nav-frontend-ekspanderbartpanel@npm:3.1.4"
-  peerDependencies:
-    "@types/react-collapse": ^5.0.0
-    classnames: ^2.2.5
-    nav-frontend-ekspanderbartpanel-style: ^1.0.38
-    nav-frontend-js-utils: ^1.0.16
-    react: ^16.8.0 || ^17.0.0
-    react-collapse: ^5.0.0
-  checksum: 14518f596b4be0a46c24913320a64ed84c4dbd87b4f44e97d157cd887d5131624e1fcb18c5f21a724f8d20a0f190aecd7fd1fa548f8ff0419ca1db2eaa7243c8
-  languageName: node
-  linkType: hard
-
-"nav-frontend-js-utils@npm:^1.0.20":
-  version: 1.0.20
-  resolution: "nav-frontend-js-utils@npm:1.0.20"
-  dependencies:
-    lodash.throttle: ^4.1.1
-  peerDependencies:
-    lodash.throttle: ^4.1.1
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
-  languageName: node
-  linkType: hard
-
 "needle@npm:^3.1.0":
   version: 3.1.0
   resolution: "needle@npm:3.1.0"
@@ -12218,10 +12172,6 @@ __metadata:
     lint-staged: ^13.0.3
     lodash.throttle: ^4.1.1
     micro: ^9.3.4
-    nav-frontend-core: ^5.1.1
-    nav-frontend-ekspanderbartpanel: ^3.1.4
-    nav-frontend-ekspanderbartpanel-style: ^1.1.2
-    nav-frontend-js-utils: ^1.0.20
     next: 12.2.0
     next-logger: ^3.0.1
     next-router-mock: ^0.6.10
