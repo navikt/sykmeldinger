@@ -52,8 +52,8 @@ ul li {
     #decorator-header,
     #decorator-footer,
     ._hj_feedback_container,
-    .alertstripe,
-    .nav-veilederpanel,
+    .navds-alert,
+    .navds-guide-panel,
     .hide-on-print {
         display: none;
     }

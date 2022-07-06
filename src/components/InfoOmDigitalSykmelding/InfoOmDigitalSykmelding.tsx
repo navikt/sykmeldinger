@@ -30,10 +30,11 @@ const InfoOmDigitalSykmelding = (): JSX.Element => (
                             melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme
                             tilbake i jobb
                         </BodyLong>
-                        <BodyLong as="li">legge til rette for at du kan søke om sykepenger</BodyLong>
+                        <BodyLong as="li" spacing>
+                            legge til rette for at du kan søke om sykepenger
+                        </BodyLong>
                     </ul>
                 </section>
-
                 <section>
                     <Heading size="small" level="3" spacing>
                         Må jeg bruke den digitale sykmeldingen?
