@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import { Radio, RadioGroup } from '@navikt/ds-react';
 
 import { FormShape, JaEllerNeiType } from '../Form';
 import QuestionWrapper from '../layout/QuestionWrapper';
@@ -8,23 +8,22 @@ import { useAmplitude } from '../../../../../../amplitude/amplitude';
 
 import UriktigeOpplysninger from './UriktigeOpplysninger';
 
-const fieldName: keyof FormShape = 'erOpplysningeneRiktige';
+const fieldName = 'erOpplysningeneRiktige';
 const sporsmaltekst = 'Stemmer opplysningene?';
 
-const ErOpplysningeneRiktige: React.FC<{ disable: boolean }> = ({ disable }) => {
+function ErOpplysningeneRiktige(): JSX.Element {
     const logEvent = useAmplitude();
-    const { register, unregister, control, watch, errors } = useFormContext<FormShape>();
+    const { register, unregister, control, watch } = useFormContext<FormShape>();
     const watchErOpplysningeneRiktige = watch(fieldName);
 
     useEffect(() => {
-        register({
-            name: `${fieldName}.sporsmaltekst`,
+        register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
         });
-        register({
-            name: `${fieldName}.svartekster`,
+        register(`${fieldName}.svartekster`, {
             value: JSON.stringify(JaEllerNeiType),
         });
+
         return () =>
             unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [register, unregister]);
@@ -33,32 +32,32 @@ const ErOpplysningeneRiktige: React.FC<{ disable: boolean }> = ({ disable }) => 
         <QuestionWrapper>
             <Controller
                 control={control}
-                name={fieldName + '.svar'}
-                defaultValue={null}
+                name={`${fieldName}.svar`}
                 rules={{ required: 'Du må svare på om opplysningene i sykmeldingen er riktige.' }}
-                render={({ onChange, value, name }) => (
-                    <RadioPanelGruppe
-                        name={name}
+                defaultValue={null}
+                render={({ field, fieldState }) => (
+                    <RadioGroup
+                        {...field}
+                        id={fieldName}
                         legend={sporsmaltekst}
-                        radios={[
-                            { label: JaEllerNeiType.JA, value: 'JA', id: fieldName, disabled: disable },
-                            { label: JaEllerNeiType.NEI, value: 'NEI', disabled: disable },
-                        ]}
-                        checked={value}
-                        // TODO type better
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        onChange={(e: any) => {
-                            logEvent({ eventName: 'skjema startet', data: { skjemanavn: 'åpen sykmelding' } });
-                            onChange(e.target.value);
+                        onChange={(value: 'JA' | 'NEI') => {
+                            logEvent(
+                                { eventName: 'skjema startet', data: { skjemanavn: 'åpen sykmelding' } },
+                                { 'stemmer opplysningene': value },
+                            );
+                            field.onChange(value);
                         }}
-                        feil={errors.erOpplysningeneRiktige?.svar?.message}
-                    />
+                        error={fieldState.error?.message}
+                    >
+                        <Radio value="JA">{JaEllerNeiType.JA}</Radio>
+                        <Radio value="NEI">{JaEllerNeiType.NEI}</Radio>
+                    </RadioGroup>
                 )}
             />
 
             {watchErOpplysningeneRiktige?.svar === 'NEI' && <UriktigeOpplysninger />}
         </QuestionWrapper>
     );
-};
+}
 
 export default ErOpplysningeneRiktige;

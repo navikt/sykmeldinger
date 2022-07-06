@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { Select } from 'nav-frontend-skjema';
+import { Select } from '@navikt/ds-react';
 
 import { SykmeldingFragment } from '../../fetching/graphql.generated';
 import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/SykmeldingSorter';

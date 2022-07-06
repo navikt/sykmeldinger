@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react';
-import NavFrontendChevron from 'nav-frontend-chevron';
 import cn from 'classnames';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { Findout, Print } from '@navikt/ds-icons';
+import { Collapse, Expand, Findout, Print } from '@navikt/ds-icons';
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated';
 import Lukknapp from '../../Lukknapp/Lukknapp';
@@ -69,7 +68,7 @@ const Sykmeldingsopplysninger: React.FC<SykmeldingsopplysningerProps> = ({
                             >
                                 Se hva som sendes til jobben din
                             </Heading>
-                            <NavFrontendChevron type={expanded ? 'opp' : 'ned'} />
+                            {expanded ? <Collapse /> : <Expand />}
                         </div>
                     </button>
                     <div

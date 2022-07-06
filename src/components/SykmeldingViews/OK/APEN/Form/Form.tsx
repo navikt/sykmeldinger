@@ -20,8 +20,8 @@ import styles from './Form.module.css';
 import VeilederSenderSykmeldingen from './formComponents/VeilederSenderSykmeldingen';
 
 export interface Egenmeldingsperiode {
-    fom: string;
-    tom: string;
+    fom: string | null;
+    tom: string | null;
 }
 
 export enum UriktigeOpplysningerType {
@@ -54,29 +54,25 @@ interface SporsmalSvar<Value> {
 }
 
 export interface FormShape {
-    erOpplysningeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    erOpplysningeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
     uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
-    arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType>;
-    arbeidsgiverOrgnummer?: SporsmalSvar<string>;
-    riktigNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType>;
-    harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType | null>;
+    arbeidsgiverOrgnummer?: SporsmalSvar<string | null>;
+    riktigNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
+    harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
     egenmeldingsperioder?: SporsmalSvar<Egenmeldingsperiode[]>;
-    harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType>;
+    harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
 }
 
 interface FormProps {
     sykmelding: SykmeldingFragment;
-    disable: boolean;
 }
 
-function Form({ sykmelding, disable }: FormProps): JSX.Element {
+function Form({ sykmelding }: FormProps): JSX.Element {
     const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding';
 
     const logEvent = useAmplitude();
-    useLogAmplitudeEvent(
-        { eventName: 'skjema åpnet', data: { skjemanavn } },
-        { 'har eldre sykmelding': disable ? 'Ja' : 'Nei' },
-    );
+    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
 
     const sykmeldingId = useGetSykmeldingIdParam();
 
@@ -88,7 +84,11 @@ function Form({ sykmelding, disable }: FormProps): JSX.Element {
     );
 
     const formMethods = useForm<FormShape>({ shouldFocusError: false });
-    const { handleSubmit, watch, errors } = formMethods;
+    const {
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = formMethods;
 
     const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
     const erArbeidstakerMedStrengtFortroligAdressse =
@@ -129,7 +129,7 @@ function Form({ sykmelding, disable }: FormProps): JSX.Element {
         <FormProvider {...formMethods}>
             <form id="apen-sykmelding-form" className="hide-on-print" onSubmit={handleSubmit(onSubmit)}>
                 <Spacing>
-                    <ErOpplysningeneRiktige disable={disable} />
+                    <ErOpplysningeneRiktige />
 
                     {Boolean(watchErOpplysningeneRiktige?.svar) && !maAvbryte && (
                         <Arbeidssituasjon
@@ -172,7 +172,7 @@ function Form({ sykmelding, disable }: FormProps): JSX.Element {
                         <div style={{ textAlign: 'center' }}>
                             <Button
                                 className={styles.sendBekreftButton}
-                                disabled={fetchingSend || disable}
+                                disabled={fetchingSend}
                                 variant="primary"
                                 type="submit"
                             >

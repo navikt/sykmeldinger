@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import dayjs from 'dayjs';
-import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { BodyShort, Heading, Label, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 
 import QuestionWrapper from '../layout/QuestionWrapper';
-import Ekspanderbar from '../../../../../Ekspanderbar/Ekspanderbar';
 import { FormShape, JaEllerNeiType } from '../Form';
 import Spacing from '../../../../../Spacing/Spacing';
 
@@ -15,23 +13,23 @@ interface HarBruktEgenmeldingProps {
     oppfolgingsdato: string;
 }
 
+const fieldName = 'harBruktEgenmelding';
+
 const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsdato }) => {
-    const { control, watch, errors, register, unregister } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'harBruktEgenmelding';
+    const { control, watch, register, unregister } = useFormContext<FormShape>();
+    const watchHarBruktEgenmelding = watch(fieldName);
     const sporsmaltekst = `Vi har registrert at du ble syk ${dayjs(oppfolgingsdato).format(
         'D. MMMM YYYY',
     )}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`;
-    const watchHarBruktEgenmelding = watch(fieldName);
 
     useEffect(() => {
-        register({
-            name: `${fieldName}.sporsmaltekst`,
+        register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
         });
-        register({
-            name: `${fieldName}.svartekster`,
+        register(`${fieldName}.svartekster`, {
             value: JSON.stringify(JaEllerNeiType),
         });
+
         return () =>
             unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [register, unregister, sporsmaltekst]);
@@ -39,7 +37,7 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsda
     return (
         <QuestionWrapper>
             <Spacing amount="x-small">
-                <Systemtittel tag="h2">Fravær før sykmeldingen</Systemtittel>
+                <Heading size="medium">Fravær før sykmeldingen</Heading>
             </Spacing>
             <Controller
                 control={control}
@@ -48,59 +46,50 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsda
                 rules={{
                     required: 'Du må svare på om du har brukt egenmelding eller annen sykmelding før du ble syk.',
                 }}
-                render={({ onChange, value, name }) => (
-                    <RadioPanelGruppe
-                        name={name}
+                render={({ field, fieldState }) => (
+                    <RadioGroup
+                        {...field}
+                        id={fieldName}
                         legend={
                             <div>
                                 <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
-                                <Ekspanderbar title="Hva betyr dette?">
-                                    <Spacing amount="x-small">
-                                        <Normaltekst>
-                                            Vi trenger denne informasjonen for å vite hvem som skal utbetale hva.
-                                        </Normaltekst>
-                                    </Spacing>
-                                    <Spacing amount="small">
-                                        <Normaltekst>
-                                            Siden vi ikke får tak i informasjonen automatisk, må vi få disse
-                                            opplysningene fra deg.
-                                        </Normaltekst>
-                                    </Spacing>
-                                    <Spacing amount="x-small">
-                                        <Element>Med fravær mener vi</Element>
-                                    </Spacing>
+                                <ReadMore header="Hva betyr dette?">
+                                    <BodyShort spacing>
+                                        Vi trenger denne informasjonen for å vite hvem som skal utbetale hva.
+                                    </BodyShort>
+                                    <BodyShort spacing>
+                                        Siden vi ikke får tak i informasjonen automatisk, må vi få disse opplysningene
+                                        fra deg.
+                                    </BodyShort>
+                                    <Label spacing>Med fravær mener vi</Label>
                                     <ul>
                                         <li>
-                                            <Normaltekst>egenmelding</Normaltekst>
+                                            <BodyShort>egenmelding</BodyShort>
                                         </li>
                                         <li>
-                                            <Normaltekst>papirsykmelding</Normaltekst>
+                                            <BodyShort>papirsykmelding</BodyShort>
                                         </li>
                                         <li>
-                                            <Normaltekst>ferie</Normaltekst>
+                                            <BodyShort>ferie</BodyShort>
                                         </li>
                                         <li>
-                                            <Normaltekst>permisjon</Normaltekst>
+                                            <BodyShort>permisjon</BodyShort>
                                         </li>
                                         <li>
-                                            <Normaltekst>
+                                            <BodyShort>
                                                 sykmelding fra et annet arbeidsforhold i samme bedrift
-                                            </Normaltekst>
+                                            </BodyShort>
                                         </li>
                                     </ul>
-                                </Ekspanderbar>
+                                </ReadMore>
                             </div>
                         }
-                        radios={[
-                            { label: JaEllerNeiType.JA, value: 'JA', id: fieldName },
-                            { label: JaEllerNeiType.NEI, value: 'NEI' },
-                        ]}
-                        checked={value}
-                        // TODO type better
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        onChange={(e: any) => onChange(e.target.value)}
-                        feil={errors.harBruktEgenmelding?.svar?.message}
-                    />
+                        onChange={(value: 'JA' | 'NEI') => field.onChange(value)}
+                        error={fieldState.error?.message}
+                    >
+                        <Radio value="JA">Ja</Radio>
+                        <Radio value="NEI">Nei</Radio>
+                    </RadioGroup>
                 )}
             />
 

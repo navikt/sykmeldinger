@@ -69,7 +69,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
         await waitFor(() =>
             expect(
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
-            ).toHaveErrorMessage('Du må bekrefte at du har lest at sykmeldingen er avvist'),
+            ).toHaveAccessibleDescription('Du må bekrefte at du har lest at sykmeldingen er avvist'),
         );
     });
 
@@ -83,7 +83,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
         await waitFor(() =>
             expect(
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
-            ).toHaveErrorMessage('Du må bekrefte at du har lest at sykmeldingen er avvist'),
+            ).toHaveAccessibleDescription('Du må bekrefte at du har lest at sykmeldingen er avvist'),
         );
 
         userEvent.click(
@@ -93,7 +93,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
         await waitFor(() =>
             expect(
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
-            ).not.toHaveErrorMessage('Du må bekrefte at du har lest at sykmeldingen er avvist'),
+            ).not.toHaveAccessibleDescription('Du må bekrefte at du har lest at sykmeldingen er avvist'),
         );
     });
 

@@ -1,27 +1,26 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { Alert } from '@navikt/ds-react';
+import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 
 import { FormShape, JaEllerNeiType } from '../Form';
 import { NaermesteLederFragment } from '../../../../../../fetching/graphql.generated';
 import QuestionWrapper from '../layout/QuestionWrapper';
 import Spacing from '../../../../../Spacing/Spacing';
-import Ekspanderbar from '../../../../../Ekspanderbar/Ekspanderbar';
 
 interface RiktigNarmesteLederProps {
     naermesteLeder: NaermesteLederFragment;
 }
 
+const fieldName = 'riktigNarmesteLeder';
+
 function RiktigNarmesteLeder({ naermesteLeder }: RiktigNarmesteLederProps): JSX.Element {
     const { control, watch, register, unregister, setValue } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'riktigNarmesteLeder';
     const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`;
     const watchRiktigNarmesteLeder = watch(fieldName);
 
     useEffect(() => {
-        register({ name: `${fieldName}.sporsmaltekst`, value: sporsmaltekst });
-        register({ name: `${fieldName}.svartekster`, value: JSON.stringify(JaEllerNeiType) });
+        register(`${fieldName}.sporsmaltekst`, { value: sporsmaltekst });
+        register(`${fieldName}.svartekster`, { value: JSON.stringify(JaEllerNeiType) });
         return () =>
             unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [register, unregister, sporsmaltekst]);
@@ -41,28 +40,26 @@ function RiktigNarmesteLeder({ naermesteLeder }: RiktigNarmesteLederProps): JSX.
                     required:
                         'Du må svare på om dette er riktig person som skal følge deg opp på jobben når du er syk.',
                 }}
-                render={({ onChange, value, name }) => (
-                    <RadioPanelGruppe
-                        name={name}
+                render={({ field, fieldState }) => (
+                    <RadioGroup
+                        {...field}
+                        id={fieldName}
                         legend={
                             <div>
                                 <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
-                                <Ekspanderbar title="Les om hva det innebærer">
+                                <ReadMore header="Les om hva det innebærer">
                                     Den vi spør om, vil få se sykmeldingen din og kan bli kontaktet av NAV underveis i
                                     sykefraværet. Hør med arbeidsgiveren din hvis du mener det er en annen de skulle
                                     meldt inn i stedet.
-                                </Ekspanderbar>
+                                </ReadMore>
                             </div>
                         }
-                        radios={[
-                            { label: JaEllerNeiType.JA, value: 'JA', id: fieldName },
-                            { label: JaEllerNeiType.NEI, value: 'NEI' },
-                        ]}
-                        checked={value}
-                        // TODO type better
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        onChange={(e: any) => onChange(e.target.value)}
-                    />
+                        onChange={(value: 'JA' | 'NEI') => field.onChange(value)}
+                        error={fieldState.error?.message}
+                    >
+                        <Radio value="JA">Ja</Radio>
+                        <Radio value="NEI">Nei</Radio>
+                    </RadioGroup>
                 )}
             />
 

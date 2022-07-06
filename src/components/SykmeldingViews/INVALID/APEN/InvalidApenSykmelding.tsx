@@ -1,6 +1,4 @@
-import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Alert } from '@navikt/ds-react';
+import { Alert, Button, ConfirmationPanel, Loader } from '@navikt/ds-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { WarningFilled } from '@navikt/ds-icons';
@@ -33,7 +31,11 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
     useHotjarTrigger('SYKMELDING_INVALID_APEN');
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
 
-    const { handleSubmit, control, errors } = useForm<FormData>();
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm<FormData>();
     const [{ loading: fetchingBekreft, error: errorBekreft }, bekreft] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.BekreftAvvist,
@@ -80,22 +82,24 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                             validate: (value) =>
                                 value === true || 'Du må bekrefte at du har lest at sykmeldingen er avvist',
                         }}
-                        render={({ onChange, value }) => (
+                        render={({ field, fieldState }) => (
                             <Spacing>
-                                <BekreftCheckboksPanel
+                                <ConfirmationPanel
+                                    {...field}
+                                    checked={field.value}
                                     label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
-                                    checked={value}
-                                    feil={errors.bekreftetLest?.message}
+                                    error={fieldState.error?.message}
                                     onChange={() => {
+                                        const newValue = !field.value;
                                         logEvent({
                                             eventName: 'skjema spørsmål besvart',
                                             data: {
                                                 skjemanavn,
                                                 [`spørsmål`]: 'bekreftet lest',
-                                                svar: value ? 'Ja' : 'Nei',
+                                                svar: newValue ? 'Ja' : 'Nei',
                                             },
                                         });
-                                        onChange(!value);
+                                        field.onChange(newValue);
                                     }}
                                 />
                             </Spacing>
@@ -110,9 +114,9 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                         </Spacing>
                     )}
 
-                    <Hovedknapp htmlType="submit" disabled={fetchingBekreft} spinner={fetchingBekreft}>
-                        Bekreft
-                    </Hovedknapp>
+                    <Button variant="primary" type="submit" disabled={fetchingBekreft}>
+                        Bekreft {fetchingBekreft && <Loader size="small" />}
+                    </Button>
                 </CenterItems>
             </form>
         </div>

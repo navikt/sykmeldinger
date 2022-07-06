@@ -1,12 +1,10 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { Alert } from '@navikt/ds-react';
+import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 
 import { FormShape } from '../Form';
 import { BrukerinformasjonFragment } from '../../../../../../fetching/graphql.generated';
 import QuestionWrapper from '../layout/QuestionWrapper';
-import Ekspanderbar from '../../../../../Ekspanderbar/Ekspanderbar';
 
 import RiktigNarmesteLeder from './RiktigNarmesteLeder';
 
@@ -14,49 +12,41 @@ interface ArbeidsgiverOrgnummerProps {
     brukerinformasjon: BrukerinformasjonFragment;
 }
 
+const fieldName = 'arbeidsgiverOrgnummer';
+const sporsmaltekst = 'Velg arbeidsgiver';
+
 function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps): JSX.Element {
     const { arbeidsgivere } = brukerinformasjon;
-    const { register, unregister, errors, control, watch } = useFormContext<FormShape>();
-    const fieldName: keyof FormShape = 'arbeidsgiverOrgnummer';
-    const sporsmaltekst = 'Velg arbeidsgiver';
+    const { register, unregister, control, watch } = useFormContext<FormShape>();
     const watchArbeidsgiverOrgnummer = watch(fieldName);
-
     const harArbeidsgiver = arbeidsgivere.length > 0;
 
     useEffect(() => {
-        register({
-            name: `${fieldName}.sporsmaltekst`,
+        register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
         });
-        register({
-            name: `${fieldName}.svartekster`,
+        register(`${fieldName}.svartekster`, {
             value: JSON.stringify(arbeidsgivere.map((ag) => ({ navn: ag.navn, orgnummer: ag.orgnummer }))),
         });
         return () =>
             unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
     }, [arbeidsgivere, register, unregister]);
 
-    const valgtArbeidsgiver = useMemo(() => {
-        const arbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer?.svar);
-        if (watchArbeidsgiverOrgnummer?.svar && arbeidsgiver === undefined) {
-            // Skal ikke kunne skje, men må håndteres hvis bruker skulle klare å manipulere skjemaet på egenhånd.
-            throw new Error('The chosen arbeidsgiver does not match with any of arbeidsgivere fetched for the user.');
-        }
-        return arbeidsgiver;
-    }, [arbeidsgivere, watchArbeidsgiverOrgnummer]);
+    const valgtArbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer?.svar);
 
     return (
         <QuestionWrapper>
             <Controller
                 control={control}
                 name={`${fieldName}.svar`}
-                defaultValue={null}
                 rules={{
                     required: 'Arbeidsgiver må være valgt siden du har valgt at du er ansatt',
                 }}
-                render={({ onChange, value, name }) => (
-                    <RadioPanelGruppe
-                        name={name}
+                defaultValue={null}
+                render={({ field, fieldState }) => (
+                    <RadioGroup
+                        {...field}
+                        id={fieldName}
                         legend={
                             <div>
                                 <div
@@ -66,24 +56,22 @@ function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps
                                     {sporsmaltekst}
                                 </div>
                                 {harArbeidsgiver && (
-                                    <Ekspanderbar title="Ser du ikke arbeidsgiveren din her?">
+                                    <ReadMore header="Ser du ikke arbeidsgiveren din her?">
                                         Be arbeidsgiveren din om å registrere deg i A-meldingen. Da blir det oppdatert
                                         her slik at du kan få sendt den til arbeidsgiveren.
-                                    </Ekspanderbar>
+                                    </ReadMore>
                                 )}
                             </div>
                         }
-                        radios={arbeidsgivere.map((arbeidsgiver, index) => ({
-                            label: `${arbeidsgiver.navn} (org.nr: ${arbeidsgiver.orgnummer})`,
-                            value: arbeidsgiver.orgnummer,
-                            id: index === 0 ? fieldName : undefined,
-                        }))}
-                        checked={value}
-                        // TODO type better
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        onChange={(e: any) => onChange(e.target.value)}
-                        feil={errors.arbeidsgiverOrgnummer?.svar?.message}
-                    />
+                        onChange={(value: string) => field.onChange(value)}
+                        error={fieldState.error?.message}
+                    >
+                        {arbeidsgivere.map((arbeidsgiver) => (
+                            <Radio key={arbeidsgiver.orgnummer} value={arbeidsgiver.orgnummer}>
+                                {arbeidsgiver.navn} (org.nr: {arbeidsgiver.orgnummer})
+                            </Radio>
+                        ))}
+                    </RadioGroup>
                 )}
             />
 
