@@ -1,5 +1,4 @@
-import { Element, Systemtittel } from 'nav-frontend-typografi';
-import { Alert } from '@navikt/ds-react';
+import { Alert, Detail, Heading } from '@navikt/ds-react';
 
 import { Behandlingsutfall, SykmeldingStatus } from '../../fetching/graphql.generated';
 import { toReadableDate } from '../../utils/dateUtils';
@@ -29,10 +28,10 @@ function StatusBanner({
     if (sykmeldingStatus.statusEvent === 'SENDT') {
         return (
             <Alert variant="success">
-                <Systemtittel tag="h2">
+                <Heading size="medium" level="2">
                     Sykmeldingen ble sendt til {sykmeldingStatus.arbeidsgiver?.orgNavn}
-                </Systemtittel>
-                <Element>{toReadableDate(sykmeldingStatus.timestamp)}</Element>
+                </Heading>
+                <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
         );
     }
@@ -40,8 +39,10 @@ function StatusBanner({
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
         return (
             <Alert variant="success">
-                <Systemtittel tag="h2">{egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble sendt til NAV</Systemtittel>
-                <Element>{toReadableDate(sykmeldingStatus.timestamp)}</Element>
+                <Heading size="medium" level="2">
+                    {egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble sendt til NAV
+                </Heading>
+                <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
         );
     }

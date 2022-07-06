@@ -1,8 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Alert } from '@navikt/ds-react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import Lenke from 'nav-frontend-lenker';
+import { Accordion, Alert, BodyShort, Link } from '@navikt/ds-react';
 import Head from 'next/head';
 
 import Spinner from '../components/Spinner/Spinner';
@@ -63,18 +60,23 @@ const SykmeldingerPage: React.FC = () => {
                 <InfoOmDigitalSykmelding />
             </Spacing>
 
-            <Ekspanderbartpanel tittel="Ser du ikke sykmeldingen din her?">
-                <Spacing amount="small">
-                    <Normaltekst>
-                        Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
-                        papirsykmeldingen i stedet.
-                    </Normaltekst>
-                </Spacing>
+            <Accordion>
+                <Accordion.Item>
+                    <Accordion.Header>Ser du ikke sykmeldingen din her?</Accordion.Header>
+                    <Accordion.Content>
+                        <Spacing amount="small">
+                            <BodyShort>
+                                Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
+                                papirsykmeldingen i stedet.
+                            </BodyShort>
+                        </Spacing>
 
-                <Lenke href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
-                    Mer informasjon om papirsykmelding finner du her.
-                </Lenke>
-            </Ekspanderbartpanel>
+                        <Link href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
+                            Mer informasjon om papirsykmelding finner du her.
+                        </Link>
+                    </Accordion.Content>
+                </Accordion.Item>
+            </Accordion>
 
             <SykmeldingLinkPanel type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
         </IndexWrapper>

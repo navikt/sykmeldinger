@@ -29,14 +29,6 @@
     padding-bottom: var(--navds-spacing-4);
 }
 
-.navVeileder {
-    margin-right: var(--navds-spacing-4);
-}
-
-.navVeileder :global(.nav-veileder__frame--info) {
-    background-color: var(--navds-global-color-white);
-}
-
 @media (max-width: 480px) {
     .veilederSenderSykmeldingen {
         display: block;
@@ -46,10 +38,5 @@
     .veilederSenderSykmeldingen :global(.typo-element) {
         display: block;
         padding-bottom: 0.3rem;
-    }
-
-    .navVeileder {
-        display: block;
-        margin-bottom: 1rem;
     }
 }

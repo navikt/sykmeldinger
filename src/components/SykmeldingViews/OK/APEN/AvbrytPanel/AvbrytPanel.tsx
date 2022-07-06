@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { Alert, Button, Loader } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Detail, Heading, Loader } from '@navikt/ds-react';
 import { Close } from '@navikt/ds-icons';
 
 import { AvbrytContext } from '../AvbrytContext';
@@ -35,12 +34,12 @@ function AvbrytPanel(): JSX.Element {
     if (maAvbryte) {
         return (
             <div className={styles.avbrytPanel} role="alert" aria-live="polite">
-                <Undertittel tag="h3" className={styles.avbrytPanelTitle}>
+                <Heading size="small" level="3" className={styles.avbrytPanelTitle}>
                     Du kan ikke bruke denne sykmeldingen
-                </Undertittel>
-                <Element className={styles.avbrytPanelInfo}>
+                </Heading>
+                <Detail className={styles.avbrytPanelInfo}>
                     Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
-                </Element>
+                </Detail>
                 <Button
                     variant="danger"
                     className={styles.avbrytPanelAvbrytKnapp}
@@ -90,9 +89,9 @@ function AvbrytPanel(): JSX.Element {
                         <Close />
                     </Button>
 
-                    <Normaltekst className={styles.avbrytPanelErDuSikker}>
+                    <BodyShort className={styles.avbrytPanelErDuSikker}>
                         Er du sikker på at du vil avbryte sykmeldingen?
-                    </Normaltekst>
+                    </BodyShort>
                     <Button className={styles.bold} variant="danger" onClick={() => avbryt()} disabled={loading}>
                         Ja, jeg er sikker {loading && <Loader />}
                     </Button>

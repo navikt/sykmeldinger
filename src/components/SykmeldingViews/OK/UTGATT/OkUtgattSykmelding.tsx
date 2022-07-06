@@ -1,6 +1,5 @@
 import React from 'react';
-import { Alert } from '@navikt/ds-react';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Alert, Detail, Heading } from '@navikt/ds-react';
 import { InformationFilled } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../../fetching/graphql.generated';
@@ -21,8 +20,10 @@ function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Elemen
         <div className="sykmelding-container">
             <Spacing>
                 <Alert variant="info">
-                    <Undertittel>Sykmeldingen er utgått</Undertittel>
-                    <Element>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Element>
+                    <Heading size="medium" level="2">
+                        Sykmeldingen er utgått
+                    </Heading>
+                    <Detail>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Detail>
                 </Alert>
             </Spacing>
             <SykmeldingStatusPrint

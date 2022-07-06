@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { Select } from '@navikt/ds-react';
+import { BodyShort, Heading, Select } from '@navikt/ds-react';
 
 import { SykmeldingFragment } from '../../fetching/graphql.generated';
 import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/SykmeldingSorter';
@@ -43,16 +42,16 @@ const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
         }
 
         if (type === 'NYE_SYKMELDINGER') {
-            return <Normaltekst style={{ marginBottom: '2rem' }}>Du har ingen nye sykmeldinger</Normaltekst>;
+            return <BodyShort style={{ marginBottom: '2rem' }}>Du har ingen nye sykmeldinger</BodyShort>;
         }
     }
 
     return (
         <section aria-labelledby={type} className={styles.lenkepanelContainer}>
             <header className={styles.lenkepanelContainerHeader}>
-                <Undertittel id={type} tag="h2">
+                <Heading size="medium" level="2" id={type}>
                     {title}
-                </Undertittel>
+                </Heading>
                 {type === 'TIDLIGERE_SYKMELDINGER' && (
                     <Select
                         value={sortBy}

@@ -54,33 +54,35 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsda
                             <div>
                                 <div style={{ marginBottom: '0.5rem' }}>{sporsmaltekst}</div>
                                 <ReadMore header="Hva betyr dette?">
-                                    <BodyShort spacing>
-                                        Vi trenger denne informasjonen for å vite hvem som skal utbetale hva.
-                                    </BodyShort>
-                                    <BodyShort spacing>
-                                        Siden vi ikke får tak i informasjonen automatisk, må vi få disse opplysningene
-                                        fra deg.
-                                    </BodyShort>
-                                    <Label spacing>Med fravær mener vi</Label>
-                                    <ul>
-                                        <li>
-                                            <BodyShort>egenmelding</BodyShort>
-                                        </li>
-                                        <li>
-                                            <BodyShort>papirsykmelding</BodyShort>
-                                        </li>
-                                        <li>
-                                            <BodyShort>ferie</BodyShort>
-                                        </li>
-                                        <li>
-                                            <BodyShort>permisjon</BodyShort>
-                                        </li>
-                                        <li>
-                                            <BodyShort>
-                                                sykmelding fra et annet arbeidsforhold i samme bedrift
-                                            </BodyShort>
-                                        </li>
-                                    </ul>
+                                    <div>
+                                        <BodyShort spacing>
+                                            Vi trenger denne informasjonen for å vite hvem som skal utbetale hva.
+                                        </BodyShort>
+                                        <BodyShort spacing>
+                                            Siden vi ikke får tak i informasjonen automatisk, må vi få disse
+                                            opplysningene fra deg.
+                                        </BodyShort>
+                                        <Label spacing>Med fravær mener vi</Label>
+                                        <ul>
+                                            <li>
+                                                <BodyShort>egenmelding</BodyShort>
+                                            </li>
+                                            <li>
+                                                <BodyShort>papirsykmelding</BodyShort>
+                                            </li>
+                                            <li>
+                                                <BodyShort>ferie</BodyShort>
+                                            </li>
+                                            <li>
+                                                <BodyShort>permisjon</BodyShort>
+                                            </li>
+                                            <li>
+                                                <BodyShort>
+                                                    sykmelding fra et annet arbeidsforhold i samme bedrift
+                                                </BodyShort>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </ReadMore>
                             </div>
                         }
