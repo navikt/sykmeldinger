@@ -14,7 +14,7 @@
         "lint": "next lint",
         "format": "prettier --write 'src/**/**.{ts,tsx,js,jsx}'",
         "report-debt": "scripts/debt.sh",
-        "postinstall": "husky install && ./scripts/strip-less"
+        "postinstall": "[ -n \"$CI\" ] || husky install"
     },
     "dependencies": {
         "@apollo/client": "^3.6.9",
