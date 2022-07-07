@@ -51,7 +51,10 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
                     onClick={() =>
                         logEvent({
                             eventName: 'navigere',
-                            data: { destinasjon: 'neste ubrukte sykmelding', lenketekst: 'Gå til sykmeldingen' },
+                            data: {
+                                destinasjon: 'neste ubrukte sykmelding (tvungen)',
+                                lenketekst: 'Gå til sykmeldingen',
+                            },
                         })
                     }
                 >
