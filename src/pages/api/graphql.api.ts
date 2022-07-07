@@ -6,10 +6,9 @@ import {
 import { NextApiRequest } from 'next';
 
 import schema from '../../server/graphql/schema';
-import { withAuthenticatedApi } from '../../auth/withAuthentication';
+import { createResolverContextType, withAuthenticatedApi } from '../../auth/withAuthentication';
 import { logger } from '../../utils/logger';
 import { ResolverContextType } from '../../server/graphql/resolvers';
-import { isLocalOrDemo } from '../../utils/env';
 
 const apolloServer = new ApolloServer({
     schema,
@@ -29,15 +28,13 @@ const apolloServer = new ApolloServer({
         return response;
     },
     context: async ({ req }: { req: NextApiRequest }): Promise<ResolverContextType> => {
-        if (isLocalOrDemo) return { selvbetjeningsToken: 'fake-local-auth-token' };
+        const resolverContextType = createResolverContextType(req);
 
-        const selvbetjeningsCookie = req.cookies['selvbetjening-idtoken'];
-
-        if (!selvbetjeningsCookie) {
+        if (!resolverContextType) {
             throw new AuthenticationError('User not logged in');
         }
 
-        return { selvbetjeningsToken: selvbetjeningsCookie };
+        return resolverContextType;
     },
     plugins: [
         process.env.NODE_ENV === 'production'

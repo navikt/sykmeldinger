@@ -3,42 +3,35 @@ import { AuthenticationError } from 'apollo-server-micro';
 
 import { getServerEnv } from '../utils/env';
 import { logger } from '../utils/logger';
+import { getToken } from '../auth/token/tokenx';
 
 import { Sykmelding, SykmeldingSchema } from './api-models/sykmelding/Sykmelding';
 import { Brukerinformasjon, BrukerinformasjonSchema } from './api-models/Brukerinformasjon';
 import { SykmeldingChangeStatus } from './graphql/resolver-types.generated';
 
-export async function getSykmeldinger(selvbetjeningsToken: string): Promise<Sykmelding[]> {
+const serverEnv = getServerEnv();
+
+export async function getSykmeldinger(accessToken: string): Promise<Sykmelding[]> {
     logger.info('Fetching sykmeldinger from backend');
 
-    return fetchApi(
-        { type: 'GET' },
-        'v1/sykmeldinger',
-        (it) => z.array(SykmeldingSchema).parse(it),
-        selvbetjeningsToken,
-    );
+    return fetchApi({ type: 'GET' }, 'v2/sykmeldinger', (it) => z.array(SykmeldingSchema).parse(it), accessToken);
 }
 
-export async function getSykmelding(sykmeldingId: string, selvbetjeningsToken: string): Promise<Sykmelding> {
+export async function getSykmelding(sykmeldingId: string, accessToken: string): Promise<Sykmelding> {
     logger.info(`Fetching sykmelding with ID ${sykmeldingId} from backend`);
 
     return fetchApi(
         { type: 'GET' },
-        `v1/sykmeldinger/${sykmeldingId}`,
+        `v2/sykmeldinger/${sykmeldingId}`,
         (it) => SykmeldingSchema.parse(it),
-        selvbetjeningsToken,
+        accessToken,
     );
 }
 
-export async function getBrukerinformasjon(selvbetjeningsToken: string): Promise<Brukerinformasjon> {
+export async function getBrukerinformasjon(accessToken: string): Promise<Brukerinformasjon> {
     logger.info(`Fetching brukerinformasjon from backend`);
 
-    return fetchApi(
-        { type: 'GET' },
-        'v1/brukerinformasjon',
-        (it) => BrukerinformasjonSchema.parse(it),
-        selvbetjeningsToken,
-    );
+    return fetchApi({ type: 'GET' }, 'v2/brukerinformasjon', (it) => BrukerinformasjonSchema.parse(it), accessToken);
 }
 
 export async function changeSykmeldingStatus(
@@ -50,7 +43,7 @@ export async function changeSykmeldingStatus(
     try {
         await fetchApi(
             { type: 'POST', body: undefined },
-            `v1/sykmeldinger/${sykmeldingId}/${statusToEndpoint(status)}`,
+            `v2/sykmeldinger/${sykmeldingId}/${statusToEndpoint(status)}`,
             () => null,
             selvbetjeningToken,
         );
@@ -74,7 +67,7 @@ export async function submitSykmelding(
     try {
         await fetchApi(
             { type: 'POST', body: JSON.stringify(values) },
-            `v2/sykmeldinger/${sykmeldingId}/send`,
+            `v3/sykmeldinger/${sykmeldingId}/send`,
             () => null,
             selvbetjeningToken,
         );
@@ -104,13 +97,18 @@ async function fetchApi<ResponseObject>(
     method: { type: 'GET' } | { type: 'POST'; body: string | undefined },
     path: string,
     parse: (json?: unknown) => ResponseObject,
-    selvbetjeningToken: string,
+    accessToken: string,
 ): Promise<ResponseObject> {
+    const tokenX = await getToken(accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE);
+    if (!tokenX) {
+        throw new Error('Unable to exchange token for dinesykmeldte-backend token');
+    }
+
     const response = await fetch(`${getServerEnv().SYKMELDINGER_BACKEND}/api/${path}`, {
         method: method.type,
         body: method.type === 'POST' ? method.body : undefined,
         headers: {
-            Cookie: `selvbetjening-idtoken=${selvbetjeningToken}`,
+            Authorization: `Bearer ${tokenX}`,
             'Content-Type': 'application/json',
         },
     });

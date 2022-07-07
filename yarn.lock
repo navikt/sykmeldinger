@@ -103,6 +103,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apollo/protobufjs@npm:1.2.4":
+  version: 1.2.4
+  resolution: "@apollo/protobufjs@npm:1.2.4"
+  dependencies:
+    "@protobufjs/aspromise": ^1.1.2
+    "@protobufjs/base64": ^1.1.2
+    "@protobufjs/codegen": ^2.0.4
+    "@protobufjs/eventemitter": ^1.1.0
+    "@protobufjs/fetch": ^1.1.0
+    "@protobufjs/float": ^1.0.2
+    "@protobufjs/inquire": ^1.1.0
+    "@protobufjs/path": ^1.1.2
+    "@protobufjs/pool": ^1.1.0
+    "@protobufjs/utf8": ^1.1.0
+    "@types/long": ^4.0.0
+    "@types/node": ^10.1.0
+    long: ^4.0.0
+  bin:
+    apollo-pbjs: bin/pbjs
+    apollo-pbts: bin/pbts
+  checksum: 261d48dbeb4f8958fce707a131d2c44cd4d24efaf6c8d6c4c05e91f673c301015d5dc267caf9c17df32de7ef3ea70b247360f476adee8eb3e96204d61c5b2a64
+  languageName: node
+  linkType: hard
+
 "@apollo/utils.dropunuseddefinitions@npm:^1.1.0":
   version: 1.1.0
   resolution: "@apollo/utils.dropunuseddefinitions@npm:1.1.0"
@@ -2957,15 +2981,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/browser@npm:7.5.1"
+"@sentry/browser@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/browser@npm:7.8.0"
   dependencies:
-    "@sentry/core": 7.5.1
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
+    "@sentry/core": 7.8.0
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
     tslib: ^1.9.3
-  checksum: c29e848a7dc315bd6afeb5c245726e1f9a2989d9b65151677932a8c7ebeebe58e379ec2c4ca8450dacd7ccfad83d3decda024e0d389b2aa3af1b2e2f2f7549d1
+  checksum: 58e0b19f90cc31fbdda65165698187a30a5f0c337a4a6ec6d991770ceaabe7e032383bb6f1a3a69ed39c55666ef9f6eb7f4fb04aa5b931d46b0cb9a8204a8538
   languageName: node
   linkType: hard
 
@@ -2986,54 +3010,54 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/core@npm:7.5.1"
+"@sentry/core@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/core@npm:7.8.0"
   dependencies:
-    "@sentry/hub": 7.5.1
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
+    "@sentry/hub": 7.8.0
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
     tslib: ^1.9.3
-  checksum: 90613800c95bd17075b33ed8f76a2cf18a2fd03e9c1b244ee7a846f0e0b738b84a199bc7c085d62c8e9043913024169e45cb925a03b36cf77d064caf8e7e05fd
+  checksum: b1c06975702b69db512faed5453d0604bfba50bfbff7b5d1c2d55947b71dc99ce0178a7892824e4a7dc0aa7330ef8039a12633b636ce35144f567077d6741bdd
   languageName: node
   linkType: hard
 
-"@sentry/hub@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/hub@npm:7.5.1"
+"@sentry/hub@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/hub@npm:7.8.0"
   dependencies:
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
     tslib: ^1.9.3
-  checksum: 6b00f2ef5fb12f94d5844f3abef9a84ec79d4f19d8347e8e8b8c06719c2d84d06963bb94e09305deb76640231ca1ed34dd4b2c63ff447fdb8fa16c22ac022484
+  checksum: d77256fa8cfc8628d9b99229fe57b815aa73eebcdcc93fc9368f0c45ad2c26a7ebf7e1dbe60d6a48b44a97ff46db1f5cea198d4ac00eb987efb18f9ed054879b
   languageName: node
   linkType: hard
 
-"@sentry/integrations@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/integrations@npm:7.5.1"
+"@sentry/integrations@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/integrations@npm:7.8.0"
   dependencies:
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
     localforage: ^1.8.1
     tslib: ^1.9.3
-  checksum: 13b4cb068e09f5208fbb750aa569453956a7f5cc4093e4e3485a92bac74b0c77a056c39b51395a2bc307cbb02cbde3b989bb985aaa849d87eed6ee853bfd33b6
+  checksum: e94f8f00354820dddda9ea564a2711deb5cb4cc0efcdd41e10b74f515e05da61eff7d0b8e8c2decc3bfcb6fedeb84646de278cac30ff7783ed7f17e7429a810e
   languageName: node
   linkType: hard
 
-"@sentry/nextjs@npm:^7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/nextjs@npm:7.5.1"
+"@sentry/nextjs@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/nextjs@npm:7.8.0"
   dependencies:
-    "@sentry/core": 7.5.1
-    "@sentry/hub": 7.5.1
-    "@sentry/integrations": 7.5.1
-    "@sentry/node": 7.5.1
-    "@sentry/react": 7.5.1
-    "@sentry/tracing": 7.5.1
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
-    "@sentry/webpack-plugin": 1.18.9
+    "@sentry/core": 7.8.0
+    "@sentry/hub": 7.8.0
+    "@sentry/integrations": 7.8.0
+    "@sentry/node": 7.8.0
+    "@sentry/react": 7.8.0
+    "@sentry/tracing": 7.8.0
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
+    "@sentry/webpack-plugin": 1.19.0
     tslib: ^1.9.3
   peerDependencies:
     next: ^10.0.8 || ^11.0 || ^12.0
@@ -3042,76 +3066,76 @@ __metadata:
   peerDependenciesMeta:
     webpack:
       optional: true
-  checksum: ca7f791075e6406af4ae3b7d25d359dbccb255b8b2f88a123056ac346a93a40926351ccb75d5b76e228215c98d85f7876d7fa3a0539f224ca895682f017c25d6
+  checksum: 046be600e0e4e3446b76008f8dfe70c1c65196a1992360c5d6cb8e67dacb10be83820ae9cba7d0dead1bf8e258db1bdab48b282f2c4e1f5477ad3edb96d909e2
   languageName: node
   linkType: hard
 
-"@sentry/node@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/node@npm:7.5.1"
+"@sentry/node@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/node@npm:7.8.0"
   dependencies:
-    "@sentry/core": 7.5.1
-    "@sentry/hub": 7.5.1
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
+    "@sentry/core": 7.8.0
+    "@sentry/hub": 7.8.0
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
     cookie: ^0.4.1
     https-proxy-agent: ^5.0.0
     lru_map: ^0.3.3
     tslib: ^1.9.3
-  checksum: a8caa39edb923952a551a9609afb933c1753e5e6cf1a8eccb9b1f4adb6567356d3077d3319b266e502a3183f1cf402847ade0967217522a408f9c1640a220f02
+  checksum: 91df828f311c751d898736b92a08ce6aa9152297067129371b2c59c573da4334e9fe63a91e8d405355d90a31b99acb14012d4c192d636fd30d1cdbfd87945a96
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/react@npm:7.5.1"
+"@sentry/react@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/react@npm:7.8.0"
   dependencies:
-    "@sentry/browser": 7.5.1
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
+    "@sentry/browser": 7.8.0
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
     hoist-non-react-statics: ^3.3.2
     tslib: ^1.9.3
   peerDependencies:
     react: 15.x || 16.x || 17.x || 18.x
-  checksum: c2346e2a30902c82f3caeedb5fd933bce8bb73f3228847d3729a88d30c5bad9d18bd8090cd2be421b000fa00e459098b7ba2a949675f424a2911ceedaa0f2c16
+  checksum: bc86287b55515450da7593163e8d841123157cbb408d71d83b9589835c88ca2d8eb81a812a6184c49a4528a45f38d52574c2e721f2d15fbdbb72954f49f331d7
   languageName: node
   linkType: hard
 
-"@sentry/tracing@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/tracing@npm:7.5.1"
+"@sentry/tracing@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/tracing@npm:7.8.0"
   dependencies:
-    "@sentry/hub": 7.5.1
-    "@sentry/types": 7.5.1
-    "@sentry/utils": 7.5.1
+    "@sentry/hub": 7.8.0
+    "@sentry/types": 7.8.0
+    "@sentry/utils": 7.8.0
     tslib: ^1.9.3
-  checksum: cf70120946a1d4a337e05b2035ab7a2b00755f638006250d003dbf6badf1fba066f0abfc19689b60d4e6143e99616f4ada0d564376aec2d48a5171c6b9c871c8
+  checksum: 1f94c1a4a4df37c9e038b9e049061c2327ff098e133ac56472dddc547d1c083fd9e40cd01872257aa477c7f84d12d29345cd401942db753c1eb6200d8f2eab3b
   languageName: node
   linkType: hard
 
-"@sentry/types@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/types@npm:7.5.1"
-  checksum: 2ff669f0e6c6ea5020c117a15012ec55147033faebbc0708c1a772aabf9cf6e283d69556903a9213e96b188b0a5f7030ded7006ad8805b2a89a6442d36202b21
+"@sentry/types@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/types@npm:7.8.0"
+  checksum: dffc5676723d22a514b914d6c3dd4f66764189197983f7b4ed9aa3c47d30ef7352326c317b829e945575a8ef6373878b73d7cd4144c0c076b27a0acf2831d816
   languageName: node
   linkType: hard
 
-"@sentry/utils@npm:7.5.1":
-  version: 7.5.1
-  resolution: "@sentry/utils@npm:7.5.1"
+"@sentry/utils@npm:7.8.0":
+  version: 7.8.0
+  resolution: "@sentry/utils@npm:7.8.0"
   dependencies:
-    "@sentry/types": 7.5.1
+    "@sentry/types": 7.8.0
     tslib: ^1.9.3
-  checksum: 567fdba09fdbfc62b0e50f5099d82b075f4e5ebd7dace67c4379a9f65c12e7191aad526fbc955ee681da757c8332807bda74a50880c4576c4c39d97c2c49e91d
+  checksum: 70010369b99189a5115e8cfc8fe38eb266b05ca6ef48a0b7bb70c3fab0a09fbd9d467d8865cc1ef1ad7485f3f5ac5752d148e5489eb5ae3ad5bf0658647b9aee
   languageName: node
   linkType: hard
 
-"@sentry/webpack-plugin@npm:1.18.9":
-  version: 1.18.9
-  resolution: "@sentry/webpack-plugin@npm:1.18.9"
+"@sentry/webpack-plugin@npm:1.19.0":
+  version: 1.19.0
+  resolution: "@sentry/webpack-plugin@npm:1.19.0"
   dependencies:
     "@sentry/cli": ^1.74.4
-  checksum: ff6edfebddd45a9d77686fe118661428ad309207b0ea6d579e38ea7edd0c390e7c84deb9e755bb0b5b118d628890e5be2146ace8c8ae72444d9d054c9c032a6d
+  checksum: 08a48378e0177f175337ef41107734aa6c1fcc76a806067d099048e71508184ee1b5b9889cc2ff4b9b2ef49242d1649ba1a47f5073d4173231c9ab60643fdba8
   languageName: node
   linkType: hard
 
@@ -4027,9 +4051,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server-core@npm:^3.9.0":
-  version: 3.9.0
-  resolution: "apollo-server-core@npm:3.9.0"
+"apollo-reporting-protobuf@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "apollo-reporting-protobuf@npm:3.3.2"
+  dependencies:
+    "@apollo/protobufjs": 1.2.4
+  checksum: fcd7312991ac3510bf4b78fe67b81d9803179c019ef5741317f06c7a182b9826247e186a9074ca2baaa8cc53b00993ddf1c69e9b38a8f65ab4c9d698a51aa2a5
+  languageName: node
+  linkType: hard
+
+"apollo-server-core@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "apollo-server-core@npm:3.10.0"
   dependencies:
     "@apollo/utils.keyvaluecache": ^1.0.1
     "@apollo/utils.logger": ^1.0.0
@@ -4040,11 +4073,11 @@ __metadata:
     "@graphql-tools/schema": ^8.0.0
     "@josephg/resolvable": ^1.0.0
     apollo-datasource: ^3.3.2
-    apollo-reporting-protobuf: ^3.3.1
+    apollo-reporting-protobuf: ^3.3.2
     apollo-server-env: ^4.2.1
     apollo-server-errors: ^3.3.1
-    apollo-server-plugin-base: ^3.6.1
-    apollo-server-types: ^3.6.1
+    apollo-server-plugin-base: ^3.6.2
+    apollo-server-types: ^3.6.2
     async-retry: ^1.2.1
     fast-json-stable-stringify: ^2.1.0
     graphql-tag: ^2.11.0
@@ -4055,7 +4088,7 @@ __metadata:
     whatwg-mimetype: ^3.0.0
   peerDependencies:
     graphql: ^15.3.0 || ^16.0.0
-  checksum: 161401b7081ff69415999dcfb010d410ef8b1f8ee63368b54dddd0a24b8803b4c269dde0844e0a4fc5963169101f12749d9d9ae3c5cf4f0ac7fdd60b43eda43c
+  checksum: f1da8de59a4db9271d140b9ab42cb84e8185bd0828b8aa84eff60dcbb3c149468585e73e632aff7615ab7002eb1e986bfb0ebffe4698e552b99812aa3eaff834
   languageName: node
   linkType: hard
 
@@ -4077,42 +4110,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server-micro@npm:^3.9.0":
-  version: 3.9.0
-  resolution: "apollo-server-micro@npm:3.9.0"
+"apollo-server-micro@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "apollo-server-micro@npm:3.10.0"
   dependencies:
     "@hapi/accept": ^5.0.2
-    apollo-server-core: ^3.9.0
-    apollo-server-types: ^3.6.1
+    apollo-server-core: ^3.10.0
+    apollo-server-types: ^3.6.2
     type-is: ^1.6.18
   peerDependencies:
     micro: ^9.3.4
-  checksum: 2d8879681b0810b2975d7ffef85f4ef12bc0ce32b004bf732667529159fd8b81a492591f07afb5d2a3c7d6e66ff696a34101f94d3ca5c53d01fc59093ea9bf8f
+  checksum: 03572b6a3bb5ee69b8f395b8f0449efaba96209e7ebf2114cbb942dd735461021b2c73cb9e59d4595fd376786f50bc44610e29b461eed46fc4d2691f0a9b0012
   languageName: node
   linkType: hard
 
-"apollo-server-plugin-base@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "apollo-server-plugin-base@npm:3.6.1"
+"apollo-server-plugin-base@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "apollo-server-plugin-base@npm:3.6.2"
   dependencies:
-    apollo-server-types: ^3.6.1
+    apollo-server-types: ^3.6.2
   peerDependencies:
     graphql: ^15.3.0 || ^16.0.0
-  checksum: 66932834602e73b2df94057e37a98263990adb75cd76ab6b6d40af56f3e68591d02f3f2859036c9111898840f10ab59f6d06806607b562404deb86704cce386a
+  checksum: 8430aa65619d96cd9e15e46b7352bca5abda3f7e4b19d3a289cf337263cdd5bc0d808d2ef110ff76358fea9cf63e62c63d0a8502f1555ee7bb8c784c64b52b6d
   languageName: node
   linkType: hard
 
-"apollo-server-types@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "apollo-server-types@npm:3.6.1"
+"apollo-server-types@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "apollo-server-types@npm:3.6.2"
   dependencies:
     "@apollo/utils.keyvaluecache": ^1.0.1
     "@apollo/utils.logger": ^1.0.0
-    apollo-reporting-protobuf: ^3.3.1
+    apollo-reporting-protobuf: ^3.3.2
     apollo-server-env: ^4.2.1
   peerDependencies:
     graphql: ^15.3.0 || ^16.0.0
-  checksum: b637c7d040f3c8bc1121918b441180999ea71e142e2ab9626e341015905d0b89be630bdf848fb0a4f39be71f12ac702f49e5b060eb0f13314f0a9e5183a759ab
+  checksum: 410d7c0e6cfcc68dbc5f0182e07008235c6ecf5ab7d01d334a2af3c4deed3921cff12e32f54206d16aad88d5213f67f5f5302762ac92a6883b778800334e2016
   languageName: node
   linkType: hard
 
@@ -8492,6 +8525,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jose@npm:^4.1.4, jose@npm:^4.8.3":
+  version: 4.8.3
+  resolution: "jose@npm:4.8.3"
+  checksum: a4a03d329d3611696d94a81df06e7fe160cef987da032ecc9e0a9d1e5e751b5101d1657eed16ead5f1905c9c2009d48820538412af4e5257f205a8754dd09d31
+  languageName: node
+  linkType: hard
+
 "joycon@npm:^3.1.1":
   version: 3.1.1
   resolution: "joycon@npm:3.1.1"
@@ -9963,6 +10003,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"object-hash@npm:^2.0.1":
+  version: 2.2.0
+  resolution: "object-hash@npm:2.2.0"
+  checksum: 55ba841e3adce9c4f1b9b46b41983eda40f854e0d01af2802d3ae18a7085a17168d6b81731d43fdf1d6bcbb3c9f9c56d22c8fea992203ad90a38d7d919bc28f1
+  languageName: node
+  linkType: hard
+
 "object-inspect@npm:^1.11.0, object-inspect@npm:^1.12.0, object-inspect@npm:^1.9.0":
   version: 1.12.0
   resolution: "object-inspect@npm:1.12.0"
@@ -10039,6 +10086,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"oidc-token-hash@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "oidc-token-hash@npm:5.0.1"
+  checksum: d62aa8c665f1a0133a3694785e4cd75f471364e6a2f4fbf7997e193a49ccf8f8de15596f475c7fdf8510d021c3b72f7ff6ab8bc5b07bff4cf21d490177f164a5
+  languageName: node
+  linkType: hard
+
 "on-exit-leak-free@npm:^0.2.0":
   version: 0.2.0
   resolution: "on-exit-leak-free@npm:0.2.0"
@@ -10102,6 +10156,18 @@ __metadata:
   bin:
     opener: bin/opener-bin.js
   checksum: 33b620c0d53d5b883f2abc6687dd1c5fd394d270dbe33a6356f2d71e0a2ec85b100d5bac94694198ccf5c30d592da863b2292c5539009c715a9c80c697b4f6cc
+  languageName: node
+  linkType: hard
+
+"openid-client@npm:^5.1.8":
+  version: 5.1.8
+  resolution: "openid-client@npm:5.1.8"
+  dependencies:
+    jose: ^4.1.4
+    lru-cache: ^6.0.0
+    object-hash: ^2.0.1
+    oidc-token-hash: ^5.0.1
+  checksum: e6fe2c7d7699280ec47ed18433367e6ea57969f6e1a5aa74be03ebf6011b801179c88fc42dd90dad4ed8df8529f3f56756670a2c0b8f9ccae5149036e9152bff
   languageName: node
   linkType: hard
 
@@ -12156,7 +12222,7 @@ __metadata:
     "@navikt/eslint-config-teamsykmelding": ^0.18.0
     "@navikt/nav-dekoratoren-moduler": ^1.6.17
     "@next/bundle-analyzer": ^12.2.0
-    "@sentry/nextjs": ^7.5.1
+    "@sentry/nextjs": ^7.8.0
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^12.1.5
     "@testing-library/react-hooks": ^8.0.1
@@ -12166,7 +12232,7 @@ __metadata:
     "@types/react": ^17.0.47
     "@types/react-collapse": ^5.0.1
     amplitude-js: ^8.18.5
-    apollo-server-micro: ^3.9.0
+    apollo-server-micro: ^3.10.0
     classnames: ^2.3.1
     concurrently: ^7.2.2
     date-fns: ^2.28.0
@@ -12177,11 +12243,14 @@ __metadata:
     graphql-scalars: ^1.17.0
     husky: ^8.0.1
     jest: ^27.5.1
+    jose: ^4.8.3
     lint-staged: ^13.0.3
     micro: ^9.3.4
     next: 12.2.0
     next-logger: ^3.0.1
     next-router-mock: ^0.6.10
+    node-cache: ^5.1.2
+    openid-client: ^5.1.8
     pino: ^8.1.0
     pino-pretty: ^8.1.0
     prettier: ^2.7.1
@@ -12556,7 +12625,7 @@ __metadata:
 
 "typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
   version: 4.7.4
-  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver

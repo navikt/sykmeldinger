@@ -6,16 +6,45 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 /**
- * @type {@sentry/nextjs.SentryWebpackPluginOptions}
+ * @type {import('@sentry/nextjs').SentryWebpackPluginOptions}
  */
 const sentryWebpackPluginOptions = {
     silent: true,
 };
 
 /**
+ * @type {import('./src/utils/env').ServerEnv}
+ */
+const serverRuntimeConfig = {
+    // Provided by nais-*.yml
+    SYKMELDINGER_BACKEND: process.env.SYKMELDINGER_BACKEND,
+    FLEX_SYKETILFELLE: process.env.FLEX_SYKETILFELLE,
+    SYKMELDINGER_BACKEND_SCOPE: process.env.SYKMELDINGER_BACKEND_SCOPE,
+    FLEX_SYKETILFELLE_BACKEND_SCOPE: process.env.FLEX_SYKETILFELLE_BACKEND_SCOPE,
+    // Provided by nais
+    IDPORTEN_CLIENT_ID: process.env.IDPORTEN_CLIENT_ID,
+    IDPORTEN_WELL_KNOWN_URL: process.env.IDPORTEN_WELL_KNOWN_URL,
+    TOKEN_X_WELL_KNOWN_URL: process.env.TOKEN_X_WELL_KNOWN_URL,
+    TOKEN_X_PRIVATE_JWK: process.env.TOKEN_X_PRIVATE_JWK,
+    TOKEN_X_CLIENT_ID: process.env.TOKEN_X_CLIENT_ID,
+};
+
+/**
+ * @type {import('./src/utils/env').PublicEnv}
+ */
+const publicRuntimeConfig = {
+    publicPath: process.env.NEXT_PUBLIC_BASE_PATH,
+    RUNTIME_ENVIRONMENT: process.env.RUNTIME_ENVIRONMENT,
+    AMPLITUDE_ENABLED: process.env.AMPLITUDE_ENABLED,
+    SYKEPENGESOKNAD_URL: process.env.SYKEPENGESOKNAD_URL,
+    SYKEFRAVAER_ROOT: process.env.SYKEFRAVAER_ROOT,
+    DITT_NAV_ROOT: process.env.DITT_NAV_ROOT,
+};
+
+/**
  * @type {import('next').NextConfig}
  */
-const nextConfig = withBundleAnalyzer({
+const nextConfig = {
     reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
@@ -24,21 +53,13 @@ const nextConfig = withBundleAnalyzer({
         dirs: ['src'],
         ignoreDuringBuilds: true,
     },
-    serverRuntimeConfig: {
-        SYKMELDINGER_BACKEND: process.env.SYKMELDINGER_BACKEND,
-        FLEX_GATEWAY_ROOT: process.env.FLEX_GATEWAY_ROOT,
-    },
-    publicRuntimeConfig: {
-        publicPath: process.env.NEXT_PUBLIC_BASE_PATH,
-        RUNTIME_ENVIRONMENT: process.env.RUNTIME_ENVIRONMENT,
-        LOGIN_SERVICE_URL: process.env.LOGIN_SERVICE_URL,
-        LOGIN_SERVICE_REDIRECT_URL: process.env.LOGIN_SERVICE_REDIRECT_URL,
-        AMPLITUDE_ENABLED: process.env.AMPLITUDE_ENABLED,
-        SYKEPENGESOKNAD_URL: process.env.SYKEPENGESOKNAD_URL,
-        SYKEFRAVAER_ROOT: process.env.SYKEFRAVAER_ROOT,
-        DITT_NAV_ROOT: process.env.DITT_NAV_ROOT,
-    },
-});
+    serverRuntimeConfig,
+    publicRuntimeConfig,
+};
+
+const nextConfigWithBundleAnalyzer = withBundleAnalyzer(nextConfig);
 
 module.exports =
-    process.env.SENTRY_ENABLED === 'true' ? withSentryConfig(nextConfig, sentryWebpackPluginOptions) : nextConfig;
+    process.env.SENTRY_ENABLED === 'true'
+        ? withSentryConfig(nextConfigWithBundleAnalyzer, sentryWebpackPluginOptions)
+        : nextConfigWithBundleAnalyzer;

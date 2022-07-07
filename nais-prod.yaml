@@ -10,6 +10,15 @@ spec:
   port: 3000
   ingresses:
     - 'https://www.nav.no/syk/sykmeldinger'
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      resources:
+        requests:
+          cpu: 150m
+  tokenx:
+    enabled: true
   replicas:
     min: 2
     max: 2
@@ -32,12 +41,12 @@ spec:
       value: 'production'
     - name: SYKMELDINGER_BACKEND
       value: 'https://sykmeldinger-backend.nav.no'
-    - name: FLEX_GATEWAY_ROOT
-      value: 'https://flex-gateway.nav.no'
-    - name: LOGIN_SERVICE_URL
-      value: 'https://loginservice.nav.no/login'
-    - name: LOGIN_SERVICE_REDIRECT_URL
-      value: 'https://www.nav.no/syk/sykmeldinger'
+    - name: FLEX_SYKETILFELLE
+      value: 'https://flex-syketilfelle.intern.nav.no'
+    - name: SYKMELDINGER_BACKEND_SCOPE
+      value: 'prod-gcp:teamsykmelding:sykmeldinger-backend'
+    - name: FLEX_SYKETILFELLE_BACKEND_SCOPE
+      value: 'prod-gcp:flex:flex-syketilfelle'
     - name: AMPLITUDE_ENABLED
       value: 'true'
     - name: SYKEPENGESOKNAD_URL
