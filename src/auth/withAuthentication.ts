@@ -1,11 +1,36 @@
+import { IncomingMessage } from 'http';
+
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next';
 
 import { getPublicEnv, isLocalOrDemo } from '../utils/env';
+import { ResolverContextType } from '../server/graphql/resolvers';
+import { logger } from '../utils/logger';
+
+import { validateIdPortenToken } from './token/idporten';
 
 type ApiHandler = (req: NextApiRequest, res: NextApiResponse) => void | Promise<unknown>;
 type PageHandler = (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<unknown>>;
 
 const publicEnv = getPublicEnv();
+
+export interface TokenPayload {
+    sub: string;
+    iss: string;
+    client_amr: string;
+    pid: string;
+    token_type: string;
+    client_id: string;
+    acr: string;
+    scope: string;
+    exp: string;
+    iat: string;
+    client_orgno: string;
+    jti: string;
+    consumer: {
+        authority: string;
+        ID: string;
+    };
+}
 
 /**
  * Used to authenticate Next.JS pages. Assumes application is behind
@@ -22,13 +47,11 @@ export function withAuthenticatedPage(handler: PageHandler = async () => ({ prop
         }
 
         const request = context.req;
-        const selvbetjeningsToken: string | null | undefined = request.cookies['selvbetjening-idtoken'];
-        if (!selvbetjeningsToken) {
+
+        const bearerToken: string | null | undefined = request.headers['authorization'];
+        if (!bearerToken || !(await validateIdPortenToken(bearerToken))) {
             return {
-                redirect: {
-                    destination: `${publicEnv.LOGIN_SERVICE_URL}?redirect=${publicEnv.LOGIN_SERVICE_REDIRECT_URL}`,
-                    permanent: false,
-                },
+                redirect: { destination: `/oauth2/login?redirect=${getRedirectPath(context)}`, permanent: false },
             };
         }
 
@@ -45,12 +68,45 @@ export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
             return handler(req, res, ...rest);
         }
 
-        const selvbetjeningsToken: string | null | undefined = req.cookies['selvbetjening-idtoken'];
-        if (!selvbetjeningsToken) {
+        const bearerToken: string | null | undefined = req.headers['authorization'];
+        if (!bearerToken || !(await validateIdPortenToken(bearerToken))) {
             res.status(401).json({ message: 'Access denied' });
             return;
         }
 
         return handler(req, res, ...rest);
+    };
+}
+
+/**
+ * When using rewrites, nextjs sometimes prepend the basepath for some reason. When redirecting to auth
+ * we need a clean URL to redirect the user back to the same page we are on.
+ */
+function getRedirectPath(context: GetServerSidePropsContext): string {
+    const basePath = publicEnv.publicPath ?? '';
+    const cleanUrl = context.resolvedUrl.replace(basePath, '');
+
+    return cleanUrl.startsWith('/null') ? `${publicEnv.publicPath}/` : `${publicEnv.publicPath}${cleanUrl}`;
+}
+
+/**
+ * Creates the GraphQL context that is passed through the resolvers, both for prefetching and HTTP-fetching.
+ */
+export function createResolverContextType(req: IncomingMessage): ResolverContextType | null {
+    if (isLocalOrDemo) {
+        return require('./fakeLocalAuthTokenSet.json');
+    }
+
+    const token = req.headers['authorization'];
+    if (!token) {
+        logger.warn('User is missing authorization bearer token');
+        return null;
+    }
+
+    const accessToken = token.replace('Bearer ', '');
+    const jwtPayload = accessToken.split('.')[1];
+    return {
+        accessToken,
+        payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
     };
 }

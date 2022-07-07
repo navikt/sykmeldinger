@@ -2,22 +2,25 @@ import { AuthenticationError } from 'apollo-server-micro';
 
 import { getServerEnv } from '../utils/env';
 import { logger } from '../utils/logger';
+import { getToken } from '../auth/token/tokenx';
 
 import { ErUtenforVentetid, ErUtenforVentetidSchema } from './api-models/ErUtenforVentetid';
 
-export async function getErUtenforVentetid(
-    sykmeldingId: string,
-    selvbetjeningsToken: string,
-): Promise<ErUtenforVentetid> {
-    logger.info(`Fetching brukerinformasjon from backend`);
+const serverEnv = getServerEnv();
+
+export async function getErUtenforVentetid(sykmeldingId: string, accessToken: string): Promise<ErUtenforVentetid> {
+    logger.info(`Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}`);
+
+    const tokenX = await getToken(accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE);
+    if (!tokenX) {
+        throw new Error('Unable to exchange token for dinesykmeldte-backend token');
+    }
 
     const response = await fetch(
-        `${
-            getServerEnv().FLEX_GATEWAY_ROOT
-        }/flex-syketilfelle/api/bruker/v1/ventetid/${sykmeldingId}/erUtenforVentetid`,
+        `${getServerEnv().FLEX_SYKETILFELLE}/api/bruker/v2/ventetid/${sykmeldingId}/erUtenforVentetid`,
         {
             headers: {
-                Cookie: `selvbetjening-idtoken=${selvbetjeningsToken}`,
+                Authorization: `Bearer ${tokenX}`,
                 'Content-Type': 'application/json',
             },
         },
@@ -28,7 +31,9 @@ export async function getErUtenforVentetid(
 
         if (!parsed.erUtenforVentetid && !parsed.oppfolgingsdato) {
             logger.warn(
-                `Expected oppfolgingsdato to be defined when sykmelding within ventetid, but was ${typeof parsed.oppfolgingsdato}. Sykmeldingid: ${sykmeldingId}`,
+                `Expected oppfolgingsdato to be defined when sykmelding within ventetid, but was ${
+                    parsed.oppfolgingsdato == null ? 'null' : typeof parsed.oppfolgingsdato
+                }. Sykmeldingid: ${sykmeldingId}`,
             );
         }
 

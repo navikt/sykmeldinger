@@ -2,27 +2,27 @@ import { GraphQLJSON } from 'graphql-scalars';
 
 import * as sykmeldingerService from '../../server/sykmeldingerService';
 import * as flexService from '../../server/flexService';
+import { TokenPayload } from '../../auth/withAuthentication';
 
 import { MutationResolvers, QueryResolvers, Resolvers } from './resolver-types.generated';
 
 export interface ResolverContextType {
-    selvbetjeningsToken: string;
+    payload: TokenPayload;
+    accessToken: string;
 }
 
 const Query: QueryResolvers = {
-    sykmeldinger: async (_, args, context) => sykmeldingerService.getSykmeldinger(context.selvbetjeningsToken),
-    sykmelding: async (_, { id }, context) => sykmeldingerService.getSykmelding(id, context.selvbetjeningsToken),
-    brukerinformasjon: async (_, args, context) =>
-        sykmeldingerService.getBrukerinformasjon(context.selvbetjeningsToken),
-    sykmeldingUtenforVentetid: async (_, { id }, context) =>
-        flexService.getErUtenforVentetid(id, context.selvbetjeningsToken),
+    sykmeldinger: async (_, args, context) => sykmeldingerService.getSykmeldinger(context.accessToken),
+    sykmelding: async (_, { id }, context) => sykmeldingerService.getSykmelding(id, context.accessToken),
+    brukerinformasjon: async (_, args, context) => sykmeldingerService.getBrukerinformasjon(context.accessToken),
+    sykmeldingUtenforVentetid: async (_, { id }, context) => flexService.getErUtenforVentetid(id, context.accessToken),
 };
 
 const Mutation: MutationResolvers = {
     changeSykmeldingStatus: async (_, { sykmeldingId, status }, context) =>
-        sykmeldingerService.changeSykmeldingStatus(sykmeldingId, status, context.selvbetjeningsToken),
+        sykmeldingerService.changeSykmeldingStatus(sykmeldingId, status, context.accessToken),
     submitSykmelding: async (_, { sykmeldingId, values }, context) =>
-        sykmeldingerService.submitSykmelding(sykmeldingId, values, context.selvbetjeningsToken),
+        sykmeldingerService.submitSykmelding(sykmeldingId, values, context.accessToken),
 };
 
 const resolvers: Partial<Resolvers> = {

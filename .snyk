@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.24.0
+version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-ANSIHTML-1296849:
@@ -73,4 +73,9 @@ ignore:
     - nodemon > update-notifier > latest-version > package-json > registry-url > rc > minimist:
         reason: None given
         expires: '2022-04-27T09:45:56.347Z'
+  SNYK-JS-NODEFETCH-2964180:
+    - '*':
+        reason: None Given
+        expires: 2022-08-31T10:12:25.474Z
+        created: 2022-08-01T10:12:25.482Z
 patch: {}

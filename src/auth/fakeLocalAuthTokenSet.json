@@ -1,0 +1,22 @@
+{
+    "accessToken": "eyJraWQiOiJjWmswME1rbTVIQzRnN3Z0NmNwUDVGSFpMS0pzdzhmQkFJdUZiUzRSVEQ0IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIzZDhhNGRjOC1hYzA5LTRkZTItYmJhOC0yYjg3ZTBmMmVmNjYiLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL29pZGMtcHJvdmlkZXIvIiwiY2xpZW50X2FtciI6InByaXZhdGVfa2V5X2p3dCIsInBpZCI6IjA4MDg5NDA4MDg0IiwidG9rZW5fdHlwZSI6IkJlYXJlciIsImNsaWVudF9pZCI6IjIxZjE5YjQ5LTkwNGMtNDkxYS1iMDdlLTdhNzAyY2RmNTRhYSIsImF1ZCI6Imh0dHBzOi8vZXhhbXBsZS5jb20iLCJhY3IiOiJMZXZlbDQiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIiwiZXhwIjoxNjI4MDkwMjcwLCJpYXQiOjE2MjgwODY2NzAsImNsaWVudF9vcmdubyI6Ijg4OTY0MDc4MiIsImp0aSI6IjI2OTllMGEyLWIwMmEtNDc4My1hYTgzLTU5MTgzZTZlMDAxZSIsImNvbnN1bWVyIjp7ImF1dGhvcml0eSI6IjU4YTJjMDczLTUxYjMiLCJJRCI6IjkxMDM1MGEyLWNjZjQtNDM4NCJ9fQ.T402ovKHGMLEIdL6kZxdm8_Vy_USFzz9ZzhUT8f7zaOqq5_Rr_S_lW8pg-l1B9ZbXkTYaX_PO3xb630BYQQaG4D-F98CYrm98WodYZHQrIkIMqjsLU4xbe_IXrRKAdaqUkCMaHtAjo9GpebaL4zKlJatFkhvGJR7Z2PjqC3dlft4vaQTX7PGTfXcLZl1gfOF0UWdgx9EXYRv9JgmUI2gDHxU6_ivQCtwfjTwwcgpnqf1f0yPsrLPxmEWy3Jf12Rz9CPbSxzRzNrVhhfD7wz8UGvpQS-zDwRmcMh0L0kzSsiavn3lfGDz2Ce5-DTTptub6iSRuTOFqFQWkITohGTU3A",
+    "payload": {
+        "sub": "3d8a4dc8-ac09-4de2-bba8-2b87e0f2ef66",
+        "iss": "https://example.com/oidc-provider/",
+        "client_amr": "private_key_jwt",
+        "pid": "08089408084",
+        "token_type": "Bearer",
+        "client_id": "21f19b49-904c-491a-b07e-7a702cdf54aa",
+        "aud": "https://example.com",
+        "acr": "Level4",
+        "scope": "openid profile",
+        "exp": 1628090270,
+        "iat": 1628086670,
+        "client_orgno": "889640782",
+        "jti": "2699e0a2-b02a-4783-aa83-59183e6e001e",
+        "consumer": {
+            "authority": "58a2c073-51b3",
+            "ID": "910350a2-ccf4-4384"
+        }
+    }
+}

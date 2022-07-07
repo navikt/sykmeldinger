@@ -3,10 +3,9 @@ import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } fr
 import { RetryLink } from '@apollo/client/link/retry';
 
 import { logger } from '../utils/logger';
-import { getPublicEnv, isLocalOrDemo } from '../utils/env';
+import { getPublicEnv } from '../utils/env';
 
 const publicEnv = getPublicEnv();
-const loginServiceUrl = `${publicEnv.LOGIN_SERVICE_URL}?redirect=${publicEnv.LOGIN_SERVICE_REDIRECT_URL}`;
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
@@ -36,10 +35,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (networkError) {
         if ('statusCode' in networkError) {
             if (networkError.statusCode === 401 || networkError.statusCode === 403) {
-                if (isLocalOrDemo) return;
-
-                window.location.href = loginServiceUrl;
-                logger.warn(`Session expired for request(s) ${graphQLErrors?.map((it) => it.path)}`);
+                // Redirect to allow SSR authentication to redirect to login
+                window.location.reload();
                 return;
             }
         }
