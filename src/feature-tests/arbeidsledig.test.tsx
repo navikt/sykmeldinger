@@ -1,15 +1,15 @@
 import userEvent from '@testing-library/user-event';
 import mockRouter from 'next-router-mock';
 
-import { render, screen, waitFor, waitForElementToBeRemoved } from '../../../utils/test/testUtils';
-import SykmeldingPage from '../index.page';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils';
+import SykmeldingPage from '../pages/[sykmeldingId]/index.page';
 import {
     StatusEvent,
     SubmitSykmeldingDocument,
     SykmeldingDocument,
     SykmeldingerDocument,
-} from '../../../fetching/graphql.generated';
-import { createMock, createSykmelding } from '../../../utils/test/dataUtils';
+} from '../fetching/graphql.generated';
+import { createMock, createSykmelding } from '../utils/test/dataUtils';
 
 import { createExtraFormDataMock } from './mockUtils';
 

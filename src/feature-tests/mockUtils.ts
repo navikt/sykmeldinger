@@ -1,7 +1,7 @@
 import { MockedResponse } from '@apollo/client/testing';
 
-import { createMock } from '../../../utils/test/dataUtils';
-import { Brukerinformasjon, ExtraFormDataDocument, UtenforVentetid } from '../../../fetching/graphql.generated';
+import { createMock } from '../utils/test/dataUtils';
+import { Brukerinformasjon, ExtraFormDataDocument, UtenforVentetid } from '../fetching/graphql.generated';
 
 export function createExtraFormDataMock({
     sykmeldingId = 'sykmelding-id',
