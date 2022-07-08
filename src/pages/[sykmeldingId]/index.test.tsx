@@ -5,9 +5,9 @@ import { render, screen } from '../../utils/test/testUtils';
 import { dateSub } from '../../utils/dateUtils';
 import { createMock, createSykmelding } from '../../utils/test/dataUtils';
 import { ExtraFormDataDocument, SykmeldingDocument, SykmeldingerDocument } from '../../fetching/graphql.generated';
+import { createExtraFormDataMock } from '../../feature-tests/mockUtils';
 
 import SykmeldingPage from './index.page';
-import { createExtraFormDataMock } from './__test__/mockUtils';
 
 describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     beforeEach(() => {
