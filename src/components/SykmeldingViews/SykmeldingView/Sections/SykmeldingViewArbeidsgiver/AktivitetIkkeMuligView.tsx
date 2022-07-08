@@ -1,7 +1,10 @@
+import { Office2 } from '@navikt/ds-icons';
+
 import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated';
 import ListEntry from '../../Layout/ListEntry/ListEntry';
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
 import { arbeidsrelatertArsakToText } from '../../../../../utils/periodeUtils';
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
 
 import styles from './AktivitetIkkeMuligView.module.css';
 
@@ -13,7 +16,8 @@ const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewPr
     if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null;
 
     return (
-        <div className={styles.aktivitetIkkeMulig}>
+        <div>
+            <SykmeldtHeading title="Aktivitet på arbeidsplassen" Icon={Office2} />
             {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
                 <div className={styles.aarsak}>
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (

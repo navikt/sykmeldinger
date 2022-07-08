@@ -1,13 +1,9 @@
-.annenInfo {
-    padding-bottom: var(--navds-spacing-4);
-}
-
 .heading {
     font-size: var(--navds-font-size-heading-xsmall);
 }
 
 .info {
-    background-color: var(--sykmelding-view-sykmeldt);
+    background-color: var(--sykmelding-view-arbeidsgiver);
     padding: var(--navds-spacing-4);
     margin-bottom: var(--navds-spacing-3);
     border-radius: 4px;
@@ -19,15 +15,4 @@
 
 .info :global(p.navds-body-short:not(:last-of-type)) {
     margin-bottom: 0.3rem;
-}
-
-@media print {
-    .annenInfo {
-        padding-bottom: var(--navds-spacing-8);
-    }
-
-    .info {
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
 }

@@ -29,9 +29,9 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
                         Sykmeldingen ble skrevet av
                     </Heading>
                     <BodyShort size="small">{getBehandlerName(sykmelding.behandler)}</BodyShort>
-                    {sykmelding.behandler.tlf && (
-                        <BodyShort size="small">{'Tlf: ' + sykmelding.behandler.tlf}</BodyShort>
-                    )}
+                    <BodyShort size="small">
+                        {sykmelding.behandler.tlf ? `Tlf: ${sykmelding.behandler.tlf}` : 'Tlf: —'}
+                    </BodyShort>
                 </div>
 
                 {sykmelding.arbeidsgiver && sykmelding.arbeidsgiver?.navn && (

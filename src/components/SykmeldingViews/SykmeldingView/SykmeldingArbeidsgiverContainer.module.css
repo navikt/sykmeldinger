@@ -1,0 +1,61 @@
+.opplysningerTilArbeidsgiver :global(.navds-accordion__content) {
+    padding: var(--navds-spacing-3) 0 var(--navds-spacing-2) 0;
+}
+
+.opplysningerTilArbeidsgiver {
+    background-color: #fef9ef;
+}
+
+.opplysningerTilArbeidsgiver .sykmeldingsopplysningerHeader {
+    background-color: #fef9ef;
+}
+
+.expandeblePanel {
+    background-color: transparent;
+}
+
+.sykmeldingsopplysningerHeader {
+    display: flex;
+    border: none;
+    width: 100%;
+    align-items: center;
+}
+
+.expendableHeader {
+    display: flex;
+    padding: 0;
+    align-items: flex-start;
+}
+
+.sykmeldingsopplysningerIcon svg {
+    font-size: var(--navds-font-size-heading-medium);
+    margin-right: 0.5rem;
+}
+
+.sykmeldingsopplysningerText {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    text-align: start;
+}
+
+.sykmeldingsopplysningerHeader .arbeidsgiverHeader {
+    width: 100%;
+    align-items: center;
+}
+
+.arbeidsgiverHeader {
+    display: flex;
+    padding: var(--navds-spacing-4);
+    align-items: flex-start;
+}
+
+@media print {
+    .sykmeldingsopplysningerHeader .arbeidsgiverHeader {
+        display: none;
+    }
+
+    .opplysningerTilArbeidsgiver {
+        border: none;
+    }
+}

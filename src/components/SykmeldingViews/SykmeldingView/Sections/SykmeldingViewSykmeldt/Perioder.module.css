@@ -6,8 +6,8 @@
 
 .perioder .periode {
     flex-grow: 1;
-    margin-bottom: var(--navds-spacing-4);
-    background-color: var(--navds-global-color-blue-50);
+    margin-bottom: var(--navds-spacing-3);
+    background-color: var(--sykmelding-view-sykmeldt);
     padding: var(--navds-spacing-4);
     border-radius: 4px;
 }

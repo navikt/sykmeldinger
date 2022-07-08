@@ -1,7 +1,7 @@
 .info,
 .tiltakNAV,
 .andreTiltak {
-    background-color: var(--navds-global-color-gray-50);
+    background-color: var(--sykmelding-view-flere-opplysninger);
     padding: var(--navds-spacing-4);
     margin-bottom: var(--navds-spacing-3);
 }

@@ -4,12 +4,12 @@ import { WarningFilled } from '@navikt/ds-icons';
 import { Sykmelding } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
 import StatusBanner from '../../../StatusBanner/StatusBanner';
 import { getBehandlerName } from '../../../../utils/behandlerUtils';
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding';
 import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: Sykmelding;
@@ -39,7 +39,7 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
                 list={sykmelding.behandlingsutfall.ruleHits}
             />
 
-            <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} />
+            <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
 
             <HintToNextOlderSykmelding />
         </div>
