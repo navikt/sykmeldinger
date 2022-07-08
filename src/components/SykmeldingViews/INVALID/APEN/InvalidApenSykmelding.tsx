@@ -6,7 +6,6 @@ import { WarningFilled } from '@navikt/ds-icons';
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
 import CenterItems from '../../../CenterItems/CenterItems';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
@@ -14,6 +13,7 @@ import { getBehandlerName } from '../../../../utils/behandlerUtils';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
 import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
 
 interface InvalidApenSykmeldingProps {
     sykmelding: Sykmelding;
@@ -64,7 +64,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
             />
 
             <Spacing>
-                <Sykmeldingsopplysninger sykmelding={sykmelding} />
+                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </Spacing>
 
             <form

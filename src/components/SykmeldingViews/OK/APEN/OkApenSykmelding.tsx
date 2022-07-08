@@ -3,11 +3,11 @@ import { WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
 import InformationBanner, { Merknadtype } from '../../../InformationBanner/InformationBanner';
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding';
 import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
 
 import AvbrytPanel from './AvbrytPanel/AvbrytPanel';
 import AvbrytContextProvider from './AvbrytContext';
@@ -42,7 +42,7 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                     </GuidePanel>
                 </Spacing>
 
-                <Sykmeldingsopplysninger sykmelding={sykmelding} />
+                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </div>
         );
     }
@@ -75,7 +75,7 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                 )}
 
                 <Spacing>
-                    <Sykmeldingsopplysninger sykmelding={sykmelding} />
+                    <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
                 </Spacing>
                 <div className="hide-on-print">
                     <Form sykmelding={sykmelding} />

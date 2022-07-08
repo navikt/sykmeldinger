@@ -7,7 +7,6 @@ import Spacing from '../../components/Spacing/Spacing';
 import Spinner from '../../components/Spinner/Spinner';
 import StatusBanner from '../../components/StatusBanner/StatusBanner';
 import StatusInfo from '../../components/StatusInfo/StatusInfo';
-import Sykmeldingsopplysninger from '../../components/SykmeldingViews/SykmeldingView/SykmeldingsopplysningerContainer';
 import { logger } from '../../utils/logger';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam';
@@ -19,6 +18,8 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils';
 import { RegelStatus, StatusEvent, SykmeldingFragment } from '../../fetching/graphql.generated';
 import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding';
+import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer';
+import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer';
 
 function SykmeldingkvitteringPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_KVITTERING');
@@ -86,11 +87,11 @@ function SykmeldingkvitteringPage(): JSX.Element {
             </Spacing>
 
             <Spacing>
-                <Sykmeldingsopplysninger sykmelding={data.sykmelding} expandedDefault={false} arbeidsgiver={false} />
+                <SykmeldingSykmeldtContainer sykmelding={data.sykmelding} />
             </Spacing>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
-                <Sykmeldingsopplysninger sykmelding={data.sykmelding} expandedDefault={false} arbeidsgiver />
+                <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} />
             )}
 
             <HintToNextOlderSykmelding />

@@ -2,9 +2,10 @@ import React from 'react';
 
 import { Sykmelding } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../Spacing/Spacing';
 import StatusBanner from '../../../StatusBanner/StatusBanner';
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
+import SykmeldingArbeidsgiverContainer from '../../SykmeldingView/SykmeldingArbeidsgiverContainer';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
@@ -23,10 +24,10 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
             </Spacing>
 
             <Spacing>
-                <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault />
+                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </Spacing>
 
-            <Sykmeldingsopplysninger sykmelding={sykmelding} expandedDefault={false} arbeidsgiver />
+            <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
         </div>
     );
 };

@@ -5,13 +5,13 @@ import { useForm, FormProvider } from 'react-hook-form';
 import useExtraFormData from '../../../../../hooks/useExtraFormData';
 import Spinner from '../../../../Spinner/Spinner';
 import { AvbrytContext } from '../AvbrytContext';
-import Sykmeldingsopplysninger from '../../../SykmeldingView/SykmeldingsopplysningerContainer';
 import Spacing from '../../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam';
 import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils';
 import { Periodetype, SykmeldingFragment } from '../../../../../fetching/graphql.generated';
 import { useSubmitSykmelding } from '../../../../../hooks/useMutations';
 import { useAmplitude, useLogAmplitudeEvent } from '../../../../../amplitude/amplitude';
+import SykmeldingArbeidsgiverContainer from '../../../SykmeldingView/SykmeldingArbeidsgiverContainer';
 
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
 import FeiloppsummeringContainer from './FeiloppsummeringContainer';
@@ -145,12 +145,7 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                     {erArbeidstaker && harValgtArbeidsgiver && !data.brukerinformasjon.strengtFortroligAdresse && (
                         <div className={styles.harValgtArbeidsgiverWrapper}>
                             <VeilederSenderSykmeldingen />
-                            <Sykmeldingsopplysninger
-                                sykmelding={sykmelding}
-                                arbeidsgiver
-                                expandable={true}
-                                expandedDefault={false}
-                            />
+                            <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} expandable />
                         </div>
                     )}
 

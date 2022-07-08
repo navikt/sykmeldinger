@@ -4,7 +4,6 @@ import { FillForms, WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Sykmeldingsopplysninger from '../../SykmeldingView/SykmeldingsopplysningerContainer';
 import { toReadableDate } from '../../../../utils/dateUtils';
 import Spacing from '../../../Spacing/Spacing';
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
@@ -12,6 +11,7 @@ import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding';
 import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding;
@@ -64,7 +64,7 @@ function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Elem
                     </Spacing>
                 </div>
             )}
-            <Sykmeldingsopplysninger sykmelding={sykmelding} />
+            <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
 
             <HintToNextOlderSykmelding />
         </div>
