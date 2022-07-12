@@ -53,4 +53,16 @@ describe('PrognoseView', () => {
         expect(screen.getByText('Hensyn som må tas på arbeidsplassen')).toBeInTheDocument();
         expect(screen.getByText('hensyn på arbeidsplassen')).toBeInTheDocument();
     });
+
+    it('Dose not render hensynArbeidsplassen if null', () => {
+        const prognose: Prognose = {
+            __typename: 'Prognose',
+            arbeidsforEtterPeriode: true,
+            hensynArbeidsplassen: null,
+            erIArbeid: null,
+            erIkkeIArbeid: null,
+        };
+        render(<PrognoseView prognose={prognose} />);
+        expect(screen.queryByText('Hensyn som må tas på arbeidsplassen')).not.toBeInTheDocument();
+    });
 });

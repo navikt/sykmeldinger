@@ -18,15 +18,14 @@ describe('TilbakedateringView', () => {
         expect(screen.getByText('1. april 2021')).toBeInTheDocument();
     });
 
-    it('Renders begrunnelse', () => {
+    it('Not render it kontaktDato is missing', () => {
         const kontaktMedPasient: KontaktMedPasient = {
             __typename: 'KontaktMedPasient',
-            kontaktDato: '2021-04-01',
-            begrunnelseIkkeKontakt: 'han var kjempesyk',
+            kontaktDato: null,
+            begrunnelseIkkeKontakt: null,
         };
         render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />);
 
-        expect(screen.queryByText('Begrunnelse for tilbakedatering')).not.toBeInTheDocument();
-        expect(screen.queryByText('han var kjempesyk')).not.toBeInTheDocument();
+        expect(screen.queryByText('Tilbakedatering')).not.toBeInTheDocument();
     });
 });
