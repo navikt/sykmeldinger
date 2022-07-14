@@ -36,4 +36,15 @@ describe('AktivitetIkkeMulig', () => {
         expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument();
         expect(screen.getByText('arbeidsrelatert beskrivelse')).toBeInTheDocument();
     });
+
+    it('should display title if medisinskArsak and arbeidsrelatertArsak is missing', () => {
+        const periode: AktivitetIkkeMuligPeriode = {
+            __typename: 'AktivitetIkkeMuligPeriode',
+            medisinskArsak: null,
+            arbeidsrelatertArsak: null,
+        };
+
+        render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} />);
+        expect(screen.queryByText('Aktivitet på arbeidsplassen')).not.toBeInTheDocument();
+    });
 });

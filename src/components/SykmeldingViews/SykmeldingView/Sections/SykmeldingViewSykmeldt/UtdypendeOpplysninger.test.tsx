@@ -4,7 +4,7 @@ import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated';
 
 import UtdypendeOpplysninger from './UtdypendeOpplysninger';
 
-describe('PeriodeView', () => {
+describe('UtdypendeOpplysninger', () => {
     it('Renders utdypende opplysninger', () => {
         const utdypende: UtdypendeOpplysning = {
             __typename: 'UtdypendeOpplysning',

@@ -29,4 +29,15 @@ describe('Tilbakedatering', () => {
         expect(screen.getByText('Begrunnelse for tilbakedatering')).toBeInTheDocument();
         expect(screen.getByText('han var kjempesyk')).toBeInTheDocument();
     });
+
+    it('should not render title if kontaktDato and begrunnelseIkkeKontakt', () => {
+        const kontaktMedPasient: KontaktMedPasient = {
+            __typename: 'KontaktMedPasient',
+            kontaktDato: null,
+            begrunnelseIkkeKontakt: null,
+        };
+        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />);
+
+        expect(screen.queryByText('Begrunnelse for tilbakedatering')).not.toBeInTheDocument();
+    });
 });

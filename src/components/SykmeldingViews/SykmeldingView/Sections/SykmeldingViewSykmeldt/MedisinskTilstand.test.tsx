@@ -60,4 +60,48 @@ describe('MedisinskTilstand', () => {
         expect(screen.getByText('Skadedato')).toBeInTheDocument();
         expect(screen.getByText('1. april 2020')).toBeInTheDocument();
     });
+
+    it('should render Bidiagnose', () => {
+        const medisinskVurdering: MedisinskVurdering = {
+            __typename: 'MedisinskVurdering',
+            annenFraversArsak: {
+                __typename: 'AnnenFraversArsak',
+                beskrivelse: '',
+                grunn: [],
+            },
+            biDiagnoser: [
+                {
+                    __typename: 'Diagnose',
+                    kode: '',
+                    system: '',
+                    tekst: 'Vondt i foten',
+                },
+            ],
+            hovedDiagnose: null,
+            svangerskap: false,
+            yrkesskade: false,
+            yrkesskadeDato: '',
+        };
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
+        expect(screen.getByText('Bidiagnose')).toBeInTheDocument();
+        expect(screen.getByText('Vondt i foten')).toBeInTheDocument();
+    });
+
+    it('should not render Bidiagnose if tekst is missing', () => {
+        const medisinskVurdering: MedisinskVurdering = {
+            __typename: 'MedisinskVurdering',
+            annenFraversArsak: {
+                __typename: 'AnnenFraversArsak',
+                beskrivelse: '',
+                grunn: [],
+            },
+            biDiagnoser: [],
+            hovedDiagnose: null,
+            svangerskap: false,
+            yrkesskade: false,
+            yrkesskadeDato: '',
+        };
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
+        expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument();
+    });
 });

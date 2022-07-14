@@ -15,6 +15,7 @@ const customJestConfig = {
         '!**/node_modules/**',
         '!**/src/utils/test/**',
         '!**/pages/api/internal/**',
+        '!**/server/graphql/mockData/**',
     ],
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 };

@@ -278,4 +278,205 @@ describe('Frilanser', () => {
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
         });
     });
+
+    describe('Egenmeldingsperioder', () => {
+        it('should show error message with link if date is missing', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                    }),
+                ],
+            });
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
+            const harBruktEgenmeldingFieldset = screen
+                .getByText(/Vi har registrert at du ble syk/i)
+                .closest('fieldset');
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+
+            expect(await screen.findByRole('link', { name: 'fom dato mangler.' })).toBeInTheDocument();
+            expect(await screen.findByText(/tom dato mangler./)).toBeInTheDocument();
+        });
+
+        it('should show error message with link if date is invalid format', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                    }),
+                ],
+            });
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
+            const harBruktEgenmeldingFieldset = screen
+                .getByText(/Vi har registrert at du ble syk/i)
+                .closest('fieldset');
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
+            expect(egenmeldingFomTom).toHaveLength(2);
+            userEvent.type(egenmeldingFomTom[0], '11.20.2020');
+            userEvent.type(egenmeldingFomTom[1], '11.25.2020');
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+
+            expect(
+                await screen.findByRole('link', { name: 'Startdato må være på formatet dd.mm.yyyy' }),
+            ).toBeInTheDocument();
+            expect(await screen.findByText(/Sluttdato må være på formatet dd.mm.yyyy/)).toBeInTheDocument();
+        });
+
+        it('should show error message with link if fom is after oppfølgingsdato', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                    }),
+                ],
+            });
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
+            const harBruktEgenmeldingFieldset = screen
+                .getByText(/Vi har registrert at du ble syk/i)
+                .closest('fieldset');
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
+            expect(egenmeldingFomTom).toHaveLength(2);
+            userEvent.type(egenmeldingFomTom[0], '02.04.2020');
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+
+            expect(
+                await screen.findByRole('link', { name: 'Startdato kan ikke være oppfølgingsdato eller senere.' }),
+            ).toBeInTheDocument();
+        });
+
+        it('should show error message with link if tom is after oppfølgingsdato', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                    }),
+                ],
+            });
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
+            const harBruktEgenmeldingFieldset = screen
+                .getByText(/Vi har registrert at du ble syk/i)
+                .closest('fieldset');
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
+            expect(egenmeldingFomTom).toHaveLength(2);
+            userEvent.type(egenmeldingFomTom[0], '01.01.2020');
+            userEvent.type(egenmeldingFomTom[1], '02.05.2020');
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+
+            expect(
+                await screen.findByRole('link', { name: 'Sluttdato kan ikke være oppfølgingsdato eller senere.' }),
+            ).toBeInTheDocument();
+        });
+
+        it('should show error message with link if fom is after tom', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                    }),
+                ],
+            });
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
+            const harBruktEgenmeldingFieldset = screen
+                .getByText(/Vi har registrert at du ble syk/i)
+                .closest('fieldset');
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
+            expect(egenmeldingFomTom).toHaveLength(2);
+            userEvent.type(egenmeldingFomTom[0], '10.01.2020');
+            userEvent.type(egenmeldingFomTom[1], '02.01.2020');
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+
+            expect(
+                await screen.findByRole('link', { name: 'Startdato kan ikke være etter sluttdato.' }),
+            ).toBeInTheDocument();
+            expect(await screen.findByText(/Sluttdato kan ikke være før startdato./)).toBeInTheDocument();
+        });
+
+        it('should be able to remove period', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                    }),
+                ],
+            });
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
+            const harBruktEgenmeldingFieldset = screen
+                .getByText(/Vi har registrert at du ble syk/i)
+                .closest('fieldset');
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
+            userEvent.click(screen.getByRole('button', { name: 'Legg til ekstra periode' }));
+            const egenmeldingFomTomTwo = await screen.findAllByPlaceholderText('dd.mm.åååå');
+            expect(egenmeldingFomTomTwo).toHaveLength(4);
+            userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }));
+
+            const egenmeldingFomTomOne = await screen.findAllByPlaceholderText('dd.mm.åååå');
+            await waitFor(() => expect(egenmeldingFomTomOne).toHaveLength(2));
+        });
+
+        it('should show guid panel about egenmeldt', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    createMock({
+                        request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                        result: {
+                            data: {
+                                __typename: 'Query',
+                                sykmelding: createSykmelding({ id: 'sykmelding-id', egenmeldt: true }),
+                            },
+                        },
+                    }),
+                    createMock({
+                        request: { query: SykmeldingerDocument },
+                        result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
+                    }),
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                    }),
+                ],
+            });
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+
+            expect(
+                await screen.findByText(
+                    'Hei, denne egenmeldingen er utløpt og kan derfor ikke benyttes. Du kan fortsatt se opplysninger fra egenmeldingen under.',
+                ),
+            ).toBeInTheDocument();
+        });
+    });
 });
