@@ -5,7 +5,7 @@ import { logger } from '../../utils/logger';
 
 export const LocalDateSchema = z.string().refine(
     (date) => {
-        const valid = isValid(parseISO(date));
+        const valid = isValid(parseISO(date, { additionalDigits: 1 }));
         if (!valid) {
             logger.error(`Strange invalid date!!, date is: ${date}`);
         }
