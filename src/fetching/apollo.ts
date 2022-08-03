@@ -43,7 +43,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
             }
         }
 
-        logger.error(`[Network error]: ${networkError} for operation ${operation.operationName}`);
+        networkError.message = `${networkError.message} Happened in operation "${operation.operationName}"`;
+
+        logger.error(networkError);
     }
 });
 
