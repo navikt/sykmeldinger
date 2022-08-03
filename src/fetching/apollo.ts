@@ -24,11 +24,13 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     });
 };
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     if (graphQLErrors)
         graphQLErrors.forEach(({ message, locations, path, extensions }) => {
             if (extensions?.code !== 'UNAUTHENTICATED') {
-                logger.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+                logger.error(
+                    `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path} for operation ${operation.operationName}`,
+                );
             }
         });
 
@@ -41,7 +43,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
             }
         }
 
-        logger.error(`[Network error]: ${networkError}`);
+        logger.error(`[Network error]: ${networkError} for operation ${operation.operationName}`);
     }
 });
 
