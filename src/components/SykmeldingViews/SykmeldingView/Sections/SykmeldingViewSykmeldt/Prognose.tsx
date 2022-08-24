@@ -27,23 +27,21 @@ function Prognose({ prognose }: Props): JSX.Element | null {
     return (
         <div>
             <SykmeldtHeading title="Prognose" Icon={Historic} />
-            <div className={styles.info}>
-                {prognose.arbeidsforEtterPeriode && (
-                    <div className={styles.arbeidsforEtterPeriode}>
-                        <JaEntry title="Er pasienten 100% arbeidsfør etter denne perioden?" headingLevel="4" />
-                    </div>
-                )}
-                {!!prognose.hensynArbeidsplassen && (
-                    <div className={styles.hensynArbeidsplassen}>
-                        <SykmeldingEntry
-                            title="Hensyn som må tas på arbeidsplassen"
-                            mainText={prognose.hensynArbeidsplassen}
-                            small
-                            headingLevel="4"
-                        />
-                    </div>
-                )}
-            </div>
+            {prognose.arbeidsforEtterPeriode && (
+                <div className={styles.arbeidsforEtterPeriode}>
+                    <JaEntry title="Er pasienten 100% arbeidsfør etter denne perioden?" headingLevel="4" />
+                </div>
+            )}
+            {!!prognose.hensynArbeidsplassen && (
+                <div className={styles.hensynArbeidsplassen}>
+                    <SykmeldingEntry
+                        title="Hensyn som må tas på arbeidsplassen"
+                        mainText={prognose.hensynArbeidsplassen}
+                        small
+                        headingLevel="4"
+                    />
+                </div>
+            )}
             {!!prognose.erIArbeid && (
                 <div className={styles.erIArbeid}>
                     {prognose.erIArbeid.egetArbeidPaSikt && (

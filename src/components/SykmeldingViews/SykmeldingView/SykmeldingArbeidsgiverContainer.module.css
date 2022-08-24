@@ -49,13 +49,3 @@
     padding: var(--navds-spacing-4);
     align-items: flex-start;
 }
-
-@media print {
-    .sykmeldingsopplysningerHeader .arbeidsgiverHeader {
-        display: none;
-    }
-
-    .opplysningerTilArbeidsgiver {
-        border: none;
-    }
-}

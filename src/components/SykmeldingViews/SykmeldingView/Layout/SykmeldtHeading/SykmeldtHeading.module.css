@@ -12,9 +12,3 @@
 .heading {
     font-size: var(--navds-font-size-heading-xsmall);
 }
-
-@media print {
-    .root {
-        padding-bottom: var(--navds-spacing-2);
-    }
-}

@@ -27,7 +27,7 @@ function PapirInfoheader(): JSX.Element {
     }, [harGittVidere, logEvent]);
 
     return (
-        <div className="hide-on-print">
+        <>
             <RadioGroup
                 name="harDuGittPapirsykmeldingenVidere"
                 legend="Har du allerede gitt papirsykmeldingen videre?"
@@ -88,7 +88,7 @@ function PapirInfoheader(): JSX.Element {
                     </Alert>
                 </Spacing>
             )}
-        </div>
+        </>
     );
 }
 

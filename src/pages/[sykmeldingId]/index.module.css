@@ -1,9 +1,22 @@
-.logoForPrint {
+.browserPrintMessage {
     display: none;
 }
 
 @media print {
-    .logoForPrint {
+    .hideOnBrowserPrint {
+        display: none;
+    }
+
+    .browserPrintMessage {
         display: block;
+        margin: 25rem var(--navds-spacing-24) 0 var(--navds-spacing-24);
+    }
+
+    .browserPrintMessage h1 {
+        margin-bottom: var(--navds-spacing-4);
+    }
+
+    .browserPrintMessage p {
+        font-size: var(--navds-font-size-heading-medium);
     }
 }

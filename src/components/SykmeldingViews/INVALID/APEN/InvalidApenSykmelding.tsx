@@ -1,7 +1,6 @@
 import { Alert, Button, ConfirmationPanel, Loader } from '@navikt/ds-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
@@ -12,7 +11,6 @@ import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
 import { getBehandlerName } from '../../../../utils/behandlerUtils';
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
 import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
-import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
 
 interface InvalidApenSykmeldingProps {
@@ -57,18 +55,12 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                     behandlingsutfall={sykmelding.behandlingsutfall}
                 />
             </Spacing>
-            <SykmeldingStatusPrint
-                title="Avvist sykmelding"
-                Icon={WarningFilled}
-                list={sykmelding.behandlingsutfall.ruleHits}
-            />
 
             <Spacing>
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </Spacing>
 
             <form
-                className="hide-on-print"
                 onSubmit={handleSubmit(() => {
                     bekreft();
                 })}

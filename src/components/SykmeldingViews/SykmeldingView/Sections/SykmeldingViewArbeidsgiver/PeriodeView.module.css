@@ -22,7 +22,7 @@
 
 .perioder .periode p:not(:last-of-type) {
     margin-bottom: 0.3rem;
-    font-size: var(--navds-spacing-4);
+    font-size: var(--navds-font-size-medium);
 }
 
 .perioder .periode div:last-of-type,

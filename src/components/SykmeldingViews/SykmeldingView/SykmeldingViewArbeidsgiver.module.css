@@ -7,9 +7,3 @@
 .sykmeldingViewArbeidsgiver > div:not(:last-of-type, :global(.periodeView)) {
     margin-bottom: var(--navds-spacing-4);
 }
-
-@media print {
-    .sykmeldingViewArbeidsgiver {
-        display: none;
-    }
-}

@@ -1,12 +1,10 @@
 import { GuidePanel } from '@navikt/ds-react';
-import { WarningFilled } from '@navikt/ds-icons';
 
 import { Sykmelding } from '../../../../fetching/graphql.generated';
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
 import Spacing from '../../../Spacing/Spacing';
-import InformationBanner, { Merknadtype } from '../../../InformationBanner/InformationBanner';
+import InformationBanner from '../../../InformationBanner/InformationBanner';
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding';
-import SykmeldingStatusPrint from '../../SykmeldingView/Layout/SykmeldingStatusPrint/SykmeldingStatusPrint';
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
 
 import AvbrytPanel from './AvbrytPanel/AvbrytPanel';
@@ -51,21 +49,12 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
         <AvbrytContextProvider>
             <div className="sykmelding-container">
                 {!olderSykmeldingId && (
-                    <div className="hide-on-print">
-                        <Spacing>
-                            <InformationBanner
-                                merknader={sykmelding.merknader}
-                                papirsykmelding={sykmelding.papirsykmelding}
-                            />
-                        </Spacing>
-                    </div>
-                )}
-                {sykmelding.merknader?.some((merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING) && (
-                    <SykmeldingStatusPrint
-                        title="Avvist sykmelding"
-                        Icon={WarningFilled}
-                        list={sykmelding.behandlingsutfall.ruleHits}
-                    />
+                    <Spacing>
+                        <InformationBanner
+                            merknader={sykmelding.merknader}
+                            papirsykmelding={sykmelding.papirsykmelding}
+                        />
+                    </Spacing>
                 )}
 
                 {Boolean(sykmelding.papirsykmelding) && (
@@ -77,10 +66,8 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                 <Spacing>
                     <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
                 </Spacing>
-                <div className="hide-on-print">
-                    <Form sykmelding={sykmelding} />
-                    <AvbrytPanel />
-                </div>
+                <Form sykmelding={sykmelding} />
+                <AvbrytPanel />
             </div>
         </AvbrytContextProvider>
     );

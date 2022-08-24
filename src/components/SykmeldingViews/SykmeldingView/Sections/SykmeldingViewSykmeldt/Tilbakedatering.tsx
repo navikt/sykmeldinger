@@ -11,7 +11,7 @@ interface Props {
     kontaktMedPasient: KontaktMedPasient;
 }
 
-function TilbakedateringSykmeldt({ kontaktMedPasient }: Props): JSX.Element | null {
+function Tilbakedatering({ kontaktMedPasient }: Props): JSX.Element | null {
     if (!kontaktMedPasient.kontaktDato && !kontaktMedPasient.begrunnelseIkkeKontakt) {
         return null;
     }
@@ -19,28 +19,26 @@ function TilbakedateringSykmeldt({ kontaktMedPasient }: Props): JSX.Element | nu
     return (
         <div>
             <SykmeldtHeading title="Tilbakedatering" Icon={Historic} />
-            <div className={styles.info}>
-                {!!kontaktMedPasient.kontaktDato && (
-                    <div className={styles.kontaktDato}>
-                        <SykmeldingEntry
-                            title="Dato for dokumenterbar kontakt med pasienten"
-                            mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
-                            headingLevel="4"
-                        />
-                    </div>
-                )}
-                {!!kontaktMedPasient.begrunnelseIkkeKontakt && (
-                    <div className={styles.begrunnelseIkkeKontakt}>
-                        <SykmeldingEntry
-                            title="Begrunnelse for tilbakedatering"
-                            mainText={kontaktMedPasient.begrunnelseIkkeKontakt}
-                            headingLevel="4"
-                        />
-                    </div>
-                )}
-            </div>
+            {!!kontaktMedPasient.kontaktDato && (
+                <div className={styles.kontaktDato}>
+                    <SykmeldingEntry
+                        title="Dato for dokumenterbar kontakt med pasienten"
+                        mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
+                        headingLevel="4"
+                    />
+                </div>
+            )}
+            {!!kontaktMedPasient.begrunnelseIkkeKontakt && (
+                <div className={styles.begrunnelseIkkeKontakt}>
+                    <SykmeldingEntry
+                        title="Begrunnelse for tilbakedatering"
+                        mainText={kontaktMedPasient.begrunnelseIkkeKontakt}
+                        headingLevel="4"
+                    />
+                </div>
+            )}
         </div>
     );
 }
 
-export default TilbakedateringSykmeldt;
+export default Tilbakedatering;

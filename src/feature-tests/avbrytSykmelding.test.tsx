@@ -54,7 +54,7 @@ describe('Avbryt sykmelding', () => {
 
         expect(screen.queryByText(/Jeg vil avbryte sykmeldingen/)).not.toBeInTheDocument();
 
-        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg 1. februar 2022/)).toBeInTheDocument();
+        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument();
         expect(await screen.findByText(/GJØR UTFYLLINGEN PÅ NYTT/)).toBeInTheDocument();
     });
 
@@ -90,12 +90,10 @@ describe('Avbryt sykmelding', () => {
             ],
         });
 
-        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg 1. februar 2022/)).toBeInTheDocument();
+        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument();
         userEvent.click(screen.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }));
 
-        await waitFor(() =>
-            expect(screen.queryByText(/Sykmeldingen ble avbrutt av deg 1. februar 2022/)).not.toBeInTheDocument(),
-        );
+        await waitFor(() => expect(screen.queryByText(/Sykmeldingen ble avbrutt av deg/)).not.toBeInTheDocument());
         expect(await screen.findByText(/Jeg vil avbryte sykmeldingen/)).toBeInTheDocument();
     });
 

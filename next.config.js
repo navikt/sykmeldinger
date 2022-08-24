@@ -55,6 +55,14 @@ const nextConfig = {
     },
     serverRuntimeConfig,
     publicRuntimeConfig,
+    async rewrites() {
+        return [
+            {
+                source: '/:sykmeldingId/pdf',
+                destination: '/api/generate-pdf/:sykmeldingId',
+            },
+        ];
+    },
 };
 
 const nextConfigWithBundleAnalyzer = withBundleAnalyzer(nextConfig);

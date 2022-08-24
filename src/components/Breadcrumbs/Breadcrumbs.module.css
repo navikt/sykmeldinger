@@ -49,9 +49,3 @@
         align-items: center;
     }
 }
-
-@media print {
-    .breadcrumbs {
-        display: none;
-    }
-}

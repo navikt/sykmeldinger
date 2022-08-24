@@ -23,6 +23,7 @@
         "@navikt/ds-icons": "^0.8.18",
         "@navikt/ds-react": "^0.19.21",
         "@navikt/nav-dekoratoren-moduler": "^1.6.17",
+        "@react-pdf/renderer": "^2.3.0",
         "@sentry/nextjs": "^7.8.0",
         "amplitude-js": "^8.18.5",
         "apollo-server-micro": "^3.10.0",
