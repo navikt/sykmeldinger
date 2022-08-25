@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { ResolverContextType } from './resolvers';
+import { RequestContext } from './resolvers';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -541,7 +541,7 @@ export type ResolversParentTypes = ResolversObject<{
 }>;
 
 export type AdresseResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Adresse'] = ResolversParentTypes['Adresse'],
 > = ResolversObject<{
     gate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -553,7 +553,7 @@ export type AdresseResolvers<
 }>;
 
 export type AktivitetIkkeMuligPeriodeResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['AktivitetIkkeMuligPeriode'] = ResolversParentTypes['AktivitetIkkeMuligPeriode'],
 > = ResolversObject<{
     arbeidsrelatertArsak?: Resolver<Maybe<ResolversTypes['ArbeidsrelatertArsak']>, ParentType, ContextType>;
@@ -562,7 +562,7 @@ export type AktivitetIkkeMuligPeriodeResolvers<
 }>;
 
 export type AnnenFraversArsakResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['AnnenFraversArsak'] = ResolversParentTypes['AnnenFraversArsak'],
 > = ResolversObject<{
     beskrivelse?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -571,7 +571,7 @@ export type AnnenFraversArsakResolvers<
 }>;
 
 export type ArbeidsgiverResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Arbeidsgiver'] = ResolversParentTypes['Arbeidsgiver'],
 > = ResolversObject<{
     aktivtArbeidsforhold?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -585,7 +585,7 @@ export type ArbeidsgiverResolvers<
 }>;
 
 export type ArbeidsgiverStatusResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsgiverStatus'] = ResolversParentTypes['ArbeidsgiverStatus'],
 > = ResolversObject<{
     juridiskOrgnummer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -595,7 +595,7 @@ export type ArbeidsgiverStatusResolvers<
 }>;
 
 export type ArbeidsgiverSykmeldingResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsgiverSykmelding'] = ResolversParentTypes['ArbeidsgiverSykmelding'],
 > = ResolversObject<{
     navn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -604,7 +604,7 @@ export type ArbeidsgiverSykmeldingResolvers<
 }>;
 
 export type ArbeidsrelatertArsakResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsrelatertArsak'] = ResolversParentTypes['ArbeidsrelatertArsak'],
 > = ResolversObject<{
     arsak?: Resolver<Array<ResolversTypes['ArbeidsrelatertArsakType']>, ParentType, ContextType>;
@@ -613,7 +613,7 @@ export type ArbeidsrelatertArsakResolvers<
 }>;
 
 export type BehandlerResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Behandler'] = ResolversParentTypes['Behandler'],
 > = ResolversObject<{
     adresse?: Resolver<Maybe<ResolversTypes['Adresse']>, ParentType, ContextType>;
@@ -625,7 +625,7 @@ export type BehandlerResolvers<
 }>;
 
 export type BehandlingsutfallResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Behandlingsutfall'] = ResolversParentTypes['Behandlingsutfall'],
 > = ResolversObject<{
     ruleHits?: Resolver<Array<ResolversTypes['RegelInfo']>, ParentType, ContextType>;
@@ -634,7 +634,7 @@ export type BehandlingsutfallResolvers<
 }>;
 
 export type BrukerinformasjonResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Brukerinformasjon'] = ResolversParentTypes['Brukerinformasjon'],
 > = ResolversObject<{
     arbeidsgivere?: Resolver<Array<ResolversTypes['Arbeidsgiver']>, ParentType, ContextType>;
@@ -651,7 +651,7 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type DiagnoseResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Diagnose'] = ResolversParentTypes['Diagnose'],
 > = ResolversObject<{
     kode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -661,7 +661,7 @@ export type DiagnoseResolvers<
 }>;
 
 export type ErIArbeidResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ErIArbeid'] = ResolversParentTypes['ErIArbeid'],
 > = ResolversObject<{
     annetArbeidPaSikt?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -672,7 +672,7 @@ export type ErIArbeidResolvers<
 }>;
 
 export type ErIkkeIArbeidResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ErIkkeIArbeid'] = ResolversParentTypes['ErIkkeIArbeid'],
 > = ResolversObject<{
     arbeidsforFOM?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
@@ -682,7 +682,7 @@ export type ErIkkeIArbeidResolvers<
 }>;
 
 export type GradertPeriodeResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['GradertPeriode'] = ResolversParentTypes['GradertPeriode'],
 > = ResolversObject<{
     grad?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -695,7 +695,7 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type KontaktMedPasientResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['KontaktMedPasient'] = ResolversParentTypes['KontaktMedPasient'],
 > = ResolversObject<{
     begrunnelseIkkeKontakt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -704,7 +704,7 @@ export type KontaktMedPasientResolvers<
 }>;
 
 export type MedisinskArsakResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['MedisinskArsak'] = ResolversParentTypes['MedisinskArsak'],
 > = ResolversObject<{
     arsak?: Resolver<Array<ResolversTypes['MedisinskArsakType']>, ParentType, ContextType>;
@@ -713,7 +713,7 @@ export type MedisinskArsakResolvers<
 }>;
 
 export type MedisinskVurderingResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['MedisinskVurdering'] = ResolversParentTypes['MedisinskVurdering'],
 > = ResolversObject<{
     annenFraversArsak?: Resolver<Maybe<ResolversTypes['AnnenFraversArsak']>, ParentType, ContextType>;
@@ -726,7 +726,7 @@ export type MedisinskVurderingResolvers<
 }>;
 
 export type MeldingTilNavResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['MeldingTilNAV'] = ResolversParentTypes['MeldingTilNAV'],
 > = ResolversObject<{
     beskrivBistand?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -735,7 +735,7 @@ export type MeldingTilNavResolvers<
 }>;
 
 export type MerknadResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Merknad'] = ResolversParentTypes['Merknad'],
 > = ResolversObject<{
     beskrivelse?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -744,7 +744,7 @@ export type MerknadResolvers<
 }>;
 
 export type MutationResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = ResolversObject<{
     changeSykmeldingStatus?: Resolver<
@@ -762,7 +762,7 @@ export type MutationResolvers<
 }>;
 
 export type NaermesteLederResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['NaermesteLeder'] = ResolversParentTypes['NaermesteLeder'],
 > = ResolversObject<{
     aktivTom?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
@@ -777,7 +777,7 @@ export type NaermesteLederResolvers<
 }>;
 
 export type PasientResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Pasient'] = ResolversParentTypes['Pasient'],
 > = ResolversObject<{
     etternavn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -788,7 +788,7 @@ export type PasientResolvers<
 }>;
 
 export type PeriodeResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Periode'] = ResolversParentTypes['Periode'],
 > = ResolversObject<{
     aktivitetIkkeMulig?: Resolver<Maybe<ResolversTypes['AktivitetIkkeMuligPeriode']>, ParentType, ContextType>;
@@ -803,7 +803,7 @@ export type PeriodeResolvers<
 }>;
 
 export type PrognoseResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Prognose'] = ResolversParentTypes['Prognose'],
 > = ResolversObject<{
     arbeidsforEtterPeriode?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -814,7 +814,7 @@ export type PrognoseResolvers<
 }>;
 
 export type QueryResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = ResolversObject<{
     brukerinformasjon?: Resolver<ResolversTypes['Brukerinformasjon'], ParentType, ContextType>;
@@ -834,7 +834,7 @@ export type QueryResolvers<
 }>;
 
 export type RegelInfoResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['RegelInfo'] = ResolversParentTypes['RegelInfo'],
 > = ResolversObject<{
     messageForSender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -845,7 +845,7 @@ export type RegelInfoResolvers<
 }>;
 
 export type SporsmalResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Sporsmal'] = ResolversParentTypes['Sporsmal'],
 > = ResolversObject<{
     shortName?: Resolver<ResolversTypes['ShortName'], ParentType, ContextType>;
@@ -855,7 +855,7 @@ export type SporsmalResolvers<
 }>;
 
 export type SvarResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Svar'] = ResolversParentTypes['Svar'],
 > = ResolversObject<{
     svar?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -864,7 +864,7 @@ export type SvarResolvers<
 }>;
 
 export type SykmeldingResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Sykmelding'] = ResolversParentTypes['Sykmelding'],
 > = ResolversObject<{
     andreTiltak?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -897,7 +897,7 @@ export type SykmeldingResolvers<
 }>;
 
 export type SykmeldingStatusResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['SykmeldingStatus'] = ResolversParentTypes['SykmeldingStatus'],
 > = ResolversObject<{
     arbeidsgiver?: Resolver<Maybe<ResolversTypes['ArbeidsgiverStatus']>, ParentType, ContextType>;
@@ -908,7 +908,7 @@ export type SykmeldingStatusResolvers<
 }>;
 
 export type UtdypendeOpplysningResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['UtdypendeOpplysning'] = ResolversParentTypes['UtdypendeOpplysning'],
 > = ResolversObject<{
     restriksjoner?: Resolver<Array<ResolversTypes['SvarRestriksjon']>, ParentType, ContextType>;
@@ -918,7 +918,7 @@ export type UtdypendeOpplysningResolvers<
 }>;
 
 export type UtenforVentetidResolvers<
-    ContextType = ResolverContextType,
+    ContextType = RequestContext,
     ParentType extends ResolversParentTypes['UtenforVentetid'] = ResolversParentTypes['UtenforVentetid'],
 > = ResolversObject<{
     erUtenforVentetid?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -926,7 +926,7 @@ export type UtenforVentetidResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type Resolvers<ContextType = ResolverContextType> = ResolversObject<{
+export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     Adresse?: AdresseResolvers<ContextType>;
     AktivitetIkkeMuligPeriode?: AktivitetIkkeMuligPeriodeResolvers<ContextType>;
     AnnenFraversArsak?: AnnenFraversArsakResolvers<ContextType>;

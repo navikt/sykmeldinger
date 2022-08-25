@@ -25,6 +25,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
             x_isFrontend: true,
             x_userAgent: req.headers['user-agent'],
             x_trace: isLocalOrDemo ? undefined : x_trace,
+            x_userTraceId: req.headers['x-user-trace-id'] ?? 'not-set',
         });
     });
 

@@ -2,19 +2,24 @@
 import pino from 'pino';
 
 import { getPublicEnv } from './env';
+import { getUserTraceId } from './userTraceId';
 
 const publicEnv = getPublicEnv();
 
-const getFrontendLogger = (): pino.Logger =>
-    pino({
+const getFrontendLogger = (): pino.Logger => {
+    const userTraceId = getUserTraceId();
+    return pino({
         browser: {
             transmit: {
                 send: async (level, logEvent) => {
                     try {
                         await fetch(`${publicEnv.publicPath ?? ''}/api/logger`, {
                             method: 'POST',
-                            headers: { 'content-type': 'application/json' },
-                            body: JSON.stringify({ ...logEvent, x_trace: new Error().stack }),
+                            headers: { 'content-type': 'application/json', 'x-user-trace-id': userTraceId },
+                            body: JSON.stringify({
+                                ...logEvent,
+                                x_trace: new Error().stack,
+                            }),
                         });
                     } catch (e) {
                         console.warn(e);
@@ -24,7 +29,8 @@ const getFrontendLogger = (): pino.Logger =>
             },
         },
     });
+};
 
-const createBackendLogger = require('../../next-logger.config').logger;
+const createBackendLogger = (): pino.Logger => require('../../next-logger.config').logger();
 
 export const logger: pino.Logger = typeof window !== 'undefined' ? getFrontendLogger() : createBackendLogger();

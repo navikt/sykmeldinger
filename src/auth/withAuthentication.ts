@@ -3,7 +3,7 @@ import { IncomingMessage } from 'http';
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next';
 
 import { getPublicEnv, isLocalOrDemo } from '../utils/env';
-import { ResolverContextType } from '../server/graphql/resolvers';
+import { RequestContext } from '../server/graphql/resolvers';
 import { logger } from '../utils/logger';
 
 import { validateIdPortenToken } from './token/idporten';
@@ -90,9 +90,9 @@ function getRedirectPath(context: GetServerSidePropsContext): string {
 }
 
 /**
- * Creates the GraphQL context that is passed through the resolvers, both for prefetching and HTTP-fetching.
+ * Creates the HTTP context that is passed through the resolvers and services, both for prefetching and HTTP-fetching.
  */
-export function createResolverContextType(req: IncomingMessage): ResolverContextType | null {
+export function createRequestContext(req: IncomingMessage): RequestContext | null {
     if (isLocalOrDemo) {
         return require('./fakeLocalAuthTokenSet.json');
     }
@@ -105,8 +105,10 @@ export function createResolverContextType(req: IncomingMessage): ResolverContext
 
     const accessToken = token.replace('Bearer ', '');
     const jwtPayload = accessToken.split('.')[1];
+    const userTraceId = req.headers['x-user-trace-id'] as string | undefined;
     return {
         accessToken,
         payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
+        userTraceId: userTraceId ?? 'not set',
     };
 }

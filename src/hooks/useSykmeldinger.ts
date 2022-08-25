@@ -1,4 +1,5 @@
 import { QueryResult, useApolloClient, useQuery } from '@apollo/client';
+import { useEffect } from 'react';
 
 import {
     SykmeldingDocument,
@@ -6,8 +7,12 @@ import {
     SykmeldingerQuery,
     SykmeldingerQueryVariables,
 } from '../fetching/graphql.generated';
+import { logger } from '../utils/logger';
 
 export function useSykmeldinger(): QueryResult<SykmeldingerQuery, SykmeldingerQueryVariables> {
+    useEffect(() => {
+        logger.info(`Client: Fetching sykmeldinger`);
+    }, []);
     const client = useApolloClient();
     return useQuery(SykmeldingerDocument, {
         onCompleted: (result) => {
