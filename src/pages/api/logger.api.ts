@@ -8,6 +8,11 @@ type LogLevels = Exclude<keyof BaseLogger, 'string' | 'level'>;
 type WithTrace = { x_trace?: string };
 
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
+    if (req.method !== 'POST') {
+        res.status(405).json({ error: 'Method Not Allowed' });
+        return;
+    }
+
     const { level, ts, x_trace, ...rest }: pino.LogEvent & WithTrace = req.body;
 
     rest.messages.forEach((msg) => {

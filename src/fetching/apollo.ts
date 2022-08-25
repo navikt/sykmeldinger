@@ -9,10 +9,6 @@ const publicEnv = getPublicEnv();
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
-        uri: `${publicEnv.publicPath ?? ''}/api/graphql`,
-        headers: {
-            credentials: 'include',
-        },
         cache: new InMemoryCache(),
         link: from([
             errorLink,
@@ -43,7 +39,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
             }
         }
 
-        networkError.message = `${networkError.message} Happened in operation "${operation.operationName}"`;
+        networkError.message = `${networkError.message}. Happened in operation "${
+            operation.operationName
+        } with variable id (if any): ${operation.variables.id ?? operation.variables.sykmeldingId}"`;
 
         logger.error(networkError);
     }
@@ -51,4 +49,5 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 
 const httpLink = new HttpLink({
     uri: `${publicEnv.publicPath ?? ''}/api/graphql`,
+    credentials: 'same-origin',
 });

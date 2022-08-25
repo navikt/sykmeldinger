@@ -130,5 +130,5 @@ async function fetchApi<ResponseObject>(
         throw new AuthenticationError('User has been logged out');
     }
 
-    throw new Error(`API responded with status ${response.status} ${response.statusText}`);
+    throw new Error(`API (${path}) responded with status ${response.status} ${response.statusText}`);
 }
