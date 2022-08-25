@@ -4,7 +4,6 @@ const pino = require('pino');
 const logger = (defaultConfig = {}) =>
     pino({
         ...defaultConfig,
-        transport: process.env.NODE_ENV !== 'production' ? { target: 'pino-pretty' } : undefined,
         timestamp: false,
         formatters: {
             level: (label) => {

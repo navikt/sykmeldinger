@@ -4,6 +4,7 @@ import { RetryLink } from '@apollo/client/link/retry';
 
 import { logger } from '../utils/logger';
 import { getPublicEnv } from '../utils/env';
+import { getUserTraceId } from '../utils/userTraceId';
 
 const publicEnv = getPublicEnv();
 
@@ -25,7 +26,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
         graphQLErrors.forEach(({ message, locations, path, extensions }) => {
             if (extensions?.code !== 'UNAUTHENTICATED') {
                 logger.error(
-                    `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path} for operation ${operation.operationName}`,
+                    `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path} for operation ${
+                        operation.operationName
+                    }, traceId: ${getUserTraceId()}`,
                 );
             }
         });
@@ -41,7 +44,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 
         networkError.message = `${networkError.message}. Happened in operation "${
             operation.operationName
-        } with variable id (if any): ${operation.variables.id ?? operation.variables.sykmeldingId}"`;
+        }" with variable id (if any): ${
+            operation.variables.id ?? operation.variables.sykmeldingId
+        }. User trace id: ${getUserTraceId()}`;
 
         logger.error(networkError);
     }
@@ -50,4 +55,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 const httpLink = new HttpLink({
     uri: `${publicEnv.publicPath ?? ''}/api/graphql`,
     credentials: 'same-origin',
+    headers: {
+        'x-user-trace-id': getUserTraceId(),
+    },
 });

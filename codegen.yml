@@ -29,7 +29,7 @@ generates:
           content: '/* eslint-disable */'
     config:
       useIndexSignature: true
-      contextType: ./resolvers#ResolverContextType
+      contextType: ./resolvers#RequestContext
       avoidOptionals:
         field: true
       scalars:

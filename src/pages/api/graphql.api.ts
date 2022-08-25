@@ -6,9 +6,9 @@ import {
 import { NextApiRequest } from 'next';
 
 import schema from '../../server/graphql/schema';
-import { createResolverContextType, withAuthenticatedApi } from '../../auth/withAuthentication';
+import { createRequestContext, withAuthenticatedApi } from '../../auth/withAuthentication';
 import { logger } from '../../utils/logger';
-import { ResolverContextType } from '../../server/graphql/resolvers';
+import { RequestContext } from '../../server/graphql/resolvers';
 
 const apolloServer = new ApolloServer({
     schema,
@@ -27,8 +27,8 @@ const apolloServer = new ApolloServer({
         }
         return response;
     },
-    context: async ({ req }: { req: NextApiRequest }): Promise<ResolverContextType> => {
-        const resolverContextType = createResolverContextType(req);
+    context: async ({ req }: { req: NextApiRequest }): Promise<RequestContext> => {
+        const resolverContextType = createRequestContext(req);
 
         if (!resolverContextType) {
             throw new AuthenticationError('User not logged in');

@@ -6,23 +6,24 @@ import { TokenPayload } from '../../auth/withAuthentication';
 
 import { MutationResolvers, QueryResolvers, Resolvers } from './resolver-types.generated';
 
-export interface ResolverContextType {
+export interface RequestContext {
     payload: TokenPayload;
     accessToken: string;
+    userTraceId: string;
 }
 
 const Query: QueryResolvers = {
-    sykmeldinger: async (_, args, context) => sykmeldingerService.getSykmeldinger(context.accessToken),
-    sykmelding: async (_, { id }, context) => sykmeldingerService.getSykmelding(id, context.accessToken),
-    brukerinformasjon: async (_, args, context) => sykmeldingerService.getBrukerinformasjon(context.accessToken),
-    sykmeldingUtenforVentetid: async (_, { id }, context) => flexService.getErUtenforVentetid(id, context.accessToken),
+    sykmeldinger: async (_, args, context) => sykmeldingerService.getSykmeldinger(context),
+    sykmelding: async (_, { id }, context) => sykmeldingerService.getSykmelding(id, context),
+    brukerinformasjon: async (_, args, context) => sykmeldingerService.getBrukerinformasjon(context),
+    sykmeldingUtenforVentetid: async (_, { id }, context) => flexService.getErUtenforVentetid(id, context),
 };
 
 const Mutation: MutationResolvers = {
     changeSykmeldingStatus: async (_, { sykmeldingId, status }, context) =>
-        sykmeldingerService.changeSykmeldingStatus(sykmeldingId, status, context.accessToken),
+        sykmeldingerService.changeSykmeldingStatus(sykmeldingId, status, context),
     submitSykmelding: async (_, { sykmeldingId, values }, context) =>
-        sykmeldingerService.submitSykmelding(sykmeldingId, values, context.accessToken),
+        sykmeldingerService.submitSykmelding(sykmeldingId, values, context),
 };
 
 const resolvers: Partial<Resolvers> = {
