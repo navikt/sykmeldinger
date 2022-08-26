@@ -2,12 +2,12 @@
 import pino from 'pino';
 
 import { getPublicEnv } from './env';
-import { getUserRequestId } from './userTraceId';
+import { getUserRequestId } from './userRequestId';
 
 const publicEnv = getPublicEnv();
 
 const getFrontendLogger = (): pino.Logger => {
-    const userTraceId = getUserRequestId();
+    const requestId = getUserRequestId();
     return pino({
         browser: {
             transmit: {
@@ -15,7 +15,7 @@ const getFrontendLogger = (): pino.Logger => {
                     try {
                         await fetch(`${publicEnv.publicPath ?? ''}/api/logger`, {
                             method: 'POST',
-                            headers: { 'content-type': 'application/json', 'x-request-id': userTraceId },
+                            headers: { 'content-type': 'application/json', 'x-request-id': requestId },
                             body: JSON.stringify({
                                 ...logEvent,
                                 x_trace: new Error().stack,
@@ -34,3 +34,8 @@ const getFrontendLogger = (): pino.Logger => {
 const createBackendLogger = (): pino.Logger => require('../../next-logger.config').logger();
 
 export const logger: pino.Logger = typeof window !== 'undefined' ? getFrontendLogger() : createBackendLogger();
+
+export const createChildLogger = (requestId: string): pino.Logger => {
+    console.log('creating loggy boi with request id', requestId);
+    return logger.child({ x_request_id: requestId, wat: true });
+};

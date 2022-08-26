@@ -93,8 +93,10 @@ function getRedirectPath(context: GetServerSidePropsContext): string {
  * Creates the HTTP context that is passed through the resolvers and services, both for prefetching and HTTP-fetching.
  */
 export function createRequestContext(req: IncomingMessage): RequestContext | null {
+    const requestId = req.headers['x-request-id'] as string | undefined;
+
     if (isLocalOrDemo) {
-        return require('./fakeLocalAuthTokenSet.json');
+        return { ...require('./fakeLocalAuthTokenSet.json'), requestId: requestId ?? 'not set' };
     }
 
     const token = req.headers['authorization'];
@@ -105,10 +107,9 @@ export function createRequestContext(req: IncomingMessage): RequestContext | nul
 
     const accessToken = token.replace('Bearer ', '');
     const jwtPayload = accessToken.split('.')[1];
-    const userTraceId = req.headers['x-request-id'] as string | undefined;
     return {
         accessToken,
         payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
-        requestId: userTraceId ?? 'not set',
+        requestId: requestId ?? 'not set',
     };
 }

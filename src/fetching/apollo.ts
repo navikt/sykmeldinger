@@ -4,7 +4,7 @@ import { RetryLink } from '@apollo/client/link/retry';
 
 import { logger } from '../utils/logger';
 import { getPublicEnv } from '../utils/env';
-import { getUserRequestId } from '../utils/userTraceId';
+import { getUserRequestId } from '../utils/userRequestId';
 
 const publicEnv = getPublicEnv();
 
@@ -28,7 +28,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
                 logger.error(
                     `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path} for operation ${
                         operation.operationName
-                    }, traceId: ${getUserRequestId()}`,
+                    }, requestId: ${getUserRequestId()}`,
                 );
             }
         });
