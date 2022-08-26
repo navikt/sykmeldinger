@@ -9,7 +9,7 @@ import { MutationResolvers, QueryResolvers, Resolvers } from './resolver-types.g
 export interface RequestContext {
     payload: TokenPayload;
     accessToken: string;
-    userTraceId: string;
+    requestId: string;
 }
 
 const Query: QueryResolvers = {

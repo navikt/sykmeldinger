@@ -13,19 +13,19 @@ import { RequestContext } from './graphql/resolvers';
 const serverEnv = getServerEnv();
 
 export async function getSykmeldinger(context: RequestContext): Promise<Sykmelding[]> {
-    logger.info(`Fetching sykmeldinger from backend, traceId: ${context.userTraceId}`);
+    logger.info(`Fetching sykmeldinger from backend, traceId: ${context.requestId}`);
 
     return fetchApi({ type: 'GET' }, 'v2/sykmeldinger', (it) => z.array(SykmeldingSchema).parse(it), context);
 }
 
 export async function getSykmelding(sykmeldingId: string, context: RequestContext): Promise<Sykmelding> {
-    logger.info(`Fetching sykmelding with ID ${sykmeldingId} from backend, traceId: ${context.userTraceId}`);
+    logger.info(`Fetching sykmelding with ID ${sykmeldingId} from backend, traceId: ${context.requestId}`);
 
     return fetchApi({ type: 'GET' }, `v2/sykmeldinger/${sykmeldingId}`, (it) => SykmeldingSchema.parse(it), context);
 }
 
 export async function getBrukerinformasjon(context: RequestContext): Promise<Brukerinformasjon> {
-    logger.info(`Fetching brukerinformasjon from backend, traceId: ${context.userTraceId}`);
+    logger.info(`Fetching brukerinformasjon from backend, traceId: ${context.requestId}`);
 
     return fetchApi({ type: 'GET' }, 'v2/brukerinformasjon', (it) => BrukerinformasjonSchema.parse(it), context);
 }
@@ -35,7 +35,7 @@ export async function changeSykmeldingStatus(
     status: SykmeldingChangeStatus,
     context: RequestContext,
 ): Promise<Sykmelding> {
-    logger.info(`Changing sykmelding with ID ${sykmeldingId} to status ${status}, traceId: ${context.userTraceId}`);
+    logger.info(`Changing sykmelding with ID ${sykmeldingId} to status ${status}, traceId: ${context.requestId}`);
     try {
         await fetchApi(
             { type: 'POST', body: undefined },
@@ -52,7 +52,7 @@ export async function changeSykmeldingStatus(
         logger.error(e);
         throw new Error(
             `Failed to change sykmelding for ${sykmeldingId} to ${statusToEndpoint(status)}, traceId: ${
-                context.userTraceId
+                context.requestId
             }`,
         );
     }
@@ -63,7 +63,7 @@ export async function submitSykmelding(
     values: unknown,
     context: RequestContext,
 ): Promise<Sykmelding> {
-    logger.info(`Submitting sykmelding with ID ${sykmeldingId}, traceId: ${context.userTraceId}`);
+    logger.info(`Submitting sykmelding with ID ${sykmeldingId}, traceId: ${context.requestId}`);
     try {
         await fetchApi(
             { type: 'POST', body: JSON.stringify(values) },
@@ -78,7 +78,7 @@ export async function submitSykmelding(
         }
 
         logger.error(e);
-        throw new Error(`Failed to submit sykmelding for ${sykmeldingId}, traceId: ${context.userTraceId}`);
+        throw new Error(`Failed to submit sykmelding for ${sykmeldingId}, traceId: ${context.requestId}`);
     }
 }
 
@@ -101,7 +101,7 @@ async function fetchApi<ResponseObject>(
 ): Promise<ResponseObject> {
     const tokenX = await getToken(context.accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE);
     if (!tokenX) {
-        throw new Error(`Unable to exchange token for dinesykmeldte-backend token, traceId: ${context.userTraceId}`);
+        throw new Error(`Unable to exchange token for dinesykmeldte-backend token, traceId: ${context.requestId}`);
     }
 
     const response = await fetch(`${getServerEnv().SYKMELDINGER_BACKEND}/api/${path}`, {
@@ -110,6 +110,7 @@ async function fetchApi<ResponseObject>(
         headers: {
             Authorization: `Bearer ${tokenX}`,
             'Content-Type': 'application/json',
+            'x-request-id': context.requestId,
         },
     });
 
@@ -121,16 +122,16 @@ async function fetchApi<ResponseObject>(
 
             return parse();
         } catch (e) {
-            logger.error(`Failed to parse JSON from ${path}, error: ${e}, traceId: ${context.userTraceId}`);
+            logger.error(`Failed to parse JSON from ${path}, error: ${e}, traceId: ${context.requestId}`);
             throw e;
         }
     }
 
     if (response.status === 401) {
-        throw new AuthenticationError(`User has been logged out, traceId: ${context.userTraceId}`);
+        throw new AuthenticationError(`User has been logged out, traceId: ${context.requestId}`);
     }
 
     throw new Error(
-        `API (${path}) responded with status ${response.status} ${response.statusText}, traceId: ${context.userTraceId}`,
+        `API (${path}) responded with status ${response.status} ${response.statusText}, traceId: ${context.requestId}`,
     );
 }

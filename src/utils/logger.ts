@@ -2,12 +2,12 @@
 import pino from 'pino';
 
 import { getPublicEnv } from './env';
-import { getUserTraceId } from './userTraceId';
+import { getUserRequestId } from './userTraceId';
 
 const publicEnv = getPublicEnv();
 
 const getFrontendLogger = (): pino.Logger => {
-    const userTraceId = getUserTraceId();
+    const userTraceId = getUserRequestId();
     return pino({
         browser: {
             transmit: {
@@ -15,7 +15,7 @@ const getFrontendLogger = (): pino.Logger => {
                     try {
                         await fetch(`${publicEnv.publicPath ?? ''}/api/logger`, {
                             method: 'POST',
-                            headers: { 'content-type': 'application/json', 'x-user-trace-id': userTraceId },
+                            headers: { 'content-type': 'application/json', 'x-request-id': userTraceId },
                             body: JSON.stringify({
                                 ...logEvent,
                                 x_trace: new Error().stack,

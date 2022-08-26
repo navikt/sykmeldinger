@@ -20,7 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void>
         return;
     }
 
-    logger.info(`Creating PDF for sykmeldingId: ${sykmeldingId}, traceId: ${context.userTraceId}`);
+    logger.info(`Creating PDF for sykmeldingId: ${sykmeldingId}, traceId: ${context.requestId}`);
     const pdfAsString = await generateSykmeldingPdfServerSide(sykmeldingId, context);
 
     res.setHeader('Content-Type', 'application/pdf');

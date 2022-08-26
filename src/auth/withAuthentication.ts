@@ -105,10 +105,10 @@ export function createRequestContext(req: IncomingMessage): RequestContext | nul
 
     const accessToken = token.replace('Bearer ', '');
     const jwtPayload = accessToken.split('.')[1];
-    const userTraceId = req.headers['x-user-trace-id'] as string | undefined;
+    const userTraceId = req.headers['x-request-id'] as string | undefined;
     return {
         accessToken,
         payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
-        userTraceId: userTraceId ?? 'not set',
+        requestId: userTraceId ?? 'not set',
     };
 }

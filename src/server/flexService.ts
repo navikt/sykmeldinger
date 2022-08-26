@@ -10,11 +10,11 @@ import { RequestContext } from './graphql/resolvers';
 const serverEnv = getServerEnv();
 
 export async function getErUtenforVentetid(sykmeldingId: string, context: RequestContext): Promise<ErUtenforVentetid> {
-    logger.info(`Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}, traceId: ${context.userTraceId}`);
+    logger.info(`Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}, traceId: ${context.requestId}`);
 
     const tokenX = await getToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE);
     if (!tokenX) {
-        throw new Error(`Unable to exchange token for dinesykmeldte-backend token, traceId: ${context.userTraceId}`);
+        throw new Error(`Unable to exchange token for dinesykmeldte-backend token, traceId: ${context.requestId}`);
     }
 
     const response = await fetch(
@@ -23,6 +23,7 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
             headers: {
                 Authorization: `Bearer ${tokenX}`,
                 'Content-Type': 'application/json',
+                'x-request-id': context.requestId,
             },
         },
     );
@@ -34,7 +35,7 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
             logger.warn(
                 `Expected oppfolgingsdato to be defined when sykmelding within ventetid, but was ${
                     parsed.oppfolgingsdato == null ? 'null' : typeof parsed.oppfolgingsdato
-                }. Sykmeldingid: ${sykmeldingId}, traceId: ${context.userTraceId}`,
+                }. Sykmeldingid: ${sykmeldingId}, traceId: ${context.requestId}`,
             );
         }
 
@@ -42,10 +43,10 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
     }
 
     if (response.status === 401) {
-        throw new AuthenticationError(`User has been logged out, traceId: ${context.userTraceId}`);
+        throw new AuthenticationError(`User has been logged out, traceId: ${context.requestId}`);
     }
 
     throw new Error(
-        `Failed to fetch brukerinformasjon from backend for sykmelding ${sykmeldingId}, flex responded with status ${response.status} ${response.statusText}, traceId: ${context.userTraceId}`,
+        `Failed to fetch brukerinformasjon from backend for sykmelding ${sykmeldingId}, flex responded with status ${response.status} ${response.statusText}, traceId: ${context.requestId}`,
     );
 }
