@@ -28,7 +28,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
     });
 
     useEffect(() => {
-        append({ fom: undefined, tom: undefined });
+        append({ fom: null, tom: null });
     }, [append]);
 
     useEffect(() => {
@@ -174,12 +174,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                 ))}
             </div>
 
-            <Button
-                variant="tertiary"
-                size="small"
-                type="button"
-                onClick={() => append({ fom: undefined, tom: undefined })}
-            >
+            <Button variant="tertiary" size="small" type="button" onClick={() => append({ fom: null, tom: null })}>
                 <Add />
                 Legg til ekstra periode
             </Button>

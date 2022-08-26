@@ -36,6 +36,5 @@ const createBackendLogger = (): pino.Logger => require('../../next-logger.config
 export const logger: pino.Logger = typeof window !== 'undefined' ? getFrontendLogger() : createBackendLogger();
 
 export const createChildLogger = (requestId: string): pino.Logger => {
-    console.log('creating loggy boi with request id', requestId);
     return logger.child({ x_request_id: requestId, wat: true });
 };

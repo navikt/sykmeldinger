@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { PropsWithChildren } from 'react';
 
 import styles from './CenterItems.module.css';
 
@@ -7,7 +8,11 @@ interface CenterItemsProps {
     horizontal?: boolean;
 }
 
-const CenterItems: React.FC<CenterItemsProps> = ({ vertical = false, horizontal = false, children }) => {
+function CenterItems({
+    vertical = false,
+    horizontal = false,
+    children,
+}: PropsWithChildren<CenterItemsProps>): JSX.Element {
     return (
         <div
             className={cn(styles.centerItems, {
@@ -18,6 +23,6 @@ const CenterItems: React.FC<CenterItemsProps> = ({ vertical = false, horizontal 
             {children}
         </div>
     );
-};
+}
 
 export default CenterItems;

@@ -78,4 +78,14 @@ ignore:
         reason: None Given
         expires: 2022-08-31T10:12:25.474Z
         created: 2022-08-01T10:12:25.482Z
+  SNYK-JS-NWSAPI-2841516:
+    - '*':
+        reason: None Given
+        expires: 2022-09-25T14:07:59.688Z
+        created: 2022-08-26T14:07:59.696Z
+  SNYK-JS-UNSETVALUE-2400660:
+    - '*':
+        reason: None Given
+        expires: 2022-09-25T14:08:07.461Z
+        created: 2022-08-26T14:08:07.469Z
 patch: {}
