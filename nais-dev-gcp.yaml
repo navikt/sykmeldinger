@@ -27,6 +27,12 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
+  accessPolicy:
+    outbound:
+      rules:
+        - application: sykmeldinger-backend
+        - application: flex-syketilfelle
+          namespace: flex
   liveness:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
@@ -37,9 +43,9 @@ spec:
     - name: RUNTIME_ENVIRONMENT
       value: 'dev'
     - name: SYKMELDINGER_BACKEND
-      value: 'https://sykmeldinger-backend.dev.nav.no'
+      value: 'http://sykmeldinger-backend'
     - name: FLEX_SYKETILFELLE
-      value: 'https://flex-syketilfelle.dev.intern.nav.no'
+      value: 'http://flex-syketilfelle.flex'
     - name: SYKMELDINGER_BACKEND_SCOPE
       value: 'dev-gcp:teamsykmelding:sykmeldinger-backend'
     - name: FLEX_SYKETILFELLE_BACKEND_SCOPE

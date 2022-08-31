@@ -34,15 +34,21 @@ spec:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
     path: /syk/sykmeldinger/api/internal/is_ready
+  accessPolicy:
+    outbound:
+      rules:
+        - application: sykmeldinger-backend
+        - application: flex-syketilfelle
+          namespace: flex
   env:
     - name: NEXT_PUBLIC_BASE_PATH
       value: /syk/sykmeldinger
     - name: RUNTIME_ENVIRONMENT
       value: 'production'
     - name: SYKMELDINGER_BACKEND
-      value: 'https://sykmeldinger-backend.nav.no'
+      value: 'http://sykmeldinger-backend'
     - name: FLEX_SYKETILFELLE
-      value: 'https://flex-syketilfelle.intern.nav.no'
+      value: 'http://flex-syketilfelle.flex'
     - name: SYKMELDINGER_BACKEND_SCOPE
       value: 'prod-gcp:teamsykmelding:sykmeldinger-backend'
     - name: FLEX_SYKETILFELLE_BACKEND_SCOPE
