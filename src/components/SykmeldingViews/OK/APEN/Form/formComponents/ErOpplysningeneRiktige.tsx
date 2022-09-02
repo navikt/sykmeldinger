@@ -4,7 +4,7 @@ import { Radio, RadioGroup } from '@navikt/ds-react'
 
 import { FormShape, JaEllerNeiType } from '../Form'
 import QuestionWrapper from '../layout/QuestionWrapper'
-import { useAmplitude } from '../../../../../../amplitude/amplitude'
+import { logAmplitudeEvent } from '../../../../../../amplitude/amplitude'
 
 import UriktigeOpplysninger from './UriktigeOpplysninger'
 
@@ -12,7 +12,6 @@ const fieldName = 'erOpplysningeneRiktige'
 const sporsmaltekst = 'Stemmer opplysningene?'
 
 function ErOpplysningeneRiktige(): JSX.Element {
-    const logEvent = useAmplitude()
     const { register, unregister, control, watch } = useFormContext<FormShape>()
     const watchErOpplysningeneRiktige = watch(fieldName)
 
@@ -41,7 +40,7 @@ function ErOpplysningeneRiktige(): JSX.Element {
                         id={fieldName}
                         legend={sporsmaltekst}
                         onChange={(value: 'JA' | 'NEI') => {
-                            logEvent(
+                            logAmplitudeEvent(
                                 { eventName: 'skjema startet', data: { skjemanavn: 'åpen sykmelding' } },
                                 { 'stemmer opplysningene': value },
                             )

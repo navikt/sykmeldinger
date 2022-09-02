@@ -6,14 +6,13 @@ import cn from 'classnames'
 import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId'
 import { pluralize } from '../../utils/stringUtils'
 import { getPublicEnv } from '../../utils/env'
-import { useAmplitude } from '../../amplitude/amplitude'
+import { logAmplitudeEvent } from '../../amplitude/amplitude'
 
 import styles from './HintToNextOlderSykmelding.module.css'
 
 const publicEnv = getPublicEnv()
 
 function HintToNextOlderSykmelding(): JSX.Element | null {
-    const logEvent = useAmplitude()
     const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
     const dontShowYet = isLoading || error || unsentSykmeldinger == null
     const isDone = unsentSykmeldinger?.length === 0 ?? false
@@ -22,11 +21,14 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
         if (dontShowYet) return
 
         if (isDone) {
-            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'ingen flere sykmeldinger å sende inn' } })
+            logAmplitudeEvent({
+                eventName: 'guidepanel vist',
+                data: { komponent: 'ingen flere sykmeldinger å sende inn' },
+            })
         } else {
-            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'hint til neste eldre sykmelding' } })
+            logAmplitudeEvent({ eventName: 'guidepanel vist', data: { komponent: 'hint til neste eldre sykmelding' } })
         }
-    }, [dontShowYet, isDone, logEvent])
+    }, [dontShowYet, isDone])
 
     if (dontShowYet) return null
     if (isDone) {
@@ -36,7 +38,7 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
                     as="a"
                     href={publicEnv.SYKEFRAVAER_ROOT || '#'}
                     onClick={() =>
-                        logEvent({
+                        logAmplitudeEvent({
                             eventName: 'navigere',
                             data: { destinasjon: 'ditt sykefravær', lenketekst: 'Ferdig' },
                         })
@@ -60,7 +62,7 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
                     as="a"
                     variant="primary"
                     onClick={() =>
-                        logEvent({
+                        logAmplitudeEvent({
                             eventName: 'navigere',
                             data: { destinasjon: 'neste ubrukte sykmelding', lenketekst: 'Gå til sykmeldingen' },
                         })
