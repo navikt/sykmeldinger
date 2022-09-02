@@ -1,4 +1,5 @@
 import { compareAsc } from 'date-fns';
+import { sortBy } from 'remeda';
 
 import { Sykmelding, SykmeldingFragment } from '../fetching/graphql.generated';
 
@@ -18,15 +19,7 @@ export function sykmeldingByDateAsc(a: SykmeldingFragment, b: SykmeldingFragment
  * @return {Sykmeldinger[]} A new list of sorted sykmeldinger
  */
 export function sortSykmeldingerByArbeidsgiver(sykmeldinger: Sykmelding[]): Sykmelding[] {
-    return [...sykmeldinger].sort((a, b) => {
-        if (a.sykmeldingStatus.arbeidsgiver?.orgNavn && b.sykmeldingStatus.arbeidsgiver?.orgNavn) {
-            if (a.sykmeldingStatus.arbeidsgiver.orgNavn > b.sykmeldingStatus.arbeidsgiver.orgNavn) {
-                return 1;
-            }
-            if (a.sykmeldingStatus.arbeidsgiver.orgNavn < b.sykmeldingStatus.arbeidsgiver.orgNavn) {
-                return -1;
-            }
-        }
-        return 0;
-    });
+    if (sykmeldinger.length === 0) return sykmeldinger;
+
+    return sortBy(sykmeldinger, [(sykmelding) => sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn ?? '', 'asc']);
 }

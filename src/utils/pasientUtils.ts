@@ -1,6 +1,6 @@
-import { Pasient } from '../fetching/graphql.generated';
-
-export function getPasientName(pasient: Pasient): string | undefined {
+export function getPasientName<
+    Pasient extends { fornavn?: string | null; mellomnavn?: string | null; etternavn?: string | null },
+>(pasient: Pasient): string | undefined {
     if (!pasient.fornavn) return undefined;
 
     return `${pasient.fornavn}${pasient.mellomnavn ? ' ' + pasient.mellomnavn : ''}${

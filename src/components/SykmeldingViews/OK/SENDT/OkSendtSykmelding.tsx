@@ -6,12 +6,14 @@ import Spacing from '../../../Spacing/Spacing';
 import StatusBanner from '../../../StatusBanner/StatusBanner';
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
 import SykmeldingArbeidsgiverContainer from '../../SykmeldingView/SykmeldingArbeidsgiverContainer';
+import { isUnderbehandling } from '../../../../utils/sykmeldingUtils';
+import { UnderBehandlingGuidePanel } from '../../../InformationBanner/InformationBanner';
 
 interface OkSendtSykmeldingProps {
     sykmelding: Sykmelding;
 }
 
-const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => {
+function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element {
     useHotjarTrigger('SYKMELDING_OK_SENDT');
 
     return (
@@ -23,6 +25,12 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
                 />
             </Spacing>
 
+            {isUnderbehandling(sykmelding) && (
+                <Spacing>
+                    <UnderBehandlingGuidePanel isSent />
+                </Spacing>
+            )}
+
             <Spacing>
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </Spacing>
@@ -30,6 +38,6 @@ const OkSendtSykmelding: React.FC<OkSendtSykmeldingProps> = ({ sykmelding }) => 
             <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
         </div>
     );
-};
+}
 
 export default OkSendtSykmelding;

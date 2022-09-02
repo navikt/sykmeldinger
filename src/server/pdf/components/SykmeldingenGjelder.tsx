@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
 
+import { getPasientName } from '../../../utils/pasientUtils';
 import { Pasient } from '../../api-models/sykmelding/Pasient';
 
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
 import People from './icons/People';
 import { Section } from './Section';
-import { getPasientName } from './utils/textUtils';
 
 interface Props {
     pasient?: Pasient | null;

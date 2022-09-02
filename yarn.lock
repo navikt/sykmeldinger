@@ -13005,6 +13005,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remeda@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "remeda@npm:1.1.0"
+  checksum: 329dfca8d819b13004452d2846da925480ec23c402e785fa45b9be1138e1b12f044dfe332b0de84e629d7317b82a908a53ae553614fd366042fc58d9f9038dc4
+  languageName: node
+  linkType: hard
+
 "remedial@npm:^1.0.7":
   version: 1.0.8
   resolution: "remedial@npm:1.0.8"
@@ -14197,6 +14204,7 @@ __metadata:
     react-dom: ^17.0.2
     react-error-boundary: ^3.1.4
     react-hook-form: ^7.34.2
+    remeda: ^1.1.0
     typescript: ^4.8.2
     uuid: ^8.3.2
     zod: ^3.18.0

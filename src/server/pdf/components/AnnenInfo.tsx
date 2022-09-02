@@ -2,8 +2,8 @@ import { StyleSheet, Text, View } from '@react-pdf/renderer';
 
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
 import { toReadableDate } from '../../../utils/dateUtils';
+import { getBehandlerName } from '../../../utils/behandlerUtils';
 
-import { getBehandlerName } from './utils/textUtils';
 import Information from './icons/Information';
 import { Section } from './Section';
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';

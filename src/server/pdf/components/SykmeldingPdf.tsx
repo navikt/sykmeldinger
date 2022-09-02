@@ -4,8 +4,8 @@ import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
 import { toReadableDate } from '../../../utils/dateUtils';
 import { Periode } from '../../api-models/sykmelding/Periode';
+import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils';
 
-import { getSykmeldingperioderSorted } from './utils/periodUtils';
 import NavLogoRedSvg from './NavLogoRedSvg';
 import { GeneratedTimestamp, PageNumbers } from './FooterItems';
 import { pageMargin } from './constants';
@@ -40,7 +40,7 @@ const SykmeldingPdf = ({ sykmelding, timestamp }: Props): JSX.Element => {
                     <Text>Sendt til oss {toReadableDate(sykmelding.mottattTidspunkt)}</Text>
                 </View>
                 <SykmeldingenGjelder pasient={sykmelding.pasient} />
-                <Perioder perioder={getSykmeldingperioderSorted(sykmelding)} />
+                <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} />
                 <AnnenInfo sykmelding={sykmelding} />
                 {sykmelding.sykmeldingsperioder?.map(
                     (periode: Periode, index: number) =>

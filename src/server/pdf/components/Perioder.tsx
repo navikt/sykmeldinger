@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
 
 import { Periode } from '../../api-models/sykmelding/Periode';
+import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../utils/periodeUtils';
 
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
 import Calender from './icons/Calender';
 import { Section } from './Section';
-import { getPeriodTitle, getReadableLength, getReadablePeriod } from './utils/periodUtils';
 
 interface Props {
     perioder: Periode[];

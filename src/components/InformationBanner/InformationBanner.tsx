@@ -68,22 +68,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING)) {
         return (
             <div data-testid="merknad-banner">
-                <GuidePanel poster>
-                    <Heading level="2" size="small" className={styles.title}>
-                        Viktig informasjon
-                    </Heading>
-                    <BodyLong className={styles.paragraph}>
-                        Vanligvis starter sykmeldingen fra den dagen du er hos legen. I ditt tilfelle har legen skrevet
-                        at den startet tidligere. NAV må derfor vurdere om det er en gyldig grunn for at sykmeldingen
-                        din starter før du var i kontakt med legen.
-                    </BodyLong>
-                    <BodyLong className={styles.paragraph}>Du kan fortsatt sende inn sykmeldingen som vanlig.</BodyLong>
-                    <hr className={styles.merknadBannerRuler} />
-                    <BodyLong>
-                        Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
-                        Du velger selv om du vil bruke sykmeldingen.
-                    </BodyLong>
-                </GuidePanel>
+                <UnderBehandlingGuidePanel isSent={false} />
             </div>
         );
     }
@@ -117,5 +102,30 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
         </div>
     );
 };
+
+export function UnderBehandlingGuidePanel({ isSent }: { isSent: boolean }): JSX.Element {
+    return (
+        <GuidePanel poster>
+            <Heading level="2" size="small" className={styles.title}>
+                Viktig informasjon
+            </Heading>
+            <BodyLong className={styles.paragraph}>
+                Vanligvis starter sykmeldingen fra den dagen du er hos legen. I ditt tilfelle har legen skrevet at den
+                startet tidligere. NAV må derfor vurdere om det er en gyldig grunn for at sykmeldingen din starter før
+                du var i kontakt med legen.
+            </BodyLong>
+            {!isSent && (
+                <>
+                    <BodyLong className={styles.paragraph}>Du kan fortsatt sende inn sykmeldingen som vanlig.</BodyLong>
+                    <hr className={styles.merknadBannerRuler} />
+                    <BodyLong>
+                        Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
+                        Du velger selv om du vil bruke sykmeldingen.
+                    </BodyLong>
+                </>
+            )}
+        </GuidePanel>
+    );
+}
 
 export default InformationBanner;

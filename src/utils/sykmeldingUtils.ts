@@ -1,13 +1,12 @@
 import { differenceInDays, isAfter, parseISO } from 'date-fns';
 import dayjs from 'dayjs';
+import { sortBy } from 'remeda';
 
 import { StatusEvent, Sykmelding, Periode, SykmeldingFragment } from '../fetching/graphql.generated';
 
 import { toDate } from './dateUtils';
 
 export function isActiveSykmelding(sykmelding: SykmeldingFragment): boolean {
-    // Under behandling skal alltids vises, uansett hvor gammel
-    if (isUnderbehandling(sykmelding)) return true;
     // Alt som ikke er APEN status, er inaktive
     if (sykmelding.sykmeldingStatus.statusEvent !== 'APEN') return false;
     // APEN sykmeldinger blir inaktive etter 12 måneder
@@ -74,16 +73,9 @@ export function getSykmeldingEndDate(sykmelding: Sykmelding): string {
  * Get the periods of the sykmelding sorted by newest first
  * @return {Periode[]} The sorted sykmelding periods
  */
-export function getSykmeldingperioderSorted(sykmelding: Sykmelding): Periode[] {
-    return [...sykmelding.sykmeldingsperioder].sort(({ fom }, { tom }) => {
-        if (dayjs(fom).isBefore(tom)) {
-            return -1;
-        } else if (dayjs(fom).isSame(tom)) {
-            return 0;
-        }
-        return 1;
-    });
-}
+export const getSykmeldingperioderSorted = <Periode extends { fom: string; tom: string }>(
+    perioder: readonly Periode[],
+): Periode[] => sortBy(perioder, [(periode) => periode.fom, 'asc'], [(periode) => periode.tom, 'asc']);
 
 /**
  * Get the text representation of the sykmelding length from start date to end date
