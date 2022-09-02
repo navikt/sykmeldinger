@@ -51,7 +51,7 @@ spec:
     - name: FLEX_SYKETILFELLE_BACKEND_SCOPE
       value: 'dev-gcp:flex:flex-syketilfelle'
     - name: AMPLITUDE_ENABLED
-      value: 'false'
+      value: 'true'
     - name: SYKEPENGESOKNAD_URL
       value: 'https://www-gcp.dev.nav.no/syk/sykepengesoknad'
     - name: SYKEFRAVAER_ROOT
@@ -60,5 +60,3 @@ spec:
       value: 'https://www.dev.nav.no/minside/'
     - name: ASSET_PREFIX
       value: 'https://cdn.dev.nav.no/teamsykmelding/sykmeldinger'
-    - name: SENTRY_ENABLED
-      value: 'true'
