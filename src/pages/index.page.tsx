@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Accordion, Alert, BodyShort, Link } from '@navikt/ds-react';
 import Head from 'next/head';
+import { groupBy } from 'remeda';
 
 import Spinner from '../components/Spinner/Spinner';
 import useSykmeldinger from '../hooks/useSykmeldinger';
@@ -8,7 +9,7 @@ import useHotjarTrigger from '../hooks/useHotjarTrigger';
 import Spacing from '../components/Spacing/Spacing';
 import { logger } from '../utils/logger';
 import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
-import { isActiveSykmelding } from '../utils/sykmeldingUtils';
+import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
 import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel';
 import Header from '../components/Header/Header';
 import Brodsmuler from '../components/Breadcrumbs/Breadcrumbs';
@@ -50,11 +51,12 @@ const SykmeldingerPage: React.FC = () => {
         );
     }
 
-    const { apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(data.sykmeldinger);
+    const { underBehandling, apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(data.sykmeldinger);
 
     return (
         <IndexWrapper>
-            <SykmeldingLinkPanel type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
+            <SykmeldingLinkPanel title="Under behandling" type="UNDER_BEHANDLING" sykmeldinger={underBehandling} />
+            <SykmeldingLinkPanel title="Nye sykmeldinger" type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
 
             <Spacing amount="small">
                 <InfoOmDigitalSykmelding />
@@ -78,7 +80,11 @@ const SykmeldingerPage: React.FC = () => {
                 </Accordion.Item>
             </Accordion>
 
-            <SykmeldingLinkPanel type="TIDLIGERE_SYKMELDINGER" sykmeldinger={pastSykmeldinger} />
+            <SykmeldingLinkPanel
+                title="Tidligere sykmeldinger"
+                type="TIDLIGERE_SYKMELDINGER"
+                sykmeldinger={pastSykmeldinger}
+            />
         </IndexWrapper>
     );
 };
@@ -107,14 +113,26 @@ function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
     );
 }
 
-function filterSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]): {
+type SykmeldingSections = {
     apenSykmeldinger: SykmeldingFragment[];
     pastSykmeldinger: SykmeldingFragment[];
-} {
-    const apenSykmeldinger = sykmeldinger.filter((sykmelding) => isActiveSykmelding(sykmelding));
-    const pastSykmeldinger = sykmeldinger.filter((sykmelding) => !isActiveSykmelding(sykmelding));
+    underBehandling: SykmeldingFragment[];
+};
 
-    return { apenSykmeldinger, pastSykmeldinger };
+const groupByPredicate = (sykmelding: SykmeldingFragment): keyof SykmeldingSections => {
+    if (isUnderbehandling(sykmelding)) return 'underBehandling';
+    else if (isActiveSykmelding(sykmelding)) return 'apenSykmeldinger';
+    else return 'pastSykmeldinger';
+};
+
+function filterSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]): SykmeldingSections {
+    const grouped: Record<keyof SykmeldingSections, SykmeldingFragment[]> = groupBy(sykmeldinger, groupByPredicate);
+
+    return {
+        apenSykmeldinger: grouped.apenSykmeldinger ?? [],
+        pastSykmeldinger: grouped.pastSykmeldinger ?? [],
+        underBehandling: grouped.underBehandling ?? [],
+    };
 }
 
 export const getServerSideProps = withAuthenticatedPage();

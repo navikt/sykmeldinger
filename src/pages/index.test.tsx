@@ -121,7 +121,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         expect(sykmeldinger[2]).toHaveTextContent(/Sykmelding/);
     });
 
-    it('should display under behandling in Nye sykmeldinger section ', async () => {
+    it('should display under behandling in seperate section ', async () => {
         render(<SykmeldingerPage />, {
             mocks: [
                 createMock({
@@ -142,8 +142,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
         });
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'));
-        expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument();
-        const lenkepanelContainer = screen.getByRole('region', { name: 'Nye sykmeldinger' });
+        const lenkepanelContainer = screen.getByRole('region', { name: 'Under behandling' });
         const sykmeldinger = within(lenkepanelContainer).getAllByRole('link');
         expect(sykmeldinger).toHaveLength(1);
         expect(sykmeldinger[0]).toHaveTextContent(/Sendt til arbeidsgiver/);

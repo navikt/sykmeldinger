@@ -23,7 +23,7 @@ function SykmeldingViewSykmeldt({ sykmelding }: Props): JSX.Element {
     return (
         <div className={styles.sykmeldingViewSykmeldt}>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
-            <Perioder perioder={getSykmeldingperioderSorted(sykmelding)} />
+            <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} />
             <AnnenInfo sykmelding={sykmelding} />
 
             <FlereOpplysninger>

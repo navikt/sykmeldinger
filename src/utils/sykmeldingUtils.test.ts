@@ -107,7 +107,7 @@ describe('isActiveSykmelding', () => {
         ).toBe(false);
     });
 
-    it('should be active if status is SENDT with merknad UNDER_BEHANDLING', () => {
+    it('should be NOT be active if status is SENDT with merknad UNDER_BEHANDLING', () => {
         expect(
             isActiveSykmelding({
                 ...minimalSykmelding,
@@ -117,7 +117,7 @@ describe('isActiveSykmelding', () => {
                 },
                 merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }],
             }),
-        ).toBe(true);
+        ).toBe(false);
     });
 
     it('should be active if status is APEN', () => {
@@ -200,7 +200,7 @@ describe('getSykmeldingEndDate', () => {
 });
 
 describe('getSykmeldingperioderSorted', () => {
-    it('Gets tom of the latest period', () => {
+    it('sorts by fom and tom', () => {
         const sykmelding: Sykmelding = {
             ...minimalSykmelding,
             sykmeldingsperioder: [
@@ -209,7 +209,9 @@ describe('getSykmeldingperioderSorted', () => {
                 createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
             ],
         };
-        expect(getSykmeldingperioderSorted(sykmelding).map((it) => ({ fom: it.fom, tom: it.tom }))).toEqual([
+        expect(
+            getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder).map((it) => ({ fom: it.fom, tom: it.tom })),
+        ).toEqual([
             { fom: '2021-04-01', tom: '2021-04-03' },
             { fom: '2021-05-01', tom: '2021-05-03' },
             { fom: '2021-06-01', tom: '2021-06-03' },

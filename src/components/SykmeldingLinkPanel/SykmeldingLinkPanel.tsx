@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { BodyShort, Heading, Select } from '@navikt/ds-react';
 
 import { SykmeldingFragment } from '../../fetching/graphql.generated';
-import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/SykmeldingSorter';
+import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/sykmeldingSortUtils';
 
 import Lenkepanel from './Lenkepanel/Lenkepanel';
 import styles from './SykmeldingLinkPanel.module.css';
@@ -14,13 +14,15 @@ export enum SortBy {
 
 interface LenkepanelContainerProps {
     sykmeldinger: SykmeldingFragment[];
-    type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER';
+    type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER' | 'UNDER_BEHANDLING';
+    title: string;
     defaultSortBy?: SortBy;
 }
 
 const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
     sykmeldinger,
     type,
+    title,
     defaultSortBy = SortBy.DATE,
 }) => {
     const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy);
@@ -34,10 +36,9 @@ const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
 
         return type === 'NYE_SYKMELDINGER' ? sykmeldings.reverse() : sykmeldings;
     }, [sykmeldinger, type]);
-    const title = type === 'NYE_SYKMELDINGER' ? 'Nye sykmeldinger' : 'Tidligere sykmeldinger';
 
     if (sykmeldinger.length === 0) {
-        if (type === 'TIDLIGERE_SYKMELDINGER') {
+        if (type === 'TIDLIGERE_SYKMELDINGER' || type === 'UNDER_BEHANDLING') {
             return null;
         }
 

@@ -54,7 +54,9 @@ export function annenFraverGrunnToText(value: AnnenFraverGrunn): string {
  * Get a text representation of the period type
  * @return {string} The period string
  */
-export function getPeriodTitle(period: Periode): string {
+export function getPeriodTitle<Periode extends { type: Periodetype; gradert?: { grad: number } | null }>(
+    period: Periode,
+): string {
     switch (period.type) {
         case Periodetype.Avventende:
             return 'Avventende sykmelding';
@@ -73,7 +75,7 @@ export function getPeriodTitle(period: Periode): string {
  * Get a text representation of the period fom to tom
  * @return {string} The period string
  */
-export function getReadablePeriod(period: Periode): string {
+export function getReadablePeriod<Periode extends { fom: string; tom: string }>(period: Periode): string {
     const sameMonthAndYear =
         dayjs(period.fom).get('month') === dayjs(period.tom).get('month') &&
         dayjs(period.fom).get('year') === dayjs(period.tom).get('year');
@@ -93,7 +95,7 @@ export function getReadablePeriod(period: Periode): string {
  * Get the total length between fom and tom in days
  * @return {number} The period length
  */
-export function getLength(period: Periode): number {
+export function getLength<Periode extends { fom: string; tom: string }>(period: Periode): number {
     return dayjs(period.tom).diff(dayjs(period.fom), 'day') + 1;
 }
 
@@ -101,7 +103,9 @@ export function getLength(period: Periode): number {
  * Get a text representation of the period length
  * @return {string} The period string
  */
-export function getReadableLength(period: Periode): string {
+export function getReadableLength<
+    Periode extends { type: Periodetype; behandlingsdager?: number | null; fom: string; tom: string },
+>(period: Periode): string {
     const length = getLength(period);
     if (period.type === Periodetype.Behandlingsdager) {
         return `${period.behandlingsdager} behandlingsdag${

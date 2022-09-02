@@ -20,7 +20,7 @@ function SykmeldingViewArbeidsgiver({ sykmelding }: SykmeldingviewProps): JSX.El
     return (
         <div className={styles.sykmeldingViewArbeidsgiver}>
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />
-            <PeriodeView perioder={getSykmeldingperioderSorted(sykmelding)} />
+            <PeriodeView perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} />
             <AnnenInfoView sykmelding={sykmelding} />
             {sykmelding.medisinskVurdering?.hovedDiagnose && sykmelding.medisinskVurdering.biDiagnoser.length > 0 && (
                 <Diagnoser medisinskVurdering={sykmelding.medisinskVurdering} sladd />
