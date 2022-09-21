@@ -28,7 +28,7 @@ function StatusBanner({
     if (sykmeldingStatus.statusEvent === 'SENDT') {
         return (
             <Alert variant="success">
-                <Heading size="medium" level="2">
+                <Heading size="small" level="2">
                     Sykmeldingen ble sendt til {sykmeldingStatus.arbeidsgiver?.orgNavn}
                 </Heading>
                 <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
@@ -39,7 +39,7 @@ function StatusBanner({
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
         return (
             <Alert variant="success">
-                <Heading size="medium" level="2">
+                <Heading size="small" level="2">
                     {egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble sendt til NAV
                 </Heading>
                 <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
