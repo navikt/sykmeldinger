@@ -106,4 +106,13 @@ describe('Uriktige opplysninger', () => {
         expect(screen.getByText('Din arbeidssituasjon')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
     });
+
+    it('should not show Din arbeidssituasjon if reason for uriktigeOpplysninger is not checked', async () => {
+        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
+
+        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }));
+
+        expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument();
+    });
 });

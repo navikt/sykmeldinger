@@ -94,8 +94,8 @@ function Form({ sykmelding }: FormProps): JSX.Element {
     const erArbeidstakerMedStrengtFortroligAdressse =
         erArbeidstaker && data?.brukerinformasjon?.strengtFortroligAdresse === true;
     const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;
-
     const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
+    const watchUriktigeOpplysninger = watch('uriktigeOpplysninger');
 
     const { maAvbryte } = useContext(AvbrytContext);
 
@@ -131,7 +131,7 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                 <Spacing>
                     <ErOpplysningeneRiktige />
 
-                    {Boolean(watchErOpplysningeneRiktige?.svar) && !maAvbryte && (
+                    {shouldArbeidssituasjonShow(watchErOpplysningeneRiktige, watchUriktigeOpplysninger, maAvbryte) && (
                         <Arbeidssituasjon
                             harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
                                 (sm) => sm.type === Periodetype.Avventende,
@@ -179,6 +179,23 @@ function Form({ sykmelding }: FormProps): JSX.Element {
             </form>
         </FormProvider>
     );
+}
+
+function shouldArbeidssituasjonShow(
+    erOpplysningeneRiktige: SporsmalSvar<keyof typeof JaEllerNeiType | null> | undefined,
+    uriktigeOpplysninger: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]> | undefined,
+    maAvbryte: boolean,
+): boolean {
+    switch (erOpplysningeneRiktige?.svar) {
+        case 'JA':
+            return true;
+        case 'NEI':
+            if (uriktigeOpplysninger?.svar && uriktigeOpplysninger?.svar?.length > 0 && !maAvbryte) {
+                return true;
+            }
+        default:
+            return false;
+    }
 }
 
 export default Form;
