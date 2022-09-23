@@ -12,7 +12,6 @@ import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam';
 import Header from '../../components/Header/Header';
 import Brodsmuler from '../../components/Breadcrumbs/Breadcrumbs';
-import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden';
 import { withAuthenticatedPage } from '../../auth/withAuthentication';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils';
@@ -91,7 +90,7 @@ function SykmeldingkvitteringPage(): JSX.Element {
             </Spacing>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
-                <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} />
+                <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} expandable />
             )}
 
             <HintToNextOlderSykmelding />
@@ -122,9 +121,6 @@ function KvitteringWrapper({
                     ]}
                 />
                 {children}
-                <Spacing direction="top" amount="large">
-                    <TilHovedsiden />
-                </Spacing>
             </PageWrapper>
         </>
     );

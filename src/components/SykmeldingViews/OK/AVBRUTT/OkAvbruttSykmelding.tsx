@@ -34,7 +34,7 @@ function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Elem
         <div className="sykmelding-container">
             <Spacing amount="small">
                 <Alert variant="info">
-                    <Heading size="medium" level="2">
+                    <Heading size="small" level="2">
                         {sykmelding.egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble avbrutt av deg
                     </Heading>
                     <Detail>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Detail>

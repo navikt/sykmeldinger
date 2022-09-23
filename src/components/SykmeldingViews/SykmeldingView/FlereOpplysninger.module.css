@@ -18,6 +18,5 @@
 
 .flereOpplysninger :global(.navds-accordion__header),
 .flereOpplysninger :global(.navds-accordion__header:hover) {
-    border: 0;
     background-color: transparent;
 }

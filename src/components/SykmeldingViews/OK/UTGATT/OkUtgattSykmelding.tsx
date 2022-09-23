@@ -18,7 +18,7 @@ function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Elemen
         <div className="sykmelding-container">
             <Spacing>
                 <Alert variant="info">
-                    <Heading size="medium" level="2">
+                    <Heading size="small" level="2">
                         Sykmeldingen er utgått
                     </Heading>
                     <Detail>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Detail>
