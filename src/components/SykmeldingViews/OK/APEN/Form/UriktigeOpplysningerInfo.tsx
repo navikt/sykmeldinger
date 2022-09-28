@@ -1,4 +1,4 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Heading } from '@navikt/ds-react';
 
 import { UriktigeOpplysningerType } from './Form';
 
@@ -28,7 +28,9 @@ function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysninger
 
     return (
         <Alert variant="info" role="alert" aria-live="polite">
-            Du kan fortsatt bruke sykmeldingen.
+            <Heading spacing size="small" level="3">
+                Du kan fortsatt bruke sykmeldingen
+            </Heading>
             <ul>
                 {uriktigeOpplysninger.map((opplysning, index) => (
                     <li key={index}>{uriktigOpplysningTekst[opplysning]}</li>
