@@ -51,7 +51,6 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
             yrkesskade: false,
             yrkesskadeDato: '2021-06-06',
         },
-        skjermesForPasient: false,
         prognose: {
             arbeidsforEtterPeriode: true,
             hensynArbeidsplassen: 'Må ta det pent',

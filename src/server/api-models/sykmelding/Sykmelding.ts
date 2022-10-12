@@ -25,7 +25,6 @@ export const SykmeldingSchema = z.object({
     sykmeldingsperioder: z.array(PeriodeSchema),
     sykmeldingStatus: SykmeldingStatusSchema,
     medisinskVurdering: MedisinskVurderingSchema.nullable(),
-    skjermesForPasient: z.boolean(),
     prognose: PrognoseSchema.nullable(),
     utdypendeOpplysninger: z.record(z.string(), z.record(z.string(), UtdypendeOpplysningSchema)),
     tiltakArbeidsplassen: z.string().nullable(),

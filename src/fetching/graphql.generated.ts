@@ -330,7 +330,6 @@ export type Sykmelding = {
     readonly papirsykmelding?: Maybe<Scalars['Boolean']>;
     readonly pasient?: Maybe<Pasient>;
     readonly prognose?: Maybe<Prognose>;
-    readonly skjermesForPasient: Scalars['Boolean'];
     readonly syketilfelleStartDato?: Maybe<Scalars['Date']>;
     readonly sykmeldingStatus: SykmeldingStatus;
     readonly sykmeldingsperioder: ReadonlyArray<Periode>;
@@ -458,7 +457,6 @@ export type ChangeSykmeldingStatusMutation = {
         readonly id: string;
         readonly mottattTidspunkt: string;
         readonly legekontorOrgnummer?: string | null;
-        readonly skjermesForPasient: boolean;
         readonly utdypendeOpplysninger: unknown;
         readonly tiltakArbeidsplassen?: string | null;
         readonly tiltakNAV?: string | null;
@@ -623,7 +621,6 @@ export type SubmitSykmeldingMutation = {
         readonly id: string;
         readonly mottattTidspunkt: string;
         readonly legekontorOrgnummer?: string | null;
-        readonly skjermesForPasient: boolean;
         readonly utdypendeOpplysninger: unknown;
         readonly tiltakArbeidsplassen?: string | null;
         readonly tiltakNAV?: string | null;
@@ -851,7 +848,6 @@ export type SykmeldingFragment = {
     readonly id: string;
     readonly mottattTidspunkt: string;
     readonly legekontorOrgnummer?: string | null;
-    readonly skjermesForPasient: boolean;
     readonly utdypendeOpplysninger: unknown;
     readonly tiltakArbeidsplassen?: string | null;
     readonly tiltakNAV?: string | null;
@@ -1012,7 +1008,6 @@ export type SykmeldingerQuery = {
         readonly id: string;
         readonly mottattTidspunkt: string;
         readonly legekontorOrgnummer?: string | null;
-        readonly skjermesForPasient: boolean;
         readonly utdypendeOpplysninger: unknown;
         readonly tiltakArbeidsplassen?: string | null;
         readonly tiltakNAV?: string | null;
@@ -1176,7 +1171,6 @@ export type SykmeldingQuery = {
         readonly id: string;
         readonly mottattTidspunkt: string;
         readonly legekontorOrgnummer?: string | null;
-        readonly skjermesForPasient: boolean;
         readonly utdypendeOpplysninger: unknown;
         readonly tiltakArbeidsplassen?: string | null;
         readonly tiltakNAV?: string | null;
@@ -1650,7 +1644,6 @@ export const SykmeldingFragmentDoc = {
                             ],
                         },
                     },
-                    { kind: 'Field', name: { kind: 'Name', value: 'skjermesForPasient' } },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'prognose' },

@@ -85,7 +85,6 @@ fragment Sykmelding on Sykmelding {
     medisinskVurdering {
         ...MedisinskVurdering
     }
-    skjermesForPasient
     prognose {
         arbeidsforEtterPeriode
         hensynArbeidsplassen

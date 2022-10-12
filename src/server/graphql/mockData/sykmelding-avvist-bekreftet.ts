@@ -64,7 +64,6 @@ export const sykmeldingAvvistBekreftet: Sykmelding = {
             grunn: [AnnenFraverGrunn.Abort],
         },
     },
-    skjermesForPasient: false,
     utdypendeOpplysninger: {
         '6.2': {
             '6.2.1': {

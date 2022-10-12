@@ -58,7 +58,6 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
         yrkesskade: false,
         yrkesskadeDato: '2021-11-16',
     },
-    skjermesForPasient: false,
     prognose: {
         arbeidsforEtterPeriode: true,
         hensynArbeidsplassen: 'Må ta det pent',

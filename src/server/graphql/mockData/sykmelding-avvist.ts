@@ -102,7 +102,6 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
                 grunn: [AnnenFraverGrunn.Abort],
             },
         },
-        skjermesForPasient: false,
         utdypendeOpplysninger: {
             '6.2': {
                 '6.2.1': {

@@ -89,7 +89,6 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
                 grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
             },
         },
-        skjermesForPasient: false,
         utdypendeOpplysninger: {
             '6.2': {
                 '6.2.1': {

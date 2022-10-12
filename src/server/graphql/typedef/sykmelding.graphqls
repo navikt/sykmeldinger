@@ -7,7 +7,6 @@ type Sykmelding {
     sykmeldingsperioder: [Periode!]!
     sykmeldingStatus: SykmeldingStatus!
     medisinskVurdering: MedisinskVurdering
-    skjermesForPasient: Boolean!
     prognose: Prognose
     utdypendeOpplysninger: JSON!
     tiltakArbeidsplassen: String

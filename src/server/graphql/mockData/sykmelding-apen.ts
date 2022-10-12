@@ -107,7 +107,6 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             erIArbeid: null,
             erIkkeIArbeid: null,
         },
-        skjermesForPasient: false,
         utdypendeOpplysninger: {
             '6.1': {
                 '6.1.1': {

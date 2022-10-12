@@ -36,7 +36,6 @@ const minimalSykmelding: Sykmelding = {
         arbeidsgiver: null,
     },
     medisinskVurdering: null,
-    skjermesForPasient: false,
     prognose: null,
     utdypendeOpplysninger: {},
     tiltakArbeidsplassen: null,

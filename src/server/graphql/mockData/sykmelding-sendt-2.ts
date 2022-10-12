@@ -61,7 +61,6 @@ export const sykmeldingSendt2: Sykmelding = {
             grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
         },
     },
-    skjermesForPasient: false,
     utdypendeOpplysninger: {
         '6.2': {
             '6.2.1': {

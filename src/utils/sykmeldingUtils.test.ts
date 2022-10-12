@@ -29,7 +29,6 @@ const minimalSykmelding: Sykmelding = {
         arbeidsgiver: null,
     },
     medisinskVurdering: null,
-    skjermesForPasient: false,
     utdypendeOpplysninger: {},
     kontaktMedPasient: { __typename: 'KontaktMedPasient', kontaktDato: null, begrunnelseIkkeKontakt: null },
     behandletTidspunkt: '2020-01-01',
