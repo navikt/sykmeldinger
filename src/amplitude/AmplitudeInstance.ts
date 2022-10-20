@@ -1,7 +1,7 @@
+import { logger } from '@navikt/next-logger';
 import amplitude, { AmplitudeClient } from 'amplitude-js';
 
 import { getPublicEnv } from '../utils/env';
-import { logger } from '../utils/logger';
 
 import { AmplitudeTaxonomyEvents } from './taxonomyEvents';
 

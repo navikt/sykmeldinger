@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { AuthenticationError } from 'apollo-server-micro';
+import { createChildLogger } from '@navikt/next-logger';
 
 import { getServerEnv } from '../utils/env';
-import { createChildLogger } from '../utils/logger';
 import { getToken } from '../auth/token/tokenx';
 
 import { Sykmelding, SykmeldingSchema } from './api-models/sykmelding/Sykmelding';

@@ -1,8 +1,8 @@
 import { onError } from '@apollo/client/link/error';
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import { RetryLink } from '@apollo/client/link/retry';
+import { logger } from '@navikt/next-logger';
 
-import { logger } from '../utils/logger';
 import { getPublicEnv } from '../utils/env';
 import { getUserRequestId } from '../utils/userRequestId';
 

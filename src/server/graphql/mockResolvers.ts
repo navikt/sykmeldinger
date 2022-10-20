@@ -1,6 +1,6 @@
 import { GraphQLJSON } from 'graphql-scalars';
+import { logger } from '@navikt/next-logger';
 
-import { logger } from '../../utils/logger';
 import { dateSub } from '../../utils/dateUtils';
 
 import {

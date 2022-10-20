@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import { Alert, BodyLong, GuidePanel, Heading } from '@navikt/ds-react';
 import Head from 'next/head';
+import { logger } from '@navikt/next-logger';
 
 import Spinner from '../../components/Spinner/Spinner';
 import useSykmelding from '../../hooks/useSykmelding';
-import { logger } from '../../utils/logger';
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils';
 import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId';
 import OkBekreftetSykmelding from '../../components/SykmeldingViews/OK/BEKREFTET/OkBekreftetSykmelding';

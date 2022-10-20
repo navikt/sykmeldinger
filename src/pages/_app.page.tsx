@@ -7,11 +7,15 @@ import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import isBetween from 'dayjs/plugin/isBetween';
+import { configureLogger, logger } from '@navikt/next-logger';
 
 import ErrorFallback from '../components/ErrorFallback/ErrorFallback';
-import { logger } from '../utils/logger';
 import { createApolloClient } from '../fetching/apollo';
 import { AmplitudeProvider } from '../amplitude/amplitude';
+
+configureLogger({
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+});
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     useEffect(() => {

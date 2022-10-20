@@ -1,5 +1,6 @@
 import { QueryResult, useApolloClient, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
+import { logger } from '@navikt/next-logger';
 
 import {
     SykmeldingDocument,
@@ -7,7 +8,6 @@ import {
     SykmeldingerQuery,
     SykmeldingerQueryVariables,
 } from '../fetching/graphql.generated';
-import { logger } from '../utils/logger';
 
 export function useSykmeldinger(): QueryResult<SykmeldingerQuery, SykmeldingerQueryVariables> {
     useEffect(() => {

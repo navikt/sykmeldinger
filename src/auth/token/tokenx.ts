@@ -1,8 +1,8 @@
 import { Client, errors, GrantBody, Issuer } from 'openid-client';
 import { JWK } from 'jose';
+import { logger } from '@navikt/next-logger';
 
 import { getServerEnv } from '../../utils/env';
-import { logger } from '../../utils/logger';
 
 import tokenCache from './tokenCache';
 

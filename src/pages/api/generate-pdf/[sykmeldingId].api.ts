@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { createChildLogger } from '@navikt/next-logger';
 
 import { generateSykmeldingPdfServerSide } from '../../../server/pdf/pdf';
-import { createChildLogger } from '../../../utils/logger';
 import { createRequestContext, withAuthenticatedApi } from '../../../auth/withAuthentication';
 
 async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {

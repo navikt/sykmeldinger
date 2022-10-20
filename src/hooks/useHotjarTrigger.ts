@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
+import { logger } from '@navikt/next-logger';
 
-import { logger } from '../utils/logger';
 import { getPublicEnv } from '../utils/env';
 
 const publicEnv = getPublicEnv();

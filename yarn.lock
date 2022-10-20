@@ -2854,6 +2854,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/next-logger@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "@navikt/next-logger@npm:1.11.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.11.0%2F097a1d1456dd6d307650b1a5d7eecb341114e151"
+  peerDependencies:
+    next: 12
+    pino: 8
+  checksum: 15f3d67a338383d1a183a31153f4e0704bbba3942b6f1d2a023d7a8699b11a3134a2ab95608c3bca1ca75d27818c30f93c585f245c4abd5897be6e54520357a6
+  languageName: node
+  linkType: hard
+
 "@next/bundle-analyzer@npm:^12.3.1":
   version: 12.3.1
   resolution: "@next/bundle-analyzer@npm:12.3.1"
@@ -7413,10 +7423,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-copy@npm:^2.1.1":
-  version: 2.1.3
-  resolution: "fast-copy@npm:2.1.3"
-  checksum: 5d1a4a218304893ed0c4593b5d21b282202f9e74ed33fee261c0c574e81003863e0c6fd0d857451dfe15f3e1919acd8084ce52c2457c9410e61e1aea9b388029
+"fast-copy@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "fast-copy@npm:3.0.0"
+  checksum: 58edbc2dcc10e948f5a67fb278dc3d696a65ac68036c3f872fc6c839522b071d3151c7bcea779946f96e01f9a1fdd9b76621532ee32f51000b1403ee673e14ba
   languageName: node
   linkType: hard
 
@@ -11276,13 +11286,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino-pretty@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "pino-pretty@npm:9.1.0"
+"pino-pretty@npm:^9.1.1":
+  version: 9.1.1
+  resolution: "pino-pretty@npm:9.1.1"
   dependencies:
     colorette: ^2.0.7
     dateformat: ^4.6.3
-    fast-copy: ^2.1.1
+    fast-copy: ^3.0.0
     fast-safe-stringify: ^2.1.1
     help-me: ^4.0.1
     joycon: ^3.1.1
@@ -11296,7 +11306,7 @@ __metadata:
     strip-json-comments: ^3.1.1
   bin:
     pino-pretty: bin.js
-  checksum: 44416ebfcc8c4b996a1508b7866301087565f47d2b9155cbe41ca56cc3e638f54c989728492bc71a07e8ea73a64d1ea44b2728a2440c1d67f9ea43c25c8cceaa
+  checksum: c1d148aa0c5f2d1034cf76c0b397cf9725923d16343e9dff78d56b564090c1c86208aae94f1208f0fb936f456eece7eab6264095337540f42d91aaa13e5b8935
   languageName: node
   linkType: hard
 
@@ -12963,6 +12973,7 @@ __metadata:
     "@navikt/ds-react": ^0.19.27
     "@navikt/eslint-config-teamsykmelding": ^0.21.0
     "@navikt/nav-dekoratoren-moduler": ^1.7.0
+    "@navikt/next-logger": ^1.11.0
     "@next/bundle-analyzer": ^12.3.1
     "@react-pdf/renderer": ^2.3.0
     "@sentry/nextjs": ^7.14.0
@@ -12993,8 +13004,8 @@ __metadata:
     next-router-mock: ^0.7.4
     node-cache: ^5.1.2
     openid-client: ^5.1.10
-    pino: ^8.6.1
-    pino-pretty: ^9.1.0
+    pino: ^8.7.0
+    pino-pretty: ^9.1.1
     prettier: ^2.7.1
     react: ^17.0.2
     react-day-picker: ^7.4.10
