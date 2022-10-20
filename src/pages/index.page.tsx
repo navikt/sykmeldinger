@@ -2,12 +2,12 @@ import React, { PropsWithChildren } from 'react';
 import { Accordion, Alert, BodyShort, Link } from '@navikt/ds-react';
 import Head from 'next/head';
 import { groupBy } from 'remeda';
+import { logger } from '@navikt/next-logger';
 
 import Spinner from '../components/Spinner/Spinner';
 import useSykmeldinger from '../hooks/useSykmeldinger';
 import useHotjarTrigger from '../hooks/useHotjarTrigger';
 import Spacing from '../components/Spacing/Spacing';
-import { logger } from '../utils/logger';
 import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
 import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
 import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel';

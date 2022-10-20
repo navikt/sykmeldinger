@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { parseISO, isValid } from 'date-fns';
-
-import { logger } from '../../utils/logger';
+import { logger } from '@navikt/next-logger';
 
 export const LocalDateSchema = z.string().refine(
     (date) => {

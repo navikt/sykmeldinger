@@ -1,10 +1,10 @@
 import { IncomingMessage } from 'http';
 
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next';
+import { logger } from '@navikt/next-logger';
 
 import { getPublicEnv, isLocalOrDemo } from '../utils/env';
 import { RequestContext } from '../server/graphql/resolvers';
-import { logger } from '../utils/logger';
 
 import { validateIdPortenToken } from './token/idporten';
 

@@ -1,5 +1,6 @@
 import { MutationResult, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
+import { logger } from '@navikt/next-logger';
 
 import {
     ChangeSykmeldingStatusDocument,
@@ -9,7 +10,6 @@ import {
     SykmeldingChangeStatus,
 } from '../fetching/graphql.generated';
 import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form';
-import { logger } from '../utils/logger';
 
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,

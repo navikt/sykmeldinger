@@ -1,17 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/explicit-function-return-type */
-const pino = require('pino');
-
-const logger = (defaultConfig = {}) =>
-    pino({
-        ...defaultConfig,
-        timestamp: false,
-        formatters: {
-            level: (label) => {
-                return { level: label };
-            },
-        },
-    });
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { backendLogger } = require('@navikt/next-logger');
 
 module.exports = {
-    logger,
+    logger: backendLogger,
 };

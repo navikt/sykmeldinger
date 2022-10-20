@@ -4,10 +4,10 @@ import {
     ApolloServerPluginLandingPageGraphQLPlayground,
 } from 'apollo-server-core';
 import { NextApiRequest } from 'next';
+import { logger } from '@navikt/next-logger';
 
 import schema from '../../server/graphql/schema';
 import { createRequestContext, withAuthenticatedApi } from '../../auth/withAuthentication';
-import { logger } from '../../utils/logger';
 import { RequestContext } from '../../server/graphql/resolvers';
 
 const apolloServer = new ApolloServer({

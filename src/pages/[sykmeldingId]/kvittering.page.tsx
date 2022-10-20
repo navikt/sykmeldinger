@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import React, { PropsWithChildren } from 'react';
 import { Alert, GuidePanel } from '@navikt/ds-react';
+import { logger } from '@navikt/next-logger';
 
 import useSykmeldinger from '../../hooks/useSykmelding';
 import Spacing from '../../components/Spacing/Spacing';
 import Spinner from '../../components/Spinner/Spinner';
 import StatusBanner from '../../components/StatusBanner/StatusBanner';
 import StatusInfo from '../../components/StatusInfo/StatusInfo';
-import { logger } from '../../utils/logger';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam';
 import Header from '../../components/Header/Header';
