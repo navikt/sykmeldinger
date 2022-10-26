@@ -90,7 +90,7 @@ function SykmeldingkvitteringPage(): JSX.Element {
             </Spacing>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
-                <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} expandable />
+                <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} />
             )}
 
             <HintToNextOlderSykmelding />

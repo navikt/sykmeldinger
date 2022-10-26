@@ -145,7 +145,7 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                     {erArbeidstaker && harValgtArbeidsgiver && !data.brukerinformasjon.strengtFortroligAdresse && (
                         <div className={styles.harValgtArbeidsgiverWrapper}>
                             <VeilederSenderSykmeldingen />
-                            <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} expandable />
+                            <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
                         </div>
                     )}
 
