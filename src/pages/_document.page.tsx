@@ -3,6 +3,7 @@ import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, Next
 import { Components, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr';
 
 import { getPublicEnv } from '../utils/env';
+import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs';
 
 const publicEnv = getPublicEnv();
 
@@ -41,6 +42,7 @@ class MyDocument extends Document<Props> {
             env: createDecoratorEnv(ctx),
             chatbot: true,
             context: 'privatperson',
+            breadcrumbs: createInitialServerSideBreadcrumbs(ctx.pathname, ctx.query),
         });
 
         const language = getDocumentParameter(initialProps, 'lang');

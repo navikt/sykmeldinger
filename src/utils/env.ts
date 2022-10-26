@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 export interface PublicEnv {
     publicPath: string | undefined;
     RUNTIME_ENVIRONMENT: 'dev' | 'test' | 'local' | 'labs' | 'production';
-    DITT_NAV_ROOT: string;
+    MIN_SIDE_ROOT: string;
     SYKEFRAVAER_ROOT: string;
     SYKEPENGESOKNAD_URL: string;
     AMPLITUDE_ENABLED: string;

@@ -56,8 +56,8 @@ spec:
       value: 'https://www-gcp.dev.nav.no/syk/sykepengesoknad'
     - name: SYKEFRAVAER_ROOT
       value: 'https://www-gcp.dev.nav.no/syk/sykefravaer'
-    - name: DITT_NAV_ROOT
-      value: 'https://person.dev.nav.no/person/dittnav/'
+    - name: MIN_SIDE_ROOT
+      value: 'https://www.dev.nav.no/minside/'
     - name: ASSET_PREFIX
       value: 'https://teamsykmelding-static-files.dev.nav.no/sykmeldinger'
     - name: SENTRY_ENABLED

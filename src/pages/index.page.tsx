@@ -12,11 +12,11 @@ import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoO
 import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
 import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel';
 import Header from '../components/Header/Header';
-import Brodsmuler from '../components/Breadcrumbs/Breadcrumbs';
 import TilHovedsiden from '../components/TilHovedsiden/TilHovedsiden';
 import { withAuthenticatedPage } from '../auth/withAuthentication';
 import PageWrapper from '../components/PageWrapper/PageWrapper';
 import { SykmeldingFragment } from '../fetching/graphql.generated';
+import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs';
 
 const SykmeldingerPage: React.FC = () => {
     useHotjarTrigger('SYKMELDING_LISTEVISNING');
@@ -90,6 +90,8 @@ const SykmeldingerPage: React.FC = () => {
 };
 
 function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
+    useUpdateBreadcrumbs(() => []);
+
     return (
         <>
             <Head>
@@ -97,13 +99,6 @@ function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
             </Head>
             <Header title="Dine sykmeldinger" />
             <PageWrapper>
-                <Brodsmuler
-                    breadcrumbs={[
-                        {
-                            title: 'Sykmeldinger',
-                        },
-                    ]}
-                />
                 {children}
                 <Spacing direction="top" amount="large">
                     <TilHovedsiden />

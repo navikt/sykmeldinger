@@ -25,11 +25,13 @@ export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
  * Used for displaying the title.
  * @return {string}
  */
-export function getSykmeldingTitle(sykmelding: Sykmelding): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' {
-    if (sykmelding.papirsykmelding) {
+export function getSykmeldingTitle(
+    sykmelding: Sykmelding | undefined,
+): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' {
+    if (sykmelding?.papirsykmelding) {
         return 'Papirsykmelding';
     }
-    if (sykmelding.egenmeldt) {
+    if (sykmelding?.egenmeldt) {
         return 'Egenmelding';
     }
     return 'Sykmelding';

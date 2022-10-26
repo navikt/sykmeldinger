@@ -16,13 +16,13 @@ import InvalidApenSykmelding from '../../components/SykmeldingViews/INVALID/APEN
 import InvalidBekreftetSykmelding from '../../components/SykmeldingViews/INVALID/BEKREFTET/InvalidBekreftetSykmelding';
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam';
 import Header from '../../components/Header/Header';
-import Brodsmuler from '../../components/Breadcrumbs/Breadcrumbs';
 import Spacing from '../../components/Spacing/Spacing';
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden';
 import { withAuthenticatedPage } from '../../auth/withAuthentication';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { Sykmelding } from '../../fetching/graphql.generated';
 import { getPublicEnv } from '../../utils/env';
+import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs';
 
 import styles from './index.module.css';
 
@@ -126,6 +126,8 @@ const SykmeldingComponent = ({
 function SykmeldingerWrapper({ sykmelding, children }: PropsWithChildren<{ sykmelding?: Sykmelding }>): JSX.Element {
     const publicEnv = getPublicEnv();
 
+    useUpdateBreadcrumbs(() => [{ title: getSykmeldingTitle(sykmelding) }]);
+
     addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
             e.preventDefault();
@@ -151,12 +153,6 @@ function SykmeldingerWrapper({ sykmelding, children }: PropsWithChildren<{ sykme
                     subTitle={sykmelding ? getReadableSykmeldingLength(sykmelding) : undefined}
                 />
                 <PageWrapper>
-                    <Brodsmuler
-                        breadcrumbs={[
-                            { title: 'Sykmeldinger', path: '/' },
-                            { title: sykmelding ? getSykmeldingTitle(sykmelding) : 'Sykmelding' },
-                        ]}
-                    />
                     {children}
                     <Spacing direction="top" amount="large">
                         <TilHovedsiden />

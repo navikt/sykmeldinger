@@ -38,7 +38,7 @@ const publicRuntimeConfig = {
     AMPLITUDE_ENABLED: process.env.AMPLITUDE_ENABLED,
     SYKEPENGESOKNAD_URL: process.env.SYKEPENGESOKNAD_URL,
     SYKEFRAVAER_ROOT: process.env.SYKEFRAVAER_ROOT,
-    DITT_NAV_ROOT: process.env.DITT_NAV_ROOT,
+    MIN_SIDE_ROOT: process.env.MIN_SIDE_ROOT,
 };
 
 /**
