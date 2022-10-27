@@ -38,14 +38,3 @@
     flex: 1;
     text-align: start;
 }
-
-.sykmeldingsopplysningerHeader .arbeidsgiverHeader {
-    width: 100%;
-    align-items: center;
-}
-
-.arbeidsgiverHeader {
-    display: flex;
-    padding: var(--navds-spacing-4);
-    align-items: flex-start;
-}

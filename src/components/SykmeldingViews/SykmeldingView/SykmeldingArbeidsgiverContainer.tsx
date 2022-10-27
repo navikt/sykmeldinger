@@ -10,61 +10,31 @@ import styles from './SykmeldingArbeidsgiverContainer.module.css';
 
 interface Props {
     sykmelding: SykmeldingFragment;
-    expandable?: boolean;
 }
 
-const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding, expandable = false }: Props) => {
+const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding }: Props) => {
     const [expanded, setExpanded] = useState(false);
     const elementRef = useRef<HTMLElement>(null);
     const headerId = `sykmelding-${sykmelding.id}-header-arbeidsgiver`;
 
     return (
         <article aria-labelledby={headerId} ref={elementRef} className={styles.opplysningerTilArbeidsgiver}>
-            {expandable ? (
-                <>
-                    <Accordion className={styles.expandeblePanel}>
-                        <Accordion.Item open={expanded}>
-                            <Accordion.Header
-                                id={headerId}
-                                className={styles.sykmeldingsopplysningerHeader}
-                                type="button"
-                                onClick={() => {
-                                    if (!expanded) {
-                                        setTimeout(() => {
-                                            elementRef.current?.scrollIntoView({ behavior: 'smooth' });
-                                        }, 200);
-                                    }
-                                    setExpanded(!expanded);
-                                }}
-                            >
-                                <div className={styles.expendableHeader}>
-                                    <div className={styles.sykmeldingsopplysningerIcon}>
-                                        <Findout />
-                                    </div>
-                                    <Heading
-                                        className={styles.sykmeldingsopplysningerText}
-                                        size="small"
-                                        level="2"
-                                        id="sykmeldinger-panel-info-section"
-                                    >
-                                        Se hva som sendes til jobben din
-                                    </Heading>
-                                </div>
-                            </Accordion.Header>
-                            <Accordion.Content
-                                id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`}
-                                aria-labelledby={headerId}
-                            >
-                                <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
-                                <Lukknapp onClick={() => setExpanded(false)} />
-                            </Accordion.Content>
-                        </Accordion.Item>
-                    </Accordion>
-                </>
-            ) : (
-                <>
-                    <header className={styles.sykmeldingsopplysningerHeader}>
-                        <div className={styles.arbeidsgiverHeader}>
+            <Accordion className={styles.expandeblePanel}>
+                <Accordion.Item open={expanded}>
+                    <Accordion.Header
+                        id={headerId}
+                        className={styles.sykmeldingsopplysningerHeader}
+                        type="button"
+                        onClick={() => {
+                            if (!expanded) {
+                                setTimeout(() => {
+                                    elementRef.current?.scrollIntoView({ behavior: 'smooth' });
+                                }, 200);
+                            }
+                            setExpanded(!expanded);
+                        }}
+                    >
+                        <div className={styles.expendableHeader}>
                             <div className={styles.sykmeldingsopplysningerIcon}>
                                 <Findout />
                             </div>
@@ -77,12 +47,16 @@ const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding, expandab
                                 Se hva som sendes til jobben din
                             </Heading>
                         </div>
-                    </header>
-                    <div id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`} aria-labelledby={headerId}>
+                    </Accordion.Header>
+                    <Accordion.Content
+                        id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`}
+                        aria-labelledby={headerId}
+                    >
                         <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
-                    </div>
-                </>
-            )}
+                        <Lukknapp onClick={() => setExpanded(false)} />
+                    </Accordion.Content>
+                </Accordion.Item>
+            </Accordion>
         </article>
     );
 };
