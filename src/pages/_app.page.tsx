@@ -12,6 +12,7 @@ import { configureLogger, logger } from '@navikt/next-logger';
 import ErrorFallback from '../components/ErrorFallback/ErrorFallback';
 import { createApolloClient } from '../fetching/apollo';
 import { AmplitudeProvider } from '../amplitude/amplitude';
+import { LabsWarning } from '../components/LabsWarning/LabsWarning';
 
 configureLogger({
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
@@ -36,6 +37,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
             <AmplitudeProvider>
                 <ApolloProvider client={apolloClient}>
+                    <LabsWarning />
                     <Component {...pageProps} />
                 </ApolloProvider>
             </AmplitudeProvider>
