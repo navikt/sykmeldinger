@@ -13,12 +13,15 @@ import ErrorFallback from '../components/ErrorFallback/ErrorFallback';
 import { createApolloClient } from '../fetching/apollo';
 import { AmplitudeProvider } from '../amplitude/amplitude';
 import { LabsWarning } from '../components/LabsWarning/LabsWarning';
+import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs';
 
 configureLogger({
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
 });
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+    useHandleDecoratorClicks();
+
     useEffect(() => {
         dayjs.locale('nb');
         dayjs.extend(isBetween);

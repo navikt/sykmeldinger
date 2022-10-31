@@ -20,12 +20,6 @@ jest.mock('next/dist/client/router', () => require('next-router-mock'));
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-Object.defineProperty(window, 'location', {
-    value: {
-        href: 'http://localhost',
-    },
-});
-
 Modal.setAppElement(document.createElement('div'));
 
 mockRouter.useParser(
@@ -35,8 +29,10 @@ mockRouter.useParser(
 jest.spyOn(window, 'scrollTo').mockImplementation(() => void 0);
 jest.mock('next/config', () => () => ({
     publicRuntimeConfig: {
-        publicPath: 'http://localhost',
+        publicPath: '/fake/basepath',
         runtimeEnv: 'test',
+        MIN_SIDE_ROOT: '/test-min-side',
+        SYKEFRAVAER_ROOT: '/test-ditt-sykefravaer',
     },
 }));
 

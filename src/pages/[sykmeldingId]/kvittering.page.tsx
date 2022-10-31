@@ -11,7 +11,6 @@ import StatusInfo from '../../components/StatusInfo/StatusInfo';
 import useHotjarTrigger from '../../hooks/useHotjarTrigger';
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam';
 import Header from '../../components/Header/Header';
-import Brodsmuler from '../../components/Breadcrumbs/Breadcrumbs';
 import { withAuthenticatedPage } from '../../auth/withAuthentication';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils';
@@ -19,6 +18,7 @@ import { RegelStatus, StatusEvent, SykmeldingFragment } from '../../fetching/gra
 import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding';
 import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer';
 import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer';
+import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs';
 
 function SykmeldingkvitteringPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_KVITTERING');
@@ -103,6 +103,8 @@ function KvitteringWrapper({
     children,
 }: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam();
+    useUpdateBreadcrumbs(() => createKvitteringBreadcrumbs(sykmeldingId, sykmelding), [sykmeldingId, sykmelding]);
+
     return (
         <>
             <Head>
@@ -112,16 +114,7 @@ function KvitteringWrapper({
                 title={sykmelding ? getSykmeldingTitle(sykmelding) : undefined}
                 subTitle={sykmelding ? getReadableSykmeldingLength(sykmelding) : undefined}
             />
-            <PageWrapper>
-                <Brodsmuler
-                    breadcrumbs={[
-                        { title: 'Sykmeldinger', path: '/' },
-                        { title: sykmelding ? getSykmeldingTitle(sykmelding) : 'Sykmelding', path: `/${sykmeldingId}` },
-                        { title: 'Kvittering' },
-                    ]}
-                />
-                {children}
-            </PageWrapper>
+            <PageWrapper>{children}</PageWrapper>
         </>
     );
 }

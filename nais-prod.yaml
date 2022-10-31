@@ -59,8 +59,8 @@ spec:
       value: 'https://www.nav.no/syk/sykepengesoknad'
     - name: SYKEFRAVAER_ROOT
       value: 'https://www.nav.no/syk/sykefravaer'
-    - name: DITT_NAV_ROOT
-      value: 'https://www.nav.no/person/dittnav'
+    - name: MIN_SIDE_ROOT
+      value: 'https://www.nav.no/minside'
     - name: ASSET_PREFIX
       value: 'https://teamsykmelding-static-files.nav.no/sykmeldinger'
     - name: SENTRY_ENABLED
