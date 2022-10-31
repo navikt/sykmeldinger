@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { MeldingTilNav } from '../../../../../fetching/graphql.generated';
+import { MeldingTilNav } from '../../../../../fetching/graphql.generated'
 
-import MeldingTilNavView from './MeldingTilNav';
+import MeldingTilNavView from './MeldingTilNav'
 
 describe('MeldingTilNavView', () => {
     it('Renders ønsker bistand if bistandUmiddelbart is true', () => {
@@ -10,42 +10,42 @@ describe('MeldingTilNavView', () => {
             __typename: 'MeldingTilNAV',
             bistandUmiddelbart: true,
             beskrivBistand: null,
-        };
-        render(<MeldingTilNavView meldingTilNav={meldingTilNav} />);
-        expect(screen.getByText('Melding til NAV')).toBeInTheDocument();
-        expect(screen.getByText('Ønskes bistand fra NAV nå?')).toBeInTheDocument();
-    });
+        }
+        render(<MeldingTilNavView meldingTilNav={meldingTilNav} />)
+        expect(screen.getByText('Melding til NAV')).toBeInTheDocument()
+        expect(screen.getByText('Ønskes bistand fra NAV nå?')).toBeInTheDocument()
+    })
 
     it('Does not render ønsker bistand if bistandUmiddelbart is false', () => {
         const meldingTilNav: MeldingTilNav = {
             __typename: 'MeldingTilNAV',
             bistandUmiddelbart: false,
             beskrivBistand: null,
-        };
-        render(<MeldingTilNavView meldingTilNav={meldingTilNav} />);
+        }
+        render(<MeldingTilNavView meldingTilNav={meldingTilNav} />)
         expect(() => {
-            expect(screen.getByText('Melding til NAV'));
-        }).toThrow();
+            expect(screen.getByText('Melding til NAV'))
+        }).toThrow()
         expect(() => {
-            screen.getByText('Ønskes bistand fra NAV nå?');
-        }).toThrow();
-    });
+            screen.getByText('Ønskes bistand fra NAV nå?')
+        }).toThrow()
+    })
 
     it('Renders beskrivelse', () => {
         const meldingTilNav: MeldingTilNav = {
             __typename: 'MeldingTilNAV',
             bistandUmiddelbart: true,
             beskrivBistand: 'beskrivelse av bistanden',
-        };
-        render(<MeldingTilNavView meldingTilNav={meldingTilNav} />);
-        expect(screen.getByText('Nærmere beskrivelse')).toBeInTheDocument();
-        expect(screen.getByText('beskrivelse av bistanden')).toBeInTheDocument();
-    });
+        }
+        render(<MeldingTilNavView meldingTilNav={meldingTilNav} />)
+        expect(screen.getByText('Nærmere beskrivelse')).toBeInTheDocument()
+        expect(screen.getByText('beskrivelse av bistanden')).toBeInTheDocument()
+    })
 
     it('Does not render section if object does not exist', () => {
-        render(<MeldingTilNavView />);
-        expect(screen.queryByText('Melding til NAV')).not.toBeInTheDocument();
-        expect(screen.queryByText('Ønskes bistand fra NAV nå?')).not.toBeInTheDocument();
-        expect(screen.queryByText('Nærmere beskrivelse')).not.toBeInTheDocument();
-    });
-});
+        render(<MeldingTilNavView />)
+        expect(screen.queryByText('Melding til NAV')).not.toBeInTheDocument()
+        expect(screen.queryByText('Ønskes bistand fra NAV nå?')).not.toBeInTheDocument()
+        expect(screen.queryByText('Nærmere beskrivelse')).not.toBeInTheDocument()
+    })
+})

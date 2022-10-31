@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Merknadtype } from '../../../../components/InformationBanner/InformationBanner';
-import { Sykmelding } from '../../../api-models/sykmelding/Sykmelding';
-import { sykmeldingStatusMarginBottom, textMarginBottom } from '../constants';
-import Warning from '../icons/Warning';
+import { Merknadtype } from '../../../../components/InformationBanner/InformationBanner'
+import { Sykmelding } from '../../../api-models/sykmelding/Sykmelding'
+import { sykmeldingStatusMarginBottom, textMarginBottom } from '../constants'
+import Warning from '../icons/Warning'
 
 interface Props {
-    sykmelding: Sykmelding;
+    sykmelding: Sykmelding
 }
 
 const styles = StyleSheet.create({
@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     title: { fontFamily: 'Helvetica-Bold', fontSize: 19 },
     underTitle: { fontFamily: 'Helvetica-Bold', marginBottom: 8 },
     text: { marginBottom: textMarginBottom },
-});
+})
 
 const SykmeldingStatusAvvist = ({ sykmelding }: Props): JSX.Element | null => {
-    const behandlingsutfall = sykmelding.behandlingsutfall.status;
+    const behandlingsutfall = sykmelding.behandlingsutfall.status
 
     if (
         behandlingsutfall === 'INVALID' ||
@@ -47,9 +47,9 @@ const SykmeldingStatusAvvist = ({ sykmelding }: Props): JSX.Element | null => {
                     </View>
                 )}
             </View>
-        );
+        )
     }
-    return null;
-};
+    return null
+}
 
-export default SykmeldingStatusAvvist;
+export default SykmeldingStatusAvvist

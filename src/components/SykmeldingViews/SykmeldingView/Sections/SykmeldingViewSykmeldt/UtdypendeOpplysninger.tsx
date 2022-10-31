@@ -1,17 +1,17 @@
-import { FileContent } from '@navikt/ds-icons';
+import { FileContent } from '@navikt/ds-icons'
 
-import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './UtdypendeOpplysninger.module.css';
+import styles from './UtdypendeOpplysninger.module.css'
 
 interface Props {
-    utdypendeOpplysninger: Record<string, Record<string, UtdypendeOpplysning>>;
+    utdypendeOpplysninger: Record<string, Record<string, UtdypendeOpplysning>>
 }
 
 function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): JSX.Element | null {
-    if (Object.keys(utdypendeOpplysninger).length === 0) return null;
+    if (Object.keys(utdypendeOpplysninger).length === 0) return null
 
     return (
         <div className={styles.utdypendeOpplysninger}>
@@ -28,14 +28,14 @@ function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): JSX.Element | 
                                         headingLevel="4"
                                     />
                                 </div>
-                            );
+                            )
                         }
-                        return null;
+                        return null
                     }),
-                );
+                )
             })}
         </div>
-    );
+    )
 }
 
-export default UtdypendeOpplysninger;
+export default UtdypendeOpplysninger

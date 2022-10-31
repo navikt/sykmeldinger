@@ -1,11 +1,11 @@
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react'
 
-import styles from './ListEntry.module.css';
+import styles from './ListEntry.module.css'
 
 interface ListEntryProps {
-    listText: string[];
-    listTitle: string;
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
+    listText: string[]
+    listTitle: string
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6'
 }
 
 const ListEntry: React.FC<ListEntryProps> = ({ listText, listTitle, headingLevel = '3' }) => {
@@ -22,7 +22,7 @@ const ListEntry: React.FC<ListEntryProps> = ({ listText, listTitle, headingLevel
                 ))}
             </ul>
         </div>
-    );
-};
+    )
+}
 
-export default ListEntry;
+export default ListEntry

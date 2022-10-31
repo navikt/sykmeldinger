@@ -1,47 +1,47 @@
-import React, { useEffect } from 'react';
-import { useFormContext, useFieldArray, Controller } from 'react-hook-form';
-import { isValid, parseISO } from 'date-fns';
-import { Datepicker } from '@navikt/ds-datepicker';
-import dayjs from 'dayjs';
-import { BodyShort, Button, Label } from '@navikt/ds-react';
-import { Add, Close } from '@navikt/ds-icons';
+import React, { useEffect } from 'react'
+import { useFormContext, useFieldArray, Controller } from 'react-hook-form'
+import { isValid, parseISO } from 'date-fns'
+import { Datepicker } from '@navikt/ds-datepicker'
+import dayjs from 'dayjs'
+import { BodyShort, Button, Label } from '@navikt/ds-react'
+import { Add, Close } from '@navikt/ds-icons'
 
-import QuestionWrapper from '../layout/QuestionWrapper';
-import { FormShape } from '../Form';
+import QuestionWrapper from '../layout/QuestionWrapper'
+import { FormShape } from '../Form'
 
-import styles from './Egenmeldingsperioder.module.css';
+import styles from './Egenmeldingsperioder.module.css'
 
 interface EgenmeldingsperioderProps {
-    oppfolgingsdato: string;
+    oppfolgingsdato: string
 }
 
-const fieldName = 'egenmeldingsperioder';
+const fieldName = 'egenmeldingsperioder'
 
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgingsdato }) => {
-    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(oppfolgingsdato).format('D. MMMM YYYY')}?`;
-    const maxDate = dayjs(oppfolgingsdato).subtract(1, 'day');
+    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(oppfolgingsdato).format('D. MMMM YYYY')}?`
+    const maxDate = dayjs(oppfolgingsdato).subtract(1, 'day')
 
-    const { control, register, getValues, unregister } = useFormContext<FormShape>();
+    const { control, register, getValues, unregister } = useFormContext<FormShape>()
     const { fields, append, remove } = useFieldArray({
         control,
         name: `${fieldName}.svar`,
-    });
+    })
 
     useEffect(() => {
-        append({ fom: null, tom: null });
-    }, [append]);
+        append({ fom: null, tom: null })
+    }, [append])
 
     useEffect(() => {
         register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
-        });
+        })
         register(`${fieldName}.svartekster`, {
             value: JSON.stringify('Fom, Tom'),
-        });
+        })
 
         return () =>
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [register, unregister, sporsmaltekst]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+    }, [register, unregister, sporsmaltekst])
 
     return (
         <QuestionWrapper>
@@ -57,18 +57,18 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 required: 'fom dato mangler.',
                                 validate: (fom) => {
                                     if (fom && !isValid(parseISO(fom))) {
-                                        return 'Startdato må være på formatet dd.mm.yyyy';
+                                        return 'Startdato må være på formatet dd.mm.yyyy'
                                     }
 
                                     // Test max date
                                     if (dayjs(fom).isAfter(maxDate)) {
-                                        return 'Startdato kan ikke være oppfølgingsdato eller senere.';
+                                        return 'Startdato kan ikke være oppfølgingsdato eller senere.'
                                     }
 
                                     // Test current peirod
-                                    const tom: string | null = getValues(`${fieldName}.svar.${index}.tom`);
+                                    const tom: string | null = getValues(`${fieldName}.svar.${index}.tom`)
                                     if (tom && dayjs(tom).isBefore(fom)) {
-                                        return 'Startdato kan ikke være etter sluttdato.';
+                                        return 'Startdato kan ikke være etter sluttdato.'
                                     }
 
                                     // Test cross-period
@@ -78,10 +78,10 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                             .filter((f) => !!f.fom && !!f.tom)
                                             .some((f) => dayjs(fom).isBetween(f.fom, f.tom, null, '[]'))
                                     ) {
-                                        return 'Du kan ikke ha overlappende perioder.';
+                                        return 'Du kan ikke ha overlappende perioder.'
                                     }
 
-                                    return true;
+                                    return true
                                 },
                             }}
                             render={({ field, fieldState }) => (
@@ -115,18 +115,18 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                 required: 'tom dato mangler.',
                                 validate: (tom) => {
                                     if (tom && !isValid(parseISO(tom))) {
-                                        return 'Sluttdato må være på formatet dd.mm.yyyy';
+                                        return 'Sluttdato må være på formatet dd.mm.yyyy'
                                     }
 
                                     // Test max date
                                     if (dayjs(tom).isAfter(maxDate)) {
-                                        return 'Sluttdato kan ikke være oppfølgingsdato eller senere.';
+                                        return 'Sluttdato kan ikke være oppfølgingsdato eller senere.'
                                     }
 
                                     // Test current peirod
-                                    const fom: string | null = getValues(`${fieldName}.svar.${index}.fom`);
+                                    const fom: string | null = getValues(`${fieldName}.svar.${index}.fom`)
                                     if (fom && dayjs(fom).isAfter(tom)) {
-                                        return 'Sluttdato kan ikke være før startdato.';
+                                        return 'Sluttdato kan ikke være før startdato.'
                                     }
 
                                     // Test cross-period
@@ -136,10 +136,10 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                                             .filter((f) => !!f.fom && !!f.tom)
                                             .some((f) => dayjs(fom).isBetween(f.fom, f.tom, null, '[]'))
                                     ) {
-                                        return 'Du kan ikke ha overlappende perioder.';
+                                        return 'Du kan ikke ha overlappende perioder.'
                                     }
 
-                                    return true;
+                                    return true
                                 },
                             }}
                             render={({ field, fieldState }) => (
@@ -179,7 +179,7 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
                 Legg til ekstra periode
             </Button>
         </QuestionWrapper>
-    );
-};
+    )
+}
 
-export default Egenmeldingsperioder;
+export default Egenmeldingsperioder

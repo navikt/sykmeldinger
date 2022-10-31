@@ -1,45 +1,45 @@
-import { PropsWithChildren, ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
-import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { Cache, InMemoryCache } from '@apollo/client';
+import { PropsWithChildren, ReactElement } from 'react'
+import { render, RenderOptions } from '@testing-library/react'
+import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks'
+import { MockedProvider, MockedResponse } from '@apollo/client/testing'
+import { Cache, InMemoryCache } from '@apollo/client'
 
 type ProviderProps = {
-    readonly initialState?: Cache.WriteQueryOptions<unknown, unknown>[];
-    readonly mocks?: MockedResponse[];
-};
+    readonly initialState?: Cache.WriteQueryOptions<unknown, unknown>[]
+    readonly mocks?: MockedResponse[]
+}
 
 function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<ProviderProps>): JSX.Element {
-    const cache = new InMemoryCache();
-    initialState?.forEach((it) => cache.writeQuery(it));
+    const cache = new InMemoryCache()
+    initialState?.forEach((it) => cache.writeQuery(it))
 
-    return <MockedProvider mocks={mocks}>{children}</MockedProvider>;
+    return <MockedProvider mocks={mocks}>{children}</MockedProvider>
 }
 
 const customRender = (
     ui: ReactElement,
     options: Omit<RenderOptions, 'queries'> & ProviderProps = {},
 ): ReturnType<typeof render> => {
-    const { initialState, mocks, ...renderOptions } = options;
+    const { initialState, mocks, ...renderOptions } = options
 
     return render(ui, {
         wrapper: (props) => <AllTheProviders {...props} initialState={initialState} mocks={mocks} />,
         ...renderOptions,
-    });
-};
+    })
+}
 
 const customRenderHook = <TProps, TResult>(
     hook: (props: TProps) => TResult,
     options: Omit<RenderHookOptions<TProps>, 'wrapper'> & ProviderProps = {},
 ): RenderHookResult<TProps, TResult> => {
-    const { initialState, mocks, ...renderOptions } = options;
+    const { initialState, mocks, ...renderOptions } = options
 
     return renderHook(hook, {
         wrapper: (props) => <AllTheProviders {...props} initialState={initialState} mocks={mocks} />,
         ...renderOptions,
-    });
-};
+    })
+}
 
-export * from '@testing-library/react';
+export * from '@testing-library/react'
 
-export { customRender as render, customRenderHook as renderHook };
+export { customRender as render, customRenderHook as renderHook }

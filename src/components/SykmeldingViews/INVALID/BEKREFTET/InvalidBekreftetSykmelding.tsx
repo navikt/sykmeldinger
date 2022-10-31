@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated';
-import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder';
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Spacing from '../../../Spacing/Spacing';
-import StatusBanner from '../../../StatusBanner/StatusBanner';
-import { getBehandlerName } from '../../../../utils/behandlerUtils';
-import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding';
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
+import { Sykmelding } from '../../../../fetching/graphql.generated'
+import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
+import Spacing from '../../../Spacing/Spacing'
+import StatusBanner from '../../../StatusBanner/StatusBanner'
+import { getBehandlerName } from '../../../../utils/behandlerUtils'
+import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface InvalidBekreftetSykmeldingProps {
-    sykmelding: Sykmelding;
+    sykmelding: Sykmelding
 }
 
 const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({ sykmelding }) => {
-    useHotjarTrigger('SYKMELDING_INVALID_BEKREFTET');
+    useHotjarTrigger('SYKMELDING_INVALID_BEKREFTET')
 
     return (
         <div className="sykmelding-container">
@@ -36,7 +36,7 @@ const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({
 
             <HintToNextOlderSykmelding />
         </div>
-    );
-};
+    )
+}
 
-export default InvalidBekreftetSykmelding;
+export default InvalidBekreftetSykmelding

@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { MedisinskVurdering } from '../../../../../fetching/graphql.generated';
+import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
 
-import Diagnoser from './Diagnoser';
+import Diagnoser from './Diagnoser'
 
 describe('Diagnoser', () => {
     it('should render title', () => {
@@ -30,10 +30,10 @@ describe('Diagnoser', () => {
             svangerskap: false,
             yrkesskade: false,
             yrkesskadeDato: '',
-        };
-        render(<Diagnoser medisinskVurdering={medisinskVurdering} sladd />);
-        expect(screen.getByText('Medisinsk tilstand')).toBeInTheDocument();
-    });
+        }
+        render(<Diagnoser medisinskVurdering={medisinskVurdering} sladd />)
+        expect(screen.getByText('Medisinsk tilstand')).toBeInTheDocument()
+    })
 
     it('should not render Bidiagnose if tekst is missing', () => {
         const medisinskVurdering: MedisinskVurdering = {
@@ -48,8 +48,8 @@ describe('Diagnoser', () => {
             svangerskap: false,
             yrkesskade: false,
             yrkesskadeDato: '',
-        };
-        render(<Diagnoser medisinskVurdering={medisinskVurdering} sladd />);
-        expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument();
-    });
-});
+        }
+        render(<Diagnoser medisinskVurdering={medisinskVurdering} sladd />)
+        expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument()
+    })
+})

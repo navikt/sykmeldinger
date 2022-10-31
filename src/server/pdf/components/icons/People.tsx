@@ -1,9 +1,9 @@
-import { Path, Svg } from '@react-pdf/renderer';
-import React from 'react';
-import { Style } from '@react-pdf/types';
+import { Path, Svg } from '@react-pdf/renderer'
+import React from 'react'
+import { Style } from '@react-pdf/types'
 
 interface Props {
-    style: Style;
+    style: Style
 }
 
 const People = ({ style }: Props): JSX.Element => (
@@ -13,6 +13,6 @@ const People = ({ style }: Props): JSX.Element => (
             fill="black"
         ></Path>
     </Svg>
-);
+)
 
-export default People;
+export default People

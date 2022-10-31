@@ -1,21 +1,21 @@
-import { ErrorSummary } from '@navikt/ds-react';
-import React, { useEffect, useRef } from 'react';
-import { FieldErrors } from 'react-hook-form';
+import { ErrorSummary } from '@navikt/ds-react'
+import React, { useEffect, useRef } from 'react'
+import { FieldErrors } from 'react-hook-form'
 
-import { FormShape } from './Form';
+import { FormShape } from './Form'
 
 interface FeiloppsummeringContainerProps {
-    errors: FieldErrors<FormShape>;
+    errors: FieldErrors<FormShape>
 }
 
-type CustomErrors = Record<keyof FormShape, string | undefined>;
+type CustomErrors = Record<keyof FormShape, string | undefined>
 
 function FeiloppsummeringContainer({ errors }: FeiloppsummeringContainerProps): JSX.Element | null {
-    const summaryRef = useRef<HTMLDivElement>(null);
+    const summaryRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        summaryRef.current?.focus();
-    }, [errors, summaryRef]);
+        summaryRef.current?.focus()
+    }, [errors, summaryRef])
 
     const customErrors: CustomErrors = {
         erOpplysningeneRiktige: errors.erOpplysningeneRiktige?.svar?.message,
@@ -30,12 +30,12 @@ function FeiloppsummeringContainer({ errors }: FeiloppsummeringContainerProps): 
             // @ts-expect-error Some weird typing isse with FieldErrors
             errors.egenmeldingsperioder?.svar?.find((ep) => ep?.tom)?.tom?.message,
         harForsikring: errors.harForsikring?.svar?.message,
-    };
+    }
 
-    const errorSummary = Object.entries(customErrors).filter((tuple): tuple is [string, string] => tuple[1] != null);
+    const errorSummary = Object.entries(customErrors).filter((tuple): tuple is [string, string] => tuple[1] != null)
 
     if (errorSummary.length === 0) {
-        return null;
+        return null
     }
 
     return (
@@ -46,7 +46,7 @@ function FeiloppsummeringContainer({ errors }: FeiloppsummeringContainerProps): 
                 </ErrorSummary.Item>
             ))}
         </ErrorSummary>
-    );
+    )
 }
 
-export default FeiloppsummeringContainer;
+export default FeiloppsummeringContainer

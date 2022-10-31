@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { Prognose } from '../../../../../fetching/graphql.generated';
+import { Prognose } from '../../../../../fetching/graphql.generated'
 
-import PrognoseView from './PrognoseView';
+import PrognoseView from './PrognoseView'
 
 describe('PrognoseView', () => {
     it('Renders section title ', () => {
@@ -12,10 +12,10 @@ describe('PrognoseView', () => {
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
             erIArbeid: null,
             erIkkeIArbeid: null,
-        };
-        render(<PrognoseView prognose={prognose} />);
-        expect(screen.getByText('Prognose')).toBeInTheDocument();
-    });
+        }
+        render(<PrognoseView prognose={prognose} />)
+        expect(screen.getByText('Prognose')).toBeInTheDocument()
+    })
 
     it('Renders arbeidsforEtterPeriode if true', () => {
         const prognose: Prognose = {
@@ -24,10 +24,10 @@ describe('PrognoseView', () => {
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
             erIArbeid: null,
             erIkkeIArbeid: null,
-        };
-        render(<PrognoseView prognose={prognose} />);
-        expect(screen.getByText('Er pasienten 100% arbeidsfør etter denne perioden?')).toBeInTheDocument();
-    });
+        }
+        render(<PrognoseView prognose={prognose} />)
+        expect(screen.getByText('Er pasienten 100% arbeidsfør etter denne perioden?')).toBeInTheDocument()
+    })
 
     it('Does not renders arbeidsforEtterPeriode if false', () => {
         const prognose: Prognose = {
@@ -36,10 +36,10 @@ describe('PrognoseView', () => {
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
             erIArbeid: null,
             erIkkeIArbeid: null,
-        };
-        render(<PrognoseView prognose={prognose} />);
-        expect(screen.queryByText('Er pasienten 100% arbeidsfør etter denne perioden?')).not.toBeInTheDocument();
-    });
+        }
+        render(<PrognoseView prognose={prognose} />)
+        expect(screen.queryByText('Er pasienten 100% arbeidsfør etter denne perioden?')).not.toBeInTheDocument()
+    })
 
     it('Renders hensynArbeidsplassen', () => {
         const prognose: Prognose = {
@@ -48,11 +48,11 @@ describe('PrognoseView', () => {
             hensynArbeidsplassen: 'hensyn på arbeidsplassen',
             erIArbeid: null,
             erIkkeIArbeid: null,
-        };
-        render(<PrognoseView prognose={prognose} />);
-        expect(screen.getByText('Hensyn som må tas på arbeidsplassen')).toBeInTheDocument();
-        expect(screen.getByText('hensyn på arbeidsplassen')).toBeInTheDocument();
-    });
+        }
+        render(<PrognoseView prognose={prognose} />)
+        expect(screen.getByText('Hensyn som må tas på arbeidsplassen')).toBeInTheDocument()
+        expect(screen.getByText('hensyn på arbeidsplassen')).toBeInTheDocument()
+    })
 
     it('Dose not render hensynArbeidsplassen if null', () => {
         const prognose: Prognose = {
@@ -61,8 +61,8 @@ describe('PrognoseView', () => {
             hensynArbeidsplassen: null,
             erIArbeid: null,
             erIkkeIArbeid: null,
-        };
-        render(<PrognoseView prognose={prognose} />);
-        expect(screen.queryByText('Hensyn som må tas på arbeidsplassen')).not.toBeInTheDocument();
-    });
-});
+        }
+        render(<PrognoseView prognose={prognose} />)
+        expect(screen.queryByText('Hensyn som må tas på arbeidsplassen')).not.toBeInTheDocument()
+    })
+})

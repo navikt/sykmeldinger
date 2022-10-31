@@ -1,41 +1,41 @@
-import React, { useEffect, useContext } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import React, { useEffect, useContext } from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react'
 
-import { FormShape, UriktigeOpplysningerType } from '../Form';
-import QuestionWrapper from '../layout/QuestionWrapper';
-import { AvbrytContext } from '../../AvbrytContext';
-import Spacing from '../../../../../Spacing/Spacing';
-import UriktigeOpplysningerInfo from '../UriktigeOpplysningerInfo';
+import { FormShape, UriktigeOpplysningerType } from '../Form'
+import QuestionWrapper from '../layout/QuestionWrapper'
+import { AvbrytContext } from '../../AvbrytContext'
+import Spacing from '../../../../../Spacing/Spacing'
+import UriktigeOpplysningerInfo from '../UriktigeOpplysningerInfo'
 
-const fieldName = 'uriktigeOpplysninger';
+const fieldName = 'uriktigeOpplysninger'
 
 function UriktigeOpplysninger(): JSX.Element {
-    const { register, unregister, control, watch } = useFormContext<FormShape>();
-    const watchUriktigeOpplysninger = watch(fieldName);
-    const { setMaAvbryte } = useContext(AvbrytContext);
+    const { register, unregister, control, watch } = useFormContext<FormShape>()
+    const watchUriktigeOpplysninger = watch(fieldName)
+    const { setMaAvbryte } = useContext(AvbrytContext)
 
-    const uriktigeOpplysinger = watchUriktigeOpplysninger?.svar ?? [];
+    const uriktigeOpplysinger = watchUriktigeOpplysninger?.svar ?? []
     const trengerNySykmelding =
-        uriktigeOpplysinger.includes('PERIODE') || uriktigeOpplysinger.includes('SYKMELDINGSGRAD_FOR_LAV');
+        uriktigeOpplysinger.includes('PERIODE') || uriktigeOpplysinger.includes('SYKMELDINGSGRAD_FOR_LAV')
 
     useEffect(() => {
-        setMaAvbryte(trengerNySykmelding);
-    }, [trengerNySykmelding, setMaAvbryte]);
+        setMaAvbryte(trengerNySykmelding)
+    }, [trengerNySykmelding, setMaAvbryte])
 
     useEffect(() => {
         register('uriktigeOpplysninger.sporsmaltekst', {
             value: 'Hvilke opplysninger stemmer ikke?',
-        });
+        })
         register('uriktigeOpplysninger.svartekster', {
             value: JSON.stringify(UriktigeOpplysningerType),
-        });
+        })
 
         return () => {
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-            setMaAvbryte(false);
-        };
-    }, [register, unregister, setMaAvbryte]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+            setMaAvbryte(false)
+        }
+    }, [register, unregister, setMaAvbryte])
 
     return (
         <QuestionWrapper>
@@ -70,7 +70,7 @@ function UriktigeOpplysninger(): JSX.Element {
                 <UriktigeOpplysningerInfo uriktigeOpplysninger={watchUriktigeOpplysninger?.svar} />
             </Spacing>
         </QuestionWrapper>
-    );
+    )
 }
 
-export default UriktigeOpplysninger;
+export default UriktigeOpplysninger

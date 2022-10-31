@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { logger } from '@navikt/next-logger';
+import { useEffect } from 'react'
+import { logger } from '@navikt/next-logger'
 
-import { getPublicEnv } from '../utils/env';
+import { getPublicEnv } from '../utils/env'
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 type TriggerType =
     | 'SYKMELDING_LISTEVISNING'
@@ -14,36 +14,36 @@ type TriggerType =
     | 'SYKMELDING_OK_UTGATT'
     | 'SYKMELDING_INVALID_APEN'
     | 'SYKMELDING_INVALID_BEKREFTET'
-    | 'SYKMELDING_KVITTERING';
+    | 'SYKMELDING_KVITTERING'
 
 interface HotjarWindow extends Window {
-    hj?: (name: string, value: string) => void;
+    hj?: (name: string, value: string) => void
 }
 
-type HotjarFunction = (name: string, value: string) => void;
+type HotjarFunction = (name: string, value: string) => void
 
 function isHotjarFunction(hj: unknown): hj is HotjarFunction {
-    return typeof hj === 'function';
+    return typeof hj === 'function'
 }
 
 const useHotjarTrigger = (triggerType: TriggerType): void => {
     useEffect(() => {
         if (publicEnv.RUNTIME_ENVIRONMENT === 'production') {
             setTimeout(() => {
-                const hotjarWindow = window as HotjarWindow;
+                const hotjarWindow = window as HotjarWindow
 
                 if (isHotjarFunction(hotjarWindow.hj)) {
-                    hotjarWindow.hj('trigger', triggerType);
+                    hotjarWindow.hj('trigger', triggerType)
                 } else {
-                    logger.info('Hotjar was not found on window');
+                    logger.info('Hotjar was not found on window')
                 }
-            }, 500);
+            }, 500)
         } else {
             if (process.env.NODE_ENV !== 'test') {
-                console.info(`Not loading Hotjar ${triggerType} because the application is not in production`);
+                console.info(`Not loading Hotjar ${triggerType} because the application is not in production`)
             }
         }
-    }, [triggerType]);
-};
+    }, [triggerType])
+}
 
-export default useHotjarTrigger;
+export default useHotjarTrigger

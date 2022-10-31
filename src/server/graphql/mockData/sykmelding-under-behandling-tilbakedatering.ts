@@ -1,13 +1,13 @@
-import { dateAdd, dateSub } from '../../../utils/dateUtils';
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { SvarRestriksjon } from '../../api-models/sykmelding/UtdypendeOpplysninger';
+import { dateAdd, dateSub } from '../../../utils/dateUtils'
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { SvarRestriksjon } from '../../api-models/sykmelding/UtdypendeOpplysninger'
 import {
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
     Periodetype,
     RegelStatus,
     StatusEvent,
-} from '../resolver-types.generated';
+} from '../resolver-types.generated'
 
 export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new Date(), { months: 11 })): Sykmelding {
     return {
@@ -115,5 +115,5 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
         harRedusertArbeidsgiverperiode: false,
         merknader: [{ type: 'UNDER_BEHANDLING', beskrivelse: null }],
         pasient: { fnr: '06078104285', fornavn: 'KORRUPT', mellomnavn: null, etternavn: 'RISPBÆRBUSK' },
-    };
+    }
 }

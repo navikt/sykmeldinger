@@ -1,8 +1,8 @@
-import { BodyShort, Label, ReadMore, SpeechBubble } from '@navikt/ds-react';
+import { BodyShort, Label, ReadMore, SpeechBubble } from '@navikt/ds-react'
 
-import VeilederMaleSvg from '../../../../../Veileder/svg/VeilederMaleSvg';
+import VeilederMaleSvg from '../../../../../Veileder/svg/VeilederMaleSvg'
 
-import styles from './VeilederSenderSykmeldingen.module.css';
+import styles from './VeilederSenderSykmeldingen.module.css'
 
 function VeilederSenderSykmeldingen(): JSX.Element {
     return (
@@ -30,7 +30,7 @@ function VeilederSenderSykmeldingen(): JSX.Element {
                 </SpeechBubble.Bubble>
             </SpeechBubble>
         </div>
-    );
+    )
 }
 
-export default VeilederSenderSykmeldingen;
+export default VeilederSenderSykmeldingen

@@ -1,12 +1,12 @@
-import { onError } from '@apollo/client/link/error';
-import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
-import { RetryLink } from '@apollo/client/link/retry';
-import { logger } from '@navikt/next-logger';
+import { onError } from '@apollo/client/link/error'
+import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { RetryLink } from '@apollo/client/link/retry'
+import { logger } from '@navikt/next-logger'
 
-import { getPublicEnv } from '../utils/env';
-import { getUserRequestId } from '../utils/userRequestId';
+import { getPublicEnv } from '../utils/env'
+import { getUserRequestId } from '../utils/userRequestId'
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
@@ -18,8 +18,8 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
             }),
             httpLink,
         ]),
-    });
-};
+    })
+}
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     if (graphQLErrors)
@@ -29,16 +29,16 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
                     `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path} for operation ${
                         operation.operationName
                     }, requestId: ${getUserRequestId()}`,
-                );
+                )
             }
-        });
+        })
 
     if (networkError) {
         if ('statusCode' in networkError) {
             if (networkError.statusCode === 401 || networkError.statusCode === 403) {
                 // Redirect to allow SSR authentication to redirect to login
-                window.location.reload();
-                return;
+                window.location.reload()
+                return
             }
         }
 
@@ -46,11 +46,11 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
             operation.operationName
         }" with variable id (if any): ${
             operation.variables.id ?? operation.variables.sykmeldingId
-        }. User trace id: ${getUserRequestId()}`;
+        }. User trace id: ${getUserRequestId()}`
 
-        logger.error(networkError);
+        logger.error(networkError)
     }
-});
+})
 
 const httpLink = new HttpLink({
     uri: `${publicEnv.publicPath ?? ''}/api/graphql`,
@@ -58,4 +58,4 @@ const httpLink = new HttpLink({
     headers: {
         'x-request-id': getUserRequestId(),
     },
-});
+})

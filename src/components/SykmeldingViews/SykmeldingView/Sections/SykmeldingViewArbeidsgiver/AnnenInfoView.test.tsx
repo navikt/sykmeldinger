@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../../../../../fetching/graphql.generated';
+import { Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../../../../../fetching/graphql.generated'
 
-import AnnenInfoView from './AnnenInfoView';
+import AnnenInfoView from './AnnenInfoView'
 
 describe('AnnenInfoView', () => {
     it('Renders behandler phone if it exist', () => {
@@ -80,11 +80,11 @@ describe('AnnenInfoView', () => {
                 mellomnavn: null,
                 etternavn: null,
             },
-        };
+        }
 
-        render(<AnnenInfoView sykmelding={sykmelding} />);
-        expect(screen.getByText('Tlf: 12345678')).toBeInTheDocument();
-    });
+        render(<AnnenInfoView sykmelding={sykmelding} />)
+        expect(screen.getByText('Tlf: 12345678')).toBeInTheDocument()
+    })
 
     it('Render hyphen if behandler phone does noe exist', () => {
         const sykmelding: Sykmelding = {
@@ -161,9 +161,9 @@ describe('AnnenInfoView', () => {
                 mellomnavn: null,
                 etternavn: null,
             },
-        };
+        }
 
-        render(<AnnenInfoView sykmelding={sykmelding} />);
-        expect(screen.getByText('Tlf: —')).toBeInTheDocument();
-    });
-});
+        render(<AnnenInfoView sykmelding={sykmelding} />)
+        expect(screen.getByText('Tlf: —')).toBeInTheDocument()
+    })
+})

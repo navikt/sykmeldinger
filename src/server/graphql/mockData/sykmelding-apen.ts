@@ -1,4 +1,4 @@
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
 import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
@@ -6,8 +6,8 @@ import {
     Periodetype,
     RegelStatus,
     StatusEvent,
-} from '../resolver-types.generated';
-import { dateAdd, dateSub } from '../../../utils/dateUtils';
+} from '../resolver-types.generated'
+import { dateAdd, dateSub } from '../../../utils/dateUtils'
 
 export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }), id = 'APEN'): Sykmelding {
     return {
@@ -165,5 +165,5 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             mellomnavn: null,
             etternavn: 'Nordmann',
         },
-    };
+    }
 }

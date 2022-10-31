@@ -1,7 +1,7 @@
-import { GraphQLJSON } from 'graphql-scalars';
-import { logger } from '@navikt/next-logger';
+import { GraphQLJSON } from 'graphql-scalars'
+import { logger } from '@navikt/next-logger'
 
-import { dateSub } from '../../utils/dateUtils';
+import { dateSub } from '../../utils/dateUtils'
 
 import {
     MutationResolvers,
@@ -9,21 +9,21 @@ import {
     Resolvers,
     StatusEvent,
     SykmeldingChangeStatus,
-} from './resolver-types.generated';
-import { sykmeldingApen } from './mockData/sykmelding-apen';
-import { sykmeldingApenPapir } from './mockData/sykmelding-apen-papir';
-import { sykmeldingSendt } from './mockData/sykmelding-sendt';
-import { sykmeldingSendt2 } from './mockData/sykmelding-sendt-2';
-import { sykmeldingSendt3 } from './mockData/sykmelding-sendt-3';
-import { sykmeldingBekreftet } from './mockData/sykmelding-bekreftet';
-import { sykmeldingAvvist } from './mockData/sykmelding-avvist';
-import { sykmeldingAvvistBekreftet } from './mockData/sykmelding-avvist-bekreftet';
-import { sykmeldingAvbrutt } from './mockData/sykmelding-avbrutt';
-import { sykmeldingUtgatt } from './mockData/sykmelding-utgatt';
-import { sykmeldingEgenmeldt } from './mockData/sykmelding-egenmeldt';
-import { sykmeldingUnderbehandlingTilbakedatering } from './mockData/sykmelding-under-behandling-tilbakedatering';
-import { sykmeldingUgyldigTilbakedatering } from './mockData/sykmelding-ugyldig-tilbakedatering';
-import arbeidsgivereMock from './mockData/arbeidsgivereMock';
+} from './resolver-types.generated'
+import { sykmeldingApen } from './mockData/sykmelding-apen'
+import { sykmeldingApenPapir } from './mockData/sykmelding-apen-papir'
+import { sykmeldingSendt } from './mockData/sykmelding-sendt'
+import { sykmeldingSendt2 } from './mockData/sykmelding-sendt-2'
+import { sykmeldingSendt3 } from './mockData/sykmelding-sendt-3'
+import { sykmeldingBekreftet } from './mockData/sykmelding-bekreftet'
+import { sykmeldingAvvist } from './mockData/sykmelding-avvist'
+import { sykmeldingAvvistBekreftet } from './mockData/sykmelding-avvist-bekreftet'
+import { sykmeldingAvbrutt } from './mockData/sykmelding-avbrutt'
+import { sykmeldingUtgatt } from './mockData/sykmelding-utgatt'
+import { sykmeldingEgenmeldt } from './mockData/sykmelding-egenmeldt'
+import { sykmeldingUnderbehandlingTilbakedatering } from './mockData/sykmelding-under-behandling-tilbakedatering'
+import { sykmeldingUgyldigTilbakedatering } from './mockData/sykmelding-ugyldig-tilbakedatering'
+import arbeidsgivereMock from './mockData/arbeidsgivereMock'
 
 export const sykmeldinger = [
     sykmeldingApen(),
@@ -40,34 +40,34 @@ export const sykmeldinger = [
     sykmeldingEgenmeldt,
     sykmeldingUnderbehandlingTilbakedatering(),
     sykmeldingUgyldigTilbakedatering,
-];
+]
 
 const Query: QueryResolvers = {
     sykmeldinger: async () => {
-        return sykmeldinger;
+        return sykmeldinger
     },
     sykmelding: async (_, { id }) => {
-        const relevantSykmelding = sykmeldinger.find((it) => it.id === id);
+        const relevantSykmelding = sykmeldinger.find((it) => it.id === id)
         if (!relevantSykmelding) {
-            throw new Error(`Unable to find sykmelding by id: ${id}`);
+            throw new Error(`Unable to find sykmelding by id: ${id}`)
         }
-        return relevantSykmelding;
+        return relevantSykmelding
     },
     brukerinformasjon: async () => {
-        return { strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock };
+        return { strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock }
     },
     sykmeldingUtenforVentetid: async function () {
-        logger.warn('Using mocked data locally or in demo mode');
+        logger.warn('Using mocked data locally or in demo mode')
 
-        return { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' };
+        return { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' }
     },
-};
+}
 
 const Mutation: MutationResolvers = {
     changeSykmeldingStatus: async (_, { sykmeldingId, status }) => {
-        const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId);
+        const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
         if (!sykmelding) {
-            throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`);
+            throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
         }
 
         const inputStatusToZodStatus = (status: SykmeldingChangeStatus): StatusEvent =>
@@ -75,28 +75,28 @@ const Mutation: MutationResolvers = {
                 ? StatusEvent.Avbrutt
                 : status === SykmeldingChangeStatus.BekreftAvvist
                 ? StatusEvent.Bekreftet
-                : StatusEvent.Apen;
+                : StatusEvent.Apen
 
-        sykmelding.sykmeldingStatus.statusEvent = inputStatusToZodStatus(status);
+        sykmelding.sykmeldingStatus.statusEvent = inputStatusToZodStatus(status)
 
-        return sykmelding;
+        return sykmelding
     },
     submitSykmelding: async (_, { sykmeldingId }) => {
-        logger.warn('Using mocked data locally or in demo mode');
+        logger.warn('Using mocked data locally or in demo mode')
 
-        const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId);
+        const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
         if (!sykmelding) {
-            throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`);
+            throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
         }
-        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.Sendt;
-        return sykmelding;
+        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.Sendt
+        return sykmelding
     },
-};
+}
 
 const resolvers: Partial<Resolvers> = {
     Query,
     Mutation,
     JSON: GraphQLJSON,
-};
+}
 
-export default resolvers;
+export default resolvers

@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../../../fetching/graphql.generated';
+import { Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../../../fetching/graphql.generated'
 
-import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver';
+import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver'
 
 const minimalSykmelding: Sykmelding = {
     __typename: 'Sykmelding',
@@ -78,13 +78,13 @@ const minimalSykmelding: Sykmelding = {
         mellomnavn: null,
         etternavn: null,
     },
-};
+}
 
 describe('SykmeldingViewArbeidsgiver', () => {
     it('Behandler should use correct name correctly formatted', () => {
-        render(<SykmeldingViewArbeidsgiver sykmelding={minimalSykmelding} />);
+        render(<SykmeldingViewArbeidsgiver sykmelding={minimalSykmelding} />)
 
         // eslint-disable-next-line testing-library/no-node-access
-        expect(screen.getByText(/Sykmeldingen ble skrevet av/).parentElement).toHaveTextContent(/Frida Perma Frost/);
-    });
-});
+        expect(screen.getByText(/Sykmeldingen ble skrevet av/).parentElement).toHaveTextContent(/Frida Perma Frost/)
+    })
+})

@@ -13,11 +13,11 @@ export type AmplitudeTaxonomyEvents =
     | { eventName: 'skjema fullført'; data: { skjemanavn: string /* skjemaId: number */ } }
     | { eventName: 'skjema innsending feilet'; data: { skjemanavn: string /* skjemaId: number */ } }
     | {
-          eventName: 'skjema spørsmål besvart';
-          data: { skjemanavn: string; spørsmål: string; svar: string /* skjemaId: number */ };
+          eventName: 'skjema spørsmål besvart'
+          data: { skjemanavn: string; spørsmål: string; svar: string /* skjemaId: number */ }
       }
     | { eventName: 'skjema startet'; data: { skjemanavn: string /* skjemaId: number */ } }
     | { eventName: 'skjema steg fullført'; data: { skjemanavn: string; steg: string /* skjemaId: number */ } }
     | { eventName: 'skjema validering feilet'; data: { skjemanavn: string /* skjemaId: number */ } }
     | { eventName: 'skjema åpnet'; data: { skjemanavn: string /* skjemaId: number */ } }
-    | { eventName: 'guidepanel vist'; data: { komponent: string; tekst?: string } };
+    | { eventName: 'guidepanel vist'; data: { komponent: string; tekst?: string } }

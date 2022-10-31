@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, BodyLong, Button, Label, Loader, Radio, RadioGroup } from '@navikt/ds-react';
+import React, { useEffect, useState } from 'react'
+import { Alert, BodyLong, Button, Label, Loader, Radio, RadioGroup } from '@navikt/ds-react'
 
-import Spacing from '../../../Spacing/Spacing';
-import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
-import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
-import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
-import { useAmplitude } from '../../../../amplitude/amplitude';
+import Spacing from '../../../Spacing/Spacing'
+import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
+import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
+import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
+import { useAmplitude } from '../../../../amplitude/amplitude'
 
-const skjemanavn = 'avbryt åpen papirsykmelding';
+const skjemanavn = 'avbryt åpen papirsykmelding'
 
 function PapirInfoheader(): JSX.Element {
-    const sykmeldingId = useGetSykmeldingIdParam();
-    const logEvent = useAmplitude();
+    const sykmeldingId = useGetSykmeldingIdParam()
+    const logEvent = useAmplitude()
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.Avbryt,
         () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
         () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
-    );
-    const [harGittVidere, setHarGittVidere] = useState<'Ja' | 'Nei' | null>(null);
+    )
+    const [harGittVidere, setHarGittVidere] = useState<'Ja' | 'Nei' | null>(null)
 
     useEffect(() => {
         if (harGittVidere) {
-            logEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
+            logEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
         }
-    }, [harGittVidere, logEvent]);
+    }, [harGittVidere, logEvent])
 
     return (
         <>
@@ -34,10 +34,10 @@ function PapirInfoheader(): JSX.Element {
                 value={harGittVidere}
                 onChange={(value: 'Ja' | 'Nei') => {
                     if (harGittVidere) {
-                        logEvent({ eventName: 'skjema startet', data: { skjemanavn } }, { 'har gitt videre': value });
+                        logEvent({ eventName: 'skjema startet', data: { skjemanavn } }, { 'har gitt videre': value })
                     }
 
-                    setHarGittVidere(value);
+                    setHarGittVidere(value)
                 }}
             >
                 <Radio value="Ja">Ja</Radio>
@@ -89,7 +89,7 @@ function PapirInfoheader(): JSX.Element {
                 </Spacing>
             )}
         </>
-    );
+    )
 }
 
-export default PapirInfoheader;
+export default PapirInfoheader

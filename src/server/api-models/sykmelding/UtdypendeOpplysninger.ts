@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export enum SvarRestriksjon {
     SKJERMET_FOR_ARBEIDSGIVER = 'SKJERMET_FOR_ARBEIDSGIVER',
@@ -9,6 +9,6 @@ export const UtdypendeOpplysningSchema = z.object({
     sporsmal: z.string().nullable(),
     svar: z.string(),
     restriksjoner: z.array(z.nativeEnum(SvarRestriksjon)),
-});
+})
 
-export type UtdypendeOpplysning = z.infer<typeof UtdypendeOpplysningSchema>;
+export type UtdypendeOpplysning = z.infer<typeof UtdypendeOpplysningSchema>

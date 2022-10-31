@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { toReadableDate } from '../../../utils/dateUtils';
-import { getBehandlerName } from '../../../utils/behandlerUtils';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { toReadableDate } from '../../../utils/dateUtils'
+import { getBehandlerName } from '../../../utils/behandlerUtils'
 
-import Information from './icons/Information';
-import { Section } from './Section';
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
+import Information from './icons/Information'
+import { Section } from './Section'
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
 
 interface Props {
-    sykmelding: Sykmelding;
+    sykmelding: Sykmelding
 }
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         marginBottom: contentMarginBottom,
     },
     view: { marginBottom: 12 },
-});
+})
 
 const AnnenInfo = ({ sykmelding }: Props): JSX.Element | null => {
     return (
@@ -51,7 +51,7 @@ const AnnenInfo = ({ sykmelding }: Props): JSX.Element | null => {
                 </View>
             </View>
         </Section>
-    );
-};
+    )
+}
 
-export default AnnenInfo;
+export default AnnenInfo

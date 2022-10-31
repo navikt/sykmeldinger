@@ -1,19 +1,19 @@
-import { ShakeHands } from '@navikt/ds-icons';
+import { ShakeHands } from '@navikt/ds-icons'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
-import styles from './Arbeidsevne.module.css';
+import styles from './Arbeidsevne.module.css'
 
 interface Props {
-    tiltakArbeidsplassen?: string | null;
-    tiltakNAV?: string | null;
-    andreTiltak?: string | null;
+    tiltakArbeidsplassen?: string | null
+    tiltakNAV?: string | null
+    andreTiltak?: string | null
 }
 
 function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): JSX.Element | null {
     if (!tiltakArbeidsplassen && !tiltakNAV && !andreTiltak) {
-        return null;
+        return null
     }
 
     return (
@@ -39,7 +39,7 @@ function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): J
                 </div>
             )}
         </div>
-    );
+    )
 }
 
-export default Arbeidsevne;
+export default Arbeidsevne

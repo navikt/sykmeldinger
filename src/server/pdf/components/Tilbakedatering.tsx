@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { KontaktMedPasient } from '../../api-models/sykmelding/KontaktMedPasient';
-import { toReadableDate } from '../../../utils/dateUtils';
+import { KontaktMedPasient } from '../../api-models/sykmelding/KontaktMedPasient'
+import { toReadableDate } from '../../../utils/dateUtils'
 
-import { Section } from './Section';
-import Historic from './icons/Historic';
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
+import { Section } from './Section'
+import Historic from './icons/Historic'
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
 
 interface Props {
-    kontaktMedPasient: KontaktMedPasient;
+    kontaktMedPasient: KontaktMedPasient
 }
 
 const styles = StyleSheet.create({
@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
         marginBottom: contentMarginBottom,
     },
     view: { marginBottom: 12 },
-});
+})
 
 const Tilbakedatering = ({ kontaktMedPasient }: Props): JSX.Element | null => {
     if (!kontaktMedPasient.kontaktDato && !kontaktMedPasient.begrunnelseIkkeKontakt) {
-        return null;
+        return null
     }
 
     return (
@@ -48,7 +48,7 @@ const Tilbakedatering = ({ kontaktMedPasient }: Props): JSX.Element | null => {
                 )}
             </View>
         </Section>
-    );
-};
+    )
+}
 
-export default Tilbakedatering;
+export default Tilbakedatering

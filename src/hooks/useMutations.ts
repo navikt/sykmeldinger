@@ -1,6 +1,6 @@
-import { MutationResult, useMutation } from '@apollo/client';
-import { useRouter } from 'next/router';
-import { logger } from '@navikt/next-logger';
+import { MutationResult, useMutation } from '@apollo/client'
+import { useRouter } from 'next/router'
+import { logger } from '@navikt/next-logger'
 
 import {
     ChangeSykmeldingStatusDocument,
@@ -8,8 +8,8 @@ import {
     SubmitSykmeldingDocument,
     SubmitSykmeldingMutation,
     SykmeldingChangeStatus,
-} from '../fetching/graphql.generated';
-import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form';
+} from '../fetching/graphql.generated'
+import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form'
 
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,
@@ -23,21 +23,21 @@ export function useChangeSykmeldingStatus(
             status,
         },
         onCompleted: () => {
-            onCompleted();
-            window.scrollTo(0, 0);
+            onCompleted()
+            window.scrollTo(0, 0)
         },
         onError: () => {
-            onError();
+            onError()
         },
-    });
+    })
 
     return [
         result,
         () => {
-            logger.info(`Client: Changing status for sykmelding ${sykmeldingId} to ${status}`);
-            submit();
+            logger.info(`Client: Changing status for sykmelding ${sykmeldingId} to ${status}`)
+            submit()
         },
-    ];
+    ]
 }
 
 export function useSubmitSykmelding(
@@ -45,23 +45,23 @@ export function useSubmitSykmelding(
     onCompleted: () => void,
     onError: () => void,
 ): [MutationResult<SubmitSykmeldingMutation>, (values: FormShape) => void] {
-    const router = useRouter();
+    const router = useRouter()
     const [submit, result] = useMutation(SubmitSykmeldingDocument, {
         onCompleted: () => {
-            onCompleted();
-            window.scrollTo(0, 0);
-            router.push(`/${sykmeldingId}/kvittering`);
+            onCompleted()
+            window.scrollTo(0, 0)
+            router.push(`/${sykmeldingId}/kvittering`)
         },
         onError: () => {
-            onError();
+            onError()
         },
-    });
+    })
 
     return [
         result,
         (values) => {
-            logger.info(`Client: Submitting sykmelding ${sykmeldingId}`);
-            submit({ variables: { sykmeldingId, values } });
+            logger.info(`Client: Submitting sykmelding ${sykmeldingId}`)
+            submit({ variables: { sykmeldingId, values } })
         },
-    ];
+    ]
 }

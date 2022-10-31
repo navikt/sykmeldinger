@@ -1,18 +1,18 @@
-import React from 'react';
-import { Alert, Detail, Heading } from '@navikt/ds-react';
+import React from 'react'
+import { Alert, Detail, Heading } from '@navikt/ds-react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated';
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import { toReadableDate } from '../../../../utils/dateUtils';
-import Spacing from '../../../Spacing/Spacing';
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
+import { Sykmelding } from '../../../../fetching/graphql.generated'
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
+import { toReadableDate } from '../../../../utils/dateUtils'
+import Spacing from '../../../Spacing/Spacing'
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkUtgattSykmeldingProps {
-    sykmelding: Sykmelding;
+    sykmelding: Sykmelding
 }
 
 function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Element {
-    useHotjarTrigger('SYKMELDING_OK_UTGATT');
+    useHotjarTrigger('SYKMELDING_OK_UTGATT')
 
     return (
         <div className="sykmelding-container">
@@ -26,7 +26,7 @@ function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Elemen
             </Spacing>
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
         </div>
-    );
+    )
 }
 
-export default OkUtgattSykmelding;
+export default OkUtgattSykmelding

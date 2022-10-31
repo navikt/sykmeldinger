@@ -1,28 +1,28 @@
-import React from 'react';
-import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import React from 'react'
+import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { toReadableDate } from '../../../utils/dateUtils';
-import { Periode } from '../../api-models/sykmelding/Periode';
-import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { toReadableDate } from '../../../utils/dateUtils'
+import { Periode } from '../../api-models/sykmelding/Periode'
+import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils'
 
-import NavLogoRedSvg from './NavLogoRedSvg';
-import { GeneratedTimestamp, PageNumbers } from './FooterItems';
-import { pageMargin } from './constants';
-import SykmeldingenGjelder from './SykmeldingenGjelder';
-import Perioder from './Perioder';
-import AnnenInfo from './AnnenInfo';
-import AktivitetIkkeMulig from './AktivitetIkkeMulig';
-import Prognose from './Prognose';
-import Arbeidsevne from './Arbeidsevne';
-import MeldingTilNav from './MeldingTilNav';
-import MeldingTilArbeidsgiver from './MeldingTilArbeidsgiver';
-import Tilbakedatering from './Tilbakedatering';
-import SykmeldingStatus from './SykmeldingStatus/SykmeldingStatus';
+import NavLogoRedSvg from './NavLogoRedSvg'
+import { GeneratedTimestamp, PageNumbers } from './FooterItems'
+import { pageMargin } from './constants'
+import SykmeldingenGjelder from './SykmeldingenGjelder'
+import Perioder from './Perioder'
+import AnnenInfo from './AnnenInfo'
+import AktivitetIkkeMulig from './AktivitetIkkeMulig'
+import Prognose from './Prognose'
+import Arbeidsevne from './Arbeidsevne'
+import MeldingTilNav from './MeldingTilNav'
+import MeldingTilArbeidsgiver from './MeldingTilArbeidsgiver'
+import Tilbakedatering from './Tilbakedatering'
+import SykmeldingStatus from './SykmeldingStatus/SykmeldingStatus'
 
 interface Props {
-    sykmelding: Sykmelding;
-    timestamp: string;
+    sykmelding: Sykmelding
+    timestamp: string
 }
 
 /**
@@ -57,14 +57,14 @@ const SykmeldingPdf = ({ sykmelding, timestamp }: Props): JSX.Element => {
                 <GeneratedTimestamp timestamp={timestamp} />
             </Page>
         </Document>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     navLogo: { marginBottom: 22 },
     page: { margin: pageMargin, paddingBottom: 90, fontSize: 14 },
     header: { marginBottom: 12 },
     heading: { fontFamily: 'Helvetica-Bold', fontSize: 18, marginBottom: 4 },
-});
+})
 
-export default SykmeldingPdf;
+export default SykmeldingPdf

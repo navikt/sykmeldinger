@@ -1,27 +1,27 @@
-import { Radio, RadioGroup } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
+import { Radio, RadioGroup } from '@navikt/ds-react'
+import React, { useEffect } from 'react'
+import { useFormContext, Controller } from 'react-hook-form'
 
-import { FormShape, JaEllerNeiType } from '../Form';
-import QuestionWrapper from '../layout/QuestionWrapper';
+import { FormShape, JaEllerNeiType } from '../Form'
+import QuestionWrapper from '../layout/QuestionWrapper'
 
-const fieldName = 'harForsikring';
-const sporsmaltekst = 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?';
+const fieldName = 'harForsikring'
+const sporsmaltekst = 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?'
 
 const HarForsikring: React.FC = () => {
-    const { control, register, unregister } = useFormContext<FormShape>();
+    const { control, register, unregister } = useFormContext<FormShape>()
 
     useEffect(() => {
         register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
-        });
+        })
         register(`${fieldName}.svartekster`, {
             value: JSON.stringify(JaEllerNeiType),
-        });
+        })
 
         return () =>
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [register, unregister]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+    }, [register, unregister])
 
     return (
         <QuestionWrapper>
@@ -47,7 +47,7 @@ const HarForsikring: React.FC = () => {
                 )}
             />
         </QuestionWrapper>
-    );
-};
+    )
+}
 
-export default HarForsikring;
+export default HarForsikring

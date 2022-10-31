@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { MeldingTilNAV } from '../../api-models/sykmelding/MeldingTilNav';
+import { MeldingTilNAV } from '../../api-models/sykmelding/MeldingTilNav'
 
-import { Section } from './Section';
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
-import PeopleDialogOutline from './icons/PeopleDialogOutline';
+import { Section } from './Section'
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
+import PeopleDialogOutline from './icons/PeopleDialogOutline'
 
 interface Props {
-    meldingTilNav?: MeldingTilNAV | null;
+    meldingTilNav?: MeldingTilNAV | null
 }
 
 const styles = StyleSheet.create({
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
         marginBottom: contentMarginBottom,
     },
     view: { marginBottom: 12 },
-});
+})
 
 const MeldingTilNav = ({ meldingTilNav }: Props): JSX.Element | null => {
     if (!meldingTilNav || (meldingTilNav.bistandUmiddelbart === false && !meldingTilNav.beskrivBistand)) {
-        return null;
+        return null
     }
 
     return (
@@ -45,7 +45,7 @@ const MeldingTilNav = ({ meldingTilNav }: Props): JSX.Element | null => {
                 )}
             </View>
         </Section>
-    );
-};
+    )
+}
 
-export default MeldingTilNav;
+export default MeldingTilNav

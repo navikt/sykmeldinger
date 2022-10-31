@@ -1,13 +1,13 @@
-import React from 'react';
-import { BodyLong, BodyShort, Label } from '@navikt/ds-react';
+import React from 'react'
+import { BodyLong, BodyShort, Label } from '@navikt/ds-react'
 
-import { Behandlingsutfall } from '../../fetching/graphql.generated';
+import { Behandlingsutfall } from '../../fetching/graphql.generated'
 
-import styles from './ForklaringAndre.module.css';
+import styles from './ForklaringAndre.module.css'
 
 interface ForklaringAndreProps {
-    behandlerNavn: string;
-    ruleHits: Behandlingsutfall['ruleHits'];
+    behandlerNavn: string
+    ruleHits: Behandlingsutfall['ruleHits']
 }
 
 function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): JSX.Element {
@@ -32,7 +32,7 @@ function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): JSX
                 skal skrive den nye sykmeldingen.
             </BodyLong>
         </>
-    );
+    )
 }
 
-export default ForklaringAndre;
+export default ForklaringAndre

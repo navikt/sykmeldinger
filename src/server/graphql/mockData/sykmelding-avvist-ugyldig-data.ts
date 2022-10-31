@@ -1,9 +1,9 @@
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { dateAdd, dateSub } from '../../../utils/dateUtils';
-import { Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated';
-import { SvarRestriksjon } from '../../api-models/sykmelding/UtdypendeOpplysninger';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { dateAdd, dateSub } from '../../../utils/dateUtils'
+import { Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated'
+import { SvarRestriksjon } from '../../api-models/sykmelding/UtdypendeOpplysninger'
 
-const mottatt = dateSub(new Date(), { months: 1 });
+const mottatt = dateSub(new Date(), { months: 1 })
 
 export const sykmeldingAvvistUgyldigData: Sykmelding = {
     id: 'fac65224-7acc-40cc-b9a3-23c36ca99ac3',
@@ -124,4 +124,4 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
     papirsykmelding: false,
     harRedusertArbeidsgiverperiode: false,
     merknader: null,
-};
+}

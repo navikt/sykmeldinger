@@ -1,23 +1,23 @@
-import { differenceInDays, isAfter, parseISO } from 'date-fns';
-import dayjs from 'dayjs';
-import { sortBy } from 'remeda';
+import { differenceInDays, isAfter, parseISO } from 'date-fns'
+import dayjs from 'dayjs'
+import { sortBy } from 'remeda'
 
-import { StatusEvent, Sykmelding, Periode, SykmeldingFragment } from '../fetching/graphql.generated';
+import { StatusEvent, Sykmelding, Periode, SykmeldingFragment } from '../fetching/graphql.generated'
 
-import { toDate } from './dateUtils';
+import { toDate } from './dateUtils'
 
 export function isActiveSykmelding(sykmelding: SykmeldingFragment): boolean {
     // Alt som ikke er APEN status, er inaktive
-    if (sykmelding.sykmeldingStatus.statusEvent !== 'APEN') return false;
+    if (sykmelding.sykmeldingStatus.statusEvent !== 'APEN') return false
     // APEN sykmeldinger blir inaktive etter 12 måneder
-    return differenceInDays(new Date(), parseISO(sykmelding.mottattTidspunkt)) < 365;
+    return differenceInDays(new Date(), parseISO(sykmelding.mottattTidspunkt)) < 365
 }
 
 export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
     return (
         sykmelding.sykmeldingStatus.statusEvent === StatusEvent.Sendt &&
         sykmelding.merknader?.find((it) => it.type === 'UNDER_BEHANDLING') != null
-    );
+    )
 }
 
 /**
@@ -29,12 +29,12 @@ export function getSykmeldingTitle(
     sykmelding: Sykmelding | undefined,
 ): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' {
     if (sykmelding?.papirsykmelding) {
-        return 'Papirsykmelding';
+        return 'Papirsykmelding'
     }
     if (sykmelding?.egenmeldt) {
-        return 'Egenmelding';
+        return 'Egenmelding'
     }
-    return 'Sykmelding';
+    return 'Sykmelding'
 }
 
 /**
@@ -44,18 +44,18 @@ export function getSykmeldingTitle(
 export function getSykmeldingStartDate(sykmelding: Sykmelding): string {
     return sykmelding.sykmeldingsperioder.reduce((acc, value) => {
         if (dayjs(value.fom).isBefore(dayjs(acc.fom))) {
-            return value;
+            return value
         }
 
-        return acc;
-    }).fom;
+        return acc
+    }).fom
 }
 
 /**
  * Used by reduce to get the latest tom date
  */
 export const toLatestTom = (previousValue: Periode, currentValue: Periode): Periode =>
-    isAfter(toDate(previousValue.tom), toDate(currentValue.tom)) ? previousValue : currentValue;
+    isAfter(toDate(previousValue.tom), toDate(currentValue.tom)) ? previousValue : currentValue
 
 /**
  * Get the last tom date of the last sykmelding period
@@ -64,11 +64,11 @@ export const toLatestTom = (previousValue: Periode, currentValue: Periode): Peri
 export function getSykmeldingEndDate(sykmelding: Sykmelding): string {
     return sykmelding.sykmeldingsperioder.reduce((acc, value) => {
         if (dayjs(value.fom).isAfter(dayjs(acc.fom))) {
-            return value;
+            return value
         }
 
-        return acc;
-    }).tom;
+        return acc
+    }).tom
 }
 
 /**
@@ -77,26 +77,26 @@ export function getSykmeldingEndDate(sykmelding: Sykmelding): string {
  */
 export const getSykmeldingperioderSorted = <Periode extends { fom: string; tom: string }>(
     perioder: readonly Periode[],
-): Periode[] => sortBy(perioder, [(periode) => periode.fom, 'asc'], [(periode) => periode.tom, 'asc']);
+): Periode[] => sortBy(perioder, [(periode) => periode.fom, 'asc'], [(periode) => periode.tom, 'asc'])
 
 /**
  * Get the text representation of the sykmelding length from start date to end date
  * @return {string} The sykmelding length
  */
 export function getReadableSykmeldingLength(sykmelding: Sykmelding): string {
-    const startDate = getSykmeldingStartDate(sykmelding);
-    const endDate = getSykmeldingEndDate(sykmelding);
+    const startDate = getSykmeldingStartDate(sykmelding)
+    const endDate = getSykmeldingEndDate(sykmelding)
 
     if (dayjs(startDate).isSame(endDate)) {
-        return dayjs(startDate).format('D. MMMM YYYY');
+        return dayjs(startDate).format('D. MMMM YYYY')
     }
 
     if (dayjs(startDate).isSame(endDate, 'year')) {
         if (dayjs(startDate).isSame(endDate, 'month')) {
-            return `${dayjs(startDate).format('D.')} - ${dayjs(endDate).format('D. MMMM YYYY')}`;
+            return `${dayjs(startDate).format('D.')} - ${dayjs(endDate).format('D. MMMM YYYY')}`
         }
-        return `${dayjs(startDate).format('D. MMMM')} - ${dayjs(endDate).format('D. MMMM YYYY')}`;
+        return `${dayjs(startDate).format('D. MMMM')} - ${dayjs(endDate).format('D. MMMM YYYY')}`
     }
 
-    return `${dayjs(startDate).format('D. MMMM YYYY')} - ${dayjs(endDate).format('D. MMMM YYYY')}`;
+    return `${dayjs(startDate).format('D. MMMM YYYY')} - ${dayjs(endDate).format('D. MMMM YYYY')}`
 }

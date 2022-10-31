@@ -1,4 +1,4 @@
-import { Arbeidsgiver } from '../../api-models/Arbeidsgiver';
+import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
 
 const arbeidsgivereMock: Arbeidsgiver[] = [
     {
@@ -37,6 +37,6 @@ const arbeidsgivereMock: Arbeidsgiver[] = [
         stillingsprosent: '80',
         aktivtArbeidsforhold: false,
     },
-];
+]
 
-export default arbeidsgivereMock;
+export default arbeidsgivereMock

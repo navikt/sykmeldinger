@@ -1,15 +1,15 @@
-import { Calender } from '@navikt/ds-icons';
+import { Calender } from '@navikt/ds-icons'
 
-import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../../../utils/periodeUtils';
-import { Periode } from '../../../../../fetching/graphql.generated';
-import JaEntry from '../../Layout/JaEntry/JaEntry';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../../../utils/periodeUtils'
+import { Periode } from '../../../../../fetching/graphql.generated'
+import JaEntry from '../../Layout/JaEntry/JaEntry'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './Perioder.module.css';
+import styles from './Perioder.module.css'
 
 interface Props {
-    perioder: Periode[];
+    perioder: Periode[]
 }
 
 function Perioder({ perioder }: Props): JSX.Element {
@@ -43,7 +43,7 @@ function Perioder({ perioder }: Props): JSX.Element {
                 ))}
             </div>
         </div>
-    );
+    )
 }
 
-export default Perioder;
+export default Perioder

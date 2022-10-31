@@ -1,6 +1,6 @@
-import { Behandler } from '../fetching/graphql.generated';
+import { Behandler } from '../fetching/graphql.generated'
 
-import { getBehandlerName } from './behandlerUtils';
+import { getBehandlerName } from './behandlerUtils'
 
 describe('behandlerUtils', () => {
     describe('getName', () => {
@@ -19,10 +19,10 @@ describe('behandlerUtils', () => {
                     land: null,
                 },
                 tlf: null,
-            };
+            }
 
-            expect(getBehandlerName(behandler)).toBe('Ola Robert Normann');
-        });
+            expect(getBehandlerName(behandler)).toBe('Ola Robert Normann')
+        })
 
         it('Gets partial name if mellomnavn is null', () => {
             const behandler: Behandler = {
@@ -39,9 +39,9 @@ describe('behandlerUtils', () => {
                     land: null,
                 },
                 tlf: null,
-            };
+            }
 
-            expect(getBehandlerName(behandler)).toBe('Ola Normann');
-        });
-    });
-});
+            expect(getBehandlerName(behandler)).toBe('Ola Normann')
+        })
+    })
+})

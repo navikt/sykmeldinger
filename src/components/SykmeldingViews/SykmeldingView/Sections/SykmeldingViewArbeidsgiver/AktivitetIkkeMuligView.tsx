@@ -1,19 +1,19 @@
-import { Office2 } from '@navikt/ds-icons';
+import { Office2 } from '@navikt/ds-icons'
 
-import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated';
-import ListEntry from '../../Layout/ListEntry/ListEntry';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { arbeidsrelatertArsakToText } from '../../../../../utils/periodeUtils';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
+import ListEntry from '../../Layout/ListEntry/ListEntry'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { arbeidsrelatertArsakToText } from '../../../../../utils/periodeUtils'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './AktivitetIkkeMuligView.module.css';
+import styles from './AktivitetIkkeMuligView.module.css'
 
 interface AktivitetIkkeMuligViewProps {
-    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode;
+    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
 }
 
 const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewProps): JSX.Element | null => {
-    if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null;
+    if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null
 
     return (
         <div>
@@ -37,7 +37,7 @@ const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewPr
                 </div>
             )}
         </div>
-    );
-};
+    )
+}
 
-export default AktivitetIkkeMuligView;
+export default AktivitetIkkeMuligView

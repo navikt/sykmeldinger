@@ -1,6 +1,6 @@
-import { Heading } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react'
 
-import styles from './Section.module.css';
+import styles from './Section.module.css'
 
 const Section: React.FC<{ title?: string }> = ({ title, children }) => {
     return (
@@ -12,7 +12,7 @@ const Section: React.FC<{ title?: string }> = ({ title, children }) => {
             )}
             {children}
         </div>
-    );
-};
+    )
+}
 
-export default Section;
+export default Section

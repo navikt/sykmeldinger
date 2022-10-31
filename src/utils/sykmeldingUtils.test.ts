@@ -1,4 +1,4 @@
-import { Periode, Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../fetching/graphql.generated';
+import { Periode, Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../fetching/graphql.generated'
 
 import {
     getReadableSykmeldingLength,
@@ -7,8 +7,8 @@ import {
     getSykmeldingStartDate,
     getSykmeldingTitle,
     isActiveSykmelding,
-} from './sykmeldingUtils';
-import { dateSub } from './dateUtils';
+} from './sykmeldingUtils'
+import { dateSub } from './dateUtils'
 
 const minimalSykmelding: Sykmelding = {
     __typename: 'Sykmelding',
@@ -68,7 +68,7 @@ const minimalSykmelding: Sykmelding = {
     prognose: null,
     tiltakArbeidsplassen: null,
     tiltakNAV: null,
-};
+}
 
 const createSykmeldingPeriode = ({ fom, tom }: { fom: string; tom: string }): Periode => ({
     __typename: 'Periode',
@@ -80,7 +80,7 @@ const createSykmeldingPeriode = ({ fom, tom }: { fom: string; tom: string }): Pe
     type: Periodetype.Reisetilskudd,
     aktivitetIkkeMulig: null,
     reisetilskudd: false,
-});
+})
 
 describe('isActiveSykmelding', () => {
     it('should be inactive if status is not APEN', () => {
@@ -92,8 +92,8 @@ describe('isActiveSykmelding', () => {
                     statusEvent: StatusEvent.Avbrutt,
                 },
             }),
-        ).toBe(false);
-    });
+        ).toBe(false)
+    })
 
     it('should be inactive if status is SENDT', () => {
         expect(
@@ -104,8 +104,8 @@ describe('isActiveSykmelding', () => {
                     statusEvent: StatusEvent.Sendt,
                 },
             }),
-        ).toBe(false);
-    });
+        ).toBe(false)
+    })
 
     it('should be NOT be active if status is SENDT with merknad UNDER_BEHANDLING', () => {
         expect(
@@ -117,8 +117,8 @@ describe('isActiveSykmelding', () => {
                 },
                 merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }],
             }),
-        ).toBe(false);
-    });
+        ).toBe(false)
+    })
 
     it('should be active if status is APEN', () => {
         expect(
@@ -129,8 +129,8 @@ describe('isActiveSykmelding', () => {
                     statusEvent: StatusEvent.Apen,
                 },
             }),
-        ).toBe(true);
-    });
+        ).toBe(true)
+    })
 
     it('should be inactive if status is APEN but older than a year', () => {
         expect(
@@ -142,34 +142,34 @@ describe('isActiveSykmelding', () => {
                     statusEvent: StatusEvent.Apen,
                 },
             }),
-        ).toBe(false);
-    });
-});
+        ).toBe(false)
+    })
+})
 
 describe('getSykmeldingTitle', () => {
     it('Gets standard sykmelding title', () => {
         const sykmelding: Sykmelding = {
             ...minimalSykmelding,
-        };
-        expect(getSykmeldingTitle(sykmelding)).toEqual('Sykmelding');
-    });
+        }
+        expect(getSykmeldingTitle(sykmelding)).toEqual('Sykmelding')
+    })
 
     it('Gets papirsykmelding title', () => {
         const sykmelding: Sykmelding = {
             ...minimalSykmelding,
             papirsykmelding: true,
-        };
-        expect(getSykmeldingTitle(sykmelding)).toEqual('Papirsykmelding');
-    });
+        }
+        expect(getSykmeldingTitle(sykmelding)).toEqual('Papirsykmelding')
+    })
 
     it('Gets egenmeldt title', () => {
         const sykmelding: Sykmelding = {
             ...minimalSykmelding,
             egenmeldt: true,
-        };
-        expect(getSykmeldingTitle(sykmelding)).toEqual('Egenmelding');
-    });
-});
+        }
+        expect(getSykmeldingTitle(sykmelding)).toEqual('Egenmelding')
+    })
+})
 
 describe('getSykmeldingStartDate', () => {
     it('Gets fom of the earliest period', () => {
@@ -180,10 +180,10 @@ describe('getSykmeldingStartDate', () => {
                 createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
                 createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
             ],
-        };
-        expect(getSykmeldingStartDate(sykmelding)).toEqual('2021-04-01');
-    });
-});
+        }
+        expect(getSykmeldingStartDate(sykmelding)).toEqual('2021-04-01')
+    })
+})
 
 describe('getSykmeldingEndDate', () => {
     it('Gets tom of the latest period', () => {
@@ -194,10 +194,10 @@ describe('getSykmeldingEndDate', () => {
                 createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
                 createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
             ],
-        };
-        expect(getSykmeldingEndDate(sykmelding)).toEqual('2021-06-03');
-    });
-});
+        }
+        expect(getSykmeldingEndDate(sykmelding)).toEqual('2021-06-03')
+    })
+})
 
 describe('getSykmeldingperioderSorted', () => {
     it('sorts by fom and tom', () => {
@@ -208,25 +208,25 @@ describe('getSykmeldingperioderSorted', () => {
                 createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
                 createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
             ],
-        };
+        }
         expect(
             getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder).map((it) => ({ fom: it.fom, tom: it.tom })),
         ).toEqual([
             { fom: '2021-04-01', tom: '2021-04-03' },
             { fom: '2021-05-01', tom: '2021-05-03' },
             { fom: '2021-06-01', tom: '2021-06-03' },
-        ]);
-    });
-});
+        ])
+    })
+})
 
 describe('getReadableSykmeldingLength', () => {
     it('Lenght is one day', () => {
         const sykmelding: Sykmelding = {
             ...minimalSykmelding,
             sykmeldingsperioder: [createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-01' })],
-        };
-        expect(getReadableSykmeldingLength(sykmelding)).toBe('1. juni 2021');
-    });
+        }
+        expect(getReadableSykmeldingLength(sykmelding)).toBe('1. juni 2021')
+    })
 
     it('Within same year', () => {
         const sykmelding: Sykmelding = {
@@ -236,9 +236,9 @@ describe('getReadableSykmeldingLength', () => {
                 createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
                 createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
             ],
-        };
-        expect(getReadableSykmeldingLength(sykmelding)).toBe('1. april - 3. juni 2021');
-    });
+        }
+        expect(getReadableSykmeldingLength(sykmelding)).toBe('1. april - 3. juni 2021')
+    })
 
     it('Within same year and month', () => {
         const sykmelding: Sykmelding = {
@@ -248,9 +248,9 @@ describe('getReadableSykmeldingLength', () => {
                 createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
                 createSykmeldingPeriode({ fom: '2021-06-06', tom: '2021-06-09' }),
             ],
-        };
-        expect(getReadableSykmeldingLength(sykmelding)).toBe('1. - 24. juni 2021');
-    });
+        }
+        expect(getReadableSykmeldingLength(sykmelding)).toBe('1. - 24. juni 2021')
+    })
 
     it('Different years', () => {
         const sykmelding: Sykmelding = {
@@ -259,7 +259,7 @@ describe('getReadableSykmeldingLength', () => {
                 createSykmeldingPeriode({ fom: '2020-12-25', tom: '2020-12-31' }),
                 createSykmeldingPeriode({ fom: '2021-01-01', tom: '2021-01-06' }),
             ],
-        };
-        expect(getReadableSykmeldingLength(sykmelding)).toBe('25. desember 2020 - 6. januar 2021');
-    });
-});
+        }
+        expect(getReadableSykmeldingLength(sykmelding)).toBe('25. desember 2020 - 6. januar 2021')
+    })
+})

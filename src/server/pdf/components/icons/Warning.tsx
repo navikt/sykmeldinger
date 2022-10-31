@@ -1,9 +1,9 @@
-import { Path, Svg } from '@react-pdf/renderer';
-import React from 'react';
-import { Style } from '@react-pdf/types';
+import { Path, Svg } from '@react-pdf/renderer'
+import React from 'react'
+import { Style } from '@react-pdf/types'
 
 interface Props {
-    style: Style;
+    style: Style
 }
 
 const Warning = ({ style }: Props): JSX.Element => (
@@ -14,6 +14,6 @@ const Warning = ({ style }: Props): JSX.Element => (
             fill="currentColor"
         ></Path>
     </Svg>
-);
+)
 
-export default Warning;
+export default Warning

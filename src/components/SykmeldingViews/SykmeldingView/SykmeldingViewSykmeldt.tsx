@@ -1,22 +1,22 @@
-import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated';
-import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils';
+import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated'
+import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils'
 
-import FlereOpplysninger from './FlereOpplysninger';
-import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav';
-import Perioder from './Sections/SykmeldingViewSykmeldt/Perioder';
-import UtdypendeOpplysninger from './Sections/SykmeldingViewSykmeldt/UtdypendeOpplysninger';
-import SykmeldingenGjelder from './Sections/SykmeldingViewSykmeldt/SykmeldingenGjelder';
-import AnnenInfo from './Sections/SykmeldingViewSykmeldt/AnnenInfo';
-import MedisinskTilstand from './Sections/SykmeldingViewSykmeldt/MedisinskTilstand';
-import AktivitetIkkeMulig from './Sections/SykmeldingViewSykmeldt/AktivitetIkkeMulig';
-import Prognose from './Sections/SykmeldingViewSykmeldt/Prognose';
-import Arbeidsevne from './Sections/SykmeldingViewSykmeldt/Arbeidsevne';
-import MeldingTilArbeidsgiver from './Sections/SykmeldingViewSykmeldt/MeldingTilArbeidsgiver';
-import Tilbakedatering from './Sections/SykmeldingViewSykmeldt/Tilbakedatering';
-import styles from './SykmeldingViewSykmeldt.module.css';
+import FlereOpplysninger from './FlereOpplysninger'
+import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav'
+import Perioder from './Sections/SykmeldingViewSykmeldt/Perioder'
+import UtdypendeOpplysninger from './Sections/SykmeldingViewSykmeldt/UtdypendeOpplysninger'
+import SykmeldingenGjelder from './Sections/SykmeldingViewSykmeldt/SykmeldingenGjelder'
+import AnnenInfo from './Sections/SykmeldingViewSykmeldt/AnnenInfo'
+import MedisinskTilstand from './Sections/SykmeldingViewSykmeldt/MedisinskTilstand'
+import AktivitetIkkeMulig from './Sections/SykmeldingViewSykmeldt/AktivitetIkkeMulig'
+import Prognose from './Sections/SykmeldingViewSykmeldt/Prognose'
+import Arbeidsevne from './Sections/SykmeldingViewSykmeldt/Arbeidsevne'
+import MeldingTilArbeidsgiver from './Sections/SykmeldingViewSykmeldt/MeldingTilArbeidsgiver'
+import Tilbakedatering from './Sections/SykmeldingViewSykmeldt/Tilbakedatering'
+import styles from './SykmeldingViewSykmeldt.module.css'
 
 interface Props {
-    sykmelding: SykmeldingFragment;
+    sykmelding: SykmeldingFragment
 }
 
 function SykmeldingViewSykmeldt({ sykmelding }: Props): JSX.Element {
@@ -50,7 +50,7 @@ function SykmeldingViewSykmeldt({ sykmelding }: Props): JSX.Element {
                 <Tilbakedatering kontaktMedPasient={sykmelding.kontaktMedPasient} />
             </FlereOpplysninger>
         </div>
-    );
+    )
 }
 
-export default SykmeldingViewSykmeldt;
+export default SykmeldingViewSykmeldt

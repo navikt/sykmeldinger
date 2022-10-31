@@ -1,19 +1,19 @@
-import { Historic } from '@navikt/ds-icons';
+import { Historic } from '@navikt/ds-icons'
 
-import { Prognose } from '../../../../../fetching/graphql.generated';
-import { toReadableDate } from '../../../../../utils/dateUtils';
-import JaEntry from '../../Layout/JaEntry/JaEntry';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { Prognose } from '../../../../../fetching/graphql.generated'
+import { toReadableDate } from '../../../../../utils/dateUtils'
+import JaEntry from '../../Layout/JaEntry/JaEntry'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './Prognose.module.css';
+import styles from './Prognose.module.css'
 
 interface Props {
-    prognose?: Prognose | null;
+    prognose?: Prognose | null
 }
 
 function Prognose({ prognose }: Props): JSX.Element | null {
-    if (!prognose) return null;
+    if (!prognose) return null
 
     if (
         !prognose.arbeidsforEtterPeriode &&
@@ -21,7 +21,7 @@ function Prognose({ prognose }: Props): JSX.Element | null {
         !prognose.erIkkeIArbeid &&
         !prognose.hensynArbeidsplassen
     ) {
-        return null;
+        return null
     }
 
     return (
@@ -98,7 +98,7 @@ function Prognose({ prognose }: Props): JSX.Element | null {
                 </div>
             )}
         </div>
-    );
+    )
 }
 
-export default Prognose;
+export default Prognose

@@ -1,14 +1,14 @@
-import cn from 'classnames';
-import { PropsWithChildren } from 'react';
+import cn from 'classnames'
+import { PropsWithChildren } from 'react'
 
-import styles from './QuestionWrapper.module.css';
+import styles from './QuestionWrapper.module.css'
 
 interface QuestionWrapperProps {
-    innrykk?: boolean;
+    innrykk?: boolean
 }
 
 function QuestionWrapper({ children, innrykk = false }: PropsWithChildren<QuestionWrapperProps>): JSX.Element {
-    return <div className={cn(styles.questionWrapper, { [styles.innrykk]: innrykk })}>{children}</div>;
+    return <div className={cn(styles.questionWrapper, { [styles.innrykk]: innrykk })}>{children}</div>
 }
 
-export default QuestionWrapper;
+export default QuestionWrapper

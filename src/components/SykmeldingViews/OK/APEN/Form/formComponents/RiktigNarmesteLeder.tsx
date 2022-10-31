@@ -1,34 +1,34 @@
-import React, { useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import React, { useEffect } from 'react'
+import { useFormContext, Controller } from 'react-hook-form'
+import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 
-import { FormShape, JaEllerNeiType } from '../Form';
-import { NaermesteLederFragment } from '../../../../../../fetching/graphql.generated';
-import QuestionWrapper from '../layout/QuestionWrapper';
-import Spacing from '../../../../../Spacing/Spacing';
+import { FormShape, JaEllerNeiType } from '../Form'
+import { NaermesteLederFragment } from '../../../../../../fetching/graphql.generated'
+import QuestionWrapper from '../layout/QuestionWrapper'
+import Spacing from '../../../../../Spacing/Spacing'
 
 interface RiktigNarmesteLederProps {
-    naermesteLeder: NaermesteLederFragment;
+    naermesteLeder: NaermesteLederFragment
 }
 
-const fieldName = 'riktigNarmesteLeder';
+const fieldName = 'riktigNarmesteLeder'
 
 function RiktigNarmesteLeder({ naermesteLeder }: RiktigNarmesteLederProps): JSX.Element {
-    const { control, watch, register, unregister, setValue } = useFormContext<FormShape>();
-    const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`;
-    const watchRiktigNarmesteLeder = watch(fieldName);
+    const { control, watch, register, unregister, setValue } = useFormContext<FormShape>()
+    const sporsmaltekst = `Er det ${naermesteLeder.navn} som skal følge deg opp på jobben mens du er syk?`
+    const watchRiktigNarmesteLeder = watch(fieldName)
 
     useEffect(() => {
-        register(`${fieldName}.sporsmaltekst`, { value: sporsmaltekst });
-        register(`${fieldName}.svartekster`, { value: JSON.stringify(JaEllerNeiType) });
+        register(`${fieldName}.sporsmaltekst`, { value: sporsmaltekst })
+        register(`${fieldName}.svartekster`, { value: JSON.stringify(JaEllerNeiType) })
         return () =>
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [register, unregister, sporsmaltekst]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+    }, [register, unregister, sporsmaltekst])
 
     // Reset the answer if the prop changes
     useEffect(() => {
-        setValue(`${fieldName}.svar`, null);
-    }, [naermesteLeder, setValue]);
+        setValue(`${fieldName}.svar`, null)
+    }, [naermesteLeder, setValue])
 
     return (
         <QuestionWrapper>
@@ -79,7 +79,7 @@ function RiktigNarmesteLeder({ naermesteLeder }: RiktigNarmesteLederProps): JSX.
                 </Spacing>
             )}
         </QuestionWrapper>
-    );
+    )
 }
 
-export default RiktigNarmesteLeder;
+export default RiktigNarmesteLeder

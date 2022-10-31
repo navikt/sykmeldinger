@@ -1,32 +1,32 @@
-import React, { useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import { Radio, RadioGroup } from '@navikt/ds-react';
+import React, { useEffect } from 'react'
+import { useFormContext, Controller } from 'react-hook-form'
+import { Radio, RadioGroup } from '@navikt/ds-react'
 
-import { FormShape, JaEllerNeiType } from '../Form';
-import QuestionWrapper from '../layout/QuestionWrapper';
-import { useAmplitude } from '../../../../../../amplitude/amplitude';
+import { FormShape, JaEllerNeiType } from '../Form'
+import QuestionWrapper from '../layout/QuestionWrapper'
+import { useAmplitude } from '../../../../../../amplitude/amplitude'
 
-import UriktigeOpplysninger from './UriktigeOpplysninger';
+import UriktigeOpplysninger from './UriktigeOpplysninger'
 
-const fieldName = 'erOpplysningeneRiktige';
-const sporsmaltekst = 'Stemmer opplysningene?';
+const fieldName = 'erOpplysningeneRiktige'
+const sporsmaltekst = 'Stemmer opplysningene?'
 
 function ErOpplysningeneRiktige(): JSX.Element {
-    const logEvent = useAmplitude();
-    const { register, unregister, control, watch } = useFormContext<FormShape>();
-    const watchErOpplysningeneRiktige = watch(fieldName);
+    const logEvent = useAmplitude()
+    const { register, unregister, control, watch } = useFormContext<FormShape>()
+    const watchErOpplysningeneRiktige = watch(fieldName)
 
     useEffect(() => {
         register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
-        });
+        })
         register(`${fieldName}.svartekster`, {
             value: JSON.stringify(JaEllerNeiType),
-        });
+        })
 
         return () =>
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [register, unregister]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+    }, [register, unregister])
 
     return (
         <QuestionWrapper>
@@ -44,8 +44,8 @@ function ErOpplysningeneRiktige(): JSX.Element {
                             logEvent(
                                 { eventName: 'skjema startet', data: { skjemanavn: 'åpen sykmelding' } },
                                 { 'stemmer opplysningene': value },
-                            );
-                            field.onChange(value);
+                            )
+                            field.onChange(value)
                         }}
                         error={fieldState.error?.message}
                     >
@@ -57,7 +57,7 @@ function ErOpplysningeneRiktige(): JSX.Element {
 
             {watchErOpplysningeneRiktige?.svar === 'NEI' && <UriktigeOpplysninger />}
         </QuestionWrapper>
-    );
+    )
 }
 
-export default ErOpplysningeneRiktige;
+export default ErOpplysningeneRiktige

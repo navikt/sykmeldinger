@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { toReadableDate } from '../../../../utils/dateUtils';
-import { Sykmelding } from '../../../api-models/sykmelding/Sykmelding';
-import { sykmeldingStatusMarginBottom } from '../constants';
-import InformationFilled from '../icons/InformationFilled';
+import { toReadableDate } from '../../../../utils/dateUtils'
+import { Sykmelding } from '../../../api-models/sykmelding/Sykmelding'
+import { sykmeldingStatusMarginBottom } from '../constants'
+import InformationFilled from '../icons/InformationFilled'
 
 interface Props {
-    sykmelding: Sykmelding;
+    sykmelding: Sykmelding
 }
 
 const styles = StyleSheet.create({
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
     icon: { marginRight: 8 },
     title: { fontFamily: 'Helvetica-Bold', fontSize: 19 },
-});
+})
 
 const SykmeldingStatusUtgatt = ({ sykmelding }: Props): JSX.Element => {
     return (
@@ -29,7 +29,7 @@ const SykmeldingStatusUtgatt = ({ sykmelding }: Props): JSX.Element => {
                 sykmelding.sykmeldingStatus.timestamp,
             )}`}</Text>
         </View>
-    );
-};
+    )
+}
 
-export default SykmeldingStatusUtgatt;
+export default SykmeldingStatusUtgatt

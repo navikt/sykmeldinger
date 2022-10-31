@@ -5,6 +5,6 @@ const SladdSvg = (): JSX.Element => (
         </pattern>
         <rect x="0" y="0" width="100%" height="100%" fill="url(#diagonalHatch)" />
     </svg>
-);
+)
 
-export default SladdSvg;
+export default SladdSvg

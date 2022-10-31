@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { AnnenFraverGrunn, MedisinskVurdering } from '../../../../../fetching/graphql.generated';
+import { AnnenFraverGrunn, MedisinskVurdering } from '../../../../../fetching/graphql.generated'
 
-import MedisinskTilstand from './MedisinskTilstand';
+import MedisinskTilstand from './MedisinskTilstand'
 
 describe('MedisinskTilstand', () => {
     it('Renders annenFraversArsak if it exits', () => {
@@ -18,15 +18,15 @@ describe('MedisinskTilstand', () => {
             svangerskap: false,
             yrkesskade: false,
             yrkesskadeDato: null,
-        };
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
+        }
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />)
 
-        expect(screen.getByText('Annen lovfestet fraværsgrunn')).toBeInTheDocument();
-        expect(screen.getByText('Når vedkommende er donor eller er under vurdering som donor')).toBeInTheDocument();
+        expect(screen.getByText('Annen lovfestet fraværsgrunn')).toBeInTheDocument()
+        expect(screen.getByText('Når vedkommende er donor eller er under vurdering som donor')).toBeInTheDocument()
 
-        expect(screen.getByText('Beskrivelse av fraværsgrunn')).toBeInTheDocument();
-        expect(screen.getByText('Dette er en beskrivelse')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Beskrivelse av fraværsgrunn')).toBeInTheDocument()
+        expect(screen.getByText('Dette er en beskrivelse')).toBeInTheDocument()
+    })
 
     it('Renders svangerskapsrelatert if it exits', () => {
         const medisinskVurdering: MedisinskVurdering = {
@@ -37,11 +37,11 @@ describe('MedisinskTilstand', () => {
             yrkesskade: false,
             yrkesskadeDato: null,
             annenFraversArsak: null,
-        };
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
+        }
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />)
 
-        expect(screen.getByText('Er sykdommen svangerskapsrelatert?')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Er sykdommen svangerskapsrelatert?')).toBeInTheDocument()
+    })
 
     it('Renders yrkesskade if it exits', () => {
         const medisinskVurdering: MedisinskVurdering = {
@@ -52,14 +52,14 @@ describe('MedisinskTilstand', () => {
             yrkesskade: true,
             yrkesskadeDato: '2020-04-01',
             annenFraversArsak: null,
-        };
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
+        }
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />)
 
-        expect(screen.getByText('Kan sykdommen skyldes en yrkesskade/yrkessykdom?')).toBeInTheDocument();
+        expect(screen.getByText('Kan sykdommen skyldes en yrkesskade/yrkessykdom?')).toBeInTheDocument()
 
-        expect(screen.getByText('Skadedato')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2020')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Skadedato')).toBeInTheDocument()
+        expect(screen.getByText('1. april 2020')).toBeInTheDocument()
+    })
 
     it('should render Bidiagnose', () => {
         const medisinskVurdering: MedisinskVurdering = {
@@ -81,11 +81,11 @@ describe('MedisinskTilstand', () => {
             svangerskap: false,
             yrkesskade: false,
             yrkesskadeDato: '',
-        };
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
-        expect(screen.getByText('Bidiagnose')).toBeInTheDocument();
-        expect(screen.getByText('Vondt i foten')).toBeInTheDocument();
-    });
+        }
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />)
+        expect(screen.getByText('Bidiagnose')).toBeInTheDocument()
+        expect(screen.getByText('Vondt i foten')).toBeInTheDocument()
+    })
 
     it('should not render Bidiagnose if tekst is missing', () => {
         const medisinskVurdering: MedisinskVurdering = {
@@ -100,8 +100,8 @@ describe('MedisinskTilstand', () => {
             svangerskap: false,
             yrkesskade: false,
             yrkesskadeDato: '',
-        };
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />);
-        expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument();
-    });
-});
+        }
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} />)
+        expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument()
+    })
+})

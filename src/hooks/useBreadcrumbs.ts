@@ -1,19 +1,19 @@
-import { ParsedUrlQuery } from 'querystring';
+import { ParsedUrlQuery } from 'querystring'
 
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
-import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
-import { useRouter } from 'next/router';
-import { logger } from '@navikt/next-logger';
+import { DependencyList, useCallback, useEffect, useRef } from 'react'
+import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler'
+import { useRouter } from 'next/router'
+import { logger } from '@navikt/next-logger'
 
-import { Sykmelding } from '../fetching/graphql.generated';
-import { getSykmeldingTitle } from '../utils/sykmeldingUtils';
-import { getPublicEnv } from '../utils/env';
+import { Sykmelding } from '../fetching/graphql.generated'
+import { getSykmeldingTitle } from '../utils/sykmeldingUtils'
+import { getPublicEnv } from '../utils/env'
 
-type Breadcrumb = { title: string; url: string };
-type LastCrumb = { title: string };
-type CompleteCrumb = Parameters<typeof setBreadcrumbs>[0][0];
+type Breadcrumb = { title: string; url: string }
+type LastCrumb = { title: string }
+type CompleteCrumb = Parameters<typeof setBreadcrumbs>[0][0]
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 const baseCrumb: CompleteCrumb[] = [
     {
@@ -31,7 +31,7 @@ const baseCrumb: CompleteCrumb[] = [
         url: publicEnv.publicPath || '/',
         handleInApp: true,
     },
-];
+]
 
 /**
  * The last crumb does not need to provide a URL, since it's only used to display the text for the "active" crumb.
@@ -43,30 +43,30 @@ function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): C
             url: 'url' in it ? `${publicEnv.publicPath}${it.url}` : '/',
             handleInApp: true,
         }),
-    );
+    )
 
-    return [...baseCrumb, ...prefixedCrumbs];
+    return [...baseCrumb, ...prefixedCrumbs]
 }
 
 export function useUpdateBreadcrumbs(makeCrumbs: () => [...Breadcrumb[], LastCrumb] | [], deps?: DependencyList): void {
-    const makeCrumbsRef = useRef(makeCrumbs);
+    const makeCrumbsRef = useRef(makeCrumbs)
     useEffect(() => {
-        makeCrumbsRef.current = makeCrumbs;
-    }, [makeCrumbs]);
+        makeCrumbsRef.current = makeCrumbs
+    }, [makeCrumbs])
 
     useEffect(() => {
-        (async () => {
+        ;(async () => {
             try {
-                const prefixedCrumbs = createCompleteCrumbs(makeCrumbsRef.current());
-                await setBreadcrumbs(prefixedCrumbs);
+                const prefixedCrumbs = createCompleteCrumbs(makeCrumbsRef.current())
+                await setBreadcrumbs(prefixedCrumbs)
             } catch (e) {
-                logger.error(`klarte ikke å oppdatere breadcrumbs på ${location.pathname}`);
-                logger.error(e);
+                logger.error(`klarte ikke å oppdatere breadcrumbs på ${location.pathname}`)
+                logger.error(e)
             }
-        })();
+        })()
         // Custom hook that passes deps array to useEffect, linting will be done where useUpdateBreadcrumbs is used
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, deps);
+    }, deps)
 }
 
 /**
@@ -74,25 +74,25 @@ export function useUpdateBreadcrumbs(makeCrumbs: () => [...Breadcrumb[], LastCru
  * instead to avoid full page loads on breadcrumb clicks
  */
 export function useHandleDecoratorClicks(): void {
-    const router = useRouter();
+    const router = useRouter()
     const callback = useCallback(
         (breadcrumb: Breadcrumb) => {
             // router.push automatically pre-pends the base route of the application
-            router.push(breadcrumb.url.replace(publicEnv.publicPath || '', '') || '/');
+            router.push(breadcrumb.url.replace(publicEnv.publicPath || '', '') || '/')
         },
         [router],
-    );
+    )
 
     useEffect(() => {
-        onBreadcrumbClick(callback);
-    });
+        onBreadcrumbClick(callback)
+    })
 }
 
 export function createKvitteringBreadcrumbs(
     sykmeldingId: string,
     sykmelding: Sykmelding | undefined,
 ): [Breadcrumb, LastCrumb] {
-    return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Kvittering' }];
+    return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Kvittering' }]
 }
 
 /**
@@ -123,11 +123,11 @@ export function createInitialServerSideBreadcrumbs(
         case SsrPathVariants.Root:
         case SsrPathVariants.NotFound:
         case SsrPathVariants.Sykmelding:
-            return createCompleteCrumbs([]);
+            return createCompleteCrumbs([])
         case SsrPathVariants.Kvittering:
-            return createCompleteCrumbs(createKvitteringBreadcrumbs(query.sykmeldingId as string, undefined));
+            return createCompleteCrumbs(createKvitteringBreadcrumbs(query.sykmeldingId as string, undefined))
         default:
-            logger.error(`Unknown initial path (${pathname}), defaulting to just base breadcrumb`);
-            return createCompleteCrumbs([]);
+            logger.error(`Unknown initial path (${pathname}), defaulting to just base breadcrumb`)
+            return createCompleteCrumbs([])
     }
 }

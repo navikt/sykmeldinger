@@ -1,8 +1,8 @@
-import { Path, Svg } from '@react-pdf/renderer';
-import { Style } from '@react-pdf/types';
+import { Path, Svg } from '@react-pdf/renderer'
+import { Style } from '@react-pdf/types'
 
 interface Props {
-    style: Style;
+    style: Style
 }
 
 const NavLogoRedSvg = ({ style }: Props): JSX.Element => (
@@ -13,6 +13,6 @@ const NavLogoRedSvg = ({ style }: Props): JSX.Element => (
             fill="#DE2E2E"
         />
     </Svg>
-);
+)
 
-export default NavLogoRedSvg;
+export default NavLogoRedSvg

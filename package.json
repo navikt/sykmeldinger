@@ -61,7 +61,7 @@
         "@graphql-codegen/typed-document-node": "^2.3.5",
         "@graphql-codegen/typescript-operations": "^2.5.5",
         "@graphql-codegen/typescript-resolvers": "^2.7.5",
-        "@navikt/eslint-config-teamsykmelding": "^0.21.0",
+        "@navikt/eslint-config-teamsykmelding": "^1.2.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^12.1.5",
         "@testing-library/react-hooks": "^8.0.1",

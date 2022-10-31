@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Prognose } from '../../api-models/sykmelding/Prognose';
+import { Prognose } from '../../api-models/sykmelding/Prognose'
 
-import { Section } from './Section';
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
-import Historic from './icons/Historic';
+import { Section } from './Section'
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
+import Historic from './icons/Historic'
 
 interface Props {
-    prognose?: Prognose | null;
+    prognose?: Prognose | null
 }
 
 const styles = StyleSheet.create({
@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
         marginBottom: contentMarginBottom,
     },
     view: { marginBottom: 12 },
-});
+})
 
 const Prognose = ({ prognose }: Props): JSX.Element | null => {
-    if (!prognose) return null;
-    if (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen) return null;
+    if (!prognose) return null
+    if (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen) return null
 
     return (
         <Section title="Prognose" Icon={Historic}>
@@ -46,7 +46,7 @@ const Prognose = ({ prognose }: Props): JSX.Element | null => {
                 )}
             </View>
         </Section>
-    );
-};
+    )
+}
 
-export default Prognose;
+export default Prognose

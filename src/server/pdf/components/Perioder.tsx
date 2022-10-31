@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Periode } from '../../api-models/sykmelding/Periode';
-import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../utils/periodeUtils';
+import { Periode } from '../../api-models/sykmelding/Periode'
+import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../utils/periodeUtils'
 
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
-import Calender from './icons/Calender';
-import { Section } from './Section';
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
+import Calender from './icons/Calender'
+import { Section } from './Section'
 
 interface Props {
-    perioder: Periode[];
+    perioder: Periode[]
 }
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         marginBottom: contentMarginBottom,
     },
     view: { marginBottom: 8 },
-});
+})
 
 const Perioder = ({ perioder }: Props): JSX.Element | null => {
     return (
@@ -53,7 +53,7 @@ const Perioder = ({ perioder }: Props): JSX.Element | null => {
                 </View>
             ))}
         </Section>
-    );
-};
+    )
+}
 
-export default Perioder;
+export default Perioder

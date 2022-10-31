@@ -1,16 +1,16 @@
-import { ShakeHands } from '@navikt/ds-icons';
+import { ShakeHands } from '@navikt/ds-icons'
 
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './ArbeidsevneView.module.css';
+import styles from './ArbeidsevneView.module.css'
 
 interface ArbeidsevneViewProps {
-    tiltakArbeidsplassen?: string | null;
+    tiltakArbeidsplassen?: string | null
 }
 
 const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({ tiltakArbeidsplassen }) => {
-    if (!tiltakArbeidsplassen) return null;
+    if (!tiltakArbeidsplassen) return null
 
     return (
         <div>
@@ -23,7 +23,7 @@ const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({ tiltakArbeidsplassen 
                 />
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ArbeidsevneView;
+export default ArbeidsevneView

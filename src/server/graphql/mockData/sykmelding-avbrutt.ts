@@ -1,6 +1,6 @@
-import { dateAdd, dateSub } from '../../../utils/dateUtils';
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { AnnenFraverGrunn, Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated';
+import { dateAdd, dateSub } from '../../../utils/dateUtils'
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { AnnenFraverGrunn, Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated'
 
 export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months: 6 })): Sykmelding {
     return {
@@ -106,5 +106,5 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
-    };
+    }
 }

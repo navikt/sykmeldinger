@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { KontaktMedPasient } from '../../../../../fetching/graphql.generated';
+import { KontaktMedPasient } from '../../../../../fetching/graphql.generated'
 
-import Tilbakedatering from './Tilbakedatering';
+import Tilbakedatering from './Tilbakedatering'
 
 describe('Tilbakedatering', () => {
     it('Renders kontaktdato', () => {
@@ -10,34 +10,34 @@ describe('Tilbakedatering', () => {
             __typename: 'KontaktMedPasient',
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: null,
-        };
-        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />);
+        }
+        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />)
 
-        expect(screen.getByText('Tilbakedatering')).toBeInTheDocument();
-        expect(screen.getByText('Dato for dokumenterbar kontakt med pasienten')).toBeInTheDocument();
-        expect(screen.getByText('1. april 2021')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Tilbakedatering')).toBeInTheDocument()
+        expect(screen.getByText('Dato for dokumenterbar kontakt med pasienten')).toBeInTheDocument()
+        expect(screen.getByText('1. april 2021')).toBeInTheDocument()
+    })
 
     it('Renders begrunnelse', () => {
         const kontaktMedPasient: KontaktMedPasient = {
             __typename: 'KontaktMedPasient',
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: 'han var kjempesyk',
-        };
-        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />);
+        }
+        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />)
 
-        expect(screen.getByText('Begrunnelse for tilbakedatering')).toBeInTheDocument();
-        expect(screen.getByText('han var kjempesyk')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Begrunnelse for tilbakedatering')).toBeInTheDocument()
+        expect(screen.getByText('han var kjempesyk')).toBeInTheDocument()
+    })
 
     it('should not render title if kontaktDato and begrunnelseIkkeKontakt', () => {
         const kontaktMedPasient: KontaktMedPasient = {
             __typename: 'KontaktMedPasient',
             kontaktDato: null,
             begrunnelseIkkeKontakt: null,
-        };
-        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />);
+        }
+        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />)
 
-        expect(screen.queryByText('Begrunnelse for tilbakedatering')).not.toBeInTheDocument();
-    });
-});
+        expect(screen.queryByText('Begrunnelse for tilbakedatering')).not.toBeInTheDocument()
+    })
+})

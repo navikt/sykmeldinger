@@ -1,34 +1,34 @@
-import { BodyLong, Button, GuidePanel } from '@navikt/ds-react';
-import Link from 'next/link';
-import React, { useEffect } from 'react';
-import cn from 'classnames';
+import { BodyLong, Button, GuidePanel } from '@navikt/ds-react'
+import Link from 'next/link'
+import React, { useEffect } from 'react'
+import cn from 'classnames'
 
-import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId';
-import { pluralize } from '../../utils/stringUtils';
-import { getPublicEnv } from '../../utils/env';
-import { useAmplitude } from '../../amplitude/amplitude';
+import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId'
+import { pluralize } from '../../utils/stringUtils'
+import { getPublicEnv } from '../../utils/env'
+import { useAmplitude } from '../../amplitude/amplitude'
 
-import styles from './HintToNextOlderSykmelding.module.css';
+import styles from './HintToNextOlderSykmelding.module.css'
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 function HintToNextOlderSykmelding(): JSX.Element | null {
-    const logEvent = useAmplitude();
-    const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger();
-    const dontShowYet = isLoading || error || unsentSykmeldinger == null;
-    const isDone = unsentSykmeldinger?.length === 0 ?? false;
+    const logEvent = useAmplitude()
+    const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
+    const dontShowYet = isLoading || error || unsentSykmeldinger == null
+    const isDone = unsentSykmeldinger?.length === 0 ?? false
 
     useEffect(() => {
-        if (dontShowYet) return;
+        if (dontShowYet) return
 
         if (isDone) {
-            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'ingen flere sykmeldinger å sende inn' } });
+            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'ingen flere sykmeldinger å sende inn' } })
         } else {
-            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'hint til neste eldre sykmelding' } });
+            logEvent({ eventName: 'guidepanel vist', data: { komponent: 'hint til neste eldre sykmelding' } })
         }
-    }, [dontShowYet, isDone, logEvent]);
+    }, [dontShowYet, isDone, logEvent])
 
-    if (dontShowYet) return null;
+    if (dontShowYet) return null
     if (isDone) {
         return (
             <div className={cn(styles.root, styles.ferdigButtonWrapper)}>
@@ -45,10 +45,10 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
                     Ferdig
                 </Button>
             </div>
-        );
+        )
     }
 
-    const earliest = unsentSykmeldinger.reduce(toEarliestSykmelding);
+    const earliest = unsentSykmeldinger.reduce(toEarliestSykmelding)
 
     return (
         <GuidePanel poster className={styles.root}>
@@ -70,7 +70,7 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
                 </Button>
             </Link>
         </GuidePanel>
-    );
+    )
 }
 
-export default HintToNextOlderSykmelding;
+export default HintToNextOlderSykmelding

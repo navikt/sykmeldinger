@@ -1,6 +1,6 @@
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { dateAdd, dateSub } from '../../../utils/dateUtils';
-import { AnnenFraverGrunn, Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { dateAdd, dateSub } from '../../../utils/dateUtils'
+import { AnnenFraverGrunn, Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated'
 
 export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { months: 2 })): Sykmelding {
     return {
@@ -106,5 +106,5 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
-    };
+    }
 }

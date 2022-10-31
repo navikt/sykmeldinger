@@ -1,27 +1,27 @@
-import React, { useContext } from 'react';
-import { Alert, Button, Loader } from '@navikt/ds-react';
-import { useForm, FormProvider } from 'react-hook-form';
+import React, { useContext } from 'react'
+import { Alert, Button, Loader } from '@navikt/ds-react'
+import { useForm, FormProvider } from 'react-hook-form'
 
-import useExtraFormData from '../../../../../hooks/useExtraFormData';
-import Spinner from '../../../../Spinner/Spinner';
-import { AvbrytContext } from '../AvbrytContext';
-import Spacing from '../../../../Spacing/Spacing';
-import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam';
-import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils';
-import { Periodetype, SykmeldingFragment } from '../../../../../fetching/graphql.generated';
-import { useSubmitSykmelding } from '../../../../../hooks/useMutations';
-import { useAmplitude, useLogAmplitudeEvent } from '../../../../../amplitude/amplitude';
-import SykmeldingArbeidsgiverContainer from '../../../SykmeldingView/SykmeldingArbeidsgiverContainer';
+import useExtraFormData from '../../../../../hooks/useExtraFormData'
+import Spinner from '../../../../Spinner/Spinner'
+import { AvbrytContext } from '../AvbrytContext'
+import Spacing from '../../../../Spacing/Spacing'
+import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam'
+import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
+import { Periodetype, SykmeldingFragment } from '../../../../../fetching/graphql.generated'
+import { useSubmitSykmelding } from '../../../../../hooks/useMutations'
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../../amplitude/amplitude'
+import SykmeldingArbeidsgiverContainer from '../../../SykmeldingView/SykmeldingArbeidsgiverContainer'
 
-import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige';
-import FeiloppsummeringContainer from './FeiloppsummeringContainer';
-import Arbeidssituasjon from './formComponents/Arbeidssituasjon';
-import styles from './Form.module.css';
-import VeilederSenderSykmeldingen from './formComponents/VeilederSenderSykmeldingen';
+import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige'
+import FeiloppsummeringContainer from './FeiloppsummeringContainer'
+import Arbeidssituasjon from './formComponents/Arbeidssituasjon'
+import styles from './Form.module.css'
+import VeilederSenderSykmeldingen from './formComponents/VeilederSenderSykmeldingen'
 
 export interface Egenmeldingsperiode {
-    fom: string | null;
-    tom: string | null;
+    fom: string | null
+    tom: string | null
 }
 
 export enum UriktigeOpplysningerType {
@@ -48,63 +48,63 @@ export enum JaEllerNeiType {
 }
 
 interface SporsmalSvar<Value> {
-    sporsmaltekst?: string;
-    svartekster?: string;
-    svar?: Value;
+    sporsmaltekst?: string
+    svartekster?: string
+    svar?: Value
 }
 
 export interface FormShape {
-    erOpplysningeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
-    uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>;
-    arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType | null>;
-    arbeidsgiverOrgnummer?: SporsmalSvar<string | null>;
-    riktigNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
-    harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
-    egenmeldingsperioder?: SporsmalSvar<Egenmeldingsperiode[]>;
-    harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType | null>;
+    erOpplysningeneRiktige?: SporsmalSvar<keyof typeof JaEllerNeiType | null>
+    uriktigeOpplysninger?: SporsmalSvar<(keyof typeof UriktigeOpplysningerType)[]>
+    arbeidssituasjon?: SporsmalSvar<keyof typeof ArbeidssituasjonType | null>
+    arbeidsgiverOrgnummer?: SporsmalSvar<string | null>
+    riktigNarmesteLeder?: SporsmalSvar<keyof typeof JaEllerNeiType | null>
+    harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType | null>
+    egenmeldingsperioder?: SporsmalSvar<Egenmeldingsperiode[]>
+    harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType | null>
 }
 
 interface FormProps {
-    sykmelding: SykmeldingFragment;
+    sykmelding: SykmeldingFragment
 }
 
 function Form({ sykmelding }: FormProps): JSX.Element {
-    const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding';
+    const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding'
 
-    const logEvent = useAmplitude();
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
+    const logEvent = useAmplitude()
+    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
-    const sykmeldingId = useGetSykmeldingIdParam();
+    const sykmeldingId = useGetSykmeldingIdParam()
 
-    const { data, error, loading } = useExtraFormData(sykmeldingId);
+    const { data, error, loading } = useExtraFormData(sykmeldingId)
     const [{ loading: fetchingSend, error: errorSend }, send] = useSubmitSykmelding(
         sykmeldingId,
         () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
         () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
-    );
+    )
 
-    const formMethods = useForm<FormShape>({ shouldFocusError: false });
+    const formMethods = useForm<FormShape>({ shouldFocusError: false })
     const {
         handleSubmit,
         watch,
         formState: { errors },
-    } = formMethods;
+    } = formMethods
 
-    const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER';
+    const erArbeidstaker = watch('arbeidssituasjon')?.svar === 'ARBEIDSTAKER'
     const erArbeidstakerMedStrengtFortroligAdressse =
-        erArbeidstaker && data?.brukerinformasjon?.strengtFortroligAdresse === true;
-    const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar;
-    const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige');
-    const watchUriktigeOpplysninger = watch('uriktigeOpplysninger');
+        erArbeidstaker && data?.brukerinformasjon?.strengtFortroligAdresse === true
+    const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar
+    const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige')
+    const watchUriktigeOpplysninger = watch('uriktigeOpplysninger')
 
-    const { maAvbryte } = useContext(AvbrytContext);
+    const { maAvbryte } = useContext(AvbrytContext)
 
     if (loading) {
         return (
             <Spacing amount="large">
                 <Spinner headline="Henter arbeidsforhold" />
             </Spacing>
-        );
+        )
     }
 
     if (error || data?.brukerinformasjon == null || data?.sykmeldingUtenforVentetid == null) {
@@ -115,14 +115,14 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                     Vennligst prøv igjen senere.
                 </Alert>
             </Spacing>
-        );
+        )
     }
 
     function onSubmit(data: FormShape): void {
         if (data?.arbeidssituasjon?.svar === 'PERMITTERT') {
-            data.arbeidssituasjon.svar = 'ARBEIDSLEDIG';
+            data.arbeidssituasjon.svar = 'ARBEIDSLEDIG'
         }
-        send(data);
+        send(data)
     }
 
     return (
@@ -178,7 +178,7 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                 )}
             </form>
         </FormProvider>
-    );
+    )
 }
 
 function shouldArbeidssituasjonShow(
@@ -188,14 +188,14 @@ function shouldArbeidssituasjonShow(
 ): boolean {
     switch (erOpplysningeneRiktige?.svar) {
         case 'JA':
-            return true;
+            return true
         case 'NEI':
             if (uriktigeOpplysninger?.svar && uriktigeOpplysninger?.svar?.length > 0 && !maAvbryte) {
-                return true;
+                return true
             }
         default:
-            return false;
+            return false
     }
 }
 
-export default Form;
+export default Form

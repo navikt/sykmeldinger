@@ -1,8 +1,8 @@
-import { Accordion, BodyLong, Heading, Link } from '@navikt/ds-react';
+import { Accordion, BodyLong, Heading, Link } from '@navikt/ds-react'
 
-import { getPublicEnv } from '../../utils/env';
+import { getPublicEnv } from '../../utils/env'
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 const InfoOmDigitalSykmelding = (): JSX.Element => (
     <Accordion>
@@ -47,6 +47,6 @@ const InfoOmDigitalSykmelding = (): JSX.Element => (
             </Accordion.Content>
         </Accordion.Item>
     </Accordion>
-);
+)
 
-export default InfoOmDigitalSykmelding;
+export default InfoOmDigitalSykmelding

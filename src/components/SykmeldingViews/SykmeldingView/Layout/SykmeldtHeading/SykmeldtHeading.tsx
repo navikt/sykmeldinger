@@ -1,12 +1,12 @@
-import React from 'react';
-import { Heading } from '@navikt/ds-react';
-import { Calender } from '@navikt/ds-icons';
+import React from 'react'
+import { Heading } from '@navikt/ds-react'
+import { Calender } from '@navikt/ds-icons'
 
-import styles from './SykmeldtHeading.module.css';
+import styles from './SykmeldtHeading.module.css'
 
 interface Props {
-    title: string;
-    Icon: typeof Calender;
+    title: string
+    Icon: typeof Calender
 }
 
 export function SykmeldtHeading({ title, Icon }: Props): JSX.Element {
@@ -17,5 +17,5 @@ export function SykmeldtHeading({ title, Icon }: Props): JSX.Element {
                 {title}
             </Heading>
         </div>
-    );
+    )
 }

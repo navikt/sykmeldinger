@@ -1,57 +1,57 @@
-import React from 'react';
-import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
-import { Components, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr';
+import React from 'react'
+import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document'
+import { Components, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 
-import { getPublicEnv } from '../utils/env';
-import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs';
+import { getPublicEnv } from '../utils/env'
+import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs'
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 // The 'head'-field of the document initialProps contains data from <head> (meta-tags etc)
 const getDocumentParameter = (initialProps: DocumentInitialProps, name: string): string => {
-    return initialProps.head?.find((element) => element?.props?.name === name)?.props?.content;
-};
+    return initialProps.head?.find((element) => element?.props?.name === name)?.props?.content
+}
 
 function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
     if (ctx.pathname === '/500' || ctx.pathname === '/404' || process.env.NODE_ENV === 'development') {
         // Blir statisk kompilert i GHA så må hentes defra
-        return 'prod';
+        return 'prod'
     }
 
     switch (publicEnv.RUNTIME_ENVIRONMENT) {
         case 'local':
         case 'test':
         case 'dev':
-            return 'dev';
+            return 'dev'
         case 'labs':
         case 'production':
-            return 'prod';
+            return 'prod'
     }
 }
 
 interface Props {
-    Decorator: Components;
-    language: string;
+    Decorator: Components
+    language: string
 }
 
 class MyDocument extends Document<Props> {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & Props> {
-        const initialProps = await Document.getInitialProps(ctx);
+        const initialProps = await Document.getInitialProps(ctx)
 
         const Decorator = await fetchDecoratorReact({
             env: createDecoratorEnv(ctx),
             chatbot: true,
             context: 'privatperson',
             breadcrumbs: createInitialServerSideBreadcrumbs(ctx.pathname, ctx.query),
-        });
+        })
 
-        const language = getDocumentParameter(initialProps, 'lang');
+        const language = getDocumentParameter(initialProps, 'lang')
 
-        return { ...initialProps, Decorator, language };
+        return { ...initialProps, Decorator, language }
     }
 
     render(): JSX.Element {
-        const { Decorator, language } = this.props;
+        const { Decorator, language } = this.props
 
         return (
             <Html lang={language || 'no'}>
@@ -66,8 +66,8 @@ class MyDocument extends Document<Props> {
                     <NextScript />
                 </body>
             </Html>
-        );
+        )
     }
 }
 
-export default MyDocument;
+export default MyDocument

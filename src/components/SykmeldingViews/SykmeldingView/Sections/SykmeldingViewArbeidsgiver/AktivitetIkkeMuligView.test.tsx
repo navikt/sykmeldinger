@@ -1,12 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
 import {
     AktivitetIkkeMuligPeriode,
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
-} from '../../../../../fetching/graphql.generated';
+} from '../../../../../fetching/graphql.generated'
 
-import AktivitetIkkeMuligView from './AktivitetIkkeMuligView';
+import AktivitetIkkeMuligView from './AktivitetIkkeMuligView'
 
 describe('AktivitetIkkeMuligView', () => {
     it('Render arbeidsrelatert arsak for arbeidsgiver view', () => {
@@ -22,14 +22,14 @@ describe('AktivitetIkkeMuligView', () => {
                 beskrivelse: 'arbeidsrelatert beskrivelse',
                 arsak: [ArbeidsrelatertArsakType.ManglendeTilrettelegging],
             },
-        };
+        }
 
-        render(<AktivitetIkkeMuligView aktivitetIkkeMulig={periode} />);
+        render(<AktivitetIkkeMuligView aktivitetIkkeMulig={periode} />)
 
         expect(
             screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
-        ).toBeInTheDocument();
-        expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument();
-        expect(screen.getByText('arbeidsrelatert beskrivelse')).toBeInTheDocument();
-    });
-});
+        ).toBeInTheDocument()
+        expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument()
+        expect(screen.getByText('arbeidsrelatert beskrivelse')).toBeInTheDocument()
+    })
+})

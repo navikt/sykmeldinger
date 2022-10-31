@@ -1,23 +1,23 @@
-import userEvent from '@testing-library/user-event';
-import mockRouter from 'next-router-mock';
+import userEvent from '@testing-library/user-event'
+import mockRouter from 'next-router-mock'
 
-import { render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils'
 import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
     SykmeldingChangeStatus,
     SykmeldingDocument,
     SykmeldingerDocument,
-} from '../fetching/graphql.generated';
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page';
-import { createMock, createSykmelding } from '../utils/test/dataUtils';
+} from '../fetching/graphql.generated'
+import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
-import { createExtraFormDataMock } from './mockUtils';
+import { createExtraFormDataMock } from './mockUtils'
 
 describe('Avbryt sykmelding', () => {
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/avbrutt-sykmelding`);
-    });
+        mockRouter.setCurrentUrl(`/avbrutt-sykmelding`)
+    })
 
     const avbruttSykmelding = createSykmelding({
         id: 'avbrutt-sykmelding',
@@ -29,7 +29,7 @@ describe('Avbryt sykmelding', () => {
             arbeidsgiver: null,
         },
         egenmeldt: false,
-    });
+    })
 
     const baseMocks = [
         createMock({
@@ -40,23 +40,23 @@ describe('Avbryt sykmelding', () => {
             request: { query: SykmeldingerDocument },
             result: { data: { __typename: 'Query', sykmeldinger: [avbruttSykmelding] } },
         }),
-    ];
+    ]
 
     it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] });
+        render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
-    });
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
+    })
 
     it('should show sykmelding as avbrutt', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] });
+        render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
-        expect(screen.queryByText(/Jeg vil avbryte sykmeldingen/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Jeg vil avbryte sykmeldingen/)).not.toBeInTheDocument()
 
-        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument();
-        expect(await screen.findByText(/GJØR UTFYLLINGEN PÅ NYTT/)).toBeInTheDocument();
-    });
+        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument()
+        expect(await screen.findByText(/GJØR UTFYLLINGEN PÅ NYTT/)).toBeInTheDocument()
+    })
 
     it('should reopen avbrutt sykmelding', async () => {
         render(<SykmeldingPage />, {
@@ -88,14 +88,14 @@ describe('Avbryt sykmelding', () => {
                     },
                 }),
             ],
-        });
+        })
 
-        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument();
-        userEvent.click(screen.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }));
+        expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument()
+        userEvent.click(screen.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
 
-        await waitFor(() => expect(screen.queryByText(/Sykmeldingen ble avbrutt av deg/)).not.toBeInTheDocument());
-        expect(await screen.findByText(/Jeg vil avbryte sykmeldingen/)).toBeInTheDocument();
-    });
+        await waitFor(() => expect(screen.queryByText(/Sykmeldingen ble avbrutt av deg/)).not.toBeInTheDocument())
+        expect(await screen.findByText(/Jeg vil avbryte sykmeldingen/)).toBeInTheDocument()
+    })
 
     it('should avbrytte open sykmelding', async () => {
         const apenSykmelding = createSykmelding({
@@ -108,7 +108,7 @@ describe('Avbryt sykmelding', () => {
                 arbeidsgiver: null,
             },
             egenmeldt: false,
-        });
+        })
 
         const baseMocks = [
             createMock({
@@ -119,7 +119,7 @@ describe('Avbryt sykmelding', () => {
                 request: { query: SykmeldingerDocument },
                 result: { data: { __typename: 'Query', sykmeldinger: [apenSykmelding] } },
             }),
-        ];
+        ]
 
         render(<SykmeldingPage />, {
             mocks: [
@@ -150,18 +150,18 @@ describe('Avbryt sykmelding', () => {
                     },
                 }),
             ],
-        });
+        })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-        userEvent.click(screen.getByRole('button', { name: 'Jeg vil avbryte sykmeldingen' }));
-        expect(await screen.findByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeInTheDocument();
+        userEvent.click(screen.getByRole('button', { name: 'Jeg vil avbryte sykmeldingen' }))
+        expect(await screen.findByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeInTheDocument()
 
-        userEvent.click(screen.getByRole('button', { name: 'Ja, jeg er sikker' }));
-        await waitForElementToBeRemoved(() => screen.queryByText('venter...'));
+        userEvent.click(screen.getByRole('button', { name: 'Ja, jeg er sikker' }))
+        await waitForElementToBeRemoved(() => screen.queryByText('venter...'))
 
-        expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument();
-    });
+        expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument()
+    })
 
     it('should show details for avbrutt egenmelding sykmelding', async () => {
         const apenSykmelding = createSykmelding({
@@ -174,7 +174,7 @@ describe('Avbryt sykmelding', () => {
                 arbeidsgiver: null,
             },
             egenmeldt: true,
-        });
+        })
 
         const baseMocks = [
             createMock({
@@ -185,7 +185,7 @@ describe('Avbryt sykmelding', () => {
                 request: { query: SykmeldingerDocument },
                 result: { data: { __typename: 'Query', sykmeldinger: [apenSykmelding] } },
             }),
-        ];
+        ]
 
         render(<SykmeldingPage />, {
             mocks: [
@@ -194,10 +194,10 @@ describe('Avbryt sykmelding', () => {
                     sykmeldingId: 'avbrutt-sykmelding',
                 }),
             ],
-        });
+        })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-        expect(screen.getByRole('heading', { name: 'Egenmeldingen ble avbrutt av deg' })).toBeInTheDocument();
-    });
-});
+        expect(screen.getByRole('heading', { name: 'Egenmeldingen ble avbrutt av deg' })).toBeInTheDocument()
+    })
+})

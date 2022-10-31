@@ -1,34 +1,34 @@
-import React, { PropsWithChildren } from 'react';
-import { Accordion, Alert, BodyShort, Link } from '@navikt/ds-react';
-import Head from 'next/head';
-import { groupBy } from 'remeda';
-import { logger } from '@navikt/next-logger';
+import React, { PropsWithChildren } from 'react'
+import { Accordion, Alert, BodyShort, Link } from '@navikt/ds-react'
+import Head from 'next/head'
+import { groupBy } from 'remeda'
+import { logger } from '@navikt/next-logger'
 
-import Spinner from '../components/Spinner/Spinner';
-import useSykmeldinger from '../hooks/useSykmeldinger';
-import useHotjarTrigger from '../hooks/useHotjarTrigger';
-import Spacing from '../components/Spacing/Spacing';
-import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding';
-import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils';
-import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel';
-import Header from '../components/Header/Header';
-import TilHovedsiden from '../components/TilHovedsiden/TilHovedsiden';
-import { withAuthenticatedPage } from '../auth/withAuthentication';
-import PageWrapper from '../components/PageWrapper/PageWrapper';
-import { SykmeldingFragment } from '../fetching/graphql.generated';
-import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs';
+import Spinner from '../components/Spinner/Spinner'
+import useSykmeldinger from '../hooks/useSykmeldinger'
+import useHotjarTrigger from '../hooks/useHotjarTrigger'
+import Spacing from '../components/Spacing/Spacing'
+import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
+import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
+import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel'
+import Header from '../components/Header/Header'
+import TilHovedsiden from '../components/TilHovedsiden/TilHovedsiden'
+import { withAuthenticatedPage } from '../auth/withAuthentication'
+import PageWrapper from '../components/PageWrapper/PageWrapper'
+import { SykmeldingFragment } from '../fetching/graphql.generated'
+import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 
 const SykmeldingerPage: React.FC = () => {
-    useHotjarTrigger('SYKMELDING_LISTEVISNING');
+    useHotjarTrigger('SYKMELDING_LISTEVISNING')
 
-    const { data, error, loading } = useSykmeldinger();
+    const { data, error, loading } = useSykmeldinger()
 
     if (loading) {
         return (
             <Spacing>
                 <Spinner headline="Henter dine sykmeldinger" />
             </Spacing>
-        );
+        )
     }
 
     if (error) {
@@ -38,20 +38,20 @@ const SykmeldingerPage: React.FC = () => {
                     Vi har problemer med baksystemene for øyeblikket.
                 </Alert>
             </IndexWrapper>
-        );
+        )
     }
     if (data?.sykmeldinger == null) {
-        logger.error('Sykmeldinger is undefined');
+        logger.error('Sykmeldinger is undefined')
         return (
             <IndexWrapper>
                 <Alert variant="error" role="alert" aria-live="polite">
                     En uventet feil oppsto. Vennligst kontakt NAV dersom problemet vedvarer.
                 </Alert>
             </IndexWrapper>
-        );
+        )
     }
 
-    const { underBehandling, apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(data.sykmeldinger);
+    const { underBehandling, apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(data.sykmeldinger)
 
     return (
         <IndexWrapper>
@@ -86,11 +86,11 @@ const SykmeldingerPage: React.FC = () => {
                 sykmeldinger={pastSykmeldinger}
             />
         </IndexWrapper>
-    );
-};
+    )
+}
 
 function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
-    useUpdateBreadcrumbs(() => []);
+    useUpdateBreadcrumbs(() => [])
 
     return (
         <>
@@ -105,31 +105,31 @@ function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
                 </Spacing>
             </PageWrapper>
         </>
-    );
+    )
 }
 
 type SykmeldingSections = {
-    apenSykmeldinger: SykmeldingFragment[];
-    pastSykmeldinger: SykmeldingFragment[];
-    underBehandling: SykmeldingFragment[];
-};
+    apenSykmeldinger: SykmeldingFragment[]
+    pastSykmeldinger: SykmeldingFragment[]
+    underBehandling: SykmeldingFragment[]
+}
 
 const groupByPredicate = (sykmelding: SykmeldingFragment): keyof SykmeldingSections => {
-    if (isUnderbehandling(sykmelding)) return 'underBehandling';
-    else if (isActiveSykmelding(sykmelding)) return 'apenSykmeldinger';
-    else return 'pastSykmeldinger';
-};
+    if (isUnderbehandling(sykmelding)) return 'underBehandling'
+    else if (isActiveSykmelding(sykmelding)) return 'apenSykmeldinger'
+    else return 'pastSykmeldinger'
+}
 
 function filterSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]): SykmeldingSections {
-    const grouped: Record<keyof SykmeldingSections, SykmeldingFragment[]> = groupBy(sykmeldinger, groupByPredicate);
+    const grouped: Record<keyof SykmeldingSections, SykmeldingFragment[]> = groupBy(sykmeldinger, groupByPredicate)
 
     return {
         apenSykmeldinger: grouped.apenSykmeldinger ?? [],
         pastSykmeldinger: grouped.pastSykmeldinger ?? [],
         underBehandling: grouped.underBehandling ?? [],
-    };
+    }
 }
 
-export const getServerSideProps = withAuthenticatedPage();
+export const getServerSideProps = withAuthenticatedPage()
 
-export default SykmeldingerPage;
+export default SykmeldingerPage

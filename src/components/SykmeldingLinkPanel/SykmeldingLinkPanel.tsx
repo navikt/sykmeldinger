@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from 'react';
-import { BodyShort, Heading, Select } from '@navikt/ds-react';
+import React, { useMemo, useState } from 'react'
+import { BodyShort, Heading, Select } from '@navikt/ds-react'
 
-import { SykmeldingFragment } from '../../fetching/graphql.generated';
-import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/sykmeldingSortUtils';
+import { SykmeldingFragment } from '../../fetching/graphql.generated'
+import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/sykmeldingSortUtils'
 
-import Lenkepanel from './Lenkepanel/Lenkepanel';
-import styles from './SykmeldingLinkPanel.module.css';
+import Lenkepanel from './Lenkepanel/Lenkepanel'
+import styles from './SykmeldingLinkPanel.module.css'
 
 export enum SortBy {
     DATE = 'DATE',
@@ -13,10 +13,10 @@ export enum SortBy {
 }
 
 interface LenkepanelContainerProps {
-    sykmeldinger: SykmeldingFragment[];
-    type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER' | 'UNDER_BEHANDLING';
-    title: string;
-    defaultSortBy?: SortBy;
+    sykmeldinger: SykmeldingFragment[]
+    type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER' | 'UNDER_BEHANDLING'
+    title: string
+    defaultSortBy?: SortBy
 }
 
 const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
@@ -25,25 +25,22 @@ const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
     title,
     defaultSortBy = SortBy.DATE,
 }) => {
-    const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy);
-    const sykmeldingerSortedByArbeidsgiver = useMemo(
-        () => sortSykmeldingerByArbeidsgiver(sykmeldinger),
-        [sykmeldinger],
-    );
+    const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy)
+    const sykmeldingerSortedByArbeidsgiver = useMemo(() => sortSykmeldingerByArbeidsgiver(sykmeldinger), [sykmeldinger])
 
     const sykmeldingerSortedByDate = useMemo(() => {
-        const sykmeldings = [...sykmeldinger].sort(sykmeldingByDateAsc).reverse();
+        const sykmeldings = [...sykmeldinger].sort(sykmeldingByDateAsc).reverse()
 
-        return type === 'NYE_SYKMELDINGER' ? sykmeldings.reverse() : sykmeldings;
-    }, [sykmeldinger, type]);
+        return type === 'NYE_SYKMELDINGER' ? sykmeldings.reverse() : sykmeldings
+    }, [sykmeldinger, type])
 
     if (sykmeldinger.length === 0) {
         if (type === 'TIDLIGERE_SYKMELDINGER' || type === 'UNDER_BEHANDLING') {
-            return null;
+            return null
         }
 
         if (type === 'NYE_SYKMELDINGER') {
-            return <BodyShort style={{ marginBottom: '2rem' }}>Du har ingen nye sykmeldinger</BodyShort>;
+            return <BodyShort style={{ marginBottom: '2rem' }}>Du har ingen nye sykmeldinger</BodyShort>
         }
     }
 
@@ -79,7 +76,7 @@ const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
                     ))}
             </ol>
         </section>
-    );
-};
+    )
+}
 
-export default SykmeldingLinkPanel;
+export default SykmeldingLinkPanel

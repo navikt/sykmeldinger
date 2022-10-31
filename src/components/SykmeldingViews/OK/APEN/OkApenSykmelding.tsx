@@ -1,25 +1,25 @@
-import { GuidePanel } from '@navikt/ds-react';
+import { GuidePanel } from '@navikt/ds-react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated';
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Spacing from '../../../Spacing/Spacing';
-import InformationBanner from '../../../InformationBanner/InformationBanner';
-import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding';
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
+import { Sykmelding } from '../../../../fetching/graphql.generated'
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
+import Spacing from '../../../Spacing/Spacing'
+import InformationBanner from '../../../InformationBanner/InformationBanner'
+import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
-import AvbrytPanel from './AvbrytPanel/AvbrytPanel';
-import AvbrytContextProvider from './AvbrytContext';
-import PapirInfoheader from './PapirInfoheader';
-import Form from './Form/Form';
+import AvbrytPanel from './AvbrytPanel/AvbrytPanel'
+import AvbrytContextProvider from './AvbrytContext'
+import PapirInfoheader from './PapirInfoheader'
+import Form from './Form/Form'
 
 interface OkApenSykmeldingProps {
-    sykmelding: Sykmelding;
-    olderSykmeldingId: string | null;
-    olderSykmeldingCount: number;
+    sykmelding: Sykmelding
+    olderSykmeldingId: string | null
+    olderSykmeldingCount: number
 }
 
 function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount }: OkApenSykmeldingProps): JSX.Element {
-    useHotjarTrigger('SYKMELDING_OK_APEN');
+    useHotjarTrigger('SYKMELDING_OK_APEN')
 
     if (olderSykmeldingId) {
         return (
@@ -27,7 +27,7 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                 olderSykmeldingId={olderSykmeldingId}
                 olderSykmeldingCount={olderSykmeldingCount}
             />
-        );
+        )
     }
 
     if (sykmelding.egenmeldt) {
@@ -42,7 +42,7 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
 
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </div>
-        );
+        )
     }
 
     return (
@@ -70,7 +70,7 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                 <AvbrytPanel />
             </div>
         </AvbrytContextProvider>
-    );
+    )
 }
 
-export default OkApenSykmelding;
+export default OkApenSykmelding

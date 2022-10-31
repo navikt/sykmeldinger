@@ -1,4 +1,4 @@
-import { BodyLong } from '@navikt/ds-react';
+import { BodyLong } from '@navikt/ds-react'
 
 function ForklaringZDiagnose(): JSX.Element {
     return (
@@ -12,7 +12,7 @@ function ForklaringZDiagnose(): JSX.Element {
                 stedet.
             </BodyLong>
         </>
-    );
+    )
 }
 
-export default ForklaringZDiagnose;
+export default ForklaringZDiagnose

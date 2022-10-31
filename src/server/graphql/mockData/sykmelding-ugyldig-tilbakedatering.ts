@@ -1,12 +1,12 @@
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { SvarRestriksjon } from '../../api-models/sykmelding/UtdypendeOpplysninger';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { SvarRestriksjon } from '../../api-models/sykmelding/UtdypendeOpplysninger'
 import {
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
     Periodetype,
     RegelStatus,
     StatusEvent,
-} from '../resolver-types.generated';
+} from '../resolver-types.generated'
 
 export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
     id: 'UGYLDIG-TILBAKEDATERING',
@@ -113,4 +113,4 @@ export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
     harRedusertArbeidsgiverperiode: false,
     merknader: [{ type: 'UGYLDIG_TILBAKEDATERING', beskrivelse: null }],
     pasient: { fnr: '06078104285', fornavn: 'KORRUPT', mellomnavn: null, etternavn: 'RISPBÆRBUSK' },
-};
+}

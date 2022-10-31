@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import { RegelStatus } from '../../../fetching/graphql.generated';
+import { RegelStatus } from '../../../fetching/graphql.generated'
 
 interface Icon {
-    hover?: boolean;
+    hover?: boolean
 }
 
 function DeclinedIcon({ hover = false }: Icon): JSX.Element {
@@ -17,7 +17,7 @@ function DeclinedIcon({ hover = false }: Icon): JSX.Element {
                     fill="#0067C5"
                 />
             </svg>
-        );
+        )
     }
     return (
         <svg width="46" height="47" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@ function DeclinedIcon({ hover = false }: Icon): JSX.Element {
                 fill="#3E3832"
             />
         </svg>
-    );
+    )
 }
 
 function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
@@ -48,7 +48,7 @@ function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
                     fill="#0067C5"
                 />
             </svg>
-        );
+        )
     }
     return (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,7 +65,7 @@ function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
                 fill="#3E3832"
             />
         </svg>
-    );
+    )
 }
 
 function StethoscopeIcon({ hover = false }: Icon): JSX.Element {
@@ -79,7 +79,7 @@ function StethoscopeIcon({ hover = false }: Icon): JSX.Element {
                     fill="#0067C5"
                 />
             </svg>
-        );
+        )
     }
     return (
         <svg width="42" height="48" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,22 +90,22 @@ function StethoscopeIcon({ hover = false }: Icon): JSX.Element {
                 fill="#3E3832"
             />
         </svg>
-    );
+    )
 }
 
 interface LenkepanelIconProps extends Icon {
-    behandlingsutfall: RegelStatus;
-    isPaper: boolean;
+    behandlingsutfall: RegelStatus
+    isPaper: boolean
 }
 
 function LenkepanelIcon({ behandlingsutfall, isPaper, hover = false }: LenkepanelIconProps): JSX.Element {
     if (behandlingsutfall === 'INVALID') {
-        return <DeclinedIcon hover={hover} />;
+        return <DeclinedIcon hover={hover} />
     }
     if (isPaper) {
-        return <PapersykmeldingIcon hover={hover} />;
+        return <PapersykmeldingIcon hover={hover} />
     }
-    return <StethoscopeIcon hover={hover} />;
+    return <StethoscopeIcon hover={hover} />
 }
 
-export default LenkepanelIcon;
+export default LenkepanelIcon

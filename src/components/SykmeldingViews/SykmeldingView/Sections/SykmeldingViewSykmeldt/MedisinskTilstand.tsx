@@ -1,20 +1,20 @@
-import React from 'react';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { Bandage } from '@navikt/ds-icons';
+import React from 'react'
+import { BodyShort, Heading } from '@navikt/ds-react'
+import { Bandage } from '@navikt/ds-icons'
 
-import { toReadableDate } from '../../../../../utils/dateUtils';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { MedisinskVurdering } from '../../../../../fetching/graphql.generated';
-import { annenFraverGrunnToText } from '../../../../../utils/periodeUtils';
+import { toReadableDate } from '../../../../../utils/dateUtils'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
+import { annenFraverGrunnToText } from '../../../../../utils/periodeUtils'
 
-import styles from './MedisinskTilstand.module.css';
+import styles from './MedisinskTilstand.module.css'
 
 interface Props {
-    medisinskVurdering: MedisinskVurdering | null | undefined;
+    medisinskVurdering: MedisinskVurdering | null | undefined
 }
 
 function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
-    if (!medisinskVurdering) return null;
+    if (!medisinskVurdering) return null
 
     return (
         <div className={styles.root}>
@@ -37,9 +37,9 @@ function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
                                 </Heading>
                                 <BodyShort size="small">{bidiagnose.tekst}</BodyShort>
                             </div>
-                        );
+                        )
                     }
-                    return null;
+                    return null
                 })}
                 <>
                     {!!(
@@ -90,7 +90,7 @@ function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
                 )}
             </div>
         </div>
-    );
+    )
 }
 
-export default MedisinskTilstand;
+export default MedisinskTilstand

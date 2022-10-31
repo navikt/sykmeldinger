@@ -1,6 +1,6 @@
-import { Pasient } from '../fetching/graphql.generated';
+import { Pasient } from '../fetching/graphql.generated'
 
-import { getPasientName } from './pasientUtils';
+import { getPasientName } from './pasientUtils'
 
 describe('pasientUtils', () => {
     describe('getName', () => {
@@ -11,9 +11,9 @@ describe('pasientUtils', () => {
                 fornavn: 'Ola',
                 mellomnavn: 'Halvor',
                 etternavn: 'Nordmann',
-            };
-            expect(getPasientName(pasient)).toEqual('Ola Halvor Nordmann');
-        });
+            }
+            expect(getPasientName(pasient)).toEqual('Ola Halvor Nordmann')
+        })
 
         it('Returns name without middle name', () => {
             const pasient: Pasient = {
@@ -22,9 +22,9 @@ describe('pasientUtils', () => {
                 fornavn: 'Ola',
                 mellomnavn: null,
                 etternavn: 'Nordmann',
-            };
-            expect(getPasientName(pasient)).toEqual('Ola Nordmann');
-        });
+            }
+            expect(getPasientName(pasient)).toEqual('Ola Nordmann')
+        })
 
         it('Returns undefined for missing fornavn', () => {
             const pasient: Pasient = {
@@ -33,8 +33,8 @@ describe('pasientUtils', () => {
                 fornavn: null,
                 mellomnavn: null,
                 etternavn: 'Nordmann',
-            };
-            expect(getPasientName(pasient)).toBeUndefined();
-        });
-    });
-});
+            }
+            expect(getPasientName(pasient)).toBeUndefined()
+        })
+    })
+})

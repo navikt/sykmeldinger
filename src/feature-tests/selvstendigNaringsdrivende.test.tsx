@@ -1,22 +1,22 @@
-import userEvent from '@testing-library/user-event';
-import mockRouter from 'next-router-mock';
+import userEvent from '@testing-library/user-event'
+import mockRouter from 'next-router-mock'
 
-import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils';
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page';
-import { createMock, createSykmelding } from '../utils/test/dataUtils';
+import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
     StatusEvent,
     SubmitSykmeldingDocument,
     SykmeldingDocument,
     SykmeldingerDocument,
-} from '../fetching/graphql.generated';
+} from '../fetching/graphql.generated'
 
-import { createExtraFormDataMock } from './mockUtils';
+import { createExtraFormDataMock } from './mockUtils'
 
 describe('Selvstendig næringsdrivende', () => {
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/sykmelding-id`);
-    });
+        mockRouter.setCurrentUrl(`/sykmelding-id`)
+    })
 
     const baseMocks = [
         createMock({
@@ -27,7 +27,7 @@ describe('Selvstendig næringsdrivende', () => {
             request: { query: SykmeldingerDocument },
             result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
         }),
-    ];
+    ]
 
     describe('Within ventetid', () => {
         it('should show details from sykmelding', async () => {
@@ -38,11 +38,11 @@ describe('Selvstendig næringsdrivende', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
-        });
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
+        })
 
         it('should be able to submit form', async () => {
             render(<SykmeldingPage />, {
@@ -102,30 +102,28 @@ describe('Selvstendig næringsdrivende', () => {
                         },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '20.12.2020');
-            userEvent.type(egenmeldingFomTom[1], '27.12.2020');
-            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset');
-            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '20.12.2020')
+            userEvent.type(egenmeldingFomTom[1], '27.12.2020')
+            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
+            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
-        });
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+        })
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
-            const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' });
+            const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' })
             render(<SykmeldingPage />, {
                 mocks: [
                     createMock({
@@ -194,42 +192,40 @@ describe('Selvstendig næringsdrivende', () => {
                         },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }))
 
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
 
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
 
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
 
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '20.12.2019');
-            userEvent.type(egenmeldingFomTom[1], '27.12.2019');
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '20.12.2019')
+            userEvent.type(egenmeldingFomTom[1], '27.12.2019')
 
-            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset');
+            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
 
-            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
-        });
-    });
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+        })
+    })
 
     describe('Outside ventetid', () => {
         it('should show details from sykmelding', async () => {
-            render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] });
+            render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
-        });
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
+        })
 
         it('should be able to submit form', async () => {
             render(<SykmeldingPage />, {
@@ -270,16 +266,16 @@ describe('Selvstendig næringsdrivende', () => {
                         },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }));
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }))
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toEqual('sykmelding-id');
-        });
-    });
-});
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+            expect(mockRouter.query.sykmeldingId).toEqual('sykmelding-id')
+        })
+    })
+})

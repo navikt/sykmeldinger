@@ -1,35 +1,35 @@
-import React, { useContext, useRef, useState } from 'react';
-import { Alert, BodyShort, Button, Detail, Heading, Loader } from '@navikt/ds-react';
-import { Close } from '@navikt/ds-icons';
+import React, { useContext, useRef, useState } from 'react'
+import { Alert, BodyShort, Button, Detail, Heading, Loader } from '@navikt/ds-react'
+import { Close } from '@navikt/ds-icons'
 
-import { AvbrytContext } from '../AvbrytContext';
-import Spacing from '../../../../Spacing/Spacing';
-import CenterItems from '../../../../CenterItems/CenterItems';
-import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam';
-import { useChangeSykmeldingStatus } from '../../../../../hooks/useMutations';
-import { SykmeldingChangeStatus } from '../../../../../fetching/graphql.generated';
-import { useAmplitude } from '../../../../../amplitude/amplitude';
+import { AvbrytContext } from '../AvbrytContext'
+import Spacing from '../../../../Spacing/Spacing'
+import CenterItems from '../../../../CenterItems/CenterItems'
+import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam'
+import { useChangeSykmeldingStatus } from '../../../../../hooks/useMutations'
+import { SykmeldingChangeStatus } from '../../../../../fetching/graphql.generated'
+import { useAmplitude } from '../../../../../amplitude/amplitude'
 
-import styles from './AvbrytPanel.module.css';
+import styles from './AvbrytPanel.module.css'
 
-const skjemanavn = 'avbryt åpen sykmelding';
+const skjemanavn = 'avbryt åpen sykmelding'
 
 function AvbrytPanel(): JSX.Element {
-    const logEvent = useAmplitude();
-    const sykmeldingId = useGetSykmeldingIdParam();
+    const logEvent = useAmplitude()
+    const sykmeldingId = useGetSykmeldingIdParam()
 
     // maAvbryte overrules isOpen
-    const { maAvbryte } = useContext(AvbrytContext);
-    const [isOpen, setIsOpen] = useState(false);
+    const { maAvbryte } = useContext(AvbrytContext)
+    const [isOpen, setIsOpen] = useState(false)
 
-    const avbrytPanelRef = useRef<HTMLDivElement>(null);
+    const avbrytPanelRef = useRef<HTMLDivElement>(null)
 
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.Avbryt,
         () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
         () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
-    );
+    )
 
     if (maAvbryte) {
         return (
@@ -57,7 +57,7 @@ function AvbrytPanel(): JSX.Element {
                     </Spacing>
                 )}
             </div>
-        );
+        )
     }
 
     return (
@@ -68,10 +68,10 @@ function AvbrytPanel(): JSX.Element {
                         variant="tertiary"
                         size="small"
                         onClick={() => {
-                            setIsOpen((prev) => !prev);
+                            setIsOpen((prev) => !prev)
                             setTimeout(() => {
-                                avbrytPanelRef.current?.focus();
-                            }, 100);
+                                avbrytPanelRef.current?.focus()
+                            }, 100)
                         }}
                     >
                         Jeg vil avbryte sykmeldingen
@@ -106,7 +106,7 @@ function AvbrytPanel(): JSX.Element {
                 </div>
             )}
         </>
-    );
+    )
 }
 
-export default AvbrytPanel;
+export default AvbrytPanel

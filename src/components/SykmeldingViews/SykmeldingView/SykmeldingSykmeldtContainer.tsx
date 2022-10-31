@@ -1,19 +1,19 @@
-import React from 'react';
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { Print } from '@navikt/ds-icons';
+import React from 'react'
+import { BodyShort, Button, Heading } from '@navikt/ds-react'
+import { Print } from '@navikt/ds-icons'
 
-import { SykmeldingFragment } from '../../../fetching/graphql.generated';
-import { toReadableDate } from '../../../utils/dateUtils';
-import { getPublicEnv } from '../../../utils/env';
+import { SykmeldingFragment } from '../../../fetching/graphql.generated'
+import { toReadableDate } from '../../../utils/dateUtils'
+import { getPublicEnv } from '../../../utils/env'
 
-import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt';
-import styles from './SykmeldingSykmeldtContainer.module.css';
+import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt'
+import styles from './SykmeldingSykmeldtContainer.module.css'
 
 interface Props {
-    sykmelding: SykmeldingFragment;
+    sykmelding: SykmeldingFragment
 }
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => {
     return (
@@ -44,7 +44,7 @@ const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => 
                 <SykmeldingViewSykmeldt sykmelding={sykmelding} />
             </div>
         </article>
-    );
-};
+    )
+}
 
-export default SykmeldingSykmeldtContainer;
+export default SykmeldingSykmeldtContainer

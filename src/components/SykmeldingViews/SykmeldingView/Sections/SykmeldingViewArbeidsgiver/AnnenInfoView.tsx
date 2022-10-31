@@ -1,16 +1,16 @@
-import React from 'react';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { Information } from '@navikt/ds-icons';
+import React from 'react'
+import { BodyShort, Heading } from '@navikt/ds-react'
+import { Information } from '@navikt/ds-icons'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { SykmeldingFragment } from '../../../../../fetching/graphql.generated';
-import { toReadableDate } from '../../../../../utils/dateUtils';
-import { getBehandlerName } from '../../../../../utils/behandlerUtils';
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingFragment } from '../../../../../fetching/graphql.generated'
+import { toReadableDate } from '../../../../../utils/dateUtils'
+import { getBehandlerName } from '../../../../../utils/behandlerUtils'
 
-import styles from './AnnenInfoView.module.css';
+import styles from './AnnenInfoView.module.css'
 
 interface Props {
-    sykmelding: SykmeldingFragment;
+    sykmelding: SykmeldingFragment
 }
 
 function AnnenInfoView({ sykmelding }: Props): JSX.Element {
@@ -42,7 +42,7 @@ function AnnenInfoView({ sykmelding }: Props): JSX.Element {
                 </div>
             )}
         </div>
-    );
+    )
 }
 
-export default AnnenInfoView;
+export default AnnenInfoView

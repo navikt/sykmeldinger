@@ -1,11 +1,11 @@
-import { QueryResult, useQuery } from '@apollo/client';
+import { QueryResult, useQuery } from '@apollo/client'
 
-import { ExtraFormDataDocument, ExtraFormDataQuery, ExtraFormDataQueryVariables } from '../fetching/graphql.generated';
+import { ExtraFormDataDocument, ExtraFormDataQuery, ExtraFormDataQueryVariables } from '../fetching/graphql.generated'
 
 function useExtraFormData(sykmeldingId: string): QueryResult<ExtraFormDataQuery, ExtraFormDataQueryVariables> {
     return useQuery(ExtraFormDataDocument, {
         variables: { sykmeldingId },
-    });
+    })
 }
 
-export default useExtraFormData;
+export default useExtraFormData

@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import { Alert, BodyLong, BodyShort, Heading, Label, Link, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import React, { useEffect } from 'react'
+import { useFormContext, Controller } from 'react-hook-form'
+import { Alert, BodyLong, BodyShort, Heading, Label, Link, Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 
-import { FormShape, ArbeidssituasjonType } from '../Form';
+import { FormShape, ArbeidssituasjonType } from '../Form'
 import {
     BrukerinformasjonFragment,
     SykmeldingUtenforVentetidFragment,
-} from '../../../../../../fetching/graphql.generated';
-import QuestionWrapper from '../layout/QuestionWrapper';
-import Spacing from '../../../../../Spacing/Spacing';
-import { useAmplitude } from '../../../../../../amplitude/amplitude';
+} from '../../../../../../fetching/graphql.generated'
+import QuestionWrapper from '../layout/QuestionWrapper'
+import Spacing from '../../../../../Spacing/Spacing'
+import { useAmplitude } from '../../../../../../amplitude/amplitude'
 
-import HarForsikring from './HarForsikring';
-import HarBruktEgenmelding from './HarBruktEgenmelding';
-import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer';
+import HarForsikring from './HarForsikring'
+import HarBruktEgenmelding from './HarBruktEgenmelding'
+import ArbeidsgiverOrgnummer from './ArbeidsgiverOrgnummer'
 
 const StrengtFortroligInfo = (): JSX.Element => (
     <Alert variant="warning">
@@ -28,17 +28,17 @@ const StrengtFortroligInfo = (): JSX.Element => (
             utskrift.
         </Label>
     </Alert>
-);
+)
 
 interface ArbeidssituasjonProps {
-    harAvventendePeriode: boolean;
-    erUtenforVentetid: SykmeldingUtenforVentetidFragment;
-    brukerinformasjon: BrukerinformasjonFragment;
-    sykmeldingFom: string;
+    harAvventendePeriode: boolean
+    erUtenforVentetid: SykmeldingUtenforVentetidFragment
+    brukerinformasjon: BrukerinformasjonFragment
+    sykmeldingFom: string
 }
 
-const fieldName = 'arbeidssituasjon';
-const sporsmaltekst = 'Jeg er sykmeldt som';
+const fieldName = 'arbeidssituasjon'
+const sporsmaltekst = 'Jeg er sykmeldt som'
 
 const Arbeidssituasjon = ({
     harAvventendePeriode,
@@ -46,31 +46,31 @@ const Arbeidssituasjon = ({
     brukerinformasjon,
     sykmeldingFom,
 }: ArbeidssituasjonProps): JSX.Element => {
-    const logEvent = useAmplitude();
-    const { register, unregister, control, watch } = useFormContext<FormShape>();
-    const watchArbeidssituasjon = watch(fieldName);
+    const logEvent = useAmplitude()
+    const { register, unregister, control, watch } = useFormContext<FormShape>()
+    const watchArbeidssituasjon = watch(fieldName)
 
     useEffect(() => {
         register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
-        });
+        })
         register(`${fieldName}.svartekster`, {
             value: JSON.stringify(ArbeidssituasjonType),
-        });
+        })
 
         return () =>
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [register, unregister]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+    }, [register, unregister])
 
     const skalViseEgenmeldingsperioderSporsmal =
         watchArbeidssituasjon?.svar &&
         ['FRILANSER', 'NAERINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
-        !erUtenforVentetid.erUtenforVentetid;
+        !erUtenforVentetid.erUtenforVentetid
 
     const skalViseForsikringSporsmal =
         watchArbeidssituasjon?.svar &&
         ['FRILANSER', 'NAERINGSDRIVENDE'].includes(watchArbeidssituasjon.svar) &&
-        !erUtenforVentetid.erUtenforVentetid;
+        !erUtenforVentetid.erUtenforVentetid
 
     return (
         <QuestionWrapper innrykk>
@@ -101,8 +101,8 @@ const Arbeidssituasjon = ({
                             logEvent({
                                 eventName: 'skjema spørsmål besvart',
                                 data: { skjemanavn: 'arbeidssituasjon', spørsmål: 'Jeg er sykmeldt som', svar: value },
-                            });
-                            field.onChange(value);
+                            })
+                            field.onChange(value)
                         }}
                         error={fieldState.error?.message}
                     >
@@ -145,7 +145,7 @@ const Arbeidssituasjon = ({
 
             {skalViseForsikringSporsmal && <HarForsikring />}
         </QuestionWrapper>
-    );
-};
+    )
+}
 
-export default Arbeidssituasjon;
+export default Arbeidssituasjon

@@ -1,7 +1,7 @@
-import { MockedResponse } from '@apollo/client/testing';
-import { TypedDocumentNode } from '@apollo/client';
-import { FetchResult } from '@apollo/client/link/core';
-import { ResultFunction } from '@apollo/client/testing/core/mocking/mockLink';
+import { MockedResponse } from '@apollo/client/testing'
+import { TypedDocumentNode } from '@apollo/client'
+import { FetchResult } from '@apollo/client/link/core'
+import { ResultFunction } from '@apollo/client/testing/core/mocking/mockLink'
 
 import {
     AnnenFraverGrunn,
@@ -11,11 +11,11 @@ import {
     RegelStatus,
     StatusEvent,
     Sykmelding,
-} from '../../fetching/graphql.generated';
-import { dateAdd, dateSub } from '../dateUtils';
+} from '../../fetching/graphql.generated'
+import { dateAdd, dateSub } from '../dateUtils'
 
 export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = StatusEvent.Apen): Sykmelding {
-    const mottatt = overrides?.mottattTidspunkt ?? dateSub(new Date(), { days: 2 });
+    const mottatt = overrides?.mottattTidspunkt ?? dateSub(new Date(), { days: 2 })
 
     return {
         __typename: 'Sykmelding',
@@ -195,11 +195,11 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
             etternavn: 'Nordmann',
         },
         ...overrides,
-    };
+    }
 }
 
 export function createUnderBehandlingMerknad(): Pick<Sykmelding, 'merknader'> {
-    return { merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }] };
+    return { merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }] }
 }
 
 export function createAvvistBehandlingsutfall(
@@ -219,15 +219,15 @@ export function createAvvistBehandlingsutfall(
                 },
             ],
         },
-    };
+    }
 }
 
 export function createMock<Query, Variables extends Record<string, unknown>>(mockedResponse: {
-    request: { query: TypedDocumentNode<Query, Variables>; variables?: Variables };
-    result?: FetchResult<Query> | ResultFunction<FetchResult<Query>>;
-    error?: Error;
-    delay?: number;
-    newData?: ResultFunction<FetchResult>;
+    request: { query: TypedDocumentNode<Query, Variables>; variables?: Variables }
+    result?: FetchResult<Query> | ResultFunction<FetchResult<Query>>
+    error?: Error
+    delay?: number
+    newData?: ResultFunction<FetchResult>
 }): MockedResponse<Query> {
-    return mockedResponse;
+    return mockedResponse
 }

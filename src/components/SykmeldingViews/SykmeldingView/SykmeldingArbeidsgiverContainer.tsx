@@ -1,21 +1,21 @@
-import React, { useRef, useState } from 'react';
-import { Accordion, Heading } from '@navikt/ds-react';
-import { Findout } from '@navikt/ds-icons';
+import React, { useRef, useState } from 'react'
+import { Accordion, Heading } from '@navikt/ds-react'
+import { Findout } from '@navikt/ds-icons'
 
-import { SykmeldingFragment } from '../../../fetching/graphql.generated';
-import Lukknapp from '../../Lukknapp/Lukknapp';
+import { SykmeldingFragment } from '../../../fetching/graphql.generated'
+import Lukknapp from '../../Lukknapp/Lukknapp'
 
-import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver';
-import styles from './SykmeldingArbeidsgiverContainer.module.css';
+import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver'
+import styles from './SykmeldingArbeidsgiverContainer.module.css'
 
 interface Props {
-    sykmelding: SykmeldingFragment;
+    sykmelding: SykmeldingFragment
 }
 
 const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding }: Props) => {
-    const [expanded, setExpanded] = useState(false);
-    const elementRef = useRef<HTMLElement>(null);
-    const headerId = `sykmelding-${sykmelding.id}-header-arbeidsgiver`;
+    const [expanded, setExpanded] = useState(false)
+    const elementRef = useRef<HTMLElement>(null)
+    const headerId = `sykmelding-${sykmelding.id}-header-arbeidsgiver`
 
     return (
         <article aria-labelledby={headerId} ref={elementRef} className={styles.opplysningerTilArbeidsgiver}>
@@ -28,10 +28,10 @@ const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding }: Props)
                         onClick={() => {
                             if (!expanded) {
                                 setTimeout(() => {
-                                    elementRef.current?.scrollIntoView({ behavior: 'smooth' });
-                                }, 200);
+                                    elementRef.current?.scrollIntoView({ behavior: 'smooth' })
+                                }, 200)
                             }
-                            setExpanded(!expanded);
+                            setExpanded(!expanded)
                         }}
                     >
                         <div className={styles.expendableHeader}>
@@ -58,7 +58,7 @@ const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding }: Props)
                 </Accordion.Item>
             </Accordion>
         </article>
-    );
-};
+    )
+}
 
-export default SykmeldingArbeidsgiverContainer;
+export default SykmeldingArbeidsgiverContainer

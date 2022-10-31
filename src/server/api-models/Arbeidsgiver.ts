@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
-import { LocalDateSchema } from './date';
+import { LocalDateSchema } from './date'
 
-export type NaermesteLeder = z.infer<typeof NaermesteLederSchema>;
+export type NaermesteLeder = z.infer<typeof NaermesteLederSchema>
 export const NaermesteLederSchema = z.object({
     aktoerId: z.string(),
     navn: z.string(),
@@ -12,9 +12,9 @@ export const NaermesteLederSchema = z.object({
     mobil: z.string().nullable(),
     aktivTom: LocalDateSchema.nullable(),
     arbeidsgiverForskuttererLoenn: z.boolean().nullable(),
-});
+})
 
-export type Arbeidsgiver = z.infer<typeof ArbeidsgiverSchema>;
+export type Arbeidsgiver = z.infer<typeof ArbeidsgiverSchema>
 export const ArbeidsgiverSchema = z.object({
     orgnummer: z.string(),
     juridiskOrgnummer: z.string(),
@@ -23,4 +23,4 @@ export const ArbeidsgiverSchema = z.object({
     stilling: z.string(),
     aktivtArbeidsforhold: z.boolean(),
     naermesteLeder: NaermesteLederSchema.nullable(),
-});
+})

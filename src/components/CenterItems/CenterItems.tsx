@@ -1,11 +1,11 @@
-import cn from 'classnames';
-import { PropsWithChildren } from 'react';
+import cn from 'classnames'
+import { PropsWithChildren } from 'react'
 
-import styles from './CenterItems.module.css';
+import styles from './CenterItems.module.css'
 
 interface CenterItemsProps {
-    vertical?: boolean;
-    horizontal?: boolean;
+    vertical?: boolean
+    horizontal?: boolean
 }
 
 function CenterItems({
@@ -22,7 +22,7 @@ function CenterItems({
         >
             {children}
         </div>
-    );
+    )
 }
 
-export default CenterItems;
+export default CenterItems

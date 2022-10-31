@@ -1,15 +1,15 @@
-import React from 'react';
-import { Heading } from '@navikt/ds-react';
+import React from 'react'
+import { Heading } from '@navikt/ds-react'
 
-import styles from './Header.module.css';
+import styles from './Header.module.css'
 interface HeaderProps {
-    title?: string;
-    subTitle?: string;
+    title?: string
+    subTitle?: string
 }
 
 const Header: React.FC<HeaderProps> = ({ title, subTitle }) => {
     if (!title) {
-        return null;
+        return null
     }
 
     return (
@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ title, subTitle }) => {
                 </Heading>
             ) : null}
         </div>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header

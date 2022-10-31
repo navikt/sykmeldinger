@@ -1,21 +1,21 @@
-import { People } from '@navikt/ds-icons';
-import { BodyShort } from '@navikt/ds-react';
+import { People } from '@navikt/ds-icons'
+import { BodyShort } from '@navikt/ds-react'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { Pasient } from '../../../../../fetching/graphql.generated';
-import { getPasientName } from '../../../../../utils/pasientUtils';
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { Pasient } from '../../../../../fetching/graphql.generated'
+import { getPasientName } from '../../../../../utils/pasientUtils'
 
-import styles from './SykmeldingenGjelder.module.css';
+import styles from './SykmeldingenGjelder.module.css'
 
 interface Props {
-    pasient?: Pasient | null;
+    pasient?: Pasient | null
 }
 
 function SykmeldingenGjelder({ pasient }: Props): JSX.Element | null {
-    if (!pasient) return null;
+    if (!pasient) return null
 
-    const name = getPasientName(pasient);
-    if (!name) return null;
+    const name = getPasientName(pasient)
+    if (!name) return null
 
     return (
         <div className={styles.sykmeldingenGjelder}>
@@ -25,7 +25,7 @@ function SykmeldingenGjelder({ pasient }: Props): JSX.Element | null {
                 {pasient.fnr && <BodyShort size="small">Fødselsnr: {pasient.fnr}</BodyShort>}
             </div>
         </div>
-    );
+    )
 }
 
-export default SykmeldingenGjelder;
+export default SykmeldingenGjelder

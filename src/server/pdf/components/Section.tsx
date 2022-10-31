@@ -1,13 +1,13 @@
-import React, { PropsWithChildren } from 'react';
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import React, { PropsWithChildren } from 'react'
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import People from './icons/People';
+import People from './icons/People'
 
 type Props = {
-    title: string;
-    Icon?: typeof People;
-    shouldWrap?: boolean;
-};
+    title: string
+    Icon?: typeof People
+    shouldWrap?: boolean
+}
 
 const styles = StyleSheet.create({
     section: { marginTop: 12 },
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     sectionIcon: { marginRight: 8 },
     sectionTitle: { fontFamily: 'Helvetica-Bold', fontSize: 16 },
     sectionContent: { width: 460 },
-});
+})
 
 export function Section({ title, Icon, children, shouldWrap }: PropsWithChildren<Props>): JSX.Element {
     return (
@@ -26,5 +26,5 @@ export function Section({ title, Icon, children, shouldWrap }: PropsWithChildren
             </View>
             <View style={styles.sectionContent}>{children}</View>
         </View>
-    );
+    )
 }

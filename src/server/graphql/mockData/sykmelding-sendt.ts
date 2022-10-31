@@ -1,5 +1,5 @@
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { dateAdd } from '../../../utils/dateUtils';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { dateAdd } from '../../../utils/dateUtils'
 import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
@@ -7,7 +7,7 @@ import {
     Periodetype,
     RegelStatus,
     StatusEvent,
-} from '../resolver-types.generated';
+} from '../resolver-types.generated'
 
 export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
     return {
@@ -133,5 +133,5 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
-    };
+    }
 }

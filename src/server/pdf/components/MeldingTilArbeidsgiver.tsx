@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Section } from './Section';
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
-import Employer from './icons/Employer';
+import { Section } from './Section'
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
+import Employer from './icons/Employer'
 
 interface Props {
-    meldingTilArbeidsgiver?: string | null;
+    meldingTilArbeidsgiver?: string | null
 }
 
 const styles = StyleSheet.create({
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
         padding: contentPadding,
         marginBottom: contentMarginBottom,
     },
-});
+})
 
 const MeldingTilArbeidsgiver = ({ meldingTilArbeidsgiver }: Props): JSX.Element | null => {
-    if (!meldingTilArbeidsgiver) return null;
+    if (!meldingTilArbeidsgiver) return null
 
     return (
         <Section title="Melding til arbeidsgiver" Icon={Employer}>
@@ -28,7 +28,7 @@ const MeldingTilArbeidsgiver = ({ meldingTilArbeidsgiver }: Props): JSX.Element 
                 <Text>{meldingTilArbeidsgiver}</Text>
             </View>
         </Section>
-    );
-};
+    )
+}
 
-export default MeldingTilArbeidsgiver;
+export default MeldingTilArbeidsgiver

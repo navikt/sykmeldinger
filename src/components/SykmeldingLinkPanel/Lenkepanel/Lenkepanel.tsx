@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
-import cn from 'classnames';
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react'
+import cn from 'classnames'
 
-import { Sykmelding } from '../../../fetching/graphql.generated';
-import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../../utils/sykmeldingUtils';
-import { getDescription } from '../../../utils/periodeUtils';
+import { Sykmelding } from '../../../fetching/graphql.generated'
+import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../../utils/sykmeldingUtils'
+import { getDescription } from '../../../utils/periodeUtils'
 
-import LenkepanelIcon from './LenkepanelIcon';
-import LenkepanelEtikett from './LenkepanelEtikett';
-import styles from './Lenkepanel.module.css';
+import LenkepanelIcon from './LenkepanelIcon'
+import LenkepanelEtikett from './LenkepanelEtikett'
+import styles from './Lenkepanel.module.css'
 
 interface LenkepanelProps {
-    sykmelding: Sykmelding;
-    isNew: boolean;
+    sykmelding: Sykmelding
+    isNew: boolean
 }
 
 const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
-    const status = sykmelding.sykmeldingStatus.statusEvent;
-    const behandlingsutfallStatus = sykmelding.behandlingsutfall.status;
-    const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn;
+    const status = sykmelding.sykmeldingStatus.statusEvent
+    const behandlingsutfallStatus = sykmelding.behandlingsutfall.status
+    const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn
 
-    const [isHoverState, setIsHoverState] = useState<boolean>(false);
+    const [isHoverState, setIsHoverState] = useState<boolean>(false)
 
     return (
         <Link href={`/${sykmelding.id}`} passHref>
@@ -58,7 +58,7 @@ const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
                 </div>
             </LinkPanel>
         </Link>
-    );
-};
+    )
+}
 
-export default Lenkepanel;
+export default Lenkepanel

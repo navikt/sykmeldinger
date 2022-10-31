@@ -1,22 +1,22 @@
-import userEvent from '@testing-library/user-event';
-import mockRouter from 'next-router-mock';
+import userEvent from '@testing-library/user-event'
+import mockRouter from 'next-router-mock'
 
-import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils';
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page';
-import { createMock, createSykmelding } from '../utils/test/dataUtils';
+import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
     StatusEvent,
     SubmitSykmeldingDocument,
     SykmeldingDocument,
     SykmeldingerDocument,
-} from '../fetching/graphql.generated';
+} from '../fetching/graphql.generated'
 
-import { createExtraFormDataMock } from './mockUtils';
+import { createExtraFormDataMock } from './mockUtils'
 
 describe('Frilanser', () => {
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/sykmelding-id`);
-    });
+        mockRouter.setCurrentUrl(`/sykmelding-id`)
+    })
 
     const baseMocks = [
         createMock({
@@ -27,7 +27,7 @@ describe('Frilanser', () => {
             request: { query: SykmeldingerDocument },
             result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
         }),
-    ];
+    ]
 
     describe('Within ventetid', () => {
         it('should show details from sykmelding', async () => {
@@ -38,11 +38,11 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
-        });
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
+        })
 
         it('should be able to submit form', async () => {
             render(<SykmeldingPage />, {
@@ -102,30 +102,28 @@ describe('Frilanser', () => {
                         },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '20.12.2020');
-            userEvent.type(egenmeldingFomTom[1], '27.12.2020');
-            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset');
-            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '20.12.2020')
+            userEvent.type(egenmeldingFomTom[1], '27.12.2020')
+            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
+            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
-        });
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+        })
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
-            const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' });
+            const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' })
 
             render(<SykmeldingPage />, {
                 mocks: [
@@ -191,28 +189,26 @@ describe('Frilanser', () => {
                         },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '20.12.2019');
-            userEvent.type(egenmeldingFomTom[1], '27.12.2019');
-            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset');
-            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '20.12.2019')
+            userEvent.type(egenmeldingFomTom[1], '27.12.2019')
+            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
+            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
-        });
-    });
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+        })
+    })
 
     describe('Outside ventetid', () => {
         it('should show details from sykmelding', async () => {
@@ -221,11 +217,11 @@ describe('Frilanser', () => {
                     ...baseMocks,
                     createExtraFormDataMock({ utenforVentetid: { erUtenforVentetid: true, oppfolgingsdato: null } }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument();
-        });
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
+        })
 
         it('should be able to submit form', async () => {
             render(<SykmeldingPage />, {
@@ -266,18 +262,18 @@ describe('Frilanser', () => {
                         },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
-        });
-    });
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+            expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+        })
+    })
 
     describe('Egenmeldingsperioder', () => {
         it('should show error message with link if date is missing', async () => {
@@ -288,21 +284,19 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            expect(await screen.findByRole('link', { name: 'fom dato mangler.' })).toBeInTheDocument();
-            expect(await screen.findByText(/tom dato mangler./)).toBeInTheDocument();
-        });
+            expect(await screen.findByRole('link', { name: 'fom dato mangler.' })).toBeInTheDocument()
+            expect(await screen.findByText(/tom dato mangler./)).toBeInTheDocument()
+        })
 
         it('should show error message with link if date is invalid format', async () => {
             render(<SykmeldingPage />, {
@@ -312,27 +306,25 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '11.20.2020');
-            userEvent.type(egenmeldingFomTom[1], '11.25.2020');
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '11.20.2020')
+            userEvent.type(egenmeldingFomTom[1], '11.25.2020')
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
                 await screen.findByRole('link', { name: 'Startdato må være på formatet dd.mm.yyyy' }),
-            ).toBeInTheDocument();
-            expect(await screen.findByText(/Sluttdato må være på formatet dd.mm.yyyy/)).toBeInTheDocument();
-        });
+            ).toBeInTheDocument()
+            expect(await screen.findByText(/Sluttdato må være på formatet dd.mm.yyyy/)).toBeInTheDocument()
+        })
 
         it('should show error message with link if fom is after oppfølgingsdato', async () => {
             render(<SykmeldingPage />, {
@@ -342,25 +334,23 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '02.04.2020');
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '02.04.2020')
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
                 await screen.findByRole('link', { name: 'Startdato kan ikke være oppfølgingsdato eller senere.' }),
-            ).toBeInTheDocument();
-        });
+            ).toBeInTheDocument()
+        })
 
         it('should show error message with link if tom is after oppfølgingsdato', async () => {
             render(<SykmeldingPage />, {
@@ -370,26 +360,24 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '01.01.2020');
-            userEvent.type(egenmeldingFomTom[1], '02.05.2020');
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '01.01.2020')
+            userEvent.type(egenmeldingFomTom[1], '02.05.2020')
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
                 await screen.findByRole('link', { name: 'Sluttdato kan ikke være oppfølgingsdato eller senere.' }),
-            ).toBeInTheDocument();
-        });
+            ).toBeInTheDocument()
+        })
 
         it('should show error message with link if fom is after tom', async () => {
             render(<SykmeldingPage />, {
@@ -399,27 +387,25 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTom).toHaveLength(2);
-            userEvent.type(egenmeldingFomTom[0], '10.01.2020');
-            userEvent.type(egenmeldingFomTom[1], '02.01.2020');
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTom).toHaveLength(2)
+            userEvent.type(egenmeldingFomTom[0], '10.01.2020')
+            userEvent.type(egenmeldingFomTom[1], '02.01.2020')
+            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
                 await screen.findByRole('link', { name: 'Startdato kan ikke være etter sluttdato.' }),
-            ).toBeInTheDocument();
-            expect(await screen.findByText(/Sluttdato kan ikke være før startdato./)).toBeInTheDocument();
-        });
+            ).toBeInTheDocument()
+            expect(await screen.findByText(/Sluttdato kan ikke være før startdato./)).toBeInTheDocument()
+        })
 
         it('should be able to remove period', async () => {
             render(<SykmeldingPage />, {
@@ -429,24 +415,22 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }));
-            const harBruktEgenmeldingFieldset = screen
-                .getByText(/Vi har registrert at du ble syk/i)
-                .closest('fieldset');
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }));
-            userEvent.click(screen.getByRole('button', { name: 'Legg til ekstra periode' }));
-            const egenmeldingFomTomTwo = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            expect(egenmeldingFomTomTwo).toHaveLength(4);
-            userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }));
+            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+            userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
+            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
+            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
+            userEvent.click(screen.getByRole('button', { name: 'Legg til ekstra periode' }))
+            const egenmeldingFomTomTwo = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            expect(egenmeldingFomTomTwo).toHaveLength(4)
+            userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
 
-            const egenmeldingFomTomOne = await screen.findAllByPlaceholderText('dd.mm.åååå');
-            await waitFor(() => expect(egenmeldingFomTomOne).toHaveLength(2));
-        });
+            const egenmeldingFomTomOne = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            await waitFor(() => expect(egenmeldingFomTomOne).toHaveLength(2))
+        })
 
         it('should show guid panel about egenmeldt', async () => {
             render(<SykmeldingPage />, {
@@ -468,15 +452,15 @@ describe('Frilanser', () => {
                         utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
                     }),
                 ],
-            });
+            })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'));
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
             expect(
                 await screen.findByText(
                     'Hei, denne egenmeldingen er utløpt og kan derfor ikke benyttes. Du kan fortsatt se opplysninger fra egenmeldingen under.',
                 ),
-            ).toBeInTheDocument();
-        });
-    });
-});
+            ).toBeInTheDocument()
+        })
+    })
+})

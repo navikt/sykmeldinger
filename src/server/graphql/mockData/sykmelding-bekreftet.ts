@@ -1,5 +1,5 @@
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { AnnenFraverGrunn, Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { AnnenFraverGrunn, Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated'
 
 export const sykmeldingBekreftet: Sykmelding = {
     id: 'BEKREFTET',
@@ -101,4 +101,4 @@ export const sykmeldingBekreftet: Sykmelding = {
     prognose: null,
     tiltakArbeidsplassen: null,
     tiltakNAV: null,
-};
+}

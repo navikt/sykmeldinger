@@ -1,12 +1,12 @@
-import { formatISO, sub } from 'date-fns';
-import { MockedResponse } from '@apollo/client/testing';
+import { formatISO, sub } from 'date-fns'
+import { MockedResponse } from '@apollo/client/testing'
 
-import { renderHook } from '../utils/test/testUtils';
-import { dateAdd, dateSub } from '../utils/dateUtils';
-import { createMock, createSykmelding, createUnderBehandlingMerknad } from '../utils/test/dataUtils';
-import { Periodetype, StatusEvent, Sykmelding, SykmeldingerDocument } from '../fetching/graphql.generated';
+import { renderHook } from '../utils/test/testUtils'
+import { dateAdd, dateSub } from '../utils/dateUtils'
+import { createMock, createSykmelding, createUnderBehandlingMerknad } from '../utils/test/dataUtils'
+import { Periodetype, StatusEvent, Sykmelding, SykmeldingerDocument } from '../fetching/graphql.generated'
 
-import useFindOlderSykmeldingId from './useFindOlderSykmeldingId';
+import useFindOlderSykmeldingId from './useFindOlderSykmeldingId'
 
 describe('useFindOlderSykmeldingId', () => {
     it('should find the earlier sykmelding when there is one APEN before', async () => {
@@ -14,15 +14,15 @@ describe('useFindOlderSykmeldingId', () => {
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
             createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[1]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
-    });
+        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1')
+    })
 
     it('should find the earlier sykmelding but disregard the sykmelding that is older than 12 months', async () => {
         const sykmeldinger = [
@@ -30,15 +30,15 @@ describe('useFindOlderSykmeldingId', () => {
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
             createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
-    });
+        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1')
+    })
 
     it('should find the earlier sykmelding but disregard the sykmelding that does not have APEN status', async () => {
         const sykmeldinger = [
@@ -49,15 +49,15 @@ describe('useFindOlderSykmeldingId', () => {
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
             createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
-    });
+        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1')
+    })
 
     it('should find the earliest sykmelding', async () => {
         const sykmeldinger = [
@@ -65,15 +65,15 @@ describe('useFindOlderSykmeldingId', () => {
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'this-sykmelding' }),
             // 30 dager siden
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'previous-sykmelding' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[0]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toEqual('previous-sykmelding');
-    });
+        expect(result.current.earliestSykmeldingId).toEqual('previous-sykmelding')
+    })
 
     it('should find the earlier sykmelding but disregard the sykmelding that is APEN but UNDER_BEHANDLING', async () => {
         const sykmeldinger = [
@@ -85,59 +85,59 @@ describe('useFindOlderSykmeldingId', () => {
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
             createSykmelding({ mottattTidspunkt: dateAdd(new Date(), { days: 15 }), id: 'SYKME-3' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
-    });
+        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1')
+    })
 
     it('should handle being the first sykmelding', async () => {
         const sykmeldinger = [
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 15 }), id: 'SYKME-2' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-3' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[0]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toBeNull();
-    });
+        expect(result.current.earliestSykmeldingId).toBeNull()
+    })
 
     it('should allow two sykmeldinger with the exact same period', async () => {
         const sykmeldinger = [
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 7 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 7 }), id: 'SYKME-2' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[1]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toBeNull();
-    });
+        expect(result.current.earliestSykmeldingId).toBeNull()
+    })
 
     it('should still work when the two first sykmeldinger has same date but the provided sykmelding is later', async () => {
         const sykmeldinger = [
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-2' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 7 }), id: 'SYKME-3' }),
-        ];
+        ]
 
         const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(sykmeldinger[2]), {
             mocks: [sykmeldingerMock(sykmeldinger)],
-        });
-        await waitForNextUpdate();
+        })
+        await waitForNextUpdate()
 
-        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1');
-    });
+        expect(result.current.earliestSykmeldingId).toEqual('SYKME-1')
+    })
 
     describe('should work when there is overlap between sykmeldinger', () => {
         const createSingle10PeriodApen = (date: string, id: string): Sykmelding => ({
@@ -155,30 +155,30 @@ describe('useFindOlderSykmeldingId', () => {
                     innspillTilArbeidsgiver: null,
                 },
             ],
-        });
+        })
 
-        const newest = createSingle10PeriodApen(dateSub(new Date(), { days: 1 }), 'SYKME-1');
-        const oldest = createSingle10PeriodApen(dateSub(new Date(), { days: 7 }), 'SYKME-2');
+        const newest = createSingle10PeriodApen(dateSub(new Date(), { days: 1 }), 'SYKME-1')
+        const oldest = createSingle10PeriodApen(dateSub(new Date(), { days: 7 }), 'SYKME-2')
 
         it('newest should point to oldest', async () => {
             const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(newest), {
                 mocks: [sykmeldingerMock([newest, oldest])],
-            });
-            await waitForNextUpdate();
+            })
+            await waitForNextUpdate()
 
-            expect(result.current.earliestSykmeldingId).toEqual('SYKME-2');
-        });
+            expect(result.current.earliestSykmeldingId).toEqual('SYKME-2')
+        })
 
         it('oldest should NOT point to newest', async () => {
             const { result, waitForNextUpdate } = renderHook(() => useFindOlderSykmeldingId(oldest), {
                 mocks: [sykmeldingerMock([newest, oldest])],
-            });
-            await waitForNextUpdate();
+            })
+            await waitForNextUpdate()
 
-            expect(result.current.earliestSykmeldingId).toBeNull();
-        });
-    });
-});
+            expect(result.current.earliestSykmeldingId).toBeNull()
+        })
+    })
+})
 
 function sykmeldingerMock(sykmeldinger: Sykmelding[]): MockedResponse {
     return createMock({
@@ -189,5 +189,5 @@ function sykmeldingerMock(sykmeldinger: Sykmelding[]): MockedResponse {
                 sykmeldinger,
             },
         },
-    });
+    })
 }

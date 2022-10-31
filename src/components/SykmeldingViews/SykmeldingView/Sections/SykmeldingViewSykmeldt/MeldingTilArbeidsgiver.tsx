@@ -1,16 +1,16 @@
-import { Employer } from '@navikt/ds-icons';
+import { Employer } from '@navikt/ds-icons'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
-import styles from './MeldingTilArbeidsgiver.module.css';
+import styles from './MeldingTilArbeidsgiver.module.css'
 
 interface Props {
-    meldingTilArbeidsgiver?: string | null;
+    meldingTilArbeidsgiver?: string | null
 }
 
 function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): JSX.Element | null {
-    if (!meldingTilArbeidsgiver) return null;
+    if (!meldingTilArbeidsgiver) return null
 
     return (
         <div>
@@ -23,7 +23,7 @@ function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): JSX.Element 
                 />
             </div>
         </div>
-    );
+    )
 }
 
-export default MeldingTilArbeidsgiver;
+export default MeldingTilArbeidsgiver

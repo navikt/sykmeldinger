@@ -1,18 +1,18 @@
-import { BodyLong, BodyShort, GuidePanel, Link } from '@navikt/ds-react';
+import { BodyLong, BodyShort, GuidePanel, Link } from '@navikt/ds-react'
 
-import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated';
-import Spacing from '../Spacing/Spacing';
-import { Merknadtype } from '../InformationBanner/InformationBanner';
-import { getPublicEnv } from '../../utils/env';
+import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated'
+import Spacing from '../Spacing/Spacing'
+import { Merknadtype } from '../InformationBanner/InformationBanner'
+import { getPublicEnv } from '../../utils/env'
 
-import styles from './StatusInfo.module.css';
+import styles from './StatusInfo.module.css'
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 interface StatusInfoProps {
-    sykmeldingStatus: SykmeldingStatus;
-    sykmeldingsperioder: readonly Periode[];
-    sykmeldingMerknader: readonly Merknad[];
+    sykmeldingStatus: SykmeldingStatus
+    sykmeldingsperioder: readonly Periode[]
+    sykmeldingMerknader: readonly Merknad[]
 }
 
 function StatusInfo({
@@ -20,22 +20,22 @@ function StatusInfo({
     sykmeldingsperioder,
     sykmeldingMerknader,
 }: StatusInfoProps): JSX.Element | null {
-    const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.Avventende);
+    const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.Avventende)
 
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
         (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
-    );
+    )
 
     const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe.find(
         (sporsmal) => sporsmal.shortName === 'ARBEIDSSITUASJON',
-    );
+    )
     const erFlEllerSn =
         arbeidssituasjonSporsmal?.svar.svar === 'FRILANSER' ||
-        arbeidssituasjonSporsmal?.svar.svar === 'NAERINGSDRIVENDE';
+        arbeidssituasjonSporsmal?.svar.svar === 'NAERINGSDRIVENDE'
 
-    if (sykmeldingStatus.statusEvent !== 'SENDT' && sykmeldingStatus.statusEvent !== 'BEKREFTET') return null;
+    if (sykmeldingStatus.statusEvent !== 'SENDT' && sykmeldingStatus.statusEvent !== 'BEKREFTET') return null
 
-    if (erAvventende && sykmeldingStatus.statusEvent === 'BEKREFTET') return null;
+    if (erAvventende && sykmeldingStatus.statusEvent === 'BEKREFTET') return null
 
     if (erAvventende) {
         return (
@@ -59,7 +59,7 @@ function StatusInfo({
                     </a>
                 </GuidePanel>
             </div>
-        );
+        )
     }
 
     if (erUnderBehandlingTilbakedatert) {
@@ -82,7 +82,7 @@ function StatusInfo({
                     </Spacing>
                 </GuidePanel>
             </div>
-        );
+        )
     }
 
     return (
@@ -116,7 +116,7 @@ function StatusInfo({
                 </Spacing>
             </GuidePanel>
         </div>
-    );
+    )
 }
 
-export default StatusInfo;
+export default StatusInfo

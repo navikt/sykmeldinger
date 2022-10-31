@@ -1,34 +1,34 @@
-import React from 'react';
-import { Alert, Button, Detail, Heading, Loader } from '@navikt/ds-react';
-import { FillForms } from '@navikt/ds-icons';
+import React from 'react'
+import { Alert, Button, Detail, Heading, Loader } from '@navikt/ds-react'
+import { FillForms } from '@navikt/ds-icons'
 
-import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated';
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import { toReadableDate } from '../../../../utils/dateUtils';
-import Spacing from '../../../Spacing/Spacing';
-import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam';
-import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations';
-import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude';
-import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding';
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
+import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
+import { toReadableDate } from '../../../../utils/dateUtils'
+import Spacing from '../../../Spacing/Spacing'
+import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
+import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
+import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkAvbruttSykmeldingProps {
-    sykmelding: Sykmelding;
+    sykmelding: Sykmelding
 }
 
-const skjemanavn = 'gjenåpne avbrutt sykmelding';
+const skjemanavn = 'gjenåpne avbrutt sykmelding'
 
 function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Element {
-    const logEvent = useAmplitude();
-    useHotjarTrigger('SYKMELDING_OK_AVBRUTT');
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } });
-    const sykmeldingId = useGetSykmeldingIdParam();
+    const logEvent = useAmplitude()
+    useHotjarTrigger('SYKMELDING_OK_AVBRUTT')
+    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
+    const sykmeldingId = useGetSykmeldingIdParam()
     const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.Gjenapne,
         () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
         () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
-    );
+    )
 
     return (
         <div className="sykmelding-container">
@@ -60,7 +60,7 @@ function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Elem
 
             <HintToNextOlderSykmelding />
         </div>
-    );
+    )
 }
 
-export default OkAvbruttSykmelding;
+export default OkAvbruttSykmelding

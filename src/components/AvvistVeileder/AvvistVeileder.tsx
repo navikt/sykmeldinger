@@ -1,33 +1,31 @@
-import React from 'react';
-import { BodyLong, BodyShort, GuidePanel, Heading } from '@navikt/ds-react';
+import React from 'react'
+import { BodyLong, BodyShort, GuidePanel, Heading } from '@navikt/ds-react'
 
-import { Behandlingsutfall } from '../../fetching/graphql.generated';
+import { Behandlingsutfall } from '../../fetching/graphql.generated'
 
-import ForklaringZDiagnose from './ForklaringZDiagnose';
-import ForklaringAndre from './ForklaringAndre';
-import styles from './AvvistVeileder.module.css';
+import ForklaringZDiagnose from './ForklaringZDiagnose'
+import ForklaringAndre from './ForklaringAndre'
+import styles from './AvvistVeileder.module.css'
 
 interface AvvistVeilederProps {
-    behandlerNavn: string;
-    behandlingsutfall: Behandlingsutfall;
+    behandlerNavn: string
+    behandlingsutfall: Behandlingsutfall
 }
 
 const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandlingsutfall }) => {
-    const isNotValidInHPR = behandlingsutfall.ruleHits.some(
-        (regel) => regel.ruleName === 'BEHANDLER_IKKE_GYLDIG_I_HPR',
-    );
+    const isNotValidInHPR = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'BEHANDLER_IKKE_GYLDIG_I_HPR')
     const isMissingAuthorization = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_MANGLER_AUTORISASJON_I_HPR',
-    );
+    )
     const isNotCorrectRole = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_IKKE_LE_KI_MT_TL_FT_I_HPR',
-    );
-    const isSuspended = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'BEHANDLER_SUSPENDERT');
+    )
+    const isSuspended = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'BEHANDLER_SUSPENDERT')
     const isOver12Weeks = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_MT_FT_KI_OVER_12_UKER',
-    );
-    const isOver70 = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'PASIENT_ELDRE_ENN_70');
-    const isZDiagnosis = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'ICPC_2_Z_DIAGNOSE');
+    )
+    const isOver70 = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'PASIENT_ELDRE_ENN_70')
+    const isZDiagnosis = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'ICPC_2_Z_DIAGNOSE')
 
     return (
         <GuidePanel poster>
@@ -61,7 +59,7 @@ const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandli
                 <ForklaringAndre behandlerNavn={behandlerNavn} ruleHits={behandlingsutfall.ruleHits} />
             )}
         </GuidePanel>
-    );
-};
+    )
+}
 
-export default AvvistVeileder;
+export default AvvistVeileder

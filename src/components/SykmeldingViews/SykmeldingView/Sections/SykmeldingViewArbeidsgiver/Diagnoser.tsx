@@ -1,15 +1,15 @@
-import { Bandage } from '@navikt/ds-icons';
-import React from 'react';
+import { Bandage } from '@navikt/ds-icons'
+import React from 'react'
 
-import { MedisinskVurdering } from '../../../../../fetching/graphql.generated';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './Diagnoser.module.css';
+import styles from './Diagnoser.module.css'
 
 interface Props {
-    medisinskVurdering: MedisinskVurdering;
-    sladd?: boolean;
+    medisinskVurdering: MedisinskVurdering
+    sladd?: boolean
 }
 
 function Diagnoser({ medisinskVurdering, sladd }: Props): JSX.Element {
@@ -28,13 +28,13 @@ function Diagnoser({ medisinskVurdering, sladd }: Props): JSX.Element {
                     if (bidiagnose.tekst) {
                         return (
                             <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} sladd={sladd} />
-                        );
+                        )
                     }
-                    return null;
+                    return null
                 })}
             </div>
         </div>
-    );
+    )
 }
 
-export default Diagnoser;
+export default Diagnoser

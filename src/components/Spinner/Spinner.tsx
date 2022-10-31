@@ -1,10 +1,10 @@
-import { Heading, Loader } from '@navikt/ds-react';
-import React from 'react';
+import { Heading, Loader } from '@navikt/ds-react'
+import React from 'react'
 
-import styles from './Spinner.module.css';
+import styles from './Spinner.module.css'
 
 interface SpinnerProps {
-    headline: string;
+    headline: string
 }
 
 const Spinner: React.FC<SpinnerProps> = ({ headline }) => (
@@ -14,6 +14,6 @@ const Spinner: React.FC<SpinnerProps> = ({ headline }) => (
         </Heading>
         <Loader />
     </div>
-);
+)
 
-export default Spinner;
+export default Spinner

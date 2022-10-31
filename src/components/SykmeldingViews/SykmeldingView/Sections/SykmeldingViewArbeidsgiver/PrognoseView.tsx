@@ -1,23 +1,23 @@
-import { Historic } from '@navikt/ds-icons';
+import { Historic } from '@navikt/ds-icons'
 
-import { Prognose } from '../../../../../fetching/graphql.generated';
-import JaEntry from '../../Layout/JaEntry/JaEntry';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { Prognose } from '../../../../../fetching/graphql.generated'
+import JaEntry from '../../Layout/JaEntry/JaEntry'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './PrognoseView.module.css';
+import styles from './PrognoseView.module.css'
 
 interface Props {
-    prognose?: Prognose | null;
+    prognose?: Prognose | null
 }
 
 function PrognoseView({ prognose }: Props): JSX.Element | null {
     if (!prognose) {
-        return null;
+        return null
     }
 
     if (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen) {
-        return null;
+        return null
     }
 
     return (
@@ -38,7 +38,7 @@ function PrognoseView({ prognose }: Props): JSX.Element | null {
                 </div>
             )}
         </div>
-    );
+    )
 }
 
-export default PrognoseView;
+export default PrognoseView

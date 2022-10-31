@@ -1,21 +1,21 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
-import { LocalDateSchema } from '../date';
+import { LocalDateSchema } from '../date'
 
-import { ArbeidsgiverSykmeldingSchema } from './ArbeidsgiverSykmelding';
-import { BehandlerSchema } from './Behandler';
-import { BehandlingsutfallSchema } from './Behandlingsutfall';
-import { KontaktMedPasientSchema } from './KontaktMedPasient';
-import { MedisinskVurderingSchema } from './MedisinskVurdering';
-import { MeldingTilNAVSchema } from './MeldingTilNav';
-import { MerknadSchema } from './Merknad';
-import { PeriodeSchema } from './Periode';
-import { PrognoseSchema } from './Prognose';
-import { SykmeldingStatusSchema } from './SykmeldingStatus';
-import { UtdypendeOpplysningSchema } from './UtdypendeOpplysninger';
-import { PasientSchema } from './Pasient';
+import { ArbeidsgiverSykmeldingSchema } from './ArbeidsgiverSykmelding'
+import { BehandlerSchema } from './Behandler'
+import { BehandlingsutfallSchema } from './Behandlingsutfall'
+import { KontaktMedPasientSchema } from './KontaktMedPasient'
+import { MedisinskVurderingSchema } from './MedisinskVurdering'
+import { MeldingTilNAVSchema } from './MeldingTilNav'
+import { MerknadSchema } from './Merknad'
+import { PeriodeSchema } from './Periode'
+import { PrognoseSchema } from './Prognose'
+import { SykmeldingStatusSchema } from './SykmeldingStatus'
+import { UtdypendeOpplysningSchema } from './UtdypendeOpplysninger'
+import { PasientSchema } from './Pasient'
 
-export type Sykmelding = z.infer<typeof SykmeldingSchema>;
+export type Sykmelding = z.infer<typeof SykmeldingSchema>
 export const SykmeldingSchema = z.object({
     id: z.string(),
     mottattTidspunkt: LocalDateSchema,
@@ -43,4 +43,4 @@ export const SykmeldingSchema = z.object({
     harRedusertArbeidsgiverperiode: z.boolean().nullable(),
     merknader: z.array(MerknadSchema).nullable(),
     pasient: PasientSchema.nullable(),
-});
+})

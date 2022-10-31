@@ -1,20 +1,20 @@
-import { Office2 } from '@navikt/ds-icons';
+import { Office2 } from '@navikt/ds-icons'
 
-import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated';
-import { arbeidsrelatertArsakToText, medisinskArsakToText } from '../../../../../utils/periodeUtils';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import ListEntry from '../../Layout/ListEntry/ListEntry';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
+import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
+import { arbeidsrelatertArsakToText, medisinskArsakToText } from '../../../../../utils/periodeUtils'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import ListEntry from '../../Layout/ListEntry/ListEntry'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
-import styles from './AktivitetIkkeMulig.module.css';
+import styles from './AktivitetIkkeMulig.module.css'
 
 interface Props {
-    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode;
+    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
 }
 
 const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null => {
     if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
-        return null;
+        return null
     }
 
     return (
@@ -57,7 +57,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
                 </div>
             )}
         </div>
-    );
-};
+    )
+}
 
-export default AktivitetIkkeMulig;
+export default AktivitetIkkeMulig

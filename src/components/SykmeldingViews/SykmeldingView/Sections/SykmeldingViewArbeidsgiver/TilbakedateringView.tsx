@@ -1,19 +1,19 @@
-import { Historic } from '@navikt/ds-icons';
+import { Historic } from '@navikt/ds-icons'
 
-import { KontaktMedPasient } from '../../../../../fetching/graphql.generated';
-import { toReadableDate } from '../../../../../utils/dateUtils';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { KontaktMedPasient } from '../../../../../fetching/graphql.generated'
+import { toReadableDate } from '../../../../../utils/dateUtils'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './TilbakedateringView.module.css';
+import styles from './TilbakedateringView.module.css'
 
 interface TilbakedateringViewProps {
-    kontaktMedPasient: KontaktMedPasient;
+    kontaktMedPasient: KontaktMedPasient
 }
 
 function TilbakedateringView({ kontaktMedPasient }: TilbakedateringViewProps): JSX.Element | null {
     if (!kontaktMedPasient.kontaktDato) {
-        return null;
+        return null
     }
 
     return (
@@ -26,7 +26,7 @@ function TilbakedateringView({ kontaktMedPasient }: TilbakedateringViewProps): J
                 />
             </div>
         </div>
-    );
+    )
 }
 
-export default TilbakedateringView;
+export default TilbakedateringView

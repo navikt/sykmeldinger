@@ -1,38 +1,38 @@
-import React, { useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import React, { useEffect } from 'react'
+import { useFormContext, Controller } from 'react-hook-form'
+import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 
-import { FormShape } from '../Form';
-import { BrukerinformasjonFragment } from '../../../../../../fetching/graphql.generated';
-import QuestionWrapper from '../layout/QuestionWrapper';
+import { FormShape } from '../Form'
+import { BrukerinformasjonFragment } from '../../../../../../fetching/graphql.generated'
+import QuestionWrapper from '../layout/QuestionWrapper'
 
-import RiktigNarmesteLeder from './RiktigNarmesteLeder';
+import RiktigNarmesteLeder from './RiktigNarmesteLeder'
 
 interface ArbeidsgiverOrgnummerProps {
-    brukerinformasjon: BrukerinformasjonFragment;
+    brukerinformasjon: BrukerinformasjonFragment
 }
 
-const fieldName = 'arbeidsgiverOrgnummer';
-const sporsmaltekst = 'Velg arbeidsgiver';
+const fieldName = 'arbeidsgiverOrgnummer'
+const sporsmaltekst = 'Velg arbeidsgiver'
 
 function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps): JSX.Element {
-    const { arbeidsgivere } = brukerinformasjon;
-    const { register, unregister, control, watch } = useFormContext<FormShape>();
-    const watchArbeidsgiverOrgnummer = watch(fieldName);
-    const harArbeidsgiver = arbeidsgivere.length > 0;
+    const { arbeidsgivere } = brukerinformasjon
+    const { register, unregister, control, watch } = useFormContext<FormShape>()
+    const watchArbeidsgiverOrgnummer = watch(fieldName)
+    const harArbeidsgiver = arbeidsgivere.length > 0
 
     useEffect(() => {
         register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
-        });
+        })
         register(`${fieldName}.svartekster`, {
             value: JSON.stringify(arbeidsgivere.map((ag) => ({ navn: ag.navn, orgnummer: ag.orgnummer }))),
-        });
+        })
         return () =>
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [arbeidsgivere, register, unregister]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+    }, [arbeidsgivere, register, unregister])
 
-    const valgtArbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer?.svar);
+    const valgtArbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === watchArbeidsgiverOrgnummer?.svar)
 
     return (
         <QuestionWrapper>
@@ -86,7 +86,7 @@ function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps
                 <RiktigNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />
             )}
         </QuestionWrapper>
-    );
+    )
 }
 
-export default ArbeidsgiverOrgnummer;
+export default ArbeidsgiverOrgnummer

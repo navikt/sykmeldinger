@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated';
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger';
-import Spacing from '../../../Spacing/Spacing';
-import StatusBanner from '../../../StatusBanner/StatusBanner';
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer';
-import SykmeldingArbeidsgiverContainer from '../../SykmeldingView/SykmeldingArbeidsgiverContainer';
-import { isUnderbehandling } from '../../../../utils/sykmeldingUtils';
-import { UnderBehandlingGuidePanel } from '../../../InformationBanner/InformationBanner';
+import { Sykmelding } from '../../../../fetching/graphql.generated'
+import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
+import Spacing from '../../../Spacing/Spacing'
+import StatusBanner from '../../../StatusBanner/StatusBanner'
+import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingArbeidsgiverContainer from '../../SykmeldingView/SykmeldingArbeidsgiverContainer'
+import { isUnderbehandling } from '../../../../utils/sykmeldingUtils'
+import { UnderBehandlingGuidePanel } from '../../../InformationBanner/InformationBanner'
 
 interface OkSendtSykmeldingProps {
-    sykmelding: Sykmelding;
+    sykmelding: Sykmelding
 }
 
 function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element {
-    useHotjarTrigger('SYKMELDING_OK_SENDT');
+    useHotjarTrigger('SYKMELDING_OK_SENDT')
 
     return (
         <div className="sykmelding-container">
@@ -37,7 +37,7 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element 
 
             <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
         </div>
-    );
+    )
 }
 
-export default OkSendtSykmelding;
+export default OkSendtSykmelding

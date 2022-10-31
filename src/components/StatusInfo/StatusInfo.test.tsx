@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
 import {
     Merknad,
@@ -8,10 +8,10 @@ import {
     StatusEvent,
     Svartype,
     SykmeldingStatus,
-} from '../../fetching/graphql.generated';
-import { Merknadtype } from '../InformationBanner/InformationBanner';
+} from '../../fetching/graphql.generated'
+import { Merknadtype } from '../InformationBanner/InformationBanner'
 
-import StatusInfo from './StatusInfo';
+import StatusInfo from './StatusInfo'
 
 describe('StatusInfo', () => {
     it('Renders nothing when status is not SENDT or BEKREFTET', () => {
@@ -21,11 +21,11 @@ describe('StatusInfo', () => {
             timestamp: '2021-05-01',
             arbeidsgiver: null,
             sporsmalOgSvarListe: [],
-        };
+        }
 
-        render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[]} sykmeldingMerknader={[]} />);
-        expect(screen.queryByTestId('status-info')).not.toBeInTheDocument();
-    });
+        render(<StatusInfo sykmeldingStatus={sykmeldingStatus} sykmeldingsperioder={[]} sykmeldingMerknader={[]} />)
+        expect(screen.queryByTestId('status-info')).not.toBeInTheDocument()
+    })
 
     describe('Avventende', () => {
         it('Renders avventende info when status is SENDT and periode is AVVENTENDE', () => {
@@ -35,7 +35,7 @@ describe('StatusInfo', () => {
                 timestamp: '2021-05-01',
                 arbeidsgiver: null,
                 sporsmalOgSvarListe: [],
-            };
+            }
             const avventendePeriode: Periode = {
                 __typename: 'Periode',
                 fom: '2021-05-01',
@@ -46,7 +46,7 @@ describe('StatusInfo', () => {
                 gradert: null,
                 behandlingsdager: null,
                 aktivitetIkkeMulig: null,
-            };
+            }
 
             render(
                 <StatusInfo
@@ -54,12 +54,12 @@ describe('StatusInfo', () => {
                     sykmeldingsperioder={[avventendePeriode]}
                     sykmeldingMerknader={[]}
                 />,
-            );
-            expect(screen.getByText(/Du har sendt beskjed til arbeidsgiveren din/)).toBeInTheDocument();
+            )
+            expect(screen.getByText(/Du har sendt beskjed til arbeidsgiveren din/)).toBeInTheDocument()
             expect(
                 screen.getByText(/Husk at du har mulighet til å lage en digital oppfølgingsplan/),
-            ).toBeInTheDocument();
-        });
+            ).toBeInTheDocument()
+        })
 
         it('Renders nothing when status is BEKREFTET and periode is AVVENTENDE', () => {
             const sykmeldingStatus: SykmeldingStatus = {
@@ -68,7 +68,7 @@ describe('StatusInfo', () => {
                 timestamp: '2021-05-01',
                 arbeidsgiver: null,
                 sporsmalOgSvarListe: [],
-            };
+            }
             const avventendePeriode: Periode = {
                 __typename: 'Periode',
                 fom: '2021-05-01',
@@ -79,17 +79,17 @@ describe('StatusInfo', () => {
                 gradert: null,
                 behandlingsdager: null,
                 aktivitetIkkeMulig: null,
-            };
+            }
             render(
                 <StatusInfo
                     sykmeldingStatus={sykmeldingStatus}
                     sykmeldingsperioder={[avventendePeriode]}
                     sykmeldingMerknader={[]}
                 />,
-            );
-            expect(screen.queryByTestId('status-info')).not.toBeInTheDocument();
-        });
-    });
+            )
+            expect(screen.queryByTestId('status-info')).not.toBeInTheDocument()
+        })
+    })
 
     describe('Tilbakedatert under behandling', () => {
         it('Renders under behandling info when status is SENDT and has merknad of type TILBAKEDATERING_UNDER_BEHANDLING', () => {
@@ -99,29 +99,29 @@ describe('StatusInfo', () => {
                 timestamp: '2021-05-01',
                 arbeidsgiver: null,
                 sporsmalOgSvarListe: [],
-            };
+            }
             const merknad: Merknad = {
                 __typename: 'Merknad',
                 type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
                 beskrivelse: null,
-            };
+            }
             render(
                 <StatusInfo
                     sykmeldingStatus={sykmeldingStatus}
                     sykmeldingsperioder={[]}
                     sykmeldingMerknader={[merknad]}
                 />,
-            );
+            )
             expect(
                 screen.getByText(/Vanligvis fyller du ut en søknad om sykepenger når sykmeldingen er over/),
-            ).toBeInTheDocument();
+            ).toBeInTheDocument()
             expect(
                 screen.getByText(
                     /Siden legen har skrevet at sykmeldingen startet før dere hadde kontakt, må NAV først vurdere om det var en gyldig grunn til dette/,
                 ),
-            ).toBeInTheDocument();
-        });
-    });
+            ).toBeInTheDocument()
+        })
+    })
 
     describe('Standard digital søknad', () => {
         describe('SENDT', () => {
@@ -132,7 +132,7 @@ describe('StatusInfo', () => {
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -143,18 +143,18 @@ describe('StatusInfo', () => {
                     innspillTilArbeidsgiver: null,
                     gradert: null,
                     aktivitetIkkeMulig: null,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+            })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -163,7 +163,7 @@ describe('StatusInfo', () => {
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -174,7 +174,7 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 const aktivitetIkkeMuligPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -189,18 +189,18 @@ describe('StatusInfo', () => {
                     gradert: null,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+            })
 
             it('Ansatt with reisetilskudd in combination with another period type renders standard info', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -220,7 +220,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -231,7 +231,7 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 const aktivitetIkkeMuligPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -246,18 +246,18 @@ describe('StatusInfo', () => {
                     gradert: null,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+            })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -277,7 +277,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -288,19 +288,19 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
+            })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -320,7 +320,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -331,19 +331,19 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
+            })
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -363,7 +363,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -374,21 +374,21 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
+                ).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-                ).not.toBeInTheDocument();
-            });
+                ).not.toBeInTheDocument()
+            })
 
             it('Gradert reisetilskudd renders standard info', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -397,7 +397,7 @@ describe('StatusInfo', () => {
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                };
+                }
                 const gradertReisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -412,19 +412,19 @@ describe('StatusInfo', () => {
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     aktivitetIkkeMulig: null,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[gradertReisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-            });
-        });
+                ).toBeInTheDocument()
+            })
+        })
 
         describe('BEKREFTET', () => {
             it('Single reisetilskudd periode not in combination with another period type renders standard info', () => {
@@ -434,7 +434,7 @@ describe('StatusInfo', () => {
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -445,18 +445,18 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+            })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -465,7 +465,7 @@ describe('StatusInfo', () => {
                     timestamp: '2021-05-01',
                     arbeidsgiver: null,
                     sporsmalOgSvarListe: [],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -476,7 +476,7 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 const aktivitetIkkeMuligPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -491,18 +491,18 @@ describe('StatusInfo', () => {
                     gradert: null,
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode, aktivitetIkkeMuligPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+            })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -522,7 +522,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -533,19 +533,19 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
+            })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -565,7 +565,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -576,19 +576,19 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
+            })
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -608,7 +608,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const reisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -619,21 +619,21 @@ describe('StatusInfo', () => {
                     gradert: null,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: true,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[reisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
+                ).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-                ).not.toBeInTheDocument();
-            });
+                ).not.toBeInTheDocument()
+            })
 
             it('Renders standard info with frilanser info for gradert reisetilskudd NAERINGSDRIVENDE', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -653,7 +653,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const gradertReisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -668,19 +668,19 @@ describe('StatusInfo', () => {
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     aktivitetIkkeMulig: null,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[gradertReisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument();
-            });
+                ).toBeInTheDocument()
+                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
+            })
 
             it('Renders standard info without frilanser info for gradert reisetilskudd ARBEIDSLEDIG', () => {
                 const sykmeldingStatus: SykmeldingStatus = {
@@ -700,7 +700,7 @@ describe('StatusInfo', () => {
                             },
                         },
                     ],
-                };
+                }
                 const gradertReisetilskuddPeriode: Periode = {
                     __typename: 'Periode',
                     fom: '2021-05-01',
@@ -715,21 +715,21 @@ describe('StatusInfo', () => {
                     behandlingsdager: null,
                     innspillTilArbeidsgiver: null,
                     aktivitetIkkeMulig: null,
-                };
+                }
                 render(
                     <StatusInfo
                         sykmeldingStatus={sykmeldingStatus}
                         sykmeldingsperioder={[gradertReisetilskuddPeriode]}
                         sykmeldingMerknader={[]}
                     />,
-                );
+                )
                 expect(
                     screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument();
+                ).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-                ).not.toBeInTheDocument();
-            });
-        });
-    });
-});
+                ).not.toBeInTheDocument()
+            })
+        })
+    })
+})

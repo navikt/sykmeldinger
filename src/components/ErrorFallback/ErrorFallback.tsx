@@ -1,4 +1,4 @@
-import { GuidePanel } from '@navikt/ds-react';
+import { GuidePanel } from '@navikt/ds-react'
 
 const ErrorFallback = (): JSX.Element => {
     return (
@@ -8,7 +8,7 @@ const ErrorFallback = (): JSX.Element => {
                 oss hvis det ikke har løst seg til i morgen.
             </GuidePanel>
         </div>
-    );
-};
+    )
+}
 
-export default ErrorFallback;
+export default ErrorFallback

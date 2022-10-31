@@ -1,21 +1,21 @@
-import { People } from '@navikt/ds-icons';
-import { BodyShort } from '@navikt/ds-react';
+import { People } from '@navikt/ds-icons'
+import { BodyShort } from '@navikt/ds-react'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
-import { Pasient } from '../../../../../fetching/graphql.generated';
-import { getPasientName } from '../../../../../utils/pasientUtils';
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { Pasient } from '../../../../../fetching/graphql.generated'
+import { getPasientName } from '../../../../../utils/pasientUtils'
 
-import styles from './SykmeldingenGjelderView.module.css';
+import styles from './SykmeldingenGjelderView.module.css'
 
 interface Props {
-    pasient?: Pasient | null;
+    pasient?: Pasient | null
 }
 
 function SykmeldingenGjelderView({ pasient }: Props): JSX.Element | null {
-    if (!pasient) return null;
+    if (!pasient) return null
 
-    const name = getPasientName(pasient);
-    if (!name) return null;
+    const name = getPasientName(pasient)
+    if (!name) return null
 
     return (
         <div>
@@ -25,7 +25,7 @@ function SykmeldingenGjelderView({ pasient }: Props): JSX.Element | null {
                 {pasient.fnr && <BodyShort size="small">Fødselsnr: {pasient.fnr}</BodyShort>}
             </div>
         </div>
-    );
+    )
 }
 
-export default SykmeldingenGjelderView;
+export default SykmeldingenGjelderView

@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react';
-import { Accordion } from '@navikt/ds-react';
-import { Findout } from '@navikt/ds-icons';
+import { PropsWithChildren } from 'react'
+import { Accordion } from '@navikt/ds-react'
+import { Findout } from '@navikt/ds-icons'
 
-import styles from './FlereOpplysninger.module.css';
+import styles from './FlereOpplysninger.module.css'
 
 function FlereOpplysninger({ children }: PropsWithChildren<unknown>): JSX.Element {
     return (
@@ -17,7 +17,7 @@ function FlereOpplysninger({ children }: PropsWithChildren<unknown>): JSX.Elemen
                 <Accordion.Content className={styles.content}>{children}</Accordion.Content>
             </Accordion.Item>
         </Accordion>
-    );
+    )
 }
 
-export default FlereOpplysninger;
+export default FlereOpplysninger

@@ -1,9 +1,9 @@
-import { BodyLong, GuidePanel, Heading, Label, SpeechBubble } from '@navikt/ds-react';
+import { BodyLong, GuidePanel, Heading, Label, SpeechBubble } from '@navikt/ds-react'
 
-import { Merknad } from '../../fetching/graphql.generated';
-import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg';
+import { Merknad } from '../../fetching/graphql.generated'
+import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg'
 
-import styles from './InformationBanner.module.css';
+import styles from './InformationBanner.module.css'
 
 export enum Merknadtype {
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
@@ -12,8 +12,8 @@ export enum Merknadtype {
 }
 
 interface InformationBannerProps {
-    merknader?: readonly Merknad[] | null;
-    papirsykmelding?: boolean | null;
+    merknader?: readonly Merknad[] | null
+    papirsykmelding?: boolean | null
 }
 
 const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProps): JSX.Element => {
@@ -45,7 +45,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                     </BodyLong>
                 </GuidePanel>
             </div>
-        );
+        )
     }
 
     if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER)) {
@@ -62,7 +62,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                     <BodyLong>Du kan likevel sende inn søknaden om sykepenger.</BodyLong>
                 </GuidePanel>
             </div>
-        );
+        )
     }
 
     if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING)) {
@@ -70,7 +70,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
             <div data-testid="merknad-banner">
                 <UnderBehandlingGuidePanel isSent={false} />
             </div>
-        );
+        )
     }
 
     if (papirsykmelding === true) {
@@ -84,7 +84,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                     </BodyLong>
                 </GuidePanel>
             </div>
-        );
+        )
     }
 
     return (
@@ -100,8 +100,8 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                 </SpeechBubble.Bubble>
             </SpeechBubble>
         </div>
-    );
-};
+    )
+}
 
 export function UnderBehandlingGuidePanel({ isSent }: { isSent: boolean }): JSX.Element {
     return (
@@ -125,7 +125,7 @@ export function UnderBehandlingGuidePanel({ isSent }: { isSent: boolean }): JSX.
                 </>
             )}
         </GuidePanel>
-    );
+    )
 }
 
-export default InformationBanner;
+export default InformationBanner

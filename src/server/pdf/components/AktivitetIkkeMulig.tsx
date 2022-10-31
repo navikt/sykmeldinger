@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { AktivitetIkkeMuligPeriode } from '../../api-models/sykmelding/Periode';
-import { arbeidsrelatertArsakToText } from '../../../utils/periodeUtils';
+import { AktivitetIkkeMuligPeriode } from '../../api-models/sykmelding/Periode'
+import { arbeidsrelatertArsakToText } from '../../../utils/periodeUtils'
 
-import Office2 from './icons/Office2';
-import { Section } from './Section';
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
+import Office2 from './icons/Office2'
+import { Section } from './Section'
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
 
 interface Props {
-    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode;
+    aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
 }
 
 const styles = StyleSheet.create({
@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
         marginBottom: contentMarginBottom,
     },
     view: { marginBottom: 12 },
-});
+})
 
 const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null => {
-    if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null;
+    if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null
 
     return (
         <Section title="Aktivitet på arbeidsplassen" Icon={Office2}>
@@ -49,7 +49,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
                 )}
             </View>
         </Section>
-    );
-};
+    )
+}
 
-export default AktivitetIkkeMulig;
+export default AktivitetIkkeMulig

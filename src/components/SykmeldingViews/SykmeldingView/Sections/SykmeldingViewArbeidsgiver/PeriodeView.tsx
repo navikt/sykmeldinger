@@ -1,15 +1,15 @@
-import { Calender } from '@navikt/ds-icons';
+import { Calender } from '@navikt/ds-icons'
 
-import JaEntry from '../../Layout/JaEntry/JaEntry';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../../../utils/periodeUtils';
-import { Periode } from '../../../../../fetching/graphql.generated';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import JaEntry from '../../Layout/JaEntry/JaEntry'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../../../utils/periodeUtils'
+import { Periode } from '../../../../../fetching/graphql.generated'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './PeriodeView.module.css';
+import styles from './PeriodeView.module.css'
 
 interface PeriodeViewProps {
-    perioder: Periode[];
+    perioder: Periode[]
 }
 
 function PeriodeView({ perioder }: PeriodeViewProps): JSX.Element {
@@ -38,7 +38,7 @@ function PeriodeView({ perioder }: PeriodeViewProps): JSX.Element {
                 ))}
             </div>
         </div>
-    );
+    )
 }
 
-export default PeriodeView;
+export default PeriodeView

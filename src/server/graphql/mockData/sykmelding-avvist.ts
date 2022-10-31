@@ -1,5 +1,5 @@
-import { Sykmelding } from '../../api-models/sykmelding/Sykmelding';
-import { dateAdd, dateSub } from '../../../utils/dateUtils';
+import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { dateAdd, dateSub } from '../../../utils/dateUtils'
 import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
@@ -7,7 +7,7 @@ import {
     Periodetype,
     RegelStatus,
     StatusEvent,
-} from '../resolver-types.generated';
+} from '../resolver-types.generated'
 
 export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): Sykmelding {
     return {
@@ -149,5 +149,5 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
-    };
+    }
 }

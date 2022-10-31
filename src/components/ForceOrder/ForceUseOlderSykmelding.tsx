@@ -1,23 +1,23 @@
-import React from 'react';
-import { BodyLong, Button, GuidePanel, Heading, ReadMore } from '@navikt/ds-react';
-import Link from 'next/link';
+import React from 'react'
+import { BodyLong, Button, GuidePanel, Heading, ReadMore } from '@navikt/ds-react'
+import Link from 'next/link'
 
-import { pluralize } from '../../utils/stringUtils';
-import { useAmplitude, useLogAmplitudeEvent } from '../../amplitude/amplitude';
+import { pluralize } from '../../utils/stringUtils'
+import { useAmplitude, useLogAmplitudeEvent } from '../../amplitude/amplitude'
 
-import styles from './ForceUseOlderSykmelding.module.css';
+import styles from './ForceUseOlderSykmelding.module.css'
 
 interface Props {
-    olderSykmeldingId: string;
-    olderSykmeldingCount: number;
+    olderSykmeldingId: string
+    olderSykmeldingCount: number
 }
 
 function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Props): JSX.Element {
-    const logEvent = useAmplitude();
+    const logEvent = useAmplitude()
     useLogAmplitudeEvent({
         eventName: 'guidepanel vist',
         data: { komponent: 'tvungen videresending til ubrukte sykmeldinger' },
-    });
+    })
 
     return (
         <GuidePanel poster>
@@ -62,7 +62,7 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
                 </Button>
             </Link>
         </GuidePanel>
-    );
+    )
 }
 
-export default ForceUseOlderSykmelding;
+export default ForceUseOlderSykmelding

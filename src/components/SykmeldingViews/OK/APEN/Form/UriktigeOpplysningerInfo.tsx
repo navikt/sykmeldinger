@@ -1,6 +1,6 @@
-import { Alert, Heading } from '@navikt/ds-react';
+import { Alert, Heading } from '@navikt/ds-react'
 
-import { UriktigeOpplysningerType } from './Form';
+import { UriktigeOpplysningerType } from './Form'
 
 const uriktigOpplysningTekst: Record<keyof typeof UriktigeOpplysningerType, string> = {
     PERIODE: '',
@@ -13,17 +13,17 @@ const uriktigOpplysningTekst: Record<keyof typeof UriktigeOpplysningerType, stri
         'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at diagnosen er feil.',
     ANDRE_OPPLYSNINGER:
         'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at den inneholder feil.',
-};
+}
 
 interface UriktigeOpplysningerInfoProps {
-    uriktigeOpplysninger?: (keyof typeof UriktigeOpplysningerType)[];
+    uriktigeOpplysninger?: (keyof typeof UriktigeOpplysningerType)[]
 }
 
 function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysningerInfoProps): JSX.Element | null {
-    if (!uriktigeOpplysninger || uriktigeOpplysninger.length === 0) return null;
+    if (!uriktigeOpplysninger || uriktigeOpplysninger.length === 0) return null
 
     if (uriktigeOpplysninger.includes('PERIODE') || uriktigeOpplysninger.includes('SYKMELDINGSGRAD_FOR_LAV')) {
-        return null;
+        return null
     }
 
     return (
@@ -37,7 +37,7 @@ function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysninger
                 ))}
             </ul>
         </Alert>
-    );
+    )
 }
 
-export default UriktigeOpplysningerInfo;
+export default UriktigeOpplysningerInfo

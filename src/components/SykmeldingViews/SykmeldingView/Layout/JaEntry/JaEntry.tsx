@@ -1,10 +1,10 @@
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react'
 
-import styles from './JaEntry.module.css';
+import styles from './JaEntry.module.css'
 
 interface JaEntryProps {
-    title: string;
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
+    title: string
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6'
 }
 
 const JaEntry: React.FC<JaEntryProps> = ({ title, headingLevel = '3' }) => {
@@ -17,7 +17,7 @@ const JaEntry: React.FC<JaEntryProps> = ({ title, headingLevel = '3' }) => {
                 Ja
             </BodyShort>
         </div>
-    );
-};
+    )
+}
 
-export default JaEntry;
+export default JaEntry

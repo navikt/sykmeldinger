@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { getPasientName } from '../../../utils/pasientUtils';
-import { Pasient } from '../../api-models/sykmelding/Pasient';
+import { getPasientName } from '../../../utils/pasientUtils'
+import { Pasient } from '../../api-models/sykmelding/Pasient'
 
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
-import People from './icons/People';
-import { Section } from './Section';
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
+import People from './icons/People'
+import { Section } from './Section'
 
 interface Props {
-    pasient?: Pasient | null;
+    pasient?: Pasient | null
 }
 
 const styles = StyleSheet.create({
@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
         padding: contentPadding,
         marginBottom: contentMarginBottom,
     },
-});
+})
 
 const SykmeldingenGjelder = ({ pasient }: Props): JSX.Element | null => {
-    if (!pasient) return null;
+    if (!pasient) return null
 
-    const name = getPasientName(pasient);
-    if (!name) return null;
+    const name = getPasientName(pasient)
+    if (!name) return null
 
     return (
         <Section title="Sykmeldingen gjelder" Icon={People}>
@@ -34,7 +34,7 @@ const SykmeldingenGjelder = ({ pasient }: Props): JSX.Element | null => {
                 <Text>Fødselsnr: {pasient.fnr}</Text>
             </View>
         </Section>
-    );
-};
+    )
+}
 
-export default SykmeldingenGjelder;
+export default SykmeldingenGjelder

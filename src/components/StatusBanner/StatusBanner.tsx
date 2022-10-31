@@ -1,12 +1,12 @@
-import { Alert, Detail, Heading } from '@navikt/ds-react';
+import { Alert, Detail, Heading } from '@navikt/ds-react'
 
-import { Behandlingsutfall, SykmeldingStatus } from '../../fetching/graphql.generated';
-import { toReadableDate } from '../../utils/dateUtils';
+import { Behandlingsutfall, SykmeldingStatus } from '../../fetching/graphql.generated'
+import { toReadableDate } from '../../utils/dateUtils'
 
 interface StatusBannerProps {
-    sykmeldingStatus: SykmeldingStatus;
-    behandlingsutfall: Behandlingsutfall;
-    egenmeldt?: boolean | null;
+    sykmeldingStatus: SykmeldingStatus
+    behandlingsutfall: Behandlingsutfall
+    egenmeldt?: boolean | null
 }
 
 function StatusBanner({
@@ -21,7 +21,7 @@ function StatusBanner({
                     Du bekreftet at du har lest at sykmeldingen er avvist den{' '}
                     {toReadableDate(sykmeldingStatus.timestamp)}
                 </Alert>
-            );
+            )
         }
     }
 
@@ -33,7 +33,7 @@ function StatusBanner({
                 </Heading>
                 <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
-        );
+        )
     }
 
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
@@ -44,10 +44,10 @@ function StatusBanner({
                 </Heading>
                 <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
-        );
+        )
     }
 
-    return null;
+    return null
 }
 
-export default StatusBanner;
+export default StatusBanner

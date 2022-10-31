@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { Periode, Periodetype } from '../../../../../fetching/graphql.generated';
+import { Periode, Periodetype } from '../../../../../fetching/graphql.generated'
 
-import PeriodeView from './PeriodeView';
+import PeriodeView from './PeriodeView'
 
 describe('PeriodeView', () => {
     it('Renders avventende periode', () => {
@@ -16,16 +16,16 @@ describe('PeriodeView', () => {
             gradert: null,
             behandlingsdager: null,
             aktivitetIkkeMulig: null,
-        };
+        }
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} />)
 
-        expect(screen.getByText('Avventende sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument();
-        expect(screen.getByText('(5 dager)')).toBeInTheDocument();
-        expect(screen.getByText('Innspill til arbeidsgiver om tilrettelegging')).toBeInTheDocument();
-        expect(screen.getByText('innspill til arbeidsgiver')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Avventende sykmelding')).toBeInTheDocument()
+        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
+        expect(screen.getByText('(5 dager)')).toBeInTheDocument()
+        expect(screen.getByText('Innspill til arbeidsgiver om tilrettelegging')).toBeInTheDocument()
+        expect(screen.getByText('innspill til arbeidsgiver')).toBeInTheDocument()
+    })
 
     it('Renders gradert periode', () => {
         const periode: Periode = {
@@ -42,15 +42,15 @@ describe('PeriodeView', () => {
             behandlingsdager: null,
             innspillTilArbeidsgiver: null,
             aktivitetIkkeMulig: null,
-        };
+        }
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} />)
 
-        expect(screen.getByText('20% sykmelding')).toBeInTheDocument();
-        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument();
-        expect(screen.getByText('(5 dager)')).toBeInTheDocument();
-        expect(screen.getByText('Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?')).toBeInTheDocument();
-    });
+        expect(screen.getByText('20% sykmelding')).toBeInTheDocument()
+        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
+        expect(screen.getByText('(5 dager)')).toBeInTheDocument()
+        expect(screen.getByText('Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?')).toBeInTheDocument()
+    })
 
     it('Renders reisetilskudd periode', () => {
         const periode: Periode = {
@@ -63,14 +63,14 @@ describe('PeriodeView', () => {
             innspillTilArbeidsgiver: null,
             gradert: null,
             aktivitetIkkeMulig: null,
-        };
+        }
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} />)
 
-        expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
-        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument();
-        expect(screen.getByText('(5 dager)')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Reisetilskudd')).toBeInTheDocument()
+        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
+        expect(screen.getByText('(5 dager)')).toBeInTheDocument()
+    })
 
     it('Renders behandlingsdager periode', () => {
         const periode: Periode = {
@@ -83,14 +83,14 @@ describe('PeriodeView', () => {
             gradert: null,
             innspillTilArbeidsgiver: null,
             aktivitetIkkeMulig: null,
-        };
+        }
 
-        render(<PeriodeView perioder={[periode]} />);
+        render(<PeriodeView perioder={[periode]} />)
 
-        expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();
-        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument();
-        expect(screen.getByText('3 behandlingsdager i løpet av 5 dager')).toBeInTheDocument();
-    });
+        expect(screen.getByText('Behandlingsdager')).toBeInTheDocument()
+        expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
+        expect(screen.getByText('3 behandlingsdager i løpet av 5 dager')).toBeInTheDocument()
+    })
 
     it('Renders more than one period', () => {
         const reisetilskudd: Periode = {
@@ -103,7 +103,7 @@ describe('PeriodeView', () => {
             innspillTilArbeidsgiver: null,
             gradert: null,
             aktivitetIkkeMulig: null,
-        };
+        }
         const behandlingsdager: Periode = {
             __typename: 'Periode',
             fom: '2021-04-01',
@@ -114,11 +114,11 @@ describe('PeriodeView', () => {
             gradert: null,
             innspillTilArbeidsgiver: null,
             aktivitetIkkeMulig: null,
-        };
+        }
 
-        render(<PeriodeView perioder={[reisetilskudd, behandlingsdager]} />);
+        render(<PeriodeView perioder={[reisetilskudd, behandlingsdager]} />)
 
-        expect(screen.getByText('Reisetilskudd')).toBeInTheDocument();
-        expect(screen.getByText('Behandlingsdager')).toBeInTheDocument();
-    });
-});
+        expect(screen.getByText('Reisetilskudd')).toBeInTheDocument()
+        expect(screen.getByText('Behandlingsdager')).toBeInTheDocument()
+    })
+})

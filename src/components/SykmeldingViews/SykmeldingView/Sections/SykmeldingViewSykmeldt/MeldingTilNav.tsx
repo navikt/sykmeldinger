@@ -1,19 +1,19 @@
-import { PeopleDialogOutline } from '@navikt/ds-icons';
+import { PeopleDialogOutline } from '@navikt/ds-icons'
 
-import { MeldingTilNav } from '../../../../../fetching/graphql.generated';
-import JaEntry from '../../Layout/JaEntry/JaEntry';
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry';
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading';
+import { MeldingTilNav } from '../../../../../fetching/graphql.generated'
+import JaEntry from '../../Layout/JaEntry/JaEntry'
+import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './MeldingTilNav.module.css';
+import styles from './MeldingTilNav.module.css'
 
 interface Props {
-    meldingTilNav?: MeldingTilNav | null;
+    meldingTilNav?: MeldingTilNav | null
 }
 
 function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {
     if (!meldingTilNav || (meldingTilNav.bistandUmiddelbart === false && !meldingTilNav.beskrivBistand)) {
-        return null;
+        return null
     }
 
     return (
@@ -35,7 +35,7 @@ function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {
                 </div>
             )}
         </div>
-    );
+    )
 }
 
-export default MeldingTilNav;
+export default MeldingTilNav

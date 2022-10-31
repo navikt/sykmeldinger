@@ -1,17 +1,17 @@
-import cn from 'classnames';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import cn from 'classnames'
+import { BodyShort, Heading } from '@navikt/ds-react'
 
-import SladdSvg from '../../Svg/SladdSvg';
+import SladdSvg from '../../Svg/SladdSvg'
 
-import styles from './SykmeldingEntry.module.css';
+import styles from './SykmeldingEntry.module.css'
 
 interface SykmeldingEntryProps {
-    title: string;
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
-    mainText: string;
-    subText?: string | null;
-    small?: boolean;
-    sladd?: boolean;
+    title: string
+    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6'
+    mainText: string
+    subText?: string | null
+    small?: boolean
+    sladd?: boolean
 }
 
 const SykmeldingEntry: React.FC<SykmeldingEntryProps> = ({
@@ -30,7 +30,7 @@ const SykmeldingEntry: React.FC<SykmeldingEntryProps> = ({
                 </Heading>
                 {sladd ? <SladdSvg /> : <BodyShort size="small">{mainText}</BodyShort>}
             </div>
-        );
+        )
     }
 
     return (
@@ -41,7 +41,7 @@ const SykmeldingEntry: React.FC<SykmeldingEntryProps> = ({
             {sladd ? <SladdSvg /> : <BodyShort size="small">{mainText}</BodyShort>}
             {!!subText && <BodyShort size="small">{subText}</BodyShort>}
         </div>
-    );
-};
+    )
+}
 
-export default SykmeldingEntry;
+export default SykmeldingEntry

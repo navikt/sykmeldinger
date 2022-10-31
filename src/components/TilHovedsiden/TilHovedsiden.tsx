@@ -1,12 +1,12 @@
-import React from 'react';
-import { Back } from '@navikt/ds-icons';
-import { BodyShort, Link } from '@navikt/ds-react';
+import React from 'react'
+import { Back } from '@navikt/ds-icons'
+import { BodyShort, Link } from '@navikt/ds-react'
 
-import { getPublicEnv } from '../../utils/env';
+import { getPublicEnv } from '../../utils/env'
 
-import styles from './TilHovedsiden.module.css';
+import styles from './TilHovedsiden.module.css'
 
-const publicEnv = getPublicEnv();
+const publicEnv = getPublicEnv()
 
 const TilHovedsiden: React.FC = () => {
     return (
@@ -14,7 +14,7 @@ const TilHovedsiden: React.FC = () => {
             <Back />
             <BodyShort>Til hovedsiden ditt sykefravær</BodyShort>
         </Link>
-    );
-};
+    )
+}
 
-export default TilHovedsiden;
+export default TilHovedsiden

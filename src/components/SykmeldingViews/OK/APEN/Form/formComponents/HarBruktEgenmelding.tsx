@@ -1,38 +1,38 @@
-import React, { useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import dayjs from 'dayjs';
-import { BodyShort, Heading, Label, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import React, { useEffect } from 'react'
+import { useFormContext, Controller } from 'react-hook-form'
+import dayjs from 'dayjs'
+import { BodyShort, Heading, Label, Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 
-import QuestionWrapper from '../layout/QuestionWrapper';
-import { FormShape, JaEllerNeiType } from '../Form';
-import Spacing from '../../../../../Spacing/Spacing';
+import QuestionWrapper from '../layout/QuestionWrapper'
+import { FormShape, JaEllerNeiType } from '../Form'
+import Spacing from '../../../../../Spacing/Spacing'
 
-import Egenmeldingsperioder from './Egenmeldingsperioder';
+import Egenmeldingsperioder from './Egenmeldingsperioder'
 
 interface HarBruktEgenmeldingProps {
-    oppfolgingsdato: string;
+    oppfolgingsdato: string
 }
 
-const fieldName = 'harBruktEgenmelding';
+const fieldName = 'harBruktEgenmelding'
 
 const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsdato }) => {
-    const { control, watch, register, unregister } = useFormContext<FormShape>();
-    const watchHarBruktEgenmelding = watch(fieldName);
+    const { control, watch, register, unregister } = useFormContext<FormShape>()
+    const watchHarBruktEgenmelding = watch(fieldName)
     const sporsmaltekst = `Vi har registrert at du ble syk ${dayjs(oppfolgingsdato).format(
         'D. MMMM YYYY',
-    )}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`;
+    )}. Brukte du egenmelding eller noen annen sykmelding før denne datoen?`
 
     useEffect(() => {
         register(`${fieldName}.sporsmaltekst`, {
             value: sporsmaltekst,
-        });
+        })
         register(`${fieldName}.svartekster`, {
             value: JSON.stringify(JaEllerNeiType),
-        });
+        })
 
         return () =>
-            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`]);
-    }, [register, unregister, sporsmaltekst]);
+            unregister([fieldName, `${fieldName}.sporsmaltekst`, `${fieldName}.svartekster`, `${fieldName}.svar`])
+    }, [register, unregister, sporsmaltekst])
 
     return (
         <QuestionWrapper>
@@ -97,7 +97,7 @@ const HarBruktEgenmelding: React.FC<HarBruktEgenmeldingProps> = ({ oppfolgingsda
 
             {watchHarBruktEgenmelding?.svar === 'JA' && <Egenmeldingsperioder oppfolgingsdato={oppfolgingsdato} />}
         </QuestionWrapper>
-    );
-};
+    )
+}
 
-export default HarBruktEgenmelding;
+export default HarBruktEgenmelding

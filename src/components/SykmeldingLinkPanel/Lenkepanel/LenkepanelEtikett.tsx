@@ -1,11 +1,11 @@
-import React from 'react';
-import { Tag } from '@navikt/ds-react';
+import React from 'react'
+import { Tag } from '@navikt/ds-react'
 
-import { RegelStatus, StatusEvent } from '../../../fetching/graphql.generated';
+import { RegelStatus, StatusEvent } from '../../../fetching/graphql.generated'
 
 interface LenkepanelEtikettProps {
-    status: StatusEvent;
-    behandlingsutfall: RegelStatus;
+    status: StatusEvent
+    behandlingsutfall: RegelStatus
 }
 
 const LenkepanelEtikett: React.FC<LenkepanelEtikettProps> = ({ status, behandlingsutfall }) => {
@@ -15,7 +15,7 @@ const LenkepanelEtikett: React.FC<LenkepanelEtikettProps> = ({ status, behandlin
                 <Tag variant="warning" size="small">
                     Avvist av NAV
                 </Tag>
-            );
+            )
         }
     }
 
@@ -25,28 +25,28 @@ const LenkepanelEtikett: React.FC<LenkepanelEtikettProps> = ({ status, behandlin
                 <Tag variant="error" size="small">
                     Avbrutt av deg
                 </Tag>
-            );
+            )
         case 'SENDT':
             return (
                 <Tag variant="success" size="small">
                     Sendt til arbeidsgiver
                 </Tag>
-            );
+            )
         case 'UTGATT':
             return (
                 <Tag variant="info" size="small">
                     Utgått
                 </Tag>
-            );
+            )
         case 'BEKREFTET':
             return (
                 <Tag variant="success" size="small">
                     Sendt til NAV
                 </Tag>
-            );
+            )
         default:
-            return null;
+            return null
     }
-};
+}
 
-export default LenkepanelEtikett;
+export default LenkepanelEtikett

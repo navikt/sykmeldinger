@@ -1,22 +1,22 @@
-import userEvent from '@testing-library/user-event';
-import mockRouter from 'next-router-mock';
+import userEvent from '@testing-library/user-event'
+import mockRouter from 'next-router-mock'
 
-import { render, screen, waitFor } from '../utils/test/testUtils';
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page';
+import { render, screen, waitFor } from '../utils/test/testUtils'
+import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import {
     StatusEvent,
     SubmitSykmeldingDocument,
     SykmeldingDocument,
     SykmeldingerDocument,
-} from '../fetching/graphql.generated';
-import { createMock, createSykmelding } from '../utils/test/dataUtils';
+} from '../fetching/graphql.generated'
+import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
-import { createExtraFormDataMock } from './mockUtils';
+import { createExtraFormDataMock } from './mockUtils'
 
 describe('Permittert', () => {
     beforeEach(() => {
-        mockRouter.setCurrentUrl(`/sykmelding-id`);
-    });
+        mockRouter.setCurrentUrl(`/sykmelding-id`)
+    })
 
     const baseMocks = [
         createMock({
@@ -27,7 +27,7 @@ describe('Permittert', () => {
             request: { query: SykmeldingerDocument },
             result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
         }),
-    ];
+    ]
 
     it('should submit ARBEIDSLEDIG when user choose radio button permittert', async () => {
         render(<SykmeldingPage />, {
@@ -68,13 +68,13 @@ describe('Permittert', () => {
                     },
                 }),
             ],
-        });
+        })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Ja' }));
-        userEvent.click(await screen.findByRole('radio', { name: 'permittert' }));
-        userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }));
+        userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
+        userEvent.click(await screen.findByRole('radio', { name: 'permittert' }))
+        userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-        await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`));
-        expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id');
-    });
-});
+        await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+        expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+    })
+})

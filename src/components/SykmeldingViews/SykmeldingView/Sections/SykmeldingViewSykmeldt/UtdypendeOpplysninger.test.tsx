@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 
-import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated';
+import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated'
 
-import UtdypendeOpplysninger from './UtdypendeOpplysninger';
+import UtdypendeOpplysninger from './UtdypendeOpplysninger'
 
 describe('UtdypendeOpplysninger', () => {
     it('Renders utdypende opplysninger', () => {
@@ -11,19 +11,19 @@ describe('UtdypendeOpplysninger', () => {
             sporsmal: 'dette er det første spørsmålet',
             svar: 'dette er det første svaret',
             restriksjoner: [],
-        };
+        }
         const utdypende2: UtdypendeOpplysning = {
             __typename: 'UtdypendeOpplysning',
             sporsmal: 'dette er det andre spørsmålet',
             svar: 'dette er det andre svaret',
             restriksjoner: [],
-        };
+        }
         const utdypende3: UtdypendeOpplysning = {
             __typename: 'UtdypendeOpplysning',
             sporsmal: 'dette er det tredje spørsmålet',
             svar: 'dette er det tredje svaret',
             restriksjoner: [],
-        };
+        }
 
         const utdypendeOpplysninger: Record<string, Record<string, UtdypendeOpplysning>> = {
             '6.1': {
@@ -33,16 +33,16 @@ describe('UtdypendeOpplysninger', () => {
             '6.2': {
                 '6.2.1': utdypende3,
             },
-        };
+        }
 
-        render(<UtdypendeOpplysninger utdypendeOpplysninger={utdypendeOpplysninger} />);
+        render(<UtdypendeOpplysninger utdypendeOpplysninger={utdypendeOpplysninger} />)
 
-        expect(screen.getByText('Utdypende opplysninger')).toBeInTheDocument();
-        expect(screen.getByText('dette er det første spørsmålet')).toBeInTheDocument();
-        expect(screen.getByText('dette er det første svaret')).toBeInTheDocument();
-        expect(screen.getByText('dette er det andre spørsmålet')).toBeInTheDocument();
-        expect(screen.getByText('dette er det andre svaret')).toBeInTheDocument();
-        expect(screen.getByText('dette er det tredje spørsmålet')).toBeInTheDocument();
-        expect(screen.getByText('dette er det tredje svaret')).toBeInTheDocument();
-    });
-});
+        expect(screen.getByText('Utdypende opplysninger')).toBeInTheDocument()
+        expect(screen.getByText('dette er det første spørsmålet')).toBeInTheDocument()
+        expect(screen.getByText('dette er det første svaret')).toBeInTheDocument()
+        expect(screen.getByText('dette er det andre spørsmålet')).toBeInTheDocument()
+        expect(screen.getByText('dette er det andre svaret')).toBeInTheDocument()
+        expect(screen.getByText('dette er det tredje spørsmålet')).toBeInTheDocument()
+        expect(screen.getByText('dette er det tredje svaret')).toBeInTheDocument()
+    })
+})

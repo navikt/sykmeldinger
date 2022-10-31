@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Section } from './Section';
-import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants';
-import ShakeHands from './icons/ShakeHands';
+import { Section } from './Section'
+import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
+import ShakeHands from './icons/ShakeHands'
 
 interface Props {
-    tiltakArbeidsplassen?: string | null;
+    tiltakArbeidsplassen?: string | null
 }
 
 const styles = StyleSheet.create({
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
         padding: contentPadding,
         marginBottom: contentMarginBottom,
     },
-});
+})
 
 const Arbeidsevne = ({ tiltakArbeidsplassen }: Props): JSX.Element | null => {
-    if (!tiltakArbeidsplassen) return null;
+    if (!tiltakArbeidsplassen) return null
 
     return (
         <Section title="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands}>
@@ -30,7 +30,7 @@ const Arbeidsevne = ({ tiltakArbeidsplassen }: Props): JSX.Element | null => {
                 </View>
             )}
         </Section>
-    );
-};
+    )
+}
 
-export default Arbeidsevne;
+export default Arbeidsevne

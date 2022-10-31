@@ -1,11 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
-    message: string;
-};
+    message: string
+}
 
 const isAlive = (req: NextApiRequest, res: NextApiResponse<Data>): void => {
-    res.status(200).json({ message: `I'm alive` });
-};
+    res.status(200).json({ message: `I'm alive` })
+}
 
-export default isAlive;
+export default isAlive
