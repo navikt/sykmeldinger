@@ -6,7 +6,7 @@ import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import {
     StatusEvent,
     SubmitSykmeldingDocument,
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
@@ -20,7 +20,7 @@ describe('Permittert', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
             result: { data: { __typename: 'Query', sykmelding: createSykmelding({ id: 'sykmelding-id' }) } },
         }),
         createMock({

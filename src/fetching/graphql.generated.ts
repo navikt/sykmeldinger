@@ -1165,11 +1165,11 @@ export type SykmeldingerQuery = {
     }>
 }
 
-export type SykmeldingQueryVariables = Exact<{
+export type SykmeldingByIdQueryVariables = Exact<{
     id: Scalars['ID']
 }>
 
-export type SykmeldingQuery = {
+export type SykmeldingByIdQuery = {
     readonly __typename: 'Query'
     readonly sykmelding: {
         readonly __typename: 'Sykmelding'
@@ -1960,13 +1960,13 @@ export const SykmeldingerDocument = {
         ...MedisinskVurderingFragmentDoc.definitions,
     ],
 } as unknown as DocumentNode<SykmeldingerQuery, SykmeldingerQueryVariables>
-export const SykmeldingDocument = {
+export const SykmeldingByIdDocument = {
     kind: 'Document',
     definitions: [
         {
             kind: 'OperationDefinition',
             operation: 'query',
-            name: { kind: 'Name', value: 'Sykmelding' },
+            name: { kind: 'Name', value: 'SykmeldingById' },
             variableDefinitions: [
                 {
                     kind: 'VariableDefinition',
@@ -2000,4 +2000,4 @@ export const SykmeldingDocument = {
         ...SykmeldingStatusFragmentDoc.definitions,
         ...MedisinskVurderingFragmentDoc.definitions,
     ],
-} as unknown as DocumentNode<SykmeldingQuery, SykmeldingQueryVariables>
+} as unknown as DocumentNode<SykmeldingByIdQuery, SykmeldingByIdQueryVariables>

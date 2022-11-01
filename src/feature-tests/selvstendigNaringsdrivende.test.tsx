@@ -7,7 +7,7 @@ import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
     StatusEvent,
     SubmitSykmeldingDocument,
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
 
@@ -20,7 +20,7 @@ describe('Selvstendig næringsdrivende', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
             result: { data: { __typename: 'Query', sykmelding: createSykmelding({ id: 'sykmelding-id' }) } },
         }),
         createMock({
@@ -110,7 +110,7 @@ describe('Selvstendig næringsdrivende', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
             expect(egenmeldingFomTom).toHaveLength(2)
             userEvent.type(egenmeldingFomTom[0], '20.12.2020')
             userEvent.type(egenmeldingFomTom[1], '27.12.2020')
@@ -120,14 +120,14 @@ describe('Selvstendig næringsdrivende', () => {
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
-        })
+        }, 15000)
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
             const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' })
             render(<SykmeldingPage />, {
                 mocks: [
                     createMock({
-                        request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                        request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
                         result: {
                             data: { __typename: 'Query', sykmelding: sykmelding },
                         },
@@ -203,7 +203,7 @@ describe('Selvstendig næringsdrivende', () => {
 
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
 
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
 
             expect(egenmeldingFomTom).toHaveLength(2)
             userEvent.type(egenmeldingFomTom[0], '20.12.2019')

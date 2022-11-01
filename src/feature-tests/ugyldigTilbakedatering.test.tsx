@@ -1,7 +1,7 @@
 import mockRouter from 'next-router-mock'
 
 import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
-import { StatusEvent, SykmeldingDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
+import { StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
@@ -30,7 +30,7 @@ describe('Ugyldig tilbakedatert sykmelding', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'ugyldig-tilbakedatering-sykmelding' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'ugyldig-tilbakedatering-sykmelding' } },
             result: { data: { __typename: 'Query', sykmelding: ugyldigTilbakedatertSykmelding } },
         }),
         createMock({

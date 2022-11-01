@@ -6,7 +6,7 @@ import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
     SykmeldingChangeStatus,
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
@@ -36,7 +36,7 @@ describe('Papir sykmelding', () => {
             sykmeldingId: 'papir-sykmelding',
         }),
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'papir-sykmelding' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'papir-sykmelding' } },
             result: { data: { __typename: 'Query', sykmelding: papirSykmelding } },
         }),
         createMock({
@@ -128,8 +128,7 @@ describe('Papir sykmelding', () => {
         userEvent.click(within(group!).getByRole('radio', { name: 'Ja' }))
 
         userEvent.click(await screen.findByRole('button', { name: 'Avbryt sykmeldingen' }))
-        await waitForElementToBeRemoved(() => screen.queryByText('venter...'))
 
-        expect(screen.getByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
+        expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
     })
 })

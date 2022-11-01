@@ -16,9 +16,18 @@ dayjs.extend(isBetween)
 
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('next/dist/client/router', () => require('next-router-mock'))
+jest.mock('@navikt/next-auth-wonderwall', () => ({
+    validateTokenXToken: () => Promise.resolve(true),
+    isInvalidTokenSet: () => false,
+}))
 
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+}))
 
 Modal.setAppElement(document.createElement('div'))
 
@@ -36,4 +45,4 @@ jest.mock('next/config', () => () => ({
     },
 }))
 
-process.env.DEBUG_PRINT_LIMIT = '30000'
+process.env.DEBUG_PRINT_LIMIT = '100000'

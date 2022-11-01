@@ -7,7 +7,7 @@ import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
     StatusEvent,
     SubmitSykmeldingDocument,
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
 
@@ -20,7 +20,7 @@ describe('Frilanser', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
             result: { data: { __typename: 'Query', sykmelding: createSykmelding({ id: 'sykmelding-id' }) } },
         }),
         createMock({
@@ -110,15 +110,15 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
-            expect(egenmeldingFomTom).toHaveLength(2)
-            userEvent.type(egenmeldingFomTom[0], '20.12.2020')
-            userEvent.type(egenmeldingFomTom[1], '27.12.2020')
+            const inputTom = screen.getByRole('textbox', { name: 'Til og med:' })
+            const inputFom = screen.getByRole('textbox', { name: 'Fra og med:' })
+            userEvent.type(inputFom, '20.12.2020')
+            userEvent.type(inputTom, '27.12.2020')
             const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
             userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }))
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+            await waitFor(() => expect(mockRouter.pathname).toEqual(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
         })
 
@@ -128,7 +128,7 @@ describe('Frilanser', () => {
             render(<SykmeldingPage />, {
                 mocks: [
                     createMock({
-                        request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                        request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
                         result: {
                             data: { __typename: 'Query', sykmelding: sykmelding },
                         },
@@ -197,7 +197,7 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
             expect(egenmeldingFomTom).toHaveLength(2)
             userEvent.type(egenmeldingFomTom[0], '20.12.2019')
             userEvent.type(egenmeldingFomTom[1], '27.12.2019')
@@ -294,8 +294,7 @@ describe('Frilanser', () => {
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            expect(await screen.findByRole('link', { name: 'fom dato mangler.' })).toBeInTheDocument()
-            expect(await screen.findByText(/tom dato mangler./)).toBeInTheDocument()
+            expect(await screen.findByRole('link', { name: 'Du må fylle inn fra dato.' })).toBeInTheDocument()
         })
 
         it('should show error message with link if date is invalid format', async () => {
@@ -314,16 +313,15 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
             expect(egenmeldingFomTom).toHaveLength(2)
             userEvent.type(egenmeldingFomTom[0], '11.20.2020')
             userEvent.type(egenmeldingFomTom[1], '11.25.2020')
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
-                await screen.findByRole('link', { name: 'Startdato må være på formatet dd.mm.yyyy' }),
+                await screen.findByRole('link', { name: 'Fra dato må være på formatet DD.MM.YYYY' }),
             ).toBeInTheDocument()
-            expect(await screen.findByText(/Sluttdato må være på formatet dd.mm.yyyy/)).toBeInTheDocument()
         })
 
         it('should show error message with link if fom is after oppfølgingsdato', async () => {
@@ -342,13 +340,14 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
-            expect(egenmeldingFomTom).toHaveLength(2)
-            userEvent.type(egenmeldingFomTom[0], '02.04.2020')
+            const inputTom = screen.getByRole('textbox', { name: 'Til og med:' })
+            const inputFom = screen.getByRole('textbox', { name: 'Fra og med:' })
+            userEvent.type(inputFom, '02.04.2020')
+            userEvent.type(inputTom, '04.04.2020')
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
-                await screen.findByRole('link', { name: 'Startdato kan ikke være oppfølgingsdato eller senere.' }),
+                await screen.findByRole('link', { name: 'Fra dato kan ikke være oppfølgingsdato eller senere.' }),
             ).toBeInTheDocument()
         })
 
@@ -368,14 +367,14 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
-            expect(egenmeldingFomTom).toHaveLength(2)
-            userEvent.type(egenmeldingFomTom[0], '01.01.2020')
-            userEvent.type(egenmeldingFomTom[1], '02.05.2020')
+            const inputTom = screen.getByRole('textbox', { name: 'Til og med:' })
+            const inputFom = screen.getByRole('textbox', { name: 'Fra og med:' })
+            userEvent.type(inputFom, '01.01.2020')
+            userEvent.type(inputTom, '02.05.2020')
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
-                await screen.findByRole('link', { name: 'Sluttdato kan ikke være oppfølgingsdato eller senere.' }),
+                await screen.findByRole('link', { name: 'Til dato kan ikke være oppfølgingsdato eller senere.' }),
             ).toBeInTheDocument()
         })
 
@@ -395,16 +394,13 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            const egenmeldingFomTom = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
             expect(egenmeldingFomTom).toHaveLength(2)
             userEvent.type(egenmeldingFomTom[0], '10.01.2020')
             userEvent.type(egenmeldingFomTom[1], '02.01.2020')
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
-            expect(
-                await screen.findByRole('link', { name: 'Startdato kan ikke være etter sluttdato.' }),
-            ).toBeInTheDocument()
-            expect(await screen.findByText(/Sluttdato kan ikke være før startdato./)).toBeInTheDocument()
+            expect(await screen.findByRole('link', { name: 'Fra kan ikke være etter til dato.' })).toBeInTheDocument()
         })
 
         it('should be able to remove period', async () => {
@@ -424,11 +420,11 @@ describe('Frilanser', () => {
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
             userEvent.click(screen.getByRole('button', { name: 'Legg til ekstra periode' }))
-            const egenmeldingFomTomTwo = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            const egenmeldingFomTomTwo = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
             expect(egenmeldingFomTomTwo).toHaveLength(4)
             userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
 
-            const egenmeldingFomTomOne = await screen.findAllByPlaceholderText('dd.mm.åååå')
+            const egenmeldingFomTomOne = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
             await waitFor(() => expect(egenmeldingFomTomOne).toHaveLength(2))
         })
 
@@ -436,7 +432,7 @@ describe('Frilanser', () => {
             render(<SykmeldingPage />, {
                 mocks: [
                     createMock({
-                        request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                        request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
                         result: {
                             data: {
                                 __typename: 'Query',

@@ -1,0 +1,29 @@
+.periodePicker {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: var(--navds-spacing-4);
+    flex-direction: column;
+}
+
+.periodePicker :global(.navds-date__wrapper) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--navds-spacing-4);
+}
+
+.periodePickerButtons {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: var(--navds-spacing-2);
+    gap: var(--navds-spacing-4);
+}
+
+.periodePicker :global(.navds-error-message::before) {
+    content: unset;
+}
+
+.periodErrorMessage {
+    margin-top: var(--navds-spacing-4);
+}

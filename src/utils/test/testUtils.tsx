@@ -1,8 +1,9 @@
 import { PropsWithChildren, ReactElement } from 'react'
-import { render, RenderOptions } from '@testing-library/react'
+import { render, RenderOptions, Screen } from '@testing-library/react'
 import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 import { Cache, InMemoryCache } from '@apollo/client'
+import open from 'open'
 
 type ProviderProps = {
     readonly initialState?: Cache.WriteQueryOptions<unknown, unknown>[]
@@ -38,6 +39,10 @@ const customRenderHook = <TProps, TResult>(
         wrapper: (props) => <AllTheProviders {...props} initialState={initialState} mocks={mocks} />,
         ...renderOptions,
     })
+}
+
+export async function openPlayground(screen: Screen): Promise<void> {
+    await open(screen.logTestingPlaygroundURL())
 }
 
 export * from '@testing-library/react'

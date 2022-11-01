@@ -6,7 +6,7 @@ import {
     Arbeidsgiver,
     StatusEvent,
     SubmitSykmeldingDocument,
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
@@ -21,7 +21,7 @@ describe('Arbeidstaker', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
             result: { data: { __typename: 'Query', sykmelding: createSykmelding({ id: 'sykmelding-id' }) } },
         }),
         createMock({

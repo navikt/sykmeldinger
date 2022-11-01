@@ -1,4 +1,4 @@
-import { Alert, Button, ConfirmationPanel, Loader } from '@navikt/ds-react'
+import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react'
 import { Controller, useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 
@@ -106,8 +106,8 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                         </Spacing>
                     )}
 
-                    <Button variant="primary" type="submit" disabled={fetchingBekreft}>
-                        Bekreft {fetchingBekreft && <Loader size="small" />}
+                    <Button variant="primary" type="submit" disabled={fetchingBekreft} loading={fetchingBekreft}>
+                        Bekreft
                     </Button>
                 </CenterItems>
             </form>

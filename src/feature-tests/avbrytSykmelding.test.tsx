@@ -6,7 +6,7 @@ import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
     SykmeldingChangeStatus,
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
@@ -33,7 +33,7 @@ describe('Avbryt sykmelding', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'avbrutt-sykmelding' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'avbrutt-sykmelding' } },
             result: { data: { __typename: 'Query', sykmelding: avbruttSykmelding } },
         }),
         createMock({
@@ -112,7 +112,7 @@ describe('Avbryt sykmelding', () => {
 
         const baseMocks = [
             createMock({
-                request: { query: SykmeldingDocument, variables: { id: 'avbrutt-sykmelding' } },
+                request: { query: SykmeldingByIdDocument, variables: { id: 'avbrutt-sykmelding' } },
                 result: { data: { __typename: 'Query', sykmelding: apenSykmelding } },
             }),
             createMock({
@@ -158,8 +158,8 @@ describe('Avbryt sykmelding', () => {
         expect(await screen.findByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeInTheDocument()
 
         userEvent.click(screen.getByRole('button', { name: 'Ja, jeg er sikker' }))
-        await waitForElementToBeRemoved(() => screen.queryByText('venter...'))
 
+        expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
         expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument()
     })
 
@@ -178,7 +178,7 @@ describe('Avbryt sykmelding', () => {
 
         const baseMocks = [
             createMock({
-                request: { query: SykmeldingDocument, variables: { id: 'avbrutt-sykmelding' } },
+                request: { query: SykmeldingByIdDocument, variables: { id: 'avbrutt-sykmelding' } },
                 result: { data: { __typename: 'Query', sykmelding: apenSykmelding } },
             }),
             createMock({

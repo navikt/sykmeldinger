@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
-import { useFormContext, useFieldArray, Controller } from 'react-hook-form'
-import { isValid, parseISO } from 'date-fns'
-import { Datepicker } from '@navikt/ds-datepicker'
-import dayjs from 'dayjs'
-import { BodyShort, Button, Label } from '@navikt/ds-react'
+import { useFormContext, useFieldArray } from 'react-hook-form'
+import { sub } from 'date-fns'
+import { Button } from '@navikt/ds-react'
 import { Add, Close } from '@navikt/ds-icons'
 
 import QuestionWrapper from '../layout/QuestionWrapper'
 import { FormShape } from '../Form'
+import { toDate, toReadableDate } from '../../../../../../utils/dateUtils'
 
+import PeriodePicker from './PeriodePicker'
 import styles from './Egenmeldingsperioder.module.css'
 
 interface EgenmeldingsperioderProps {
@@ -18,17 +18,17 @@ interface EgenmeldingsperioderProps {
 const fieldName = 'egenmeldingsperioder'
 
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgingsdato }) => {
-    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${dayjs(oppfolgingsdato).format('D. MMMM YYYY')}?`
-    const maxDate = dayjs(oppfolgingsdato).subtract(1, 'day')
+    const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${toReadableDate(oppfolgingsdato)}?`
+    const maxDate = sub(toDate(oppfolgingsdato), { days: 1 })
 
-    const { control, register, getValues, unregister } = useFormContext<FormShape>()
+    const { control, register, unregister } = useFormContext<FormShape>()
     const { fields, append, remove } = useFieldArray({
         control,
         name: `${fieldName}.svar`,
     })
 
     useEffect(() => {
-        append({ fom: null, tom: null })
+        append({ range: { fom: undefined, tom: undefined } })
     }, [append])
 
     useEffect(() => {
@@ -49,133 +49,34 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
             <div id={fieldName} className={styles.egenmeldingsperioder}>
                 {fields.map((field, index) => (
                     <div key={field.id} className={styles.egenmeldingsperiode}>
-                        <Controller
-                            control={control}
-                            name={`${fieldName}.svar.${index}.fom`}
-                            defaultValue={null}
-                            rules={{
-                                required: 'fom dato mangler.',
-                                validate: (fom) => {
-                                    if (fom && !isValid(parseISO(fom))) {
-                                        return 'Startdato må være på formatet dd.mm.yyyy'
-                                    }
-
-                                    // Test max date
-                                    if (dayjs(fom).isAfter(maxDate)) {
-                                        return 'Startdato kan ikke være oppfølgingsdato eller senere.'
-                                    }
-
-                                    // Test current peirod
-                                    const tom: string | null = getValues(`${fieldName}.svar.${index}.tom`)
-                                    if (tom && dayjs(tom).isBefore(fom)) {
-                                        return 'Startdato kan ikke være etter sluttdato.'
-                                    }
-
-                                    // Test cross-period
-                                    if (
-                                        fields
-                                            .filter((f) => f.id !== field.id)
-                                            .filter((f) => !!f.fom && !!f.tom)
-                                            .some((f) => dayjs(fom).isBetween(f.fom, f.tom, null, '[]'))
-                                    ) {
-                                        return 'Du kan ikke ha overlappende perioder.'
-                                    }
-
-                                    return true
-                                },
-                            }}
-                            render={({ field, fieldState }) => (
-                                <div className={styles.periodeFom}>
-                                    <BodyShort>Fra og med:</BodyShort>
-                                    <Datepicker
-                                        locale="nb"
-                                        inputLabel=""
-                                        value={field.value ? field.value : undefined}
-                                        onChange={field.onChange}
-                                        limitations={{
-                                            maxDate: maxDate.format('YYYY-MM-DD'),
-                                        }}
-                                        inputProps={{ name: field.name, placeholder: 'dd.mm.åååå' }}
-                                        dayPickerProps={{ initialMonth: maxDate.toDate() }}
-                                    />
-                                    {fieldState.error?.message && (
-                                        <Label style={{ color: 'darkred', maxWidth: '12rem' }}>
-                                            {fieldState.error?.message}
-                                        </Label>
-                                    )}
-                                </div>
-                            )}
+                        <PeriodePicker
+                            name={`egenmeldingsperioder.svar.${index}.range`}
+                            maxDate={maxDate}
+                            otherPeriods={fields.filter((it) => it.id !== field.id)}
+                            removeButton={
+                                index > 0 && (
+                                    <Button
+                                        variant="tertiary"
+                                        type="button"
+                                        onClick={() => remove(index)}
+                                        icon={<Close />}
+                                    >
+                                        Fjern periode
+                                    </Button>
+                                )
+                            }
                         />
-
-                        <Controller
-                            control={control}
-                            name={`${fieldName}.svar.${index}.tom`}
-                            defaultValue={null}
-                            rules={{
-                                required: 'tom dato mangler.',
-                                validate: (tom) => {
-                                    if (tom && !isValid(parseISO(tom))) {
-                                        return 'Sluttdato må være på formatet dd.mm.yyyy'
-                                    }
-
-                                    // Test max date
-                                    if (dayjs(tom).isAfter(maxDate)) {
-                                        return 'Sluttdato kan ikke være oppfølgingsdato eller senere.'
-                                    }
-
-                                    // Test current peirod
-                                    const fom: string | null = getValues(`${fieldName}.svar.${index}.fom`)
-                                    if (fom && dayjs(fom).isAfter(tom)) {
-                                        return 'Sluttdato kan ikke være før startdato.'
-                                    }
-
-                                    // Test cross-period
-                                    if (
-                                        fields
-                                            .filter((f) => f.id !== field.id)
-                                            .filter((f) => !!f.fom && !!f.tom)
-                                            .some((f) => dayjs(fom).isBetween(f.fom, f.tom, null, '[]'))
-                                    ) {
-                                        return 'Du kan ikke ha overlappende perioder.'
-                                    }
-
-                                    return true
-                                },
-                            }}
-                            render={({ field, fieldState }) => (
-                                <div className={styles.periodeTom}>
-                                    <BodyShort>Til og med:</BodyShort>
-                                    <Datepicker
-                                        locale="nb"
-                                        value={field.value ? field.value : undefined}
-                                        inputLabel=""
-                                        onChange={field.onChange}
-                                        limitations={{
-                                            maxDate: maxDate.format('YYYY-MM-DD'),
-                                        }}
-                                        inputProps={{ name: field.name, placeholder: 'dd.mm.åååå' }}
-                                        dayPickerProps={{ initialMonth: maxDate.toDate() }}
-                                    />
-                                    {fieldState.error?.message && (
-                                        <Label style={{ color: 'darkred', maxWidth: '11rem' }}>
-                                            {fieldState.error?.message}
-                                        </Label>
-                                    )}
-                                </div>
-                            )}
-                        />
-                        {index > 0 && (
-                            <Button variant="tertiary" size="small" type="button" onClick={() => remove(index)}>
-                                <Close />
-                                Fjern periode
-                            </Button>
-                        )}
                     </div>
                 ))}
             </div>
 
-            <Button variant="tertiary" size="small" type="button" onClick={() => append({ fom: null, tom: null })}>
-                <Add />
+            <Button
+                variant="tertiary"
+                size="small"
+                type="button"
+                onClick={() => append({ range: { fom: undefined, tom: undefined } })}
+                icon={<Add />}
+            >
                 Legg til ekstra periode
             </Button>
         </QuestionWrapper>
