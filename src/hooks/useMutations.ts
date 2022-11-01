@@ -10,6 +10,7 @@ import {
     SykmeldingChangeStatus,
 } from '../fetching/graphql.generated'
 import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form'
+import { toDateString } from '../utils/dateUtils'
 
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,
@@ -61,7 +62,23 @@ export function useSubmitSykmelding(
         result,
         (values) => {
             logger.info(`Client: Submitting sykmelding ${sykmeldingId}`)
-            submit({ variables: { sykmeldingId, values } })
+            submit({ variables: { sykmeldingId, values: mapFormValuesToApiValues(values) } })
         },
     ]
+}
+
+function mapFormValuesToApiValues(values: FormShape): unknown {
+    return {
+        ...values,
+        egenmeldingsperioder:
+            values.egenmeldingsperioder?.svar != null
+                ? {
+                      ...values.egenmeldingsperioder,
+                      svar: values.egenmeldingsperioder?.svar?.map((svar) => ({
+                          fom: svar.range.fom ? toDateString(svar.range.fom) : null,
+                          tom: svar.range.tom ? toDateString(svar.range.tom) : null,
+                      })),
+                  }
+                : undefined,
+    }
 }

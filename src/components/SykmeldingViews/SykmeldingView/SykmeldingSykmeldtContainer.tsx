@@ -34,9 +34,8 @@ const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => 
                             rel="noopener noreferrer"
                             variant="tertiary"
                             className={styles.printButton}
-                        >
-                            <Print />
-                        </Button>
+                            icon={<Print />}
+                        />
                     </div>
                 </div>
             </header>

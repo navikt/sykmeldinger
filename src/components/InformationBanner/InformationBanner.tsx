@@ -1,4 +1,4 @@
-import { BodyLong, GuidePanel, Heading, Label, SpeechBubble } from '@navikt/ds-react'
+import { BodyLong, GuidePanel, Heading, Label, Chat } from '@navikt/ds-react'
 
 import { Merknad } from '../../fetching/graphql.generated'
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg'
@@ -89,16 +89,16 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
 
     return (
         <div className={styles.veilederMottattSykmeldingen}>
-            <SpeechBubble illustration={<VeilederMaleSvg />} position="left">
-                <SpeechBubble.Bubble>
+            <Chat avatar={<VeilederMaleSvg />} position="left">
+                <Chat.Bubble>
                     <Label>Vi har mottatt sykmeldingen din</Label>
                     <BodyLong>
                         Under ser du opplysningene vi har fått fra behandleren din. Stemmer dette med det dere ble enige
                         om?
                     </BodyLong>
                     <BodyLong>Når du er ferdig sender du sykmeldingen, nederst på siden.</BodyLong>
-                </SpeechBubble.Bubble>
-            </SpeechBubble>
+                </Chat.Bubble>
+            </Chat>
         </div>
     )
 }

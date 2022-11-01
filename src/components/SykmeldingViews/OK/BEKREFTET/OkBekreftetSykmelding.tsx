@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Button, Loader } from '@navikt/ds-react'
+import { Alert, Button } from '@navikt/ds-react'
 import { FillForms } from '@navikt/ds-icons'
 
 import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
@@ -42,10 +42,14 @@ const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmeldin
             {!Boolean(sykmelding.egenmeldt) && (
                 <Spacing>
                     <Spacing amount="small">
-                        <Button size="small" variant="secondary" disabled={loading} onClick={() => gjenapne()}>
-                            <FillForms />
-                            <span>GJØR UTFYLLINGEN PÅ NYTT</span>
-                            {loading && <Loader size="xsmall" />}
+                        <Button
+                            size="small"
+                            variant="secondary"
+                            disabled={loading}
+                            onClick={() => gjenapne()}
+                            icon={<FillForms />}
+                        >
+                            GJØR UTFYLLINGEN PÅ NYTT
                         </Button>
                     </Spacing>
                     {error && (

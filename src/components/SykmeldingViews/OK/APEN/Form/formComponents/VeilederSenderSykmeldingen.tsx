@@ -1,4 +1,4 @@
-import { BodyShort, Label, ReadMore, SpeechBubble } from '@navikt/ds-react'
+import { BodyShort, Label, ReadMore, Chat } from '@navikt/ds-react'
 
 import VeilederMaleSvg from '../../../../../Veileder/svg/VeilederMaleSvg'
 
@@ -7,8 +7,8 @@ import styles from './VeilederSenderSykmeldingen.module.css'
 function VeilederSenderSykmeldingen(): JSX.Element {
     return (
         <div className={styles.veilederSenderSykmeldingen}>
-            <SpeechBubble illustration={<VeilederMaleSvg />} position="left">
-                <SpeechBubble.Bubble backgroundColor="white">
+            <Chat avatar={<VeilederMaleSvg />} position="left">
+                <Chat.Bubble backgroundColor="white">
                     <Label>Sykmeldingen sendes til jobben din</Label>
                     <BodyShort>
                         Under ser du hva jobben din får se hvis du sender sykmeldingen. Diagnosen og annen sensitiv data
@@ -27,8 +27,8 @@ function VeilederSenderSykmeldingen(): JSX.Element {
                             </BodyShort>
                         </div>
                     </ReadMore>
-                </SpeechBubble.Bubble>
-            </SpeechBubble>
+                </Chat.Bubble>
+            </Chat>
         </div>
     )
 }

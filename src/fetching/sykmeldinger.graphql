@@ -151,7 +151,7 @@ query Sykmeldinger {
     }
 }
 
-query Sykmelding($id: ID!) {
+query SykmeldingById($id: ID!) {
     sykmelding(id: $id) {
         ...Sykmelding
     }

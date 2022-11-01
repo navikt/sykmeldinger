@@ -2,11 +2,10 @@ import { IncomingMessage } from 'http'
 
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next'
 import { logger } from '@navikt/next-logger'
+import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
 
 import { getPublicEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
-
-import { validateIdPortenToken } from './token/idporten'
 
 type ApiHandler = (req: NextApiRequest, res: NextApiResponse) => void | Promise<unknown>
 type PageHandler = (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<unknown>>
@@ -49,7 +48,20 @@ export function withAuthenticatedPage(handler: PageHandler = async () => ({ prop
         const request = context.req
 
         const bearerToken: string | null | undefined = request.headers['authorization']
-        if (!bearerToken || !(await validateIdPortenToken(bearerToken))) {
+        if (!bearerToken) {
+            return {
+                redirect: { destination: `/oauth2/login?redirect=${getRedirectPath(context)}`, permanent: false },
+            }
+        }
+
+        const validationResult = await validateIdportenToken(bearerToken)
+        if (validationResult !== 'valid') {
+            logger.error(
+                new Error(
+                    `Invalid JWT token found (cause: ${validationResult.errorType} ${validationResult.message}, redirecting to login.`,
+                    { cause: validationResult.error },
+                ),
+            )
             return {
                 redirect: { destination: `/oauth2/login?redirect=${getRedirectPath(context)}`, permanent: false },
             }
@@ -69,7 +81,12 @@ export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
         }
 
         const bearerToken: string | null | undefined = req.headers['authorization']
-        if (!bearerToken || !(await validateIdPortenToken(bearerToken))) {
+        const validatedToken = bearerToken ? await validateIdportenToken(bearerToken) : null
+        if (!bearerToken || validatedToken !== 'valid') {
+            if (validatedToken && validatedToken !== 'valid') {
+                logger.error(`Invalid JWT token found (cause: ${validatedToken.message} for API ${req.url}`)
+            }
+
             res.status(401).json({ message: 'Access denied' })
             return
         }

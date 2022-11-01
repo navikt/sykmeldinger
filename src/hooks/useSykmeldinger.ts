@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { logger } from '@navikt/next-logger'
 
 import {
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
     SykmeldingerQuery,
     SykmeldingerQueryVariables,
@@ -18,7 +18,7 @@ export function useSykmeldinger(): QueryResult<SykmeldingerQuery, SykmeldingerQu
         onCompleted: (result) => {
             result.sykmeldinger?.forEach((sykmelding) => {
                 client.writeQuery({
-                    query: SykmeldingDocument,
+                    query: SykmeldingByIdDocument,
                     variables: { id: sykmelding.id },
                     data: { __typename: 'Query', sykmelding },
                 })

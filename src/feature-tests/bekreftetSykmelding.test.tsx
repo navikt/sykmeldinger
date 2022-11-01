@@ -6,7 +6,7 @@ import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
     SykmeldingChangeStatus,
-    SykmeldingDocument,
+    SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
@@ -35,7 +35,7 @@ describe('Bekreftet sykmelding', () => {
             sykmeldingId: 'bekreftet-sykmelding',
         }),
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'bekreftet-sykmelding' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'bekreftet-sykmelding' } },
             result: { data: { __typename: 'Query', sykmelding: bekreftetSykmelding } },
         }),
         createMock({

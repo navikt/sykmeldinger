@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Alert, Button, Loader } from '@navikt/ds-react'
+import { Alert, Button } from '@navikt/ds-react'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import useExtraFormData from '../../../../../hooks/useExtraFormData'
@@ -19,9 +19,13 @@ import Arbeidssituasjon from './formComponents/Arbeidssituasjon'
 import styles from './Form.module.css'
 import VeilederSenderSykmeldingen from './formComponents/VeilederSenderSykmeldingen'
 
+export type DateRange = {
+    fom: Date | undefined
+    tom: Date | undefined
+}
+
 export interface Egenmeldingsperiode {
-    fom: string | null
-    tom: string | null
+    range: DateRange
 }
 
 export enum UriktigeOpplysningerType {
@@ -170,8 +174,9 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                                 disabled={fetchingSend}
                                 variant="primary"
                                 type="submit"
+                                loading={fetchingSend}
                             >
-                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding {fetchingSend && <Loader />}
+                                {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
                             </Button>
                         </div>
                     </Spacing>

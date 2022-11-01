@@ -1,8 +1,8 @@
 import { AuthenticationError } from 'apollo-server-micro'
 import { createChildLogger } from '@navikt/next-logger'
+import { grantTokenXOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall'
 
 import { getServerEnv } from '../utils/env'
-import { getToken } from '../auth/token/tokenx'
 
 import { ErUtenforVentetid, ErUtenforVentetidSchema } from './api-models/ErUtenforVentetid'
 import { RequestContext } from './graphql/resolvers'
@@ -16,9 +16,14 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
         `Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}, requestId: ${context.requestId}`,
     )
 
-    const tokenX = await getToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE)
-    if (!tokenX) {
-        throw new Error(`Unable to exchange token for dinesykmeldte-backend token, requestId: ${context.requestId}`)
+    const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE)
+    if (isInvalidTokenSet(tokenX)) {
+        throw new Error(
+            `Unable to exchange token for dinesykmeldte-backend token, requestId: ${context.requestId},reason: ${tokenX.message}`,
+            {
+                cause: tokenX.error,
+            },
+        )
     }
 
     const response = await fetch(

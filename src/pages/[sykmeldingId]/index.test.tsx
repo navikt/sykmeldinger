@@ -4,7 +4,7 @@ import { GraphQLError } from 'graphql'
 import { render, screen } from '../../utils/test/testUtils'
 import { dateSub } from '../../utils/dateUtils'
 import { createMock, createSykmelding } from '../../utils/test/dataUtils'
-import { ExtraFormDataDocument, SykmeldingDocument, SykmeldingerDocument } from '../../fetching/graphql.generated'
+import { ExtraFormDataDocument, SykmeldingByIdDocument, SykmeldingerDocument } from '../../fetching/graphql.generated'
 import { createExtraFormDataMock } from '../../feature-tests/mockUtils'
 
 import SykmeldingPage from './index.page'
@@ -20,7 +20,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
         render(<SykmeldingPage />, {
             mocks: [
                 createMock({
-                    request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
                     result: { data: { __typename: 'Query', sykmelding: sykmelding } },
                 }),
                 createMock({
@@ -53,7 +53,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
         render(<SykmeldingPage />, {
             mocks: [
                 createMock({
-                    request: { query: SykmeldingDocument, variables: { id: 'this-sykmelding' } },
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'this-sykmelding' } },
                     result: { data: { __typename: 'Query', sykmelding: thisSykmelding } },
                 }),
                 createMock({
@@ -74,7 +74,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
         render(<SykmeldingPage />, {
             mocks: [
                 createMock({
-                    request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
                     result: { data: null, errors: [new GraphQLError('Some backend error')] },
                 }),
                 createMock({
@@ -94,7 +94,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
         render(<SykmeldingPage />, {
             mocks: [
                 createMock({
-                    request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
                     result: { data: { __typename: 'Query', sykmelding: sykmelding } },
                 }),
                 createMock({

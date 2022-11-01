@@ -4,7 +4,7 @@ import mockRouter from 'next-router-mock'
 import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
-import { SykmeldingDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
+import { SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 
 import { createExtraFormDataMock } from './mockUtils'
 
@@ -15,7 +15,7 @@ describe('Uriktige opplysninger', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingDocument, variables: { id: 'sykmelding-id' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
             result: { data: { __typename: 'Query', sykmelding: createSykmelding({ id: 'sykmelding-id' }) } },
         }),
         createMock({

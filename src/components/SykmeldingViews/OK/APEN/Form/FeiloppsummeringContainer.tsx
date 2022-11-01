@@ -24,11 +24,7 @@ function FeiloppsummeringContainer({ errors }: FeiloppsummeringContainerProps): 
         arbeidsgiverOrgnummer: errors.arbeidsgiverOrgnummer?.svar?.message,
         riktigNarmesteLeder: errors.riktigNarmesteLeder?.svar?.message,
         harBruktEgenmelding: errors.harBruktEgenmelding?.svar?.message,
-        egenmeldingsperioder:
-            // @ts-expect-error Some weird typing isse with FieldErrors
-            errors.egenmeldingsperioder?.svar?.find((ep) => ep?.fom)?.fom?.message ||
-            // @ts-expect-error Some weird typing isse with FieldErrors
-            errors.egenmeldingsperioder?.svar?.find((ep) => ep?.tom)?.tom?.message,
+        egenmeldingsperioder: errors.egenmeldingsperioder?.svar?.find?.((ep) => ep?.range)?.range?.message,
         harForsikring: errors.harForsikring?.svar?.message,
     }
 

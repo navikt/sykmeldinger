@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, BodyLong, Button, Label, Loader, Radio, RadioGroup } from '@navikt/ds-react'
+import { Alert, BodyLong, Button, Label, Radio, RadioGroup } from '@navikt/ds-react'
 
 import Spacing from '../../../Spacing/Spacing'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
@@ -63,8 +63,8 @@ function PapirInfoheader(): JSX.Element {
                         </Alert>
                     </Spacing>
 
-                    <Button disabled={loading} onClick={() => avbryt()}>
-                        Avbryt sykmeldingen {loading && <Loader size="small" />}
+                    <Button loading={loading} onClick={() => avbryt()}>
+                        Avbryt sykmeldingen
                     </Button>
 
                     {error && (

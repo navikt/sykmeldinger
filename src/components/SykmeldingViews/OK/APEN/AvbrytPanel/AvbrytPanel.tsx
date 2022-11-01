@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react'
-import { Alert, BodyShort, Button, Detail, Heading, Loader } from '@navikt/ds-react'
+import { Alert, BodyShort, Button, Detail, Heading } from '@navikt/ds-react'
 import { Close } from '@navikt/ds-icons'
 
 import { AvbrytContext } from '../AvbrytContext'
@@ -44,9 +44,9 @@ function AvbrytPanel(): JSX.Element {
                     variant="danger"
                     className={styles.avbrytPanelAvbrytKnapp}
                     onClick={() => avbryt()}
-                    disabled={loading}
+                    loading={loading}
                 >
-                    Avbryt sykmelding {loading && <Loader />}
+                    Avbryt sykmelding
                 </Button>
 
                 {error && (
@@ -85,15 +85,13 @@ function AvbrytPanel(): JSX.Element {
                         variant="tertiary"
                         className={styles.avbrytPanelCross}
                         onClick={() => setIsOpen((prev) => !prev)}
-                    >
-                        <Close />
-                    </Button>
-
+                        icon={<Close />}
+                    />
                     <BodyShort className={styles.avbrytPanelErDuSikker}>
                         Er du sikker på at du vil avbryte sykmeldingen?
                     </BodyShort>
-                    <Button className={styles.bold} variant="danger" onClick={() => avbryt()} disabled={loading}>
-                        Ja, jeg er sikker {loading && <Loader />}
+                    <Button className={styles.bold} variant="danger" onClick={() => avbryt()} loading={loading}>
+                        Ja, jeg er sikker
                     </Button>
 
                     {error && (
