@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const nextJest = require('next/jest');
+const nextJest = require('next/jest')
 
 const createJestConfig = nextJest({
     dir: './src',
-});
+})
 
 const customJestConfig = {
     moduleDirectories: ['node_modules', '<rootDir>/'],
@@ -18,6 +18,6 @@ const customJestConfig = {
         '!**/server/graphql/mockData/**',
     ],
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-};
+}
 
-module.exports = createJestConfig(customJestConfig);
+module.exports = createJestConfig(customJestConfig)

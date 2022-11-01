@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require('@sentry/nextjs')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
-});
+})
 
 /**
  * @type {import('@sentry/nextjs').SentryWebpackPluginOptions}
  */
 const sentryWebpackPluginOptions = {
     silent: true,
-};
+}
 
 /**
  * @type {import('./src/utils/env').ServerEnv}
@@ -27,7 +27,7 @@ const serverRuntimeConfig = {
     TOKEN_X_WELL_KNOWN_URL: process.env.TOKEN_X_WELL_KNOWN_URL,
     TOKEN_X_PRIVATE_JWK: process.env.TOKEN_X_PRIVATE_JWK,
     TOKEN_X_CLIENT_ID: process.env.TOKEN_X_CLIENT_ID,
-};
+}
 
 /**
  * @type {import('./src/utils/env').PublicEnv}
@@ -39,7 +39,7 @@ const publicRuntimeConfig = {
     SYKEPENGESOKNAD_URL: process.env.SYKEPENGESOKNAD_URL,
     SYKEFRAVAER_ROOT: process.env.SYKEFRAVAER_ROOT,
     MIN_SIDE_ROOT: process.env.MIN_SIDE_ROOT,
-};
+}
 
 /**
  * @type {import('next').NextConfig}
@@ -61,13 +61,13 @@ const nextConfig = {
                 source: '/:sykmeldingId/pdf',
                 destination: '/api/generate-pdf/:sykmeldingId',
             },
-        ];
+        ]
     },
-};
+}
 
-const nextConfigWithBundleAnalyzer = withBundleAnalyzer(nextConfig);
+const nextConfigWithBundleAnalyzer = withBundleAnalyzer(nextConfig)
 
 module.exports =
     process.env.SENTRY_ENABLED === 'true'
         ? withSentryConfig(nextConfigWithBundleAnalyzer, sentryWebpackPluginOptions)
-        : nextConfigWithBundleAnalyzer;
+        : nextConfigWithBundleAnalyzer
