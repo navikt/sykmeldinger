@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react'
 import { useController } from 'react-hook-form'
 import { Button, ErrorMessage, UNSAFE_DatePicker, UNSAFE_useRangeDatepicker, RangeValidationT } from '@navikt/ds-react'
-import { Interval, isBefore, isWithinInterval } from 'date-fns'
+import { Interval, isWithinInterval } from 'date-fns'
 
 import { DateRange, FormShape } from '../Form'
 
@@ -9,7 +9,7 @@ import styles from './PeriodePicker.module.css'
 
 type FormName = `egenmeldingsperioder.svar.${number}.range`
 
-interface PeriodePickerProps {
+export interface PeriodePickerProps {
     name: FormName
     maxDate: Date
     otherPeriods: { id: string; range: DateRange }[]
@@ -28,14 +28,14 @@ function PeriodePicker({ name, maxDate, otherPeriods, removeButton }: PeriodePic
                 if (rangeError?.to.isInvalid) {
                     return 'Til dato må være på formatet DD.MM.YYYY'
                 }
-                if (rangeError?.to?.isBeforeFrom) {
-                    return 'Fra kan ikke være etter til dato.'
-                }
                 if (rangeError?.from?.isAfter) {
                     return 'Fra dato kan ikke være oppfølgingsdato eller senere.'
                 }
                 if (rangeError?.to?.isAfter) {
                     return 'Til dato kan ikke være oppfølgingsdato eller senere.'
+                }
+                if (rangeError?.to?.isBeforeFrom) {
+                    return 'Fra kan ikke være etter til dato.'
                 }
 
                 const fom = value.fom
@@ -45,10 +45,6 @@ function PeriodePicker({ name, maxDate, otherPeriods, removeButton }: PeriodePic
                 }
                 if (!tom) {
                     return 'Du må fylle inn til dato.'
-                }
-
-                if (isBefore(tom, fom)) {
-                    return 'Startdato kan ikke være etter sluttdato.'
                 }
 
                 if (
@@ -99,7 +95,9 @@ function PeriodePicker({ name, maxDate, otherPeriods, removeButton }: PeriodePic
                     error={!!fieldState.error?.message}
                 />
             </UNSAFE_DatePicker>
-            <ErrorMessage className={styles.periodErrorMessage}>{fieldState.error?.message}</ErrorMessage>
+            {fieldState.error && (
+                <ErrorMessage className={styles.periodErrorMessage}>{fieldState.error?.message}</ErrorMessage>
+            )}
             <div className={styles.periodePickerButtons}>
                 <Button
                     variant="tertiary"
