@@ -3,10 +3,12 @@ import { useFormContext, useFieldArray } from 'react-hook-form'
 import { sub } from 'date-fns'
 import { Button } from '@navikt/ds-react'
 import { Add, Close } from '@navikt/ds-icons'
+import { logger } from '@navikt/next-logger'
 
 import QuestionWrapper from '../layout/QuestionWrapper'
 import { FormShape } from '../Form'
 import { toDate, toReadableDate } from '../../../../../../utils/dateUtils'
+import useGetSykmeldingIdParam from '../../../../../../hooks/useGetSykmeldingIdParam'
 
 import PeriodePicker from './PeriodePicker'
 import styles from './Egenmeldingsperioder.module.css'
@@ -18,6 +20,7 @@ interface EgenmeldingsperioderProps {
 const fieldName = 'egenmeldingsperioder'
 
 const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgingsdato }) => {
+    const sykmeldingId = useGetSykmeldingIdParam()
     const sporsmaltekst = `Hvilke dager var du borte fra jobb før ${toReadableDate(oppfolgingsdato)}?`
     const maxDate = sub(toDate(oppfolgingsdato), { days: 1 })
 
@@ -28,8 +31,10 @@ const Egenmeldingsperioder: React.FC<EgenmeldingsperioderProps> = ({ oppfolgings
     })
 
     useEffect(() => {
+        // TODO: Temporary logging to track usage of new date-picker :)
+        logger.info(`New datepicker: is used for sykmelding ${sykmeldingId}`)
         append({ range: { fom: undefined, tom: undefined } })
-    }, [append])
+    }, [append, sykmeldingId])
 
     useEffect(() => {
         register(`${fieldName}.sporsmaltekst`, {

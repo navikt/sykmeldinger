@@ -68,17 +68,30 @@ export function useSubmitSykmelding(
 }
 
 function mapFormValuesToApiValues(values: FormShape): unknown {
+    const egenmeldingsperioder =
+        values.egenmeldingsperioder?.svar != null
+            ? {
+                  ...values.egenmeldingsperioder,
+                  svar: values.egenmeldingsperioder?.svar?.map((svar) => ({
+                      fom: svar.range.fom ? toDateString(svar.range.fom) : null,
+                      tom: svar.range.tom ? toDateString(svar.range.tom) : null,
+                  })),
+              }
+            : undefined
+
+    // TODO: Temporary logging to track usage of new date-picker :)
+    if (egenmeldingsperioder) {
+        logger.info(
+            `New datepicker: mapping values for ${
+                egenmeldingsperioder.svar.length
+            } egenmeldingsperioder. ${egenmeldingsperioder.svar
+                .map((it) => `fom-length: ${it.fom?.length}, tom-length: ${it.tom?.length}`)
+                .join(', ')}`,
+        )
+    }
+
     return {
         ...values,
-        egenmeldingsperioder:
-            values.egenmeldingsperioder?.svar != null
-                ? {
-                      ...values.egenmeldingsperioder,
-                      svar: values.egenmeldingsperioder?.svar?.map((svar) => ({
-                          fom: svar.range.fom ? toDateString(svar.range.fom) : null,
-                          tom: svar.range.tom ? toDateString(svar.range.tom) : null,
-                      })),
-                  }
-                : undefined,
+        egenmeldingsperioder: egenmeldingsperioder,
     }
 }
