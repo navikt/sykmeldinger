@@ -1,0 +1,38 @@
+input SendSykmeldingValues {
+    erOpplysningeneRiktige: YesOrNo
+    uriktigeOpplysninger: [UriktigeOpplysningerType!]
+    arbeidssituasjon: ArbeidssituasjonType
+    arbeidsgiverOrgnummer: String
+    riktigNarmesteLeder: YesOrNo
+    harBruktEgenmelding: YesOrNo
+    egenmeldingsperioder: [DateRange!]
+    harForsikring: YesOrNo
+}
+
+input DateRange {
+    fom: Date
+    tom: Date
+}
+
+enum YesOrNo {
+    YES
+    NO
+}
+
+enum UriktigeOpplysningerType {
+    PERIODE
+    SYKMELDINGSGRAD_FOR_LAV
+    SYKMELDINGSGRAD_FOR_HOY
+    ARBEIDSGIVER
+    DIAGNOSE
+    ANDRE_OPPLYSNINGER
+}
+
+enum ArbeidssituasjonType {
+    ARBEIDSTAKER
+    FRILANSER
+    NAERINGSDRIVENDE
+    ARBEIDSLEDIG
+    PERMITTERT
+    ANNET
+}

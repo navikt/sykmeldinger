@@ -7,8 +7,9 @@ import { getServerEnv } from '../utils/env'
 
 import { Sykmelding, SykmeldingSchema } from './api-models/sykmelding/Sykmelding'
 import { Brukerinformasjon, BrukerinformasjonSchema } from './api-models/Brukerinformasjon'
-import { SykmeldingChangeStatus } from './graphql/resolver-types.generated'
+import { SendSykmeldingValues, SykmeldingChangeStatus } from './graphql/resolver-types.generated'
 import { RequestContext } from './graphql/resolvers'
+import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 
 const serverEnv = getServerEnv()
 
@@ -82,6 +83,35 @@ export async function submitSykmelding(
             context,
         )
         return getSykmelding(sykmeldingId, context)
+    } catch (e) {
+        if (e instanceof AuthenticationError) {
+            throw e
+        }
+
+        childLogger.error(e)
+        throw new Error(`Failed to submit sykmelding for ${sykmeldingId}, requestId: ${context.requestId}`)
+    }
+}
+
+export async function sendSykmelding(
+    sykmeldingId: string,
+    values: SendSykmeldingValues,
+    context: RequestContext,
+): Promise<Sykmelding> {
+    const childLogger = createChildLogger(context.requestId)
+
+    childLogger.info(`Sending sykmelding with ID ${sykmeldingId}, requestId: ${context.requestId}`)
+
+    const sykmelding = getSykmelding(sykmeldingId, context)
+    const mappedValues = mapSendSykmeldingValuesToV3Api(values)
+    try {
+        await fetchApi(
+            { type: 'POST', body: JSON.stringify(mappedValues) },
+            `v3/sykmeldinger/${sykmeldingId}/send`,
+            () => null,
+            context,
+        )
+        return sykmelding
     } catch (e) {
         if (e instanceof AuthenticationError) {
             throw e

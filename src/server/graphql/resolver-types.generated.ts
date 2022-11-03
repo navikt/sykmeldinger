@@ -88,6 +88,15 @@ export enum ArbeidsrelatertArsakType {
     ManglendeTilrettelegging = 'MANGLENDE_TILRETTELEGGING',
 }
 
+export enum ArbeidssituasjonType {
+    Annet = 'ANNET',
+    Arbeidsledig = 'ARBEIDSLEDIG',
+    Arbeidstaker = 'ARBEIDSTAKER',
+    Frilanser = 'FRILANSER',
+    Naeringsdrivende = 'NAERINGSDRIVENDE',
+    Permittert = 'PERMITTERT',
+}
+
 export type Behandler = {
     __typename?: 'Behandler'
     adresse: Maybe<Adresse>
@@ -107,6 +116,11 @@ export type Brukerinformasjon = {
     __typename?: 'Brukerinformasjon'
     arbeidsgivere: Array<Arbeidsgiver>
     strengtFortroligAdresse: Scalars['Boolean']
+}
+
+export type DateRange = {
+    fom?: InputMaybe<Scalars['Date']>
+    tom?: InputMaybe<Scalars['Date']>
 }
 
 export type Diagnose = {
@@ -181,12 +195,18 @@ export type Merknad = {
 export type Mutation = {
     __typename?: 'Mutation'
     changeSykmeldingStatus: Sykmelding
+    sendSykmelding: Sykmelding
     submitSykmelding: Sykmelding
 }
 
 export type MutationChangeSykmeldingStatusArgs = {
     status: SykmeldingChangeStatus
     sykmeldingId: Scalars['ID']
+}
+
+export type MutationSendSykmeldingArgs = {
+    sykmeldingId: Scalars['ID']
+    values: SendSykmeldingValues
 }
 
 export type MutationSubmitSykmeldingArgs = {
@@ -270,6 +290,17 @@ export enum RegelStatus {
     Invalid = 'INVALID',
     ManualProcessing = 'MANUAL_PROCESSING',
     Ok = 'OK',
+}
+
+export type SendSykmeldingValues = {
+    arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']>
+    arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
+    egenmeldingsperioder?: InputMaybe<Array<DateRange>>
+    erOpplysningeneRiktige?: InputMaybe<YesOrNo>
+    harBruktEgenmelding?: InputMaybe<YesOrNo>
+    harForsikring?: InputMaybe<YesOrNo>
+    riktigNarmesteLeder?: InputMaybe<YesOrNo>
+    uriktigeOpplysninger?: InputMaybe<Array<UriktigeOpplysningerType>>
 }
 
 export enum ShortName {
@@ -356,6 +387,15 @@ export type SykmeldingStatus = {
     timestamp: Scalars['Date']
 }
 
+export enum UriktigeOpplysningerType {
+    AndreOpplysninger = 'ANDRE_OPPLYSNINGER',
+    Arbeidsgiver = 'ARBEIDSGIVER',
+    Diagnose = 'DIAGNOSE',
+    Periode = 'PERIODE',
+    SykmeldingsgradForHoy = 'SYKMELDINGSGRAD_FOR_HOY',
+    SykmeldingsgradForLav = 'SYKMELDINGSGRAD_FOR_LAV',
+}
+
 export type UtdypendeOpplysning = {
     __typename?: 'UtdypendeOpplysning'
     restriksjoner: Array<SvarRestriksjon>
@@ -367,6 +407,11 @@ export type UtenforVentetid = {
     __typename?: 'UtenforVentetid'
     erUtenforVentetid: Scalars['Boolean']
     oppfolgingsdato: Maybe<Scalars['Date']>
+}
+
+export enum YesOrNo {
+    No = 'NO',
+    Yes = 'YES',
 }
 
 export type WithIndex<TObject> = TObject & Record<string, any>
@@ -453,11 +498,13 @@ export type ResolversTypes = ResolversObject<{
     ArbeidsgiverSykmelding: ResolverTypeWrapper<ArbeidsgiverSykmelding>
     ArbeidsrelatertArsak: ResolverTypeWrapper<ArbeidsrelatertArsak>
     ArbeidsrelatertArsakType: ArbeidsrelatertArsakType
+    ArbeidssituasjonType: ArbeidssituasjonType
     Behandler: ResolverTypeWrapper<Behandler>
     Behandlingsutfall: ResolverTypeWrapper<Behandlingsutfall>
     Boolean: ResolverTypeWrapper<Scalars['Boolean']>
     Brukerinformasjon: ResolverTypeWrapper<Brukerinformasjon>
     Date: ResolverTypeWrapper<Scalars['Date']>
+    DateRange: DateRange
     DateTime: ResolverTypeWrapper<Scalars['DateTime']>
     Diagnose: ResolverTypeWrapper<Diagnose>
     ErIArbeid: ResolverTypeWrapper<ErIArbeid>
@@ -482,6 +529,7 @@ export type ResolversTypes = ResolversObject<{
     Query: ResolverTypeWrapper<{}>
     RegelInfo: ResolverTypeWrapper<RegelInfo>
     RegelStatus: RegelStatus
+    SendSykmeldingValues: SendSykmeldingValues
     ShortName: ShortName
     Sporsmal: ResolverTypeWrapper<Sporsmal>
     StatusEvent: StatusEvent
@@ -492,8 +540,10 @@ export type ResolversTypes = ResolversObject<{
     Sykmelding: ResolverTypeWrapper<Sykmelding>
     SykmeldingChangeStatus: SykmeldingChangeStatus
     SykmeldingStatus: ResolverTypeWrapper<SykmeldingStatus>
+    UriktigeOpplysningerType: UriktigeOpplysningerType
     UtdypendeOpplysning: ResolverTypeWrapper<UtdypendeOpplysning>
     UtenforVentetid: ResolverTypeWrapper<UtenforVentetid>
+    YesOrNo: YesOrNo
 }>
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -510,6 +560,7 @@ export type ResolversParentTypes = ResolversObject<{
     Boolean: Scalars['Boolean']
     Brukerinformasjon: Brukerinformasjon
     Date: Scalars['Date']
+    DateRange: DateRange
     DateTime: Scalars['DateTime']
     Diagnose: Diagnose
     ErIArbeid: ErIArbeid
@@ -531,6 +582,7 @@ export type ResolversParentTypes = ResolversObject<{
     Prognose: Prognose
     Query: {}
     RegelInfo: RegelInfo
+    SendSykmeldingValues: SendSykmeldingValues
     Sporsmal: Sporsmal
     String: Scalars['String']
     Svar: Svar
@@ -752,6 +804,12 @@ export type MutationResolvers<
         ParentType,
         ContextType,
         RequireFields<MutationChangeSykmeldingStatusArgs, 'status' | 'sykmeldingId'>
+    >
+    sendSykmelding?: Resolver<
+        ResolversTypes['Sykmelding'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationSendSykmeldingArgs, 'sykmeldingId' | 'values'>
     >
     submitSykmelding?: Resolver<
         ResolversTypes['Sykmelding'],

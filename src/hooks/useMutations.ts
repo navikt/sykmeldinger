@@ -5,11 +5,14 @@ import { logger } from '@navikt/next-logger'
 import {
     ChangeSykmeldingStatusDocument,
     ChangeSykmeldingStatusMutation,
+    SendSykmeldingDocument,
+    SendSykmeldingMutation,
     SubmitSykmeldingDocument,
     SubmitSykmeldingMutation,
     SykmeldingChangeStatus,
 } from '../fetching/graphql.generated'
 import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form'
+import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { toDateString } from '../utils/dateUtils'
 
 export function useChangeSykmeldingStatus(
@@ -94,4 +97,36 @@ function mapFormValuesToApiValues(values: FormShape): unknown {
         ...values,
         egenmeldingsperioder: egenmeldingsperioder,
     }
+}
+
+/**
+ * New alternative API for submitting sykmeldinger. This will eventually replace
+ * submitSykmelding. Until the åpen sykmelding form is migrated to the new API,
+ * we need to keep the old API around.
+ */
+export function useSendSykmelding(
+    sykmeldingId: string,
+    onCompleted: () => void,
+    onError: () => void,
+): [MutationResult<SendSykmeldingMutation>, (values: FormValues) => void] {
+    const router = useRouter()
+    const [submit, result] = useMutation(SendSykmeldingDocument, {
+        onCompleted: () => {
+            onCompleted()
+            window.scrollTo(0, 0)
+            router.push(`/${sykmeldingId}/kvittering`)
+        },
+        onError: () => {
+            onError()
+        },
+    })
+
+    return [
+        result,
+        (values) => {
+            logger.info(`Client: Submitting sykmelding ${sykmeldingId}`)
+
+            submit({ variables: { sykmeldingId, values } })
+        },
+    ]
 }

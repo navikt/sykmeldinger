@@ -6,11 +6,15 @@ import Spacing from '../../../Spacing/Spacing'
 import InformationBanner from '../../../InformationBanner/InformationBanner'
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SendSykmeldingForm from '../../../SendSykmelding/SendSykmeldingForm'
+import { getPublicEnv } from '../../../../utils/env'
 
 import AvbrytPanel from './AvbrytPanel/AvbrytPanel'
 import AvbrytContextProvider from './AvbrytContext'
 import PapirInfoheader from './PapirInfoheader'
 import Form from './Form/Form'
+
+const publicEnv = getPublicEnv()
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding
@@ -66,6 +70,7 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                 <Spacing>
                     <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
                 </Spacing>
+                {publicEnv.ENABLE_NEW_FORM === 'true' && <SendSykmeldingForm sykmelding={sykmelding} />}
                 <Form sykmelding={sykmelding} />
                 <AvbrytPanel />
             </div>
