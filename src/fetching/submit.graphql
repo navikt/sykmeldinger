@@ -9,3 +9,9 @@ mutation SubmitSykmelding($sykmeldingId: ID!, $values: JSON!) {
         ...Sykmelding
     }
 }
+
+mutation SendSykmelding($sykmeldingId: ID!, $values: SendSykmeldingValues!) {
+    sendSykmelding(sykmeldingId: $sykmeldingId, values: $values) {
+        ...Sykmelding
+    }
+}

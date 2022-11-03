@@ -8,6 +8,7 @@ type Query {
 type Mutation {
     changeSykmeldingStatus(sykmeldingId: ID!, status: SykmeldingChangeStatus!): Sykmelding!
     submitSykmelding(sykmeldingId: ID!, values: JSON!): Sykmelding!
+    sendSykmelding(sykmeldingId: ID!, values: SendSykmeldingValues!): Sykmelding!
 }
 
 enum SykmeldingChangeStatus {

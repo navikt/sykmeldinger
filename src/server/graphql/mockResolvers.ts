@@ -2,6 +2,7 @@ import { GraphQLJSON } from 'graphql-scalars'
 import { logger } from '@navikt/next-logger'
 
 import { dateSub } from '../../utils/dateUtils'
+import { mapSendSykmeldingValuesToV3Api } from '../sendSykmeldingMapping'
 
 import {
     MutationResolvers,
@@ -83,6 +84,17 @@ const Mutation: MutationResolvers = {
     },
     submitSykmelding: async (_, { sykmeldingId }) => {
         logger.warn('Using mocked data locally or in demo mode')
+
+        const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
+        if (!sykmelding) {
+            throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
+        }
+        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.Sendt
+        return sykmelding
+    },
+    sendSykmelding: async (_, { sykmeldingId, values }) => {
+        logger.warn('Using mocked data for send mutation locally or in demo mode')
+        logger.info(`Mapped values: ${JSON.stringify(mapSendSykmeldingValuesToV3Api(values), null, 2)}`)
 
         const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
         if (!sykmelding) {

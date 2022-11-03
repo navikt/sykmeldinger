@@ -44,6 +44,22 @@ describe('Frilanser', () => {
             expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
         })
 
+        it('should NOT render new form under active development', async () => {
+            render(<SykmeldingPage />, {
+                mocks: [
+                    ...baseMocks,
+                    createExtraFormDataMock({
+                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
+                    }),
+                ],
+            })
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+
+            expect(await screen.findByRole('group', { name: 'Stemmer opplysningene?' })).toBeInTheDocument()
+            expect(screen.queryByTestId('new-form')).not.toBeInTheDocument()
+        })
+
         it('should be able to submit form', async () => {
             render(<SykmeldingPage />, {
                 mocks: [
