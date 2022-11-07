@@ -66,6 +66,11 @@ export interface FormShape {
     harBruktEgenmelding?: SporsmalSvar<keyof typeof JaEllerNeiType | null>
     egenmeldingsperioder?: SporsmalSvar<Egenmeldingsperiode[]>
     harForsikring?: SporsmalSvar<keyof typeof JaEllerNeiType | null>
+    harEgenmeldingsperioder?: {
+        harPerioder: 'Ja' | 'Nei' | null
+        datoer: Date[] | null
+        hasClickedVidere: boolean | null
+    }[]
 }
 
 interface FormProps {
@@ -100,6 +105,13 @@ function Form({ sykmelding }: FormProps): JSX.Element {
     const harValgtArbeidsgiver = !!watch('arbeidsgiverOrgnummer')?.svar
     const watchErOpplysningeneRiktige = watch('erOpplysningeneRiktige')
     const watchUriktigeOpplysninger = watch('uriktigeOpplysninger')
+    const watchHarEgenmeldingsperioder = watch('harEgenmeldingsperioder')
+
+    const harValgtOgFullførtSykmeldingsPerioder = !erArbeidstaker
+        ? true
+        : watchHarEgenmeldingsperioder &&
+          watchHarEgenmeldingsperioder.length > 0 &&
+          watchHarEgenmeldingsperioder[watchHarEgenmeldingsperioder.length - 1].harPerioder == 'Nei'
 
     const { maAvbryte } = useContext(AvbrytContext)
 
@@ -134,7 +146,6 @@ function Form({ sykmelding }: FormProps): JSX.Element {
             <form id="apen-sykmelding-form" onSubmit={handleSubmit(onSubmit)}>
                 <Spacing>
                     <ErOpplysningeneRiktige />
-
                     {shouldArbeidssituasjonShow(watchErOpplysningeneRiktige, watchUriktigeOpplysninger, maAvbryte) && (
                         <Arbeidssituasjon
                             harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
@@ -145,14 +156,15 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                             sykmeldingFom={getSykmeldingStartDate(sykmelding)}
                         />
                     )}
-
-                    {erArbeidstaker && harValgtArbeidsgiver && !data.brukerinformasjon.strengtFortroligAdresse && (
-                        <div className={styles.harValgtArbeidsgiverWrapper}>
-                            <VeilederSenderSykmeldingen />
-                            <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
-                        </div>
-                    )}
-
+                    {erArbeidstaker &&
+                        harValgtArbeidsgiver &&
+                        !data.brukerinformasjon.strengtFortroligAdresse &&
+                        harValgtOgFullførtSykmeldingsPerioder && (
+                            <div className={styles.harValgtArbeidsgiverWrapper}>
+                                <VeilederSenderSykmeldingen />
+                                <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
+                            </div>
+                        )}
                     {errorSend && (
                         <Spacing amount="small">
                             <Alert variant="error" role="alert" aria-live="polite">

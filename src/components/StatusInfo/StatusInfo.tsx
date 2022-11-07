@@ -1,13 +1,11 @@
-import { BodyLong, BodyShort, GuidePanel, Link } from '@navikt/ds-react'
+import { BodyLong, BodyShort, GuidePanel, Heading, Panel } from '@navikt/ds-react'
+import { Information } from '@navikt/ds-icons'
 
 import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated'
 import Spacing from '../Spacing/Spacing'
 import { Merknadtype } from '../InformationBanner/InformationBanner'
-import { getPublicEnv } from '../../utils/env'
 
 import styles from './StatusInfo.module.css'
-
-const publicEnv = getPublicEnv()
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatus
@@ -87,20 +85,15 @@ function StatusInfo({
 
     return (
         <div data-testid="status-info">
-            <GuidePanel poster>
-                <Spacing amount="small">
-                    <BodyLong>
-                        Når sykefraværet er over, får du en melding fra oss igjen. Da svarer du på noen spørsmål slik at
-                        vi kan beregne sykepengene dine riktig.
-                    </BodyLong>
-                </Spacing>
-                <Spacing amount="small">
-                    <BodyLong>
-                        Du kan kikke på det allerede nå i{' '}
-                        <Link href={publicEnv.SYKEPENGESOKNAD_URL || '#'}>dine søknader</Link>.
-                    </BodyLong>
-                </Spacing>
-
+            <Heading size="small" className={styles.iconHeading}>
+                <Information />
+                Hva skjer videre?
+            </Heading>
+            <Panel className={styles.panel}>
+                <BodyLong spacing>
+                    Nå innhenter vi opplysninger fra arbeidsgiveren din. Når eller om vi trenger noe mer fra deg får du
+                    beskjed om i god tid.
+                </BodyLong>
                 {erFlEllerSn && (
                     <Spacing amount="small">
                         <BodyLong>
@@ -110,11 +103,8 @@ function StatusInfo({
                         </BodyLong>
                     </Spacing>
                 )}
-
-                <Spacing amount="small">
-                    <BodyShort>God bedring!</BodyShort>
-                </Spacing>
-            </GuidePanel>
+                <BodyShort>God bedring!</BodyShort>
+            </Panel>
         </div>
     )
 }

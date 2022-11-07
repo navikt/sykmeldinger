@@ -136,7 +136,7 @@ const Arbeidssituasjon = ({
             )}
 
             {watchArbeidssituasjon?.svar === 'ARBEIDSTAKER' && !brukerinformasjon.strengtFortroligAdresse && (
-                <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} />
+                <ArbeidsgiverOrgnummer brukerinformasjon={brukerinformasjon} sykmeldingFom={sykmeldingFom} />
             )}
 
             {skalViseEgenmeldingsperioderSporsmal && (

@@ -152,7 +152,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
             })
 
@@ -198,7 +198,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
             })
 
@@ -255,7 +255,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
             })
 
@@ -297,7 +297,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
             })
@@ -340,7 +340,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
             })
@@ -383,7 +383,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
@@ -421,7 +421,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
             })
         })
@@ -454,7 +454,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
             })
 
@@ -500,7 +500,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
             })
 
@@ -542,7 +542,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
             })
@@ -585,7 +585,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
             })
@@ -628,7 +628,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
@@ -677,7 +677,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
             })
@@ -724,7 +724,7 @@ describe('StatusInfo', () => {
                     />,
                 )
                 expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
+                    screen.getByText(/Når eller om vi trenger noe mer fra deg får du beskjed om i god tid./),
                 ).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),

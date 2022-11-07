@@ -113,7 +113,11 @@ export function createRequestContext(req: IncomingMessage): RequestContext | nul
     const requestId = req.headers['x-request-id'] as string | undefined
 
     if (isLocalOrDemo) {
-        return { ...require('./fakeLocalAuthTokenSet.json'), requestId: requestId ?? 'not set' }
+        return {
+            ...require('./fakeLocalAuthTokenSet.json'),
+            requestId: requestId ?? 'not set',
+            user: req.headers['x-test-user'],
+        }
     }
 
     const token = req.headers['authorization']

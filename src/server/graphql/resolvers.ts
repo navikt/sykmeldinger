@@ -10,6 +10,8 @@ export interface RequestContext {
     payload: TokenPayload
     accessToken: string
     requestId: string
+    // only used locally or in labs
+    user?: string
 }
 
 const Query: QueryResolvers = {

@@ -26,6 +26,7 @@ function FeiloppsummeringContainer({ errors }: FeiloppsummeringContainerProps): 
         harBruktEgenmelding: errors.harBruktEgenmelding?.svar?.message,
         egenmeldingsperioder: errors.egenmeldingsperioder?.svar?.find?.((ep) => ep?.range)?.range?.message,
         harForsikring: errors.harForsikring?.svar?.message,
+        harEgenmeldingsperioder: errors.harEgenmeldingsperioder?.find?.((ep) => ep?.harPerioder)?.harPerioder?.message,
     }
 
     const errorSummary = Object.entries(customErrors).filter((tuple): tuple is [string, string] => tuple[1] != null)

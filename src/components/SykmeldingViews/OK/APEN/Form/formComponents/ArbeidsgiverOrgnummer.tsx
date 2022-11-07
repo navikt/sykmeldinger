@@ -5,20 +5,24 @@ import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 import { FormShape } from '../Form'
 import { BrukerinformasjonFragment } from '../../../../../../fetching/graphql.generated'
 import QuestionWrapper from '../layout/QuestionWrapper'
+import Spacing from '../../../../../Spacing/Spacing'
 
 import RiktigNarmesteLeder from './RiktigNarmesteLeder'
+import EgenmeldingsperioderForKortePerioderOgSånt from './EgenmeldingsperioderForKortePerioderOgSånt'
 
 interface ArbeidsgiverOrgnummerProps {
     brukerinformasjon: BrukerinformasjonFragment
+    sykmeldingFom: string
 }
 
 const fieldName = 'arbeidsgiverOrgnummer'
 const sporsmaltekst = 'Velg arbeidsgiver'
 
-function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps): JSX.Element {
+function ArbeidsgiverOrgnummer({ brukerinformasjon, sykmeldingFom }: ArbeidsgiverOrgnummerProps): JSX.Element {
     const { arbeidsgivere } = brukerinformasjon
     const { register, unregister, control, watch } = useFormContext<FormShape>()
     const watchArbeidsgiverOrgnummer = watch(fieldName)
+    const watchRiktigNarmesteLeder = watch('riktigNarmesteLeder')
     const harArbeidsgiver = arbeidsgivere.length > 0
 
     useEffect(() => {
@@ -84,6 +88,19 @@ function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps
 
             {valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder && (
                 <RiktigNarmesteLeder naermesteLeder={valgtArbeidsgiver.naermesteLeder} />
+            )}
+
+            {((valgtArbeidsgiver?.aktivtArbeidsforhold &&
+                valgtArbeidsgiver?.naermesteLeder &&
+                watchRiktigNarmesteLeder?.svar != null) ||
+                valgtArbeidsgiver?.aktivtArbeidsforhold == false) && (
+                <Spacing direction="top">
+                    <EgenmeldingsperioderForKortePerioderOgSånt
+                        index={0}
+                        sykmeldingFom={sykmeldingFom}
+                        arbeidsgiver={valgtArbeidsgiver.navn}
+                    />
+                </Spacing>
             )}
         </QuestionWrapper>
     )

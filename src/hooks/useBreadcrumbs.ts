@@ -85,7 +85,7 @@ export function useHandleDecoratorClicks(): void {
 
     useEffect(() => {
         onBreadcrumbClick(callback)
-    })
+    }, [callback])
 }
 
 export function createKvitteringBreadcrumbs(

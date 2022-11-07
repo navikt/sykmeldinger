@@ -93,5 +93,6 @@ function mapFormValuesToApiValues(values: FormShape): unknown {
     return {
         ...values,
         egenmeldingsperioder: egenmeldingsperioder,
+        harEgenmeldingsperioder: undefined,
     }
 }

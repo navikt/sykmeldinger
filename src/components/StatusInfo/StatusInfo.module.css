@@ -1,3 +1,17 @@
 .root > :global(.nav-veilederpanel--advarsel) {
     border: none;
 }
+
+.iconHeading {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--navds-spacing-2);
+}
+
+.iconHeading > svg {
+    margin-right: var(--navds-spacing-2);
+}
+
+.panel {
+    background-color: var(--navds-semantic-color-component-background-alternate);
+}

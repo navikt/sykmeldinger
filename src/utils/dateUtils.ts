@@ -1,4 +1,4 @@
-import { add, format, formatISO, parseISO, sub } from 'date-fns'
+import { add, format, formatISO, getDate, isSameMonth, isSameYear, parseISO, sub } from 'date-fns'
 import nbLocale from 'date-fns/locale/nb'
 
 export function dateAdd(date: string | Date, duration: Duration): string {
@@ -21,4 +21,21 @@ export function toDateString(date: Date): string {
 
 export function toReadableDate(date: string | Date): string {
     return format(toDate(date), `d. MMMM yyyy`, { locale: nbLocale })
+}
+
+export function formatDateNoYear(date: string | Date): string {
+    return format(toDate(date), 'd. MMMM', { locale: nbLocale })
+}
+
+export function formatDatePeriod(fom: string | Date, tom: string | Date): string {
+    const fomDate = toDate(fom)
+    const tomDate = toDate(tom)
+
+    if (isSameMonth(fomDate, tomDate)) {
+        return `${getDate(fomDate)}. - ${toReadableDate(tomDate)}`
+    } else if (isSameYear(fomDate, tomDate)) {
+        return `${formatDateNoYear(fomDate)} - ${toReadableDate(tomDate)}`
+    } else {
+        return `${toReadableDate(fomDate)} - ${toReadableDate(tomDate)}`
+    }
 }

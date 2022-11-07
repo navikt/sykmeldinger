@@ -21,7 +21,7 @@ import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 const SykmeldingerPage: React.FC = () => {
     useHotjarTrigger('SYKMELDING_LISTEVISNING')
 
-    const { data, error, loading } = useSykmeldinger()
+    const { data, error, loading } = useSykmeldinger(true)
 
     if (loading) {
         return (

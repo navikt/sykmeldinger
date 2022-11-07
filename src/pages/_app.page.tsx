@@ -7,12 +7,18 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/nb'
 import isBetween from 'dayjs/plugin/isBetween'
 import { configureLogger } from '@navikt/next-logger'
+import dynamic from 'next/dynamic'
 
 import { createApolloClient } from '../fetching/apollo'
 import { AmplitudeProvider } from '../amplitude/amplitude'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs'
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
+import { isLocalOrDemo } from '../utils/env'
+
+const HemmeligMockUI = dynamic(() => import('../components/HemmeligMockUI/HemmeligMockUI'), {
+    ssr: false,
+})
 
 configureLogger({
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
@@ -34,7 +40,12 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <ErrorBoundary>
             <AmplitudeProvider>
                 <ApolloProvider client={apolloClient}>
-                    <LabsWarning />
+                    {isLocalOrDemo && (
+                        <>
+                            <LabsWarning />
+                            <HemmeligMockUI />
+                        </>
+                    )}
                     <Component {...pageProps} />
                 </ApolloProvider>
             </AmplitudeProvider>

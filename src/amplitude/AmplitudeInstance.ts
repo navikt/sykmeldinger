@@ -1,7 +1,7 @@
 import { logger } from '@navikt/next-logger'
 import amplitude, { AmplitudeClient } from 'amplitude-js'
 
-import { getPublicEnv } from '../utils/env'
+import { getPublicEnv, isLocalOrDemo } from '../utils/env'
 
 import { AmplitudeTaxonomyEvents } from './taxonomyEvents'
 
@@ -26,7 +26,7 @@ class AmplitudeInstance {
                 platform: window.location.toString(),
             })
         } else {
-            logger.warn('Amplitude is not initialized because AMPLITUDE_ENABLED is not set')
+            if (!isLocalOrDemo) logger.warn('Amplitude is not initialized because AMPLITUDE_ENABLED is not set')
         }
     }
 

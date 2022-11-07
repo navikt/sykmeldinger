@@ -1,10 +1,11 @@
 import { onError } from '@apollo/client/link/error'
-import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 import { RetryLink } from '@apollo/client/link/retry'
 import { logger } from '@navikt/next-logger'
 
-import { getPublicEnv } from '../utils/env'
+import { getPublicEnv, isLocalOrDemo } from '../utils/env'
 import { getUserRequestId } from '../utils/userRequestId'
+import { getUserTestId } from '../utils/userTestId'
 
 const publicEnv = getPublicEnv()
 
@@ -15,6 +16,14 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
             errorLink,
             new RetryLink({
                 attempts: { max: 3 },
+            }),
+            new ApolloLink((operation, forward) => {
+                if (isLocalOrDemo) {
+                    operation.setContext(({ headers = {} }) => ({
+                        headers: { ...headers, 'x-test-user': getUserTestId() },
+                    }))
+                }
+                return forward(operation)
             }),
             httpLink,
         ]),

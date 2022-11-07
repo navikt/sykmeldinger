@@ -9,12 +9,13 @@ import {
     SykmeldingerQueryVariables,
 } from '../fetching/graphql.generated'
 
-export function useSykmeldinger(): QueryResult<SykmeldingerQuery, SykmeldingerQueryVariables> {
+export function useSykmeldinger(refetchOnMount = false): QueryResult<SykmeldingerQuery, SykmeldingerQueryVariables> {
     useEffect(() => {
         logger.info(`Client: Fetching sykmeldinger`)
     }, [])
     const client = useApolloClient()
     return useQuery(SykmeldingerDocument, {
+        fetchPolicy: refetchOnMount ? 'cache-and-network' : undefined,
         onCompleted: (result) => {
             result.sykmeldinger?.forEach((sykmelding) => {
                 client.writeQuery({
