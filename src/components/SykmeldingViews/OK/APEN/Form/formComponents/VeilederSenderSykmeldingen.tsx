@@ -5,11 +5,12 @@ import VeilederMaleSvg from '../../../../../Veileder/svg/VeilederMaleSvg'
 import styles from './VeilederSenderSykmeldingen.module.css'
 
 function VeilederSenderSykmeldingen(): JSX.Element {
+    const veilederSectionId = 'veilederSenderSykmeldingen'
     return (
-        <div className={styles.veilederSenderSykmeldingen}>
+        <section className={styles.veilederSenderSykmeldingen} aria-labelledby={veilederSectionId}>
             <Chat avatar={<VeilederMaleSvg />} position="left">
                 <Chat.Bubble backgroundColor="white">
-                    <Label>Sykmeldingen sendes til jobben din</Label>
+                    <Label id={veilederSectionId}>Sykmeldingen sendes til jobben din</Label>
                     <BodyShort>
                         Under ser du hva jobben din får se hvis du sender sykmeldingen. Diagnosen og annen sensitiv data
                         sendes for eksempel ikke.
@@ -29,7 +30,7 @@ function VeilederSenderSykmeldingen(): JSX.Element {
                     </ReadMore>
                 </Chat.Bubble>
             </Chat>
-        </div>
+        </section>
     )
 }
 

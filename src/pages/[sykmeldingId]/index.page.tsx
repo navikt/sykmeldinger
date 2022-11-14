@@ -138,7 +138,7 @@ function SykmeldingerWrapper({ sykmelding, children }: PropsWithChildren<{ sykme
 
     return (
         <div id="index-page">
-            <div className={styles.browserPrintMessage}>
+            <div className={styles.browserPrintMessage} hidden>
                 <Heading level="1" size="large">
                     Det er ikke mulig å printe på denne måten.
                 </Heading>

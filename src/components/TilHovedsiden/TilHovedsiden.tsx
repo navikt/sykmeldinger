@@ -11,7 +11,7 @@ const publicEnv = getPublicEnv()
 const TilHovedsiden: React.FC = () => {
     return (
         <Link href={publicEnv.SYKEFRAVAER_ROOT} className={styles.tilHovedsiden}>
-            <Back />
+            <Back role="img" aria-hidden />
             <BodyShort>Til hovedsiden ditt sykefravær</BodyShort>
         </Link>
     )

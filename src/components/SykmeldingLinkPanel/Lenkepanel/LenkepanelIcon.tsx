@@ -9,7 +9,15 @@ interface Icon {
 function DeclinedIcon({ hover = false }: Icon): JSX.Element {
     if (hover) {
         return (
-            <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+                width="46"
+                height="46"
+                viewBox="0 0 46 46"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-hidden
+            >
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -20,7 +28,15 @@ function DeclinedIcon({ hover = false }: Icon): JSX.Element {
         )
     }
     return (
-        <svg width="46" height="47" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="46"
+            height="47"
+            viewBox="0 0 46 47"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-hidden
+        >
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -34,7 +50,15 @@ function DeclinedIcon({ hover = false }: Icon): JSX.Element {
 function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
     if (hover) {
         return (
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-hidden
+            >
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -51,7 +75,15 @@ function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
         )
     }
     return (
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-hidden
+        >
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -71,7 +103,15 @@ function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
 function StethoscopeIcon({ hover = false }: Icon): JSX.Element {
     if (hover) {
         return (
-            <svg width="42" height="48" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+                width="42"
+                height="48"
+                viewBox="0 0 42 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-hidden
+            >
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -82,7 +122,15 @@ function StethoscopeIcon({ hover = false }: Icon): JSX.Element {
         )
     }
     return (
-        <svg width="42" height="48" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="42"
+            height="48"
+            viewBox="0 0 42 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-hidden
+        >
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"

@@ -74,16 +74,17 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     }
 
     if (papirsykmelding === true) {
+        const guidePanelLabelId = 'guide-panel-label'
         return (
-            <div data-testid="papir-banner">
+            <section aria-labelledby={guidePanelLabelId} data-testid="papir-banner">
                 <GuidePanel poster>
-                    <Label>Før du bruker sykmeldingen</Label>
+                    <Label id={guidePanelLabelId}>Før du bruker sykmeldingen</Label>
                     <BodyLong>
                         Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik
                         at du kan gjøre resten digitalt.
                     </BodyLong>
                 </GuidePanel>
-            </div>
+            </section>
         )
     }
 

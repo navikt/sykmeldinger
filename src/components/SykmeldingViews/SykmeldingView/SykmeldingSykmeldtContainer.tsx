@@ -16,11 +16,13 @@ interface Props {
 const publicEnv = getPublicEnv()
 
 const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => {
+    const articleHeadingId = `sykmelding-${sykmelding.id}-header`
+
     return (
-        <article aria-labelledby={`sykmelding-${sykmelding.id}-header`}>
+        <article aria-labelledby={articleHeadingId}>
             <header className={styles.sykmeldingsopplysningerHeader}>
                 <div className={styles.sykmeldtHeader}>
-                    <Heading size="small" level="2" id="sykmeldinger-panel-info-section">
+                    <Heading id={articleHeadingId} size="small" level="2">
                         Opplysninger fra sykmeldingen
                     </Heading>
                     <div className={styles.sentDateAndPrint}>
@@ -34,14 +36,12 @@ const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => 
                             rel="noopener noreferrer"
                             variant="tertiary"
                             className={styles.printButton}
-                            icon={<Print />}
+                            icon={<Print title="Åpne PDF av sykmeldingen" />}
                         />
                     </div>
                 </div>
             </header>
-            <div id={`sykmelding-${sykmelding.id}-content`} aria-labelledby={`sykmelding-${sykmelding.id}-header`}>
-                <SykmeldingViewSykmeldt sykmelding={sykmelding} />
-            </div>
+            <SykmeldingViewSykmeldt sykmelding={sykmelding} />
         </article>
     )
 }
