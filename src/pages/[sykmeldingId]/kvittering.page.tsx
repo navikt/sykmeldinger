@@ -56,7 +56,7 @@ function SykmeldingkvitteringPage(): JSX.Element {
         ![StatusEvent.Sendt, StatusEvent.Bekreftet].includes(data.sykmelding.sykmeldingStatus.statusEvent)
     ) {
         logger.error(
-            `Trying to display kvittering for sykmelding with id: ${sykmeldingId}, but the status is wrong, status: ${data.sykmelding.behandlingsutfall.status}`,
+            `Trying to display kvittering for sykmelding with id: ${sykmeldingId}, but the status is wrong, sykmeldingstatus: ${data.sykmelding.sykmeldingStatus.statusEvent}, behandlingsutfall: ${data.sykmelding.behandlingsutfall.status}`,
         )
         return (
             <KvitteringWrapper>

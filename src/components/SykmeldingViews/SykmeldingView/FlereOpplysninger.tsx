@@ -10,7 +10,7 @@ function FlereOpplysninger({ children }: PropsWithChildren<unknown>): JSX.Elemen
             <Accordion.Item>
                 <Accordion.Header>
                     <div className={styles.iconAndTitle}>
-                        <Findout />
+                        <Findout role="img" aria-hidden />
                         Flere opplysninger
                     </div>
                 </Accordion.Header>

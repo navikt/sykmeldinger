@@ -36,7 +36,7 @@ const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding }: Props)
                     >
                         <div className={styles.expendableHeader}>
                             <div className={styles.sykmeldingsopplysningerIcon}>
-                                <Findout />
+                                <Findout role="img" aria-hidden />
                             </div>
                             <Heading
                                 className={styles.sykmeldingsopplysningerText}

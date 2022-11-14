@@ -12,7 +12,7 @@ interface Props {
 export function SykmeldtHeading({ title, Icon }: Props): JSX.Element {
     return (
         <div className={styles.root}>
-            <Icon />
+            <Icon role="img" aria-hidden />
             <Heading className={styles.heading} size="small" level="3">
                 {title}
             </Heading>

@@ -1,18 +1,19 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: sykmeldinger
+  name: {{appname}}
   namespace: teamsykmelding
   labels:
     team: teamsykmelding
+    branchState: {{branchState}}
 spec:
   image: {{image}}
   port: 3000
   ingresses:
-    - 'https://sykmeldinger.labs.nais.io/'
+    - {{ingress}}
   replicas:
-    min: 1
-    max: 1
+    min: {{replicas}}
+    max: {{replicas}}
   liveness:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:

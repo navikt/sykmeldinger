@@ -3,6 +3,8 @@ import * as dekoratoren from '@navikt/nav-dekoratoren-moduler'
 
 import { createInitialServerSideBreadcrumbs, SsrPathVariants, useUpdateBreadcrumbs } from './useBreadcrumbs'
 
+jest.mock('@navikt/nav-dekoratoren-moduler')
+
 describe('useUpdateBreadcrumbs', () => {
     it('should update when given a single crumb, automatically setting the URL', () => {
         const spy = jest.spyOn(dekoratoren, 'setBreadcrumbs')

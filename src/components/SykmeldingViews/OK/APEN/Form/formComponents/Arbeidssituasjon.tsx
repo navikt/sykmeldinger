@@ -75,7 +75,7 @@ const Arbeidssituasjon = ({
     return (
         <QuestionWrapper innrykk>
             <Spacing>
-                <Heading size="medium" spacing>
+                <Heading size="medium" level="2" spacing>
                     Din arbeidssituasjon
                 </Heading>
                 <BodyShort spacing>

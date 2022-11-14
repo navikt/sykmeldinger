@@ -1,0 +1,20 @@
+name: Labs delete
+on: delete
+env:
+  APP: sykmeldinger
+  branchname: ${{ github.event.ref }}
+jobs:
+  deploy-branch-to-labs-gcp:
+    if: startsWith(github.event.ref, 'labs-')
+    name: Delete branch labs-gcp
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: echo "IMAGE=ghcr.io/navikt/$APP:latest" >> $GITHUB_ENV
+      - name: Scale down labs-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: labs-gcp
+          RESOURCE: nais-labs-branch.yaml
+          VAR: appname=${{ env.branchname }},replicas=0,branchState=deleted

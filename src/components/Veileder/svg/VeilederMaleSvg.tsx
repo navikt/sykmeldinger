@@ -1,7 +1,15 @@
 import styles from './VeilederSvg.module.css'
 
 const VeilederMaleSvg = (): JSX.Element => (
-    <svg width="54" height="77" viewBox="0 0 54 77" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+        width="54"
+        height="77"
+        viewBox="0 0 54 77"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-hidden
+    >
         <path
             fillRule="evenodd"
             clipRule="evenodd"

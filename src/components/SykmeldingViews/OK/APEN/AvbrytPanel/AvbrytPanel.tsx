@@ -85,7 +85,7 @@ function AvbrytPanel(): JSX.Element {
                         variant="tertiary"
                         className={styles.avbrytPanelCross}
                         onClick={() => setIsOpen((prev) => !prev)}
-                        icon={<Close />}
+                        icon={<Close title="Lukk avbryt sykmelding panel" />}
                     />
                     <BodyShort className={styles.avbrytPanelErDuSikker}>
                         Er du sikker på at du vil avbryte sykmeldingen?
