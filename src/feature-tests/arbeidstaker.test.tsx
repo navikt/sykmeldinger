@@ -100,7 +100,7 @@ describe('Arbeidstaker', () => {
         const naermesteLederFieldset = screen.getByText(/som skal følge deg opp/i).closest('fieldset')
         userEvent.click(within(naermesteLederFieldset!).getByRole('radio', { name: 'Ja' }))
 
-        const egenmeldingsDagerFieldSet = screen.getByText(/Var du syk med egenmelding hos/i).closest('fieldset')
+        const egenmeldingsDagerFieldSet = screen.getByText(/Brukte du egenmeldingsdager hos/i).closest('fieldset')
         userEvent.click(within(egenmeldingsDagerFieldSet!).getByRole('radio', { name: 'Nei' }))
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
@@ -164,7 +164,7 @@ describe('Arbeidstaker', () => {
                 name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
             }),
         )
-        const egenmeldingsDagerFieldSet = (await screen.findByText(/Var du syk med egenmelding hos/i)).closest(
+        const egenmeldingsDagerFieldSet = (await screen.findByText(/Brukte du egenmeldingsdager hos/i)).closest(
             'fieldset',
         )
         userEvent.click(within(egenmeldingsDagerFieldSet!).getByRole('radio', { name: 'Nei' }))

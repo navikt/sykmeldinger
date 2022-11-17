@@ -1,6 +1,5 @@
 .harValgtArbeidsgiverWrapper {
-    background-color: #e4edf2;
-    padding: 0 var(--navds-spacing-8) var(--navds-spacing-12) var(--navds-spacing-8);
+    padding: 0;
 }
 
 .sendBekreftButton span {
@@ -15,7 +14,6 @@
 
     .harValgtArbeidsgiverWrapper::before {
         content: '';
-        background-color: #e4edf2;
         position: absolute;
         height: 100%;
         width: 145vw;

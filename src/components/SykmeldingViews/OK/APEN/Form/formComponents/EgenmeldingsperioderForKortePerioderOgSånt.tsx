@@ -1,5 +1,14 @@
 import React from 'react'
-import { Label, Button, ErrorMessage, Radio, RadioGroup, UNSAFE_DatePicker } from '@navikt/ds-react'
+import {
+    Label,
+    Button,
+    ErrorMessage,
+    Radio,
+    RadioGroup,
+    UNSAFE_DatePicker,
+    ReadMore,
+    BodyShort,
+} from '@navikt/ds-react'
 import { sub } from 'date-fns'
 import { useController } from 'react-hook-form'
 
@@ -65,10 +74,26 @@ function EgenmeldingsperioderForKortePerioderOgSånt({ index, sykmeldingFom, arb
         <div>
             <RadioGroup
                 name={jaNeiField.name}
-                legend={`Var du syk med egenmelding hos ${arbeidsgiver} i perioden ${formatDatePeriod(
-                    lastPossibleDate,
-                    firstPossibleDate,
-                )}`}
+                legend={
+                    <div>
+                        <div style={{ marginBottom: '0.5rem' }}>
+                            {`Brukte du egenmeldingsdager hos ${arbeidsgiver} i perioden ${formatDatePeriod(
+                                lastPossibleDate,
+                                firstPossibleDate,
+                            )}`}{' '}
+                        </div>
+                        <ReadMore header="Hvorfor spør vi om dette?">
+                            <BodyShort spacing>
+                                Arbeidsgiveren din betaler de første 16 dagene (arbeidsgiverperioden), hvor
+                                egenmeldingsdager teller med i arbeidsgiverperioden.
+                            </BodyShort>
+                            <BodyShort>
+                                Derfor må vi finne ut om du brukte egenmeldingsdager før du ble sykmeldt, slik at du
+                                og/eller arbeidsgiveren din får utbetalt riktig beløp.
+                            </BodyShort>
+                        </ReadMore>
+                    </div>
+                }
                 value={jaNeiField.value}
                 onChange={(value: 'Ja' | 'Nei') => {
                     jaNeiField.onChange(value)
@@ -80,7 +105,7 @@ function EgenmeldingsperioderForKortePerioderOgSånt({ index, sykmeldingFom, arb
             </RadioGroup>
             {jaNeiField.value == 'Ja' && (
                 <div className={styles.datePickerSection}>
-                    <Label>Velg dagene du var syk med egenmelding</Label>
+                    <Label>Velg dagene du brukte egenmelding</Label>
                     <UNSAFE_DatePicker.Standalone
                         mode="multiple"
                         min={1}

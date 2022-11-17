@@ -3,8 +3,7 @@
 }
 
 .innrykk {
-    background-color: #e4edf2;
-    padding: 2rem 1.5rem;
+    padding: 1rem 0;
 }
 
 @media (max-width: 672px) {
@@ -15,7 +14,6 @@
 
     .innrykk::before {
         content: '';
-        background-color: #e4edf2;
         position: absolute;
         height: 100%;
         width: 145vw;
