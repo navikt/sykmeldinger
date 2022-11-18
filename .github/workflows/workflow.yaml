@@ -67,7 +67,7 @@ jobs:
           source: ./.next/static
           destination: '/sykmeldinger/_next'
       - name: Upload static files to NAV CDN prod
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         uses: nais/frontend-plattform-cdn-upload-action@main
         with:
           cdn-environment: cdn.nav.no
