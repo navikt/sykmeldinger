@@ -2966,13 +2966,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/next-logger@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@navikt/next-logger@npm:1.11.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.11.0%2F097a1d1456dd6d307650b1a5d7eecb341114e151"
+"@navikt/next-logger@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "@navikt/next-logger@npm:1.12.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.12.0%2Fc7cb132501b2d568071ad2d72192a61b3f270aa1"
   peerDependencies:
     next: 12
     pino: 8
-  checksum: 15f3d67a338383d1a183a31153f4e0704bbba3942b6f1d2a023d7a8699b11a3134a2ab95608c3bca1ca75d27818c30f93c585f245c4abd5897be6e54520357a6
+  checksum: ace9aa2d04a2522c5e205c8ec07d1641efde82fedb5586b2e345f77f7d999d805b216868055b39a592c3f5e248a8b4bff2a84fefea9212b08c4cbb7d81cfa1e3
   languageName: node
   linkType: hard
 
@@ -12974,7 +12974,7 @@ __metadata:
     "@navikt/eslint-config-teamsykmelding": ^1.2.0
     "@navikt/nav-dekoratoren-moduler": ^1.8.1
     "@navikt/next-auth-wonderwall": ^1.0.0
-    "@navikt/next-logger": ^1.11.0
+    "@navikt/next-logger": ^1.12.0
     "@next/bundle-analyzer": ^12.3.3
     "@react-pdf/renderer": ^2.3.0
     "@sentry/nextjs": ^7.17.3
