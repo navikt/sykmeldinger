@@ -62,6 +62,6 @@ spec:
     - name: MIN_SIDE_ROOT
       value: 'https://www.nav.no/minside'
     - name: ASSET_PREFIX
-      value: 'https://teamsykmelding-static-files.nav.no/sykmeldinger'
+      value: 'https://cdn.nav.no/teamsykmelding/sykmeldinger'
     - name: SENTRY_ENABLED
       value: 'true'
