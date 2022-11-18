@@ -117,7 +117,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: labs-gcp
           RESOURCE: nais-labs.yaml
-          VAR: image=${{ env.DOCKER_IMAGE }},ingress=ttps://sykmeldinger.labs.nais.io,appname=sykmeldinger,replicas=1,branchState=alive
+          VAR: image=${{ env.DOCKER_IMAGE }},ingress=https://sykmeldinger.labs.nais.io,appname=sykmeldinger,replicas=1,branchState=alive
 
   deploy-to-labs-gcp:
     if: startsWith(github.ref_name, 'labs')
