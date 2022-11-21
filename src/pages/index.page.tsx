@@ -17,11 +17,14 @@ import { withAuthenticatedPage } from '../auth/withAuthentication'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
+import useFocusRefetch from '../hooks/useFocusRefetch'
 
 const SykmeldingerPage: React.FC = () => {
     useHotjarTrigger('SYKMELDING_LISTEVISNING')
 
-    const { data, error, loading } = useSykmeldinger()
+    const { data, error, loading, refetch } = useSykmeldinger()
+
+    useFocusRefetch(refetch)
 
     if (loading) {
         return (

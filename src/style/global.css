@@ -3,7 +3,7 @@
 html {
     --header-farge: #c2eaf7;
     --skillelinje-farge: #c9c9c9;
-    --desktop-limit-width: 672px;
+    --desktop-limit-width: 42rem;
     --eyes-open-color: #3e3832;
     --eyes-closed-color: #e7e9e9;
     --sykmelding-view-sykmeldt: var(--navds-global-color-blue-50);
