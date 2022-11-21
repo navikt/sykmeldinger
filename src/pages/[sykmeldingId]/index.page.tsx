@@ -23,14 +23,17 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { Sykmelding } from '../../fetching/graphql.generated'
 import { getPublicEnv } from '../../utils/env'
 import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import useFocusRefetch from '../../hooks/useFocusRefetch'
 
 import styles from './index.module.css'
 
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
 
-    const { data, error, loading } = useSykmelding(sykmeldingId)
+    const { data, error, loading, refetch } = useSykmelding(sykmeldingId)
     const olderSykmelding = useFindOlderSykmeldingId(data?.sykmelding)
+
+    useFocusRefetch(refetch)
 
     if (loading || olderSykmelding.isLoading) {
         return (
