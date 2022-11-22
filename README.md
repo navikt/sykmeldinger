@@ -57,7 +57,27 @@ Kjør appen i utviklingsmodus:
 yarn start
 ```
 
-Bygging av appen i utviklingsmodus:
+Verifisering av appen lokalt:
+
+-   kjør lint:
+
+```bash
+yarn lint
+```
+
+-   sjekk typescript:
+
+```bash
+yarn tsc
+```
+
+-   kjør tester:
+
+```bash
+yarn test
+```
+
+-   bygg appen:
 
 ```bash
 yarn build
