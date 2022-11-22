@@ -35,7 +35,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             <AmplitudeProvider>
                 <ApolloProvider client={apolloClient}>
                     <LabsWarning />
-                    <Component {...pageProps} />
+                    <main id="maincontent" role="main" tabIndex={-1}>
+                        <Component {...pageProps} />
+                    </main>
                 </ApolloProvider>
             </AmplitudeProvider>
         </ErrorBoundary>
