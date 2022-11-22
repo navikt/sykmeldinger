@@ -144,7 +144,7 @@ async function fetchApi<ResponseObject>(
     const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE)
     if (isInvalidTokenSet(tokenX)) {
         throw new Error(
-            `Unable to exchange token for dinesykmeldte-backend token, requestId: ${context.requestId}, reason: ${tokenX.message}`,
+            `Unable to exchange token for sykmeldinger-backend token, requestId: ${context.requestId}, reason: ${tokenX.message}`,
             {
                 cause: tokenX.error,
             },

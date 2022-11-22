@@ -19,7 +19,7 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
     const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE)
     if (isInvalidTokenSet(tokenX)) {
         throw new Error(
-            `Unable to exchange token for dinesykmeldte-backend token, requestId: ${context.requestId},reason: ${tokenX.message}`,
+            `Unable to exchange token for flex-syketilfelle token, requestId: ${context.requestId},reason: ${tokenX.message}`,
             {
                 cause: tokenX.error,
             },
