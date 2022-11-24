@@ -5,7 +5,7 @@ env:
   NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 jobs:
   snyk-monitor:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     name: monitor dependencies
     runs-on: ubuntu-latest
     steps:
@@ -67,7 +67,7 @@ jobs:
           source: ./.next/static
           destination: '/sykmeldinger/_next'
       - name: Upload static files to NAV CDN prod
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         uses: nais/frontend-plattform-cdn-upload-action@main
         with:
           cdn-environment: cdn.nav.no
@@ -105,8 +105,8 @@ jobs:
           RESOURCE: nais-dev-gcp.yaml
           VAR: image=${{ env.DOCKER_IMAGE }},version=${{ github.sha }}
 
-  deploy-to-master-labs-gcp:
-    if: github.ref_name == 'master'
+  deploy-to-main-labs-gcp:
+    if: github.ref_name == 'main'
     name: Deploy to labs-gcp (Demo)
     needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
@@ -138,7 +138,7 @@ jobs:
           VAR: image=${{ env.DOCKER_IMAGE }},ingress=https://${{ steps.slug.outputs.slug }}.labs.nais.io,appname=${{ steps.slug.outputs.slug }},replicas=1,branchState=alive
 
   deploy-to-prod-gcp:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     name: Deploy to prod
     needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
