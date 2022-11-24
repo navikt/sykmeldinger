@@ -53,17 +53,13 @@ export type AnnenFraversArsak = {
 export type Arbeidsgiver = {
     readonly __typename: 'Arbeidsgiver'
     readonly aktivtArbeidsforhold: Scalars['Boolean']
-    readonly juridiskOrgnummer: Scalars['String']
     readonly naermesteLeder?: Maybe<NaermesteLeder>
     readonly navn: Scalars['String']
     readonly orgnummer: Scalars['String']
-    readonly stilling: Scalars['String']
-    readonly stillingsprosent: Scalars['String']
 }
 
 export type ArbeidsgiverStatus = {
     readonly __typename: 'ArbeidsgiverStatus'
-    readonly juridiskOrgnummer?: Maybe<Scalars['String']>
     readonly orgNavn: Scalars['String']
     readonly orgnummer: Scalars['String']
 }
@@ -71,7 +67,6 @@ export type ArbeidsgiverStatus = {
 export type ArbeidsgiverSykmelding = {
     readonly __typename: 'ArbeidsgiverSykmelding'
     readonly navn?: Maybe<Scalars['String']>
-    readonly stillingsprosent?: Maybe<Scalars['Float']>
 }
 
 export type ArbeidsrelatertArsak = {
@@ -213,14 +208,7 @@ export type MutationSubmitSykmeldingArgs = {
 
 export type NaermesteLeder = {
     readonly __typename: 'NaermesteLeder'
-    readonly aktivTom?: Maybe<Scalars['Date']>
-    readonly aktoerId: Scalars['String']
-    readonly arbeidsgiverForskuttererLoenn?: Maybe<Scalars['Boolean']>
-    readonly epost?: Maybe<Scalars['String']>
-    readonly mobil?: Maybe<Scalars['String']>
     readonly navn: Scalars['String']
-    readonly organisasjonsnavn: Scalars['String']
-    readonly orgnummer: Scalars['String']
 }
 
 export type Pasient = {

@@ -27,7 +27,7 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
         ],
     },
     legekontorOrgnummer: '223456789',
-    arbeidsgiver: { navn: 'LOMMEN BARNEHAVE', stillingsprosent: 100 },
+    arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
     sykmeldingsperioder: [
         {
             fom: dateAdd(mottatt, { days: 2 }),

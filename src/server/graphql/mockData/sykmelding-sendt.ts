@@ -19,7 +19,6 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
         },
         arbeidsgiver: {
             navn: 'Navn Navnesen',
-            stillingsprosent: 100,
         },
         sykmeldingsperioder: [
             {
@@ -58,7 +57,6 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
             arbeidsgiver: {
                 orgnummer: '123456',
                 orgNavn: 'Posten AS',
-                juridiskOrgnummer: null,
             },
             sporsmalOgSvarListe: [],
         },

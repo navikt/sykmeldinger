@@ -12,7 +12,6 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
         },
         arbeidsgiver: {
             navn: 'Navn Navnesen',
-            stillingsprosent: 100,
         },
         sykmeldingsperioder: [
             {

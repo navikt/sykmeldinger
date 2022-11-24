@@ -36,7 +36,6 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
         arbeidsgiver: {
             __typename: 'ArbeidsgiverSykmelding',
             navn: 'Navn Navnesen',
-            stillingsprosent: 100,
         },
         merknader: null,
         legekontorOrgnummer: null,

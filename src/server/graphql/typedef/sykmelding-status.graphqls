@@ -23,7 +23,6 @@ enum StatusEvent {
 type ArbeidsgiverStatus {
     orgnummer: String!
     orgNavn: String!
-    juridiskOrgnummer: String
 }
 
 type Svar {

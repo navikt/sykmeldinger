@@ -34,7 +34,6 @@ function createSykmeldingStatusWithArbeidsgiver(orgNavn: string): SykmeldingStat
         arbeidsgiver: {
             __typename: 'ArbeidsgiverStatus',
             orgNavn,
-            juridiskOrgnummer: '123',
             orgnummer: '123',
         },
     }

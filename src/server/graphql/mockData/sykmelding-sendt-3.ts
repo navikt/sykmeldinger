@@ -10,7 +10,6 @@ export const sykmeldingSendt3: Sykmelding = {
     },
     arbeidsgiver: {
         navn: 'Navn Navnesen',
-        stillingsprosent: 100,
     },
     sykmeldingsperioder: [
         {
@@ -30,7 +29,6 @@ export const sykmeldingSendt3: Sykmelding = {
         arbeidsgiver: {
             orgnummer: '123456',
             orgNavn: 'Posten AS',
-            juridiskOrgnummer: null,
         },
         sporsmalOgSvarListe: [],
     },

@@ -26,7 +26,6 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
         },
         arbeidsgiver: {
             navn: 'Navn Navnesen',
-            stillingsprosent: 100,
         },
         sykmeldingsperioder: [
             {

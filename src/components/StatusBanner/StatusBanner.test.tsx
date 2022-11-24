@@ -14,7 +14,6 @@ describe('StatusBanner', () => {
                 __typename: 'ArbeidsgiverStatus',
                 orgnummer: '123456',
                 orgNavn: 'Politiet',
-                juridiskOrgnummer: null,
             },
             sporsmalOgSvarListe: [],
         }
