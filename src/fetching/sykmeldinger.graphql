@@ -27,7 +27,6 @@ fragment SykmeldingStatus on SykmeldingStatus {
     arbeidsgiver {
         orgnummer
         orgNavn
-        juridiskOrgnummer
     }
     sporsmalOgSvarListe {
         tekst
@@ -74,7 +73,6 @@ fragment Sykmelding on Sykmelding {
     legekontorOrgnummer
     arbeidsgiver {
         navn
-        stillingsprosent
     }
     sykmeldingsperioder {
         ...Periode
