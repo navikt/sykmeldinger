@@ -56,17 +56,13 @@ export type AnnenFraversArsak = {
 export type Arbeidsgiver = {
     __typename?: 'Arbeidsgiver'
     aktivtArbeidsforhold: Scalars['Boolean']
-    juridiskOrgnummer: Scalars['String']
     naermesteLeder: Maybe<NaermesteLeder>
     navn: Scalars['String']
     orgnummer: Scalars['String']
-    stilling: Scalars['String']
-    stillingsprosent: Scalars['String']
 }
 
 export type ArbeidsgiverStatus = {
     __typename?: 'ArbeidsgiverStatus'
-    juridiskOrgnummer: Maybe<Scalars['String']>
     orgNavn: Scalars['String']
     orgnummer: Scalars['String']
 }
@@ -74,7 +70,6 @@ export type ArbeidsgiverStatus = {
 export type ArbeidsgiverSykmelding = {
     __typename?: 'ArbeidsgiverSykmelding'
     navn: Maybe<Scalars['String']>
-    stillingsprosent: Maybe<Scalars['Float']>
 }
 
 export type ArbeidsrelatertArsak = {
@@ -216,14 +211,7 @@ export type MutationSubmitSykmeldingArgs = {
 
 export type NaermesteLeder = {
     __typename?: 'NaermesteLeder'
-    aktivTom: Maybe<Scalars['Date']>
-    aktoerId: Scalars['String']
-    arbeidsgiverForskuttererLoenn: Maybe<Scalars['Boolean']>
-    epost: Maybe<Scalars['String']>
-    mobil: Maybe<Scalars['String']>
     navn: Scalars['String']
-    organisasjonsnavn: Scalars['String']
-    orgnummer: Scalars['String']
 }
 
 export type Pasient = {
@@ -509,7 +497,6 @@ export type ResolversTypes = ResolversObject<{
     Diagnose: ResolverTypeWrapper<Diagnose>
     ErIArbeid: ResolverTypeWrapper<ErIArbeid>
     ErIkkeIArbeid: ResolverTypeWrapper<ErIkkeIArbeid>
-    Float: ResolverTypeWrapper<Scalars['Float']>
     GradertPeriode: ResolverTypeWrapper<GradertPeriode>
     ID: ResolverTypeWrapper<Scalars['ID']>
     Int: ResolverTypeWrapper<Scalars['Int']>
@@ -565,7 +552,6 @@ export type ResolversParentTypes = ResolversObject<{
     Diagnose: Diagnose
     ErIArbeid: ErIArbeid
     ErIkkeIArbeid: ErIkkeIArbeid
-    Float: Scalars['Float']
     GradertPeriode: GradertPeriode
     ID: Scalars['ID']
     Int: Scalars['Int']
@@ -627,12 +613,9 @@ export type ArbeidsgiverResolvers<
     ParentType extends ResolversParentTypes['Arbeidsgiver'] = ResolversParentTypes['Arbeidsgiver'],
 > = ResolversObject<{
     aktivtArbeidsforhold?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
-    juridiskOrgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     naermesteLeder?: Resolver<Maybe<ResolversTypes['NaermesteLeder']>, ParentType, ContextType>
     navn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    stilling?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    stillingsprosent?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -640,7 +623,6 @@ export type ArbeidsgiverStatusResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsgiverStatus'] = ResolversParentTypes['ArbeidsgiverStatus'],
 > = ResolversObject<{
-    juridiskOrgnummer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     orgNavn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
@@ -651,7 +633,6 @@ export type ArbeidsgiverSykmeldingResolvers<
     ParentType extends ResolversParentTypes['ArbeidsgiverSykmelding'] = ResolversParentTypes['ArbeidsgiverSykmelding'],
 > = ResolversObject<{
     navn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    stillingsprosent?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -823,14 +804,7 @@ export type NaermesteLederResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['NaermesteLeder'] = ResolversParentTypes['NaermesteLeder'],
 > = ResolversObject<{
-    aktivTom?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>
-    aktoerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    arbeidsgiverForskuttererLoenn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
-    epost?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    mobil?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     navn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    organisasjonsnavn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 

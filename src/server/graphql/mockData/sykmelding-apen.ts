@@ -19,7 +19,6 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
         },
         arbeidsgiver: {
             navn: 'Navn Navnesen',
-            stillingsprosent: 100,
         },
         merknader: null,
         legekontorOrgnummer: null,

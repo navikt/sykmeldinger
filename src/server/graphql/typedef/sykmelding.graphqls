@@ -29,7 +29,6 @@ type Sykmelding {
 
 type ArbeidsgiverSykmelding {
     navn: String
-    stillingsprosent: Float
 }
 
 type MeldingTilNAV {

@@ -13,7 +13,7 @@ export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
     mottattTidspunkt: '2021-06-16T20:00:00Z',
     behandlingsutfall: { status: RegelStatus.Ok, ruleHits: [] },
     legekontorOrgnummer: '223456789',
-    arbeidsgiver: { navn: 'LOMMEN BARNEHAVE', stillingsprosent: 100 },
+    arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
     sykmeldingsperioder: [
         {
             fom: '2021-06-06',

@@ -6,7 +6,6 @@ import { ShortName, StatusEvent, Svartype } from '../../graphql/resolver-types.g
 const ArbeidsgiverStatusSchema = z.object({
     orgnummer: z.string(),
     orgNavn: z.string(),
-    juridiskOrgnummer: z.string().nullable(),
 })
 
 const SvarSchema = z.object({

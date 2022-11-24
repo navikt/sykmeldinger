@@ -10,7 +10,6 @@ export const sykmeldingBekreftet: Sykmelding = {
     },
     arbeidsgiver: {
         navn: 'Navn Navnesen',
-        stillingsprosent: 100,
     },
     sykmeldingsperioder: [
         {

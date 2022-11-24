@@ -15,7 +15,7 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
         mottattTidspunkt: mottatt,
         behandlingsutfall: { status: RegelStatus.Ok, ruleHits: [] },
         legekontorOrgnummer: '223456789',
-        arbeidsgiver: { navn: 'LOMMEN BARNEHAVE', stillingsprosent: 100 },
+        arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
         sykmeldingsperioder: [
             {
                 fom: dateAdd(mottatt, { days: 5 }),
