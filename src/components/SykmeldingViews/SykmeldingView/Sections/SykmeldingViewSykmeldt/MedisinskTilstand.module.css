@@ -4,18 +4,18 @@
 }
 
 .heading {
-    font-size: var(--navds-font-size-heading-xsmall);
+    font-size: var(--a-font-size-heading-xsmall);
 }
 
 .underHeading {
-    font-size: var(--navds-font-size-medium);
-    margin-top: var(--navds-spacing-4);
+    font-size: var(--a-font-size-medium);
+    margin-top: var(--a-spacing-4);
 }
 
 .info {
     background-color: var(--sykmelding-view-flere-opplysninger);
-    padding: var(--navds-spacing-4);
-    margin-bottom: var(--navds-spacing-3);
+    padding: var(--a-spacing-4);
+    margin-bottom: var(--a-spacing-3);
     border-radius: 4px;
 }
 
@@ -25,5 +25,5 @@
 }
 
 .info :global(.navds-body-short) {
-    margin-top: var(--navds-spacing-2);
+    margin-top: var(--a-spacing-2);
 }

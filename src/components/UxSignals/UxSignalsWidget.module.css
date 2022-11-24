@@ -1,21 +1,21 @@
 .uxSignalsContainer {
-    margin-top: var(--navds-spacing-12);
+    margin-top: var(--a-spacing-12);
 }
 
 .uxSignalsContainer > :global(.uxsignals-container) {
-    background-color: var(--navds-guide-panel-color-background);
-    border-color: var(--navds-guide-panel-color-border);
-    border-radius: var(--navds-border-radius-medium);
-    color: var(--navds-semantic-color-text);
+    background-color: var(--a-surface-default);
+    border-color: var(--a-border-action);
+    border-radius: var(--a-border-radius-medium);
+    color: var(--a-text-default);
     margin: 0;
 }
 
 .uxSignalsContainer :global(.uxsignals-cta) {
-    background-color: var(--navds-button-color-primary-background);
-    color: var(--navds-button-color-primary-text);
-    border-radius: var(--navds-border-radius-small);
+    background-color: var(--a-surface-action);
+    color: var(--a-text-on-action);
+    border-radius: var(--a-border-radius-small);
 }
 
 .uxSignalsContainer :global(.uxsignals-cta):hover {
-    background-color: var(--navds-button-color-primary-background-hover);
+    background-color: var(--a-surface-action-hover);
 }

@@ -1,13 +1,13 @@
 .merknadBannerSection {
-    margin-bottom: var(--navds-spacing-6);
+    margin-bottom: var(--a-spacing-6);
 }
 
 .title {
-    margin-bottom: var(--navds-spacing-4);
+    margin-bottom: var(--a-spacing-4);
 }
 
 .paragraph {
-    margin-bottom: var(--navds-spacing-2);
+    margin-bottom: var(--a-spacing-2);
 }
 
 .merknadBannerRuler {
@@ -17,22 +17,22 @@
 
 .veilederMottattSykmeldingen {
     display: flex;
-    margin: 0 var(--navds-spacing-12) 0 var(--navds-spacing-12);
+    margin: 0 var(--a-spacing-12) 0 var(--a-spacing-12);
 }
 
 .veilederMottattSykmeldingen :global(.nav-veileder) {
-    margin-right: var(--navds-spacing-4);
+    margin-right: var(--a-spacing-4);
 }
 
 @media (max-width: 480px) {
     .veilederMottattSykmeldingen {
         display: block;
-        margin: 0 var(--navds-spacing-2) 0 var(--navds-spacing-2);
+        margin: 0 var(--a-spacing-2) 0 var(--a-spacing-2);
     }
 
     .veilederMottattSykmeldingen :global(.nav-veileder) {
         display: block;
-        margin: 0 0 var(--navds-spacing-4) 0;
+        margin: 0 0 var(--a-spacing-4) 0;
     }
 
     .veilederMottattSykmeldingen :global(.typo-element) {

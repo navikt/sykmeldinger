@@ -5,7 +5,7 @@
 .egenmeldingsperiode {
     position: relative;
     display: flex;
-    padding: var(--navds-spacing-4) 0;
+    padding: var(--a-spacing-4) 0;
 }
 
 .egenmeldingsperiode:not(:last-child) {

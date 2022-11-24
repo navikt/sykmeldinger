@@ -2,6 +2,6 @@
 .tiltakNAV,
 .andreTiltak {
     background-color: var(--sykmelding-view-flere-opplysninger);
-    padding: var(--navds-spacing-4);
-    margin-bottom: var(--navds-spacing-3);
+    padding: var(--a-spacing-4);
+    margin-bottom: var(--a-spacing-3);
 }
