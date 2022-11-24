@@ -1,19 +1,19 @@
 .perioder {
     display: flex;
     flex-wrap: wrap;
-    column-gap: var(--navds-spacing-4);
+    column-gap: var(--a-spacing-4);
 }
 
 .perioder .periode {
     flex-grow: 1;
-    margin-bottom: var(--navds-spacing-3);
+    margin-bottom: var(--a-spacing-3);
     background-color: var(--sykmelding-view-arbeidsgiver);
-    padding: var(--navds-spacing-4);
+    padding: var(--a-spacing-4);
     border-radius: 4px;
 }
 
 .perioder .periode div {
-    margin-bottom: var(--navds-spacing-8);
+    margin-bottom: var(--a-spacing-8);
 }
 
 .perioder .periode:nth-child(3n + 3) {
@@ -22,7 +22,7 @@
 
 .perioder .periode p:not(:last-of-type) {
     margin-bottom: 0.3rem;
-    font-size: var(--navds-font-size-medium);
+    font-size: var(--a-font-size-medium);
 }
 
 .perioder .periode div:last-of-type,

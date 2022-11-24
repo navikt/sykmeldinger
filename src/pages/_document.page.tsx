@@ -57,6 +57,13 @@ class MyDocument extends Document<Props> {
             <Html lang={language || 'no'}>
                 <Head>
                     <Decorator.Styles />
+                    <link
+                        rel="preload"
+                        href="https://cdn.nav.no/aksel/fonts/SourceSans3-normal.woff2"
+                        as="font"
+                        type="font/woff2"
+                        crossOrigin="anonymous"
+                    />
                 </Head>
                 <body>
                     <Decorator.Header />

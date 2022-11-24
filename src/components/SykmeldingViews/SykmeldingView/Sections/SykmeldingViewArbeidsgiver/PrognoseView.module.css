@@ -1,12 +1,12 @@
 .arbeidsforEtterPeriode div,
 .hensynArbeidsplassen div {
     background-color: var(--sykmelding-view-arbeidsgiver);
-    padding: var(--navds-spacing-4);
+    padding: var(--a-spacing-4);
     border-radius: 4px;
 }
 
 .arbeidsforEtterPeriode div {
-    margin-bottom: var(--navds-spacing-3);
+    margin-bottom: var(--a-spacing-3);
 }
 
 .arbeidsforEtterPeriode p:last-of-type,

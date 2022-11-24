@@ -1,7 +1,7 @@
 .periodePicker {
     display: flex;
     flex-wrap: wrap;
-    padding-top: var(--navds-spacing-4);
+    padding-top: var(--a-spacing-4);
     flex-direction: column;
 }
 
@@ -9,15 +9,15 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: var(--navds-spacing-4);
+    gap: var(--a-spacing-4);
 }
 
 .periodePickerButtons {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: var(--navds-spacing-2);
-    gap: var(--navds-spacing-4);
+    margin-top: var(--a-spacing-2);
+    gap: var(--a-spacing-4);
 }
 
 .periodePicker :global(.navds-error-message::before) {
@@ -25,5 +25,5 @@
 }
 
 .periodErrorMessage {
-    margin-top: var(--navds-spacing-4);
+    margin-top: var(--a-spacing-4);
 }
