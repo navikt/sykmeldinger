@@ -1,22 +1,12 @@
 fragment NaermesteLeder on NaermesteLeder {
-    aktoerId
     navn
-    orgnummer
-    organisasjonsnavn
-    epost
-    mobil
-    aktivTom
-    arbeidsgiverForskuttererLoenn
 }
 
 fragment Brukerinformasjon on Brukerinformasjon {
     strengtFortroligAdresse
     arbeidsgivere {
         orgnummer
-        juridiskOrgnummer
         navn
-        stillingsprosent
-        stilling
         aktivtArbeidsforhold
         naermesteLeder {
             ...NaermesteLeder

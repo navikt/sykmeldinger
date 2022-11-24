@@ -411,17 +411,7 @@ export enum YesOrNo {
     Yes = 'YES',
 }
 
-export type NaermesteLederFragment = {
-    readonly __typename: 'NaermesteLeder'
-    readonly aktoerId: string
-    readonly navn: string
-    readonly orgnummer: string
-    readonly organisasjonsnavn: string
-    readonly epost?: string | null
-    readonly mobil?: string | null
-    readonly aktivTom?: string | null
-    readonly arbeidsgiverForskuttererLoenn?: boolean | null
-}
+export type NaermesteLederFragment = { readonly __typename: 'NaermesteLeder'; readonly navn: string }
 
 export type BrukerinformasjonFragment = {
     readonly __typename: 'Brukerinformasjon'
@@ -429,22 +419,9 @@ export type BrukerinformasjonFragment = {
     readonly arbeidsgivere: ReadonlyArray<{
         readonly __typename: 'Arbeidsgiver'
         readonly orgnummer: string
-        readonly juridiskOrgnummer: string
         readonly navn: string
-        readonly stillingsprosent: string
-        readonly stilling: string
         readonly aktivtArbeidsforhold: boolean
-        readonly naermesteLeder?: {
-            readonly __typename: 'NaermesteLeder'
-            readonly aktoerId: string
-            readonly navn: string
-            readonly orgnummer: string
-            readonly organisasjonsnavn: string
-            readonly epost?: string | null
-            readonly mobil?: string | null
-            readonly aktivTom?: string | null
-            readonly arbeidsgiverForskuttererLoenn?: boolean | null
-        } | null
+        readonly naermesteLeder?: { readonly __typename: 'NaermesteLeder'; readonly navn: string } | null
     }>
 }
 
@@ -466,22 +443,9 @@ export type ExtraFormDataQuery = {
         readonly arbeidsgivere: ReadonlyArray<{
             readonly __typename: 'Arbeidsgiver'
             readonly orgnummer: string
-            readonly juridiskOrgnummer: string
             readonly navn: string
-            readonly stillingsprosent: string
-            readonly stilling: string
             readonly aktivtArbeidsforhold: boolean
-            readonly naermesteLeder?: {
-                readonly __typename: 'NaermesteLeder'
-                readonly aktoerId: string
-                readonly navn: string
-                readonly orgnummer: string
-                readonly organisasjonsnavn: string
-                readonly epost?: string | null
-                readonly mobil?: string | null
-                readonly aktivTom?: string | null
-                readonly arbeidsgiverForskuttererLoenn?: boolean | null
-            } | null
+            readonly naermesteLeder?: { readonly __typename: 'NaermesteLeder'; readonly navn: string } | null
         }>
     }
     readonly sykmeldingUtenforVentetid: {
@@ -526,11 +490,7 @@ export type ChangeSykmeldingStatusMutation = {
                 readonly ruleStatus: RegelStatus
             }>
         }
-        readonly arbeidsgiver?: {
-            readonly __typename: 'ArbeidsgiverSykmelding'
-            readonly navn?: string | null
-            readonly stillingsprosent?: number | null
-        } | null
+        readonly arbeidsgiver?: { readonly __typename: 'ArbeidsgiverSykmelding'; readonly navn?: string | null } | null
         readonly sykmeldingsperioder: ReadonlyArray<{
             readonly __typename: 'Periode'
             readonly fom: string
@@ -566,7 +526,6 @@ export type ChangeSykmeldingStatusMutation = {
                 readonly __typename: 'ArbeidsgiverStatus'
                 readonly orgnummer: string
                 readonly orgNavn: string
-                readonly juridiskOrgnummer?: string | null
             } | null
             readonly sporsmalOgSvarListe: ReadonlyArray<{
                 readonly __typename: 'Sporsmal'
@@ -691,11 +650,7 @@ export type SubmitSykmeldingMutation = {
                 readonly ruleStatus: RegelStatus
             }>
         }
-        readonly arbeidsgiver?: {
-            readonly __typename: 'ArbeidsgiverSykmelding'
-            readonly navn?: string | null
-            readonly stillingsprosent?: number | null
-        } | null
+        readonly arbeidsgiver?: { readonly __typename: 'ArbeidsgiverSykmelding'; readonly navn?: string | null } | null
         readonly sykmeldingsperioder: ReadonlyArray<{
             readonly __typename: 'Periode'
             readonly fom: string
@@ -731,7 +686,6 @@ export type SubmitSykmeldingMutation = {
                 readonly __typename: 'ArbeidsgiverStatus'
                 readonly orgnummer: string
                 readonly orgNavn: string
-                readonly juridiskOrgnummer?: string | null
             } | null
             readonly sporsmalOgSvarListe: ReadonlyArray<{
                 readonly __typename: 'Sporsmal'
@@ -856,11 +810,7 @@ export type SendSykmeldingMutation = {
                 readonly ruleStatus: RegelStatus
             }>
         }
-        readonly arbeidsgiver?: {
-            readonly __typename: 'ArbeidsgiverSykmelding'
-            readonly navn?: string | null
-            readonly stillingsprosent?: number | null
-        } | null
+        readonly arbeidsgiver?: { readonly __typename: 'ArbeidsgiverSykmelding'; readonly navn?: string | null } | null
         readonly sykmeldingsperioder: ReadonlyArray<{
             readonly __typename: 'Periode'
             readonly fom: string
@@ -896,7 +846,6 @@ export type SendSykmeldingMutation = {
                 readonly __typename: 'ArbeidsgiverStatus'
                 readonly orgnummer: string
                 readonly orgNavn: string
-                readonly juridiskOrgnummer?: string | null
             } | null
             readonly sporsmalOgSvarListe: ReadonlyArray<{
                 readonly __typename: 'Sporsmal'
@@ -1022,7 +971,6 @@ export type SykmeldingStatusFragment = {
         readonly __typename: 'ArbeidsgiverStatus'
         readonly orgnummer: string
         readonly orgNavn: string
-        readonly juridiskOrgnummer?: string | null
     } | null
     readonly sporsmalOgSvarListe: ReadonlyArray<{
         readonly __typename: 'Sporsmal'
@@ -1084,11 +1032,7 @@ export type SykmeldingFragment = {
             readonly ruleStatus: RegelStatus
         }>
     }
-    readonly arbeidsgiver?: {
-        readonly __typename: 'ArbeidsgiverSykmelding'
-        readonly navn?: string | null
-        readonly stillingsprosent?: number | null
-    } | null
+    readonly arbeidsgiver?: { readonly __typename: 'ArbeidsgiverSykmelding'; readonly navn?: string | null } | null
     readonly sykmeldingsperioder: ReadonlyArray<{
         readonly __typename: 'Periode'
         readonly fom: string
@@ -1124,7 +1068,6 @@ export type SykmeldingFragment = {
             readonly __typename: 'ArbeidsgiverStatus'
             readonly orgnummer: string
             readonly orgNavn: string
-            readonly juridiskOrgnummer?: string | null
         } | null
         readonly sporsmalOgSvarListe: ReadonlyArray<{
             readonly __typename: 'Sporsmal'
@@ -1245,11 +1188,7 @@ export type SykmeldingerQuery = {
                 readonly ruleStatus: RegelStatus
             }>
         }
-        readonly arbeidsgiver?: {
-            readonly __typename: 'ArbeidsgiverSykmelding'
-            readonly navn?: string | null
-            readonly stillingsprosent?: number | null
-        } | null
+        readonly arbeidsgiver?: { readonly __typename: 'ArbeidsgiverSykmelding'; readonly navn?: string | null } | null
         readonly sykmeldingsperioder: ReadonlyArray<{
             readonly __typename: 'Periode'
             readonly fom: string
@@ -1285,7 +1224,6 @@ export type SykmeldingerQuery = {
                 readonly __typename: 'ArbeidsgiverStatus'
                 readonly orgnummer: string
                 readonly orgNavn: string
-                readonly juridiskOrgnummer?: string | null
             } | null
             readonly sporsmalOgSvarListe: ReadonlyArray<{
                 readonly __typename: 'Sporsmal'
@@ -1409,11 +1347,7 @@ export type SykmeldingByIdQuery = {
                 readonly ruleStatus: RegelStatus
             }>
         }
-        readonly arbeidsgiver?: {
-            readonly __typename: 'ArbeidsgiverSykmelding'
-            readonly navn?: string | null
-            readonly stillingsprosent?: number | null
-        } | null
+        readonly arbeidsgiver?: { readonly __typename: 'ArbeidsgiverSykmelding'; readonly navn?: string | null } | null
         readonly sykmeldingsperioder: ReadonlyArray<{
             readonly __typename: 'Periode'
             readonly fom: string
@@ -1449,7 +1383,6 @@ export type SykmeldingByIdQuery = {
                 readonly __typename: 'ArbeidsgiverStatus'
                 readonly orgnummer: string
                 readonly orgNavn: string
-                readonly juridiskOrgnummer?: string | null
             } | null
             readonly sporsmalOgSvarListe: ReadonlyArray<{
                 readonly __typename: 'Sporsmal'
@@ -1548,16 +1481,7 @@ export const NaermesteLederFragmentDoc = {
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'NaermesteLeder' } },
             selectionSet: {
                 kind: 'SelectionSet',
-                selections: [
-                    { kind: 'Field', name: { kind: 'Name', value: 'aktoerId' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'navn' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'organisasjonsnavn' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'epost' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'mobil' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'aktivTom' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'arbeidsgiverForskuttererLoenn' } },
-                ],
+                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'navn' } }],
             },
         },
     ],
@@ -1580,10 +1504,7 @@ export const BrukerinformasjonFragmentDoc = {
                             kind: 'SelectionSet',
                             selections: [
                                 { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'juridiskOrgnummer' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'navn' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'stillingsprosent' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'stilling' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'aktivtArbeidsforhold' } },
                                 {
                                     kind: 'Field',
@@ -1703,7 +1624,6 @@ export const SykmeldingStatusFragmentDoc = {
                             selections: [
                                 { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'juridiskOrgnummer' } },
                             ],
                         },
                     },
@@ -1828,10 +1748,7 @@ export const SykmeldingFragmentDoc = {
                         name: { kind: 'Name', value: 'arbeidsgiver' },
                         selectionSet: {
                             kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'navn' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'stillingsprosent' } },
-                            ],
+                            selections: [{ kind: 'Field', name: { kind: 'Name', value: 'navn' } }],
                         },
                     },
                     {
