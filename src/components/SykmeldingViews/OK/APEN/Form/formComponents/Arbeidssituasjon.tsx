@@ -9,7 +9,7 @@ import {
 } from '../../../../../../fetching/graphql.generated'
 import QuestionWrapper from '../layout/QuestionWrapper'
 import Spacing from '../../../../../Spacing/Spacing'
-import { logAmplitudeEvent } from '../../../../../../amplitude/amplitude'
+import { useAmplitude } from '../../../../../../amplitude/amplitude'
 
 import HarForsikring from './HarForsikring'
 import HarBruktEgenmelding from './HarBruktEgenmelding'
@@ -46,6 +46,7 @@ const Arbeidssituasjon = ({
     brukerinformasjon,
     sykmeldingFom,
 }: ArbeidssituasjonProps): JSX.Element => {
+    const logEvent = useAmplitude()
     const { register, unregister, control, watch } = useFormContext<FormShape>()
     const watchArbeidssituasjon = watch(fieldName)
 
@@ -97,7 +98,7 @@ const Arbeidssituasjon = ({
                         id={fieldName}
                         legend={sporsmaltekst}
                         onChange={(value: keyof typeof ArbeidssituasjonType) => {
-                            logAmplitudeEvent({
+                            logEvent({
                                 eventName: 'skjema spørsmål besvart',
                                 data: { skjemanavn: 'arbeidssituasjon', spørsmål: 'Jeg er sykmeldt som', svar: value },
                             })

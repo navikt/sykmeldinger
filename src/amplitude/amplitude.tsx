@@ -1,50 +1,33 @@
-import { useEffect, useRef } from 'react'
-import { track, init } from '@amplitude/analytics-browser'
-import { BaseEvent } from '@amplitude/analytics-types'
-import { logger } from '@navikt/next-logger'
+import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
-import { getPublicEnv } from '../utils/env'
-
+import AmplitudeInstance from './AmplitudeInstance'
 import { AmplitudeTaxonomyEvents } from './taxonomyEvents'
 
-const publicEnv = getPublicEnv()
+const AmplitudeContext = createContext<AmplitudeInstance | null>(null)
 
-/**
- * The new amplitude client is isomorphic, so we can use it in both the browser and the server.
- */
-export function initAmplitude(): void {
-    if (publicEnv.AMPLITUDE_ENABLED !== 'true') return
+export function AmplitudeProvider({ children }: PropsWithChildren<unknown>): JSX.Element {
+    const [amplitudeClient] = useState(() => (typeof window !== 'undefined' ? new AmplitudeInstance() : null))
 
-    init('default', undefined, { useBatch: true, serverUrl: 'https://amplitude.nav.no/collect-auto' })
+    return <AmplitudeContext.Provider value={amplitudeClient}>{children}</AmplitudeContext.Provider>
+}
+
+export function useAmplitude(): (event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>) => void {
+    const amplitudeClient = useContext(AmplitudeContext)
+
+    return useCallback(
+        (event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void => {
+            amplitudeClient?.logEvent(event, extraData)
+        },
+        [amplitudeClient],
+    )
 }
 
 export function useLogAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
+    const logEvent = useAmplitude()
     const stableEvent = useRef(event)
     const stableExtraData = useRef(extraData)
 
     useEffect(() => {
-        logAmplitudeEvent(stableEvent.current, stableExtraData.current)
-    }, [])
-}
-
-export function logAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
-    if (publicEnv.AMPLITUDE_ENABLED !== 'true') {
-        logDebugEvent(event, extraData)
-        return
-    }
-
-    track(taxonomyToAmplitudeEvent(event), extraData)
-}
-
-function taxonomyToAmplitudeEvent(event: AmplitudeTaxonomyEvents): BaseEvent {
-    return {
-        event_type: event.eventName,
-        event_properties: 'data' in event ? event.data : undefined,
-    }
-}
-
-function logDebugEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
-    const data = { ...('data' in event ? event.data : {}), ...extraData }
-
-    logger.info(`Amplitude debug event: ${event.eventName} ${JSON.stringify(data)}`)
+        logEvent(stableEvent.current, stableExtraData.current)
+    }, [logEvent])
 }

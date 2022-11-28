@@ -12,7 +12,7 @@ import {
 } from '../../fetching/graphql.generated'
 import useExtraFormData from '../../hooks/useExtraFormData'
 import { useSendSykmelding } from '../../hooks/useMutations'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitude'
+import { useAmplitude, useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import Spinner from '../Spinner/Spinner'
 
 import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/OpplysningerRiktigeSection'
@@ -38,6 +38,7 @@ interface Props {
 function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding'
     const sykmeldingId = useGetSykmeldingIdParam()
+    const logEvent = useAmplitude()
 
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
@@ -45,8 +46,8 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     const extraFormData = useExtraFormData(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
     if (extraFormData.loading) {

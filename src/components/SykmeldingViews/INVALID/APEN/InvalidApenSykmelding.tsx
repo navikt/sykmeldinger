@@ -10,7 +10,7 @@ import CenterItems from '../../../CenterItems/CenterItems'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface InvalidApenSykmeldingProps {
@@ -25,6 +25,7 @@ const skjemanavn = 'invalid åpen sykmelding'
 
 function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
+    const logEvent = useAmplitude()
     useHotjarTrigger('SYKMELDING_INVALID_APEN')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
@@ -36,15 +37,15 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
     const [{ loading: fetchingBekreft, error: errorBekreft }, bekreft] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.BekreftAvvist,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
     useEffect(() => {
         if (errors.bekreftetLest) {
-            logAmplitudeEvent({ eventName: 'skjema validering feilet', data: { skjemanavn } })
+            logEvent({ eventName: 'skjema validering feilet', data: { skjemanavn } })
         }
-    }, [errors.bekreftetLest])
+    }, [errors.bekreftetLest, logEvent])
 
     return (
         <div className="sykmelding-container">
@@ -82,7 +83,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                                     error={fieldState.error?.message}
                                     onChange={() => {
                                         const newValue = !field.value
-                                        logAmplitudeEvent({
+                                        logEvent({
                                             eventName: 'skjema spørsmål besvart',
                                             data: {
                                                 skjemanavn,

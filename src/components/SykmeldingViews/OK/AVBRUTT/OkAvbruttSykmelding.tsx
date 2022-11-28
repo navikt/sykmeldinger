@@ -8,7 +8,7 @@ import { toReadableDate } from '../../../../utils/dateUtils'
 import Spacing from '../../../Spacing/Spacing'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
@@ -19,14 +19,15 @@ interface OkAvbruttSykmeldingProps {
 const skjemanavn = 'gjenåpne avbrutt sykmelding'
 
 function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Element {
+    const logEvent = useAmplitude()
     useHotjarTrigger('SYKMELDING_OK_AVBRUTT')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
     const sykmeldingId = useGetSykmeldingIdParam()
     const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.Gjenapne,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
     return (

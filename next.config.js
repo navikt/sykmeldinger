@@ -1,8 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+const { withSentryConfig } = require('@sentry/nextjs')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 })
+
+/**
+ * @type {import('@sentry/nextjs').SentryWebpackPluginOptions}
+ */
+const sentryWebpackPluginOptions = {
+    silent: true,
+}
 
 /**
  * @type {import('./src/utils/env').ServerEnv}
@@ -58,4 +66,9 @@ const nextConfig = {
     },
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+const nextConfigWithBundleAnalyzer = withBundleAnalyzer(nextConfig)
+
+module.exports =
+    process.env.SENTRY_ENABLED === 'true'
+        ? withSentryConfig(nextConfigWithBundleAnalyzer, sentryWebpackPluginOptions)
+        : nextConfigWithBundleAnalyzer

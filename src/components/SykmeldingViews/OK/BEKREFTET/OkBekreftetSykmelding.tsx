@@ -8,7 +8,7 @@ import Spacing from '../../../Spacing/Spacing'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkBekreftetSykmeldingProps {
@@ -18,14 +18,15 @@ interface OkBekreftetSykmeldingProps {
 const skjemanavn = 'ok gjenåpne bekreftet sykmelding'
 
 const OkBekreftetSykmelding: React.FC<OkBekreftetSykmeldingProps> = ({ sykmelding }) => {
+    const logEvent = useAmplitude()
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
     useHotjarTrigger('SYKMELDING_OK_BEKREFTET')
     const sykmeldingId = useGetSykmeldingIdParam()
     const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.Gjenapne,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
     return (

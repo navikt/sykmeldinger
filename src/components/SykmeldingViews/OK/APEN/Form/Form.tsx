@@ -10,7 +10,7 @@ import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdPara
 import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
 import { Periodetype, SykmeldingFragment } from '../../../../../fetching/graphql.generated'
 import { useSubmitSykmelding } from '../../../../../hooks/useMutations'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../../amplitude/amplitude'
+import { useAmplitude, useLogAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import SykmeldingArbeidsgiverContainer from '../../../SykmeldingView/SykmeldingArbeidsgiverContainer'
 
 import ErOpplysningeneRiktige from './formComponents/ErOpplysningeneRiktige'
@@ -75,6 +75,7 @@ interface FormProps {
 function Form({ sykmelding }: FormProps): JSX.Element {
     const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding'
 
+    const logEvent = useAmplitude()
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -82,8 +83,8 @@ function Form({ sykmelding }: FormProps): JSX.Element {
     const { data, error, loading } = useExtraFormData(sykmeldingId)
     const [{ loading: fetchingSend, error: errorSend }, send] = useSubmitSykmelding(
         sykmeldingId,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
     const formMethods = useForm<FormShape>({ shouldFocusError: false })

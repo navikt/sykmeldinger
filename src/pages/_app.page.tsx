@@ -9,12 +9,11 @@ import isBetween from 'dayjs/plugin/isBetween'
 import { configureLogger } from '@navikt/next-logger'
 
 import { createApolloClient } from '../fetching/apollo'
+import { AmplitudeProvider } from '../amplitude/amplitude'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs'
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
-import { initAmplitude } from '../amplitude/amplitude'
 
-initAmplitude()
 configureLogger({
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
 })
@@ -33,12 +32,14 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
     return (
         <ErrorBoundary>
-            <ApolloProvider client={apolloClient}>
-                <LabsWarning />
-                <main id="maincontent" role="main" tabIndex={-1}>
-                    <Component {...pageProps} />
-                </main>
-            </ApolloProvider>
+            <AmplitudeProvider>
+                <ApolloProvider client={apolloClient}>
+                    <LabsWarning />
+                    <main id="maincontent" role="main" tabIndex={-1}>
+                        <Component {...pageProps} />
+                    </main>
+                </ApolloProvider>
+            </AmplitudeProvider>
         </ErrorBoundary>
     )
 }

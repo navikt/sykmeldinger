@@ -5,25 +5,26 @@ import Spacing from '../../../Spacing/Spacing'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
 import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
-import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { useAmplitude } from '../../../../amplitude/amplitude'
 
 const skjemanavn = 'avbryt åpen papirsykmelding'
 
 function PapirInfoheader(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
+    const logEvent = useAmplitude()
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.Avbryt,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
     const [harGittVidere, setHarGittVidere] = useState<'Ja' | 'Nei' | null>(null)
 
     useEffect(() => {
         if (harGittVidere) {
-            logAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
+            logEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
         }
-    }, [harGittVidere])
+    }, [harGittVidere, logEvent])
 
     return (
         <>
@@ -33,10 +34,7 @@ function PapirInfoheader(): JSX.Element {
                 value={harGittVidere}
                 onChange={(value: 'Ja' | 'Nei') => {
                     if (harGittVidere) {
-                        logAmplitudeEvent(
-                            { eventName: 'skjema startet', data: { skjemanavn } },
-                            { 'har gitt videre': value },
-                        )
+                        logEvent({ eventName: 'skjema startet', data: { skjemanavn } }, { 'har gitt videre': value })
                     }
 
                     setHarGittVidere(value)
