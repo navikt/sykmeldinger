@@ -9,13 +9,17 @@ import { AmplitudeTaxonomyEvents } from './taxonomyEvents'
 
 const publicEnv = getPublicEnv()
 
-/**
- * The new amplitude client is isomorphic, so we can use it in both the browser and the server.
- */
 export function initAmplitude(): void {
-    if (publicEnv.AMPLITUDE_ENABLED !== 'true') return
+    if (typeof window === 'undefined' || publicEnv.AMPLITUDE_ENABLED !== 'true') return
 
-    init('default', undefined, { useBatch: true, serverUrl: 'https://amplitude.nav.no/collect-auto' })
+    init('default', undefined, {
+        useBatch: true,
+        serverUrl: 'https://amplitude.nav.no/collect-auto',
+        ingestionMetadata: {
+            // This is a hack to provide collect-auto with the correct environment, won't be used within amplitude
+            sourceName: window.location.toString(),
+        },
+    })
 }
 
 export function useLogAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
