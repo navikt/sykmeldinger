@@ -3,7 +3,7 @@ import { BodyLong, Button, GuidePanel, Heading, ReadMore } from '@navikt/ds-reac
 import Link from 'next/link'
 
 import { pluralize } from '../../utils/stringUtils'
-import { useAmplitude, useLogAmplitudeEvent } from '../../amplitude/amplitude'
+import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitude'
 
 import styles from './ForceUseOlderSykmelding.module.css'
 
@@ -13,7 +13,6 @@ interface Props {
 }
 
 function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Props): JSX.Element {
-    const logEvent = useAmplitude()
     useLogAmplitudeEvent({
         eventName: 'guidepanel vist',
         data: { komponent: 'tvungen videresending til ubrukte sykmeldinger' },
@@ -27,7 +26,7 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
                 <ReadMore
                     header="Hvorfor må jeg gjøre dette?"
                     onClick={() =>
-                        logEvent({
+                        logAmplitudeEvent({
                             eventName: 'accordion åpnet',
                             data: { tekst: 'Hvorfor må jeg gjøre dette?' },
                         })
@@ -49,7 +48,7 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
                     as="a"
                     variant="primary"
                     onClick={() =>
-                        logEvent({
+                        logAmplitudeEvent({
                             eventName: 'navigere',
                             data: {
                                 destinasjon: 'neste ubrukte sykmelding (tvungen)',

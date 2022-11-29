@@ -25,8 +25,6 @@ COPY --from=build /app/node_modules /app/node_modules
 COPY next.config.js /app/
 COPY next-logger.config.js /app/
 COPY src/**/**/**/*.graphqls /app/
-COPY sentry.client.config.js /app/
-COPY sentry.server.config.js /app/
 COPY .next /app/.next/
 COPY public /app/public/
 

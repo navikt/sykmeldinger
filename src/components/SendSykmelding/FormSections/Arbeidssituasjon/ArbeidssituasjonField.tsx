@@ -4,16 +4,15 @@ import { Radio, RadioGroup } from '@navikt/ds-react'
 
 import { FormValues } from '../../SendSykmeldingForm'
 import QuestionWrapper from '../shared/QuestionWrapper'
-import { useAmplitude } from '../../../../amplitude/amplitude'
 import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
 import { ArbeidssituasjonType } from '../../../../fetching/graphql.generated'
+import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
 interface Props {
     harAvventendePeriode: boolean
 }
 
 function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
-    const logEvent = useAmplitude()
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidssituasjon',
         rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
@@ -26,7 +25,7 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
                 id={field.name}
                 legend={sporsmolOgSvar.arbeidssituasjon.sporsmaltekst}
                 onChange={(value: ArbeidssituasjonType) => {
-                    logEvent({
+                    logAmplitudeEvent({
                         eventName: 'skjema spørsmål besvart',
                         data: { skjemanavn: 'arbeidssituasjon', spørsmål: 'Jeg er sykmeldt som', svar: value },
                     })
