@@ -8,14 +8,13 @@ import CenterItems from '../../../../CenterItems/CenterItems'
 import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam'
 import { useChangeSykmeldingStatus } from '../../../../../hooks/useMutations'
 import { SykmeldingChangeStatus } from '../../../../../fetching/graphql.generated'
-import { useAmplitude } from '../../../../../amplitude/amplitude'
+import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 import styles from './AvbrytPanel.module.css'
 
 const skjemanavn = 'avbryt åpen sykmelding'
 
 function AvbrytPanel(): JSX.Element {
-    const logEvent = useAmplitude()
     const sykmeldingId = useGetSykmeldingIdParam()
 
     // maAvbryte overrules isOpen
@@ -27,8 +26,8 @@ function AvbrytPanel(): JSX.Element {
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.Avbryt,
-        () => logEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
     if (maAvbryte) {

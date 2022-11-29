@@ -66,6 +66,3 @@ typings/
 
 # next
 .next
-
-# Sentry
-.sentryclirc

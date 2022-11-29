@@ -63,5 +63,3 @@ spec:
       value: 'https://www.nav.no/minside'
     - name: ASSET_PREFIX
       value: 'https://cdn.nav.no/teamsykmelding/sykmeldinger'
-    - name: SENTRY_ENABLED
-      value: 'true'
