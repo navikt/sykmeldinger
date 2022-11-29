@@ -14,7 +14,7 @@ function UxSignalsWidget(): JSX.Element | null {
                 strategy="lazyOnload"
                 src="https://uxsignals-frontend.uxsignals.app.iterate.no/embed.js"
             />
-            <div data-uxsignals-embed="study-ok4tm1djgc" className={styles.uxSignalsContainer} />
+            <div data-uxsignals-embed="study-6fkh2x1b4r" className={styles.uxSignalsContainer} />
         </>
     )
 }
