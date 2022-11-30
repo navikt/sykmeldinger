@@ -2,10 +2,24 @@ import { sporsmolOgSvar } from '../utils/sporsmolOgSvar'
 
 import { ArbeidssituasjonType, SendSykmeldingValues, YesOrNo } from './graphql/resolver-types.generated'
 import { ArbeidssituasjonV3, JaEllerNeiV3, SykmeldingUserEventV3Api } from './api-models/SendSykmelding'
+import { Brukerinformasjon } from './api-models/Brukerinformasjon'
 
-export function mapSendSykmeldingValuesToV3Api(values: SendSykmeldingValues): SykmeldingUserEventV3Api {
+export function mapSendSykmeldingValuesToV3Api(
+    values: SendSykmeldingValues,
+    brukerinformasjon: Brukerinformasjon,
+): SykmeldingUserEventV3Api {
     if (values.arbeidssituasjon == null) throw new Error('Illegal state: arbeidssituasjon is required')
     if (values.erOpplysningeneRiktige == null) throw new Error('Illegal state: erOpplysningeneRiktige is required')
+
+    const valgtNarmesteLederNavn: string | null =
+        brukerinformasjon.arbeidsgivere.find((arbeidsgiver) => arbeidsgiver.orgnummer === values.arbeidsgiverOrgnummer)
+            ?.naermesteLeder?.navn ?? null
+
+    if (values.arbeidsgiverOrgnummer != null && valgtNarmesteLederNavn == null) {
+        throw new Error(
+            `Illegal state: unable to find narmeste leder for selected arbeidsgiver ${values.arbeidsgiverOrgnummer}`,
+        )
+    }
 
     return {
         erOpplysningeneRiktige: {
@@ -18,12 +32,27 @@ export function mapSendSykmeldingValuesToV3Api(values: SendSykmeldingValues): Sy
             sporsmaltekst: sporsmolOgSvar.arbeidssituasjon.sporsmaltekst,
             svartekster: sporsmolOgSvar.arbeidssituasjon.svartekster,
         },
+        arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer
+            ? {
+                  svar: values.arbeidsgiverOrgnummer,
+                  sporsmaltekst: sporsmolOgSvar.arbeidsgiverOrgnummer.sporsmaltekst,
+                  svartekster: JSON.stringify(
+                      sporsmolOgSvar.arbeidsgiverOrgnummer.svartekster(brukerinformasjon.arbeidsgivere),
+                  ),
+              }
+            : null,
+        riktigNarmesteLeder:
+            values.riktigNarmesteLeder && valgtNarmesteLederNavn != null
+                ? {
+                      svar: yesOrNoTypeToV3Enum(values.riktigNarmesteLeder),
+                      sporsmaltekst: sporsmolOgSvar.riktigNarmesteLeder.sporsmalstekst(valgtNarmesteLederNavn),
+                      svartekster: sporsmolOgSvar.riktigNarmesteLeder.svartekster,
+                  }
+                : null,
         egenmeldingsperioder: null,
         harBruktEgenmelding: null,
         harForsikring: null,
-        riktigNarmesteLeder: null,
         uriktigeOpplysninger: null,
-        arbeidsgiverOrgnummer: null,
     }
 }
 

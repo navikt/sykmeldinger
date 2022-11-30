@@ -14,10 +14,21 @@ export const sporsmolOgSvar = {
         sporsmaltekst: 'Hva er din arbeidssituasjon?',
         svartekster: JaEllerNeiSvarTekster,
     },
-    arbeidsgiverOrgnummer: null,
+    arbeidsgiverOrgnummer: {
+        sporsmaltekst: 'Velg arbeidsgiver',
+        svartekster: (arbeidsgivere: { navn: string; orgnummer: string }[]) =>
+            arbeidsgivere.map((arbeidsgiver) => ({
+                navn: arbeidsgiver.navn,
+                orgnummer: arbeidsgiver.orgnummer,
+            })),
+    },
+    riktigNarmesteLeder: {
+        sporsmalstekst: (narmesteLederNavn: string) =>
+            `Er det ${narmesteLederNavn} som skal følge deg opp på jobben mens du er syk?`,
+        svartekster: JaEllerNeiSvarTekster,
+    },
     egenmeldingsperioder: null,
     harBruktEgenmelding: null,
     harForsikring: null,
-    riktigNarmesteLeder: null,
     uriktigeOpplysninger: null,
 }

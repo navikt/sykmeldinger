@@ -7,7 +7,7 @@ import { FormValues } from '../../SendSykmeldingForm'
 import { YesOrNo } from '../../../../fetching/graphql.generated'
 
 interface Props {
-    name: 'erOpplysningeneRiktige'
+    name: 'erOpplysningeneRiktige' | 'riktigNarmesteLeder'
     legend: string
     onChange?: (value: YesOrNo) => void
     rules?: UseControllerProps['rules']

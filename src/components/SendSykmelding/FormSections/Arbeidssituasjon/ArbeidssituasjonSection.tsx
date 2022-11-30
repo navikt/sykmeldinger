@@ -14,6 +14,7 @@ import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
 import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
 import styles from './ArbeidssituasjonSection.module.css'
+import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -40,7 +41,7 @@ function ArbeidssituasjonSection({
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             <ArbeidssituasjonStatusInfo />
             {shouldShowStrengtFortroligInfo && <StrengtFortroligInfo />}
-            {shouldShowArbeidsgiverOrgnummer && <div>TODO: Arbeidsgiver input</div>}
+            {shouldShowArbeidsgiverOrgnummer && <ArbeidsgiverSection arbeidsgivere={brukerinformasjon.arbeidsgivere} />}
             {shouldShowEgenmeldingsperioderSporsmal && (
                 <>
                     <div>TODO: Egenmelding periode field</div>
@@ -73,7 +74,11 @@ function useDynamicSubSections(
     const shouldShowEgenmeldingsperioderSporsmal: boolean =
         isFrilanserOrNaeringsdrivende && !sykmeldingUtenforVentetid.erUtenforVentetid
 
-    return { shouldShowStrengtFortroligInfo, shouldShowArbeidsgiverOrgnummer, shouldShowEgenmeldingsperioderSporsmal }
+    return {
+        shouldShowStrengtFortroligInfo,
+        shouldShowArbeidsgiverOrgnummer,
+        shouldShowEgenmeldingsperioderSporsmal,
+    }
 }
 
 export default ArbeidssituasjonSection

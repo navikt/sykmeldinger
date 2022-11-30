@@ -10,6 +10,7 @@ const publicEnv = getPublicEnv()
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
+        connectToDevTools: process.env.NODE_ENV === 'development',
         cache: new InMemoryCache(),
         link: from([
             errorLink,
