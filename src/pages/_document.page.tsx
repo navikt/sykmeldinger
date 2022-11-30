@@ -1,6 +1,7 @@
 import React from 'react'
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document'
 import { Components, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
+import Script from 'next/script'
 
 import { getPublicEnv } from '../utils/env'
 import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs'
@@ -57,6 +58,10 @@ class MyDocument extends Document<Props> {
             <Html lang={language || 'no'}>
                 <Head>
                     <Decorator.Styles />
+                    <Script
+                        strategy="beforeInteractive"
+                        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/public-env`}
+                    />
                     <link
                         rel="preload"
                         href="https://cdn.nav.no/aksel/fonts/SourceSans3-normal.woff2"
