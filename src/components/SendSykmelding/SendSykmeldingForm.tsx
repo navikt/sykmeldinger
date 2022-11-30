@@ -65,7 +65,7 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     return (
         <div className={styles.newFormTemporary}>
             <code>New form under active development, should only be enabled with process.env.ENABLE_NEW_FORM</code>
-            <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
+            <pre className={styles.newFormTemporaryPre}>{JSON.stringify(form.watch(), null, 2)}</pre>
             <FormProvider {...form}>
                 <form data-testid="new-form" onSubmit={form.handleSubmit(sendSykmelding)}>
                     <OpplysningerRiktigeSection />

@@ -1,3 +1,10 @@
 .newFormTemporary {
     border: 1px dotted red;
 }
+
+.newFormTemporaryPre {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    background-color: rgba(133, 133, 133, 0.2);
+}

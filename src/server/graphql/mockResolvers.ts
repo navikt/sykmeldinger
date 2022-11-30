@@ -94,7 +94,16 @@ const Mutation: MutationResolvers = {
     },
     sendSykmelding: async (_, { sykmeldingId, values }) => {
         logger.warn('Using mocked data for send mutation locally or in demo mode')
-        logger.info(`Mapped values: ${JSON.stringify(mapSendSykmeldingValuesToV3Api(values), null, 2)}`)
+        logger.info(
+            `Mapped values: ${JSON.stringify(
+                mapSendSykmeldingValuesToV3Api(values, {
+                    strengtFortroligAdresse: false,
+                    arbeidsgivere: arbeidsgivereMock,
+                }),
+                null,
+                2,
+            )}`,
+        )
 
         const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
         if (!sykmelding) {

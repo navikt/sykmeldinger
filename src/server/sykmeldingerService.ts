@@ -102,8 +102,8 @@ export async function sendSykmelding(
 
     childLogger.info(`Sending sykmelding with ID ${sykmeldingId}, requestId: ${context.requestId}`)
 
-    const sykmelding = getSykmelding(sykmeldingId, context)
-    const mappedValues = mapSendSykmeldingValuesToV3Api(values)
+    const brukerinformasjon = await getBrukerinformasjon(context)
+    const mappedValues = mapSendSykmeldingValuesToV3Api(values, brukerinformasjon)
     try {
         await fetchApi(
             { type: 'POST', body: JSON.stringify(mappedValues) },
@@ -111,7 +111,9 @@ export async function sendSykmelding(
             () => null,
             context,
         )
-        return sykmelding
+
+        // Return the updated sykmelding so apollo can update the cache
+        return getSykmelding(sykmeldingId, context)
     } catch (e) {
         if (e instanceof AuthenticationError) {
             throw e
