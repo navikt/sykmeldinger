@@ -59,4 +59,4 @@ spec:
     - name: MIN_SIDE_ROOT
       value: 'https://www.dev.nav.no/minside/'
     - name: ASSET_PREFIX
-      value: 'https://cdn.dev.nav.no/teamsykmelding/sykmeldinger'
+      value: 'https://cdn.nav.no/teamsykmelding/sykmeldinger'
