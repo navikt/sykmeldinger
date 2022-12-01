@@ -82,7 +82,7 @@ jobs:
   deploy-to-dev-gcp:
     if: ${{ !startsWith(github.ref , 'refs/heads/labs') }}
     name: Deploy to dev-gcp
-    needs: [build-and-publish, snyk-test]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -96,7 +96,7 @@ jobs:
   deploy-to-main-labs-gcp:
     if: github.ref_name == 'main'
     name: Deploy to labs-gcp (Demo)
-    needs: [build-and-publish, snyk-test]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -110,7 +110,7 @@ jobs:
   deploy-to-labs-gcp:
     if: startsWith(github.ref_name, 'labs')
     name: Deploy branch to labs-gcp (Demo)
-    needs: [build-and-publish, snyk-test]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -128,7 +128,7 @@ jobs:
   deploy-to-prod-gcp:
     if: github.ref == 'refs/heads/main'
     name: Deploy to prod
-    needs: [build-and-publish, snyk-test]
+    needs: [build-and-publish]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
