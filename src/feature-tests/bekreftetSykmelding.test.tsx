@@ -2,13 +2,7 @@ import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
 import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
-import {
-    ChangeSykmeldingStatusDocument,
-    StatusEvent,
-    SykmeldingChangeStatus,
-    SykmeldingByIdDocument,
-    SykmeldingerDocument,
-} from '../fetching/graphql.generated'
+import { StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
@@ -57,28 +51,6 @@ describe('Bekreftet sykmelding', () => {
                 ...baseMocks,
                 createExtraFormDataMock({
                     sykmeldingId: 'bekreftet-sykmelding',
-                }),
-                createMock({
-                    request: {
-                        query: ChangeSykmeldingStatusDocument,
-                        variables: {
-                            sykmeldingId: 'bekreftet-sykmelding',
-                            status: SykmeldingChangeStatus.Gjenapne,
-                        },
-                    },
-                    result: {
-                        data: {
-                            __typename: 'Mutation',
-                            changeSykmeldingStatus: {
-                                ...bekreftetSykmelding,
-                                sykmeldingStatus: {
-                                    ...bekreftetSykmelding.sykmeldingStatus,
-                                    statusEvent: StatusEvent.Apen,
-                                    timestamp: '2022-03-01',
-                                },
-                            },
-                        },
-                    },
                 }),
             ],
         })

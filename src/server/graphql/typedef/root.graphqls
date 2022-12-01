@@ -14,5 +14,4 @@ type Mutation {
 enum SykmeldingChangeStatus {
     AVBRYT
     BEKREFT_AVVIST
-    GJENAPNE
 }

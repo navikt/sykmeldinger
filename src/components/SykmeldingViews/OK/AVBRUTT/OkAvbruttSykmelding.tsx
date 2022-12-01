@@ -2,32 +2,24 @@ import React from 'react'
 import { Alert, Button, Detail, Heading } from '@navikt/ds-react'
 import { FillForms } from '@navikt/ds-icons'
 
-import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
+import { Sykmelding } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import { toReadableDate } from '../../../../utils/dateUtils'
 import Spacing from '../../../Spacing/Spacing'
-import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
-import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: Sykmelding
+    reopen: () => void
 }
 
 const skjemanavn = 'gjenåpne avbrutt sykmelding'
 
-function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Element {
+function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): JSX.Element {
     useHotjarTrigger('SYKMELDING_OK_AVBRUTT')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
-    const sykmeldingId = useGetSykmeldingIdParam()
-    const [{ loading, error }, gjenapne] = useChangeSykmeldingStatus(
-        sykmeldingId,
-        SykmeldingChangeStatus.Gjenapne,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
-    )
 
     return (
         <div className="sykmelding-container">
@@ -45,18 +37,15 @@ function OkAvbruttSykmelding({ sykmelding }: OkAvbruttSykmeldingProps): JSX.Elem
                         <Button
                             size="small"
                             variant="secondary"
-                            loading={loading}
-                            onClick={() => gjenapne()}
+                            onClick={() => {
+                                logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } })
+                                reopen()
+                            }}
                             icon={<FillForms />}
                         >
                             GJØR UTFYLLINGEN PÅ NYTT
                         </Button>
                     </Spacing>
-                    {error && (
-                        <Alert variant="error" role="alert" aria-live="polite">
-                            En feil oppsto som gjorde at vi ikke kunne gjenåpne sykmeldingen. Prøv igjen senere.
-                        </Alert>
-                    )}
                 </Spacing>
             )}
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
