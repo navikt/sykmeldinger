@@ -361,7 +361,6 @@ export type Sykmelding = {
 export enum SykmeldingChangeStatus {
     Avbryt = 'AVBRYT',
     BekreftAvvist = 'BEKREFT_AVVIST',
-    Gjenapne = 'GJENAPNE',
 }
 
 export type SykmeldingStatus = {

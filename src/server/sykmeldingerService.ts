@@ -124,14 +124,12 @@ export async function sendSykmelding(
     }
 }
 
-function statusToEndpoint(status: SykmeldingChangeStatus): 'avbryt' | 'bekreftAvvist' | 'gjenapne' {
+function statusToEndpoint(status: SykmeldingChangeStatus): 'avbryt' | 'bekreftAvvist' {
     switch (status) {
         case SykmeldingChangeStatus.Avbryt:
             return 'avbryt'
         case SykmeldingChangeStatus.BekreftAvvist:
             return 'bekreftAvvist'
-        case SykmeldingChangeStatus.Gjenapne:
-            return 'gjenapne'
     }
 }
 

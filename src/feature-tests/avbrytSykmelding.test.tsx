@@ -65,28 +65,6 @@ describe('Avbryt sykmelding', () => {
                 createExtraFormDataMock({
                     sykmeldingId: 'avbrutt-sykmelding',
                 }),
-                createMock({
-                    request: {
-                        query: ChangeSykmeldingStatusDocument,
-                        variables: {
-                            sykmeldingId: 'avbrutt-sykmelding',
-                            status: SykmeldingChangeStatus.Gjenapne,
-                        },
-                    },
-                    result: {
-                        data: {
-                            __typename: 'Mutation',
-                            changeSykmeldingStatus: {
-                                ...avbruttSykmelding,
-                                sykmeldingStatus: {
-                                    ...avbruttSykmelding.sykmeldingStatus,
-                                    statusEvent: StatusEvent.Apen,
-                                    timestamp: '2022-03-01',
-                                },
-                            },
-                        },
-                    },
-                }),
             ],
         })
 

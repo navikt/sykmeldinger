@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useCallback, useState } from 'react'
 import { Alert, BodyLong, GuidePanel, Heading } from '@navikt/ds-react'
 import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
@@ -84,12 +84,27 @@ const SykmeldingComponent = ({
     olderSykmeldingId: string | null
     olderSykmeldingCount: number
 }): JSX.Element | null => {
+    const [hasReopenedSykmelding, setHasReopenedSykmelding] = useState(false)
+    const reopen = useCallback(() => {
+        setHasReopenedSykmelding(true)
+    }, [])
+
     const behandlingsutfall = sykmelding.behandlingsutfall.status
     const status = sykmelding.sykmeldingStatus.statusEvent
 
     switch (behandlingsutfall) {
         case 'OK':
         case 'MANUAL_PROCESSING':
+            if (hasReopenedSykmelding) {
+                return (
+                    <OkApenSykmelding
+                        sykmelding={sykmelding}
+                        olderSykmeldingId={olderSykmeldingId}
+                        olderSykmeldingCount={olderSykmeldingCount}
+                    />
+                )
+            }
+
             switch (status) {
                 case 'APEN':
                     return (
@@ -100,11 +115,11 @@ const SykmeldingComponent = ({
                         />
                     )
                 case 'BEKREFTET':
-                    return <OkBekreftetSykmelding sykmelding={sykmelding} />
+                    return <OkBekreftetSykmelding sykmelding={sykmelding} reopen={reopen} />
                 case 'SENDT':
                     return <OkSendtSykmelding sykmelding={sykmelding} />
                 case 'AVBRUTT':
-                    return <OkAvbruttSykmelding sykmelding={sykmelding} />
+                    return <OkAvbruttSykmelding sykmelding={sykmelding} reopen={reopen} />
                 case 'UTGATT':
                     return <OkUtgattSykmelding sykmelding={sykmelding} />
                 default:
@@ -112,6 +127,10 @@ const SykmeldingComponent = ({
                     return <GuidePanel>Oisann! Det har oppstått en feil i baksystemene.</GuidePanel>
             }
         case 'INVALID':
+            if (hasReopenedSykmelding) {
+                return <InvalidApenSykmelding sykmelding={sykmelding} />
+            }
+
             switch (status) {
                 case 'APEN':
                     return <InvalidApenSykmelding sykmelding={sykmelding} />
