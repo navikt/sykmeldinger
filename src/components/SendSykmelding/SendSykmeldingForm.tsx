@@ -7,7 +7,6 @@ import {
     YesOrNo,
     UriktigeOpplysningerType,
     ArbeidssituasjonType,
-    DateRange,
     SykmeldingFragment,
 } from '../../fetching/graphql.generated'
 import useExtraFormData from '../../hooks/useExtraFormData'
@@ -27,7 +26,7 @@ export interface FormValues {
     arbeidsgiverOrgnummer: string | null
     riktigNarmesteLeder: YesOrNo | null
     harBruktEgenmelding: YesOrNo | null
-    egenmeldingsperioder: DateRange[] | null
+    egenmeldingsperioder: { fom: Date | null; tom: Date | null }[] | null
     harForsikring: YesOrNo | null
 }
 

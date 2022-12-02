@@ -1,12 +1,16 @@
 import { sporsmolOgSvar } from '../utils/sporsmolOgSvar'
+import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 
-import { ArbeidssituasjonType, SendSykmeldingValues, YesOrNo } from './graphql/resolver-types.generated'
+import { ArbeidssituasjonType, SendSykmeldingValues, Sykmelding, YesOrNo } from './graphql/resolver-types.generated'
 import { ArbeidssituasjonV3, JaEllerNeiV3, SykmeldingUserEventV3Api } from './api-models/SendSykmelding'
 import { Brukerinformasjon } from './api-models/Brukerinformasjon'
+import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
 
 export function mapSendSykmeldingValuesToV3Api(
     values: SendSykmeldingValues,
+    sykmelding: Sykmelding,
     brukerinformasjon: Brukerinformasjon,
+    erUtenforVentetid: ErUtenforVentetid,
 ): SykmeldingUserEventV3Api {
     if (values.arbeidssituasjon == null) throw new Error('Illegal state: arbeidssituasjon is required')
     if (values.erOpplysningeneRiktige == null) throw new Error('Illegal state: erOpplysningeneRiktige is required')
@@ -20,6 +24,8 @@ export function mapSendSykmeldingValuesToV3Api(
             `Illegal state: unable to find narmeste leder for selected arbeidsgiver ${values.arbeidsgiverOrgnummer}`,
         )
     }
+
+    const oppfolgingsdato = erUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding)
 
     return {
         erOpplysningeneRiktige: {
@@ -49,8 +55,30 @@ export function mapSendSykmeldingValuesToV3Api(
                       svartekster: sporsmolOgSvar.riktigNarmesteLeder.svartekster,
                   }
                 : null,
-        egenmeldingsperioder: null,
-        harBruktEgenmelding: null,
+        harBruktEgenmelding: values.harBruktEgenmelding
+            ? {
+                  svar: yesOrNoTypeToV3Enum(values.harBruktEgenmelding),
+                  sporsmaltekst: sporsmolOgSvar.harBruktEgenmelding.sporsmaltekst(oppfolgingsdato),
+                  svartekster: sporsmolOgSvar.harBruktEgenmelding.svartekster,
+              }
+            : null,
+        egenmeldingsperioder:
+            values.egenmeldingsperioder && erUtenforVentetid.oppfolgingsdato != null
+                ? {
+                      svar: values.egenmeldingsperioder.map((periode) => {
+                          if (periode.fom == null || periode.tom == null) {
+                              throw new Error('Illegal state: periode.fom and periode.tom is required')
+                          }
+
+                          return {
+                              fom: periode.fom,
+                              tom: periode.tom,
+                          }
+                      }),
+                      sporsmaltekst: sporsmolOgSvar.egenmeldingsperioder.sporsmaltekst(oppfolgingsdato),
+                      svartekster: sporsmolOgSvar.egenmeldingsperioder.svartekster,
+                  }
+                : null,
         harForsikring: null,
         uriktigeOpplysninger: null,
     }

@@ -4,7 +4,7 @@ import { useController } from 'react-hook-form'
 
 import { FormValues } from '../../SendSykmeldingForm'
 import { UriktigeOpplysningerType } from '../../../../fetching/graphql.generated'
-import QuestionWrapper from '../shared/QuestionWrapper'
+import { QuestionWrapper } from '../shared/FormStructure'
 
 function UriktigeOpplysningerField(): JSX.Element {
     const { field, fieldState } = useController<FormValues, 'uriktigeOpplysninger'>({
@@ -13,6 +13,8 @@ function UriktigeOpplysningerField(): JSX.Element {
             validate: (value) =>
                 value == null || value.length <= 0 ? 'Du må svare på hvilke opplysninger som ikke stemmer.' : undefined,
         },
+        shouldUnregister: true,
+        defaultValue: null,
     })
 
     return (

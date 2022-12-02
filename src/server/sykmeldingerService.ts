@@ -10,6 +10,7 @@ import { Brukerinformasjon, BrukerinformasjonSchema } from './api-models/Brukeri
 import { SendSykmeldingValues, SykmeldingChangeStatus } from './graphql/resolver-types.generated'
 import { RequestContext } from './graphql/resolvers'
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
+import { getErUtenforVentetid } from './flexService'
 
 const serverEnv = getServerEnv()
 
@@ -93,6 +94,15 @@ export async function submitSykmelding(
     }
 }
 
+/**
+ * This function reduces the amount of static data the browser needs to provide about the questions and answers.
+ * Thus removing the possibility for the user to create unecessary dirty data. This however requires the backend
+ * to look up multiple values such as sykmelding, brukerinformasjon and erUtenForVentetid.
+ *
+ * @param sykmeldingId
+ * @param values
+ * @param context
+ */
 export async function sendSykmelding(
     sykmeldingId: string,
     values: SendSykmeldingValues,
@@ -102,8 +112,13 @@ export async function sendSykmelding(
 
     childLogger.info(`Sending sykmelding with ID ${sykmeldingId}, requestId: ${context.requestId}`)
 
+    // TODO paralellize these calls
+    const sykmelding = await getSykmelding(sykmeldingId, context)
     const brukerinformasjon = await getBrukerinformasjon(context)
-    const mappedValues = mapSendSykmeldingValuesToV3Api(values, brukerinformasjon)
+    const erUtenforVentetid = await getErUtenforVentetid(sykmeldingId, context)
+
+    const mappedValues = mapSendSykmeldingValuesToV3Api(values, sykmelding, brukerinformasjon, erUtenforVentetid)
+
     try {
         await fetchApi(
             { type: 'POST', body: JSON.stringify(mappedValues) },

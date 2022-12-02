@@ -93,22 +93,27 @@ const Mutation: MutationResolvers = {
         return sykmelding
     },
     sendSykmelding: async (_, { sykmeldingId, values }) => {
-        logger.warn('Using mocked data for send mutation locally or in demo mode')
-        logger.info(
-            `Mapped values: ${JSON.stringify(
-                mapSendSykmeldingValuesToV3Api(values, {
-                    strengtFortroligAdresse: false,
-                    arbeidsgivere: arbeidsgivereMock,
-                }),
-                null,
-                2,
-            )}`,
-        )
-
         const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
         if (!sykmelding) {
             throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
         }
+
+        logger.warn('Using mocked data for send mutation locally or in demo mode')
+        logger.info(
+            `Mapped values: ${JSON.stringify(
+                mapSendSykmeldingValuesToV3Api(
+                    values,
+                    sykmelding,
+                    {
+                        strengtFortroligAdresse: false,
+                        arbeidsgivere: arbeidsgivereMock,
+                    },
+                    { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' },
+                ),
+                null,
+                2,
+            )}`,
+        )
         sykmelding.sykmeldingStatus.statusEvent = StatusEvent.Sendt
         return sykmelding
     },

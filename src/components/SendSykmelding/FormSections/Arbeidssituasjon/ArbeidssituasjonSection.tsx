@@ -10,11 +10,13 @@ import {
 } from '../../../../fetching/graphql.generated'
 import { FormValues } from '../../SendSykmeldingForm'
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
+import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
+import { SectionWrapper } from '../shared/FormStructure'
 
-import ArbeidssituasjonField from './ArbeidssituasjonField'
 import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
-import styles from './ArbeidssituasjonSection.module.css'
+import ArbeidssituasjonField from './ArbeidssituasjonField'
 import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
+import FrilanserSection from './Frilanser/FrilanserSection'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -36,19 +38,18 @@ function ArbeidssituasjonSection({
     if (!shouldArbeidssituasjonShow) return null
 
     return (
-        <div className={styles.arbedissituasjonRoot}>
+        <SectionWrapper title="Din arbeidssituasjon">
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             <ArbeidssituasjonStatusInfo />
             {shouldShowStrengtFortroligInfo && <StrengtFortroligInfo />}
             {shouldShowArbeidsgiverOrgnummer && <ArbeidsgiverSection arbeidsgivere={brukerinformasjon.arbeidsgivere} />}
             {shouldShowEgenmeldingsperioderSporsmal && (
-                <>
-                    <div>TODO: Egenmelding periode field</div>
-                    <div>TODO: forsikring field</div>
-                </>
+                <FrilanserSection
+                    oppfolgingsdato={sykmeldingUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding)}
+                />
             )}
-        </div>
+        </SectionWrapper>
     )
 }
 

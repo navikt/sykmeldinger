@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
-import QuestionWrapper from '../shared/QuestionWrapper'
+import { QuestionWrapper } from '../shared/FormStructure'
 import YesNoField from '../shared/YesNoField'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
-function ErOpplysningeneRiktige(): JSX.Element {
+function ErOpplysningeneRiktigeField(): JSX.Element {
     return (
         <QuestionWrapper>
             <YesNoField
@@ -25,4 +25,4 @@ function ErOpplysningeneRiktige(): JSX.Element {
     )
 }
 
-export default ErOpplysningeneRiktige
+export default ErOpplysningeneRiktigeField
