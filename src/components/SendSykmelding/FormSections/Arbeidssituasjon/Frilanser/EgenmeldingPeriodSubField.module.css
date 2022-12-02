@@ -1,0 +1,13 @@
+.dateFields {
+    gap: 0.5rem;
+    display: grid;
+    place-items: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 52ch;
+}
+
+.fieldButtons {
+    margin-top: var(--a-spacing-2);
+    display: flex;
+    gap: var(--a-spacing-4);
+}

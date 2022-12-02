@@ -2,7 +2,7 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 
-import QuestionWrapper from '../shared/QuestionWrapper'
+import { QuestionWrapper } from '../shared/FormStructure'
 import { NaermesteLederFragment, YesOrNo } from '../../../../fetching/graphql.generated'
 import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'

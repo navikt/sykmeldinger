@@ -4,9 +4,10 @@ import { useFormContext } from 'react-hook-form'
 import { FormValues } from '../../SendSykmeldingForm'
 import { YesOrNo } from '../../../../fetching/graphql.generated'
 import { getTrengerNySykmelding } from '../shared/sykmeldingUtils'
+import { SectionWrapper } from '../shared/FormStructure'
 
 import UriktigeOpplysningerField from './UriktigeOpplysningerField'
-import ErOpplysningeneRiktige from './ErOpplysningeneRiktige'
+import ErOpplysningeneRiktigeField from './ErOpplysningeneRiktigeField'
 import UriktigeOpplysningerInfo from './UriktigeOpplysningerInfo'
 
 function OpplysningerRiktigeSection(): JSX.Element {
@@ -16,13 +17,13 @@ function OpplysningerRiktigeSection(): JSX.Element {
     const trengerNySykmelding = getTrengerNySykmelding(uriktigeOpplysninger)
 
     return (
-        <div>
-            <ErOpplysningeneRiktige />
+        <SectionWrapper>
+            <ErOpplysningeneRiktigeField />
             {erOpplysningeneRiktige === YesOrNo.No && <UriktigeOpplysningerField />}
             {!trengerNySykmelding && (uriktigeOpplysninger ?? []).length > 0 && (
                 <UriktigeOpplysningerInfo uriktigeOpplysninger={uriktigeOpplysninger ?? []} />
             )}
-        </div>
+        </SectionWrapper>
     )
 }
 

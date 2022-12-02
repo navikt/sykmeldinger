@@ -7,7 +7,7 @@ import { FormValues } from '../../SendSykmeldingForm'
 import { YesOrNo } from '../../../../fetching/graphql.generated'
 
 interface Props {
-    name: 'erOpplysningeneRiktige' | 'riktigNarmesteLeder'
+    name: 'erOpplysningeneRiktige' | 'riktigNarmesteLeder' | 'harBruktEgenmelding'
     legend: string
     onChange?: (value: YesOrNo) => void
     rules?: UseControllerProps['rules']
@@ -17,6 +17,8 @@ function YesNoField({ name, legend, onChange, rules }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name,
         rules,
+        shouldUnregister: true,
+        defaultValue: null,
     })
 
     return (

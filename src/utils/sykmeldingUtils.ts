@@ -41,7 +41,9 @@ export function getSykmeldingTitle(
  * Get the first fom date of the earliest sykmelding period
  * @return {Date} The start date
  */
-export function getSykmeldingStartDate(sykmelding: Sykmelding): string {
+export function getSykmeldingStartDate(sykmelding: {
+    sykmeldingsperioder: readonly { readonly fom: string }[]
+}): string {
     return sykmelding.sykmeldingsperioder.reduce((acc, value) => {
         if (dayjs(value.fom).isBefore(dayjs(acc.fom))) {
             return value

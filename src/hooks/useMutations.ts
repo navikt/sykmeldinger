@@ -7,6 +7,7 @@ import {
     ChangeSykmeldingStatusMutation,
     SendSykmeldingDocument,
     SendSykmeldingMutation,
+    SendSykmeldingValues,
     SubmitSykmeldingDocument,
     SubmitSykmeldingMutation,
     SykmeldingChangeStatus,
@@ -126,7 +127,17 @@ export function useSendSykmelding(
         (values) => {
             logger.info(`Client: Submitting sykmelding ${sykmeldingId}`)
 
-            submit({ variables: { sykmeldingId, values } })
+            submit({ variables: { sykmeldingId, values: mapToSendSykmeldingValues(values) } })
         },
     ]
+}
+
+function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
+    return {
+        ...values,
+        egenmeldingsperioder: values.egenmeldingsperioder?.map((periode) => ({
+            fom: periode.fom ? toDateString(periode.fom) : null,
+            tom: periode.tom ? toDateString(periode.tom) : null,
+        })),
+    }
 }

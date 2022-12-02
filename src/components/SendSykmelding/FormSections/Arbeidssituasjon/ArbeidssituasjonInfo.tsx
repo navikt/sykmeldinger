@@ -1,14 +1,11 @@
 import React from 'react'
-import { Alert, BodyLong, BodyShort, Heading, Label, Link, ReadMore } from '@navikt/ds-react'
+import { Alert, BodyLong, BodyShort, Label, Link, ReadMore } from '@navikt/ds-react'
 
 import styles from './ArbeidssituasjonInfo.module.css'
 
 export function ArbeidssituasjonInfo(): JSX.Element {
     return (
         <div>
-            <Heading size="medium" level="2" spacing>
-                Din arbeidssituasjon
-            </Heading>
             <BodyShort spacing>
                 Fortell oss hva som er situasjonen din, så vet vi hvilken informasjon du skal få
             </BodyShort>

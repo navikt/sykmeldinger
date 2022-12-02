@@ -3,7 +3,7 @@ import { useController } from 'react-hook-form'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 
 import { FormValues } from '../../SendSykmeldingForm'
-import QuestionWrapper from '../shared/QuestionWrapper'
+import { QuestionWrapper } from '../shared/FormStructure'
 import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
 import { ArbeidssituasjonType } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
@@ -16,6 +16,8 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidssituasjon',
         rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
+        shouldUnregister: true,
+        defaultValue: null,
     })
 
     return (
