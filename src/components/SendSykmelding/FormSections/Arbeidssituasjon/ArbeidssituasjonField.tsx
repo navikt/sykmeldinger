@@ -4,7 +4,7 @@ import { Radio, RadioGroup } from '@navikt/ds-react'
 
 import { FormValues } from '../../SendSykmeldingForm'
 import { QuestionWrapper } from '../shared/FormStructure'
-import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
+import { arbeidsSituasjonEnumToText, sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
 import { ArbeidssituasjonType } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
@@ -35,21 +35,24 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
                 }}
                 error={fieldState.error?.message}
             >
-                <Radio value={ArbeidssituasjonType.Arbeidstaker}>ansatt</Radio>
+                {/* This is not mapped directly from the enum values because we want to dictate the order */}
+                <Radio value={ArbeidssituasjonType.Arbeidstaker}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Arbeidstaker)}
+                </Radio>
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Frilanser}>
-                    frilanser
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Frilanser)}
                 </Radio>
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Naeringsdrivende}>
-                    selvstendig næringsdrivende
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Naeringsdrivende)}
                 </Radio>
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Arbeidsledig}>
-                    arbeidsledig
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Arbeidsledig)}
                 </Radio>
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Permittert}>
-                    permittert
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Permittert)}
                 </Radio>
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Annet}>
-                    annet
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Annet)}
                 </Radio>
             </RadioGroup>
         </QuestionWrapper>

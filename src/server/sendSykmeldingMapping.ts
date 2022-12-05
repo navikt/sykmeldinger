@@ -1,8 +1,19 @@
 import { sporsmolOgSvar } from '../utils/sporsmolOgSvar'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 
-import { ArbeidssituasjonType, SendSykmeldingValues, Sykmelding, YesOrNo } from './graphql/resolver-types.generated'
-import { ArbeidssituasjonV3, JaEllerNeiV3, SykmeldingUserEventV3Api } from './api-models/SendSykmelding'
+import {
+    ArbeidssituasjonType,
+    SendSykmeldingValues,
+    Sykmelding,
+    UriktigeOpplysningerType,
+    YesOrNo,
+} from './graphql/resolver-types.generated'
+import {
+    ArbeidssituasjonV3,
+    JaEllerNeiV3,
+    SykmeldingUserEventV3Api,
+    UriktigeOpplysningerV3,
+} from './api-models/SendSykmelding'
 import { Brukerinformasjon } from './api-models/Brukerinformasjon'
 import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
 
@@ -79,8 +90,20 @@ export function mapSendSykmeldingValuesToV3Api(
                       svartekster: sporsmolOgSvar.egenmeldingsperioder.svartekster,
                   }
                 : null,
-        harForsikring: null,
-        uriktigeOpplysninger: null,
+        harForsikring: values.harForsikring
+            ? {
+                  svar: yesOrNoTypeToV3Enum(values.harForsikring),
+                  sporsmaltekst: sporsmolOgSvar.harForsikring.sporsmaltekst,
+                  svartekster: sporsmolOgSvar.harForsikring.svartekster,
+              }
+            : null,
+        uriktigeOpplysninger: values.uriktigeOpplysninger
+            ? {
+                  svar: values.uriktigeOpplysninger.map(uriktigeOpplysningerTypeToV3Enum),
+                  sporsmaltekst: sporsmolOgSvar.uriktigeOpplysninger.sporsmaltekst,
+                  svartekster: sporsmolOgSvar.uriktigeOpplysninger.svartekster,
+              }
+            : null,
     }
 }
 
@@ -103,5 +126,22 @@ function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): Arbeidssitua
             return ArbeidssituasjonV3.ANNET
         case ArbeidssituasjonType.Annet:
             return ArbeidssituasjonV3.ANNET
+    }
+}
+
+function uriktigeOpplysningerTypeToV3Enum(value: UriktigeOpplysningerType): UriktigeOpplysningerV3 {
+    switch (value) {
+        case UriktigeOpplysningerType.AndreOpplysninger:
+            return UriktigeOpplysningerV3.ANDRE_OPPLYSNINGER
+        case UriktigeOpplysningerType.Arbeidsgiver:
+            return UriktigeOpplysningerV3.ARBEIDSGIVER
+        case UriktigeOpplysningerType.Diagnose:
+            return UriktigeOpplysningerV3.DIAGNOSE
+        case UriktigeOpplysningerType.Periode:
+            return UriktigeOpplysningerV3.PERIODE
+        case UriktigeOpplysningerType.SykmeldingsgradForHoy:
+            return UriktigeOpplysningerV3.SYKMELDINGSGRAD_FOR_HOY
+        case UriktigeOpplysningerType.SykmeldingsgradForLav:
+            return UriktigeOpplysningerV3.SYKMELDINGSGRAD_FOR_LAV
     }
 }
