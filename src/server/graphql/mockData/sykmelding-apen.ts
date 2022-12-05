@@ -14,7 +14,7 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
         id,
         mottattTidspunkt: mottatt,
         behandlingsutfall: {
-            status: RegelStatus.Ok,
+            status: RegelStatus.OK,
             ruleHits: [],
         },
         arbeidsgiver: {
@@ -28,7 +28,7 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
                 behandlingsdager: 2,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 reisetilskudd: false,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
@@ -37,17 +37,17 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             {
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 behandlingsdager: null,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
                 aktivitetIkkeMulig: {
                     medisinskArsak: {
-                        arsak: [MedisinskArsakType.Annet, MedisinskArsakType.AktivitetForverrerTilstand],
+                        arsak: [MedisinskArsakType.ANNET, MedisinskArsakType.AKTIVITET_FORVERRER_TILSTAND],
                         beskrivelse: 'Dette er en beskrivelse av den medisinske årsaken.',
                     },
                     arbeidsrelatertArsak: {
-                        arsak: [ArbeidsrelatertArsakType.Annet],
+                        arsak: [ArbeidsrelatertArsakType.ANNET],
                         beskrivelse: 'Dette er en beskrivelse av den arbeidsrelaterte årsaken',
                     },
                 },
@@ -56,7 +56,7 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             {
                 fom: dateAdd(mottatt, { days: 6 }),
                 tom: dateAdd(mottatt, { days: 11 }),
-                type: Periodetype.Gradert,
+                type: Periodetype.GRADERT,
                 gradert: {
                     grad: 20,
                     reisetilskudd: false,
@@ -69,7 +69,7 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
         ],
         sykmeldingStatus: {
             timestamp: mottatt,
-            statusEvent: StatusEvent.Apen,
+            statusEvent: StatusEvent.APEN,
             sporsmalOgSvarListe: [],
             arbeidsgiver: null,
         },
@@ -97,7 +97,7 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             annenFraversArsak: {
                 beskrivelse:
                     'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-                grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
+                grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
             },
         },
         prognose: {

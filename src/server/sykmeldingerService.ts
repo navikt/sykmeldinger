@@ -141,9 +141,9 @@ export async function sendSykmelding(
 
 function statusToEndpoint(status: SykmeldingChangeStatus): 'avbryt' | 'bekreftAvvist' {
     switch (status) {
-        case SykmeldingChangeStatus.Avbryt:
+        case SykmeldingChangeStatus.AVBRYT:
             return 'avbryt'
-        case SykmeldingChangeStatus.BekreftAvvist:
+        case SykmeldingChangeStatus.BEKREFT_AVVIST:
             return 'bekreftAvvist'
     }
 }

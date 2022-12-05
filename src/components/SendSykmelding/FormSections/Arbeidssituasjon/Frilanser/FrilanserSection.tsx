@@ -20,7 +20,7 @@ function FrilanserSection({ oppfolgingsdato }: Props): JSX.Element {
     return (
         <SectionWrapper title="Fravær før sykmeldingen">
             <HarBruktEgenmeldingField oppfolgingsdato={oppfolgingsdato} />
-            {harBruktEgenmelding === YesOrNo.Yes && <EgenmeldingerField oppfolgingsdato={oppfolgingsdato} />}
+            {harBruktEgenmelding === YesOrNo.YES && <EgenmeldingerField oppfolgingsdato={oppfolgingsdato} />}
             <HarForsikringField />
         </SectionWrapper>
     )

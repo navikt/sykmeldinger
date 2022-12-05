@@ -39,7 +39,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
                     })
                 }}
             />
-            {riktigNarmesteLeder === YesOrNo.Yes && (
+            {riktigNarmesteLeder === YesOrNo.YES && (
                 <Alert className={styles.riktigNarmesteLederInfo} variant="info" role="alert" aria-live="polite">
                     Vi sender sykmeldingen til {narmesteLeder.navn}, som finner den ved å logge inn på nav.no
                 </Alert>

@@ -15,12 +15,12 @@ describe('AktivitetIkkeMulig', () => {
             medisinskArsak: {
                 __typename: 'MedisinskArsak',
                 beskrivelse: 'medisinsk beskrivelse',
-                arsak: [MedisinskArsakType.TilstandHindrerAktivitet],
+                arsak: [MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET],
             },
             arbeidsrelatertArsak: {
                 __typename: 'ArbeidsrelatertArsak',
                 beskrivelse: 'arbeidsrelatert beskrivelse',
-                arsak: [ArbeidsrelatertArsakType.ManglendeTilrettelegging],
+                arsak: [ArbeidsrelatertArsakType.MANGLENDE_TILRETTELEGGING],
             },
         }
 

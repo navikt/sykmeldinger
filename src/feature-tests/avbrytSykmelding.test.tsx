@@ -24,7 +24,7 @@ describe('Avbryt sykmelding', () => {
         sykmeldingStatus: {
             __typename: 'SykmeldingStatus',
             timestamp: '2022-02-01',
-            statusEvent: StatusEvent.Avbrutt,
+            statusEvent: StatusEvent.AVBRUTT,
             sporsmalOgSvarListe: [],
             arbeidsgiver: null,
         },
@@ -81,7 +81,7 @@ describe('Avbryt sykmelding', () => {
             sykmeldingStatus: {
                 __typename: 'SykmeldingStatus',
                 timestamp: '2022-02-01',
-                statusEvent: StatusEvent.Apen,
+                statusEvent: StatusEvent.APEN,
                 sporsmalOgSvarListe: [],
                 arbeidsgiver: null,
             },
@@ -110,7 +110,7 @@ describe('Avbryt sykmelding', () => {
                         query: ChangeSykmeldingStatusDocument,
                         variables: {
                             sykmeldingId: 'avbrutt-sykmelding',
-                            status: SykmeldingChangeStatus.Avbryt,
+                            status: SykmeldingChangeStatus.AVBRYT,
                         },
                     },
                     result: {
@@ -120,7 +120,7 @@ describe('Avbryt sykmelding', () => {
                                 ...apenSykmelding,
                                 sykmeldingStatus: {
                                     ...apenSykmelding.sykmeldingStatus,
-                                    statusEvent: StatusEvent.Avbrutt,
+                                    statusEvent: StatusEvent.AVBRUTT,
                                     timestamp: '2022-03-01',
                                 },
                             },
@@ -147,7 +147,7 @@ describe('Avbryt sykmelding', () => {
             sykmeldingStatus: {
                 __typename: 'SykmeldingStatus',
                 timestamp: '2022-02-01',
-                statusEvent: StatusEvent.Avbrutt,
+                statusEvent: StatusEvent.AVBRUTT,
                 sporsmalOgSvarListe: [],
                 arbeidsgiver: null,
             },

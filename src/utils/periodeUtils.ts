@@ -5,47 +5,47 @@ import { AnnenFraverGrunn } from '../server/graphql/resolver-types.generated'
 
 export function medisinskArsakToText(value: MedisinskArsakType): string {
     switch (value) {
-        case MedisinskArsakType.TilstandHindrerAktivitet:
+        case MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET:
             return 'Helsetilstanden hindrer pasienten i å være i aktivitet'
-        case MedisinskArsakType.AktivitetForverrerTilstand:
+        case MedisinskArsakType.AKTIVITET_FORVERRER_TILSTAND:
             return 'Aktivitet vil forverre helsetilstanden'
-        case MedisinskArsakType.AktivitetForhindrerBedring:
+        case MedisinskArsakType.AKTIVITET_FORHINDRER_BEDRING:
             return 'Aktivitet vil hindre/forsinke bedring av helsetilstanden'
-        case MedisinskArsakType.Annet:
+        case MedisinskArsakType.ANNET:
             return 'Annet'
     }
 }
 
 export function arbeidsrelatertArsakToText(value: ArbeidsrelatertArsakType): string {
     switch (value) {
-        case ArbeidsrelatertArsakType.ManglendeTilrettelegging:
+        case ArbeidsrelatertArsakType.MANGLENDE_TILRETTELEGGING:
             return 'Manglende tilrettelegging på arbeidsplassen'
-        case ArbeidsrelatertArsakType.Annet:
+        case ArbeidsrelatertArsakType.ANNET:
             return 'Annet'
     }
 }
 
 export function annenFraverGrunnToText(value: AnnenFraverGrunn): string {
     switch (value) {
-        case AnnenFraverGrunn.GodkjentHelseinstitusjon:
+        case AnnenFraverGrunn.GODKJENT_HELSEINSTITUSJON:
             return 'Når vedkommende er innlagt i en godkjent helseinstitusjon'
-        case AnnenFraverGrunn.BehandlingForhindrerArbeid:
+        case AnnenFraverGrunn.BEHANDLING_FORHINDRER_ARBEID:
             return 'Når vedkommende er under behandling og legen erklærer at behandlingen gjør det nødvendig at vedkommende ikke arbeider'
-        case AnnenFraverGrunn.ArbeidsrettetTiltak:
+        case AnnenFraverGrunn.ARBEIDSRETTET_TILTAK:
             return 'Når vedkommende deltar på et arbeidsrettet tiltak'
-        case AnnenFraverGrunn.MottarTilskuddGrunnetHelsetilstand:
+        case AnnenFraverGrunn.MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND:
             return 'Når vedkommende på grunn av sykdom, skade eller lyte får tilskott når vedkommende på grunn av sykdom, skade eller lyte får tilskott'
-        case AnnenFraverGrunn.NodvendigKontrollundenrsokelse:
+        case AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE:
             return 'Når vedkommende er til nødvendig kontrollundersøkelse som krever minst 24 timers fravær, reisetid medregnet'
-        case AnnenFraverGrunn.Smittefare:
+        case AnnenFraverGrunn.SMITTEFARE:
             return 'Når vedkommende myndighet har nedlagt forbud mot at han eller hun arbeider på grunn av smittefare'
-        case AnnenFraverGrunn.Abort:
+        case AnnenFraverGrunn.ABORT:
             return 'Når vedkommende er arbeidsufør som følge av svangerskapsavbrudd'
-        case AnnenFraverGrunn.UforGrunnetBarnloshet:
+        case AnnenFraverGrunn.UFOR_GRUNNET_BARNLOSHET:
             return 'Når vedkommende er arbeidsufør som følge av behandling for barnløshet'
-        case AnnenFraverGrunn.Donor:
+        case AnnenFraverGrunn.DONOR:
             return 'Når vedkommende er donor eller er under vurdering som donor'
-        case AnnenFraverGrunn.BehandlingSterilisering:
+        case AnnenFraverGrunn.BEHANDLING_STERILISERING:
             return 'Når vedkommende er arbeidsufør som følge av behandling i forbindelse med sterilisering'
     }
 }
@@ -58,15 +58,15 @@ export function getPeriodTitle<Periode extends { type: Periodetype; gradert?: { 
     period: Periode,
 ): string {
     switch (period.type) {
-        case Periodetype.Avventende:
+        case Periodetype.AVVENTENDE:
             return 'Avventende sykmelding'
-        case Periodetype.AktivitetIkkeMulig:
+        case Periodetype.AKTIVITET_IKKE_MULIG:
             return '100% sykmelding'
-        case Periodetype.Gradert:
+        case Periodetype.GRADERT:
             return `${period.gradert?.grad}% sykmelding`
-        case Periodetype.Reisetilskudd:
+        case Periodetype.REISETILSKUDD:
             return 'Reisetilskudd'
-        case Periodetype.Behandlingsdager:
+        case Periodetype.BEHANDLINGSDAGER:
             return 'Behandlingsdager'
     }
 }
@@ -107,7 +107,7 @@ export function getReadableLength<
     Periode extends { type: Periodetype; behandlingsdager?: number | null; fom: string; tom: string },
 >(period: Periode): string {
     const length = getLength(period)
-    if (period.type === Periodetype.Behandlingsdager) {
+    if (period.type === Periodetype.BEHANDLINGSDAGER) {
         return `${period.behandlingsdager} behandlingsdag${
             period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
         } i løpet av ${length} dag${length > 1 ? 'er' : ''}`
@@ -123,21 +123,21 @@ export function getDescription(period: Periode, arbeidsgiverNavn?: string): stri
     const periodLength = getLength(period)
 
     switch (period.type) {
-        case Periodetype.AktivitetIkkeMulig:
+        case Periodetype.AKTIVITET_IKKE_MULIG:
             return `100% sykmeldt${arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''} i ${periodLength} dag${
                 periodLength > 1 ? 'er' : ''
             }`
-        case Periodetype.Gradert:
+        case Periodetype.GRADERT:
             return `${period.gradert?.grad}% sykmeldt${
                 arbeidsgiverNavn ? ` fra ${arbeidsgiverNavn}` : ''
             } i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`
-        case Periodetype.Behandlingsdager:
+        case Periodetype.BEHANDLINGSDAGER:
             return `${period.behandlingsdager} behandlingsdag${
                 period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
             } i løpet av ${periodLength} dag${periodLength > 1 ? 'er' : ''}`
-        case Periodetype.Avventende:
+        case Periodetype.AVVENTENDE:
             return `Avventende sykmelding i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`
-        case Periodetype.Reisetilskudd:
+        case Periodetype.REISETILSKUDD:
             return `Reisetilskudd i ${periodLength} dag${periodLength > 1 ? 'er' : ''}`
         default:
             return ''

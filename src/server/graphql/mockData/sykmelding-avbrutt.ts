@@ -7,7 +7,7 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
         id: 'AVBRUTT',
         mottattTidspunkt: mottatt,
         behandlingsutfall: {
-            status: RegelStatus.Ok,
+            status: RegelStatus.OK,
             ruleHits: [],
         },
         arbeidsgiver: {
@@ -18,7 +18,7 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
                 fom: dateAdd(mottatt, { days: 5 }),
                 tom: dateAdd(mottatt, { days: 15 }),
                 behandlingsdager: 2,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 reisetilskudd: false,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
@@ -27,7 +27,7 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
         ],
         sykmeldingStatus: {
             timestamp: mottatt,
-            statusEvent: StatusEvent.Avbrutt,
+            statusEvent: StatusEvent.AVBRUTT,
             sporsmalOgSvarListe: [],
             arbeidsgiver: null,
         },
@@ -55,7 +55,7 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
             annenFraversArsak: {
                 beskrivelse:
                     'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-                grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
+                grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
             },
         },
         skjermesForPasient: false,

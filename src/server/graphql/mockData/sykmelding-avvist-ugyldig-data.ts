@@ -15,14 +15,14 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
     },
     mottattTidspunkt: mottatt,
     behandlingsutfall: {
-        status: RegelStatus.Invalid,
+        status: RegelStatus.INVALID,
         ruleHits: [
             {
                 messageForSender:
                     'Sykmeldingen kan ikke rettes, det må skrives en ny. Pasienten har fått beskjed om å vente på ny sykmelding fra deg. Grunnet følgende:Hvis sykmeldingsgrad er høyere enn 99% for delvis sykmelding avvises meldingen',
                 messageForUser: 'Sykmeldingsgraden kan ikke være mer enn 99% fordi det er en gradert sykmelding.',
                 ruleName: 'GRADERT_SYKMELDING_OVER_99_PROSENT',
-                ruleStatus: RegelStatus.Invalid,
+                ruleStatus: RegelStatus.INVALID,
             },
         ],
     },
@@ -35,13 +35,13 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
             gradert: { grad: 160, reisetilskudd: false },
             behandlingsdager: null,
             innspillTilArbeidsgiver: null,
-            type: Periodetype.Gradert,
+            type: Periodetype.GRADERT,
             aktivitetIkkeMulig: null,
             reisetilskudd: false,
         },
     ],
     sykmeldingStatus: {
-        statusEvent: StatusEvent.Apen,
+        statusEvent: StatusEvent.APEN,
         timestamp: '2021-11-23T06:50:02.746659Z',
         arbeidsgiver: null,
         sporsmalOgSvarListe: [],

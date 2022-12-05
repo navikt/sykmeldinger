@@ -13,7 +13,7 @@ describe('MedisinskTilstand', () => {
             annenFraversArsak: {
                 __typename: 'AnnenFraversArsak',
                 beskrivelse: 'Dette er en beskrivelse',
-                grunn: [AnnenFraverGrunn.Donor],
+                grunn: [AnnenFraverGrunn.DONOR],
             },
             svangerskap: false,
             yrkesskade: false,

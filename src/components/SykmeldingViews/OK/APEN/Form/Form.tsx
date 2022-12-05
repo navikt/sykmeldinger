@@ -137,7 +137,7 @@ function Form({ sykmelding }: FormProps): JSX.Element {
                     {shouldArbeidssituasjonShow(watchErOpplysningeneRiktige, watchUriktigeOpplysninger, maAvbryte) && (
                         <Arbeidssituasjon
                             harAvventendePeriode={sykmelding.sykmeldingsperioder.some(
-                                (sm) => sm.type === Periodetype.Avventende,
+                                (sm) => sm.type === Periodetype.AVVENTENDE,
                             )}
                             erUtenforVentetid={data.sykmeldingUtenforVentetid}
                             brukerinformasjon={data.brukerinformasjon}

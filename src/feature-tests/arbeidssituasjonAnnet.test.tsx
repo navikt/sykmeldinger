@@ -69,7 +69,7 @@ describe('Annet', () => {
                             submitSykmelding: createSykmelding({
                                 sykmeldingStatus: {
                                     ...createSykmelding().sykmeldingStatus,
-                                    statusEvent: StatusEvent.Bekreftet,
+                                    statusEvent: StatusEvent.BEKREFTET,
                                     timestamp: '2020-01-01',
                                 },
                             }),

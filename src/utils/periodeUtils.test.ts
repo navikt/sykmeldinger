@@ -12,7 +12,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Dette er et innspill',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -28,7 +28,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 aktivitetIkkeMulig: {
                     __typename: 'AktivitetIkkeMuligPeriode',
                     medisinskArsak: null,
@@ -51,7 +51,7 @@ describe('periodeUtils', () => {
                 },
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Gradert,
+                type: Periodetype.GRADERT,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -66,7 +66,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Reisetilskudd,
+                type: Periodetype.REISETILSKUDD,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: true,
             }
@@ -81,7 +81,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: 2,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -98,7 +98,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -113,7 +113,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -127,7 +127,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -144,7 +144,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -159,7 +159,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -174,7 +174,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -189,7 +189,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -206,7 +206,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Dette er et innspill',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -221,7 +221,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Dette er et innspill',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -236,7 +236,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 aktivitetIkkeMulig: {
                     __typename: 'AktivitetIkkeMuligPeriode',
                     medisinskArsak: null,
@@ -259,7 +259,7 @@ describe('periodeUtils', () => {
                 },
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Gradert,
+                type: Periodetype.GRADERT,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -274,7 +274,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Reisetilskudd,
+                type: Periodetype.REISETILSKUDD,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: true,
             }
@@ -289,7 +289,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: 1,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -304,7 +304,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: 3,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -321,7 +321,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: 'Dette er et innspill',
-                type: Periodetype.Avventende,
+                type: Periodetype.AVVENTENDE,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -336,7 +336,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 aktivitetIkkeMulig: {
                     __typename: 'AktivitetIkkeMuligPeriode',
                     medisinskArsak: null,
@@ -355,7 +355,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 aktivitetIkkeMulig: {
                     __typename: 'AktivitetIkkeMuligPeriode',
                     medisinskArsak: null,
@@ -378,7 +378,7 @@ describe('periodeUtils', () => {
                 },
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Gradert,
+                type: Periodetype.GRADERT,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -397,7 +397,7 @@ describe('periodeUtils', () => {
                 },
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Gradert,
+                type: Periodetype.GRADERT,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -412,7 +412,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Reisetilskudd,
+                type: Periodetype.REISETILSKUDD,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: true,
             }
@@ -427,7 +427,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: 1,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }
@@ -442,7 +442,7 @@ describe('periodeUtils', () => {
                 gradert: null,
                 behandlingsdager: 2,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 aktivitetIkkeMulig: null,
                 reisetilskudd: false,
             }

@@ -11,7 +11,7 @@ import {
 export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
     id: 'UGYLDIG-TILBAKEDATERING',
     mottattTidspunkt: '2021-06-16T20:00:00Z',
-    behandlingsutfall: { status: RegelStatus.Ok, ruleHits: [] },
+    behandlingsutfall: { status: RegelStatus.OK, ruleHits: [] },
     legekontorOrgnummer: '223456789',
     arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
     sykmeldingsperioder: [
@@ -21,22 +21,22 @@ export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
             gradert: null,
             behandlingsdager: null,
             innspillTilArbeidsgiver: null,
-            type: Periodetype.AktivitetIkkeMulig,
+            type: Periodetype.AKTIVITET_IKKE_MULIG,
             aktivitetIkkeMulig: {
                 medisinskArsak: {
                     beskrivelse: 'andre årsaker til sykefravær',
-                    arsak: [MedisinskArsakType.AktivitetForhindrerBedring],
+                    arsak: [MedisinskArsakType.AKTIVITET_FORHINDRER_BEDRING],
                 },
                 arbeidsrelatertArsak: {
                     beskrivelse: 'andre årsaker til sykefravær',
-                    arsak: [ArbeidsrelatertArsakType.Annet],
+                    arsak: [ArbeidsrelatertArsakType.ANNET],
                 },
             },
             reisetilskudd: false,
         },
     ],
     sykmeldingStatus: {
-        statusEvent: StatusEvent.Apen,
+        statusEvent: StatusEvent.APEN,
         timestamp: '2021-06-17T07:31:16.870561Z',
         arbeidsgiver: null,
         sporsmalOgSvarListe: [],

@@ -5,13 +5,13 @@ export const sykmeldingAvvistBekreftet: Sykmelding = {
     id: 'AVVIST_BEKREFTET',
     mottattTidspunkt: '2020-06-02',
     behandlingsutfall: {
-        status: RegelStatus.Invalid,
+        status: RegelStatus.INVALID,
         ruleHits: [
             {
                 messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                 messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                 ruleName: 'tilbakedatering',
-                ruleStatus: RegelStatus.Invalid,
+                ruleStatus: RegelStatus.INVALID,
             },
         ],
     },
@@ -23,7 +23,7 @@ export const sykmeldingAvvistBekreftet: Sykmelding = {
             fom: '2020-02-10',
             tom: '2020-02-11',
             behandlingsdager: 2,
-            type: Periodetype.Behandlingsdager,
+            type: Periodetype.BEHANDLINGSDAGER,
             reisetilskudd: false,
             gradert: null,
             innspillTilArbeidsgiver: null,
@@ -32,7 +32,7 @@ export const sykmeldingAvvistBekreftet: Sykmelding = {
     ],
     sykmeldingStatus: {
         timestamp: '2020-01-01',
-        statusEvent: StatusEvent.Bekreftet,
+        statusEvent: StatusEvent.BEKREFTET,
         sporsmalOgSvarListe: [],
         arbeidsgiver: null,
     },
@@ -60,7 +60,7 @@ export const sykmeldingAvvistBekreftet: Sykmelding = {
         annenFraversArsak: {
             beskrivelse:
                 'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-            grunn: [AnnenFraverGrunn.Abort],
+            grunn: [AnnenFraverGrunn.ABORT],
         },
     },
     skjermesForPasient: false,

@@ -32,16 +32,16 @@ export type AktivitetIkkeMuligPeriode = {
 }
 
 export enum AnnenFraverGrunn {
-    Abort = 'ABORT',
-    ArbeidsrettetTiltak = 'ARBEIDSRETTET_TILTAK',
-    BehandlingForhindrerArbeid = 'BEHANDLING_FORHINDRER_ARBEID',
-    BehandlingSterilisering = 'BEHANDLING_STERILISERING',
-    Donor = 'DONOR',
-    GodkjentHelseinstitusjon = 'GODKJENT_HELSEINSTITUSJON',
-    MottarTilskuddGrunnetHelsetilstand = 'MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND',
-    NodvendigKontrollundenrsokelse = 'NODVENDIG_KONTROLLUNDENRSOKELSE',
-    Smittefare = 'SMITTEFARE',
-    UforGrunnetBarnloshet = 'UFOR_GRUNNET_BARNLOSHET',
+    ABORT = 'ABORT',
+    ARBEIDSRETTET_TILTAK = 'ARBEIDSRETTET_TILTAK',
+    BEHANDLING_FORHINDRER_ARBEID = 'BEHANDLING_FORHINDRER_ARBEID',
+    BEHANDLING_STERILISERING = 'BEHANDLING_STERILISERING',
+    DONOR = 'DONOR',
+    GODKJENT_HELSEINSTITUSJON = 'GODKJENT_HELSEINSTITUSJON',
+    MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND = 'MOTTAR_TILSKUDD_GRUNNET_HELSETILSTAND',
+    NODVENDIG_KONTROLLUNDENRSOKELSE = 'NODVENDIG_KONTROLLUNDENRSOKELSE',
+    SMITTEFARE = 'SMITTEFARE',
+    UFOR_GRUNNET_BARNLOSHET = 'UFOR_GRUNNET_BARNLOSHET',
 }
 
 export type AnnenFraversArsak = {
@@ -76,17 +76,17 @@ export type ArbeidsrelatertArsak = {
 }
 
 export enum ArbeidsrelatertArsakType {
-    Annet = 'ANNET',
-    ManglendeTilrettelegging = 'MANGLENDE_TILRETTELEGGING',
+    ANNET = 'ANNET',
+    MANGLENDE_TILRETTELEGGING = 'MANGLENDE_TILRETTELEGGING',
 }
 
 export enum ArbeidssituasjonType {
-    Annet = 'ANNET',
-    Arbeidsledig = 'ARBEIDSLEDIG',
-    Arbeidstaker = 'ARBEIDSTAKER',
-    Frilanser = 'FRILANSER',
-    Naeringsdrivende = 'NAERINGSDRIVENDE',
-    Permittert = 'PERMITTERT',
+    ANNET = 'ANNET',
+    ARBEIDSLEDIG = 'ARBEIDSLEDIG',
+    ARBEIDSTAKER = 'ARBEIDSTAKER',
+    FRILANSER = 'FRILANSER',
+    NAERINGSDRIVENDE = 'NAERINGSDRIVENDE',
+    PERMITTERT = 'PERMITTERT',
 }
 
 export type Behandler = {
@@ -156,10 +156,10 @@ export type MedisinskArsak = {
 }
 
 export enum MedisinskArsakType {
-    AktivitetForhindrerBedring = 'AKTIVITET_FORHINDRER_BEDRING',
-    AktivitetForverrerTilstand = 'AKTIVITET_FORVERRER_TILSTAND',
-    Annet = 'ANNET',
-    TilstandHindrerAktivitet = 'TILSTAND_HINDRER_AKTIVITET',
+    AKTIVITET_FORHINDRER_BEDRING = 'AKTIVITET_FORHINDRER_BEDRING',
+    AKTIVITET_FORVERRER_TILSTAND = 'AKTIVITET_FORVERRER_TILSTAND',
+    ANNET = 'ANNET',
+    TILSTAND_HINDRER_AKTIVITET = 'TILSTAND_HINDRER_AKTIVITET',
 }
 
 export type MedisinskVurdering = {
@@ -232,11 +232,11 @@ export type Periode = {
 }
 
 export enum Periodetype {
-    AktivitetIkkeMulig = 'AKTIVITET_IKKE_MULIG',
-    Avventende = 'AVVENTENDE',
-    Behandlingsdager = 'BEHANDLINGSDAGER',
-    Gradert = 'GRADERT',
-    Reisetilskudd = 'REISETILSKUDD',
+    AKTIVITET_IKKE_MULIG = 'AKTIVITET_IKKE_MULIG',
+    AVVENTENDE = 'AVVENTENDE',
+    BEHANDLINGSDAGER = 'BEHANDLINGSDAGER',
+    GRADERT = 'GRADERT',
+    REISETILSKUDD = 'REISETILSKUDD',
 }
 
 export type Prognose = {
@@ -272,9 +272,9 @@ export type RegelInfo = {
 }
 
 export enum RegelStatus {
-    Invalid = 'INVALID',
-    ManualProcessing = 'MANUAL_PROCESSING',
-    Ok = 'OK',
+    INVALID = 'INVALID',
+    MANUAL_PROCESSING = 'MANUAL_PROCESSING',
+    OK = 'OK',
 }
 
 export type SendSykmeldingValues = {
@@ -289,11 +289,11 @@ export type SendSykmeldingValues = {
 }
 
 export enum ShortName {
-    Arbeidssituasjon = 'ARBEIDSSITUASJON',
-    Forsikring = 'FORSIKRING',
-    Fravaer = 'FRAVAER',
-    NyNarmesteLeder = 'NY_NARMESTE_LEDER',
-    Periode = 'PERIODE',
+    ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    FORSIKRING = 'FORSIKRING',
+    FRAVAER = 'FRAVAER',
+    NY_NARMESTE_LEDER = 'NY_NARMESTE_LEDER',
+    PERIODE = 'PERIODE',
 }
 
 export type Sporsmal = {
@@ -304,11 +304,11 @@ export type Sporsmal = {
 }
 
 export enum StatusEvent {
-    Apen = 'APEN',
-    Avbrutt = 'AVBRUTT',
-    Bekreftet = 'BEKREFTET',
-    Sendt = 'SENDT',
-    Utgatt = 'UTGATT',
+    APEN = 'APEN',
+    AVBRUTT = 'AVBRUTT',
+    BEKREFTET = 'BEKREFTET',
+    SENDT = 'SENDT',
+    UTGATT = 'UTGATT',
 }
 
 export type Svar = {
@@ -318,14 +318,14 @@ export type Svar = {
 }
 
 export enum SvarRestriksjon {
-    SkjermetForArbeidsgiver = 'SKJERMET_FOR_ARBEIDSGIVER',
-    SkjermetForNav = 'SKJERMET_FOR_NAV',
+    SKJERMET_FOR_ARBEIDSGIVER = 'SKJERMET_FOR_ARBEIDSGIVER',
+    SKJERMET_FOR_NAV = 'SKJERMET_FOR_NAV',
 }
 
 export enum Svartype {
-    Arbeidssituasjon = 'ARBEIDSSITUASJON',
-    JaNei = 'JA_NEI',
-    Perioder = 'PERIODER',
+    ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    JA_NEI = 'JA_NEI',
+    PERIODER = 'PERIODER',
 }
 
 export type Sykmelding = {
@@ -359,8 +359,8 @@ export type Sykmelding = {
 }
 
 export enum SykmeldingChangeStatus {
-    Avbryt = 'AVBRYT',
-    BekreftAvvist = 'BEKREFT_AVVIST',
+    AVBRYT = 'AVBRYT',
+    BEKREFT_AVVIST = 'BEKREFT_AVVIST',
 }
 
 export type SykmeldingStatus = {
@@ -372,12 +372,12 @@ export type SykmeldingStatus = {
 }
 
 export enum UriktigeOpplysningerType {
-    AndreOpplysninger = 'ANDRE_OPPLYSNINGER',
-    Arbeidsgiver = 'ARBEIDSGIVER',
-    Diagnose = 'DIAGNOSE',
-    Periode = 'PERIODE',
-    SykmeldingsgradForHoy = 'SYKMELDINGSGRAD_FOR_HOY',
-    SykmeldingsgradForLav = 'SYKMELDINGSGRAD_FOR_LAV',
+    ANDRE_OPPLYSNINGER = 'ANDRE_OPPLYSNINGER',
+    ARBEIDSGIVER = 'ARBEIDSGIVER',
+    DIAGNOSE = 'DIAGNOSE',
+    PERIODE = 'PERIODE',
+    SYKMELDINGSGRAD_FOR_HOY = 'SYKMELDINGSGRAD_FOR_HOY',
+    SYKMELDINGSGRAD_FOR_LAV = 'SYKMELDINGSGRAD_FOR_LAV',
 }
 
 export type UtdypendeOpplysning = {
@@ -394,8 +394,8 @@ export type UtenforVentetid = {
 }
 
 export enum YesOrNo {
-    No = 'NO',
-    Yes = 'YES',
+    NO = 'NO',
+    YES = 'YES',
 }
 
 export type NaermesteLederFragment = { readonly __typename: 'NaermesteLeder'; readonly navn: string }

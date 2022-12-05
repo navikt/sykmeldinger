@@ -108,40 +108,40 @@ export function mapSendSykmeldingValuesToV3Api(
 }
 
 function yesOrNoTypeToV3Enum(value: YesOrNo): JaEllerNeiV3 {
-    return value === YesOrNo.Yes ? JaEllerNeiV3.JA : JaEllerNeiV3.NEI
+    return value === YesOrNo.YES ? JaEllerNeiV3.JA : JaEllerNeiV3.NEI
 }
 
 function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonV3 {
     switch (value) {
-        case ArbeidssituasjonType.Arbeidsledig:
+        case ArbeidssituasjonType.ARBEIDSLEDIG:
             return ArbeidssituasjonV3.ARBEIDSLEDIG
-        case ArbeidssituasjonType.Arbeidstaker:
+        case ArbeidssituasjonType.ARBEIDSTAKER:
             return ArbeidssituasjonV3.ARBEIDSTAKER
-        case ArbeidssituasjonType.Frilanser:
+        case ArbeidssituasjonType.FRILANSER:
             return ArbeidssituasjonV3.FRILANSER
-        case ArbeidssituasjonType.Naeringsdrivende:
+        case ArbeidssituasjonType.NAERINGSDRIVENDE:
             return ArbeidssituasjonV3.NAERINGSDRIVENDE
-        case ArbeidssituasjonType.Permittert:
+        case ArbeidssituasjonType.PERMITTERT:
             // TODO ???
             return ArbeidssituasjonV3.ANNET
-        case ArbeidssituasjonType.Annet:
+        case ArbeidssituasjonType.ANNET:
             return ArbeidssituasjonV3.ANNET
     }
 }
 
 function uriktigeOpplysningerTypeToV3Enum(value: UriktigeOpplysningerType): UriktigeOpplysningerV3 {
     switch (value) {
-        case UriktigeOpplysningerType.AndreOpplysninger:
+        case UriktigeOpplysningerType.ANDRE_OPPLYSNINGER:
             return UriktigeOpplysningerV3.ANDRE_OPPLYSNINGER
-        case UriktigeOpplysningerType.Arbeidsgiver:
+        case UriktigeOpplysningerType.ARBEIDSGIVER:
             return UriktigeOpplysningerV3.ARBEIDSGIVER
-        case UriktigeOpplysningerType.Diagnose:
+        case UriktigeOpplysningerType.DIAGNOSE:
             return UriktigeOpplysningerV3.DIAGNOSE
-        case UriktigeOpplysningerType.Periode:
+        case UriktigeOpplysningerType.PERIODE:
             return UriktigeOpplysningerV3.PERIODE
-        case UriktigeOpplysningerType.SykmeldingsgradForHoy:
+        case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_HOY:
             return UriktigeOpplysningerV3.SYKMELDINGSGRAD_FOR_HOY
-        case UriktigeOpplysningerType.SykmeldingsgradForLav:
+        case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_LAV:
             return UriktigeOpplysningerV3.SYKMELDINGSGRAD_FOR_LAV
     }
 }

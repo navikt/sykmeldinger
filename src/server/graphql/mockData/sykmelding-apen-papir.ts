@@ -7,7 +7,7 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
         id: 'APEN_PAPIR',
         mottattTidspunkt: mottatt,
         behandlingsutfall: {
-            status: RegelStatus.Ok,
+            status: RegelStatus.OK,
             ruleHits: [],
         },
         arbeidsgiver: {
@@ -18,7 +18,7 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
                 fom: dateAdd(mottatt, { days: 0 }),
                 tom: dateAdd(mottatt, { days: 4 }),
                 behandlingsdager: 2,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 reisetilskudd: false,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
@@ -27,7 +27,7 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
         ],
         sykmeldingStatus: {
             timestamp: mottatt,
-            statusEvent: StatusEvent.Apen,
+            statusEvent: StatusEvent.APEN,
             sporsmalOgSvarListe: [],
             arbeidsgiver: null,
         },
@@ -55,7 +55,7 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
             annenFraversArsak: {
                 beskrivelse:
                     'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-                grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
+                grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
             },
         },
         skjermesForPasient: false,

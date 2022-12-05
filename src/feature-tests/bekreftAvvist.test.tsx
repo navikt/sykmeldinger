@@ -22,14 +22,14 @@ describe('Bekreft avvist sykmelding som lest', () => {
         id: 'avvist-sykmelding',
         behandlingsutfall: {
             __typename: 'Behandlingsutfall',
-            status: RegelStatus.Invalid,
+            status: RegelStatus.INVALID,
             ruleHits: [
                 {
                     __typename: 'RegelInfo',
                     messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                     messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                     ruleName: 'tilbakedatering',
-                    ruleStatus: RegelStatus.Invalid,
+                    ruleStatus: RegelStatus.INVALID,
                 },
             ],
         },
@@ -106,7 +106,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
                         query: ChangeSykmeldingStatusDocument,
                         variables: {
                             sykmeldingId: 'avvist-sykmelding',
-                            status: SykmeldingChangeStatus.BekreftAvvist,
+                            status: SykmeldingChangeStatus.BEKREFT_AVVIST,
                         },
                     },
                     result: {
@@ -116,7 +116,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
                                 ...avvistSykmelding,
                                 sykmeldingStatus: {
                                     ...avvistSykmelding.sykmeldingStatus,
-                                    statusEvent: StatusEvent.Bekreftet,
+                                    statusEvent: StatusEvent.BEKREFTET,
                                     timestamp: '2020-01-01',
                                 },
                             },

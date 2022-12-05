@@ -36,23 +36,23 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
                 error={fieldState.error?.message}
             >
                 {/* This is not mapped directly from the enum values because we want to dictate the order */}
-                <Radio value={ArbeidssituasjonType.Arbeidstaker}>
-                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Arbeidstaker)}
+                <Radio value={ArbeidssituasjonType.ARBEIDSTAKER}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.ARBEIDSTAKER)}
                 </Radio>
-                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Frilanser}>
-                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Frilanser)}
+                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.FRILANSER}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.FRILANSER)}
                 </Radio>
-                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Naeringsdrivende}>
-                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Naeringsdrivende)}
+                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.NAERINGSDRIVENDE}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.NAERINGSDRIVENDE)}
                 </Radio>
-                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Arbeidsledig}>
-                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Arbeidsledig)}
+                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.ARBEIDSLEDIG}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.ARBEIDSLEDIG)}
                 </Radio>
-                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Permittert}>
-                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Permittert)}
+                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.PERMITTERT}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.PERMITTERT)}
                 </Radio>
-                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.Annet}>
-                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.Annet)}
+                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.ANNET}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.ANNET)}
                 </Radio>
             </RadioGroup>
         </QuestionWrapper>

@@ -24,7 +24,7 @@ describe('Papir sykmelding', () => {
         sykmeldingStatus: {
             __typename: 'SykmeldingStatus',
             timestamp: '2022-02-01',
-            statusEvent: StatusEvent.Apen,
+            statusEvent: StatusEvent.APEN,
             sporsmalOgSvarListe: [],
             arbeidsgiver: null,
         },
@@ -101,7 +101,7 @@ describe('Papir sykmelding', () => {
                         query: ChangeSykmeldingStatusDocument,
                         variables: {
                             sykmeldingId: 'papir-sykmelding',
-                            status: SykmeldingChangeStatus.Avbryt,
+                            status: SykmeldingChangeStatus.AVBRYT,
                         },
                     },
                     result: {
@@ -111,7 +111,7 @@ describe('Papir sykmelding', () => {
                                 ...papirSykmelding,
                                 sykmeldingStatus: {
                                     ...papirSykmelding.sykmeldingStatus,
-                                    statusEvent: StatusEvent.Avbrutt,
+                                    statusEvent: StatusEvent.AVBRUTT,
                                     timestamp: '2022-03-01',
                                 },
                             },

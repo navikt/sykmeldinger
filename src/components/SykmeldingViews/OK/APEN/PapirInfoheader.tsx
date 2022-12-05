@@ -13,7 +13,7 @@ function PapirInfoheader(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
         sykmeldingId,
-        SykmeldingChangeStatus.Avbryt,
+        SykmeldingChangeStatus.AVBRYT,
         () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
         () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )

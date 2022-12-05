@@ -11,7 +11,7 @@ export function useShouldArbeidssituasjonShow(): boolean {
     if (erOpplysningeneRiktige == null) return false
 
     // "Yes" should always show the section
-    if (erOpplysningeneRiktige === YesOrNo.Yes) return true
+    if (erOpplysningeneRiktige === YesOrNo.YES) return true
 
     // "No" but no uriktigeOpplysninger should not show the section
     if (uriktigeOpplysninger == null || uriktigeOpplysninger.length === 0) return false
@@ -24,7 +24,7 @@ export function getTrengerNySykmelding(uriktigeOpplysninger: UriktigeOpplysninge
     if (uriktigeOpplysninger == null) return false
 
     return (
-        uriktigeOpplysninger?.includes(UriktigeOpplysningerType.Periode) ||
-        uriktigeOpplysninger?.includes(UriktigeOpplysningerType.SykmeldingsgradForLav)
+        uriktigeOpplysninger?.includes(UriktigeOpplysningerType.PERIODE) ||
+        uriktigeOpplysninger?.includes(UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_LAV)
     )
 }

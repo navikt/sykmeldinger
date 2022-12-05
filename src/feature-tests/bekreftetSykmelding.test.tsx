@@ -18,7 +18,7 @@ describe('Bekreftet sykmelding', () => {
         sykmeldingStatus: {
             __typename: 'SykmeldingStatus',
             timestamp: '2022-02-01',
-            statusEvent: StatusEvent.Bekreftet,
+            statusEvent: StatusEvent.BEKREFTET,
             sporsmalOgSvarListe: [],
             arbeidsgiver: null,
         },

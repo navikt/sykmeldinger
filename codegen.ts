@@ -16,6 +16,7 @@ const config: CodegenConfig = {
                 scalars: { Date: 'string', DateTime: 'string', JSON: 'unknown' },
                 dedupeFragments: true,
                 nonOptionalTypename: true,
+                namingConvention: { enumValues: 'keep' },
             },
         },
         './src/server/graphql/resolver-types.generated.ts': {
@@ -31,6 +32,7 @@ const config: CodegenConfig = {
                     field: true,
                 },
                 scalars: { Date: 'string', DateTime: 'string', JSON: 'unknown' },
+                namingConvention: { enumValues: 'keep' },
             },
         },
     },

@@ -28,7 +28,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): JSX.Element {
     const [avbrytSykmelding, setAvbrytSykmelding] = useState(false)
     const { watch } = useFormContext<FormValues>()
 
-    const erArbeidstaker = watch('arbeidssituasjon') === ArbeidssituasjonType.Arbeidstaker
+    const erArbeidstaker = watch('arbeidssituasjon') === ArbeidssituasjonType.ARBEIDSTAKER
     const trengerNySykmelding = getTrengerNySykmelding(watch('uriktigeOpplysninger'))
 
     if (trengerNySykmelding) {
@@ -151,7 +151,7 @@ function AvbrytSykmeldingen({
 function useAvbryt(sykmeldingId: string): [MutationResult<ChangeSykmeldingStatusMutation>, () => void] {
     return useChangeSykmeldingStatus(
         sykmeldingId,
-        SykmeldingChangeStatus.Avbryt,
+        SykmeldingChangeStatus.AVBRYT,
         () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn: 'avbryt åpen sykmelding' } }),
         () =>
             logAmplitudeEvent({
