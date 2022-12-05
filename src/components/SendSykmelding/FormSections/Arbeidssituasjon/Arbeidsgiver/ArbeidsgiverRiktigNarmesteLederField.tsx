@@ -2,12 +2,12 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 
-import { QuestionWrapper } from '../shared/FormStructure'
-import { NaermesteLederFragment, YesOrNo } from '../../../../fetching/graphql.generated'
-import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
-import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
-import YesNoField from '../shared/YesNoField'
-import { FormValues } from '../../SendSykmeldingForm'
+import { QuestionWrapper } from '../../shared/FormStructure'
+import { NaermesteLederFragment, YesOrNo } from '../../../../../fetching/graphql.generated'
+import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
+import YesNoField from '../../shared/YesNoField'
+import { FormValues } from '../../../SendSykmeldingForm'
 
 import styles from './ArbeidsgiverRiktigNarmesteLederField.module.css'
 
@@ -26,7 +26,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
                 name="riktigNarmesteLeder"
                 legend={sporsmolOgSvar.riktigNarmesteLeder.sporsmalstekst(narmesteLeder.navn)}
                 rules={{
-                    required: 'Du må svare på om dette er nærmeste lederen som skal følge deg opp.',
+                    required: 'Du må svare på om dette er nærmeste lederen som skal følge deg opp',
                 }}
                 onChange={(value) => {
                     logAmplitudeEvent({

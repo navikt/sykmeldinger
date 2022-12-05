@@ -12,10 +12,16 @@ import styles from './EgenmeldingPeriodSubField.module.css'
 interface EgenmeldingPeriodSubFieldProps {
     index: number
     remove: (index: number) => void
+    oppfolgingsdato: Date
     otherPeriods: FormValues['egenmeldingsperioder']
 }
 
-function EgenmeldingPeriodSubField({ index, remove, otherPeriods }: EgenmeldingPeriodSubFieldProps): JSX.Element {
+function EgenmeldingPeriodSubField({
+    index,
+    remove,
+    oppfolgingsdato,
+    otherPeriods,
+}: EgenmeldingPeriodSubFieldProps): JSX.Element {
     const [rangeError, setRangeError] = useState<RangeValidationT | null>(null)
     const { field: toField, fieldState: toFieldState } = useController<FormValues, `${EgenmeldingField}.tom`>({
         name: `egenmeldingsperioder.${index}.tom`,
@@ -25,14 +31,14 @@ function EgenmeldingPeriodSubField({ index, remove, otherPeriods }: EgenmeldingP
                     return 'Til dato må være på formatet DD.MM.YYYY'
                 }
                 if (rangeError?.to?.isAfter) {
-                    return 'Til dato kan ikke være oppfølgingsdato eller senere.'
+                    return 'Til dato kan ikke være oppfølgingsdato eller senere'
                 }
                 if (rangeError?.to?.isBeforeFrom) {
-                    return 'Fra kan ikke være etter til dato.'
+                    return 'Fra kan ikke være etter til dato'
                 }
 
                 if (!tomValue) {
-                    return 'Du må fylle inn til dato.'
+                    return 'Du må fylle inn til dato'
                 }
 
                 return undefined
@@ -49,11 +55,11 @@ function EgenmeldingPeriodSubField({ index, remove, otherPeriods }: EgenmeldingP
                     return 'Fra dato må være på formatet DD.MM.YYYY'
                 }
                 if (rangeError?.from?.isAfter) {
-                    return 'Fra dato kan ikke være oppfølgingsdato eller senere.'
+                    return 'Fra dato kan ikke være oppfølgingsdato eller senere'
                 }
 
                 if (!fomValue) {
-                    return 'Du må fylle inn fra dato.'
+                    return 'Du må fylle inn fra dato'
                 }
 
                 if (
@@ -65,7 +71,7 @@ function EgenmeldingPeriodSubField({ index, remove, otherPeriods }: EgenmeldingP
                         return isWithinInterval(fomValue, interval) || isWithinInterval(toField.value, interval)
                     })
                 ) {
-                    return 'Du kan ikke ha overlappende perioder.'
+                    return 'Du kan ikke ha overlappende perioder'
                 }
 
                 return undefined
@@ -76,6 +82,8 @@ function EgenmeldingPeriodSubField({ index, remove, otherPeriods }: EgenmeldingP
     })
 
     const { datepickerProps, toInputProps, fromInputProps, setSelected } = UNSAFE_useRangeDatepicker({
+        toDate: oppfolgingsdato,
+        today: oppfolgingsdato,
         defaultSelected: {
             from: fromField.value ?? undefined,
             to: toField.value ?? undefined,

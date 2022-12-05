@@ -12,7 +12,7 @@ function ErOpplysningeneRiktigeField(): JSX.Element {
                 name="erOpplysningeneRiktige"
                 legend={sporsmolOgSvar.erOpplysningeneRiktige.sporsmaltekst}
                 rules={{
-                    required: 'Du må svare på om opplysningene i sykmeldingen er riktige.',
+                    required: 'Du må svare på om opplysningene i sykmeldingen er riktige',
                 }}
                 onChange={(value) => {
                     logAmplitudeEvent(
