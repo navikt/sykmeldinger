@@ -5,9 +5,11 @@ import { render, screen, waitFor, waitForElementToBeRemoved } from '../utils/tes
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import {
     StatusEvent,
-    SubmitSykmeldingDocument,
+    SendSykmeldingDocument,
     SykmeldingByIdDocument,
     SykmeldingerDocument,
+    YesOrNo,
+    ArbeidssituasjonType,
 } from '../fetching/graphql.generated'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
@@ -45,28 +47,19 @@ describe('Annet', () => {
                 createExtraFormDataMock(),
                 createMock({
                     request: {
-                        query: SubmitSykmeldingDocument,
+                        query: SendSykmeldingDocument,
                         variables: {
                             sykmeldingId: 'sykmelding-id',
                             values: {
-                                erOpplysningeneRiktige: {
-                                    svar: 'JA',
-                                    sporsmaltekst: 'Stemmer opplysningene?',
-                                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                },
-                                arbeidssituasjon: {
-                                    svar: 'ANNET',
-                                    sporsmaltekst: 'Jeg er sykmeldt som',
-                                    svartekster:
-                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                },
+                                erOpplysningeneRiktige: YesOrNo.YES,
+                                arbeidssituasjon: ArbeidssituasjonType.ANNET,
                             },
                         },
                     },
                     result: {
                         data: {
                             __typename: 'Mutation',
-                            submitSykmelding: createSykmelding({
+                            sendSykmelding: createSykmelding({
                                 sykmeldingStatus: {
                                     ...createSykmelding().sykmeldingStatus,
                                     statusEvent: StatusEvent.BEKREFTET,

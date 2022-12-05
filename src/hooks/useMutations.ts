@@ -8,11 +8,8 @@ import {
     SendSykmeldingDocument,
     SendSykmeldingMutation,
     SendSykmeldingValues,
-    SubmitSykmeldingDocument,
-    SubmitSykmeldingMutation,
     SykmeldingChangeStatus,
 } from '../fetching/graphql.generated'
-import { FormShape } from '../components/SykmeldingViews/OK/APEN/Form/Form'
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { toDateString } from '../utils/dateUtils'
 
@@ -43,61 +40,6 @@ export function useChangeSykmeldingStatus(
             submit()
         },
     ]
-}
-
-export function useSubmitSykmelding(
-    sykmeldingId: string,
-    onCompleted: () => void,
-    onError: () => void,
-): [MutationResult<SubmitSykmeldingMutation>, (values: FormShape) => void] {
-    const router = useRouter()
-    const [submit, result] = useMutation(SubmitSykmeldingDocument, {
-        onCompleted: () => {
-            onCompleted()
-            window.scrollTo(0, 0)
-            router.push(`/${sykmeldingId}/kvittering`)
-        },
-        onError: () => {
-            onError()
-        },
-    })
-
-    return [
-        result,
-        (values) => {
-            logger.info(`Client: Submitting sykmelding ${sykmeldingId}`)
-            submit({ variables: { sykmeldingId, values: mapFormValuesToApiValues(values) } })
-        },
-    ]
-}
-
-function mapFormValuesToApiValues(values: FormShape): unknown {
-    const egenmeldingsperioder =
-        values.egenmeldingsperioder?.svar != null
-            ? {
-                  ...values.egenmeldingsperioder,
-                  svar: values.egenmeldingsperioder?.svar?.map((svar) => ({
-                      fom: svar.range.fom ? toDateString(svar.range.fom) : null,
-                      tom: svar.range.tom ? toDateString(svar.range.tom) : null,
-                  })),
-              }
-            : undefined
-
-    // TODO: Temporary logging to track usage of new date-picker :)
-    if (egenmeldingsperioder) {
-        logger.info(
-            `New datepicker: mapping values for ${
-                egenmeldingsperioder.svar.length
-            } egenmeldingsperioder. ${egenmeldingsperioder.svar
-                .map((it) => `fom-length: ${it.fom?.length}, tom-length: ${it.tom?.length}`)
-                .join(', ')}`,
-        )
-    }
-
-    return {
-        ...values,
-        egenmeldingsperioder: egenmeldingsperioder,
-    }
 }
 
 /**

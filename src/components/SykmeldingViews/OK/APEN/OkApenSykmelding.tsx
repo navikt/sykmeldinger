@@ -8,10 +8,7 @@ import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 import SendSykmeldingForm from '../../../SendSykmelding/SendSykmeldingForm'
 
-import AvbrytPanel from './AvbrytPanel/AvbrytPanel'
-import AvbrytContextProvider from './AvbrytContext'
 import PapirInfoheader from './PapirInfoheader'
-import Form from './Form/Form'
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding
@@ -21,7 +18,6 @@ interface OkApenSykmeldingProps {
 
 function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount }: OkApenSykmeldingProps): JSX.Element {
     useHotjarTrigger('SYKMELDING_OK_APEN')
-    const useNewForm = shouldUseNewForm()
 
     if (olderSykmeldingId) {
         return (
@@ -48,46 +44,25 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
     }
 
     return (
-        <AvbrytContextProvider>
-            <div className="sykmelding-container">
-                {!olderSykmeldingId && (
-                    <Spacing>
-                        <InformationBanner
-                            merknader={sykmelding.merknader}
-                            papirsykmelding={sykmelding.papirsykmelding}
-                        />
-                    </Spacing>
-                )}
-
-                {Boolean(sykmelding.papirsykmelding) && (
-                    <Spacing amount="large">
-                        <PapirInfoheader />
-                    </Spacing>
-                )}
-
+        <div className="sykmelding-container">
+            {!olderSykmeldingId && (
                 <Spacing>
-                    <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+                    <InformationBanner merknader={sykmelding.merknader} papirsykmelding={sykmelding.papirsykmelding} />
                 </Spacing>
-                {useNewForm ? (
-                    <SendSykmeldingForm sykmelding={sykmelding} />
-                ) : (
-                    <>
-                        <Form sykmelding={sykmelding} />
-                        <AvbrytPanel />
-                    </>
-                )}
-            </div>
-        </AvbrytContextProvider>
+            )}
+
+            {Boolean(sykmelding.papirsykmelding) && (
+                <Spacing amount="large">
+                    <PapirInfoheader />
+                </Spacing>
+            )}
+
+            <Spacing>
+                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+            </Spacing>
+            <SendSykmeldingForm sykmelding={sykmelding} />
+        </div>
     )
-}
-
-/**
- * This should enable the form for roughly 33% of the users, used as a temporary hacky feature toggle
- */
-function shouldUseNewForm(): boolean {
-    if (process.env.NODE_ENV === 'development') return true
-
-    return process.env.NODE_ENV !== 'test'
 }
 
 export default OkApenSykmelding

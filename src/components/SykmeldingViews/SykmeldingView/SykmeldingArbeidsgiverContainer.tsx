@@ -12,7 +12,7 @@ interface Props {
     sykmelding: SykmeldingFragment
 }
 
-const SykmeldingArbeidsgiverContainer: React.FC<Props> = ({ sykmelding }: Props) => {
+function SykmeldingArbeidsgiverContainer({ sykmelding }: Props): JSX.Element {
     const [expanded, setExpanded] = useState(false)
     const elementRef = useRef<HTMLElement>(null)
     const headerId = `sykmelding-${sykmelding.id}-header-arbeidsgiver`

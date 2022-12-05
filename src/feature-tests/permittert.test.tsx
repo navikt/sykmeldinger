@@ -5,9 +5,11 @@ import { render, screen, waitFor } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import {
     StatusEvent,
-    SubmitSykmeldingDocument,
+    SendSykmeldingDocument,
     SykmeldingByIdDocument,
     SykmeldingerDocument,
+    YesOrNo,
+    ArbeidssituasjonType,
 } from '../fetching/graphql.generated'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
@@ -29,35 +31,30 @@ describe('Permittert', () => {
         }),
     ]
 
-    it('should submit ARBEIDSLEDIG when user choose radio button permittert', async () => {
+    /**
+     * This fallback from PERMITTERT to ARBEIDSLEDIG used to happen in the frontend, it has been moved
+     * to the mapping in the API layer
+     */
+    it('should submit PERMITTERT when user choose radio button permittert', async () => {
         render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock(),
                 createMock({
                     request: {
-                        query: SubmitSykmeldingDocument,
+                        query: SendSykmeldingDocument,
                         variables: {
                             sykmeldingId: 'sykmelding-id',
                             values: {
-                                erOpplysningeneRiktige: {
-                                    svar: 'JA',
-                                    sporsmaltekst: 'Stemmer opplysningene?',
-                                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                },
-                                arbeidssituasjon: {
-                                    svar: 'ARBEIDSLEDIG',
-                                    sporsmaltekst: 'Jeg er sykmeldt som',
-                                    svartekster:
-                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                },
+                                erOpplysningeneRiktige: YesOrNo.YES,
+                                arbeidssituasjon: ArbeidssituasjonType.PERMITTERT,
                             },
                         },
                     },
                     result: {
                         data: {
                             __typename: 'Mutation',
-                            submitSykmelding: createSykmelding({
+                            sendSykmelding: createSykmelding({
                                 sykmeldingStatus: {
                                     ...createSykmelding().sykmeldingStatus,
                                     statusEvent: StatusEvent.BEKREFTET,
