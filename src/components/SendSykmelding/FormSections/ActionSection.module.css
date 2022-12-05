@@ -1,0 +1,35 @@
+.actionSectionButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--a-spacing-4);
+}
+
+.avbrytPanel {
+    position: relative;
+    background-color: var(--a-bg-subtle);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--a-spacing-8);
+}
+
+.confirmButton {
+    margin-top: var(--a-spacing-4);
+}
+
+.avbrytText {
+    max-width: 75%;
+}
+
+.feedbackError {
+    margin-top: var(--a-spacing-4);
+}
+
+.closeAvbryt {
+    position: absolute;
+    top: var(--a-spacing-1);
+    right: var(--a-spacing-1);
+}
