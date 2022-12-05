@@ -7,6 +7,7 @@ import { SectionWrapper } from '../../shared/FormStructure'
 
 import HarBruktEgenmeldingField from './HarBruktEgenmeldingField'
 import EgenmeldingerField from './EgenmeldingerField'
+import HarForsikringField from './HarForsikringField'
 
 interface Props {
     oppfolgingsdato: string
@@ -20,7 +21,7 @@ function FrilanserSection({ oppfolgingsdato }: Props): JSX.Element {
         <SectionWrapper title="Fravær før sykmeldingen">
             <HarBruktEgenmeldingField oppfolgingsdato={oppfolgingsdato} />
             {harBruktEgenmelding === YesOrNo.Yes && <EgenmeldingerField oppfolgingsdato={oppfolgingsdato} />}
-            <div>TODO: forsikring field</div>
+            <HarForsikringField />
         </SectionWrapper>
     )
 }
