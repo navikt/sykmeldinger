@@ -24,6 +24,7 @@ function YesNoField({ name, legend, onChange, rules }: Props): JSX.Element {
     return (
         <RadioGroup
             {...field}
+            id={field.name}
             legend={legend}
             error={fieldState.error?.message}
             onChange={(value: YesOrNo) => {

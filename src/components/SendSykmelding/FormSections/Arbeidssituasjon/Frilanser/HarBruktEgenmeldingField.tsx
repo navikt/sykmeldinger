@@ -16,7 +16,7 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
                 name="harBruktEgenmelding"
                 legend={sporsmolOgSvar.harBruktEgenmelding.sporsmaltekst(oppfolgingsdato)}
                 rules={{
-                    required: 'Du må svare på om du har brukt egenmelding eller annen sykmelding før du ble syk.',
+                    required: 'Du må svare på om du har brukt egenmelding eller annen sykmelding før du ble syk',
                 }}
                 onChange={(value) => {
                     logAmplitudeEvent({

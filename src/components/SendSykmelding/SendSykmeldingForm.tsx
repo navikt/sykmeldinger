@@ -17,6 +17,7 @@ import Spinner from '../Spinner/Spinner'
 import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/OpplysningerRiktigeSection'
 import ActionSection from './FormSections/ActionSection'
 import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/ArbeidssituasjonSection'
+import ErrorSection from './FormSections/ErrorSection'
 import styles from './SendSykmeldingForm.module.css'
 
 export interface FormValues {
@@ -73,6 +74,7 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
                         sykmeldingUtenforVentetid={extraFormData.data.sykmeldingUtenforVentetid}
                         brukerinformasjon={extraFormData.data.brukerinformasjon}
                     />
+                    <ErrorSection />
                     <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
                 </form>
             </FormProvider>

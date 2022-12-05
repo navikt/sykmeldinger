@@ -2915,14 +2915,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:^2.0.5":
+"@navikt/ds-css@npm:2.0.5":
   version: 2.0.5
   resolution: "@navikt/ds-css@npm:2.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F2.0.5%2F17a171a0babda857a1f773dc2ab4ee7098306457"
   checksum: 4874245c318cf921d1e039f294a32f001cd8518bb7bbfbd487f7517e3124506e69fb38f5eae813f28a84b388b62ab85f86b2d58a8d8eb7dec1c61272911415f8
   languageName: node
   linkType: hard
 
-"@navikt/ds-icons@npm:^2.0.5":
+"@navikt/ds-icons@npm:2.0.5":
   version: 2.0.5
   resolution: "@navikt/ds-icons@npm:2.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.0.5%2Ff9301dcdab5c1855dad9d4c342cc79c313a431d1"
   peerDependencies:
@@ -2932,7 +2932,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-react@npm:^2.0.5":
+"@navikt/ds-icons@npm:^2.0.5":
+  version: 2.0.6
+  resolution: "@navikt/ds-icons@npm:2.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.0.6%2F70f1bc761ce2a07ce0367787a4d6fe2bfe136fa2"
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: 0375e75678093f363e241ebed961a74f45d24894c90caea058945331156f8231c6261b5baf4e913c279dbbfc69c5858a8c90228e3def57d910994c868f32ad2d
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-react@npm:2.0.5":
   version: 2.0.5
   resolution: "@navikt/ds-react@npm:2.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F2.0.5%2Fd8456f264c819654b745c9b98e8255563eb2c25b"
   dependencies:
@@ -12560,9 +12570,9 @@ __metadata:
     "@graphql-tools/load": ^7.8.6
     "@graphql-tools/schema": ^9.0.10
     "@graphql-typed-document-node/core": ^3.1.1
-    "@navikt/ds-css": ^2.0.5
-    "@navikt/ds-icons": ^2.0.5
-    "@navikt/ds-react": ^2.0.5
+    "@navikt/ds-css": 2.0.5
+    "@navikt/ds-icons": 2.0.5
+    "@navikt/ds-react": 2.0.5
     "@navikt/eslint-config-teamsykmelding": ^1.2.0
     "@navikt/nav-dekoratoren-moduler": ^1.8.1
     "@navikt/next-auth-wonderwall": ^1.0.0

@@ -2,11 +2,11 @@ import { Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 import React from 'react'
 import { useController } from 'react-hook-form'
 
-import { QuestionWrapper } from '../shared/FormStructure'
-import { ArbeidssituasjonType, BrukerinformasjonFragment } from '../../../../fetching/graphql.generated'
-import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
-import { FormValues } from '../../SendSykmeldingForm'
-import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { QuestionWrapper } from '../../shared/FormStructure'
+import { ArbeidssituasjonType, BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
+import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { FormValues } from '../../../SendSykmeldingForm'
+import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
@@ -15,7 +15,7 @@ interface Props {
 function ArbeidsgiverField({ arbeidsgivere }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidsgiverOrgnummer',
-        rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
+        rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra' },
         shouldUnregister: true,
         defaultValue: null,
     })

@@ -2,10 +2,12 @@ import React, { useLayoutEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Button, Label } from '@navikt/ds-react'
 import { Add } from '@navikt/ds-icons'
+import { sub } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
 import { QuestionWrapper } from '../../shared/FormStructure'
 import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { toDate } from '../../../../../utils/dateUtils'
 
 import EgenmeldingPeriodSubField from './EgenmeldingPeriodSubField'
 import styles from './EgenmeldingerField.module.css'
@@ -39,6 +41,7 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
                         key={field.id}
                         index={index}
                         remove={remove}
+                        oppfolgingsdato={sub(toDate(oppfolgingsdato), { days: 1 })}
                         otherPeriods={fields.filter((it) => it.id !== field.id)}
                     />
                 ))}
