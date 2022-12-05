@@ -20,7 +20,7 @@ function StatusInfo({
     sykmeldingsperioder,
     sykmeldingMerknader,
 }: StatusInfoProps): JSX.Element | null {
-    const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.Avventende)
+    const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.AVVENTENDE)
 
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
         (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,

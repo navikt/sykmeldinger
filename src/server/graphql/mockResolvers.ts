@@ -45,6 +45,7 @@ export const sykmeldinger = [
 
 const Query: QueryResolvers = {
     sykmeldinger: async () => {
+        console.log('ahaaaa')
         return sykmeldinger
     },
     sykmelding: async (_, { id }) => {
@@ -72,11 +73,11 @@ const Mutation: MutationResolvers = {
         }
 
         const inputStatusToZodStatus = (status: SykmeldingChangeStatus): StatusEvent =>
-            status === SykmeldingChangeStatus.Avbryt
-                ? StatusEvent.Avbrutt
-                : status === SykmeldingChangeStatus.BekreftAvvist
-                ? StatusEvent.Bekreftet
-                : StatusEvent.Apen
+            status === SykmeldingChangeStatus.AVBRYT
+                ? StatusEvent.AVBRUTT
+                : status === SykmeldingChangeStatus.BEKREFT_AVVIST
+                ? StatusEvent.BEKREFTET
+                : StatusEvent.APEN
 
         sykmelding.sykmeldingStatus.statusEvent = inputStatusToZodStatus(status)
 
@@ -89,7 +90,7 @@ const Mutation: MutationResolvers = {
         if (!sykmelding) {
             throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
         }
-        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.Sendt
+        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.SENDT
         return sykmelding
     },
     sendSykmelding: async (_, { sykmeldingId, values }) => {
@@ -114,7 +115,7 @@ const Mutation: MutationResolvers = {
                 2,
             )}`,
         )
-        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.Sendt
+        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.SENDT
         return sykmelding
     },
 }

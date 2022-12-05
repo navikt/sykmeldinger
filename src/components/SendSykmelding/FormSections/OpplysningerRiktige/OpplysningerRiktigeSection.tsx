@@ -19,7 +19,7 @@ function OpplysningerRiktigeSection(): JSX.Element {
     return (
         <SectionWrapper>
             <ErOpplysningeneRiktigeField />
-            {erOpplysningeneRiktige === YesOrNo.No && <UriktigeOpplysningerField />}
+            {erOpplysningeneRiktige === YesOrNo.NO && <UriktigeOpplysningerField />}
             {!trengerNySykmelding && (uriktigeOpplysninger ?? []).length > 0 && (
                 <UriktigeOpplysningerInfo uriktigeOpplysninger={uriktigeOpplysninger ?? []} />
             )}

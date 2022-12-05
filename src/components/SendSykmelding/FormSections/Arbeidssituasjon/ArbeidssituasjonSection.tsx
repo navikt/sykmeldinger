@@ -31,7 +31,7 @@ function ArbeidssituasjonSection({
     brukerinformasjon,
 }: Props): JSX.Element | null {
     const shouldArbeidssituasjonShow = useShouldArbeidssituasjonShow()
-    const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.Avventende)
+    const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
     const {
         shouldShowArbeidsgiverOrgnummer,
         shouldShowEgenmeldingsperioderSporsmal,
@@ -73,16 +73,16 @@ function useDynamicSubSections(
     const { watch } = useFormContext<FormValues>()
     const [arbeidssituasjon, arbeidsgiverOrgnummer] = watch(['arbeidssituasjon', 'arbeidsgiverOrgnummer'])
     const shouldShowStrengtFortroligInfo: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.Arbeidstaker && brukerinformasjon.strengtFortroligAdresse
+        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && brukerinformasjon.strengtFortroligAdresse
     const shouldShowArbeidsgiverOrgnummer: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.Arbeidstaker && !brukerinformasjon.strengtFortroligAdresse
+        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && !brukerinformasjon.strengtFortroligAdresse
     const isFrilanserOrNaeringsdrivende: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.Frilanser ||
-        arbeidssituasjon === ArbeidssituasjonType.Naeringsdrivende
+        arbeidssituasjon === ArbeidssituasjonType.FRILANSER ||
+        arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
     const shouldShowEgenmeldingsperioderSporsmal: boolean =
         isFrilanserOrNaeringsdrivende && !sykmeldingUtenforVentetid.erUtenforVentetid
     const shouldShowSendesTilArbeidsgiverInfo =
-        arbeidssituasjon === ArbeidssituasjonType.Arbeidstaker &&
+        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER &&
         arbeidsgiverOrgnummer != null &&
         !brukerinformasjon.strengtFortroligAdresse
 

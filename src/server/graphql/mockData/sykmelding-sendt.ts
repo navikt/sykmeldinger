@@ -14,7 +14,7 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
         id: 'SENDT',
         mottattTidspunkt: mottatt,
         behandlingsutfall: {
-            status: RegelStatus.Ok,
+            status: RegelStatus.OK,
             ruleHits: [],
         },
         arbeidsgiver: {
@@ -25,7 +25,7 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
                 fom: dateAdd(mottatt, { days: 10 }),
                 tom: dateAdd(mottatt, { days: 11 }),
                 behandlingsdager: 2,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 reisetilskudd: false,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
@@ -34,16 +34,16 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
             {
                 fom: dateAdd(mottatt, { days: 13 }),
                 tom: dateAdd(mottatt, { days: 15 }),
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 reisetilskudd: false,
                 aktivitetIkkeMulig: {
                     medisinskArsak: {
                         beskrivelse: 'Han er veldig syk',
-                        arsak: [MedisinskArsakType.TilstandHindrerAktivitet],
+                        arsak: [MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET],
                     },
                     arbeidsrelatertArsak: {
                         beskrivelse: 'Kan ikke jobbe fordi han ikke har hev-/senk-bord',
-                        arsak: [ArbeidsrelatertArsakType.ManglendeTilrettelegging],
+                        arsak: [ArbeidsrelatertArsakType.MANGLENDE_TILRETTELEGGING],
                     },
                 },
                 gradert: null,
@@ -53,7 +53,7 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
         ],
         sykmeldingStatus: {
             timestamp: mottatt,
-            statusEvent: StatusEvent.Sendt,
+            statusEvent: StatusEvent.SENDT,
             arbeidsgiver: {
                 orgnummer: '123456',
                 orgNavn: 'Posten AS',
@@ -84,7 +84,7 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
             annenFraversArsak: {
                 beskrivelse:
                     'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-                grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
+                grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
             },
         },
         skjermesForPasient: false,

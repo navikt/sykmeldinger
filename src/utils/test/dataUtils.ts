@@ -14,7 +14,7 @@ import {
 } from '../../fetching/graphql.generated'
 import { dateAdd, dateSub } from '../dateUtils'
 
-export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = StatusEvent.Apen): Sykmelding {
+export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = StatusEvent.APEN): Sykmelding {
     const mottatt = overrides?.mottattTidspunkt ?? dateSub(new Date(), { days: 2 })
 
     return {
@@ -30,7 +30,7 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
         },
         behandlingsutfall: {
             __typename: 'Behandlingsutfall',
-            status: RegelStatus.Ok,
+            status: RegelStatus.OK,
             ruleHits: [],
         },
         arbeidsgiver: {
@@ -46,7 +46,7 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
                 behandlingsdager: 2,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 reisetilskudd: false,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
@@ -56,7 +56,7 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
                 __typename: 'Periode',
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 behandlingsdager: null,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
@@ -64,12 +64,12 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
                     __typename: 'AktivitetIkkeMuligPeriode',
                     medisinskArsak: {
                         __typename: 'MedisinskArsak',
-                        arsak: [MedisinskArsakType.Annet, MedisinskArsakType.AktivitetForverrerTilstand],
+                        arsak: [MedisinskArsakType.ANNET, MedisinskArsakType.AKTIVITET_FORVERRER_TILSTAND],
                         beskrivelse: 'Dette er en beskrivelse av den medisinske årsaken.',
                     },
                     arbeidsrelatertArsak: {
                         __typename: 'ArbeidsrelatertArsak',
-                        arsak: [ArbeidsrelatertArsakType.Annet],
+                        arsak: [ArbeidsrelatertArsakType.ANNET],
                         beskrivelse: 'Dette er en beskrivelse av den arbeidsrelaterte årsaken',
                     },
                 },
@@ -79,7 +79,7 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
                 __typename: 'Periode',
                 fom: dateAdd(mottatt, { days: 6 }),
                 tom: dateAdd(mottatt, { days: 11 }),
-                type: Periodetype.Gradert,
+                type: Periodetype.GRADERT,
                 gradert: {
                     __typename: 'GradertPeriode',
                     grad: 20,
@@ -120,7 +120,7 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
                 __typename: 'AnnenFraversArsak',
                 beskrivelse:
                     'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-                grunn: [AnnenFraverGrunn.NodvendigKontrollundenrsokelse],
+                grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
             },
         },
         prognose: {
@@ -207,14 +207,14 @@ export function createAvvistBehandlingsutfall(
     return {
         behandlingsutfall: {
             __typename: 'Behandlingsutfall',
-            status: RegelStatus.Invalid,
+            status: RegelStatus.INVALID,
             ruleHits: [
                 {
                     __typename: 'RegelInfo',
                     messageForSender: reason,
                     messageForUser: reason,
                     ruleName: 'tilbakedatering',
-                    ruleStatus: RegelStatus.Invalid,
+                    ruleStatus: RegelStatus.INVALID,
                 },
             ],
         },

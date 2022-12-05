@@ -14,13 +14,13 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
         id: 'AVVIST',
         mottattTidspunkt: mottatt,
         behandlingsutfall: {
-            status: RegelStatus.Invalid,
+            status: RegelStatus.INVALID,
             ruleHits: [
                 {
                     messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                     messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
                     ruleName: 'tilbakedatering',
-                    ruleStatus: RegelStatus.Invalid,
+                    ruleStatus: RegelStatus.INVALID,
                 },
             ],
         },
@@ -33,7 +33,7 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
                 tom: dateAdd(mottatt, { days: 5 }),
                 behandlingsdager: 2,
                 reisetilskudd: false,
-                type: Periodetype.Behandlingsdager,
+                type: Periodetype.BEHANDLINGSDAGER,
                 gradert: null,
                 innspillTilArbeidsgiver: null,
                 aktivitetIkkeMulig: null,
@@ -41,15 +41,15 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
             {
                 fom: dateAdd(mottatt, { days: 6 }),
                 tom: dateAdd(mottatt, { days: 10 }),
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 aktivitetIkkeMulig: {
                     medisinskArsak: {
                         beskrivelse: 'Han er veldig syk',
-                        arsak: [MedisinskArsakType.TilstandHindrerAktivitet],
+                        arsak: [MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET],
                     },
                     arbeidsrelatertArsak: {
                         beskrivelse: 'Kan ikke jobbe fordi han ikke har hev-/senk-bord',
-                        arsak: [ArbeidsrelatertArsakType.ManglendeTilrettelegging],
+                        arsak: [ArbeidsrelatertArsakType.MANGLENDE_TILRETTELEGGING],
                     },
                 },
                 reisetilskudd: false,
@@ -60,7 +60,7 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
             {
                 fom: dateAdd(mottatt, { days: 11 }),
                 tom: dateAdd(mottatt, { days: 15 }),
-                type: Periodetype.Reisetilskudd,
+                type: Periodetype.REISETILSKUDD,
                 reisetilskudd: true,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
@@ -70,7 +70,7 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
         ],
         sykmeldingStatus: {
             timestamp: '2020-01-01',
-            statusEvent: StatusEvent.Apen,
+            statusEvent: StatusEvent.APEN,
             sporsmalOgSvarListe: [],
             arbeidsgiver: null,
         },
@@ -98,7 +98,7 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
             annenFraversArsak: {
                 beskrivelse:
                     'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-                grunn: [AnnenFraverGrunn.Abort],
+                grunn: [AnnenFraverGrunn.ABORT],
             },
         },
         skjermesForPasient: false,

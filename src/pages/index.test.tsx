@@ -48,14 +48,14 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
                         data: {
                             __typename: 'Query',
                             sykmeldinger: [
-                                createSykmelding({ id: 'sykme-1' }, StatusEvent.Bekreftet),
-                                createSykmelding({ id: 'sykme-2' }, StatusEvent.Sendt),
-                                createSykmelding({ id: 'sykme-3' }, StatusEvent.Avbrutt),
+                                createSykmelding({ id: 'sykme-1' }, StatusEvent.BEKREFTET),
+                                createSykmelding({ id: 'sykme-2' }, StatusEvent.SENDT),
+                                createSykmelding({ id: 'sykme-3' }, StatusEvent.AVBRUTT),
                                 createSykmelding(
                                     { id: 'sykme-4', ...createAvvistBehandlingsutfall() },
-                                    StatusEvent.Bekreftet,
+                                    StatusEvent.BEKREFTET,
                                 ),
-                                createSykmelding({ id: 'sykme-5' }, StatusEvent.Utgatt),
+                                createSykmelding({ id: 'sykme-5' }, StatusEvent.UTGATT),
                             ],
                         },
                     },
@@ -86,7 +86,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
                             sykmeldinger: [
                                 createSykmelding(
                                     { id: 'sykme-1', mottattTidspunkt: dateSub(new Date(), { days: 2 }) },
-                                    StatusEvent.Apen,
+                                    StatusEvent.APEN,
                                 ),
                                 createSykmelding(
                                     {
@@ -94,7 +94,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
                                         mottattTidspunkt: dateSub(new Date(), { days: 6 }),
                                         papirsykmelding: true,
                                     },
-                                    StatusEvent.Apen,
+                                    StatusEvent.APEN,
                                 ),
                                 createSykmelding(
                                     {
@@ -102,7 +102,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
                                         mottattTidspunkt: dateSub(new Date(), { days: 4 }),
                                         ...createAvvistBehandlingsutfall(),
                                     },
-                                    StatusEvent.Apen,
+                                    StatusEvent.APEN,
                                 ),
                             ],
                         },
@@ -132,7 +132,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
                             sykmeldinger: [
                                 createSykmelding(
                                     { id: 'sykme-1', ...createUnderBehandlingMerknad() },
-                                    StatusEvent.Sendt,
+                                    StatusEvent.SENDT,
                                 ),
                             ],
                         },
@@ -157,8 +157,8 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
                         data: {
                             __typename: 'Query',
                             sykmeldinger: [
-                                createSykmelding({ id: 'sykme-1' }, StatusEvent.Apen),
-                                createSykmelding({ id: 'sykme-2' }, StatusEvent.Bekreftet),
+                                createSykmelding({ id: 'sykme-1' }, StatusEvent.APEN),
+                                createSykmelding({ id: 'sykme-2' }, StatusEvent.BEKREFTET),
                             ],
                         },
                     },
@@ -187,9 +187,9 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
                             sykmeldinger: [
                                 createSykmelding(
                                     { id: 'sykme-1', mottattTidspunkt: dateSub(new Date(), { months: 12 }) },
-                                    StatusEvent.Apen,
+                                    StatusEvent.APEN,
                                 ),
-                                createSykmelding({ id: 'sykme-2' }, StatusEvent.Bekreftet),
+                                createSykmelding({ id: 'sykme-2' }, StatusEvent.BEKREFTET),
                             ],
                         },
                     },

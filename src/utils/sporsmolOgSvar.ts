@@ -18,8 +18,14 @@ export const sporsmolOgSvar = {
         svartekster: JaEllerNeiSvarTekster,
     },
     arbeidssituasjon: {
-        sporsmaltekst: 'Hva er din arbeidssituasjon?',
-        svartekster: JSON.stringify(R.mapValues(ArbeidssituasjonType, (value) => arbeidsSituasjonEnumToText(value))),
+        sporsmaltekst: 'Jeg er sykmeldt som',
+        svartekster: JSON.stringify(
+            R.pipe(
+                ArbeidssituasjonType,
+                R.mapKeys((it) => it.toUpperCase()),
+                R.mapValues((value) => arbeidsSituasjonEnumToText(value)),
+            ),
+        ),
     },
     arbeidsgiverOrgnummer: {
         sporsmaltekst: 'Velg arbeidsgiver',
@@ -54,41 +60,45 @@ export const sporsmolOgSvar = {
     uriktigeOpplysninger: {
         sporsmaltekst: 'Hvilke opplysninger stemmer ikke?',
         svartekster: JSON.stringify(
-            R.mapValues(UriktigeOpplysningerType, (value) => uriktigeOpplysningerEnumToText(value)),
+            R.pipe(
+                UriktigeOpplysningerType,
+                R.mapKeys((it) => it.toUpperCase()),
+                R.mapValues((value) => uriktigeOpplysningerEnumToText(value)),
+            ),
         ),
     },
 }
 
 export function arbeidsSituasjonEnumToText(arbeidssituasjon: ArbeidssituasjonType): string {
     switch (arbeidssituasjon) {
-        case ArbeidssituasjonType.Arbeidstaker:
+        case ArbeidssituasjonType.ARBEIDSTAKER:
             return 'ansatt'
-        case ArbeidssituasjonType.Frilanser:
+        case ArbeidssituasjonType.FRILANSER:
             return 'frilanser'
-        case ArbeidssituasjonType.Naeringsdrivende:
+        case ArbeidssituasjonType.NAERINGSDRIVENDE:
             return 'selvstendig næringsdrivende'
-        case ArbeidssituasjonType.Arbeidsledig:
+        case ArbeidssituasjonType.ARBEIDSLEDIG:
             return 'arbeidsledig'
-        case ArbeidssituasjonType.Permittert:
+        case ArbeidssituasjonType.PERMITTERT:
             return 'permittert'
-        case ArbeidssituasjonType.Annet:
+        case ArbeidssituasjonType.ANNET:
             return 'annet'
     }
 }
 
 export function uriktigeOpplysningerEnumToText(uriktigeOpplysninger: UriktigeOpplysningerType): string {
     switch (uriktigeOpplysninger) {
-        case UriktigeOpplysningerType.Periode:
+        case UriktigeOpplysningerType.PERIODE:
             return 'Periode'
-        case UriktigeOpplysningerType.SykmeldingsgradForLav:
+        case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_LAV:
             return 'Sykmeldingsgraden er for lav'
-        case UriktigeOpplysningerType.SykmeldingsgradForHoy:
+        case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_HOY:
             return 'Sykmeldingsgraden er for høy'
-        case UriktigeOpplysningerType.Arbeidsgiver:
+        case UriktigeOpplysningerType.ARBEIDSGIVER:
             return 'Arbeidsgiver'
-        case UriktigeOpplysningerType.Diagnose:
+        case UriktigeOpplysningerType.DIAGNOSE:
             return 'Diagnose'
-        case UriktigeOpplysningerType.AndreOpplysninger:
+        case UriktigeOpplysningerType.ANDRE_OPPLYSNINGER:
             return 'Andre opplysninger'
     }
 }

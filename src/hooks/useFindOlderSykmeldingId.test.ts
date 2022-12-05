@@ -44,7 +44,7 @@ describe('useFindOlderSykmeldingId', () => {
         const sykmeldinger = [
             createSykmelding(
                 { mottattTidspunkt: dateSub(new Date(), { days: 40 }), id: 'SYKME-0' },
-                StatusEvent.Avbrutt,
+                StatusEvent.AVBRUTT,
             ),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 30 }), id: 'SYKME-1' }),
             createSykmelding({ mottattTidspunkt: dateSub(new Date(), { days: 2 }), id: 'SYKME-2' }),
@@ -147,7 +147,7 @@ describe('useFindOlderSykmeldingId', () => {
                     __typename: 'Periode',
                     fom: date,
                     tom: dateAdd(date, { days: 10 }),
-                    type: Periodetype.AktivitetIkkeMulig,
+                    type: Periodetype.AKTIVITET_IKKE_MULIG,
                     aktivitetIkkeMulig: null,
                     reisetilskudd: false,
                     gradert: null,

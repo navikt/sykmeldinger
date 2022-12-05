@@ -94,7 +94,7 @@ describe('Selvstendig næringsdrivende', () => {
                                 submitSykmelding: createSykmelding({
                                     sykmeldingStatus: {
                                         ...createSykmelding().sykmeldingStatus,
-                                        statusEvent: StatusEvent.Sendt,
+                                        statusEvent: StatusEvent.SENDT,
                                         timestamp: '2020-01-01',
                                     },
                                 }),
@@ -184,7 +184,7 @@ describe('Selvstendig næringsdrivende', () => {
                                     ...sykmelding,
                                     sykmeldingStatus: {
                                         ...sykmelding.sykmeldingStatus,
-                                        statusEvent: StatusEvent.Sendt,
+                                        statusEvent: StatusEvent.SENDT,
                                         timestamp: '2020-01-01',
                                     },
                                 },
@@ -258,7 +258,7 @@ describe('Selvstendig næringsdrivende', () => {
                                 submitSykmelding: createSykmelding({
                                     sykmeldingStatus: {
                                         ...createSykmelding().sykmeldingStatus,
-                                        statusEvent: StatusEvent.Sendt,
+                                        statusEvent: StatusEvent.SENDT,
                                         timestamp: '2020-01-01',
                                     },
                                 }),

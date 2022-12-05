@@ -29,7 +29,7 @@ function createSykmeldingStatusWithArbeidsgiver(orgNavn: string): SykmeldingStat
     return {
         __typename: 'SykmeldingStatus',
         timestamp: '2020-01-01',
-        statusEvent: StatusEvent.Apen,
+        statusEvent: StatusEvent.APEN,
         sporsmalOgSvarListe: [],
         arbeidsgiver: {
             __typename: 'ArbeidsgiverStatus',

@@ -28,23 +28,23 @@ function UriktigeOpplysningerField(): JSX.Element {
                 error={fieldState.error?.message}
             >
                 {/* This is not mapped directly from the enum values because we want to dictate the order */}
-                <Checkbox value={UriktigeOpplysningerType.Periode}>
-                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.Periode)}
+                <Checkbox value={UriktigeOpplysningerType.PERIODE}>
+                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.PERIODE)}
                 </Checkbox>
-                <Checkbox value={UriktigeOpplysningerType.SykmeldingsgradForLav}>
-                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.SykmeldingsgradForLav)}
+                <Checkbox value={UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_LAV}>
+                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_LAV)}
                 </Checkbox>
-                <Checkbox value={UriktigeOpplysningerType.SykmeldingsgradForHoy}>
-                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.SykmeldingsgradForHoy)}
+                <Checkbox value={UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_HOY}>
+                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_HOY)}
                 </Checkbox>
-                <Checkbox value={UriktigeOpplysningerType.Arbeidsgiver}>
-                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.Arbeidsgiver)}
+                <Checkbox value={UriktigeOpplysningerType.ARBEIDSGIVER}>
+                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.ARBEIDSGIVER)}
                 </Checkbox>
-                <Checkbox value={UriktigeOpplysningerType.Diagnose}>
-                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.Diagnose)}
+                <Checkbox value={UriktigeOpplysningerType.DIAGNOSE}>
+                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.DIAGNOSE)}
                 </Checkbox>
-                <Checkbox value={UriktigeOpplysningerType.AndreOpplysninger}>
-                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.AndreOpplysninger)}
+                <Checkbox value={UriktigeOpplysningerType.ANDRE_OPPLYSNINGER}>
+                    {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.ANDRE_OPPLYSNINGER)}
                 </Checkbox>
             </CheckboxGroup>
         </QuestionWrapper>

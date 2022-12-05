@@ -15,7 +15,7 @@ export function isActiveSykmelding(sykmelding: SykmeldingFragment): boolean {
 
 export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
     return (
-        sykmelding.sykmeldingStatus.statusEvent === StatusEvent.Sendt &&
+        sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT &&
         sykmelding.merknader?.find((it) => it.type === 'UNDER_BEHANDLING') != null
     )
 }

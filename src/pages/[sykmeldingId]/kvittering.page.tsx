@@ -52,8 +52,8 @@ function SykmeldingkvitteringPage(): JSX.Element {
     }
 
     if (
-        data.sykmelding.behandlingsutfall.status === RegelStatus.Invalid ||
-        ![StatusEvent.Sendt, StatusEvent.Bekreftet].includes(data.sykmelding.sykmeldingStatus.statusEvent)
+        data.sykmelding.behandlingsutfall.status === RegelStatus.INVALID ||
+        ![StatusEvent.SENDT, StatusEvent.BEKREFTET].includes(data.sykmelding.sykmeldingStatus.statusEvent)
     ) {
         logger.error(
             `Trying to display kvittering for sykmelding with id: ${sykmeldingId}, but the status is wrong, sykmeldingstatus: ${data.sykmelding.sykmeldingStatus.statusEvent}, behandlingsutfall: ${data.sykmelding.behandlingsutfall.status}`,

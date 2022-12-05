@@ -32,8 +32,8 @@ function YesNoField({ name, legend, onChange, rules }: Props): JSX.Element {
                 onChange?.(value)
             }}
         >
-            <Radio value={YesOrNo.Yes}>Ja</Radio>
-            <Radio value={YesOrNo.No}>Nei</Radio>
+            <Radio value={YesOrNo.YES}>Ja</Radio>
+            <Radio value={YesOrNo.NO}>Nei</Radio>
         </RadioGroup>
     )
 }

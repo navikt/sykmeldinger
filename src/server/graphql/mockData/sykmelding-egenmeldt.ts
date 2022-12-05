@@ -5,7 +5,7 @@ export const sykmeldingEgenmeldt: Sykmelding = {
     id: 'EGENMELDT',
     mottattTidspunkt: '2020-06-01',
     behandlingsutfall: {
-        status: RegelStatus.Ok,
+        status: RegelStatus.OK,
         ruleHits: [],
     },
     arbeidsgiver: {
@@ -16,7 +16,7 @@ export const sykmeldingEgenmeldt: Sykmelding = {
             fom: '2020-02-10',
             tom: '2020-02-15',
             behandlingsdager: 2,
-            type: Periodetype.Behandlingsdager,
+            type: Periodetype.BEHANDLINGSDAGER,
             reisetilskudd: false,
             gradert: null,
             innspillTilArbeidsgiver: null,
@@ -25,7 +25,7 @@ export const sykmeldingEgenmeldt: Sykmelding = {
     ],
     sykmeldingStatus: {
         timestamp: '2020-01-01',
-        statusEvent: StatusEvent.Bekreftet,
+        statusEvent: StatusEvent.BEKREFTET,
         sporsmalOgSvarListe: [],
         arbeidsgiver: null,
     },
@@ -42,7 +42,7 @@ export const sykmeldingEgenmeldt: Sykmelding = {
         annenFraversArsak: {
             beskrivelse:
                 'word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word',
-            grunn: [AnnenFraverGrunn.Abort],
+            grunn: [AnnenFraverGrunn.ABORT],
         },
     },
     skjermesForPasient: false,

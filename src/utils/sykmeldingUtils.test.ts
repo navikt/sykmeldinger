@@ -16,7 +16,7 @@ const minimalSykmelding: Sykmelding = {
     mottattTidspunkt: dateSub(new Date(), { days: 1 }),
     behandlingsutfall: {
         __typename: 'Behandlingsutfall',
-        status: RegelStatus.Ok,
+        status: RegelStatus.OK,
         ruleHits: [],
     },
     arbeidsgiver: null,
@@ -24,7 +24,7 @@ const minimalSykmelding: Sykmelding = {
     sykmeldingStatus: {
         __typename: 'SykmeldingStatus',
         timestamp: '2020-01-01',
-        statusEvent: StatusEvent.Apen,
+        statusEvent: StatusEvent.APEN,
         sporsmalOgSvarListe: [],
         arbeidsgiver: null,
     },
@@ -77,7 +77,7 @@ const createSykmeldingPeriode = ({ fom, tom }: { fom: string; tom: string }): Pe
     gradert: null,
     behandlingsdager: null,
     innspillTilArbeidsgiver: null,
-    type: Periodetype.Reisetilskudd,
+    type: Periodetype.REISETILSKUDD,
     aktivitetIkkeMulig: null,
     reisetilskudd: false,
 })
@@ -89,7 +89,7 @@ describe('isActiveSykmelding', () => {
                 ...minimalSykmelding,
                 sykmeldingStatus: {
                     ...minimalSykmelding.sykmeldingStatus,
-                    statusEvent: StatusEvent.Avbrutt,
+                    statusEvent: StatusEvent.AVBRUTT,
                 },
             }),
         ).toBe(false)
@@ -101,7 +101,7 @@ describe('isActiveSykmelding', () => {
                 ...minimalSykmelding,
                 sykmeldingStatus: {
                     ...minimalSykmelding.sykmeldingStatus,
-                    statusEvent: StatusEvent.Sendt,
+                    statusEvent: StatusEvent.SENDT,
                 },
             }),
         ).toBe(false)
@@ -113,7 +113,7 @@ describe('isActiveSykmelding', () => {
                 ...minimalSykmelding,
                 sykmeldingStatus: {
                     ...minimalSykmelding.sykmeldingStatus,
-                    statusEvent: StatusEvent.Sendt,
+                    statusEvent: StatusEvent.SENDT,
                 },
                 merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }],
             }),
@@ -126,7 +126,7 @@ describe('isActiveSykmelding', () => {
                 ...minimalSykmelding,
                 sykmeldingStatus: {
                     ...minimalSykmelding.sykmeldingStatus,
-                    statusEvent: StatusEvent.Apen,
+                    statusEvent: StatusEvent.APEN,
                 },
             }),
         ).toBe(true)
@@ -139,7 +139,7 @@ describe('isActiveSykmelding', () => {
                 mottattTidspunkt: dateSub(new Date(), { days: 365 }),
                 sykmeldingStatus: {
                     ...minimalSykmelding.sykmeldingStatus,
-                    statusEvent: StatusEvent.Apen,
+                    statusEvent: StatusEvent.APEN,
                 },
             }),
         ).toBe(false)

@@ -13,7 +13,7 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
     return {
         id: 'UNDER-BEAHNDLING-TILBAKEDATERING',
         mottattTidspunkt: mottatt,
-        behandlingsutfall: { status: RegelStatus.Ok, ruleHits: [] },
+        behandlingsutfall: { status: RegelStatus.OK, ruleHits: [] },
         legekontorOrgnummer: '223456789',
         arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
         sykmeldingsperioder: [
@@ -23,22 +23,22 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
                 gradert: null,
                 behandlingsdager: null,
                 innspillTilArbeidsgiver: null,
-                type: Periodetype.AktivitetIkkeMulig,
+                type: Periodetype.AKTIVITET_IKKE_MULIG,
                 aktivitetIkkeMulig: {
                     medisinskArsak: {
                         beskrivelse: 'andre årsaker til sykefravær',
-                        arsak: [MedisinskArsakType.AktivitetForhindrerBedring],
+                        arsak: [MedisinskArsakType.AKTIVITET_FORHINDRER_BEDRING],
                     },
                     arbeidsrelatertArsak: {
                         beskrivelse: 'andre årsaker til sykefravær',
-                        arsak: [ArbeidsrelatertArsakType.Annet],
+                        arsak: [ArbeidsrelatertArsakType.ANNET],
                     },
                 },
                 reisetilskudd: false,
             },
         ],
         sykmeldingStatus: {
-            statusEvent: StatusEvent.Sendt,
+            statusEvent: StatusEvent.SENDT,
             timestamp: dateAdd(mottatt, { days: 3 }),
             arbeidsgiver: null,
             sporsmalOgSvarListe: [],

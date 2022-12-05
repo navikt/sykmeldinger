@@ -35,7 +35,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
     } = useForm<FormData>()
     const [{ loading: fetchingBekreft, error: errorBekreft }, bekreft] = useChangeSykmeldingStatus(
         sykmeldingId,
-        SykmeldingChangeStatus.BekreftAvvist,
+        SykmeldingChangeStatus.BEKREFT_AVVIST,
         () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
         () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )

@@ -10,7 +10,7 @@ const minimalSykmelding: Sykmelding = {
     mottattTidspunkt: '2020-01-10',
     behandlingsutfall: {
         __typename: 'Behandlingsutfall',
-        status: RegelStatus.Ok,
+        status: RegelStatus.OK,
         ruleHits: [],
     },
     legekontorOrgnummer: null,
@@ -21,7 +21,7 @@ const minimalSykmelding: Sykmelding = {
             fom: '2020-02-10',
             tom: '2020-02-15',
             behandlingsdager: 2,
-            type: Periodetype.Behandlingsdager,
+            type: Periodetype.BEHANDLINGSDAGER,
             reisetilskudd: false,
             gradert: null,
             innspillTilArbeidsgiver: null,
@@ -31,7 +31,7 @@ const minimalSykmelding: Sykmelding = {
     sykmeldingStatus: {
         __typename: 'SykmeldingStatus',
         timestamp: '2020-01-01',
-        statusEvent: StatusEvent.Apen,
+        statusEvent: StatusEvent.APEN,
         sporsmalOgSvarListe: [],
         arbeidsgiver: null,
     },
