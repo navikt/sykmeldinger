@@ -73,7 +73,7 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
                         sykmeldingUtenforVentetid={extraFormData.data.sykmeldingUtenforVentetid}
                         brukerinformasjon={extraFormData.data.brukerinformasjon}
                     />
-                    <ActionSection sendResult={sendSykmeldingResult} />
+                    <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
                 </form>
             </FormProvider>
         </div>
