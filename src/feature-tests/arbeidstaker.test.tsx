@@ -5,9 +5,11 @@ import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../u
 import {
     Arbeidsgiver,
     StatusEvent,
-    SubmitSykmeldingDocument,
+    SendSykmeldingDocument,
     SykmeldingByIdDocument,
     SykmeldingerDocument,
+    YesOrNo,
+    ArbeidssituasjonType,
 } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
@@ -46,38 +48,21 @@ describe('Arbeidstaker', () => {
                 createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
                 createMock({
                     request: {
-                        query: SubmitSykmeldingDocument,
+                        query: SendSykmeldingDocument,
                         variables: {
                             sykmeldingId: 'sykmelding-id',
                             values: {
-                                erOpplysningeneRiktige: {
-                                    svar: 'JA',
-                                    sporsmaltekst: 'Stemmer opplysningene?',
-                                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                },
-                                arbeidssituasjon: {
-                                    svar: 'ARBEIDSTAKER',
-                                    sporsmaltekst: 'Jeg er sykmeldt som',
-                                    svartekster:
-                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                },
-                                arbeidsgiverOrgnummer: {
-                                    svar: arbeidsgivereMock[0].orgnummer,
-                                    sporsmaltekst: 'Velg arbeidsgiver',
-                                    svartekster: `[{"navn":"${arbeidsgivereMock[0].navn}","orgnummer":"${arbeidsgivereMock[0].orgnummer}"},{"navn":"${arbeidsgivereMock[1].navn}","orgnummer":"${arbeidsgivereMock[1].orgnummer}"}]`,
-                                },
-                                riktigNarmesteLeder: {
-                                    svar: 'JA',
-                                    sporsmaltekst: `Er det ${arbeidsgivereMock[0]?.naermesteLeder?.navn} som skal følge deg opp på jobben mens du er syk?`,
-                                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                },
+                                erOpplysningeneRiktige: YesOrNo.YES,
+                                arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
+                                arbeidsgiverOrgnummer: arbeidsgivereMock[0].orgnummer,
+                                riktigNarmesteLeder: YesOrNo.YES,
                             },
                         },
                     },
                     result: {
                         data: {
                             __typename: 'Mutation',
-                            submitSykmelding: createSykmelding({
+                            sendSykmelding: createSykmelding({
                                 sykmeldingStatus: {
                                     ...createSykmelding().sykmeldingStatus,
                                     statusEvent: StatusEvent.BEKREFTET,
@@ -115,33 +100,20 @@ describe('Arbeidstaker', () => {
                 createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
                 createMock({
                     request: {
-                        query: SubmitSykmeldingDocument,
+                        query: SendSykmeldingDocument,
                         variables: {
                             sykmeldingId: 'sykmelding-id',
                             values: {
-                                erOpplysningeneRiktige: {
-                                    svar: 'JA',
-                                    sporsmaltekst: 'Stemmer opplysningene?',
-                                    svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                },
-                                arbeidssituasjon: {
-                                    svar: 'ARBEIDSTAKER',
-                                    sporsmaltekst: 'Jeg er sykmeldt som',
-                                    svartekster:
-                                        '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                },
-                                arbeidsgiverOrgnummer: {
-                                    svar: arbeidsgivereMock[1].orgnummer,
-                                    sporsmaltekst: 'Velg arbeidsgiver',
-                                    svartekster: `[{"navn":"${arbeidsgivereMock[0].navn}","orgnummer":"${arbeidsgivereMock[0].orgnummer}"},{"navn":"${arbeidsgivereMock[1].navn}","orgnummer":"${arbeidsgivereMock[1].orgnummer}"}]`,
-                                },
+                                erOpplysningeneRiktige: YesOrNo.YES,
+                                arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
+                                arbeidsgiverOrgnummer: arbeidsgivereMock[1].orgnummer,
                             },
                         },
                     },
                     result: {
                         data: {
                             __typename: 'Mutation',
-                            submitSykmelding: createSykmelding({
+                            sendSykmelding: createSykmelding({
                                 sykmeldingStatus: {
                                     ...createSykmelding().sykmeldingStatus,
                                     statusEvent: StatusEvent.BEKREFTET,

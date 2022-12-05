@@ -7,6 +7,7 @@ type Query {
 
 type Mutation {
     changeSykmeldingStatus(sykmeldingId: ID!, status: SykmeldingChangeStatus!): Sykmelding!
+    # TODO: Remove after multi stage deploy :)
     submitSykmelding(sykmeldingId: ID!, values: JSON!): Sykmelding!
     sendSykmelding(sykmeldingId: ID!, values: SendSykmeldingValues!): Sykmelding!
 }

@@ -5,10 +5,12 @@ import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../u
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
+    ArbeidssituasjonType,
     StatusEvent,
-    SubmitSykmeldingDocument,
+    SendSykmeldingDocument,
     SykmeldingByIdDocument,
     SykmeldingerDocument,
+    YesOrNo,
 } from '../fetching/graphql.generated'
 
 import { createExtraFormDataMock } from './mockUtils'
@@ -44,22 +46,6 @@ describe('Frilanser', () => {
             expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
         })
 
-        it('should NOT render new form under active development', async () => {
-            render(<SykmeldingPage />, {
-                mocks: [
-                    ...baseMocks,
-                    createExtraFormDataMock({
-                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
-                    }),
-                ],
-            })
-
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-
-            expect(await screen.findByRole('group', { name: 'Stemmer opplysningene?' })).toBeInTheDocument()
-            expect(screen.queryByTestId('new-form')).not.toBeInTheDocument()
-        })
-
         it('should be able to submit form', async () => {
             render(<SykmeldingPage />, {
                 mocks: [
@@ -69,45 +55,22 @@ describe('Frilanser', () => {
                     }),
                     createMock({
                         request: {
-                            query: SubmitSykmeldingDocument,
+                            query: SendSykmeldingDocument,
                             variables: {
                                 sykmeldingId: 'sykmelding-id',
                                 values: {
-                                    erOpplysningeneRiktige: {
-                                        svar: 'JA',
-                                        sporsmaltekst: 'Stemmer opplysningene?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    arbeidssituasjon: {
-                                        svar: 'FRILANSER',
-                                        sporsmaltekst: 'Jeg er sykmeldt som',
-                                        svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                    },
-                                    harBruktEgenmelding: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Vi har registrert at du ble syk 1. januar 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    harForsikring: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    egenmeldingsperioder: {
-                                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 1. januar 2021?',
-                                        svartekster: '"Fom, Tom"',
-                                        svar: [{ fom: '2020-12-20', tom: '2020-12-27' }],
-                                    },
+                                    erOpplysningeneRiktige: YesOrNo.YES,
+                                    arbeidssituasjon: ArbeidssituasjonType.FRILANSER,
+                                    harBruktEgenmelding: YesOrNo.YES,
+                                    harForsikring: YesOrNo.YES,
+                                    egenmeldingsperioder: [{ fom: '2020-12-20', tom: '2020-12-27' }],
                                 },
                             },
                         },
                         result: {
                             data: {
                                 __typename: 'Mutation',
-                                submitSykmelding: createSykmelding({
+                                sendSykmelding: createSykmelding({
                                     sykmeldingStatus: {
                                         ...createSykmelding().sykmeldingStatus,
                                         statusEvent: StatusEvent.BEKREFTET,
@@ -126,8 +89,8 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const inputTom = screen.getByRole('textbox', { name: 'Til og med:' })
-            const inputFom = screen.getByRole('textbox', { name: 'Fra og med:' })
+            const inputTom = screen.getByRole('textbox', { name: 'Til og med' })
+            const inputFom = screen.getByRole('textbox', { name: 'Fra og med' })
             userEvent.type(inputFom, '20.12.2020')
             userEvent.type(inputTom, '27.12.2020')
             const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
@@ -156,45 +119,22 @@ describe('Frilanser', () => {
                     createExtraFormDataMock({ utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: null } }),
                     createMock({
                         request: {
-                            query: SubmitSykmeldingDocument,
+                            query: SendSykmeldingDocument,
                             variables: {
                                 sykmeldingId: 'sykmelding-id',
                                 values: {
-                                    erOpplysningeneRiktige: {
-                                        svar: 'JA',
-                                        sporsmaltekst: 'Stemmer opplysningene?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    arbeidssituasjon: {
-                                        svar: 'FRILANSER',
-                                        sporsmaltekst: 'Jeg er sykmeldt som',
-                                        svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                    },
-                                    harBruktEgenmelding: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Vi har registrert at du ble syk 10. februar 2020. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    harForsikring: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    egenmeldingsperioder: {
-                                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 10. februar 2020?',
-                                        svartekster: '"Fom, Tom"',
-                                        svar: [{ fom: '2019-12-20', tom: '2019-12-27' }],
-                                    },
+                                    erOpplysningeneRiktige: YesOrNo.YES,
+                                    arbeidssituasjon: ArbeidssituasjonType.FRILANSER,
+                                    harBruktEgenmelding: YesOrNo.YES,
+                                    harForsikring: YesOrNo.YES,
+                                    egenmeldingsperioder: [{ fom: '2019-12-20', tom: '2019-12-27' }],
                                 },
                             },
                         },
                         result: {
                             data: {
                                 __typename: 'Mutation',
-                                submitSykmelding: createSykmelding({
+                                sendSykmelding: createSykmelding({
                                     sykmeldingStatus: {
                                         ...createSykmelding().sykmeldingStatus,
                                         statusEvent: StatusEvent.BEKREFTET,
@@ -246,28 +186,19 @@ describe('Frilanser', () => {
                     createExtraFormDataMock({ utenforVentetid: { erUtenforVentetid: true, oppfolgingsdato: null } }),
                     createMock({
                         request: {
-                            query: SubmitSykmeldingDocument,
+                            query: SendSykmeldingDocument,
                             variables: {
                                 sykmeldingId: 'sykmelding-id',
                                 values: {
-                                    erOpplysningeneRiktige: {
-                                        svar: 'JA',
-                                        sporsmaltekst: 'Stemmer opplysningene?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    arbeidssituasjon: {
-                                        svar: 'FRILANSER',
-                                        sporsmaltekst: 'Jeg er sykmeldt som',
-                                        svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                    },
+                                    erOpplysningeneRiktige: YesOrNo.YES,
+                                    arbeidssituasjon: ArbeidssituasjonType.FRILANSER,
                                 },
                             },
                         },
                         result: {
                             data: {
                                 __typename: 'Mutation',
-                                submitSykmelding: createSykmelding({
+                                sendSykmelding: createSykmelding({
                                     sykmeldingStatus: {
                                         ...createSykmelding().sykmeldingStatus,
                                         statusEvent: StatusEvent.BEKREFTET,
@@ -356,8 +287,8 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const inputTom = screen.getByRole('textbox', { name: 'Til og med:' })
-            const inputFom = screen.getByRole('textbox', { name: 'Fra og med:' })
+            const inputTom = screen.getByRole('textbox', { name: 'Til og med' })
+            const inputFom = screen.getByRole('textbox', { name: 'Fra og med' })
             userEvent.type(inputFom, '02.04.2020')
             userEvent.type(inputTom, '04.04.2020')
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -383,8 +314,8 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('radio', { name: 'frilanser' }))
             const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
             userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const inputTom = screen.getByRole('textbox', { name: 'Til og med:' })
-            const inputFom = screen.getByRole('textbox', { name: 'Fra og med:' })
+            const inputTom = screen.getByRole('textbox', { name: 'Til og med' })
+            const inputFom = screen.getByRole('textbox', { name: 'Fra og med' })
             userEvent.type(inputFom, '01.01.2020')
             userEvent.type(inputTom, '02.05.2020')
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))

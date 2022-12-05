@@ -5,10 +5,12 @@ import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../u
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
+    ArbeidssituasjonType,
     StatusEvent,
-    SubmitSykmeldingDocument,
+    SendSykmeldingDocument,
     SykmeldingByIdDocument,
     SykmeldingerDocument,
+    YesOrNo,
 } from '../fetching/graphql.generated'
 
 import { createExtraFormDataMock } from './mockUtils'
@@ -53,45 +55,22 @@ describe('Selvstendig næringsdrivende', () => {
                     }),
                     createMock({
                         request: {
-                            query: SubmitSykmeldingDocument,
+                            query: SendSykmeldingDocument,
                             variables: {
                                 sykmeldingId: 'sykmelding-id',
                                 values: {
-                                    erOpplysningeneRiktige: {
-                                        svar: 'JA',
-                                        sporsmaltekst: 'Stemmer opplysningene?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    arbeidssituasjon: {
-                                        svar: 'NAERINGSDRIVENDE',
-                                        sporsmaltekst: 'Jeg er sykmeldt som',
-                                        svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                    },
-                                    harBruktEgenmelding: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Vi har registrert at du ble syk 1. januar 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    harForsikring: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    egenmeldingsperioder: {
-                                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 1. januar 2021?',
-                                        svartekster: '"Fom, Tom"',
-                                        svar: [{ fom: '2020-12-20', tom: '2020-12-27' }],
-                                    },
+                                    erOpplysningeneRiktige: YesOrNo.YES,
+                                    arbeidssituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
+                                    harBruktEgenmelding: YesOrNo.YES,
+                                    harForsikring: YesOrNo.YES,
+                                    egenmeldingsperioder: [{ fom: '2020-12-20', tom: '2020-12-27' }],
                                 },
                             },
                         },
                         result: {
                             data: {
                                 __typename: 'Mutation',
-                                submitSykmelding: createSykmelding({
+                                sendSykmelding: createSykmelding({
                                     sykmeldingStatus: {
                                         ...createSykmelding().sykmeldingStatus,
                                         statusEvent: StatusEvent.SENDT,
@@ -142,45 +121,22 @@ describe('Selvstendig næringsdrivende', () => {
                     }),
                     createMock({
                         request: {
-                            query: SubmitSykmeldingDocument,
+                            query: SendSykmeldingDocument,
                             variables: {
                                 sykmeldingId: 'sykmelding-id',
                                 values: {
-                                    erOpplysningeneRiktige: {
-                                        svar: 'JA',
-                                        sporsmaltekst: 'Stemmer opplysningene?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    arbeidssituasjon: {
-                                        svar: 'NAERINGSDRIVENDE',
-                                        sporsmaltekst: 'Jeg er sykmeldt som',
-                                        svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                    },
-                                    harBruktEgenmelding: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Vi har registrert at du ble syk 10. februar 2020. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    harForsikring: {
-                                        svar: 'JA',
-                                        sporsmaltekst:
-                                            'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    egenmeldingsperioder: {
-                                        sporsmaltekst: 'Hvilke dager var du borte fra jobb før 10. februar 2020?',
-                                        svartekster: '"Fom, Tom"',
-                                        svar: [{ fom: '2019-12-20', tom: '2019-12-27' }],
-                                    },
+                                    erOpplysningeneRiktige: YesOrNo.YES,
+                                    arbeidssituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
+                                    harBruktEgenmelding: YesOrNo.YES,
+                                    harForsikring: YesOrNo.YES,
+                                    egenmeldingsperioder: [{ fom: '2019-12-20', tom: '2019-12-27' }],
                                 },
                             },
                         },
                         result: {
                             data: {
                                 __typename: 'Mutation',
-                                submitSykmelding: {
+                                sendSykmelding: {
                                     ...sykmelding,
                                     sykmeldingStatus: {
                                         ...sykmelding.sykmeldingStatus,
@@ -234,28 +190,19 @@ describe('Selvstendig næringsdrivende', () => {
                     createExtraFormDataMock(),
                     createMock({
                         request: {
-                            query: SubmitSykmeldingDocument,
+                            query: SendSykmeldingDocument,
                             variables: {
                                 sykmeldingId: 'sykmelding-id',
                                 values: {
-                                    erOpplysningeneRiktige: {
-                                        svar: 'JA',
-                                        sporsmaltekst: 'Stemmer opplysningene?',
-                                        svartekster: '{"JA":"Ja","NEI":"Nei"}',
-                                    },
-                                    arbeidssituasjon: {
-                                        svar: 'NAERINGSDRIVENDE',
-                                        sporsmaltekst: 'Jeg er sykmeldt som',
-                                        svartekster:
-                                            '{"ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","ARBEIDSLEDIG":"arbeidsledig","PERMITTERT":"permittert","ANNET":"annet"}',
-                                    },
+                                    erOpplysningeneRiktige: YesOrNo.YES,
+                                    arbeidssituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                                 },
                             },
                         },
                         result: {
                             data: {
                                 __typename: 'Mutation',
-                                submitSykmelding: createSykmelding({
+                                sendSykmelding: createSykmelding({
                                     sykmeldingStatus: {
                                         ...createSykmelding().sykmeldingStatus,
                                         statusEvent: StatusEvent.SENDT,
