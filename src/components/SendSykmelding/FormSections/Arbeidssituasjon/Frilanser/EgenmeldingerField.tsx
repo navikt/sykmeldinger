@@ -51,7 +51,12 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
                 variant="tertiary"
                 icon={<Add role="img" aria-hidden />}
                 type="button"
-                onClick={() => append({ fom: null, tom: null })}
+                onClick={() =>
+                    append(
+                        { fom: null, tom: null },
+                        { shouldFocus: true, focusName: `egenmeldingsperioder.${fields.length}.fom` },
+                    )
+                }
             >
                 Legg til ekstra periode
             </Button>

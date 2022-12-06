@@ -112,10 +112,11 @@ export async function sendSykmelding(
 
     childLogger.info(`Sending sykmelding with ID ${sykmeldingId}, requestId: ${context.requestId}`)
 
-    // TODO paralellize these calls
-    const sykmelding = await getSykmelding(sykmeldingId, context)
-    const brukerinformasjon = await getBrukerinformasjon(context)
-    const erUtenforVentetid = await getErUtenforVentetid(sykmeldingId, context)
+    const [sykmelding, brukerinformasjon, erUtenforVentetid] = await Promise.all([
+        getSykmelding(sykmeldingId, context),
+        getBrukerinformasjon(context),
+        getErUtenforVentetid(sykmeldingId, context),
+    ])
 
     const mappedValues = mapSendSykmeldingValuesToV3Api(values, sykmelding, brukerinformasjon, erUtenforVentetid)
 

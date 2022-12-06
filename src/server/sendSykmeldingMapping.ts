@@ -2,9 +2,8 @@ import { sporsmolOgSvar } from '../utils/sporsmolOgSvar'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 
 import {
-    ArbeidssituasjonType,
     SendSykmeldingValues,
-    Sykmelding,
+    ArbeidssituasjonType,
     UriktigeOpplysningerType,
     YesOrNo,
 } from './graphql/resolver-types.generated'
@@ -16,6 +15,7 @@ import {
 } from './api-models/SendSykmelding'
 import { Brukerinformasjon } from './api-models/Brukerinformasjon'
 import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
+import { Sykmelding } from './api-models/sykmelding/Sykmelding'
 
 export function mapSendSykmeldingValuesToV3Api(
     values: SendSykmeldingValues,
@@ -113,7 +113,9 @@ function yesOrNoTypeToV3Enum(value: YesOrNo): JaEllerNeiV3 {
 
 function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonV3 {
     switch (value) {
+        // Permittert falls back to arbeidsledig in the API, this is intentional
         case ArbeidssituasjonType.ARBEIDSLEDIG:
+        case ArbeidssituasjonType.PERMITTERT:
             return ArbeidssituasjonV3.ARBEIDSLEDIG
         case ArbeidssituasjonType.ARBEIDSTAKER:
             return ArbeidssituasjonV3.ARBEIDSTAKER
@@ -121,9 +123,6 @@ function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): Arbeidssitua
             return ArbeidssituasjonV3.FRILANSER
         case ArbeidssituasjonType.NAERINGSDRIVENDE:
             return ArbeidssituasjonV3.NAERINGSDRIVENDE
-        case ArbeidssituasjonType.PERMITTERT:
-            // TODO ???
-            return ArbeidssituasjonV3.ANNET
         case ArbeidssituasjonType.ANNET:
             return ArbeidssituasjonV3.ANNET
     }
