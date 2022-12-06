@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 
@@ -41,6 +41,7 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
 
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
+    const errorSectionRef = useRef<HTMLDivElement>(null)
     const form = useForm<FormValues>({ shouldFocusError: false })
     const extraFormData = useExtraFormData(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
@@ -67,14 +68,21 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
             <code>New form under active development, should only be enabled with process.env.ENABLE_NEW_FORM</code>
             <pre className={styles.newFormTemporaryPre}>{JSON.stringify(form.watch(), null, 2)}</pre>
             <FormProvider {...form}>
-                <form data-testid="new-form" onSubmit={form.handleSubmit(sendSykmelding)}>
+                <form
+                    data-testid="new-form"
+                    onSubmit={form.handleSubmit(sendSykmelding, () => {
+                        requestAnimationFrame(() => {
+                            errorSectionRef.current?.focus()
+                        })
+                    })}
+                >
                     <OpplysningerRiktigeSection />
                     <ArbeidssituasjonSection
                         sykmelding={sykmelding}
                         sykmeldingUtenforVentetid={extraFormData.data.sykmeldingUtenforVentetid}
                         brukerinformasjon={extraFormData.data.brukerinformasjon}
                     />
-                    <ErrorSection />
+                    <ErrorSection ref={errorSectionRef} />
                     <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
                 </form>
             </FormProvider>

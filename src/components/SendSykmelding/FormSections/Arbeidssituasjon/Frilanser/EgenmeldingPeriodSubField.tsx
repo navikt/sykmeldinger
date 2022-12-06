@@ -101,6 +101,7 @@ function EgenmeldingPeriodSubField({
                 <UNSAFE_DatePicker.Input
                     id={fromField.name}
                     {...fromInputProps}
+                    ref={fromField.ref}
                     label="Fra og med"
                     placeholder="DD.MM.ÅÅÅÅ"
                     error={fromFieldState.error?.message}
@@ -109,6 +110,7 @@ function EgenmeldingPeriodSubField({
                 <UNSAFE_DatePicker.Input
                     id={toField.name}
                     {...toInputProps}
+                    ref={toField.ref}
                     label="Til og med"
                     placeholder="DD.MM.ÅÅÅÅ"
                     error={toFieldState.error?.message}
