@@ -336,7 +336,7 @@ describe('Frilanser', () => {
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(
-                await screen.findByRole('link', { name: 'Fra dato må være på formatet DD.MM.YYYY' }),
+                await screen.findByRole('link', { name: 'Fra dato må være på formatet DD.MM.YYYY.' }),
             ).toBeInTheDocument()
         })
 

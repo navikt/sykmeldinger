@@ -28,17 +28,17 @@ function EgenmeldingPeriodSubField({
         rules: {
             validate: (tomValue) => {
                 if (rangeError?.to.isInvalid) {
-                    return 'Til dato må være på formatet DD.MM.YYYY'
+                    return 'Til dato må være på formatet DD.MM.YYYY.'
                 }
                 if (rangeError?.to?.isAfter) {
-                    return 'Til dato kan ikke være oppfølgingsdato eller senere'
+                    return 'Til dato kan ikke være oppfølgingsdato eller senere.'
                 }
                 if (rangeError?.to?.isBeforeFrom) {
-                    return 'Fra kan ikke være etter til dato'
+                    return 'Fra kan ikke være etter til dato.'
                 }
 
                 if (!tomValue) {
-                    return 'Du må fylle inn til dato'
+                    return 'Du må fylle inn til dato.'
                 }
 
                 return undefined
@@ -52,14 +52,14 @@ function EgenmeldingPeriodSubField({
         rules: {
             validate: (fomValue) => {
                 if (rangeError?.from.isInvalid) {
-                    return 'Fra dato må være på formatet DD.MM.YYYY'
+                    return 'Fra dato må være på formatet DD.MM.YYYY.'
                 }
                 if (rangeError?.from?.isAfter) {
-                    return 'Fra dato kan ikke være oppfølgingsdato eller senere'
+                    return 'Fra dato kan ikke være oppfølgingsdato eller senere.'
                 }
 
                 if (!fomValue) {
-                    return 'Du må fylle inn fra dato'
+                    return 'Du må fylle inn fra dato.'
                 }
 
                 if (
@@ -71,7 +71,7 @@ function EgenmeldingPeriodSubField({
                         return isWithinInterval(fomValue, interval) || isWithinInterval(toField.value, interval)
                     })
                 ) {
-                    return 'Du kan ikke ha overlappende perioder'
+                    return 'Du kan ikke ha overlappende perioder.'
                 }
 
                 return undefined

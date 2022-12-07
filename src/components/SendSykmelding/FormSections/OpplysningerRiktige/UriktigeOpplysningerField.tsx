@@ -12,7 +12,7 @@ function UriktigeOpplysningerField(): JSX.Element {
         name: 'uriktigeOpplysninger',
         rules: {
             validate: (value) =>
-                value == null || value.length <= 0 ? 'Du må svare på hvilke opplysninger som ikke stemmer' : undefined,
+                value == null || value.length <= 0 ? 'Du må svare på hvilke opplysninger som ikke stemmer.' : undefined,
         },
         shouldUnregister: true,
         defaultValue: null,

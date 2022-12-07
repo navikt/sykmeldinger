@@ -45,7 +45,6 @@ export const sykmeldinger = [
 
 const Query: QueryResolvers = {
     sykmeldinger: async () => {
-        console.log('ahaaaa')
         return sykmeldinger
     },
     sykmelding: async (_, { id }) => {

@@ -26,7 +26,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
                 name="riktigNarmesteLeder"
                 legend={sporsmolOgSvar.riktigNarmesteLeder.sporsmalstekst(narmesteLeder.navn)}
                 rules={{
-                    required: 'Du må svare på om dette er nærmeste lederen som skal følge deg opp',
+                    required: 'Du må svare på om dette er nærmeste lederen som skal følge deg opp.',
                 }}
                 onChange={(value) => {
                     logAmplitudeEvent({
