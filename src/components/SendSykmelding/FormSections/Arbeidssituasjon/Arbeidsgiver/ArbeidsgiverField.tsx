@@ -15,7 +15,7 @@ interface Props {
 function ArbeidsgiverField({ arbeidsgivere }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidsgiverOrgnummer',
-        rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra' },
+        rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
         shouldUnregister: true,
         defaultValue: null,
     })

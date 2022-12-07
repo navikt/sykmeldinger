@@ -23,10 +23,10 @@ function PeriodePicker({ name, maxDate, otherPeriods, removeButton }: PeriodePic
         rules: {
             validate: (value) => {
                 if (rangeError?.from.isInvalid) {
-                    return 'Fra dato må være på formatet DD.MM.YYYY'
+                    return 'Fra dato må være på formatet DD.MM.YYYY.'
                 }
                 if (rangeError?.to.isInvalid) {
-                    return 'Til dato må være på formatet DD.MM.YYYY'
+                    return 'Til dato må være på formatet DD.MM.YYYY.'
                 }
                 if (rangeError?.from?.isAfter) {
                     return 'Fra dato kan ikke være oppfølgingsdato eller senere.'

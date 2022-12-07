@@ -71,7 +71,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                         defaultValue={false}
                         rules={{
                             validate: (value) =>
-                                value === true || 'Du må bekrefte at du har lest at sykmeldingen er avvist',
+                                value === true || 'Du må bekrefte at du har lest at sykmeldingen er avvist.',
                         }}
                         render={({ field, fieldState }) => (
                             <Spacing>

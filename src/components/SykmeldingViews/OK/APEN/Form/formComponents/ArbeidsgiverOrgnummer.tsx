@@ -40,7 +40,7 @@ function ArbeidsgiverOrgnummer({ brukerinformasjon }: ArbeidsgiverOrgnummerProps
                 control={control}
                 name={`${fieldName}.svar`}
                 rules={{
-                    required: 'Arbeidsgiver må være valgt siden du har valgt at du er ansatt',
+                    required: 'Arbeidsgiver må være valgt siden du har valgt at du er ansatt.',
                 }}
                 defaultValue={null}
                 render={({ field, fieldState }) => (

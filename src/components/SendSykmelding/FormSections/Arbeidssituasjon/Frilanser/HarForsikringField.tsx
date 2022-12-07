@@ -12,7 +12,8 @@ function HarForsikringField(): JSX.Element {
                 name="harForsikring"
                 legend={sporsmolOgSvar.harForsikring.sporsmaltekst}
                 rules={{
-                    required: 'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet',
+                    required:
+                        'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet.',
                 }}
                 onChange={(value) => {
                     logAmplitudeEvent({
