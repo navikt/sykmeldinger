@@ -19,7 +19,6 @@ import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOld
 import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
 import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer'
 import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
-import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
 
 function SykmeldingkvitteringPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_KVITTERING')
@@ -93,10 +92,6 @@ function SykmeldingkvitteringPage(): JSX.Element {
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
                 <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} />
             )}
-
-            <Spacing>
-                <UxSignalsWidget />
-            </Spacing>
 
             <HintToNextOlderSykmelding />
         </KvitteringWrapper>
