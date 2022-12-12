@@ -1,4 +1,4 @@
-import { sporsmolOgSvar } from '../utils/sporsmolOgSvar'
+import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 
 import {
@@ -41,36 +41,29 @@ export function mapSendSykmeldingValuesToV3Api(
     return {
         erOpplysningeneRiktige: {
             svar: yesOrNoTypeToV3Enum(values.erOpplysningeneRiktige),
-            sporsmaltekst: sporsmolOgSvar.erOpplysningeneRiktige.sporsmaltekst,
-            svartekster: sporsmolOgSvar.erOpplysningeneRiktige.svartekster,
+            sporsmaltekst: sporsmal.erOpplysningeneRiktige,
         },
         arbeidssituasjon: {
             svar: arbeidssituasjonTypeToV3Enum(values.arbeidssituasjon),
-            sporsmaltekst: sporsmolOgSvar.arbeidssituasjon.sporsmaltekst,
-            svartekster: sporsmolOgSvar.arbeidssituasjon.svartekster,
+            sporsmaltekst: sporsmal.arbeidssituasjon,
         },
         arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer
             ? {
                   svar: values.arbeidsgiverOrgnummer,
-                  sporsmaltekst: sporsmolOgSvar.arbeidsgiverOrgnummer.sporsmaltekst,
-                  svartekster: JSON.stringify(
-                      sporsmolOgSvar.arbeidsgiverOrgnummer.svartekster(brukerinformasjon.arbeidsgivere),
-                  ),
+                  sporsmaltekst: sporsmal.arbeidsgiverOrgnummer,
               }
             : null,
         riktigNarmesteLeder:
             values.riktigNarmesteLeder && valgtNarmesteLederNavn != null
                 ? {
                       svar: yesOrNoTypeToV3Enum(values.riktigNarmesteLeder),
-                      sporsmaltekst: sporsmolOgSvar.riktigNarmesteLeder.sporsmalstekst(valgtNarmesteLederNavn),
-                      svartekster: sporsmolOgSvar.riktigNarmesteLeder.svartekster,
+                      sporsmaltekst: sporsmal.riktigNarmesteLeder(valgtNarmesteLederNavn),
                   }
                 : null,
         harBruktEgenmelding: values.harBruktEgenmelding
             ? {
                   svar: yesOrNoTypeToV3Enum(values.harBruktEgenmelding),
-                  sporsmaltekst: sporsmolOgSvar.harBruktEgenmelding.sporsmaltekst(oppfolgingsdato),
-                  svartekster: sporsmolOgSvar.harBruktEgenmelding.svartekster,
+                  sporsmaltekst: sporsmal.harBruktEgenmelding(oppfolgingsdato),
               }
             : null,
         egenmeldingsperioder:
@@ -86,22 +79,19 @@ export function mapSendSykmeldingValuesToV3Api(
                               tom: periode.tom,
                           }
                       }),
-                      sporsmaltekst: sporsmolOgSvar.egenmeldingsperioder.sporsmaltekst(oppfolgingsdato),
-                      svartekster: sporsmolOgSvar.egenmeldingsperioder.svartekster,
+                      sporsmaltekst: sporsmal.egenmeldingsperioder(oppfolgingsdato),
                   }
                 : null,
         harForsikring: values.harForsikring
             ? {
                   svar: yesOrNoTypeToV3Enum(values.harForsikring),
-                  sporsmaltekst: sporsmolOgSvar.harForsikring.sporsmaltekst,
-                  svartekster: sporsmolOgSvar.harForsikring.svartekster,
+                  sporsmaltekst: sporsmal.harForsikring,
               }
             : null,
         uriktigeOpplysninger: values.uriktigeOpplysninger
             ? {
                   svar: values.uriktigeOpplysninger.map(uriktigeOpplysningerTypeToV3Enum),
-                  sporsmaltekst: sporsmolOgSvar.uriktigeOpplysninger.sporsmaltekst,
-                  svartekster: sporsmolOgSvar.uriktigeOpplysninger.svartekster,
+                  sporsmaltekst: sporsmal.uriktigeOpplysninger,
               }
             : null,
     }

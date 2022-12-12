@@ -4,7 +4,7 @@ import { useController } from 'react-hook-form'
 
 import { QuestionWrapper } from '../../shared/FormStructure'
 import { ArbeidssituasjonType, BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
-import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { sporsmal } from '../../../../../utils/sporsmal'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
@@ -25,13 +25,13 @@ function ArbeidsgiverField({ arbeidsgivere }: Props): JSX.Element {
             <RadioGroup
                 {...field}
                 id={field.name}
-                legend={sporsmolOgSvar.arbeidsgiverOrgnummer.sporsmaltekst}
+                legend={sporsmal.arbeidsgiverOrgnummer}
                 onChange={(value: ArbeidssituasjonType) => {
                     logAmplitudeEvent({
                         eventName: 'skjema spørsmål besvart',
                         data: {
                             skjemanavn: 'arbeidsgiver',
-                            spørsmål: sporsmolOgSvar.arbeidsgiverOrgnummer.sporsmaltekst,
+                            spørsmål: sporsmal.arbeidsgiverOrgnummer,
                             svar: value,
                         },
                     })

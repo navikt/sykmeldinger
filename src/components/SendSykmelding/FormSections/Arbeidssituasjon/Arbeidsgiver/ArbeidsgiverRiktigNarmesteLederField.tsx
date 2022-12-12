@@ -4,7 +4,7 @@ import { Alert, ReadMore } from '@navikt/ds-react'
 
 import { QuestionWrapper } from '../../shared/FormStructure'
 import { NaermesteLederFragment, YesOrNo } from '../../../../../fetching/graphql.generated'
-import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import YesNoField from '../../shared/YesNoField'
 import { FormValues } from '../../../SendSykmeldingForm'
@@ -24,7 +24,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
         <QuestionWrapper>
             <YesNoField
                 name="riktigNarmesteLeder"
-                legend={sporsmolOgSvar.riktigNarmesteLeder.sporsmalstekst(narmesteLeder.navn)}
+                legend={sporsmal.riktigNarmesteLeder(narmesteLeder.navn)}
                 subtext={
                     <ReadMore header="Les om hva det innebærer">
                         Den vi spør om, vil få se sykmeldingen din og kan bli kontaktet av NAV underveis i sykefraværet.

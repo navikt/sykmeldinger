@@ -2,7 +2,7 @@ import React from 'react'
 
 import { QuestionWrapper } from '../../shared/FormStructure'
 import YesNoField from '../../shared/YesNoField'
-import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 function HarForsikringField(): JSX.Element {
@@ -10,7 +10,7 @@ function HarForsikringField(): JSX.Element {
         <QuestionWrapper>
             <YesNoField
                 name="harForsikring"
-                legend={sporsmolOgSvar.harForsikring.sporsmaltekst}
+                legend={sporsmal.harForsikring}
                 rules={{
                     required:
                         'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet.',
@@ -20,7 +20,7 @@ function HarForsikringField(): JSX.Element {
                         eventName: 'skjema spørsmål besvart',
                         data: {
                             skjemanavn: 'åpen sykmelding',
-                            spørsmål: sporsmolOgSvar.harForsikring.sporsmaltekst,
+                            spørsmål: sporsmal.harForsikring,
                             svar: value,
                         },
                     })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { BodyShort, Label, ReadMore } from '@navikt/ds-react'
 
-import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { sporsmal } from '../../../../../utils/sporsmal'
 import YesNoField from '../../shared/YesNoField'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import { QuestionWrapper } from '../../shared/FormStructure'
@@ -15,7 +15,7 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
         <QuestionWrapper>
             <YesNoField
                 name="harBruktEgenmelding"
-                legend={sporsmolOgSvar.harBruktEgenmelding.sporsmaltekst(oppfolgingsdato)}
+                legend={sporsmal.harBruktEgenmelding(oppfolgingsdato)}
                 subtext={<HarBruktEgenmeldingReadMore />}
                 rules={{
                     required: 'Du må svare på om du har brukt egenmelding eller annen sykmelding før du ble syk.',
@@ -25,7 +25,7 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
                         eventName: 'skjema spørsmål besvart',
                         data: {
                             skjemanavn: 'åpen sykmelding',
-                            spørsmål: sporsmolOgSvar.harBruktEgenmelding.sporsmaltekst(oppfolgingsdato),
+                            spørsmål: sporsmal.harBruktEgenmelding(oppfolgingsdato),
                             svar: value,
                         },
                     })
