@@ -3,10 +3,6 @@ import { ArbeidssituasjonType, UriktigeOpplysningerType, YesOrNo } from './graph
 import arbeidsgivereMock from './graphql/mockData/arbeidsgivereMock'
 import { sykmeldingApen } from './graphql/mockData/sykmelding-apen'
 
-const expectedYesNoText = '{"JA":"Ja","NEI":"Nei"}'
-const expectedArbeidssituasjonText =
-    '{"ANNET":"annet","ARBEIDSLEDIG":"arbeidsledig","ARBEIDSTAKER":"ansatt","FRILANSER":"frilanser","NAERINGSDRIVENDE":"selvstendig næringsdrivende","PERMITTERT":"permittert"}'
-
 describe('sendSykmeldingMapping', () => {
     const brukerinformasjon = { strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock }
     const erUtenforVentetid = { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' }
@@ -27,12 +23,10 @@ describe('sendSykmeldingMapping', () => {
             erOpplysningeneRiktige: {
                 sporsmaltekst: 'Stemmer opplysningene?',
                 svar: 'JA',
-                svartekster: expectedYesNoText,
             },
             arbeidssituasjon: {
                 sporsmaltekst: 'Jeg er sykmeldt som',
                 svar: 'ANNET',
-                svartekster: expectedArbeidssituasjonText,
             },
             arbeidsgiverOrgnummer: null,
             egenmeldingsperioder: null,
@@ -59,12 +53,10 @@ describe('sendSykmeldingMapping', () => {
             erOpplysningeneRiktige: {
                 sporsmaltekst: 'Stemmer opplysningene?',
                 svar: 'JA',
-                svartekster: expectedYesNoText,
             },
             arbeidssituasjon: {
                 sporsmaltekst: 'Jeg er sykmeldt som',
                 svar: 'ARBEIDSLEDIG',
-                svartekster: expectedArbeidssituasjonText,
             },
             arbeidsgiverOrgnummer: null,
             egenmeldingsperioder: null,
@@ -92,18 +84,14 @@ describe('sendSykmeldingMapping', () => {
             erOpplysningeneRiktige: {
                 sporsmaltekst: 'Stemmer opplysningene?',
                 svar: 'NEI',
-                svartekster: expectedYesNoText,
             },
             uriktigeOpplysninger: {
                 sporsmaltekst: 'Hvilke opplysninger stemmer ikke?',
                 svar: ['DIAGNOSE', 'ARBEIDSGIVER'],
-                svartekster:
-                    '{"ANDRE_OPPLYSNINGER":"Andre opplysninger","ARBEIDSGIVER":"Arbeidsgiver","DIAGNOSE":"Diagnose","PERIODE":"Periode","SYKMELDINGSGRAD_FOR_HOY":"Sykmeldingsgraden er for høy","SYKMELDINGSGRAD_FOR_LAV":"Sykmeldingsgraden er for lav"}',
             },
             arbeidssituasjon: {
                 sporsmaltekst: 'Jeg er sykmeldt som',
                 svar: 'ANNET',
-                svartekster: expectedArbeidssituasjonText,
             },
             arbeidsgiverOrgnummer: null,
             egenmeldingsperioder: null,
@@ -131,23 +119,18 @@ describe('sendSykmeldingMapping', () => {
             erOpplysningeneRiktige: {
                 sporsmaltekst: 'Stemmer opplysningene?',
                 svar: 'JA',
-                svartekster: expectedYesNoText,
             },
             arbeidssituasjon: {
                 sporsmaltekst: 'Jeg er sykmeldt som',
                 svar: 'ARBEIDSTAKER',
-                svartekster: expectedArbeidssituasjonText,
             },
             arbeidsgiverOrgnummer: {
                 sporsmaltekst: 'Velg arbeidsgiver',
                 svar: '110110110',
-                svartekster:
-                    '[{"navn":"PONTYPANDY FIRE SERVICE","orgnummer":"110110110"},{"navn":"ANDEBY BRANNSTATION","orgnummer":"110110112"}]',
             },
             riktigNarmesteLeder: {
                 sporsmaltekst: 'Er det Station Officer Steele som skal følge deg opp på jobben mens du er syk?',
                 svar: 'JA',
-                svartekster: expectedYesNoText,
             },
             egenmeldingsperioder: null,
             harBruktEgenmelding: null,
@@ -178,18 +161,15 @@ describe('sendSykmeldingMapping', () => {
             erOpplysningeneRiktige: {
                 sporsmaltekst: 'Stemmer opplysningene?',
                 svar: 'JA',
-                svartekster: expectedYesNoText,
             },
             arbeidssituasjon: {
                 sporsmaltekst: 'Jeg er sykmeldt som',
                 svar: 'FRILANSER',
-                svartekster: expectedArbeidssituasjonText,
             },
             harBruktEgenmelding: {
                 sporsmaltekst:
                     'Vi har registrert at du ble syk 10. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
                 svar: 'JA',
-                svartekster: expectedYesNoText,
             },
             egenmeldingsperioder: {
                 sporsmaltekst: 'Hvilke dager var du borte fra jobb før 10. april 2021?',
@@ -197,12 +177,10 @@ describe('sendSykmeldingMapping', () => {
                     { fom: '2021-04-10', tom: '2021-04-11' },
                     { fom: '2021-04-12', tom: '2021-04-13' },
                 ],
-                svartekster: '"Fom, Tom"',
             },
             harForsikring: {
                 sporsmaltekst: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
                 svar: 'JA',
-                svartekster: expectedYesNoText,
             },
             arbeidsgiverOrgnummer: null,
             riktigNarmesteLeder: null,

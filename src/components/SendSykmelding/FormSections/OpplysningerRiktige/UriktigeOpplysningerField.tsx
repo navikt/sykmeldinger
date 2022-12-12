@@ -5,7 +5,7 @@ import { useController } from 'react-hook-form'
 import { FormValues } from '../../SendSykmeldingForm'
 import { UriktigeOpplysningerType } from '../../../../fetching/graphql.generated'
 import { QuestionWrapper } from '../shared/FormStructure'
-import { sporsmolOgSvar, uriktigeOpplysningerEnumToText } from '../../../../utils/sporsmolOgSvar'
+import { sporsmal, uriktigeOpplysningerEnumToText } from '../../../../utils/sporsmal'
 
 function UriktigeOpplysningerField(): JSX.Element {
     const { field, fieldState } = useController<FormValues, 'uriktigeOpplysninger'>({
@@ -24,7 +24,7 @@ function UriktigeOpplysningerField(): JSX.Element {
                 {...field}
                 value={field.value ?? []}
                 id={field.name}
-                legend={sporsmolOgSvar.uriktigeOpplysninger.sporsmaltekst}
+                legend={sporsmal.uriktigeOpplysninger}
                 error={fieldState.error?.message}
             >
                 {/* This is not mapped directly from the enum values because we want to dictate the order */}

@@ -4,7 +4,7 @@ import { Radio, RadioGroup } from '@navikt/ds-react'
 
 import { FormValues } from '../../SendSykmeldingForm'
 import { QuestionWrapper } from '../shared/FormStructure'
-import { arbeidsSituasjonEnumToText, sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
+import { arbeidsSituasjonEnumToText, sporsmal } from '../../../../utils/sporsmal'
 import { ArbeidssituasjonType } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
@@ -25,7 +25,7 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
             <RadioGroup
                 {...field}
                 id={field.name}
-                legend={sporsmolOgSvar.arbeidssituasjon.sporsmaltekst}
+                legend={sporsmal.arbeidssituasjon}
                 onChange={(value: ArbeidssituasjonType) => {
                     logAmplitudeEvent({
                         eventName: 'skjema spørsmål besvart',

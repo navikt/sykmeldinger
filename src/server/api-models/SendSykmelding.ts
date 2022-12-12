@@ -11,7 +11,6 @@ export type SykmeldingUserEventV3Api = {
 
 type SporsmalSvar<T> = {
     sporsmaltekst: string
-    svartekster: string
     svar: T
 }
 

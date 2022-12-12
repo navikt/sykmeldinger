@@ -6,7 +6,7 @@ import { sub } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
 import { QuestionWrapper } from '../../shared/FormStructure'
-import { sporsmolOgSvar } from '../../../../../utils/sporsmolOgSvar'
+import { sporsmal } from '../../../../../utils/sporsmal'
 import { toDate } from '../../../../../utils/dateUtils'
 
 import EgenmeldingPeriodSubField from './EgenmeldingPeriodSubField'
@@ -34,7 +34,7 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
 
     return (
         <QuestionWrapper>
-            <Label as="h3">{sporsmolOgSvar.egenmeldingsperioder.sporsmaltekst(oppfolgingsdato)}</Label>
+            <Label as="h3">{sporsmal.egenmeldingsperioder(oppfolgingsdato)}</Label>
             <div className={styles.dateFieldsWrapper}>
                 {fields.map((field, index) => (
                     <EgenmeldingPeriodSubField

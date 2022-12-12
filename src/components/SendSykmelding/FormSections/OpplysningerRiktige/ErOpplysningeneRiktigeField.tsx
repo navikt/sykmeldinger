@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { sporsmolOgSvar } from '../../../../utils/sporsmolOgSvar'
+import { sporsmal } from '../../../../utils/sporsmal'
 import { QuestionWrapper } from '../shared/FormStructure'
 import YesNoField from '../shared/YesNoField'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
@@ -10,7 +10,7 @@ function ErOpplysningeneRiktigeField(): JSX.Element {
         <QuestionWrapper>
             <YesNoField
                 name="erOpplysningeneRiktige"
-                legend={sporsmolOgSvar.erOpplysningeneRiktige.sporsmaltekst}
+                legend={sporsmal.erOpplysningeneRiktige}
                 rules={{
                     required: 'Du må svare på om opplysningene i sykmeldingen er riktige.',
                 }}
