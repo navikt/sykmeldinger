@@ -7,14 +7,11 @@ import InformationBanner from '../../../InformationBanner/InformationBanner'
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 import SendSykmeldingForm from '../../../SendSykmelding/SendSykmeldingForm'
-import { getPublicEnv } from '../../../../utils/env'
 
 import AvbrytPanel from './AvbrytPanel/AvbrytPanel'
 import AvbrytContextProvider from './AvbrytContext'
 import PapirInfoheader from './PapirInfoheader'
 import Form from './Form/Form'
-
-const publicEnv = getPublicEnv()
 
 interface OkApenSykmeldingProps {
     sykmelding: Sykmelding
@@ -24,6 +21,7 @@ interface OkApenSykmeldingProps {
 
 function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount }: OkApenSykmeldingProps): JSX.Element {
     useHotjarTrigger('SYKMELDING_OK_APEN')
+    const useNewForm = shouldUseNewForm(sykmelding.pasient?.fnr)
 
     if (olderSykmeldingId) {
         return (
@@ -70,12 +68,28 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
                 <Spacing>
                     <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
                 </Spacing>
-                {publicEnv.ENABLE_NEW_FORM === 'true' && <SendSykmeldingForm sykmelding={sykmelding} />}
-                <Form sykmelding={sykmelding} />
-                <AvbrytPanel />
+                {useNewForm ? (
+                    <SendSykmeldingForm sykmelding={sykmelding} />
+                ) : (
+                    <>
+                        <Form sykmelding={sykmelding} />
+                        <AvbrytPanel />
+                    </>
+                )}
             </div>
         </AvbrytContextProvider>
     )
+}
+
+/**
+ * This should enable the form for roughly 5% of the users, used as a temporary hacky feature toggle
+ */
+function shouldUseNewForm(fnr: string | null | undefined): boolean {
+    if (process.env.NODE_ENV === 'development') return true
+
+    if (!fnr) return false
+    const last2Digits = +fnr.slice(-2)
+    return last2Digits % 20 === 0
 }
 
 export default OkApenSykmelding

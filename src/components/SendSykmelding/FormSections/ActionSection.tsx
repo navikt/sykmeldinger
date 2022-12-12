@@ -152,12 +152,19 @@ function useAvbryt(sykmeldingId: string): [MutationResult<ChangeSykmeldingStatus
     return useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.AVBRYT,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn: 'avbryt åpen sykmelding' } }),
         () =>
-            logAmplitudeEvent({
-                eventName: 'skjema innsending feilet',
-                data: { skjemanavn: 'avbryt åpen sykmelding' },
-            }),
+            logAmplitudeEvent(
+                { eventName: 'skjema fullført', data: { skjemanavn: 'avbryt åpen sykmelding' } },
+                { newForm: true },
+            ),
+        () =>
+            logAmplitudeEvent(
+                {
+                    eventName: 'skjema innsending feilet',
+                    data: { skjemanavn: 'avbryt åpen sykmelding' },
+                },
+                { newForm: true },
+            ),
     )
 }
 

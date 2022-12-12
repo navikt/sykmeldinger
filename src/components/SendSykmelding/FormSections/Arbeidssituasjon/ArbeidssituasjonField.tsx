@@ -27,10 +27,13 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
                 id={field.name}
                 legend={sporsmal.arbeidssituasjon}
                 onChange={(value: ArbeidssituasjonType) => {
-                    logAmplitudeEvent({
-                        eventName: 'skjema spørsmål besvart',
-                        data: { skjemanavn: 'arbeidssituasjon', spørsmål: 'Jeg er sykmeldt som', svar: value },
-                    })
+                    logAmplitudeEvent(
+                        {
+                            eventName: 'skjema spørsmål besvart',
+                            data: { skjemanavn: 'arbeidssituasjon', spørsmål: 'Jeg er sykmeldt som', svar: value },
+                        },
+                        { newForm: true },
+                    )
                     field.onChange(value)
                 }}
                 error={fieldState.error?.message}
