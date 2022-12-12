@@ -18,7 +18,6 @@ import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/Opply
 import ActionSection from './FormSections/ActionSection'
 import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/ArbeidssituasjonSection'
 import ErrorSection from './FormSections/ErrorSection'
-import styles from './SendSykmeldingForm.module.css'
 
 export interface FormValues {
     erOpplysningeneRiktige: YesOrNo | null
@@ -39,15 +38,15 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding'
     const sykmeldingId = useGetSykmeldingIdParam()
 
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
+    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } }, { newForm: true })
 
     const errorSectionRef = useRef<HTMLDivElement>(null)
     const form = useForm<FormValues>({ shouldFocusError: false })
     const extraFormData = useExtraFormData(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }, { newForm: true }),
+        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }, { newForm: true }),
     )
 
     if (extraFormData.loading) {
@@ -64,29 +63,25 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     }
 
     return (
-        <div className={styles.newFormTemporary}>
-            <code>New form under active development, should only be enabled with process.env.ENABLE_NEW_FORM</code>
-            <pre className={styles.newFormTemporaryPre}>{JSON.stringify(form.watch(), null, 2)}</pre>
-            <FormProvider {...form}>
-                <form
-                    data-testid="new-form"
-                    onSubmit={form.handleSubmit(sendSykmelding, () => {
-                        requestAnimationFrame(() => {
-                            errorSectionRef.current?.focus()
-                        })
-                    })}
-                >
-                    <OpplysningerRiktigeSection />
-                    <ArbeidssituasjonSection
-                        sykmelding={sykmelding}
-                        sykmeldingUtenforVentetid={extraFormData.data.sykmeldingUtenforVentetid}
-                        brukerinformasjon={extraFormData.data.brukerinformasjon}
-                    />
-                    <ErrorSection ref={errorSectionRef} />
-                    <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
-                </form>
-            </FormProvider>
-        </div>
+        <FormProvider {...form}>
+            <form
+                data-testid="new-form"
+                onSubmit={form.handleSubmit(sendSykmelding, () => {
+                    requestAnimationFrame(() => {
+                        errorSectionRef.current?.focus()
+                    })
+                })}
+            >
+                <OpplysningerRiktigeSection />
+                <ArbeidssituasjonSection
+                    sykmelding={sykmelding}
+                    sykmeldingUtenforVentetid={extraFormData.data.sykmeldingUtenforVentetid}
+                    brukerinformasjon={extraFormData.data.brukerinformasjon}
+                />
+                <ErrorSection ref={errorSectionRef} />
+                <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
+            </form>
+        </FormProvider>
     )
 }
 

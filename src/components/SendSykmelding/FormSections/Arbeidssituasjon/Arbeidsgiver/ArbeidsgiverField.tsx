@@ -27,14 +27,17 @@ function ArbeidsgiverField({ arbeidsgivere }: Props): JSX.Element {
                 id={field.name}
                 legend={sporsmal.arbeidsgiverOrgnummer}
                 onChange={(value: ArbeidssituasjonType) => {
-                    logAmplitudeEvent({
-                        eventName: 'skjema spørsmål besvart',
-                        data: {
-                            skjemanavn: 'arbeidsgiver',
-                            spørsmål: sporsmal.arbeidsgiverOrgnummer,
-                            svar: value,
+                    logAmplitudeEvent(
+                        {
+                            eventName: 'skjema spørsmål besvart',
+                            data: {
+                                skjemanavn: 'arbeidsgiver',
+                                spørsmål: sporsmal.arbeidsgiverOrgnummer,
+                                svar: value,
+                            },
                         },
-                    })
+                        { newForm: true },
+                    )
                     field.onChange(value)
                 }}
                 error={fieldState.error?.message}

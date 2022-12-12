@@ -7,7 +7,6 @@ export interface PublicEnv {
     SYKEFRAVAER_ROOT: string
     SYKEPENGESOKNAD_URL: string
     AMPLITUDE_ENABLED: string
-    ENABLE_NEW_FORM: string
 }
 
 export interface ServerEnv {

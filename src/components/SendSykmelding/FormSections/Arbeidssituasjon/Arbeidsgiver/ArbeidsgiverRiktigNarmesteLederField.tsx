@@ -35,14 +35,17 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
                     required: 'Du må svare på om dette er nærmeste lederen som skal følge deg opp.',
                 }}
                 onChange={(value) => {
-                    logAmplitudeEvent({
-                        eventName: 'skjema spørsmål besvart',
-                        data: {
-                            skjemanavn: 'åpen sykmelding',
-                            spørsmål: 'Er det rett nærmeste leder som skal følge deg opp?',
-                            svar: value,
+                    logAmplitudeEvent(
+                        {
+                            eventName: 'skjema spørsmål besvart',
+                            data: {
+                                skjemanavn: 'åpen sykmelding',
+                                spørsmål: 'Er det rett nærmeste leder som skal følge deg opp?',
+                                svar: value,
+                            },
                         },
-                    })
+                        { newForm: true },
+                    )
                 }}
             />
             {riktigNarmesteLeder != null && (
