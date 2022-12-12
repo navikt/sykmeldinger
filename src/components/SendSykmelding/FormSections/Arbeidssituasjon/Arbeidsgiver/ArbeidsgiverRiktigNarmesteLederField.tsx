@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Alert } from '@navikt/ds-react'
+import { Alert, ReadMore } from '@navikt/ds-react'
 
 import { QuestionWrapper } from '../../shared/FormStructure'
 import { NaermesteLederFragment, YesOrNo } from '../../../../../fetching/graphql.generated'
@@ -25,6 +25,12 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
             <YesNoField
                 name="riktigNarmesteLeder"
                 legend={sporsmolOgSvar.riktigNarmesteLeder.sporsmalstekst(narmesteLeder.navn)}
+                subtext={
+                    <ReadMore header="Les om hva det innebærer">
+                        Den vi spør om, vil få se sykmeldingen din og kan bli kontaktet av NAV underveis i sykefraværet.
+                        Hør med arbeidsgiveren din hvis du mener det er en annen de skulle meldt inn i stedet.
+                    </ReadMore>
+                }
                 rules={{
                     required: 'Du må svare på om dette er nærmeste lederen som skal følge deg opp.',
                 }}
@@ -39,9 +45,11 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
                     })
                 }}
             />
-            {riktigNarmesteLeder === YesOrNo.YES && (
-                <Alert className={styles.riktigNarmesteLederInfo} variant="info" role="alert" aria-live="polite">
-                    Vi sender sykmeldingen til {narmesteLeder.navn}, som finner den ved å logge inn på nav.no
+            {riktigNarmesteLeder != null && (
+                <Alert className={styles.narmestelederInfo} variant="info" role="alert" aria-live="polite">
+                    {riktigNarmesteLeder === YesOrNo.YES
+                        ? `Vi sender sykmeldingen til ${narmesteLeder.navn}, som finner den ved å logge inn på nav.no`
+                        : 'Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.'}
                 </Alert>
             )}
         </QuestionWrapper>

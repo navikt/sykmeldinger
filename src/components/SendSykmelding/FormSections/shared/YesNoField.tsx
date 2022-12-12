@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
 import { UseControllerProps } from 'react-hook-form/dist/types/controller'
@@ -6,14 +6,17 @@ import { UseControllerProps } from 'react-hook-form/dist/types/controller'
 import { FormValues } from '../../SendSykmeldingForm'
 import { YesOrNo } from '../../../../fetching/graphql.generated'
 
+import styles from './YesNoField.module.css'
+
 interface Props {
     name: 'erOpplysningeneRiktige' | 'riktigNarmesteLeder' | 'harBruktEgenmelding' | 'harForsikring'
     legend: string
+    subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void
     rules?: UseControllerProps['rules']
 }
 
-function YesNoField({ name, legend, onChange, rules }: Props): JSX.Element {
+function YesNoField({ name, legend, subtext, onChange, rules }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name,
         rules,
@@ -32,6 +35,7 @@ function YesNoField({ name, legend, onChange, rules }: Props): JSX.Element {
                 onChange?.(value)
             }}
         >
+            {subtext && <div className={styles.subText}>{subtext}</div>}
             <Radio value={YesOrNo.YES}>Ja</Radio>
             <Radio value={YesOrNo.NO}>Nei</Radio>
         </RadioGroup>
