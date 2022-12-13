@@ -139,6 +139,44 @@ describe('sendSykmeldingMapping', () => {
         })
     })
 
+    it('should map a arbeidssituasjon with inactive arbeidsgiver result correctly', () => {
+        const sykmelding = sykmeldingApen()
+        const mappedResult = mapSendSykmeldingValuesToV3Api(
+            {
+                erOpplysningeneRiktige: YesOrNo.YES,
+                arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
+                arbeidsgiverOrgnummer: '110110110',
+                riktigNarmesteLeder: YesOrNo.YES,
+            },
+            sykmelding,
+            {
+                ...brukerinformasjon,
+                arbeidsgivere: [{ ...arbeidsgivereMock[0], aktivtArbeidsforhold: false, naermesteLeder: null }],
+            },
+            erUtenforVentetid,
+        )
+
+        expect(mappedResult).toEqual({
+            erOpplysningeneRiktige: {
+                sporsmaltekst: 'Stemmer opplysningene?',
+                svar: 'JA',
+            },
+            arbeidssituasjon: {
+                sporsmaltekst: 'Jeg er sykmeldt som',
+                svar: 'ARBEIDSTAKER',
+            },
+            arbeidsgiverOrgnummer: {
+                sporsmaltekst: 'Velg arbeidsgiver',
+                svar: '110110110',
+            },
+            riktigNarmesteLeder: null,
+            egenmeldingsperioder: null,
+            harBruktEgenmelding: null,
+            harForsikring: null,
+            uriktigeOpplysninger: null,
+        })
+    })
+
     it('should map a frilanser with egenmeldingsperioder and forsikring correctly', () => {
         const sykmelding = sykmeldingApen()
         const mappedResult = mapSendSykmeldingValuesToV3Api(
