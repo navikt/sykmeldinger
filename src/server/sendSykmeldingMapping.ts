@@ -26,13 +26,18 @@ export function mapSendSykmeldingValuesToV3Api(
     if (values.arbeidssituasjon == null) throw new Error('Illegal state: arbeidssituasjon is required')
     if (values.erOpplysningeneRiktige == null) throw new Error('Illegal state: erOpplysningeneRiktige is required')
 
-    const valgtNarmesteLederNavn: string | null =
-        brukerinformasjon.arbeidsgivere.find((arbeidsgiver) => arbeidsgiver.orgnummer === values.arbeidsgiverOrgnummer)
-            ?.naermesteLeder?.navn ?? null
+    const valgtArbeidsgiver = brukerinformasjon.arbeidsgivere.find(
+        (arbeidsgiver) => arbeidsgiver.orgnummer === values.arbeidsgiverOrgnummer,
+    )
+    const valgtNarmesteLederNavn: string | null = valgtArbeidsgiver?.naermesteLeder?.navn ?? null
 
-    if (values.arbeidsgiverOrgnummer != null && valgtNarmesteLederNavn == null) {
+    if (
+        values.arbeidsgiverOrgnummer != null &&
+        valgtArbeidsgiver?.aktivtArbeidsforhold &&
+        valgtNarmesteLederNavn == null
+    ) {
         throw new Error(
-            `Illegal state: unable to find narmeste leder for selected arbeidsgiver ${values.arbeidsgiverOrgnummer}`,
+            `Illegal state: unable to find narmeste leder for selected aktive arbeidsgiver ${values.arbeidsgiverOrgnummer}`,
         )
     }
 
