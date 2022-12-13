@@ -21,8 +21,7 @@ interface OkApenSykmeldingProps {
 
 function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount }: OkApenSykmeldingProps): JSX.Element {
     useHotjarTrigger('SYKMELDING_OK_APEN')
-    // const useNewForm = shouldUseNewForm(sykmelding.pasient?.fnr)
-    const useNewForm = false
+    const useNewForm = shouldUseNewForm(sykmelding.pasient?.fnr)
 
     if (olderSykmeldingId) {
         return (
@@ -85,7 +84,6 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
 /**
  * This should enable the form for roughly 5% of the users, used as a temporary hacky feature toggle
  */
-/*
 function shouldUseNewForm(fnr: string | null | undefined): boolean {
     if (process.env.NODE_ENV === 'development') return true
 
@@ -93,6 +91,5 @@ function shouldUseNewForm(fnr: string | null | undefined): boolean {
     const last2Digits = +fnr.slice(-2)
     return last2Digits % 20 === 0
 }
- */
 
 export default OkApenSykmelding
