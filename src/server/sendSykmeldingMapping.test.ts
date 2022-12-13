@@ -146,7 +146,6 @@ describe('sendSykmeldingMapping', () => {
                 erOpplysningeneRiktige: YesOrNo.YES,
                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
                 arbeidsgiverOrgnummer: '110110110',
-                riktigNarmesteLeder: YesOrNo.YES,
             },
             sykmelding,
             {
@@ -175,6 +174,29 @@ describe('sendSykmeldingMapping', () => {
             harForsikring: null,
             uriktigeOpplysninger: null,
         })
+    })
+
+    it('should throw error if user answered riktigNarmesteLeder but mapping is missing said leader', () => {
+        const sykmelding = sykmeldingApen()
+        const mapIt = (): unknown =>
+            mapSendSykmeldingValuesToV3Api(
+                {
+                    erOpplysningeneRiktige: YesOrNo.YES,
+                    arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
+                    arbeidsgiverOrgnummer: '110110110',
+                    riktigNarmesteLeder: YesOrNo.YES,
+                },
+                sykmelding,
+                {
+                    ...brukerinformasjon,
+                    arbeidsgivere: [{ ...arbeidsgivereMock[0], aktivtArbeidsforhold: true, naermesteLeder: null }],
+                },
+                erUtenforVentetid,
+            )
+
+        expect(mapIt).toThrowError(
+            'Illegal state: unable to find narmeste leder for selected aktive arbeidsgiver 110110110',
+        )
     })
 
     it('should map a frilanser with egenmeldingsperioder and forsikring correctly', () => {

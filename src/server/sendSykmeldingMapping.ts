@@ -34,6 +34,7 @@ export function mapSendSykmeldingValuesToV3Api(
     if (
         values.arbeidsgiverOrgnummer != null &&
         valgtArbeidsgiver?.aktivtArbeidsforhold &&
+        values.riktigNarmesteLeder != null &&
         valgtNarmesteLederNavn == null
     ) {
         throw new Error(
