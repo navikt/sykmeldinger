@@ -1,3 +1,5 @@
+import { logger } from '@navikt/next-logger'
+
 import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 
@@ -37,8 +39,8 @@ export function mapSendSykmeldingValuesToV3Api(
         values.riktigNarmesteLeder != null &&
         valgtNarmesteLederNavn == null
     ) {
-        throw new Error(
-            `Illegal state: unable to find narmeste leder for selected aktive arbeidsgiver ${values.arbeidsgiverOrgnummer}`,
+        logger.warn(
+            `Illegal state: unable to find narmeste leder for selected aktive arbeidsgiver ${values.arbeidsgiverOrgnummer}. SykmeldingId: ${sykmelding.id}`,
         )
     }
 
