@@ -82,14 +82,14 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
 }
 
 /**
- * This should enable the form for roughly 33% of the users, used as a temporary hacky feature toggle
+ * This should enable the form for 50% of the users, used as a temporary hacky feature toggle
  */
 function shouldUseNewForm(fnr: string | null | undefined): boolean {
     if (process.env.NODE_ENV === 'development') return true
 
     if (!fnr) return false
     const last2Digits = +fnr.slice(-2)
-    return last2Digits % 3 === 0
+    return last2Digits % 2 === 0
 }
 
 export default OkApenSykmelding
