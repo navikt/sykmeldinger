@@ -31,17 +31,6 @@ export function mapSendSykmeldingValuesToV3Api(
     )
     const valgtNarmesteLederNavn: string | null = valgtArbeidsgiver?.naermesteLeder?.navn ?? null
 
-    if (
-        values.arbeidsgiverOrgnummer != null &&
-        valgtArbeidsgiver?.aktivtArbeidsforhold &&
-        values.riktigNarmesteLeder != null &&
-        valgtNarmesteLederNavn == null
-    ) {
-        throw new Error(
-            `Illegal state: unable to find narmeste leder for selected aktive arbeidsgiver ${values.arbeidsgiverOrgnummer}`,
-        )
-    }
-
     const oppfolgingsdato = erUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding)
 
     return {
