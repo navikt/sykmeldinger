@@ -19,6 +19,7 @@ import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOld
 import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
 import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer'
 import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
 
 function SykmeldingkvitteringPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_KVITTERING')
@@ -83,6 +84,10 @@ function SykmeldingkvitteringPage(): JSX.Element {
                     sykmeldingsperioder={data.sykmelding.sykmeldingsperioder}
                     sykmeldingMerknader={data.sykmelding.merknader ?? []}
                 />
+            </Spacing>
+
+            <Spacing>
+                <UxSignalsWidget />
             </Spacing>
 
             <Spacing>
