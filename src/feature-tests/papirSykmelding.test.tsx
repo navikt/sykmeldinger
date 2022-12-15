@@ -93,9 +93,7 @@ describe('Papir sykmelding', () => {
         render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
-                createExtraFormDataMock({
-                    sykmeldingId: 'papir-sykmelding',
-                }),
+                createExtraFormDataMock(),
                 createMock({
                     request: {
                         query: ChangeSykmeldingStatusDocument,
@@ -130,5 +128,44 @@ describe('Papir sykmelding', () => {
         userEvent.click(await screen.findByRole('button', { name: 'Avbryt sykmeldingen' }))
 
         expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
+    })
+
+    describe('Utenlandsk sykmelding', () => {
+        it('Should show country for utenlandsk sykmelding', async () => {
+            const mock = [
+                createExtraFormDataMock({
+                    sykmeldingId: 'papir-sykmelding',
+                }),
+                createMock({
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'papir-sykmelding' } },
+                    result: { data: { __typename: 'Query', sykmelding: papirSykmelding } },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [
+                                {
+                                    ...papirSykmelding,
+                                    utenlandskSykmelding: {
+                                        __typename: 'UtenlandskSykmelding',
+                                        land: 'Island',
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                }),
+            ]
+
+            render(<SykmeldingPage />, {
+                mocks: mock,
+            })
+
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            expect(screen.getByRole('heading', { name: 'Landet sykmeldingen ble skrevet' })).toBeInTheDocument()
+            expect(screen.getByText('Island')).toBeInTheDocument()
+        })
     })
 })

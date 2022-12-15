@@ -7,6 +7,7 @@ import Lukknapp from '../../Lukknapp/Lukknapp'
 
 import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver'
 import styles from './SykmeldingArbeidsgiverContainer.module.css'
+import SykmeldingArbeidsgiverUtenlandsk from './SykmeldingArbeidsgiverUtenlandsk'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -52,7 +53,11 @@ function SykmeldingArbeidsgiverContainer({ sykmelding }: Props): JSX.Element {
                         id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`}
                         aria-labelledby={headerId}
                     >
-                        <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
+                        {sykmelding.utenlandskSykmelding ? (
+                            <SykmeldingArbeidsgiverUtenlandsk sykmelding={sykmelding} />
+                        ) : (
+                            <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
+                        )}
                         <Lukknapp onClick={() => setExpanded(false)} />
                     </Accordion.Content>
                 </Accordion.Item>

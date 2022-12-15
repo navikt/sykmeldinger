@@ -606,6 +606,7 @@ export type ChangeSykmeldingStatusMutation = {
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
         } | null
+        readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
 }
 
@@ -766,6 +767,7 @@ export type SubmitSykmeldingMutation = {
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
         } | null
+        readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
 }
 
@@ -926,6 +928,7 @@ export type SendSykmeldingMutation = {
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
         } | null
+        readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
 }
 
@@ -1148,6 +1151,7 @@ export type SykmeldingFragment = {
         readonly mellomnavn?: string | null
         readonly etternavn?: string | null
     } | null
+    readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
 }
 
 export type SykmeldingerQueryVariables = Exact<{ [key: string]: never }>
@@ -1304,6 +1308,7 @@ export type SykmeldingerQuery = {
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
         } | null
+        readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }>
 }
 
@@ -1463,6 +1468,7 @@ export type SykmeldingByIdQuery = {
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
         } | null
+        readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
 }
 
@@ -1890,6 +1896,14 @@ export const SykmeldingFragmentDoc = {
                                 { kind: 'Field', name: { kind: 'Name', value: 'mellomnavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'etternavn' } },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'utenlandskSykmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'Field', name: { kind: 'Name', value: 'land' } }],
                         },
                     },
                 ],

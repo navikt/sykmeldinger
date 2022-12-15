@@ -42,19 +42,23 @@ const SykmeldingPdf = ({ sykmelding, timestamp }: Props): JSX.Element => {
                 <SykmeldingenGjelder pasient={sykmelding.pasient} />
                 <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} />
                 <AnnenInfo sykmelding={sykmelding} />
-                {sykmelding.sykmeldingsperioder?.map(
-                    (periode: Periode, index: number) =>
-                        periode.aktivitetIkkeMulig && (
-                            <AktivitetIkkeMulig key={index} aktivitetIkkeMulig={periode.aktivitetIkkeMulig} />
-                        ),
+                {!sykmelding.utenlandskSykmelding && (
+                    <>
+                        {sykmelding.sykmeldingsperioder?.map(
+                            (periode: Periode, index: number) =>
+                                periode.aktivitetIkkeMulig && (
+                                    <AktivitetIkkeMulig key={index} aktivitetIkkeMulig={periode.aktivitetIkkeMulig} />
+                                ),
+                        )}
+                        <Prognose prognose={sykmelding.prognose} />
+                        <Arbeidsevne tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} />
+                        <MeldingTilNav meldingTilNav={sykmelding.meldingTilNAV} />
+                        <MeldingTilArbeidsgiver meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver} />
+                        <Tilbakedatering kontaktMedPasient={sykmelding.kontaktMedPasient} />
+                        <PageNumbers />
+                        <GeneratedTimestamp timestamp={timestamp} />
+                    </>
                 )}
-                <Prognose prognose={sykmelding.prognose} />
-                <Arbeidsevne tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} />
-                <MeldingTilNav meldingTilNav={sykmelding.meldingTilNAV} />
-                <MeldingTilArbeidsgiver meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver} />
-                <Tilbakedatering kontaktMedPasient={sykmelding.kontaktMedPasient} />
-                <PageNumbers />
-                <GeneratedTimestamp timestamp={timestamp} />
             </Page>
         </Document>
     )
