@@ -359,6 +359,7 @@ export type Sykmelding = {
     tiltakArbeidsplassen: Maybe<Scalars['String']>
     tiltakNAV: Maybe<Scalars['String']>
     utdypendeOpplysninger: Scalars['JSON']
+    utenlandskSykmelding: Maybe<UtenlandskSykmelding>
 }
 
 export enum SykmeldingChangeStatus {
@@ -394,6 +395,11 @@ export type UtenforVentetid = {
     __typename?: 'UtenforVentetid'
     erUtenforVentetid: Scalars['Boolean']
     oppfolgingsdato: Maybe<Scalars['Date']>
+}
+
+export type UtenlandskSykmelding = {
+    __typename?: 'UtenlandskSykmelding'
+    land: Scalars['String']
 }
 
 export enum YesOrNo {
@@ -529,6 +535,7 @@ export type ResolversTypes = ResolversObject<{
     UriktigeOpplysningerType: UriktigeOpplysningerType
     UtdypendeOpplysning: ResolverTypeWrapper<UtdypendeOpplysning>
     UtenforVentetid: ResolverTypeWrapper<UtenforVentetid>
+    UtenlandskSykmelding: ResolverTypeWrapper<UtenlandskSykmelding>
     YesOrNo: YesOrNo
 }>
 
@@ -575,6 +582,7 @@ export type ResolversParentTypes = ResolversObject<{
     SykmeldingStatus: SykmeldingStatus
     UtdypendeOpplysning: UtdypendeOpplysning
     UtenforVentetid: UtenforVentetid
+    UtenlandskSykmelding: UtenlandskSykmelding
 }>
 
 export type AdresseResolvers<
@@ -924,6 +932,7 @@ export type SykmeldingResolvers<
     tiltakArbeidsplassen?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     tiltakNAV?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     utdypendeOpplysninger?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>
+    utenlandskSykmelding?: Resolver<Maybe<ResolversTypes['UtenlandskSykmelding']>, ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -954,6 +963,14 @@ export type UtenforVentetidResolvers<
 > = ResolversObject<{
     erUtenforVentetid?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
     oppfolgingsdato?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type UtenlandskSykmeldingResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['UtenlandskSykmelding'] = ResolversParentTypes['UtenlandskSykmelding'],
+> = ResolversObject<{
+    land?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -993,4 +1010,5 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     SykmeldingStatus?: SykmeldingStatusResolvers<ContextType>
     UtdypendeOpplysning?: UtdypendeOpplysningResolvers<ContextType>
     UtenforVentetid?: UtenforVentetidResolvers<ContextType>
+    UtenlandskSykmelding?: UtenlandskSykmeldingResolvers<ContextType>
 }>

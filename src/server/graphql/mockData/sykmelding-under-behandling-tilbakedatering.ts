@@ -115,5 +115,6 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
         harRedusertArbeidsgiverperiode: false,
         merknader: [{ type: 'UNDER_BEHANDLING', beskrivelse: null }],
         pasient: { fnr: '06078104285', fornavn: 'KORRUPT', mellomnavn: null, etternavn: 'RISPBÆRBUSK' },
+        utenlandskSykmelding: null,
     }
 }

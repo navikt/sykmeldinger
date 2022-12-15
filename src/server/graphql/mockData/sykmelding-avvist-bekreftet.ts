@@ -107,4 +107,5 @@ export const sykmeldingAvvistBekreftet: Sykmelding = {
     prognose: null,
     tiltakArbeidsplassen: null,
     tiltakNAV: null,
+    utenlandskSykmelding: null,
 }

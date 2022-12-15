@@ -25,6 +25,7 @@ type Sykmelding {
     harRedusertArbeidsgiverperiode: Boolean
     merknader: [Merknad!]
     pasient: Pasient
+    utenlandskSykmelding: UtenlandskSykmelding
 }
 
 type ArbeidsgiverSykmelding {
@@ -78,4 +79,8 @@ type UtdypendeOpplysning {
     sporsmal: String
     svar: String!
     restriksjoner: [SvarRestriksjon!]!
+}
+
+type UtenlandskSykmelding {
+    land: String!
 }

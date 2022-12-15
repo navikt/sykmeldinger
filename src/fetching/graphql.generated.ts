@@ -356,6 +356,7 @@ export type Sykmelding = {
     readonly tiltakArbeidsplassen?: Maybe<Scalars['String']>
     readonly tiltakNAV?: Maybe<Scalars['String']>
     readonly utdypendeOpplysninger: Scalars['JSON']
+    readonly utenlandskSykmelding?: Maybe<UtenlandskSykmelding>
 }
 
 export enum SykmeldingChangeStatus {
@@ -391,6 +392,11 @@ export type UtenforVentetid = {
     readonly __typename: 'UtenforVentetid'
     readonly erUtenforVentetid: Scalars['Boolean']
     readonly oppfolgingsdato?: Maybe<Scalars['Date']>
+}
+
+export type UtenlandskSykmelding = {
+    readonly __typename: 'UtenlandskSykmelding'
+    readonly land: Scalars['String']
 }
 
 export enum YesOrNo {

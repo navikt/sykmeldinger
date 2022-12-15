@@ -148,5 +148,6 @@ export function sykmeldingAvvist(mottatt = dateSub(new Date(), { months: 1 })): 
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
+        utenlandskSykmelding: null,
     }
 }

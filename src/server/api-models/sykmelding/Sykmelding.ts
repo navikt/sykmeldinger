@@ -14,6 +14,7 @@ import { PrognoseSchema } from './Prognose'
 import { SykmeldingStatusSchema } from './SykmeldingStatus'
 import { UtdypendeOpplysningSchema } from './UtdypendeOpplysninger'
 import { PasientSchema } from './Pasient'
+import { UtenlandskSykmeldingSchema } from './UtenlandskSykmelding'
 
 export type Sykmelding = z.infer<typeof SykmeldingSchema>
 export const SykmeldingSchema = z.object({
@@ -43,4 +44,5 @@ export const SykmeldingSchema = z.object({
     harRedusertArbeidsgiverperiode: z.boolean().nullable(),
     merknader: z.array(MerknadSchema).nullable(),
     pasient: PasientSchema.nullable(),
+    utenlandskSykmelding: UtenlandskSykmeldingSchema.nullable(),
 })

@@ -193,6 +193,7 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
             mellomnavn: null,
             etternavn: 'Nordmann',
         },
+        utenlandskSykmelding: null,
         ...overrides,
     }
 }
