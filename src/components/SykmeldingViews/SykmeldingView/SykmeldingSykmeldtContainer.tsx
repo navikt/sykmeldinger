@@ -6,6 +6,7 @@ import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../utils/dateUtils'
 import { getPublicEnv } from '../../../utils/env'
 
+import SykmeldingSykmeldtUtenlandsk from './SykmeldingSykmeldtUtenlandsk'
 import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt'
 import styles from './SykmeldingSykmeldtContainer.module.css'
 
@@ -41,7 +42,11 @@ const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => 
                     </div>
                 </div>
             </header>
-            <SykmeldingViewSykmeldt sykmelding={sykmelding} />
+            {sykmelding.utenlandskSykmelding ? (
+                <SykmeldingSykmeldtUtenlandsk sykmelding={sykmelding} />
+            ) : (
+                <SykmeldingViewSykmeldt sykmelding={sykmelding} />
+            )}
         </article>
     )
 }

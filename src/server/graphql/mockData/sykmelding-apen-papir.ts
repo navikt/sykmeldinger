@@ -106,6 +106,8 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
         rulesetVersion: 3,
-        utenlandskSykmelding: null,
+        utenlandskSykmelding: {
+            land: 'Spania',
+        },
     }
 }
