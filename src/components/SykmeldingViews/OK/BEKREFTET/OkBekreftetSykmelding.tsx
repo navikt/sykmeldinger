@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@navikt/ds-react'
 import { FillForms } from '@navikt/ds-icons'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import Spacing from '../../../Spacing/Spacing'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
@@ -10,7 +10,7 @@ import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/a
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkBekreftetSykmeldingProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
     reopen: () => void
 }
 

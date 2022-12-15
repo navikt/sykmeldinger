@@ -25,6 +25,7 @@ type Sykmelding {
     harRedusertArbeidsgiverperiode: Boolean
     merknader: [Merknad!]
     pasient: Pasient
+    rulesetVersion: Int!
     utenlandskSykmelding: UtenlandskSykmelding
 }
 

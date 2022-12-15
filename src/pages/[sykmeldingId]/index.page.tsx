@@ -20,7 +20,7 @@ import Spacing from '../../components/Spacing/Spacing'
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
-import { Sykmelding } from '../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../fetching/graphql.generated'
 import { getPublicEnv } from '../../utils/env'
 import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
@@ -75,15 +75,15 @@ function SykmeldingPage(): JSX.Element {
     )
 }
 
-const SykmeldingComponent = ({
+function SykmeldingComponent({
     sykmelding,
     olderSykmeldingId,
     olderSykmeldingCount,
 }: {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
     olderSykmeldingId: string | null
     olderSykmeldingCount: number
-}): JSX.Element | null => {
+}): JSX.Element | null {
     const [hasReopenedSykmelding, setHasReopenedSykmelding] = useState(false)
     const reopen = useCallback(() => {
         setHasReopenedSykmelding(true)
@@ -145,7 +145,10 @@ const SykmeldingComponent = ({
     return null
 }
 
-function SykmeldingerWrapper({ sykmelding, children }: PropsWithChildren<{ sykmelding?: Sykmelding }>): JSX.Element {
+function SykmeldingerWrapper({
+    sykmelding,
+    children,
+}: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): JSX.Element {
     const publicEnv = getPublicEnv()
 
     useUpdateBreadcrumbs(() => [{ title: getSykmeldingTitle(sykmelding) }])

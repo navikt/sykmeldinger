@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import Spacing from '../../../Spacing/Spacing'
@@ -10,7 +10,7 @@ import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmel
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface InvalidBekreftetSykmeldingProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
 }
 
 const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({ sykmelding }) => {

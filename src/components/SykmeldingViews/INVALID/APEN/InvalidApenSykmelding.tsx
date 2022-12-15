@@ -2,7 +2,7 @@ import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react'
 import { Controller, useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 
-import { Sykmelding, SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
+import { SykmeldingChangeStatus, SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import Spacing from '../../../Spacing/Spacing'
@@ -14,7 +14,7 @@ import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/a
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface InvalidApenSykmeldingProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
 }
 
 interface FormData {

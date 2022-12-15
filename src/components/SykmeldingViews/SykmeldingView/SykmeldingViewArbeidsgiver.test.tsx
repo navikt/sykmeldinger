@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
 
-import { Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../../../fetching/graphql.generated'
+import { Periodetype, RegelStatus, StatusEvent, SykmeldingFragment } from '../../../fetching/graphql.generated'
 
 import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver'
 
-const minimalSykmelding: Sykmelding = {
+const minimalSykmelding: SykmeldingFragment = {
     __typename: 'Sykmelding',
     id: '123',
     mottattTidspunkt: '2020-01-10',

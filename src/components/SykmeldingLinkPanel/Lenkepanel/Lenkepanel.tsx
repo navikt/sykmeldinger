@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react'
 import cn from 'classnames'
 
-import { Sykmelding } from '../../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../../utils/sykmeldingUtils'
 import { getDescription } from '../../../utils/periodeUtils'
 
@@ -12,11 +12,11 @@ import LenkepanelEtikett from './LenkepanelEtikett'
 import styles from './Lenkepanel.module.css'
 
 interface LenkepanelProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
     isNew: boolean
 }
 
-const Lenkepanel: React.FC<LenkepanelProps> = ({ sykmelding, isNew }) => {
+function Lenkepanel({ sykmelding, isNew }: LenkepanelProps): JSX.Element {
     const status = sykmelding.sykmeldingStatus.statusEvent
     const behandlingsutfallStatus = sykmelding.behandlingsutfall.status
     const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn

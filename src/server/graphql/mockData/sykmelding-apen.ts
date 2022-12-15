@@ -164,6 +164,7 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             mellomnavn: null,
             etternavn: 'Nordmann',
         },
+        rulesetVersion: 3,
         utenlandskSykmelding: null,
     }
 }

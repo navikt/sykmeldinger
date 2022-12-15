@@ -352,6 +352,7 @@ export type Sykmelding = {
     papirsykmelding: Maybe<Scalars['Boolean']>
     pasient: Maybe<Pasient>
     prognose: Maybe<Prognose>
+    rulesetVersion: Scalars['Int']
     skjermesForPasient: Scalars['Boolean']
     syketilfelleStartDato: Maybe<Scalars['Date']>
     sykmeldingStatus: SykmeldingStatus
@@ -925,6 +926,7 @@ export type SykmeldingResolvers<
     papirsykmelding?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
     pasient?: Resolver<Maybe<ResolversTypes['Pasient']>, ParentType, ContextType>
     prognose?: Resolver<Maybe<ResolversTypes['Prognose']>, ParentType, ContextType>
+    rulesetVersion?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
     skjermesForPasient?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
     syketilfelleStartDato?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>
     sykmeldingStatus?: Resolver<ResolversTypes['SykmeldingStatus'], ParentType, ContextType>

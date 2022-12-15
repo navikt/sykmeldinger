@@ -131,6 +131,7 @@ export function sykmeldingSendt(mottatt = '2020-02-01'): Sykmelding {
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
+        rulesetVersion: 3,
         utenlandskSykmelding: null,
     }
 }

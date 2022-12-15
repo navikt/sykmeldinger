@@ -100,5 +100,6 @@ export const sykmeldingBekreftet: Sykmelding = {
     prognose: null,
     tiltakArbeidsplassen: null,
     tiltakNAV: null,
+    rulesetVersion: 3,
     utenlandskSykmelding: null,
 }

@@ -1,6 +1,6 @@
 import { GuidePanel } from '@navikt/ds-react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import Spacing from '../../../Spacing/Spacing'
 import InformationBanner from '../../../InformationBanner/InformationBanner'
@@ -11,7 +11,7 @@ import SendSykmeldingForm from '../../../SendSykmelding/SendSykmeldingForm'
 import PapirInfoheader from './PapirInfoheader'
 
 interface OkApenSykmeldingProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
     olderSykmeldingId: string | null
     olderSykmeldingCount: number
 }

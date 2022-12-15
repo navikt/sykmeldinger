@@ -2,7 +2,7 @@ import { differenceInDays, isAfter, parseISO } from 'date-fns'
 import dayjs from 'dayjs'
 import { sortBy } from 'remeda'
 
-import { StatusEvent, Sykmelding, Periode, SykmeldingFragment } from '../fetching/graphql.generated'
+import { StatusEvent, Periode, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { toDate } from './dateUtils'
 
@@ -26,7 +26,7 @@ export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
  * @return {string}
  */
 export function getSykmeldingTitle(
-    sykmelding: Sykmelding | undefined,
+    sykmelding: SykmeldingFragment | undefined,
 ): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' {
     if (sykmelding?.papirsykmelding) {
         return 'Papirsykmelding'
@@ -63,7 +63,7 @@ export const toLatestTom = (previousValue: Periode, currentValue: Periode): Peri
  * Get the last tom date of the last sykmelding period
  * @return {Date} The end date
  */
-export function getSykmeldingEndDate(sykmelding: Sykmelding): string {
+export function getSykmeldingEndDate(sykmelding: SykmeldingFragment): string {
     return sykmelding.sykmeldingsperioder.reduce((acc, value) => {
         if (dayjs(value.fom).isAfter(dayjs(acc.fom))) {
             return value
@@ -85,7 +85,7 @@ export const getSykmeldingperioderSorted = <Periode extends { fom: string; tom: 
  * Get the text representation of the sykmelding length from start date to end date
  * @return {string} The sykmelding length
  */
-export function getReadableSykmeldingLength(sykmelding: Sykmelding): string {
+export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment): string {
     const startDate = getSykmeldingStartDate(sykmelding)
     const endDate = getSykmeldingEndDate(sykmelding)
 

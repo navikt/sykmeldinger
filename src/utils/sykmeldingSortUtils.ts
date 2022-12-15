@@ -1,7 +1,7 @@
 import { compareAsc } from 'date-fns'
 import { sortBy } from 'remeda'
 
-import { Sykmelding, SykmeldingFragment } from '../fetching/graphql.generated'
+import { SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { toLatestTom } from './sykmeldingUtils'
 import { toDate } from './dateUtils'
@@ -18,7 +18,7 @@ export function sykmeldingByDateAsc(a: SykmeldingFragment, b: SykmeldingFragment
  * @param {Sykmelding[]} sykmeldinger A list of sykmeldinger
  * @return {Sykmeldinger[]} A new list of sorted sykmeldinger
  */
-export function sortSykmeldingerByArbeidsgiver(sykmeldinger: Sykmelding[]): Sykmelding[] {
+export function sortSykmeldingerByArbeidsgiver(sykmeldinger: SykmeldingFragment[]): SykmeldingFragment[] {
     if (sykmeldinger.length === 0) return sykmeldinger
 
     return sortBy(sykmeldinger, [(sykmelding) => sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn ?? '', 'asc'])

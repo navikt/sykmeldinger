@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import Spacing from '../../../Spacing/Spacing'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
@@ -10,7 +10,7 @@ import { isUnderbehandling } from '../../../../utils/sykmeldingUtils'
 import { UnderBehandlingGuidePanel } from '../../../InformationBanner/InformationBanner'
 
 interface OkSendtSykmeldingProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
 }
 
 function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element {
