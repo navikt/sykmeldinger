@@ -105,6 +105,7 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
+        rulesetVersion: 3,
         utenlandskSykmelding: null,
     }
 }

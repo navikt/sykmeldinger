@@ -11,10 +11,14 @@ import {
     RegelStatus,
     StatusEvent,
     Sykmelding,
+    SykmeldingFragment,
 } from '../../fetching/graphql.generated'
 import { dateAdd, dateSub } from '../dateUtils'
 
-export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = StatusEvent.APEN): Sykmelding {
+export function createSykmelding(
+    overrides?: Partial<SykmeldingFragment>,
+    statusEvent = StatusEvent.APEN,
+): SykmeldingFragment {
     const mottatt = overrides?.mottattTidspunkt ?? dateSub(new Date(), { days: 2 })
 
     return {
@@ -193,7 +197,6 @@ export function createSykmelding(overrides?: Partial<Sykmelding>, statusEvent = 
             mellomnavn: null,
             etternavn: 'Nordmann',
         },
-        utenlandskSykmelding: null,
         ...overrides,
     }
 }

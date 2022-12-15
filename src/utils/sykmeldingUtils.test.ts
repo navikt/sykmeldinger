@@ -1,4 +1,4 @@
-import { Periode, Periodetype, RegelStatus, StatusEvent, Sykmelding } from '../fetching/graphql.generated'
+import { Periode, Periodetype, RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import {
     getReadableSykmeldingLength,
@@ -10,7 +10,7 @@ import {
 } from './sykmeldingUtils'
 import { dateSub } from './dateUtils'
 
-const minimalSykmelding: Sykmelding = {
+const minimalSykmelding: SykmeldingFragment = {
     __typename: 'Sykmelding',
     id: 'APEN_PAPIR',
     mottattTidspunkt: dateSub(new Date(), { days: 1 }),
@@ -148,14 +148,14 @@ describe('isActiveSykmelding', () => {
 
 describe('getSykmeldingTitle', () => {
     it('Gets standard sykmelding title', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
         }
         expect(getSykmeldingTitle(sykmelding)).toEqual('Sykmelding')
     })
 
     it('Gets papirsykmelding title', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             papirsykmelding: true,
         }
@@ -163,7 +163,7 @@ describe('getSykmeldingTitle', () => {
     })
 
     it('Gets egenmeldt title', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             egenmeldt: true,
         }
@@ -173,7 +173,7 @@ describe('getSykmeldingTitle', () => {
 
 describe('getSykmeldingStartDate', () => {
     it('Gets fom of the earliest period', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             sykmeldingsperioder: [
                 createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
@@ -187,7 +187,7 @@ describe('getSykmeldingStartDate', () => {
 
 describe('getSykmeldingEndDate', () => {
     it('Gets tom of the latest period', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             sykmeldingsperioder: [
                 createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
@@ -201,7 +201,7 @@ describe('getSykmeldingEndDate', () => {
 
 describe('getSykmeldingperioderSorted', () => {
     it('sorts by fom and tom', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             sykmeldingsperioder: [
                 createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
@@ -221,7 +221,7 @@ describe('getSykmeldingperioderSorted', () => {
 
 describe('getReadableSykmeldingLength', () => {
     it('Lenght is one day', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             sykmeldingsperioder: [createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-01' })],
         }
@@ -229,7 +229,7 @@ describe('getReadableSykmeldingLength', () => {
     })
 
     it('Within same year', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             sykmeldingsperioder: [
                 createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
@@ -241,7 +241,7 @@ describe('getReadableSykmeldingLength', () => {
     })
 
     it('Within same year and month', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             sykmeldingsperioder: [
                 createSykmeldingPeriode({ fom: '2021-06-20', tom: '2021-06-24' }),
@@ -253,7 +253,7 @@ describe('getReadableSykmeldingLength', () => {
     })
 
     it('Different years', () => {
-        const sykmelding: Sykmelding = {
+        const sykmelding: SykmeldingFragment = {
             ...minimalSykmelding,
             sykmeldingsperioder: [
                 createSykmeldingPeriode({ fom: '2020-12-25', tom: '2020-12-31' }),

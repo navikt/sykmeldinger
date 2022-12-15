@@ -16,6 +16,11 @@ import { UtdypendeOpplysningSchema } from './UtdypendeOpplysninger'
 import { PasientSchema } from './Pasient'
 import { UtenlandskSykmeldingSchema } from './UtenlandskSykmelding'
 
+export const RulesetVersion = z.preprocess((value: unknown) => {
+    if (!value) return 2
+    return +String(value)
+}, z.number())
+
 export type Sykmelding = z.infer<typeof SykmeldingSchema>
 export const SykmeldingSchema = z.object({
     id: z.string(),
@@ -44,5 +49,6 @@ export const SykmeldingSchema = z.object({
     harRedusertArbeidsgiverperiode: z.boolean().nullable(),
     merknader: z.array(MerknadSchema).nullable(),
     pasient: PasientSchema.nullable(),
+    rulesetVersion: RulesetVersion,
     utenlandskSykmelding: UtenlandskSykmeldingSchema.nullable(),
 })

@@ -19,12 +19,12 @@ interface LenkepanelContainerProps {
     defaultSortBy?: SortBy
 }
 
-const SykmeldingLinkPanel: React.FC<LenkepanelContainerProps> = ({
+function SykmeldingLinkPanel({
     sykmeldinger,
     type,
     title,
     defaultSortBy = SortBy.DATE,
-}) => {
+}: LenkepanelContainerProps): JSX.Element | null {
     const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy)
     const sykmeldingerSortedByArbeidsgiver = useMemo(() => sortSykmeldingerByArbeidsgiver(sykmeldinger), [sykmeldinger])
 

@@ -1,14 +1,14 @@
 import React from 'react'
 import { Alert, Detail, Heading } from '@navikt/ds-react'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import { toReadableDate } from '../../../../utils/dateUtils'
 import Spacing from '../../../Spacing/Spacing'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkUtgattSykmeldingProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
 }
 
 function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Element {

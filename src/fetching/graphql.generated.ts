@@ -349,6 +349,7 @@ export type Sykmelding = {
     readonly papirsykmelding?: Maybe<Scalars['Boolean']>
     readonly pasient?: Maybe<Pasient>
     readonly prognose?: Maybe<Prognose>
+    readonly rulesetVersion: Scalars['Int']
     readonly skjermesForPasient: Scalars['Boolean']
     readonly syketilfelleStartDato?: Maybe<Scalars['Date']>
     readonly sykmeldingStatus: SykmeldingStatus

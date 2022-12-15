@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, Button, Detail, Heading } from '@navikt/ds-react'
 import { FillForms } from '@navikt/ds-icons'
 
-import { Sykmelding } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import { toReadableDate } from '../../../../utils/dateUtils'
 import Spacing from '../../../Spacing/Spacing'
@@ -11,7 +11,7 @@ import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmel
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkAvbruttSykmeldingProps {
-    sykmelding: Sykmelding
+    sykmelding: SykmeldingFragment
     reopen: () => void
 }
 

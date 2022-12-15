@@ -105,6 +105,7 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
         prognose: null,
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
+        rulesetVersion: 3,
         utenlandskSykmelding: null,
     }
 }

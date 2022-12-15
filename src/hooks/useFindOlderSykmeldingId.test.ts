@@ -4,7 +4,7 @@ import { MockedResponse } from '@apollo/client/testing'
 import { renderHook } from '../utils/test/testUtils'
 import { dateAdd, dateSub } from '../utils/dateUtils'
 import { createMock, createSykmelding, createUnderBehandlingMerknad } from '../utils/test/dataUtils'
-import { Periodetype, StatusEvent, Sykmelding, SykmeldingerDocument } from '../fetching/graphql.generated'
+import { Periodetype, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import useFindOlderSykmeldingId from './useFindOlderSykmeldingId'
 
@@ -140,7 +140,7 @@ describe('useFindOlderSykmeldingId', () => {
     })
 
     describe('should work when there is overlap between sykmeldinger', () => {
-        const createSingle10PeriodApen = (date: string, id: string): Sykmelding => ({
+        const createSingle10PeriodApen = (date: string, id: string): SykmeldingFragment => ({
             ...createSykmelding({ mottattTidspunkt: date, id }),
             sykmeldingsperioder: [
                 {
@@ -180,7 +180,7 @@ describe('useFindOlderSykmeldingId', () => {
     })
 })
 
-function sykmeldingerMock(sykmeldinger: Sykmelding[]): MockedResponse {
+function sykmeldingerMock(sykmeldinger: SykmeldingFragment[]): MockedResponse {
     return createMock({
         request: { query: SykmeldingerDocument },
         result: {

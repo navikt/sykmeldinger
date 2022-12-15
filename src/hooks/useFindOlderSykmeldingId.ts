@@ -1,6 +1,6 @@
 import { isBefore, parseISO } from 'date-fns'
 
-import { Sykmelding, SykmeldingFragment } from '../fetching/graphql.generated'
+import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { getSykmeldingStartDate, isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
 
 import useSykmeldinger from './useSykmeldinger'
@@ -55,7 +55,7 @@ function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
 
     const startDate: string = getSykmeldingStartDate(sykmelding)
     const unsentExceptOverlappingDates = unsentSykmeldinger.filter((it) => getSykmeldingStartDate(it) !== startDate)
-    const earliestSykmelding: Sykmelding = unsentExceptOverlappingDates.reduce(toEarliestSykmelding, sykmelding)
+    const earliestSykmelding: SykmeldingFragment = unsentExceptOverlappingDates.reduce(toEarliestSykmelding, sykmelding)
 
     return {
         // When the earliest sykmelding is the provided sykmelding, it's the very first

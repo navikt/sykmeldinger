@@ -5,7 +5,7 @@ import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-modul
 import { useRouter } from 'next/router'
 import { logger } from '@navikt/next-logger'
 
-import { Sykmelding } from '../fetching/graphql.generated'
+import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { getSykmeldingTitle } from '../utils/sykmeldingUtils'
 import { getPublicEnv } from '../utils/env'
 
@@ -90,7 +90,7 @@ export function useHandleDecoratorClicks(): void {
 
 export function createKvitteringBreadcrumbs(
     sykmeldingId: string,
-    sykmelding: Sykmelding | undefined,
+    sykmelding: SykmeldingFragment | undefined,
 ): [Breadcrumb, LastCrumb] {
     return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Kvittering' }]
 }
