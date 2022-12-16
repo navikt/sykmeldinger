@@ -124,4 +124,5 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
     papirsykmelding: false,
     harRedusertArbeidsgiverperiode: false,
     merknader: null,
+    utenlandskSykmelding: null,
 }
