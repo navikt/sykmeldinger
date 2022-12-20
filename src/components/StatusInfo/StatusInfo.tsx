@@ -94,7 +94,7 @@ function StatusInfo({
                 <Spacing amount="small">
                     <BodyShort>
                         Hvis du vurderer å reise utenfor EØS mens du er sykmeldt, må du{' '}
-                        <Link href="https://tjenester.nav.no/sykepengesoknad/sykepengesoknad-utland" target="_blank">
+                        <Link href="https://www.nav.no/syk/sykepengesoknad/sykepengesoknad-utland" target="_blank">
                             søke om å beholde sykepengene
                         </Link>{' '}
                         før du reiser.
