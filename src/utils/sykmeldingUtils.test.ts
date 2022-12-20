@@ -68,6 +68,7 @@ const minimalSykmelding: SykmeldingFragment = {
     prognose: null,
     tiltakArbeidsplassen: null,
     tiltakNAV: null,
+    utenlandskSykmelding: null,
 }
 
 const createSykmeldingPeriode = ({ fom, tom }: { fom: string; tom: string }): Periode => ({

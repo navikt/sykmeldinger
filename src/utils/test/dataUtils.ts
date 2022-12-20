@@ -197,6 +197,7 @@ export function createSykmelding(
             mellomnavn: null,
             etternavn: 'Nordmann',
         },
+        utenlandskSykmelding: null,
         ...overrides,
     }
 }

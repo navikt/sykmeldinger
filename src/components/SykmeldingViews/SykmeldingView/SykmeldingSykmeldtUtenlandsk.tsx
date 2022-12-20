@@ -1,5 +1,5 @@
-import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils'
+import { UtenlandskSykmelding } from '../../../utils/utenlanskUtils'
 
 import Perioder from './Sections/SykmeldingViewSykmeldt/Perioder'
 import SykmeldingenGjelder from './Sections/SykmeldingViewSykmeldt/SykmeldingenGjelder'
@@ -7,7 +7,7 @@ import AnnenInfo from './Sections/SykmeldingSykmeldtUtenlandsk/AnnenInfo'
 import styles from './SykmeldingSykmeldtUtenlandsk.module.css'
 
 interface Props {
-    sykmelding: SykmeldingFragment
+    sykmelding: UtenlandskSykmelding
 }
 
 function SykmeldingSykmeldtUtenlandsk({ sykmelding }: Props): JSX.Element {

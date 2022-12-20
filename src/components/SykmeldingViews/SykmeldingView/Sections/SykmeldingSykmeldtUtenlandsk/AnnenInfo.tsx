@@ -3,13 +3,13 @@ import { BodyShort, Heading } from '@navikt/ds-react'
 import { Information } from '@navikt/ds-icons'
 
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
-import { SykmeldingFragment } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
+import { UtenlandskSykmelding } from '../../../../../utils/utenlanskUtils'
 
 import styles from './AnnenInfo.module.css'
 
 interface Props {
-    sykmelding: SykmeldingFragment
+    sykmelding: UtenlandskSykmelding
 }
 
 function AnnenInfo({ sykmelding }: Props): JSX.Element {
@@ -27,14 +27,14 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
                     <Heading className={styles.heading} size="small" level="4">
                         Landet sykmeldingen ble skrevet
                     </Heading>
-                    <BodyShort size="small">{sykmelding.utenlandskSykmelding?.land}</BodyShort>
+                    <BodyShort size="small">{sykmelding.utenlandskSykmelding.land}</BodyShort>
                 </div>
                 {sykmelding.medisinskVurdering?.hovedDiagnose?.tekst && (
                     <div className={styles.info}>
                         <Heading className={styles.heading} size="small" level="4">
                             Diagnose
                         </Heading>
-                        <BodyShort size="small">{sykmelding.medisinskVurdering?.hovedDiagnose?.tekst}</BodyShort>
+                        <BodyShort size="small">{sykmelding.medisinskVurdering.hovedDiagnose.tekst}</BodyShort>
                     </div>
                 )}
                 {sykmelding.medisinskVurdering?.biDiagnoser.map((bidiagnose, index) => {
