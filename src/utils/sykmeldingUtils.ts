@@ -5,6 +5,7 @@ import { sortBy } from 'remeda'
 import { StatusEvent, Periode, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { toDate } from './dateUtils'
+import { isUtenlandsk } from './utenlanskUtils'
 
 export function isActiveSykmelding(sykmelding: SykmeldingFragment): boolean {
     // Alt som ikke er APEN status, er inaktive
@@ -27,7 +28,10 @@ export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
  */
 export function getSykmeldingTitle(
     sykmelding: SykmeldingFragment | undefined,
-): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' {
+): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' | 'Utenlandsk sykmelding' {
+    if (sykmelding && isUtenlandsk(sykmelding)) {
+        return 'Utenlandsk sykmelding'
+    }
     if (sykmelding?.papirsykmelding) {
         return 'Papirsykmelding'
     }
