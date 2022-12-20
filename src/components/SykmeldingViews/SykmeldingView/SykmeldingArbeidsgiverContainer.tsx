@@ -4,6 +4,7 @@ import { Findout } from '@navikt/ds-icons'
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import Lukknapp from '../../Lukknapp/Lukknapp'
+import { isUtenlandsk } from '../../../utils/utenlanskUtils'
 
 import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver'
 import styles from './SykmeldingArbeidsgiverContainer.module.css'
@@ -53,7 +54,7 @@ function SykmeldingArbeidsgiverContainer({ sykmelding }: Props): JSX.Element {
                         id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`}
                         aria-labelledby={headerId}
                     >
-                        {sykmelding.utenlandskSykmelding ? (
+                        {isUtenlandsk(sykmelding) ? (
                             <SykmeldingArbeidsgiverUtenlandsk sykmelding={sykmelding} />
                         ) : (
                             <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />

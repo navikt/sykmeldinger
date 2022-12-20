@@ -5,6 +5,7 @@ import { Print } from '@navikt/ds-icons'
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../utils/dateUtils'
 import { getPublicEnv } from '../../../utils/env'
+import { isUtenlandsk } from '../../../utils/utenlanskUtils'
 
 import SykmeldingSykmeldtUtenlandsk from './SykmeldingSykmeldtUtenlandsk'
 import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt'
@@ -42,7 +43,7 @@ const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => 
                     </div>
                 </div>
             </header>
-            {sykmelding.utenlandskSykmelding ? (
+            {isUtenlandsk(sykmelding) ? (
                 <SykmeldingSykmeldtUtenlandsk sykmelding={sykmelding} />
             ) : (
                 <SykmeldingViewSykmeldt sykmelding={sykmelding} />

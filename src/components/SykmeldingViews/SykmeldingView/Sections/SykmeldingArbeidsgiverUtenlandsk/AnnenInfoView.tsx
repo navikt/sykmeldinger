@@ -2,14 +2,14 @@ import { BodyShort, Heading } from '@navikt/ds-react'
 import { Information } from '@navikt/ds-icons'
 
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
-import { SykmeldingFragment } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { UtenlandskSykmelding } from '../../../../../utils/utenlanskUtils'
 
 import styles from './AnnenInfoView.module.css'
 
 interface Props {
-    sykmelding: SykmeldingFragment
+    sykmelding: UtenlandskSykmelding
 }
 
 function AnnenInfoView({ sykmelding }: Props): JSX.Element {
@@ -26,13 +26,13 @@ function AnnenInfoView({ sykmelding }: Props): JSX.Element {
                 <Heading className={styles.heading} size="small" level="4">
                     Landet sykmeldingen ble skrevet
                 </Heading>
-                <BodyShort size="small">{sykmelding.utenlandskSykmelding?.land}</BodyShort>
+                <BodyShort size="small">{sykmelding.utenlandskSykmelding.land}</BodyShort>
             </div>
             <div className={styles.diagnoser}>
                 {sykmelding.medisinskVurdering?.hovedDiagnose?.tekst && (
                     <SykmeldingEntry
                         title="Diagnose"
-                        mainText={sykmelding.medisinskVurdering?.hovedDiagnose?.tekst}
+                        mainText={sykmelding.medisinskVurdering.hovedDiagnose.tekst}
                         sladd
                     />
                 )}

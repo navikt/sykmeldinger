@@ -8,12 +8,13 @@ describe('SykmeldingArbeidsgiverUtenlandsk', () => {
     it('should show country for utenlandsk sykmelding', () => {
         render(
             <SykmeldingArbeidsgiverUtenlandsk
-                sykmelding={createSykmelding({
+                sykmelding={{
+                    ...createSykmelding(),
                     utenlandskSykmelding: {
                         __typename: 'UtenlandskSykmelding',
                         land: 'Polen',
                     },
-                })}
+                }}
             />,
         )
 
