@@ -24,6 +24,8 @@ import { SykmeldingFragment } from '../../fetching/graphql.generated'
 import { getPublicEnv } from '../../utils/env'
 import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
+import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
+import { isUtenlandsk } from '../../utils/utenlanskUtils'
 
 import styles from './index.module.css'
 
@@ -84,6 +86,8 @@ function SykmeldingComponent({
     olderSykmeldingId: string | null
     olderSykmeldingCount: number
 }): JSX.Element | null {
+    useLogSykmeldingPageAmplitude(sykmelding, olderSykmeldingCount)
+
     const [hasReopenedSykmelding, setHasReopenedSykmelding] = useState(false)
     const reopen = useCallback(() => {
         setHasReopenedSykmelding(true)
@@ -143,6 +147,18 @@ function SykmeldingComponent({
     }
 
     return null
+}
+
+function useLogSykmeldingPageAmplitude(sykmelding: SykmeldingFragment, olderSykmeldingCount: number): void {
+    useLogAmplitudeEvent(
+        { eventName: 'komponent vist', data: { komponent: 'Sykmelding Page' } },
+        {
+            status: sykmelding.sykmeldingStatus.statusEvent,
+            behandlingsutfall: sykmelding.behandlingsutfall.status,
+            hasOlderSykmelding: olderSykmeldingCount > 0,
+            isUtenlandsk: isUtenlandsk(sykmelding),
+        },
+    )
 }
 
 function SykmeldingerWrapper({
