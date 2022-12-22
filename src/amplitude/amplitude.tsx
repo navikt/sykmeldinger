@@ -37,13 +37,18 @@ export function logAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Re
         return
     }
 
-    track(taxonomyToAmplitudeEvent(event), extraData)
+    track(taxonomyToAmplitudeEvent(event, extraData))
 }
 
-function taxonomyToAmplitudeEvent(event: AmplitudeTaxonomyEvents): BaseEvent {
+function taxonomyToAmplitudeEvent(
+    event: AmplitudeTaxonomyEvents,
+    extraData: Record<string, unknown> | undefined,
+): BaseEvent {
+    const properties = { ...('data' in event ? event.data : {}), ...extraData }
+
     return {
         event_type: event.eventName,
-        event_properties: 'data' in event ? event.data : undefined,
+        event_properties: properties,
     }
 }
 
