@@ -40,7 +40,7 @@ const useHotjarTrigger = (triggerType: TriggerType): void => {
             }, 500)
         } else {
             if (process.env.NODE_ENV !== 'test') {
-                console.info(`Not loading Hotjar ${triggerType} because the application is not in production`)
+                logger.info(`Not loading Hotjar ${triggerType} because the application is not in production`)
             }
         }
     }, [triggerType])
