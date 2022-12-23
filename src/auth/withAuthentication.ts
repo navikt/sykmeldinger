@@ -7,7 +7,7 @@ import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
 import { getPublicEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
 
-type ApiHandler = (req: NextApiRequest, res: NextApiResponse) => void | Promise<unknown>
+type ApiHandler = (req: NextApiRequest, res: NextApiResponse) => Promise<unknown> | unknown
 type PageHandler = (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<unknown>>
 
 const publicEnv = getPublicEnv()
