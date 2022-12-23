@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { AuthenticationError } from 'apollo-server-micro'
 import { createChildLogger } from '@navikt/next-logger'
 import { grantTokenXOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall'
+import { GraphQLError } from 'graphql'
 
 import { getServerEnv } from '../utils/env'
 
@@ -55,7 +55,7 @@ export async function changeSykmeldingStatus(
         )
         return getSykmelding(sykmeldingId, context)
     } catch (e) {
-        if (e instanceof AuthenticationError) {
+        if (e instanceof GraphQLError && e.extensions.code === 'UNAUTHENTICATED') {
             throw e
         }
 
@@ -85,7 +85,7 @@ export async function submitSykmelding(
         )
         return getSykmelding(sykmeldingId, context)
     } catch (e) {
-        if (e instanceof AuthenticationError) {
+        if (e instanceof GraphQLError && e.extensions.code === 'UNAUTHENTICATED') {
             throw e
         }
 
@@ -131,7 +131,7 @@ export async function sendSykmelding(
         // Return the updated sykmelding so apollo can update the cache
         return getSykmelding(sykmeldingId, context)
     } catch (e) {
-        if (e instanceof AuthenticationError) {
+        if (e instanceof GraphQLError && e.extensions.code === 'UNAUTHENTICATED') {
             throw e
         }
 
@@ -191,7 +191,9 @@ async function fetchApi<ResponseObject>(
     }
 
     if (response.status === 401) {
-        throw new AuthenticationError(`User has been logged out, requestId: ${context.requestId}`)
+        throw new GraphQLError(`User has been logged out, requestId: ${context.requestId}`, {
+            extensions: { code: 'UNAUTHENTICATED' },
+        })
     }
 
     throw new Error(

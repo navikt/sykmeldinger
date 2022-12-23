@@ -1,4 +1,4 @@
-import { AuthenticationError } from 'apollo-server-micro'
+import { GraphQLError } from 'graphql'
 import { createChildLogger } from '@navikt/next-logger'
 import { grantTokenXOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall'
 
@@ -52,7 +52,9 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
     }
 
     if (response.status === 401) {
-        throw new AuthenticationError(`User has been logged out, requestId: ${context.requestId}`)
+        throw new GraphQLError(`User has been logged out, requestId: ${context.requestId}`, {
+            extensions: { code: 'UNAUTHENTICATED' },
+        })
     }
 
     throw new Error(
