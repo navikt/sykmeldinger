@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from 'react'
 import { Alert, GuidePanel } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 
-import useSykmeldinger from '../../hooks/useSykmelding'
+import useSykmeldingById from '../../hooks/useSykmeldingById'
 import Spacing from '../../components/Spacing/Spacing'
 import Spinner from '../../components/Spinner/Spinner'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'
@@ -20,12 +20,13 @@ import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/Sy
 import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer'
 import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
+import { isUtenlandsk } from '../../utils/utenlanskUtils'
 
 function SykmeldingkvitteringPage(): JSX.Element {
-    useHotjarTrigger('SYKMELDING_KVITTERING')
     const sykmeldingId = useGetSykmeldingIdParam()
+    const { data, error, loading } = useSykmeldingById(sykmeldingId)
 
-    const { data, error, loading } = useSykmeldinger(sykmeldingId)
+    useHotjarTrigger(getHotjarType(data?.sykmelding))
 
     if (loading) {
         return <Spinner headline="Laster kvittering" />
@@ -101,6 +102,16 @@ function SykmeldingkvitteringPage(): JSX.Element {
             <HintToNextOlderSykmelding />
         </KvitteringWrapper>
     )
+}
+
+function getHotjarType(
+    sykmelding: SykmeldingFragment | null | undefined,
+): 'SYKMELDING_KVITTERING' | 'UTENLANDSK_KVITTERING' | null {
+    if (sykmelding == null) {
+        return null
+    }
+
+    return isUtenlandsk(sykmelding) ? 'UTENLANDSK_KVITTERING' : 'SYKMELDING_KVITTERING'
 }
 
 function KvitteringWrapper({

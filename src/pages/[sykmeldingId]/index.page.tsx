@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
 
 import Spinner from '../../components/Spinner/Spinner'
-import useSykmelding from '../../hooks/useSykmelding'
+import useSykmeldingById from '../../hooks/useSykmeldingById'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
 import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId'
 import OkBekreftetSykmelding from '../../components/SykmeldingViews/OK/BEKREFTET/OkBekreftetSykmelding'
@@ -32,7 +32,7 @@ import styles from './index.module.css'
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
 
-    const { data, error, loading, refetch } = useSykmelding(sykmeldingId)
+    const { data, error, loading, refetch } = useSykmeldingById(sykmeldingId)
     const olderSykmelding = useFindOlderSykmeldingId(data?.sykmelding)
 
     useFocusRefetch(refetch)
