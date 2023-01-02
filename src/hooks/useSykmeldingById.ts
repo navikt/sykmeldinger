@@ -8,7 +8,7 @@ import {
     SykmeldingByIdQueryVariables,
 } from '../fetching/graphql.generated'
 
-function useSykmelding(sykmeldingId: string): QueryResult<SykmeldingByIdQuery, SykmeldingByIdQueryVariables> {
+function useSykmeldingById(sykmeldingId: string): QueryResult<SykmeldingByIdQuery, SykmeldingByIdQueryVariables> {
     useEffect(() => {
         logger.info(`Client: Fetching sykmelding with id ${sykmeldingId}`)
     }, [sykmeldingId])
@@ -19,4 +19,4 @@ function useSykmelding(sykmeldingId: string): QueryResult<SykmeldingByIdQuery, S
     })
 }
 
-export default useSykmelding
+export default useSykmeldingById

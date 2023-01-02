@@ -15,6 +15,7 @@ type TriggerType =
     | 'SYKMELDING_INVALID_APEN'
     | 'SYKMELDING_INVALID_BEKREFTET'
     | 'SYKMELDING_KVITTERING'
+    | 'UTENLANDSK_KVITTERING'
 
 interface HotjarWindow extends Window {
     hj?: (name: string, value: string) => void
@@ -26,13 +27,15 @@ function isHotjarFunction(hj: unknown): hj is HotjarFunction {
     return typeof hj === 'function'
 }
 
-const useHotjarTrigger = (triggerType: TriggerType): void => {
+const useHotjarTrigger = (triggerType: TriggerType | null): void => {
     useEffect(() => {
         if (publicEnv.RUNTIME_ENVIRONMENT === 'production') {
             setTimeout(() => {
                 const hotjarWindow = window as HotjarWindow
 
                 if (isHotjarFunction(hotjarWindow.hj)) {
+                    if (triggerType == null) return
+
                     hotjarWindow.hj('trigger', triggerType)
                 } else {
                     logger.info('Hotjar was not found on window')
