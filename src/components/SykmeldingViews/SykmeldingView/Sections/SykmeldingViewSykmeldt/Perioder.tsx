@@ -10,9 +10,10 @@ import styles from './Perioder.module.css'
 
 interface Props {
     perioder: Periode[]
+    isV3: boolean
 }
 
-function Perioder({ perioder }: Props): JSX.Element {
+function Perioder({ perioder, isV3 }: Props): JSX.Element {
     return (
         <div>
             <SykmeldtHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
@@ -35,7 +36,11 @@ function Perioder({ perioder }: Props): JSX.Element {
                         )}
                         {periode.gradert?.reisetilskudd && (
                             <JaEntry
-                                title="Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?"
+                                title={
+                                    isV3
+                                        ? 'Pasienten kan være delvis i arbeid ved bruk av reisetilskudd'
+                                        : 'Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?'
+                                }
                                 headingLevel="4"
                             />
                         )}

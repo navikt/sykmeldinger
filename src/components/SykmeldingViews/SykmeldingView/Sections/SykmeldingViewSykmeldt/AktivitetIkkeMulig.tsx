@@ -10,9 +10,10 @@ import styles from './AktivitetIkkeMulig.module.css'
 
 interface Props {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
+    isV3: boolean
 }
 
-const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null => {
+const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): JSX.Element | null => {
     if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
         return null
     }
@@ -25,7 +26,9 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null =
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                         <ListEntry
                             listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.medisinskArsak.arsak.map(medisinskArsakToText)}
+                            listText={aktivitetIkkeMulig.medisinskArsak.arsak.map((it) =>
+                                medisinskArsakToText(it, isV3),
+                            )}
                             headingLevel="4"
                         />
                     )}

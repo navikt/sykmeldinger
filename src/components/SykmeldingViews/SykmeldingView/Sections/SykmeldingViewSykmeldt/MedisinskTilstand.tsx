@@ -11,9 +11,10 @@ import styles from './MedisinskTilstand.module.css'
 
 interface Props {
     medisinskVurdering: MedisinskVurdering | null | undefined
+    isV3: boolean
 }
 
-function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
+function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | null {
     if (!medisinskVurdering) return null
 
     return (
@@ -74,7 +75,9 @@ function MedisinskTilstand({ medisinskVurdering }: Props): JSX.Element | null {
                     {medisinskVurdering.yrkesskade && (
                         <div className={styles.info}>
                             <Heading className={styles.underHeading} size="xsmall" level="5">
-                                Kan sykdommen skyldes en yrkesskade/yrkessykdom?
+                                {isV3
+                                    ? 'Kan sykmeldingen skyldes en yrkesskade/yrkessykdom?'
+                                    : 'Kan sykdommen skyldes en yrkesskade/yrkessykdom?'}
                             </Heading>
                             <BodyShort size="small">Ja</BodyShort>
                         </div>

@@ -3,12 +3,14 @@ import dayjs from 'dayjs'
 import { ArbeidsrelatertArsakType, MedisinskArsakType, Periode, Periodetype } from '../fetching/graphql.generated'
 import { AnnenFraverGrunn } from '../server/graphql/resolver-types.generated'
 
-export function medisinskArsakToText(value: MedisinskArsakType): string {
+export function medisinskArsakToText(value: MedisinskArsakType, isV3: boolean): string {
     switch (value) {
         case MedisinskArsakType.TILSTAND_HINDRER_AKTIVITET:
-            return 'Helsetilstanden hindrer pasienten i å være i aktivitet'
+            return isV3
+                ? 'Helsetilstanden hindrer pasienten å være i aktivitet'
+                : 'Helsetilstanden hindrer pasienten i å være i aktivitet'
         case MedisinskArsakType.AKTIVITET_FORVERRER_TILSTAND:
-            return 'Aktivitet vil forverre helsetilstanden'
+            return isV3 ? 'Aktivitet vil forverre helsetilstand' : 'Aktivitet vil forverre helsetilstanden'
         case MedisinskArsakType.AKTIVITET_FORHINDRER_BEDRING:
             return 'Aktivitet vil hindre/forsinke bedring av helsetilstanden'
         case MedisinskArsakType.ANNET:

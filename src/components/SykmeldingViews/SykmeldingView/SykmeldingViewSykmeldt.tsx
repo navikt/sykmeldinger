@@ -1,5 +1,5 @@
 import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated'
-import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils'
+import { getSykmeldingperioderSorted, isV3 } from '../../../utils/sykmeldingUtils'
 
 import FlereOpplysninger from './FlereOpplysninger'
 import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav'
@@ -20,21 +20,27 @@ interface Props {
 }
 
 function SykmeldingViewSykmeldt({ sykmelding }: Props): JSX.Element {
+    const isV3Sykmelding = isV3(sykmelding)
+
     return (
         <div className={styles.sykmeldingViewSykmeldt}>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
-            <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} />
+            <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3Sykmelding} />
             <AnnenInfo sykmelding={sykmelding} />
 
             <FlereOpplysninger>
-                <MedisinskTilstand medisinskVurdering={sykmelding.medisinskVurdering} />
+                <MedisinskTilstand medisinskVurdering={sykmelding.medisinskVurdering} isV3={isV3Sykmelding} />
                 {sykmelding.sykmeldingsperioder?.map(
                     (periode: Periode, index: number) =>
                         periode.aktivitetIkkeMulig && (
-                            <AktivitetIkkeMulig key={index} aktivitetIkkeMulig={periode.aktivitetIkkeMulig} />
+                            <AktivitetIkkeMulig
+                                key={index}
+                                aktivitetIkkeMulig={periode.aktivitetIkkeMulig}
+                                isV3={isV3Sykmelding}
+                            />
                         ),
                 )}
-                <Prognose prognose={sykmelding.prognose} />
+                <Prognose prognose={sykmelding.prognose} isV3={isV3Sykmelding} />
                 <UtdypendeOpplysninger
                     utdypendeOpplysninger={
                         sykmelding.utdypendeOpplysninger as Record<string, Record<string, UtdypendeOpplysning>>

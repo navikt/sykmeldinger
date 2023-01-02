@@ -2,12 +2,10 @@ type Sykmelding {
     id: String!
     mottattTidspunkt: Date!
     behandlingsutfall: Behandlingsutfall!
-    legekontorOrgnummer: String
     arbeidsgiver: ArbeidsgiverSykmelding
     sykmeldingsperioder: [Periode!]!
     sykmeldingStatus: SykmeldingStatus!
     medisinskVurdering: MedisinskVurdering
-    skjermesForPasient: Boolean!
     prognose: Prognose
     utdypendeOpplysninger: JSON!
     tiltakArbeidsplassen: String
@@ -18,15 +16,22 @@ type Sykmelding {
     kontaktMedPasient: KontaktMedPasient!
     behandletTidspunkt: Date!
     behandler: Behandler!
-    syketilfelleStartDato: Date
-    navnFastlege: String
     egenmeldt: Boolean
     papirsykmelding: Boolean
-    harRedusertArbeidsgiverperiode: Boolean
     merknader: [Merknad!]
     pasient: Pasient
     rulesetVersion: Int!
     utenlandskSykmelding: UtenlandskSykmelding
+    # TODO: Remove from schema after deploy of query removal
+    skjermesForPasient: Boolean!
+    # TODO ubrukt
+    syketilfelleStartDato: Date
+    # TODO ubrukt
+    navnFastlege: String
+    # TODO ubrukt
+    harRedusertArbeidsgiverperiode: Boolean
+    # TODO ubrukt
+    legekontorOrgnummer: String
 }
 
 type ArbeidsgiverSykmelding {

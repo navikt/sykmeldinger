@@ -42,7 +42,6 @@ export function createSykmelding(
             navn: 'Navn Navnesen',
         },
         merknader: null,
-        legekontorOrgnummer: null,
         meldingTilArbeidsgiver: null,
         sykmeldingsperioder: [
             {
@@ -134,7 +133,6 @@ export function createSykmelding(
             erIArbeid: null,
             erIkkeIArbeid: null,
         },
-        skjermesForPasient: false,
         utdypendeOpplysninger: {
             '6.1': {
                 '6.1.1': {
@@ -185,11 +183,8 @@ export function createSykmelding(
             },
             tlf: '900 00 000',
         },
-        syketilfelleStartDato: '2018-10-10',
-        navnFastlege: 'Doktor Legesen',
         egenmeldt: false,
         papirsykmelding: false,
-        harRedusertArbeidsgiverperiode: false,
         pasient: {
             __typename: 'Pasient',
             fnr: '12345678901',
@@ -198,6 +193,7 @@ export function createSykmelding(
             etternavn: 'Nordmann',
         },
         utenlandskSykmelding: null,
+        rulesetVersion: 2,
         ...overrides,
     }
 }

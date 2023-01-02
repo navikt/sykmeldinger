@@ -42,11 +42,6 @@ export function useChangeSykmeldingStatus(
     ]
 }
 
-/**
- * New alternative API for submitting sykmeldinger. This will eventually replace
- * submitSykmelding. Until the åpen sykmelding form is migrated to the new API,
- * we need to keep the old API around.
- */
 export function useSendSykmelding(
     sykmeldingId: string,
     onCompleted: () => void,
