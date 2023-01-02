@@ -13,7 +13,7 @@ describe('Prognose', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
         expect(screen.getByText('Prognose')).toBeInTheDocument()
     })
 
@@ -25,7 +25,7 @@ describe('Prognose', () => {
             erIkkeIArbeid: null,
             erIArbeid: null,
         }
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
 
         expect(screen.queryByText('Friskmelding/Prognose')).not.toBeInTheDocument()
     })
@@ -38,7 +38,7 @@ describe('Prognose', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
         expect(screen.getByText('Er pasienten 100% arbeidsfør etter denne perioden?')).toBeInTheDocument()
     })
 
@@ -50,7 +50,7 @@ describe('Prognose', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
         expect(screen.queryByText('Er pasienten 100% arbeidsfør etter denne perioden?')).not.toBeInTheDocument()
     })
 
@@ -62,7 +62,7 @@ describe('Prognose', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
         expect(screen.getByText('Hensyn som må tas på arbeidsplassen')).toBeInTheDocument()
         expect(screen.getByText('hensyn på arbeidsplassen')).toBeInTheDocument()
     })
@@ -81,7 +81,7 @@ describe('Prognose', () => {
             },
             erIkkeIArbeid: null,
         }
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
         expect(
             screen.getByText('Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?'),
         ).toBeInTheDocument()
@@ -111,7 +111,7 @@ describe('Prognose', () => {
             erIkkeIArbeid: null,
         }
 
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
 
         expect(
             screen.getByText('Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?'),
@@ -140,7 +140,7 @@ describe('Prognose', () => {
             },
             erIArbeid: null,
         }
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
         expect(screen.getByText('Antas pasienten å kunne komme i arbeid på sikt?')).toBeInTheDocument()
 
         expect(screen.getByText('Pasienten anslås å vær være arbeidsfør')).toBeInTheDocument()
@@ -164,7 +164,7 @@ describe('Prognose', () => {
             erIArbeid: null,
         }
 
-        render(<PrognoseSykmeldt prognose={prognose} />)
+        render(<PrognoseSykmeldt prognose={prognose} isV3={false} />)
 
         expect(screen.queryByText('Antas pasienten å kunne komme i arbeid på sikt?')).not.toBeInTheDocument()
         expect(screen.getByText('Behandler kan gi tilbakemelding på dette')).toBeInTheDocument()

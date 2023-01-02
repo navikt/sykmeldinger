@@ -106,3 +106,7 @@ export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment): str
 
     return `${dayjs(startDate).format('D. MMMM YYYY')} - ${dayjs(endDate).format('D. MMMM YYYY')}`
 }
+
+export function isV3(sykmelding: SykmeldingFragment): boolean {
+    return sykmelding.rulesetVersion === 3
+}

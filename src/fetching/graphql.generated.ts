@@ -460,19 +460,15 @@ export type ChangeSykmeldingStatusMutation = {
         readonly __typename: 'Sykmelding'
         readonly id: string
         readonly mottattTidspunkt: string
-        readonly legekontorOrgnummer?: string | null
-        readonly skjermesForPasient: boolean
         readonly utdypendeOpplysninger: unknown
         readonly tiltakArbeidsplassen?: string | null
         readonly tiltakNAV?: string | null
         readonly andreTiltak?: string | null
         readonly meldingTilArbeidsgiver?: string | null
         readonly behandletTidspunkt: string
-        readonly syketilfelleStartDato?: string | null
-        readonly navnFastlege?: string | null
         readonly egenmeldt?: boolean | null
         readonly papirsykmelding?: boolean | null
-        readonly harRedusertArbeidsgiverperiode?: boolean | null
+        readonly rulesetVersion: number
         readonly behandlingsutfall: {
             readonly __typename: 'Behandlingsutfall'
             readonly status: RegelStatus
@@ -621,19 +617,15 @@ export type SubmitSykmeldingMutation = {
         readonly __typename: 'Sykmelding'
         readonly id: string
         readonly mottattTidspunkt: string
-        readonly legekontorOrgnummer?: string | null
-        readonly skjermesForPasient: boolean
         readonly utdypendeOpplysninger: unknown
         readonly tiltakArbeidsplassen?: string | null
         readonly tiltakNAV?: string | null
         readonly andreTiltak?: string | null
         readonly meldingTilArbeidsgiver?: string | null
         readonly behandletTidspunkt: string
-        readonly syketilfelleStartDato?: string | null
-        readonly navnFastlege?: string | null
         readonly egenmeldt?: boolean | null
         readonly papirsykmelding?: boolean | null
-        readonly harRedusertArbeidsgiverperiode?: boolean | null
+        readonly rulesetVersion: number
         readonly behandlingsutfall: {
             readonly __typename: 'Behandlingsutfall'
             readonly status: RegelStatus
@@ -782,19 +774,15 @@ export type SendSykmeldingMutation = {
         readonly __typename: 'Sykmelding'
         readonly id: string
         readonly mottattTidspunkt: string
-        readonly legekontorOrgnummer?: string | null
-        readonly skjermesForPasient: boolean
         readonly utdypendeOpplysninger: unknown
         readonly tiltakArbeidsplassen?: string | null
         readonly tiltakNAV?: string | null
         readonly andreTiltak?: string | null
         readonly meldingTilArbeidsgiver?: string | null
         readonly behandletTidspunkt: string
-        readonly syketilfelleStartDato?: string | null
-        readonly navnFastlege?: string | null
         readonly egenmeldt?: boolean | null
         readonly papirsykmelding?: boolean | null
-        readonly harRedusertArbeidsgiverperiode?: boolean | null
+        readonly rulesetVersion: number
         readonly behandlingsutfall: {
             readonly __typename: 'Behandlingsutfall'
             readonly status: RegelStatus
@@ -1005,19 +993,15 @@ export type SykmeldingFragment = {
     readonly __typename: 'Sykmelding'
     readonly id: string
     readonly mottattTidspunkt: string
-    readonly legekontorOrgnummer?: string | null
-    readonly skjermesForPasient: boolean
     readonly utdypendeOpplysninger: unknown
     readonly tiltakArbeidsplassen?: string | null
     readonly tiltakNAV?: string | null
     readonly andreTiltak?: string | null
     readonly meldingTilArbeidsgiver?: string | null
     readonly behandletTidspunkt: string
-    readonly syketilfelleStartDato?: string | null
-    readonly navnFastlege?: string | null
     readonly egenmeldt?: boolean | null
     readonly papirsykmelding?: boolean | null
-    readonly harRedusertArbeidsgiverperiode?: boolean | null
+    readonly rulesetVersion: number
     readonly behandlingsutfall: {
         readonly __typename: 'Behandlingsutfall'
         readonly status: RegelStatus
@@ -1162,19 +1146,15 @@ export type SykmeldingerQuery = {
         readonly __typename: 'Sykmelding'
         readonly id: string
         readonly mottattTidspunkt: string
-        readonly legekontorOrgnummer?: string | null
-        readonly skjermesForPasient: boolean
         readonly utdypendeOpplysninger: unknown
         readonly tiltakArbeidsplassen?: string | null
         readonly tiltakNAV?: string | null
         readonly andreTiltak?: string | null
         readonly meldingTilArbeidsgiver?: string | null
         readonly behandletTidspunkt: string
-        readonly syketilfelleStartDato?: string | null
-        readonly navnFastlege?: string | null
         readonly egenmeldt?: boolean | null
         readonly papirsykmelding?: boolean | null
-        readonly harRedusertArbeidsgiverperiode?: boolean | null
+        readonly rulesetVersion: number
         readonly behandlingsutfall: {
             readonly __typename: 'Behandlingsutfall'
             readonly status: RegelStatus
@@ -1322,19 +1302,15 @@ export type SykmeldingByIdQuery = {
         readonly __typename: 'Sykmelding'
         readonly id: string
         readonly mottattTidspunkt: string
-        readonly legekontorOrgnummer?: string | null
-        readonly skjermesForPasient: boolean
         readonly utdypendeOpplysninger: unknown
         readonly tiltakArbeidsplassen?: string | null
         readonly tiltakNAV?: string | null
         readonly andreTiltak?: string | null
         readonly meldingTilArbeidsgiver?: string | null
         readonly behandletTidspunkt: string
-        readonly syketilfelleStartDato?: string | null
-        readonly navnFastlege?: string | null
         readonly egenmeldt?: boolean | null
         readonly papirsykmelding?: boolean | null
-        readonly harRedusertArbeidsgiverperiode?: boolean | null
+        readonly rulesetVersion: number
         readonly behandlingsutfall: {
             readonly __typename: 'Behandlingsutfall'
             readonly status: RegelStatus
@@ -1742,7 +1718,6 @@ export const SykmeldingFragmentDoc = {
                             ],
                         },
                     },
-                    { kind: 'Field', name: { kind: 'Name', value: 'legekontorOrgnummer' } },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'arbeidsgiver' },
@@ -1777,7 +1752,6 @@ export const SykmeldingFragmentDoc = {
                             ],
                         },
                     },
-                    { kind: 'Field', name: { kind: 'Name', value: 'skjermesForPasient' } },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'prognose' },
@@ -1869,11 +1843,8 @@ export const SykmeldingFragmentDoc = {
                             ],
                         },
                     },
-                    { kind: 'Field', name: { kind: 'Name', value: 'syketilfelleStartDato' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'navnFastlege' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'egenmeldt' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'papirsykmelding' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'harRedusertArbeidsgiverperiode' } },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'merknader' },
@@ -1906,6 +1877,7 @@ export const SykmeldingFragmentDoc = {
                             selections: [{ kind: 'Field', name: { kind: 'Name', value: 'land' } }],
                         },
                     },
+                    { kind: 'Field', name: { kind: 'Name', value: 'rulesetVersion' } },
                 ],
             },
         },

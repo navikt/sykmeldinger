@@ -29,7 +29,6 @@ const minimalSykmelding: SykmeldingFragment = {
         arbeidsgiver: null,
     },
     medisinskVurdering: null,
-    skjermesForPasient: false,
     utdypendeOpplysninger: {},
     kontaktMedPasient: { __typename: 'KontaktMedPasient', kontaktDato: null, begrunnelseIkkeKontakt: null },
     behandletTidspunkt: '2020-01-01',
@@ -48,11 +47,8 @@ const minimalSykmelding: SykmeldingFragment = {
         },
         tlf: '900 00 000',
     },
-    syketilfelleStartDato: null,
-    navnFastlege: null,
     egenmeldt: null,
     papirsykmelding: null,
-    harRedusertArbeidsgiverperiode: false,
     merknader: null,
     pasient: {
         __typename: 'Pasient',
@@ -62,13 +58,13 @@ const minimalSykmelding: SykmeldingFragment = {
         etternavn: null,
     },
     andreTiltak: null,
-    legekontorOrgnummer: null,
     meldingTilArbeidsgiver: null,
     meldingTilNAV: null,
     prognose: null,
     tiltakArbeidsplassen: null,
     tiltakNAV: null,
     utenlandskSykmelding: null,
+    rulesetVersion: 2,
 }
 
 const createSykmeldingPeriode = ({ fom, tom }: { fom: string; tom: string }): Periode => ({

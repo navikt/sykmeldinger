@@ -10,9 +10,10 @@ import styles from './Prognose.module.css'
 
 interface Props {
     prognose?: Prognose | null
+    isV3: boolean
 }
 
-function Prognose({ prognose }: Props): JSX.Element | null {
+function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
     if (!prognose) return null
 
     if (
@@ -29,7 +30,14 @@ function Prognose({ prognose }: Props): JSX.Element | null {
             <SykmeldtHeading title="Prognose" Icon={Historic} />
             {prognose.arbeidsforEtterPeriode && (
                 <div className={styles.arbeidsforEtterPeriode}>
-                    <JaEntry title="Er pasienten 100% arbeidsfør etter denne perioden?" headingLevel="4" />
+                    <JaEntry
+                        title={
+                            isV3
+                                ? 'Pasienten er 100% arbeidsfør etter denne perioden'
+                                : 'Er pasienten 100% arbeidsfør etter denne perioden?'
+                        }
+                        headingLevel="4"
+                    />
                 </div>
             )}
             {!!prognose.hensynArbeidsplassen && (

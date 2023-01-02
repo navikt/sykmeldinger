@@ -15,7 +15,6 @@ describe('AnnenInfoView', () => {
                 status: RegelStatus.OK,
                 ruleHits: [],
             },
-            legekontorOrgnummer: null,
             arbeidsgiver: null,
             sykmeldingsperioder: [
                 {
@@ -38,7 +37,6 @@ describe('AnnenInfoView', () => {
                 arbeidsgiver: null,
             },
             medisinskVurdering: null,
-            skjermesForPasient: false,
             prognose: null,
             utdypendeOpplysninger: {},
             tiltakArbeidsplassen: null,
@@ -67,11 +65,8 @@ describe('AnnenInfoView', () => {
                 },
                 tlf: '12345678',
             },
-            syketilfelleStartDato: null,
-            navnFastlege: null,
             egenmeldt: null,
             papirsykmelding: null,
-            harRedusertArbeidsgiverperiode: null,
             merknader: null,
             pasient: {
                 __typename: 'Pasient',
@@ -80,6 +75,7 @@ describe('AnnenInfoView', () => {
                 mellomnavn: null,
                 etternavn: null,
             },
+            rulesetVersion: 2,
         }
 
         render(<AnnenInfoView sykmelding={sykmelding} />)
@@ -96,7 +92,6 @@ describe('AnnenInfoView', () => {
                 status: RegelStatus.OK,
                 ruleHits: [],
             },
-            legekontorOrgnummer: null,
             arbeidsgiver: null,
             sykmeldingsperioder: [
                 {
@@ -119,7 +114,6 @@ describe('AnnenInfoView', () => {
                 arbeidsgiver: null,
             },
             medisinskVurdering: null,
-            skjermesForPasient: false,
             prognose: null,
             utdypendeOpplysninger: {},
             tiltakArbeidsplassen: null,
@@ -148,11 +142,8 @@ describe('AnnenInfoView', () => {
                 },
                 tlf: null,
             },
-            syketilfelleStartDato: null,
-            navnFastlege: null,
             egenmeldt: null,
             papirsykmelding: null,
-            harRedusertArbeidsgiverperiode: null,
             merknader: null,
             pasient: {
                 __typename: 'Pasient',
@@ -161,6 +152,7 @@ describe('AnnenInfoView', () => {
                 mellomnavn: null,
                 etternavn: null,
             },
+            rulesetVersion: 2,
         }
 
         render(<AnnenInfoView sykmelding={sykmelding} />)

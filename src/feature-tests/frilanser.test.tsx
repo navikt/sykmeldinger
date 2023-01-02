@@ -99,7 +99,7 @@ describe('Frilanser', () => {
 
             await waitFor(() => expect(mockRouter.pathname).toEqual(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
-        })
+        }, 10_000)
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
             const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' })

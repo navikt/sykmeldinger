@@ -13,7 +13,6 @@ const minimalSykmelding: SykmeldingFragment = {
         status: RegelStatus.OK,
         ruleHits: [],
     },
-    legekontorOrgnummer: null,
     arbeidsgiver: null,
     sykmeldingsperioder: [
         {
@@ -36,7 +35,6 @@ const minimalSykmelding: SykmeldingFragment = {
         arbeidsgiver: null,
     },
     medisinskVurdering: null,
-    skjermesForPasient: false,
     prognose: null,
     utdypendeOpplysninger: {},
     tiltakArbeidsplassen: null,
@@ -65,11 +63,8 @@ const minimalSykmelding: SykmeldingFragment = {
         },
         tlf: null,
     },
-    syketilfelleStartDato: null,
-    navnFastlege: null,
     egenmeldt: null,
     papirsykmelding: null,
-    harRedusertArbeidsgiverperiode: null,
     merknader: null,
     pasient: {
         __typename: 'Pasient',
@@ -78,6 +73,7 @@ const minimalSykmelding: SykmeldingFragment = {
         mellomnavn: null,
         etternavn: null,
     },
+    rulesetVersion: 2,
 }
 
 describe('SykmeldingViewArbeidsgiver', () => {
