@@ -72,9 +72,9 @@ describe('Arbeidsledig', () => {
 
         render(<SykmeldingPage />, { mocks })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
-        userEvent.click(await screen.findByRole('radio', { name: 'arbeidsledig' }))
-        userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+        await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'arbeidsledig' }))
+        await userEvent.click(screen.getByRole('button', { name: 'Bekreft sykmelding' }))
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
