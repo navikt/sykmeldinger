@@ -55,7 +55,7 @@ describe('Avbryt sykmelding', () => {
         expect(screen.queryByText(/Jeg vil avbryte sykmeldingen/)).not.toBeInTheDocument()
 
         expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument()
-        expect(await screen.findByText(/GJØR UTFYLLINGEN PÅ NYTT/)).toBeInTheDocument()
+        expect(screen.getByText(/GJØR UTFYLLINGEN PÅ NYTT/)).toBeInTheDocument()
     })
 
     it('should reopen avbrutt sykmelding', async () => {
@@ -133,8 +133,7 @@ describe('Avbryt sykmelding', () => {
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
         userEvent.click(await screen.findByRole('button', { name: 'Jeg vil avbryte sykmeldingen' }))
-        expect(await screen.findByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeInTheDocument()
-
+        expect(screen.getByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeInTheDocument()
         userEvent.click(screen.getByRole('button', { name: 'Ja, jeg er sikker' }))
 
         expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
@@ -175,7 +174,6 @@ describe('Avbryt sykmelding', () => {
         })
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-
         expect(screen.getByRole('heading', { name: 'Egenmeldingen ble avbrutt av deg' })).toBeInTheDocument()
     })
 })
