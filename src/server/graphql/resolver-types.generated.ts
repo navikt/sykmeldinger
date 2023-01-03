@@ -339,22 +339,17 @@ export type Sykmelding = {
     behandletTidspunkt: Scalars['Date']
     behandlingsutfall: Behandlingsutfall
     egenmeldt: Maybe<Scalars['Boolean']>
-    harRedusertArbeidsgiverperiode: Maybe<Scalars['Boolean']>
     id: Scalars['String']
     kontaktMedPasient: KontaktMedPasient
-    legekontorOrgnummer: Maybe<Scalars['String']>
     medisinskVurdering: Maybe<MedisinskVurdering>
     meldingTilArbeidsgiver: Maybe<Scalars['String']>
     meldingTilNAV: Maybe<MeldingTilNav>
     merknader: Maybe<Array<Merknad>>
     mottattTidspunkt: Scalars['Date']
-    navnFastlege: Maybe<Scalars['String']>
     papirsykmelding: Maybe<Scalars['Boolean']>
     pasient: Maybe<Pasient>
     prognose: Maybe<Prognose>
     rulesetVersion: Scalars['Int']
-    skjermesForPasient: Scalars['Boolean']
-    syketilfelleStartDato: Maybe<Scalars['Date']>
     sykmeldingStatus: SykmeldingStatus
     sykmeldingsperioder: Array<Periode>
     tiltakArbeidsplassen: Maybe<Scalars['String']>
@@ -913,22 +908,17 @@ export type SykmeldingResolvers<
     behandletTidspunkt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
     behandlingsutfall?: Resolver<ResolversTypes['Behandlingsutfall'], ParentType, ContextType>
     egenmeldt?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
-    harRedusertArbeidsgiverperiode?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
     id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     kontaktMedPasient?: Resolver<ResolversTypes['KontaktMedPasient'], ParentType, ContextType>
-    legekontorOrgnummer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     medisinskVurdering?: Resolver<Maybe<ResolversTypes['MedisinskVurdering']>, ParentType, ContextType>
     meldingTilArbeidsgiver?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     meldingTilNAV?: Resolver<Maybe<ResolversTypes['MeldingTilNAV']>, ParentType, ContextType>
     merknader?: Resolver<Maybe<Array<ResolversTypes['Merknad']>>, ParentType, ContextType>
     mottattTidspunkt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
-    navnFastlege?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     papirsykmelding?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
     pasient?: Resolver<Maybe<ResolversTypes['Pasient']>, ParentType, ContextType>
     prognose?: Resolver<Maybe<ResolversTypes['Prognose']>, ParentType, ContextType>
     rulesetVersion?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-    skjermesForPasient?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
-    syketilfelleStartDato?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>
     sykmeldingStatus?: Resolver<ResolversTypes['SykmeldingStatus'], ParentType, ContextType>
     sykmeldingsperioder?: Resolver<Array<ResolversTypes['Periode']>, ParentType, ContextType>
     tiltakArbeidsplassen?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>

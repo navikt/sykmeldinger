@@ -58,7 +58,6 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
                 grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
             },
         },
-        skjermesForPasient: false,
         utdypendeOpplysninger: {
             '6.2': {
                 '6.2.1': {
@@ -86,11 +85,8 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
             },
             tlf: '900 00 000',
         },
-        syketilfelleStartDato: '2018-10-10',
-        navnFastlege: 'Doktor Legesen',
         egenmeldt: false,
         papirsykmelding: true,
-        harRedusertArbeidsgiverperiode: false,
         pasient: {
             fnr: '12345678901',
             fornavn: 'Ola',
@@ -98,7 +94,6 @@ export function sykmeldingApenPapir(mottatt: string = dateSub(new Date(), { mont
             etternavn: 'Nordmann',
         },
         meldingTilArbeidsgiver: null,
-        legekontorOrgnummer: null,
         andreTiltak: null,
         meldingTilNAV: null,
         merknader: null,

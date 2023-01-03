@@ -26,7 +26,6 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
             },
         ],
     },
-    legekontorOrgnummer: '223456789',
     arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
     sykmeldingsperioder: [
         {
@@ -58,7 +57,6 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
         yrkesskade: false,
         yrkesskadeDato: '2021-11-16',
     },
-    skjermesForPasient: false,
     prognose: {
         arbeidsforEtterPeriode: true,
         hensynArbeidsplassen: 'Må ta det pent',
@@ -118,11 +116,8 @@ export const sykmeldingAvvistUgyldigData: Sykmelding = {
         },
         tlf: 'tel:94431152',
     },
-    syketilfelleStartDato: '2021-11-16',
-    navnFastlege: 'Victor Frankenstein',
     egenmeldt: false,
     papirsykmelding: false,
-    harRedusertArbeidsgiverperiode: false,
     merknader: null,
     rulesetVersion: 3,
     utenlandskSykmelding: null,

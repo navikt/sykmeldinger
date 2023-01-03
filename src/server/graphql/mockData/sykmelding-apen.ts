@@ -21,7 +21,6 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             navn: 'Navn Navnesen',
         },
         merknader: null,
-        legekontorOrgnummer: null,
         meldingTilArbeidsgiver: null,
         sykmeldingsperioder: [
             {
@@ -106,7 +105,6 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             erIArbeid: null,
             erIkkeIArbeid: null,
         },
-        skjermesForPasient: false,
         utdypendeOpplysninger: {
             '6.1': {
                 '6.1.1': {
@@ -153,11 +151,8 @@ export function sykmeldingApen(mottatt: string = dateSub(new Date(), { days: 2 }
             },
             tlf: '900 00 000',
         },
-        syketilfelleStartDato: '2018-10-10',
-        navnFastlege: 'Doktor Legesen',
         egenmeldt: false,
         papirsykmelding: false,
-        harRedusertArbeidsgiverperiode: false,
         pasient: {
             fnr: '12345678901',
             fornavn: 'Ola',

@@ -59,7 +59,6 @@ export const sykmeldingUtgatt: Sykmelding = {
             grunn: [AnnenFraverGrunn.ABORT],
         },
     },
-    skjermesForPasient: false,
     utdypendeOpplysninger: {
         '6.2': {
             '6.2.1': {
@@ -84,11 +83,8 @@ export const sykmeldingUtgatt: Sykmelding = {
         },
         tlf: '900 00 000',
     },
-    syketilfelleStartDato: '2018-10-10',
-    navnFastlege: 'Doktor Legesen',
     egenmeldt: false,
     papirsykmelding: false,
-    harRedusertArbeidsgiverperiode: false,
     pasient: {
         fnr: '12345678901',
         fornavn: 'Ola',
@@ -96,7 +92,6 @@ export const sykmeldingUtgatt: Sykmelding = {
         etternavn: 'Nordmann',
     },
     andreTiltak: null,
-    legekontorOrgnummer: null,
     meldingTilArbeidsgiver: null,
     meldingTilNAV: null,
     merknader: null,

@@ -22,16 +22,6 @@ type Sykmelding {
     pasient: Pasient
     rulesetVersion: Int!
     utenlandskSykmelding: UtenlandskSykmelding
-    # TODO: Remove from schema after deploy of query removal
-    skjermesForPasient: Boolean!
-    # TODO ubrukt
-    syketilfelleStartDato: Date
-    # TODO ubrukt
-    navnFastlege: String
-    # TODO ubrukt
-    harRedusertArbeidsgiverperiode: Boolean
-    # TODO ubrukt
-    legekontorOrgnummer: String
 }
 
 type ArbeidsgiverSykmelding {
