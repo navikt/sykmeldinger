@@ -14,7 +14,6 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
         id: 'UNDER-BEAHNDLING-TILBAKEDATERING',
         mottattTidspunkt: mottatt,
         behandlingsutfall: { status: RegelStatus.OK, ruleHits: [] },
-        legekontorOrgnummer: '223456789',
         arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
         sykmeldingsperioder: [
             {
@@ -51,7 +50,6 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
             yrkesskade: false,
             yrkesskadeDato: '2021-06-06',
         },
-        skjermesForPasient: false,
         prognose: {
             arbeidsforEtterPeriode: true,
             hensynArbeidsplassen: 'Må ta det pent',
@@ -108,11 +106,8 @@ export function sykmeldingUnderbehandlingTilbakedatering(mottatt = dateSub(new D
             },
             tlf: 'tel:94431152',
         },
-        syketilfelleStartDato: '2021-06-17',
-        navnFastlege: 'Victor Frankenstein',
         egenmeldt: false,
         papirsykmelding: false,
-        harRedusertArbeidsgiverperiode: false,
         merknader: [{ type: 'UNDER_BEHANDLING', beskrivelse: null }],
         pasient: { fnr: '06078104285', fornavn: 'KORRUPT', mellomnavn: null, etternavn: 'RISPBÆRBUSK' },
         rulesetVersion: 3,

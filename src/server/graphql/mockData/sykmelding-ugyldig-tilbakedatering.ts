@@ -12,7 +12,6 @@ export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
     id: 'UGYLDIG-TILBAKEDATERING',
     mottattTidspunkt: '2021-06-16T20:00:00Z',
     behandlingsutfall: { status: RegelStatus.OK, ruleHits: [] },
-    legekontorOrgnummer: '223456789',
     arbeidsgiver: { navn: 'LOMMEN BARNEHAVE' },
     sykmeldingsperioder: [
         {
@@ -49,7 +48,6 @@ export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
         yrkesskade: false,
         yrkesskadeDato: '2021-06-06',
     },
-    skjermesForPasient: false,
     prognose: {
         arbeidsforEtterPeriode: true,
         hensynArbeidsplassen: 'Må ta det pent',
@@ -106,11 +104,8 @@ export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
         },
         tlf: 'tel:94431152',
     },
-    syketilfelleStartDato: '2021-06-17',
-    navnFastlege: 'Victor Frankenstein',
     egenmeldt: false,
     papirsykmelding: false,
-    harRedusertArbeidsgiverperiode: false,
     merknader: [{ type: 'UGYLDIG_TILBAKEDATERING', beskrivelse: null }],
     pasient: { fnr: '06078104285', fornavn: 'KORRUPT', mellomnavn: null, etternavn: 'RISPBÆRBUSK' },
     rulesetVersion: 3,

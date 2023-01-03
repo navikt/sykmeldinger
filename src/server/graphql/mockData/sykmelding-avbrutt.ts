@@ -58,7 +58,6 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
                 grunn: [AnnenFraverGrunn.NODVENDIG_KONTROLLUNDENRSOKELSE],
             },
         },
-        skjermesForPasient: false,
         utdypendeOpplysninger: {
             '6.2': {
                 '6.2.1': {
@@ -86,11 +85,8 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
             },
             tlf: '900 00 000',
         },
-        syketilfelleStartDato: mottatt,
-        navnFastlege: 'Doktor Legesen',
         egenmeldt: false,
         papirsykmelding: false,
-        harRedusertArbeidsgiverperiode: false,
         pasient: {
             fnr: '12345678901',
             fornavn: 'Ola',
@@ -98,7 +94,6 @@ export function sykmeldingAvbrutt(mottatt: string = dateSub(new Date(), { months
             etternavn: 'Nordmann',
         },
         andreTiltak: null,
-        legekontorOrgnummer: null,
         meldingTilArbeidsgiver: null,
         meldingTilNAV: null,
         merknader: null,

@@ -336,22 +336,17 @@ export type Sykmelding = {
     readonly behandletTidspunkt: Scalars['Date']
     readonly behandlingsutfall: Behandlingsutfall
     readonly egenmeldt?: Maybe<Scalars['Boolean']>
-    readonly harRedusertArbeidsgiverperiode?: Maybe<Scalars['Boolean']>
     readonly id: Scalars['String']
     readonly kontaktMedPasient: KontaktMedPasient
-    readonly legekontorOrgnummer?: Maybe<Scalars['String']>
     readonly medisinskVurdering?: Maybe<MedisinskVurdering>
     readonly meldingTilArbeidsgiver?: Maybe<Scalars['String']>
     readonly meldingTilNAV?: Maybe<MeldingTilNav>
     readonly merknader?: Maybe<ReadonlyArray<Merknad>>
     readonly mottattTidspunkt: Scalars['Date']
-    readonly navnFastlege?: Maybe<Scalars['String']>
     readonly papirsykmelding?: Maybe<Scalars['Boolean']>
     readonly pasient?: Maybe<Pasient>
     readonly prognose?: Maybe<Prognose>
     readonly rulesetVersion: Scalars['Int']
-    readonly skjermesForPasient: Scalars['Boolean']
-    readonly syketilfelleStartDato?: Maybe<Scalars['Date']>
     readonly sykmeldingStatus: SykmeldingStatus
     readonly sykmeldingsperioder: ReadonlyArray<Periode>
     readonly tiltakArbeidsplassen?: Maybe<Scalars['String']>
