@@ -55,8 +55,6 @@ describe('Bekreftet sykmelding', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-
         userEvent.click(await screen.findByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
         expect(await screen.findByRole('button', { name: 'Bekreft sykmelding' })).toBeInTheDocument()
     })
