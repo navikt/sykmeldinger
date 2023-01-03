@@ -1,9 +1,11 @@
 import { PropsWithChildren, ReactElement } from 'react'
-import { render, RenderOptions, Screen } from '@testing-library/react'
+import { render, screen, RenderOptions, Screen } from '@testing-library/react'
 import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 import { Cache, InMemoryCache } from '@apollo/client'
 import open from 'open'
+
+import * as customQueries from './customQueries'
 
 type ProviderProps = {
     readonly initialState?: Cache.WriteQueryOptions<unknown, unknown>[]
@@ -47,4 +49,11 @@ export async function openPlayground(screen: Screen): Promise<void> {
 
 export * from '@testing-library/react'
 
+const customScreen = {
+    ...screen,
+    getByGroup: customQueries.getByGroup.bind(null, screen)(),
+    findByGroup: customQueries.findByGroup.bind(null, screen)(),
+}
+
+export { customScreen as screen }
 export { customRender as render, customRenderHook as renderHook }
