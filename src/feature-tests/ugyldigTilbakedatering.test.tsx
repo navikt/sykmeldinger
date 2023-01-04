@@ -5,6 +5,8 @@ import { StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fe
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
+import { createExtraFormDataMock } from './mockUtils'
+
 describe('Ugyldig tilbakedatert sykmelding', () => {
     beforeEach(() => {
         mockRouter.setCurrentUrl(`/ugyldig-tilbakedatering-sykmelding`)
@@ -37,6 +39,7 @@ describe('Ugyldig tilbakedatert sykmelding', () => {
             request: { query: SykmeldingerDocument },
             result: { data: { __typename: 'Query', sykmeldinger: [ugyldigTilbakedatertSykmelding] } },
         }),
+        createExtraFormDataMock({ sykmeldingId: 'ugyldig-tilbakedatering-sykmelding' }),
     ]
 
     it('should show details from sykmelding', async () => {

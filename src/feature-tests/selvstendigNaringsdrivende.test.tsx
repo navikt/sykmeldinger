@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, within, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { render, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
@@ -83,18 +83,15 @@ describe('Selvstendig næringsdrivende', () => {
                 ],
             })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(
+                screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'selvstendig næringsdrivende' }),
+            )
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '20.12.2020')
+            await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2020')
+            await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
-            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }))
-            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
-            expect(egenmeldingFomTom).toHaveLength(2)
-            userEvent.type(egenmeldingFomTom[0], '20.12.2020')
-            userEvent.type(egenmeldingFomTom[1], '27.12.2020')
-            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
-            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }))
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -150,24 +147,15 @@ describe('Selvstendig næringsdrivende', () => {
                 ],
             })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(
+                screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'selvstendig næringsdrivende' }),
+            )
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '20.12.2019')
+            await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2019')
+            await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
-            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }))
-
-            const harBruktEgenmeldingFieldset = screen.getByText(/Vi har registrert at du ble syk/i).closest('fieldset')
-
-            userEvent.click(within(harBruktEgenmeldingFieldset!).getByRole('radio', { name: 'Ja' }))
-
-            const egenmeldingFomTom = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
-
-            expect(egenmeldingFomTom).toHaveLength(2)
-            userEvent.type(egenmeldingFomTom[0], '20.12.2019')
-            userEvent.type(egenmeldingFomTom[1], '27.12.2019')
-
-            const forsikringFieldset = screen.getByText(/Har du forsikring som gjelder/i).closest('fieldset')
-
-            userEvent.click(within(forsikringFieldset!).getByRole('radio', { name: 'Ja' }))
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -215,10 +203,11 @@ describe('Selvstendig næringsdrivende', () => {
                 ],
             })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(
+                screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'selvstendig næringsdrivende' }),
+            )
 
-            userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
-            userEvent.click(await screen.findByRole('radio', { name: 'selvstendig næringsdrivende' }))
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))

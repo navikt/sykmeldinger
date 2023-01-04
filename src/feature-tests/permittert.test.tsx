@@ -67,9 +67,9 @@ describe('Permittert', () => {
             ],
         })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Ja' }))
-        userEvent.click(await screen.findByRole('radio', { name: 'permittert' }))
-        userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'permittert' }))
+        await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')

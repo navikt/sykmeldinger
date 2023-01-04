@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { PropsWithChildren, ReactElement } from 'react'
 import { render, screen, RenderOptions, Screen } from '@testing-library/react'
 import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks'
@@ -7,6 +5,7 @@ import { MockedProvider, MockedResponse, MockLink } from '@apollo/client/testing
 import { ApolloLink, Cache, InMemoryCache } from '@apollo/client'
 import open from 'open'
 import { onError } from '@apollo/client/link/error'
+import { logger } from '@navikt/next-logger'
 
 import * as customQueries from './customQueries'
 
@@ -18,12 +17,12 @@ type ProviderProps = {
 const errorLoggingLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(({ message, locations, path }) =>
-            console.error('[GraphQL error]:' + `Message: ${message},` + `Location: ${locations},` + `Path: ${path}`),
+            logger.error('[GraphQL error]:' + `Message: ${message},` + `Location: ${locations},` + `Path: ${path}`),
         )
     }
 
     if (networkError) {
-        console.error(`[Network error]: ${networkError}`)
+        logger.error(`[Network error]: ${networkError}`)
     }
 })
 
@@ -35,7 +34,7 @@ function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<Pr
     const link = ApolloLink.from([errorLoggingLink, mockLink])
 
     return (
-        <MockedProvider link={link} mocks={mocks}>
+        <MockedProvider link={link} mocks={mocks} cache={cache}>
             {children}
         </MockedProvider>
     )
@@ -73,8 +72,10 @@ export * from '@testing-library/react'
 
 const customScreen = {
     ...screen,
-    getByGroup: customQueries.getByGroup.bind(null, screen)(),
-    findByGroup: customQueries.findByGroup.bind(null, screen)(),
+    getRadioInGroup: customQueries.getRadioInGroup(screen)('radio'),
+    getCheckboxInGroup: customQueries.getRadioInGroup(screen)('checkbox'),
+    findRadioInGroup: customQueries.findRadioInGroup(screen),
+    openPlayground: () => openPlayground(screen),
 }
 
 export { customScreen as screen }
