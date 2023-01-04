@@ -21,17 +21,14 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
                     required: 'Du må svare på om du har brukt egenmelding eller annen sykmelding før du ble syk.',
                 }}
                 onChange={(value) => {
-                    logAmplitudeEvent(
-                        {
-                            eventName: 'skjema spørsmål besvart',
-                            data: {
-                                skjemanavn: 'åpen sykmelding',
-                                spørsmål: sporsmal.harBruktEgenmelding(oppfolgingsdato),
-                                svar: value,
-                            },
+                    logAmplitudeEvent({
+                        eventName: 'skjema spørsmål besvart',
+                        data: {
+                            skjemanavn: 'åpen sykmelding',
+                            spørsmål: sporsmal.harBruktEgenmelding(oppfolgingsdato),
+                            svar: value,
                         },
-                        { newForm: true },
-                    )
+                    })
                 }}
             />
         </QuestionWrapper>

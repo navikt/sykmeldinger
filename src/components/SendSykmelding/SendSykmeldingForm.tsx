@@ -38,15 +38,15 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding'
     const sykmeldingId = useGetSykmeldingIdParam()
 
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } }, { newForm: true })
+    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
     const errorSectionRef = useRef<HTMLDivElement>(null)
     const form = useForm<FormValues>({ shouldFocusError: false })
     const extraFormData = useExtraFormData(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }, { newForm: true }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }, { newForm: true }),
+        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
     if (extraFormData.loading) {
@@ -65,7 +65,6 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     return (
         <FormProvider {...form}>
             <form
-                data-testid="new-form"
                 onSubmit={form.handleSubmit(sendSykmelding, () => {
                     requestAnimationFrame(() => {
                         errorSectionRef.current?.focus()

@@ -16,17 +16,14 @@ function HarForsikringField(): JSX.Element {
                         'Du må svare på om du har forsikring som gjelder for de første 16 dagene av sykefraværet.',
                 }}
                 onChange={(value) => {
-                    logAmplitudeEvent(
-                        {
-                            eventName: 'skjema spørsmål besvart',
-                            data: {
-                                skjemanavn: 'åpen sykmelding',
-                                spørsmål: sporsmal.harForsikring,
-                                svar: value,
-                            },
+                    logAmplitudeEvent({
+                        eventName: 'skjema spørsmål besvart',
+                        data: {
+                            skjemanavn: 'åpen sykmelding',
+                            spørsmål: sporsmal.harForsikring,
+                            svar: value,
                         },
-                        { newForm: true },
-                    )
+                    })
                 }}
             />
         </QuestionWrapper>

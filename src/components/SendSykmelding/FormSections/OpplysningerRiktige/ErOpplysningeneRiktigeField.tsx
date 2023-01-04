@@ -17,7 +17,7 @@ function ErOpplysningeneRiktigeField(): JSX.Element {
                 onChange={(value) => {
                     logAmplitudeEvent(
                         { eventName: 'skjema startet', data: { skjemanavn: 'åpen sykmelding' } },
-                        { 'stemmer opplysningene': value, newForm: true },
+                        { 'stemmer opplysningene': value },
                     )
                 }}
             />
