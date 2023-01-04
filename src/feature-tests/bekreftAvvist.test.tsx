@@ -37,7 +37,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
     const baseMocks = [
         createMock({
-            request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
+            request: { query: SykmeldingByIdDocument, variables: { id: 'avvist-sykmelding' } },
             result: { data: { __typename: 'Query', sykmelding: avvistSykmelding } },
         }),
         createMock({

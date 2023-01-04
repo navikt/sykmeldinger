@@ -34,8 +34,11 @@ describe('Uriktige opplysninger', () => {
     it('should show error message when periode is wrong', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }))
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Periode' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }))
+        await userEvent.click(
+            screen.getCheckboxInGroup({ name: /Hvilke opplysninger stemmer ikke?/i }, { name: 'Periode' }),
+        )
+
         expect(await screen.findByText('Du kan ikke bruke denne sykmeldingen')).toBeInTheDocument()
         expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument()
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument()
@@ -44,8 +47,14 @@ describe('Uriktige opplysninger', () => {
     it('should show error message when sykmeldingsgrad is to low', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }))
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for lav' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }))
+        await userEvent.click(
+            screen.getCheckboxInGroup(
+                { name: /Hvilke opplysninger stemmer ikke?/i },
+                { name: 'Sykmeldingsgraden er for lav' },
+            ),
+        )
+
         expect(await screen.findByText('Du kan ikke bruke denne sykmeldingen')).toBeInTheDocument()
         expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument()
         expect(screen.queryByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeInTheDocument()
@@ -54,8 +63,14 @@ describe('Uriktige opplysninger', () => {
     it('should be able to continue when sykmeldingsgrad is too high', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }))
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Sykmeldingsgraden er for høy' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }))
+        await userEvent.click(
+            screen.getCheckboxInGroup(
+                { name: /Hvilke opplysninger stemmer ikke?/i },
+                { name: 'Sykmeldingsgraden er for høy' },
+            ),
+        )
+
         expect(
             await screen.findByText(
                 'Senere, når du skal fylle ut søknaden om sykepenger, skriver du bare inn hvor mye du faktisk jobbet.',
@@ -68,8 +83,11 @@ describe('Uriktige opplysninger', () => {
     it('should be able to continue when arbeidsgiver is wrong', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }))
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Arbeidsgiver' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }))
+        await userEvent.click(
+            screen.getCheckboxInGroup({ name: /Hvilke opplysninger stemmer ikke?/i }, { name: 'Arbeidsgiver' }),
+        )
+
         expect(
             await screen.findByText(
                 'I neste trinn velger du riktig arbeidsgiver. Obs: Feilen vil være synlig for arbeidsgiveren du sender sykmeldingen til.',
@@ -82,8 +100,11 @@ describe('Uriktige opplysninger', () => {
     it('should be able to continue when diagnose is wrong', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }))
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Diagnose' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }))
+        await userEvent.click(
+            screen.getCheckboxInGroup({ name: /Hvilke opplysninger stemmer ikke?/i }, { name: 'Diagnose' }),
+        )
+
         expect(
             await screen.findByText(
                 'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at diagnosen er feil.',
@@ -96,8 +117,11 @@ describe('Uriktige opplysninger', () => {
     it('should be able to continue when andre opplysninger is wrong', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }))
-        userEvent.click(await screen.findByRole('checkbox', { name: 'Andre opplysninger' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }))
+        await userEvent.click(
+            screen.getCheckboxInGroup({ name: /Hvilke opplysninger stemmer ikke?/i }, { name: 'Andre opplysninger' }),
+        )
+
         expect(
             await screen.findByText(
                 'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at den inneholder feil.',
@@ -110,7 +134,7 @@ describe('Uriktige opplysninger', () => {
     it('should not show Din arbeidssituasjon if reason for uriktigeOpplysninger is not checked', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
 
-        userEvent.click(await screen.findByRole('radio', { name: 'Nei' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }))
 
         expect(screen.queryByText('Din arbeidssituasjon')).not.toBeInTheDocument()
         expect(screen.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeInTheDocument()

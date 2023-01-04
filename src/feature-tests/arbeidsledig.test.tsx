@@ -33,7 +33,7 @@ describe('Arbeidsledig', () => {
 
     it('should show details from sykmelding', async () => {
         render(<SykmeldingPage />, {
-            mocks: [...baseMocks],
+            mocks: [...baseMocks, createExtraFormDataMock()],
         })
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
@@ -72,8 +72,8 @@ describe('Arbeidsledig', () => {
 
         render(<SykmeldingPage />, { mocks })
 
-        await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-        await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'arbeidsledig' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'arbeidsledig' }))
         await userEvent.click(screen.getByRole('button', { name: 'Bekreft sykmelding' }))
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))

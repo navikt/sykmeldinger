@@ -1,9 +1,9 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { render, waitFor, screen, waitForElementToBeRemoved, within } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
-import { createMock, createSykmelding } from '../utils/test/dataUtils'
+import { createInitialQuery, createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
     ArbeidssituasjonType,
     StatusEvent,
@@ -83,12 +83,12 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
             await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '20.12.2020')
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2020')
-            await userEvent.click(screen.getByGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
@@ -144,12 +144,12 @@ describe('Frilanser', () => {
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
             await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '20.12.2019')
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2019')
-            await userEvent.click(screen.getByGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -204,8 +204,8 @@ describe('Frilanser', () => {
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -224,9 +224,9 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(await screen.findByRole('link', { name: 'Du må fylle inn fra dato.' })).toBeInTheDocument()
@@ -242,9 +242,9 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
             await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '11.20.2020')
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '11.25.2020')
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -264,9 +264,9 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
             await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '02.04.2020')
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '04.04.2020')
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -286,9 +286,9 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
             await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '01.01.2020')
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '02.05.2020')
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -310,9 +310,9 @@ describe('Frilanser', () => {
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
             await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '10.01.2020')
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '02.01.2020')
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -332,42 +332,36 @@ describe('Frilanser', () => {
 
             await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-            await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
-            await userEvent.click(screen.getByGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
-            // TODO: continue fixing tests
-            userEvent.click(screen.getByRole('button', { name: 'Legg til ekstra periode' }))
-            const egenmeldingFomTomTwo = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
-            expect(egenmeldingFomTomTwo).toHaveLength(4)
-            userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
+            await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+            await userEvent.click(screen.getRadioInGroup({ name: /Vi har registrert at du ble syk/i }, { name: 'Ja' }))
+            await userEvent.click(screen.getByRole('button', { name: 'Legg til ekstra periode' }))
+            const periodeSection = within(
+                screen.getByRole('region', { name: /Hvilke dager var du borte fra jobb før/i }),
+            )
 
-            const egenmeldingFomTomOne = await screen.findAllByPlaceholderText('DD.MM.ÅÅÅÅ')
-            await waitFor(() => expect(egenmeldingFomTomOne).toHaveLength(2))
+            expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(4)
+            userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
+            expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(2)
         })
 
         it('should show guid panel about egenmeldt', async () => {
             render(<SykmeldingPage />, {
-                mocks: [
-                    createMock({
-                        request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
-                        result: {
-                            data: {
-                                __typename: 'Query',
-                                sykmelding: createSykmelding({ id: 'sykmelding-id', egenmeldt: true }),
-                            },
+                initialState: [
+                    createInitialQuery(
+                        SykmeldingByIdDocument,
+                        {
+                            __typename: 'Query',
+                            sykmelding: createSykmelding({ id: 'sykmelding-id', egenmeldt: true }),
                         },
-                    }),
-                    createMock({
-                        request: { query: SykmeldingerDocument },
-                        result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
-                    }),
-                    createExtraFormDataMock({
-                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2020-04-01' },
+                        { id: 'sykmelding-id' },
+                    ),
+                    createInitialQuery(SykmeldingerDocument, {
+                        __typename: 'Query',
+                        sykmeldinger: [createSykmelding()],
                     }),
                 ],
             })
-
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
             expect(
                 await screen.findByText(

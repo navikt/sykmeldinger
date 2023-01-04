@@ -1,11 +1,11 @@
 import React, { useLayoutEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
-import { Button, Label } from '@navikt/ds-react'
+import { Button } from '@navikt/ds-react'
 import { Add } from '@navikt/ds-icons'
 import { sub } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
-import { QuestionWrapper } from '../../shared/FormStructure'
+import { SectionWrapper } from '../../shared/FormStructure'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { toDate } from '../../../../../utils/dateUtils'
 
@@ -33,8 +33,7 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
     }, [append])
 
     return (
-        <QuestionWrapper>
-            <Label as="h3">{sporsmal.egenmeldingsperioder(oppfolgingsdato)}</Label>
+        <SectionWrapper title={sporsmal.egenmeldingsperioder(oppfolgingsdato)} level="3" size="small">
             <div className={styles.dateFieldsWrapper}>
                 {fields.map((field, index) => (
                     <EgenmeldingPeriodSubField
@@ -60,7 +59,7 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
             >
                 Legg til ekstra periode
             </Button>
-        </QuestionWrapper>
+        </SectionWrapper>
     )
 }
 

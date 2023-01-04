@@ -75,16 +75,16 @@ describe('Arbeidstaker', () => {
             ],
         })
 
-        await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-        await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
         await userEvent.click(
-            screen.getByGroup(
+            screen.getRadioInGroup(
                 { name: /Velg arbeidsgiver/i },
                 { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})` },
             ),
         )
         await userEvent.click(
-            screen.getByGroup(
+            screen.getRadioInGroup(
                 { name: /Er det station officer steele som skal følge deg opp på jobben mens du er syk/i },
                 { name: 'Ja' },
             ),
@@ -130,8 +130,8 @@ describe('Arbeidstaker', () => {
             ],
         })
 
-        await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-        await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
         userEvent.click(
             await screen.findByRole('radio', {
                 name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
@@ -150,8 +150,8 @@ describe('Arbeidstaker', () => {
             mocks: [...baseMocks, createExtraFormDataMock()],
         })
 
-        await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-        await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
 
         expect(
             await screen.findByText(/Vi klarer ikke å finne noen arbeidsforhold registrert på deg/),
@@ -163,8 +163,8 @@ describe('Arbeidstaker', () => {
             mocks: [...baseMocks, createExtraFormDataMock({ brukerinformasjon: { strengtFortroligAdresse: true } })],
         })
 
-        await userEvent.click(await screen.findByGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-        await userEvent.click(screen.getByGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
 
         expect(await screen.findByText(/Du er registrert med adressesperre/)).toBeInTheDocument()
         expect(screen.queryByRole('button', { name: 'Bekreft sykmelding' })).not.toBeInTheDocument()

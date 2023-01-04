@@ -1,5 +1,5 @@
 import { MockedResponse } from '@apollo/client/testing'
-import { TypedDocumentNode } from '@apollo/client'
+import { Cache, TypedDocumentNode } from '@apollo/client'
 import { FetchResult } from '@apollo/client/link/core'
 import { ResultFunction } from '@apollo/client/testing/core/mocking/mockLink'
 
@@ -219,6 +219,18 @@ export function createAvvistBehandlingsutfall(
                 },
             ],
         },
+    }
+}
+
+export function createInitialQuery<Query, Variables>(
+    typedDocumentNode: TypedDocumentNode<Query, Variables>,
+    data: Query,
+    variables?: Variables,
+): Cache.WriteQueryOptions<Query, Variables> {
+    return {
+        query: typedDocumentNode,
+        data,
+        variables,
     }
 }
 

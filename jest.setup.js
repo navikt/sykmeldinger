@@ -10,6 +10,8 @@ import { Modal } from '@navikt/ds-react'
 import mockRouter from 'next-router-mock'
 import { createDynamicRouteParser } from 'next-router-mock/dynamic-routes'
 import dayjs from 'dayjs'
+import pino from 'pino'
+import pretty from 'pino-pretty'
 
 dayjs.locale('nb')
 dayjs.extend(isBetween)
@@ -19,6 +21,9 @@ jest.mock('next/dist/client/router', () => require('next-router-mock'))
 jest.mock('@navikt/next-auth-wonderwall', () => ({
     validateTokenXToken: () => Promise.resolve(true),
     isInvalidTokenSet: () => false,
+}))
+jest.mock('@navikt/next-logger', () => ({
+    logger: pino(pretty({ sync: true })),
 }))
 
 global.TextEncoder = TextEncoder

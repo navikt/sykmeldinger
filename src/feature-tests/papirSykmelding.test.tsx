@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitForElementToBeRemoved, within } from '../utils/test/testUtils'
+import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
 import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
@@ -49,22 +49,17 @@ describe('Papir sykmelding', () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-
         expect(screen.getByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
     })
 
     it('should show information if papirsykmelding is already passed on', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        expect(await screen.findByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
 
-        expect(screen.getByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
-
-        expect(
-            screen.getByRole('group', { name: 'Har du allerede gitt papirsykmeldingen videre?' }),
-        ).toBeInTheDocument()
-        const group = screen.getByText('Har du allerede gitt papirsykmeldingen videre?').closest('fieldset')
-        userEvent.click(within(group!).getByRole('radio', { name: 'Ja' }))
+        await userEvent.click(
+            screen.getRadioInGroup({ name: /Har du allerede gitt papirsykmeldingen videre?/i }, { name: 'Ja' }),
+        )
 
         expect(
             screen.getByText(
@@ -76,15 +71,11 @@ describe('Papir sykmelding', () => {
     it('should show information if papirsykmelding is not passed on', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        expect(await screen.findByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
 
-        expect(screen.getByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
-
-        expect(
-            screen.getByRole('group', { name: 'Har du allerede gitt papirsykmeldingen videre?' }),
-        ).toBeInTheDocument()
-        const group = screen.getByText('Har du allerede gitt papirsykmeldingen videre?').closest('fieldset')
-        userEvent.click(within(group!).getByRole('radio', { name: 'Nei' }))
+        await userEvent.click(
+            screen.getRadioInGroup({ name: /Har du allerede gitt papirsykmeldingen videre?/i }, { name: 'Nei' }),
+        )
 
         expect(screen.getByText('Da kan du sende sykmeldingen herfra')).toBeInTheDocument()
     })
@@ -119,13 +110,11 @@ describe('Papir sykmelding', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-
-        expect(screen.getByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
-        const group = screen.getByText('Har du allerede gitt papirsykmeldingen videre?').closest('fieldset')
-        userEvent.click(within(group!).getByRole('radio', { name: 'Ja' }))
-
-        userEvent.click(await screen.findByRole('button', { name: 'Avbryt sykmeldingen' }))
+        expect(await screen.findByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
+        await userEvent.click(
+            screen.getRadioInGroup({ name: /Har du allerede gitt papirsykmeldingen videre?/i }, { name: 'Ja' }),
+        )
+        await userEvent.click(await screen.findByRole('button', { name: 'Avbryt sykmeldingen' }))
 
         expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
     })
@@ -159,12 +148,9 @@ describe('Papir sykmelding', () => {
                 }),
             ]
 
-            render(<SykmeldingPage />, {
-                mocks: mock,
-            })
+            render(<SykmeldingPage />, { mocks: mock })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-            expect(screen.getByRole('heading', { name: 'Landet sykmeldingen ble skrevet' })).toBeInTheDocument()
+            expect(await screen.findByRole('heading', { name: 'Landet sykmeldingen ble skrevet' })).toBeInTheDocument()
             expect(screen.getByText('Island')).toBeInTheDocument()
         })
     })
