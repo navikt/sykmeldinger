@@ -6,6 +6,7 @@ import { ApolloLink, Cache, InMemoryCache } from '@apollo/client'
 import open from 'open'
 import { onError } from '@apollo/client/link/error'
 import { logger } from '@navikt/next-logger'
+import { configureAxe } from 'jest-axe'
 
 import * as customQueries from './customQueries'
 
@@ -68,6 +69,13 @@ export async function openPlayground(screen: Screen): Promise<void> {
     await open(screen.logTestingPlaygroundURL())
 }
 
+const axe = configureAxe({
+    rules: {
+        // The react-ds datepicker uses aria-controls to refer to a popover that doesn't exist, axe doesn't like this, so we have to disable the rule for now.
+        'aria-valid-attr-value': { enabled: false },
+    },
+})
+
 export * from '@testing-library/react'
 
 const customScreen = {
@@ -78,5 +86,6 @@ const customScreen = {
     openPlayground: () => openPlayground(screen),
 }
 
+export { axe as axe }
 export { customScreen as screen }
 export { customRender as render, customRenderHook as renderHook }

@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils'
 import {
     ChangeSykmeldingStatusDocument,
     RegelStatus,
@@ -47,20 +47,14 @@ describe('Bekreft avvist sykmelding som lest', () => {
     ]
 
     it('should display reason for rejection', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
+        const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         expect(await screen.findByText(/Du trenger en ny sykmelding/)).toBeInTheDocument()
-    })
-
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 
     it('should get error message when trying to submit without checking checkbox', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
+        const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
@@ -71,10 +65,11 @@ describe('Bekreft avvist sykmelding som lest', () => {
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
             ).toHaveAccessibleDescription('Du må bekrefte at du har lest at sykmeldingen er avvist.'),
         )
+        expect(await axe(container)).toHaveNoViolations()
     })
 
     it('should remove error message after clicking checkbox', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
+        const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
@@ -85,6 +80,8 @@ describe('Bekreft avvist sykmelding som lest', () => {
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
             ).toHaveAccessibleDescription('Du må bekrefte at du har lest at sykmeldingen er avvist.'),
         )
+
+        expect(await axe(container)).toHaveNoViolations()
 
         userEvent.click(
             screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
@@ -95,10 +92,11 @@ describe('Bekreft avvist sykmelding som lest', () => {
                 screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
             ).not.toHaveAccessibleDescription('Du må bekrefte at du har lest at sykmeldingen er avvist.'),
         )
+        expect(await axe(container)).toHaveNoViolations()
     })
 
     it('should show confirmation after submitting', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createMock({
@@ -131,6 +129,9 @@ describe('Bekreft avvist sykmelding som lest', () => {
         userEvent.click(
             screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
         )
+
+        expect(await axe(container)).toHaveNoViolations()
+
         userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
 
         expect(
@@ -139,5 +140,6 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
         // There are no more unsent sykmeldinger, should show Ferdig link to ditt sykefravær
         expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 })

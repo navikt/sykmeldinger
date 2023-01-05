@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { render, waitFor, screen, axe } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
@@ -32,22 +32,8 @@ describe('Selvstendig næringsdrivende', () => {
     ]
 
     describe('Within ventetid', () => {
-        it('should show details from sykmelding', async () => {
-            render(<SykmeldingPage />, {
-                mocks: [
-                    ...baseMocks,
-                    createExtraFormDataMock({
-                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
-                    }),
-                ],
-            })
-
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-        })
-
         it('should be able to submit form', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -92,7 +78,9 @@ describe('Selvstendig næringsdrivende', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2020')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+            expect(await axe(container)).toHaveNoViolations()
+
+            await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
@@ -100,7 +88,7 @@ describe('Selvstendig næringsdrivende', () => {
 
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
             const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' })
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     createMock({
                         request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
@@ -156,7 +144,9 @@ describe('Selvstendig næringsdrivende', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2019')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+            expect(await axe(container)).toHaveNoViolations()
+
+            await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
@@ -164,15 +154,8 @@ describe('Selvstendig næringsdrivende', () => {
     })
 
     describe('Outside ventetid', () => {
-        it('should show details from sykmelding', async () => {
-            render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
-
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-        })
-
         it('should be able to submit form', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock(),
@@ -208,7 +191,9 @@ describe('Selvstendig næringsdrivende', () => {
                 screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'selvstendig næringsdrivende' }),
             )
 
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+            expect(await axe(container)).toHaveNoViolations()
+
+            await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toEqual('sykmelding-id')

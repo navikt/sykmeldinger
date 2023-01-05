@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils'
 import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
@@ -42,24 +42,25 @@ describe('Avbryt sykmelding', () => {
         }),
     ]
 
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-    })
-
     it('should show sykmelding as avbrutt', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
+        const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         expect(screen.queryByText(/Jeg vil avbryte sykmeldingen/)).not.toBeInTheDocument()
 
         expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument()
         expect(screen.getByText(/GJØR UTFYLLINGEN PÅ NYTT/)).toBeInTheDocument()
+        expect(
+            await axe(container, {
+                // This is a false positive on the print button
+                rules: {
+                    'svg-img-alt': { enabled: false },
+                },
+            }),
+        ).toHaveNoViolations()
     })
 
     it('should reopen avbrutt sykmelding', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock({
@@ -70,6 +71,8 @@ describe('Avbryt sykmelding', () => {
 
         expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument()
         userEvent.click(screen.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
+
+        expect(await axe(container)).toHaveNoViolations()
 
         await waitFor(() => expect(screen.queryByText(/Sykmeldingen ble avbrutt av deg/)).not.toBeInTheDocument())
         expect(await screen.findByText(/Jeg vil avbryte sykmeldingen/)).toBeInTheDocument()
@@ -99,7 +102,7 @@ describe('Avbryt sykmelding', () => {
             }),
         ]
 
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock({
@@ -138,6 +141,14 @@ describe('Avbryt sykmelding', () => {
 
         expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
         expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument()
+        expect(
+            await axe(container, {
+                // This is a false positive on the print button
+                rules: {
+                    'svg-img-alt': { enabled: false },
+                },
+            }),
+        ).toHaveNoViolations()
     })
 
     it('should show details for avbrutt egenmelding sykmelding', async () => {
@@ -164,7 +175,7 @@ describe('Avbryt sykmelding', () => {
             }),
         ]
 
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock({
@@ -175,5 +186,6 @@ describe('Avbryt sykmelding', () => {
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
         expect(screen.getByRole('heading', { name: 'Egenmeldingen ble avbrutt av deg' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 })

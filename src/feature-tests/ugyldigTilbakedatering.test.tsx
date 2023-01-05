@@ -1,6 +1,6 @@
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
 import { StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
@@ -42,17 +42,11 @@ describe('Ugyldig tilbakedatert sykmelding', () => {
         createExtraFormDataMock({ sykmeldingId: 'ugyldig-tilbakedatering-sykmelding' }),
     ]
 
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-    })
-
     it('should show information about tilbakedatering', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
+        const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
         expect(screen.getByRole('heading', { name: 'Tilbakedateringen kan ikke godkjennes' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 })

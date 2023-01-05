@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, waitFor, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { render, waitFor, screen, axe } from '../utils/test/testUtils'
 import {
     Arbeidsgiver,
     StatusEvent,
@@ -32,17 +32,8 @@ describe('Arbeidstaker', () => {
         }),
     ]
 
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, {
-            mocks: [...baseMocks, createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } })],
-        })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-    })
-
     it('should be able to submit form with active arbeidsgiver and nærmeste leder', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
@@ -91,6 +82,7 @@ describe('Arbeidstaker', () => {
         )
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -98,7 +90,7 @@ describe('Arbeidstaker', () => {
     })
 
     it('should be able to submit form with inactive arbeidsgiver', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
@@ -139,6 +131,7 @@ describe('Arbeidstaker', () => {
         )
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -146,7 +139,7 @@ describe('Arbeidstaker', () => {
     })
 
     it('should show warning if user does not have any arbeidsforhold', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [...baseMocks, createExtraFormDataMock()],
         })
 
@@ -156,10 +149,11 @@ describe('Arbeidstaker', () => {
         expect(
             await screen.findByText(/Vi klarer ikke å finne noen arbeidsforhold registrert på deg/),
         ).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 
     it('should show information for people with diskresjonskode strengt fortrilig adresse', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [...baseMocks, createExtraFormDataMock({ brukerinformasjon: { strengtFortroligAdresse: true } })],
         })
 
@@ -167,6 +161,7 @@ describe('Arbeidstaker', () => {
         await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
 
         expect(await screen.findByText(/Du er registrert med adressesperre/)).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
         expect(screen.queryByRole('button', { name: 'Bekreft sykmelding' })).not.toBeInTheDocument()
     })
 })

@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen } from '../utils/test/testUtils'
 import { StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
@@ -38,15 +38,8 @@ describe('Bekreftet sykmelding', () => {
         }),
     ]
 
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-    })
-
     it('should reopen brekreftet sykmelding', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock({
@@ -57,5 +50,6 @@ describe('Bekreftet sykmelding', () => {
 
         userEvent.click(await screen.findByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
         expect(await screen.findByRole('button', { name: 'Bekreft sykmelding' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 })

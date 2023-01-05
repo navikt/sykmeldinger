@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { render, screen } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import { SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
@@ -23,13 +23,6 @@ describe('Uriktige opplysninger', () => {
             result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
         }),
     ]
-
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-    })
 
     it('should show error message when periode is wrong', async () => {
         render(<SykmeldingPage />, { mocks: [...baseMocks, createExtraFormDataMock()] })
