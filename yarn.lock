@@ -6163,13 +6163,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.7":
-  version: 1.11.7
-  resolution: "dayjs@npm:1.11.7"
-  checksum: 5003a7c1dd9ed51385beb658231c3548700b82d3548c0cfbe549d85f2d08e90e972510282b7506941452c58d32136d6362f009c77ca55381a09c704e9f177ebb
-  languageName: node
-  linkType: hard
-
 "deasync@npm:^0.1.0":
   version: 0.1.24
   resolution: "deasync@npm:0.1.24"
@@ -12830,7 +12823,6 @@ __metadata:
     classnames: ^2.3.2
     concurrently: ^7.6.0
     date-fns: ^2.29.3
-    dayjs: ^1.11.7
     eslint: ^8.30.0
     eslint-config-next: ^12.3.4
     graphql: ^16.6.0

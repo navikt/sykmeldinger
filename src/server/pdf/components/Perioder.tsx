@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { Periode } from '../../api-models/sykmelding/Periode'
-import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../utils/periodeUtils'
+import { getPeriodTitle, getReadableLength } from '../../../utils/periodeUtils'
+import { toReadableDatePeriod } from '../../../utils/dateUtils'
 
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
 import Calender from './icons/Calender'
@@ -33,7 +34,7 @@ const Perioder = ({ perioder }: Props): JSX.Element | null => {
                 <View key={index} style={styles.content} wrap={false}>
                     <View style={styles.view}>
                         <Text style={styles.title}>{getPeriodTitle(periode)}</Text>
-                        <Text style={styles.text}>{getReadablePeriod(periode)}</Text>
+                        <Text style={styles.text}>{toReadableDatePeriod(periode.fom, periode.tom)}</Text>
                         <Text style={styles.text}>{getReadableLength(periode)}</Text>
                     </View>
                     {!!periode.innspillTilArbeidsgiver && (

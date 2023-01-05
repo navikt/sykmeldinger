@@ -1,21 +1,15 @@
 import 'next'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/extend-expect'
-import 'dayjs/locale/nb'
 
 import { TextDecoder, TextEncoder } from 'util'
 
 import { toHaveNoViolations } from 'jest-axe'
-import isBetween from 'dayjs/plugin/isBetween'
 import { Modal } from '@navikt/ds-react'
 import mockRouter from 'next-router-mock'
 import { createDynamicRouteParser } from 'next-router-mock/dynamic-routes'
-import dayjs from 'dayjs'
 import pino from 'pino'
 import pretty from 'pino-pretty'
-
-dayjs.locale('nb')
-dayjs.extend(isBetween)
 
 expect.extend(toHaveNoViolations)
 

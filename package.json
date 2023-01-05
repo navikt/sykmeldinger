@@ -35,7 +35,6 @@
         "@react-pdf/renderer": "^2.3.0",
         "classnames": "^2.3.2",
         "date-fns": "^2.29.3",
-        "dayjs": "^1.11.7",
         "graphql": "^16.6.0",
         "graphql-scalars": "^1.20.1",
         "next": "12.3.4",

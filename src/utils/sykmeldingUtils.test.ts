@@ -1,14 +1,14 @@
-import { Periode, Periodetype, RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
+import { RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import {
     getReadableSykmeldingLength,
     getSykmeldingEndDate,
-    getSykmeldingperioderSorted,
     getSykmeldingStartDate,
     getSykmeldingTitle,
     isActiveSykmelding,
 } from './sykmeldingUtils'
 import { dateSub } from './dateUtils'
+import { createSykmeldingPeriode } from './test/dataUtils'
 
 const minimalSykmelding: SykmeldingFragment = {
     __typename: 'Sykmelding',
@@ -66,18 +66,6 @@ const minimalSykmelding: SykmeldingFragment = {
     utenlandskSykmelding: null,
     rulesetVersion: 2,
 }
-
-const createSykmeldingPeriode = ({ fom, tom }: { fom: string; tom: string }): Periode => ({
-    __typename: 'Periode',
-    fom,
-    tom,
-    gradert: null,
-    behandlingsdager: null,
-    innspillTilArbeidsgiver: null,
-    type: Periodetype.REISETILSKUDD,
-    aktivitetIkkeMulig: null,
-    reisetilskudd: false,
-})
 
 describe('isActiveSykmelding', () => {
     it('should be inactive if status is not APEN', () => {
@@ -166,6 +154,17 @@ describe('getSykmeldingTitle', () => {
         }
         expect(getSykmeldingTitle(sykmelding)).toEqual('Egenmelding')
     })
+
+    it('Gets utenlandsk title', () => {
+        const sykmelding: SykmeldingFragment = {
+            ...minimalSykmelding,
+            utenlandskSykmelding: {
+                __typename: 'UtenlandskSykmelding',
+                land: 'Sverige',
+            },
+        }
+        expect(getSykmeldingTitle(sykmelding)).toEqual('Utenlandsk sykmelding')
+    })
 })
 
 describe('getSykmeldingStartDate', () => {
@@ -193,26 +192,6 @@ describe('getSykmeldingEndDate', () => {
             ],
         }
         expect(getSykmeldingEndDate(sykmelding)).toEqual('2021-06-03')
-    })
-})
-
-describe('getSykmeldingperioderSorted', () => {
-    it('sorts by fom and tom', () => {
-        const sykmelding: SykmeldingFragment = {
-            ...minimalSykmelding,
-            sykmeldingsperioder: [
-                createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
-                createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
-                createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
-            ],
-        }
-        expect(
-            getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder).map((it) => ({ fom: it.fom, tom: it.tom })),
-        ).toEqual([
-            { fom: '2021-04-01', tom: '2021-04-03' },
-            { fom: '2021-05-01', tom: '2021-05-03' },
-            { fom: '2021-06-01', tom: '2021-06-03' },
-        ])
     })
 })
 

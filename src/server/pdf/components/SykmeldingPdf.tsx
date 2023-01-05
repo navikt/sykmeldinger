@@ -4,7 +4,7 @@ import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
 import { toReadableDate } from '../../../utils/dateUtils'
 import { Periode } from '../../api-models/sykmelding/Periode'
-import { getSykmeldingperioderSorted } from '../../../utils/sykmeldingUtils'
+import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
 
 import NavLogoRedSvg from './NavLogoRedSvg'
 import { GeneratedTimestamp, PageNumbers } from './FooterItems'

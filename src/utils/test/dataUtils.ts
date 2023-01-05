@@ -7,6 +7,7 @@ import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
+    PeriodeFragment,
     Periodetype,
     RegelStatus,
     StatusEvent,
@@ -44,25 +45,16 @@ export function createSykmelding(
         merknader: null,
         meldingTilArbeidsgiver: null,
         sykmeldingsperioder: [
-            {
-                __typename: 'Periode',
+            createSykmeldingPeriode({
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
                 behandlingsdager: 2,
                 type: Periodetype.BEHANDLINGSDAGER,
-                reisetilskudd: false,
-                gradert: null,
-                innspillTilArbeidsgiver: null,
-                aktivitetIkkeMulig: null,
-            },
-            {
-                __typename: 'Periode',
+            }),
+            createSykmeldingPeriode({
                 fom: mottatt,
                 tom: dateAdd(mottatt, { days: 5 }),
                 type: Periodetype.AKTIVITET_IKKE_MULIG,
-                behandlingsdager: null,
-                gradert: null,
-                innspillTilArbeidsgiver: null,
                 aktivitetIkkeMulig: {
                     __typename: 'AktivitetIkkeMuligPeriode',
                     medisinskArsak: {
@@ -76,10 +68,8 @@ export function createSykmelding(
                         beskrivelse: 'Dette er en beskrivelse av den arbeidsrelaterte årsaken',
                     },
                 },
-                reisetilskudd: false,
-            },
-            {
-                __typename: 'Periode',
+            }),
+            createSykmeldingPeriode({
                 fom: dateAdd(mottatt, { days: 6 }),
                 tom: dateAdd(mottatt, { days: 11 }),
                 type: Periodetype.GRADERT,
@@ -88,11 +78,7 @@ export function createSykmelding(
                     grad: 20,
                     reisetilskudd: false,
                 },
-                reisetilskudd: false,
-                behandlingsdager: null,
-                aktivitetIkkeMulig: null,
-                innspillTilArbeidsgiver: null,
-            },
+            }),
         ],
         medisinskVurdering: {
             __typename: 'MedisinskVurdering',
@@ -197,6 +183,19 @@ export function createSykmelding(
         ...overrides,
     }
 }
+
+export const createSykmeldingPeriode = (overrides?: Partial<PeriodeFragment>): PeriodeFragment => ({
+    __typename: 'Periode',
+    type: Periodetype.REISETILSKUDD,
+    fom: '2020-04-01',
+    tom: '2020-04-15',
+    gradert: null,
+    behandlingsdager: null,
+    innspillTilArbeidsgiver: null,
+    aktivitetIkkeMulig: null,
+    reisetilskudd: false,
+    ...overrides,
+})
 
 export function createUnderBehandlingMerknad(): Pick<Sykmelding, 'merknader'> {
     return { merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }] }
