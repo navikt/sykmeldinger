@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitFor, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen, waitFor } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import {
     StatusEvent,
@@ -31,17 +31,8 @@ describe('Annet', () => {
         }),
     ]
 
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, {
-            mocks: [...baseMocks, createExtraFormDataMock()],
-        })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-    })
-
     it('should be able to submit form with work situation annet', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock(),
@@ -74,6 +65,9 @@ describe('Annet', () => {
 
         await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
         await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'annet' }))
+
+        expect(await axe(container)).toHaveNoViolations()
+
         await userEvent.click(screen.getByRole('button', { name: 'Bekreft sykmelding' }))
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))

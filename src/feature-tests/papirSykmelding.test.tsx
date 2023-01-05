@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen } from '../utils/test/testUtils'
 import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
@@ -45,15 +45,8 @@ describe('Papir sykmelding', () => {
         }),
     ]
 
-    it('should show details from sykmelding', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
-
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-        expect(screen.getByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
-    })
-
     it('should show information if papirsykmelding is already passed on', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
+        const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         expect(await screen.findByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
 
@@ -66,10 +59,11 @@ describe('Papir sykmelding', () => {
                 'Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i stedet. Det er en fordel for begge: Da får dere alt her, både sykepengesøknaden og andre meldinger som handler om sykefraværet. Papirsykmeldingen kan du legge bort. Det du gjør her, erstatter papiret.',
             ),
         ).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 
     it('should show information if papirsykmelding is not passed on', async () => {
-        render(<SykmeldingPage />, { mocks: [...baseMocks] })
+        const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
         expect(await screen.findByRole('heading', { name: 'Papirsykmelding' })).toBeInTheDocument()
 
@@ -78,10 +72,11 @@ describe('Papir sykmelding', () => {
         )
 
         expect(screen.getByText('Da kan du sende sykmeldingen herfra')).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
     })
 
     it('should avbryte papirsykmelding', async () => {
-        render(<SykmeldingPage />, {
+        const { container } = render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock(),
@@ -114,6 +109,7 @@ describe('Papir sykmelding', () => {
         await userEvent.click(
             screen.getRadioInGroup({ name: /Har du allerede gitt papirsykmeldingen videre?/i }, { name: 'Ja' }),
         )
+        expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Avbryt sykmeldingen' }))
 
         expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()

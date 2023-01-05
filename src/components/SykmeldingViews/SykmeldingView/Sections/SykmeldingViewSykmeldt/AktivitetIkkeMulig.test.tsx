@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react'
-
+import { render, screen, axe } from '../../../../../utils/test/testUtils'
 import {
     AktivitetIkkeMuligPeriode,
     ArbeidsrelatertArsakType,
@@ -9,7 +8,7 @@ import {
 import AktivitetIkkeMulig from './AktivitetIkkeMulig'
 
 describe('AktivitetIkkeMulig', () => {
-    it('Renders aktivitet ikke mulig periode with specified medisinsk- and arbeidsrelatert arsak', () => {
+    it('Renders aktivitet ikke mulig periode with specified medisinsk- and arbeidsrelatert arsak', async () => {
         const periode: AktivitetIkkeMuligPeriode = {
             __typename: 'AktivitetIkkeMuligPeriode',
             medisinskArsak: {
@@ -24,7 +23,7 @@ describe('AktivitetIkkeMulig', () => {
             },
         }
 
-        render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} isV3={false} />)
+        const { container } = render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} isV3={false} />)
 
         expect(screen.getByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).toBeInTheDocument()
         expect(screen.getByText('Helsetilstanden hindrer pasienten i å være i aktivitet')).toBeInTheDocument()
@@ -35,6 +34,8 @@ describe('AktivitetIkkeMulig', () => {
         ).toBeInTheDocument()
         expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument()
         expect(screen.getByText('arbeidsrelatert beskrivelse')).toBeInTheDocument()
+
+        expect(await axe(container)).toHaveNoViolations()
     })
 
     it('should display title if medisinskArsak and arbeidsrelatertArsak is missing', () => {

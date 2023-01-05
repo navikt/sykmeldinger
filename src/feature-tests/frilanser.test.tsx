@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, waitFor, screen, waitForElementToBeRemoved, within } from '../utils/test/testUtils'
+import { render, waitFor, screen, waitForElementToBeRemoved, within, axe } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createInitialQuery, createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
@@ -32,22 +32,8 @@ describe('Frilanser', () => {
     ]
 
     describe('Within ventetid', () => {
-        it('should show details from sykmelding', async () => {
-            render(<SykmeldingPage />, {
-                mocks: [
-                    ...baseMocks,
-                    createExtraFormDataMock({
-                        utenforVentetid: { erUtenforVentetid: false, oppfolgingsdato: '2021-01-01' },
-                    }),
-                ],
-            })
-
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-        })
-
         it('should be able to submit form', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -90,6 +76,8 @@ describe('Frilanser', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2020')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
+            expect(await axe(container)).toHaveNoViolations()
+
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toEqual(`/[sykmeldingId]/kvittering`))
@@ -99,7 +87,7 @@ describe('Frilanser', () => {
         it('should use first fom in sykmelding period if oppfolgingsdato is missing', async () => {
             const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2020-02-10' })
 
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     createMock({
                         request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
@@ -150,6 +138,9 @@ describe('Frilanser', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '20.12.2019')
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2019')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
+
+            expect(await axe(container)).toHaveNoViolations()
+
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -158,20 +149,8 @@ describe('Frilanser', () => {
     })
 
     describe('Outside ventetid', () => {
-        it('should show details from sykmelding', async () => {
-            render(<SykmeldingPage />, {
-                mocks: [
-                    ...baseMocks,
-                    createExtraFormDataMock({ utenforVentetid: { erUtenforVentetid: true, oppfolgingsdato: null } }),
-                ],
-            })
-
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
-            expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-        })
-
         it('should be able to submit form', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({ utenforVentetid: { erUtenforVentetid: true, oppfolgingsdato: null } }),
@@ -206,6 +185,9 @@ describe('Frilanser', () => {
 
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
             await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
+
+            expect(await axe(container)).toHaveNoViolations()
+
             userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
@@ -215,7 +197,7 @@ describe('Frilanser', () => {
 
     describe('Egenmeldingsperioder', () => {
         it('should show error message with link if date is missing', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -230,10 +212,11 @@ describe('Frilanser', () => {
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(await screen.findByRole('link', { name: 'Du må fylle inn fra dato.' })).toBeInTheDocument()
+            expect(await axe(container)).toHaveNoViolations()
         })
 
         it('should show error message with link if date is invalid format', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -252,10 +235,11 @@ describe('Frilanser', () => {
             expect(
                 await screen.findByRole('link', { name: 'Fra dato må være på formatet DD.MM.YYYY.' }),
             ).toBeInTheDocument()
+            expect(await axe(container)).toHaveNoViolations()
         })
 
         it('should show error message with link if fom is after oppfølgingsdato', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -274,10 +258,11 @@ describe('Frilanser', () => {
             expect(
                 await screen.findByRole('link', { name: 'Fra dato kan ikke være oppfølgingsdato eller senere.' }),
             ).toBeInTheDocument()
+            expect(await axe(container)).toHaveNoViolations()
         })
 
         it('should show error message with link if tom is after oppfølgingsdato', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -296,10 +281,11 @@ describe('Frilanser', () => {
             expect(
                 await screen.findByRole('link', { name: 'Til dato kan ikke være oppfølgingsdato eller senere.' }),
             ).toBeInTheDocument()
+            expect(await axe(container)).toHaveNoViolations()
         })
 
         it('should show error message with link if fom is after tom', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -318,10 +304,11 @@ describe('Frilanser', () => {
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(await screen.findByRole('link', { name: 'Fra kan ikke være etter til dato.' })).toBeInTheDocument()
+            expect(await axe(container)).toHaveNoViolations()
         })
 
         it('should be able to remove period', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 mocks: [
                     ...baseMocks,
                     createExtraFormDataMock({
@@ -343,10 +330,11 @@ describe('Frilanser', () => {
             expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(4)
             userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
             expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(2)
+            expect(await axe(container)).toHaveNoViolations()
         })
 
         it('should show guid panel about egenmeldt', async () => {
-            render(<SykmeldingPage />, {
+            const { container } = render(<SykmeldingPage />, {
                 initialState: [
                     createInitialQuery(
                         SykmeldingByIdDocument,
@@ -368,6 +356,7 @@ describe('Frilanser', () => {
                     'Hei, denne egenmeldingen er utløpt og kan derfor ikke benyttes. Du kan fortsatt se opplysninger fra egenmeldingen under.',
                 ),
             ).toBeInTheDocument()
+            expect(await axe(container)).toHaveNoViolations()
         })
     })
 })

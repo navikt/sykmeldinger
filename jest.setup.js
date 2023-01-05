@@ -5,6 +5,7 @@ import 'dayjs/locale/nb'
 
 import { TextDecoder, TextEncoder } from 'util'
 
+import { toHaveNoViolations } from 'jest-axe'
 import isBetween from 'dayjs/plugin/isBetween'
 import { Modal } from '@navikt/ds-react'
 import mockRouter from 'next-router-mock'
@@ -15,6 +16,8 @@ import pretty from 'pino-pretty'
 
 dayjs.locale('nb')
 dayjs.extend(isBetween)
+
+expect.extend(toHaveNoViolations)
 
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('next/dist/client/router', () => require('next-router-mock'))
