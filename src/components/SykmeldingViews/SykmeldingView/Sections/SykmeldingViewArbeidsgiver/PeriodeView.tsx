@@ -2,9 +2,10 @@ import { Calender } from '@navikt/ds-icons'
 
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { getPeriodTitle, getReadableLength, getReadablePeriod } from '../../../../../utils/periodeUtils'
+import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode } from '../../../../../fetching/graphql.generated'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
 
 import styles from './PeriodeView.module.css'
 
@@ -21,7 +22,7 @@ function PeriodeView({ perioder }: PeriodeViewProps): JSX.Element {
                     <div key={index} className={styles.periode}>
                         <SykmeldingEntry
                             title={getPeriodTitle(periode)}
-                            mainText={getReadablePeriod(periode)}
+                            mainText={toReadableDatePeriod(periode.fom, periode.tom)}
                             subText={getReadableLength(periode)}
                         />
                         {!!periode.innspillTilArbeidsgiver && (

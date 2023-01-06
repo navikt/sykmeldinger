@@ -1,5 +1,6 @@
-import { getSykmeldingperioderSorted, isV3 } from '../../../utils/sykmeldingUtils'
+import { isV3 } from '../../../utils/sykmeldingUtils'
 import { UtenlandskSykmelding } from '../../../utils/utenlanskUtils'
+import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
 
 import Perioder from './Sections/SykmeldingViewSykmeldt/Perioder'
 import SykmeldingenGjelder from './Sections/SykmeldingViewSykmeldt/SykmeldingenGjelder'

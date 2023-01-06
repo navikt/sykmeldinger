@@ -1,10 +1,8 @@
-import { differenceInDays, isAfter, parseISO } from 'date-fns'
-import dayjs from 'dayjs'
-import { sortBy } from 'remeda'
+import { differenceInDays, isAfter, isBefore, parseISO } from 'date-fns'
 
-import { StatusEvent, Periode, SykmeldingFragment } from '../fetching/graphql.generated'
+import { StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
 
-import { toDate } from './dateUtils'
+import { toDate, toReadableDatePeriod } from './dateUtils'
 import { isUtenlandsk } from './utenlanskUtils'
 
 export function isActiveSykmelding(sykmelding: SykmeldingFragment): boolean {
@@ -31,11 +29,9 @@ export function getSykmeldingTitle(
 ): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' | 'Utenlandsk sykmelding' {
     if (sykmelding && isUtenlandsk(sykmelding)) {
         return 'Utenlandsk sykmelding'
-    }
-    if (sykmelding?.papirsykmelding) {
+    } else if (sykmelding?.papirsykmelding) {
         return 'Papirsykmelding'
-    }
-    if (sykmelding?.egenmeldt) {
+    } else if (sykmelding?.egenmeldt) {
         return 'Egenmelding'
     }
     return 'Sykmelding'
@@ -48,42 +44,20 @@ export function getSykmeldingTitle(
 export function getSykmeldingStartDate(sykmelding: {
     sykmeldingsperioder: readonly { readonly fom: string }[]
 }): string {
-    return sykmelding.sykmeldingsperioder.reduce((acc, value) => {
-        if (dayjs(value.fom).isBefore(dayjs(acc.fom))) {
-            return value
-        }
-
-        return acc
-    }).fom
+    return sykmelding.sykmeldingsperioder.reduce((acc, value) =>
+        isBefore(toDate(value.fom), toDate(acc.fom)) ? value : acc,
+    ).fom
 }
-
-/**
- * Used by reduce to get the latest tom date
- */
-export const toLatestTom = (previousValue: Periode, currentValue: Periode): Periode =>
-    isAfter(toDate(previousValue.tom), toDate(currentValue.tom)) ? previousValue : currentValue
 
 /**
  * Get the last tom date of the last sykmelding period
  * @return {Date} The end date
  */
 export function getSykmeldingEndDate(sykmelding: SykmeldingFragment): string {
-    return sykmelding.sykmeldingsperioder.reduce((acc, value) => {
-        if (dayjs(value.fom).isAfter(dayjs(acc.fom))) {
-            return value
-        }
-
-        return acc
-    }).tom
+    return sykmelding.sykmeldingsperioder.reduce((acc, value) =>
+        isAfter(toDate(value.fom), toDate(acc.fom)) ? value : acc,
+    ).tom
 }
-
-/**
- * Get the periods of the sykmelding sorted by newest first
- * @return {Periode[]} The sorted sykmelding periods
- */
-export const getSykmeldingperioderSorted = <Periode extends { fom: string; tom: string }>(
-    perioder: readonly Periode[],
-): Periode[] => sortBy(perioder, [(periode) => periode.fom, 'asc'], [(periode) => periode.tom, 'asc'])
 
 /**
  * Get the text representation of the sykmelding length from start date to end date
@@ -93,18 +67,7 @@ export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment): str
     const startDate = getSykmeldingStartDate(sykmelding)
     const endDate = getSykmeldingEndDate(sykmelding)
 
-    if (dayjs(startDate).isSame(endDate)) {
-        return dayjs(startDate).format('D. MMMM YYYY')
-    }
-
-    if (dayjs(startDate).isSame(endDate, 'year')) {
-        if (dayjs(startDate).isSame(endDate, 'month')) {
-            return `${dayjs(startDate).format('D.')} - ${dayjs(endDate).format('D. MMMM YYYY')}`
-        }
-        return `${dayjs(startDate).format('D. MMMM')} - ${dayjs(endDate).format('D. MMMM YYYY')}`
-    }
-
-    return `${dayjs(startDate).format('D. MMMM YYYY')} - ${dayjs(endDate).format('D. MMMM YYYY')}`
+    return toReadableDatePeriod(startDate, endDate)
 }
 
 export function isV3(sykmelding: SykmeldingFragment): boolean {

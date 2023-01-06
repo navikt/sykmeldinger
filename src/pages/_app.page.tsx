@@ -2,10 +2,7 @@ import '../style/global.css'
 
 import { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
-import React, { useEffect, useState } from 'react'
-import dayjs from 'dayjs'
-import 'dayjs/locale/nb'
-import isBetween from 'dayjs/plugin/isBetween'
+import React, { useState } from 'react'
 import { configureLogger } from '@navikt/next-logger'
 
 import { createApolloClient } from '../fetching/apollo'
@@ -21,11 +18,6 @@ configureLogger({
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     useHandleDecoratorClicks()
-
-    useEffect(() => {
-        dayjs.locale('nb')
-        dayjs.extend(isBetween)
-    }, [])
 
     const [apolloClient] = useState(() => {
         return createApolloClient()

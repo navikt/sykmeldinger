@@ -1,7 +1,9 @@
-import dayjs from 'dayjs'
+import { sortBy } from 'remeda'
 
 import { ArbeidsrelatertArsakType, MedisinskArsakType, Periode, Periodetype } from '../fetching/graphql.generated'
 import { AnnenFraverGrunn } from '../server/graphql/resolver-types.generated'
+
+import { diffInDays } from './dateUtils'
 
 export function medisinskArsakToText(value: MedisinskArsakType, isV3: boolean): string {
     switch (value) {
@@ -74,41 +76,13 @@ export function getPeriodTitle<Periode extends { type: Periodetype; gradert?: { 
 }
 
 /**
- * Get a text representation of the period fom to tom
- * @return {string} The period string
- */
-export function getReadablePeriod<Periode extends { fom: string; tom: string }>(period: Periode): string {
-    const sameMonthAndYear =
-        dayjs(period.fom).get('month') === dayjs(period.tom).get('month') &&
-        dayjs(period.fom).get('year') === dayjs(period.tom).get('year')
-    const sameYearNotMonth =
-        dayjs(period.fom).get('month') !== dayjs(period.tom).get('month') &&
-        dayjs(period.fom).get('year') === dayjs(period.tom).get('year')
-
-    if (sameMonthAndYear) {
-        return `${dayjs(period.fom).format('D.')} - ${dayjs(period.tom).format('D. MMM YYYY')}`
-    } else if (sameYearNotMonth) {
-        return `${dayjs(period.fom).format('D. MMM')} - ${dayjs(period.tom).format('D. MMM YYYY')}`
-    }
-    return `${dayjs(period.fom).format('D. MMM YYYY')} - ${dayjs(period.tom).format('D. MMM YYYY')}`
-}
-
-/**
- * Get the total length between fom and tom in days
- * @return {number} The period length
- */
-export function getLength<Periode extends { fom: string; tom: string }>(period: Periode): number {
-    return dayjs(period.tom).diff(dayjs(period.fom), 'day') + 1
-}
-
-/**
  * Get a text representation of the period length
  * @return {string} The period string
  */
 export function getReadableLength<
     Periode extends { type: Periodetype; behandlingsdager?: number | null; fom: string; tom: string },
 >(period: Periode): string {
-    const length = getLength(period)
+    const length = diffInDays(period.fom, period.tom)
     if (period.type === Periodetype.BEHANDLINGSDAGER) {
         return `${period.behandlingsdager} behandlingsdag${
             period.behandlingsdager && period.behandlingsdager > 1 ? 'er' : ''
@@ -122,7 +96,7 @@ export function getReadableLength<
  * @return {string} The period discription
  */
 export function getDescription(period: Periode, arbeidsgiverNavn?: string): string {
-    const periodLength = getLength(period)
+    const periodLength = diffInDays(period.fom, period.tom)
 
     switch (period.type) {
         case Periodetype.AKTIVITET_IKKE_MULIG:
@@ -145,3 +119,11 @@ export function getDescription(period: Periode, arbeidsgiverNavn?: string): stri
             return ''
     }
 }
+
+/**
+ * Get the periods of the sykmelding sorted by newest first
+ * @return {Periode[]} The sorted sykmelding periods
+ */
+export const getSykmeldingperioderSorted = <Periode extends { fom: string; tom: string }>(
+    perioder: readonly Periode[],
+): Periode[] => sortBy(perioder, [(periode) => periode.fom, 'asc'], [(periode) => periode.tom, 'asc'])

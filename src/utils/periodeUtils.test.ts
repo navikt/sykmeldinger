@@ -1,6 +1,7 @@
-import { Periode, Periodetype } from '../fetching/graphql.generated'
+import { Periode, PeriodeFragment, Periodetype } from '../fetching/graphql.generated'
 
-import { getDescription, getLength, getPeriodTitle, getReadableLength, getReadablePeriod } from './periodeUtils'
+import { getDescription, getPeriodTitle, getReadableLength, getSykmeldingperioderSorted } from './periodeUtils'
+import { createSykmeldingPeriode } from './test/dataUtils'
 
 describe('periodeUtils', () => {
     describe('getPeriodTitle', () => {
@@ -86,114 +87,6 @@ describe('periodeUtils', () => {
                 reisetilskudd: false,
             }
             expect(getPeriodTitle(periode)).toBe('Behandlingsdager')
-        })
-    })
-
-    describe('getReadablePeriod', () => {
-        it('Returns month and year only once if fom and tom have the same month and year', () => {
-            const periode: Periode = {
-                __typename: 'Periode',
-                fom: '2021-04-01',
-                tom: '2021-04-03',
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.AVVENTENDE,
-                aktivitetIkkeMulig: null,
-                reisetilskudd: false,
-            }
-            expect(getReadablePeriod(periode)).toBe('1. - 3. april 2021')
-        })
-
-        it('Returns both months if month is different and year is equal for fom and tom', () => {
-            const periode: Periode = {
-                __typename: 'Periode',
-                fom: '2021-01-01',
-                tom: '2021-04-03',
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.AVVENTENDE,
-                aktivitetIkkeMulig: null,
-                reisetilskudd: false,
-            }
-            expect(getReadablePeriod(periode)).toBe('1. jan. - 3. april 2021')
-        })
-        it('Returns both months and years if the month and year are different', () => {
-            const periode: Periode = {
-                __typename: 'Periode',
-                fom: '2020-12-01',
-                tom: '2021-02-03',
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.AVVENTENDE,
-                aktivitetIkkeMulig: null,
-                reisetilskudd: false,
-            }
-            expect(getReadablePeriod(periode)).toBe('1. des. 2020 - 3. feb. 2021')
-        })
-    })
-
-    describe('getLength', () => {
-        it('Handles fom/tom same day', () => {
-            const periode: Periode = {
-                __typename: 'Periode',
-                fom: '2021-04-29',
-                tom: '2021-04-29',
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.AVVENTENDE,
-                aktivitetIkkeMulig: null,
-                reisetilskudd: false,
-            }
-            expect(getLength(periode)).toBe(1)
-        })
-
-        it('Handles fom/tom within same month', () => {
-            const periode: Periode = {
-                __typename: 'Periode',
-                fom: '2021-04-01',
-                tom: '2021-04-03',
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.AVVENTENDE,
-                aktivitetIkkeMulig: null,
-                reisetilskudd: false,
-            }
-            expect(getLength(periode)).toBe(3)
-        })
-
-        it('Handles fom/tom cross same month', () => {
-            const periode: Periode = {
-                __typename: 'Periode',
-                fom: '2021-04-29',
-                tom: '2021-05-01',
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.AVVENTENDE,
-                aktivitetIkkeMulig: null,
-                reisetilskudd: false,
-            }
-            expect(getLength(periode)).toBe(3)
-        })
-
-        it('Handles fom/tom cross year', () => {
-            const periode: Periode = {
-                __typename: 'Periode',
-                fom: '2021-12-31',
-                tom: '2022-01-01',
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: 'Innspill til arbeidsgiver',
-                type: Periodetype.AVVENTENDE,
-                aktivitetIkkeMulig: null,
-                reisetilskudd: false,
-            }
-            expect(getLength(periode)).toBe(2)
         })
     })
 
@@ -447,6 +340,22 @@ describe('periodeUtils', () => {
                 reisetilskudd: false,
             }
             expect(getDescription(periode)).toBe('2 behandlingsdager i løpet av 3 dager')
+        })
+    })
+
+    describe('getSykmeldingperioderSorted', () => {
+        it('sorts by fom and tom', () => {
+            const perioder: PeriodeFragment[] = [
+                createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
+                createSykmeldingPeriode({ fom: '2021-05-01', tom: '2021-05-03' }),
+                createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
+            ]
+
+            expect(getSykmeldingperioderSorted(perioder).map((it) => ({ fom: it.fom, tom: it.tom }))).toEqual([
+                { fom: '2021-04-01', tom: '2021-04-03' },
+                { fom: '2021-05-01', tom: '2021-05-03' },
+                { fom: '2021-06-01', tom: '2021-06-03' },
+            ])
         })
     })
 })

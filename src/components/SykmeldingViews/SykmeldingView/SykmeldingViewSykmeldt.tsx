@@ -1,5 +1,6 @@
 import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated'
-import { getSykmeldingperioderSorted, isV3 } from '../../../utils/sykmeldingUtils'
+import { isV3 } from '../../../utils/sykmeldingUtils'
+import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
 
 import FlereOpplysninger from './FlereOpplysninger'
 import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav'
