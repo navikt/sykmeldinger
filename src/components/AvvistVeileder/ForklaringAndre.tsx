@@ -10,16 +10,17 @@ interface ForklaringAndreProps {
     ruleHits: Behandlingsutfall['ruleHits']
 }
 
+const avvistGrunnId = 'avvist-grunn'
+
 function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): JSX.Element {
     return (
         <>
-            <BodyLong>
+            <BodyLong className={styles.trengerNySykmelding}>
                 Du trenger en ny sykmelding fordi det er gjort en feil i utfyllingen. Vi har gitt beskjed til{' '}
                 {behandlerNavn} om hva som er feil, og at du må få en ny sykmelding.
             </BodyLong>
-            <br />
-            <Label>Grunnen til at sykmeldingen er avvist:</Label>
-            <ul className={styles.begrunnelseList}>
+            <Label id={avvistGrunnId}>Grunnen til at sykmeldingen er avvist:</Label>
+            <ul className={styles.begrunnelseList} aria-labelledby={avvistGrunnId}>
                 {ruleHits.map((ruleHit, index) => (
                     <li key={index}>
                         <BodyShort>{ruleHit.messageForUser}</BodyShort>

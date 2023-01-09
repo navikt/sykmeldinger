@@ -40,20 +40,12 @@ function SykmeldingArbeidsgiverContainer({ sykmelding }: Props): JSX.Element {
                             <div className={styles.sykmeldingsopplysningerIcon}>
                                 <Findout role="img" aria-hidden />
                             </div>
-                            <Heading
-                                className={styles.sykmeldingsopplysningerText}
-                                size="small"
-                                level="2"
-                                id="sykmeldinger-panel-info-section"
-                            >
+                            <Heading size="medium" level="2" id="sykmeldinger-panel-info-section">
                                 Se hva som sendes til jobben din
                             </Heading>
                         </div>
                     </Accordion.Header>
-                    <Accordion.Content
-                        id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`}
-                        aria-labelledby={headerId}
-                    >
+                    <Accordion.Content id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`}>
                         {isUtenlandsk(sykmelding) ? (
                             <SykmeldingArbeidsgiverUtenlandsk sykmelding={sykmelding} />
                         ) : (

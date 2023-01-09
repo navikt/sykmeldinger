@@ -1,4 +1,3 @@
-import React from 'react'
 import { BodyLong, BodyShort, GuidePanel, Heading } from '@navikt/ds-react'
 
 import { Behandlingsutfall } from '../../fetching/graphql.generated'
@@ -12,7 +11,7 @@ interface AvvistVeilederProps {
     behandlingsutfall: Behandlingsutfall
 }
 
-const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandlingsutfall }) => {
+function AvvistVeileder({ behandlerNavn, behandlingsutfall }: AvvistVeilederProps): JSX.Element {
     const isNotValidInHPR = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'BEHANDLER_IKKE_GYLDIG_I_HPR')
     const isMissingAuthorization = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_MANGLER_AUTORISASJON_I_HPR',
@@ -34,30 +33,31 @@ const AvvistVeileder: React.FC<AvvistVeilederProps> = ({ behandlerNavn, behandli
             </Heading>
             <hr aria-hidden className={styles.underline} />
             <BodyShort>Beklager at vi må bry deg mens du er syk.</BodyShort>
-            <br />
-            {isNotValidInHPR || isMissingAuthorization || isNotCorrectRole || isSuspended ? (
-                <BodyShort>
-                    Den som har skrevet sykmeldingen, har ikke autorisasjon til å gjøre det. Du må derfor få en annen
-                    til å skrive sykmeldingen.
-                </BodyShort>
-            ) : isOver12Weeks ? (
-                <div className={styles.over12Weeks}>
-                    <BodyLong>
-                        Kiropraktorer og manuellterapeuter har ikke lov til å skrive en sykmelding som gjør at det
-                        totale sykefraværet ditt blir lenger enn 12 uker.
-                    </BodyLong>
-                    <BodyLong>Du må få en lege til å skrive sykmeldingen.</BodyLong>
-                </div>
-            ) : isOver70 ? (
-                <BodyShort>
-                    Du har ikke rett til sykepenger fordi du er over 70 år. I stedet for sykmelding kan du be om en
-                    skriftlig bekreftelse på at du er syk.
-                </BodyShort>
-            ) : isZDiagnosis ? (
-                <ForklaringZDiagnose />
-            ) : (
-                <ForklaringAndre behandlerNavn={behandlerNavn} ruleHits={behandlingsutfall.ruleHits} />
-            )}
+            <div className={styles.textWrapper}>
+                {isNotValidInHPR || isMissingAuthorization || isNotCorrectRole || isSuspended ? (
+                    <BodyShort>
+                        Den som har skrevet sykmeldingen, har ikke autorisasjon til å gjøre det. Du må derfor få en
+                        annen til å skrive sykmeldingen.
+                    </BodyShort>
+                ) : isOver12Weeks ? (
+                    <div className={styles.over12Weeks}>
+                        <BodyLong>
+                            Kiropraktorer og manuellterapeuter har ikke lov til å skrive en sykmelding som gjør at det
+                            totale sykefraværet ditt blir lenger enn 12 uker.
+                        </BodyLong>
+                        <BodyLong>Du må få en lege til å skrive sykmeldingen.</BodyLong>
+                    </div>
+                ) : isOver70 ? (
+                    <BodyShort>
+                        Du har ikke rett til sykepenger fordi du er over 70 år. I stedet for sykmelding kan du be om en
+                        skriftlig bekreftelse på at du er syk.
+                    </BodyShort>
+                ) : isZDiagnosis ? (
+                    <ForklaringZDiagnose />
+                ) : (
+                    <ForklaringAndre behandlerNavn={behandlerNavn} ruleHits={behandlingsutfall.ruleHits} />
+                )}
+            </div>
         </GuidePanel>
     )
 }

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Back } from '@navikt/ds-icons'
 import { BodyShort, Link } from '@navikt/ds-react'
 
@@ -8,7 +7,7 @@ import styles from './TilHovedsiden.module.css'
 
 const publicEnv = getPublicEnv()
 
-const TilHovedsiden: React.FC = () => {
+function TilHovedsiden(): JSX.Element {
     return (
         <Link href={publicEnv.SYKEFRAVAER_ROOT} className={styles.tilHovedsiden}>
             <Back role="img" aria-hidden />

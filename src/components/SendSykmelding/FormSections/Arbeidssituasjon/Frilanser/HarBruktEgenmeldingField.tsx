@@ -36,14 +36,17 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
 }
 
 function HarBruktEgenmeldingReadMore(): JSX.Element {
+    const fravaerListId = 'fravaer-list'
     return (
         <ReadMore header="Hva betyr dette?">
             <BodyShort spacing>Vi trenger denne informasjonen for å vite hvem som skal utbetale hva.</BodyShort>
             <BodyShort spacing>
                 Siden vi ikke får tak i informasjonen automatisk, må vi få disse opplysningene fra deg.
             </BodyShort>
-            <Label spacing>Med fravær mener vi</Label>
-            <ul>
+            <Label id={fravaerListId} spacing>
+                Med fravær mener vi
+            </Label>
+            <ul aria-labelledby={fravaerListId}>
                 <li>
                     <BodyShort>egenmelding</BodyShort>
                 </li>

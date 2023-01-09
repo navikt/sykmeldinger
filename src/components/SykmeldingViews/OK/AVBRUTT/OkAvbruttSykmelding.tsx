@@ -41,7 +41,7 @@ function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): 
                                 logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } })
                                 reopen()
                             }}
-                            icon={<FillForms />}
+                            icon={<FillForms aria-hidden />}
                         >
                             GJØR UTFYLLINGEN PÅ NYTT
                         </Button>

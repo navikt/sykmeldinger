@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import { Accordion, Alert, BodyShort, Link } from '@navikt/ds-react'
 import Head from 'next/head'
 import { groupBy } from 'remeda'
@@ -19,7 +19,7 @@ import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 import useFocusRefetch from '../hooks/useFocusRefetch'
 
-const SykmeldingerPage: React.FC = () => {
+function SykmeldingerPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_LISTEVISNING')
 
     const { data, error, loading, refetch } = useSykmeldinger()

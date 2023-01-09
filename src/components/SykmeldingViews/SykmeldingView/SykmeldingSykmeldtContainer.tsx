@@ -1,4 +1,3 @@
-import React from 'react'
 import { BodyShort, Button, Heading } from '@navikt/ds-react'
 import { Print } from '@navikt/ds-icons'
 
@@ -17,14 +16,14 @@ interface Props {
 
 const publicEnv = getPublicEnv()
 
-const SykmeldingSykmeldtContainer: React.FC<Props> = ({ sykmelding }: Props) => {
+function SykmeldingSykmeldtContainer({ sykmelding }: Props): JSX.Element {
     const articleHeadingId = `sykmelding-${sykmelding.id}-header`
 
     return (
         <article aria-labelledby={articleHeadingId}>
             <header className={styles.sykmeldingsopplysningerHeader}>
                 <div className={styles.sykmeldtHeader}>
-                    <Heading id={articleHeadingId} size="small" level="2">
+                    <Heading id={articleHeadingId} size="medium" level="2">
                         Opplysninger fra sykmeldingen
                     </Heading>
                     <div className={styles.sentDateAndPrint}>

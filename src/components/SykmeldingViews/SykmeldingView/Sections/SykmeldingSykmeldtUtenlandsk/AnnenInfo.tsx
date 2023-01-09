@@ -18,20 +18,20 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
             <SykmeldtHeading title="Annen info" Icon={Information} />
             <div className={styles.annenInfo}>
                 <div className={styles.info}>
-                    <Heading className={styles.heading} size="small" level="4">
+                    <Heading size="xsmall" level="4">
                         Dato sykmeldingen ble skrevet
                     </Heading>
                     <BodyShort size="small">{toReadableDate(sykmelding.behandletTidspunkt)}</BodyShort>
                 </div>
                 <div className={styles.info}>
-                    <Heading className={styles.heading} size="small" level="4">
+                    <Heading size="xsmall" level="4">
                         Landet sykmeldingen ble skrevet
                     </Heading>
                     <BodyShort size="small">{sykmelding.utenlandskSykmelding.land}</BodyShort>
                 </div>
                 {sykmelding.medisinskVurdering?.hovedDiagnose?.tekst && (
                     <div className={styles.info}>
-                        <Heading className={styles.heading} size="small" level="4">
+                        <Heading size="xsmall" level="4">
                             Diagnose
                         </Heading>
                         <BodyShort size="small">{sykmelding.medisinskVurdering.hovedDiagnose.tekst}</BodyShort>
@@ -41,7 +41,7 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
                     if (bidiagnose.tekst) {
                         return (
                             <div className={styles.info} key={index}>
-                                <Heading className={styles.heading} size="small" level="4">
+                                <Heading size="xsmall" level="4">
                                     Bidiagnose
                                 </Heading>
                                 <BodyShort size="small">{bidiagnose.tekst}</BodyShort>

@@ -4,13 +4,12 @@ import styles from './JaEntry.module.css'
 
 interface JaEntryProps {
     title: string
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6'
 }
 
-const JaEntry: React.FC<JaEntryProps> = ({ title, headingLevel = '3' }) => {
+function JaEntry({ title }: JaEntryProps): JSX.Element {
     return (
         <div>
-            <Heading className={styles.heading} size="small" level={headingLevel}>
+            <Heading size="xsmall" level="4">
                 {title}
             </Heading>
             <BodyShort size="small" className={styles.jaEntryText}>

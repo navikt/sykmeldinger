@@ -16,11 +16,7 @@ function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): JSX.Element 
         <div>
             <SykmeldtHeading title="Melding til arbeidsgiver" Icon={Employer} />
             <div className={styles.info}>
-                <SykmeldingEntry
-                    title="Andre innspill til arbeidsgiver"
-                    mainText={meldingTilArbeidsgiver}
-                    headingLevel="4"
-                />
+                <SykmeldingEntry title="Andre innspill til arbeidsgiver" mainText={meldingTilArbeidsgiver} />
             </div>
         </div>
     )

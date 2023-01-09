@@ -88,11 +88,13 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
         )
     }
 
+    const mottattSykmeldingId = 'mottatt-sykmelding'
+
     return (
         <div className={styles.veilederMottattSykmeldingen}>
-            <Chat avatar={<VeilederMaleSvg />} position="left">
+            <Chat avatar={<VeilederMaleSvg />} position="left" aria-labelledby={mottattSykmeldingId}>
                 <Chat.Bubble>
-                    <Label>Vi har mottatt sykmeldingen din</Label>
+                    <Label id={mottattSykmeldingId}>Vi har mottatt sykmeldingen din</Label>
                     <BodyLong>
                         Under ser du opplysningene vi har fått fra behandleren din. Stemmer dette med det dere ble enige
                         om?

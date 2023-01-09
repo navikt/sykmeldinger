@@ -24,18 +24,17 @@ function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): J
                     <SykmeldingEntry
                         title="Tilrettelegging/hensyn som bør tas på arbeidsplassen"
                         mainText={tiltakArbeidsplassen}
-                        headingLevel="4"
                     />
                 </div>
             )}
             {!!tiltakNAV && (
                 <div className={styles.tiltakNAV}>
-                    <SykmeldingEntry title="Tiltak i regi av NAV" mainText={tiltakNAV} headingLevel="4" />
+                    <SykmeldingEntry title="Tiltak i regi av NAV" mainText={tiltakNAV} />
                 </div>
             )}
             {!!andreTiltak && (
                 <div className={styles.andreTiltak}>
-                    <SykmeldingEntry title="Andre innspill til NAV" mainText={andreTiltak} headingLevel="4" />
+                    <SykmeldingEntry title="Andre innspill til NAV" mainText={andreTiltak} />
                 </div>
             )}
         </div>

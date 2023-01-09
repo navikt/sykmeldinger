@@ -36,7 +36,6 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
                                 ? 'Pasienten er 100% arbeidsfør etter denne perioden'
                                 : 'Er pasienten 100% arbeidsfør etter denne perioden?'
                         }
-                        headingLevel="4"
                     />
                 </div>
             )}
@@ -46,30 +45,22 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
                         title="Hensyn som må tas på arbeidsplassen"
                         mainText={prognose.hensynArbeidsplassen}
                         small
-                        headingLevel="4"
                     />
                 </div>
             )}
             {!!prognose.erIArbeid && (
                 <div className={styles.erIArbeid}>
                     {prognose.erIArbeid.egetArbeidPaSikt && (
-                        <JaEntry
-                            title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?"
-                            headingLevel="4"
-                        />
+                        <JaEntry title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?" />
                     )}
                     {prognose.erIArbeid.annetArbeidPaSikt && (
-                        <JaEntry
-                            title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?"
-                            headingLevel="4"
-                        />
+                        <JaEntry title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?" />
                     )}
                     {!!prognose.erIArbeid.arbeidFOM && (
                         <SykmeldingEntry
                             title="Pasienten anslås å være tilbake"
                             mainText={toReadableDate(prognose.erIArbeid.arbeidFOM)}
                             small
-                            headingLevel="4"
                         />
                     )}
                     {!!prognose.erIArbeid.vurderingsdato && (
@@ -77,7 +68,6 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
                             title="Behandler kan gi tilbakemelding på dette"
                             mainText={toReadableDate(prognose.erIArbeid.vurderingsdato)}
                             small
-                            headingLevel="4"
                         />
                     )}
                 </div>
@@ -85,14 +75,13 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
             {!!prognose.erIkkeIArbeid && (
                 <div className={styles.erIkkeIArbeid}>
                     {prognose.erIkkeIArbeid.arbeidsforPaSikt && (
-                        <JaEntry title="Antas pasienten å kunne komme i arbeid på sikt?" headingLevel="4" />
+                        <JaEntry title="Antas pasienten å kunne komme i arbeid på sikt?" />
                     )}
                     {!!prognose.erIkkeIArbeid.arbeidsforFOM && (
                         <SykmeldingEntry
                             title="Pasienten anslås å vær være arbeidsfør"
                             mainText={toReadableDate(prognose.erIkkeIArbeid.arbeidsforFOM)}
                             small
-                            headingLevel="4"
                         />
                     )}
                     {!!prognose.erIkkeIArbeid.vurderingsdato && (
@@ -100,7 +89,6 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
                             title="Behandler kan gi tilbakemelding på dette"
                             mainText={toReadableDate(prognose.erIkkeIArbeid.vurderingsdato)}
                             small
-                            headingLevel="4"
                         />
                     )}
                 </div>

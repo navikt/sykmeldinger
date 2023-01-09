@@ -1,4 +1,3 @@
-import React from 'react'
 import { Heading } from '@navikt/ds-react'
 
 import styles from './Header.module.css'
@@ -7,7 +6,7 @@ interface HeaderProps {
     subTitle?: string
 }
 
-const Header: React.FC<HeaderProps> = ({ title, subTitle }) => {
+function Header({ title, subTitle }: HeaderProps): JSX.Element | null {
     if (!title) {
         return null
     }

@@ -3,10 +3,6 @@
     padding: 0;
 }
 
-.heading {
-    font-size: var(--a-font-size-heading-xsmall);
-}
-
 .underHeading {
     font-size: var(--a-font-size-medium);
     margin-top: var(--a-spacing-4);

@@ -1,8 +1,13 @@
+import { PropsWithChildren } from 'react'
 import { Heading } from '@navikt/ds-react'
 
 import styles from './Section.module.css'
 
-const Section: React.FC<{ title?: string }> = ({ title, children }) => {
+interface Props {
+    title?: string
+}
+
+function Section({ title, children }: PropsWithChildren<Props>): JSX.Element {
     return (
         <div className={styles.opplysningSection}>
             {title && (

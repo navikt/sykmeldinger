@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { axe, render, screen } from '../utils/test/testUtils'
+import { axe, render, screen, waitFor } from '../utils/test/testUtils'
 import {
     ChangeSykmeldingStatusDocument,
     StatusEvent,
@@ -147,7 +147,9 @@ describe('Papir sykmelding', () => {
             render(<SykmeldingPage />, { mocks: mock })
 
             expect(await screen.findByRole('heading', { name: 'Landet sykmeldingen ble skrevet' })).toBeInTheDocument()
-            expect(screen.getByText('Island')).toBeInTheDocument()
+            await waitFor(() => {
+                expect(screen.getByText('Island')).toBeInTheDocument()
+            })
         })
     })
 })
