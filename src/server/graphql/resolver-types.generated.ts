@@ -191,7 +191,6 @@ export type Mutation = {
     __typename?: 'Mutation'
     changeSykmeldingStatus: Sykmelding
     sendSykmelding: Sykmelding
-    submitSykmelding: Sykmelding
 }
 
 export type MutationChangeSykmeldingStatusArgs = {
@@ -202,11 +201,6 @@ export type MutationChangeSykmeldingStatusArgs = {
 export type MutationSendSykmeldingArgs = {
     sykmeldingId: Scalars['ID']
     values: SendSykmeldingValues
-}
-
-export type MutationSubmitSykmeldingArgs = {
-    sykmeldingId: Scalars['ID']
-    values: Scalars['JSON']
 }
 
 export type NaermesteLeder = {
@@ -794,12 +788,6 @@ export type MutationResolvers<
         ParentType,
         ContextType,
         RequireFields<MutationSendSykmeldingArgs, 'sykmeldingId' | 'values'>
-    >
-    submitSykmelding?: Resolver<
-        ResolversTypes['Sykmelding'],
-        ParentType,
-        ContextType,
-        RequireFields<MutationSubmitSykmeldingArgs, 'sykmeldingId' | 'values'>
     >
 }>
 

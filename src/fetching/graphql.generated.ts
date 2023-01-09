@@ -188,7 +188,6 @@ export type Mutation = {
     readonly __typename: 'Mutation'
     readonly changeSykmeldingStatus: Sykmelding
     readonly sendSykmelding: Sykmelding
-    readonly submitSykmelding: Sykmelding
 }
 
 export type MutationChangeSykmeldingStatusArgs = {
@@ -199,11 +198,6 @@ export type MutationChangeSykmeldingStatusArgs = {
 export type MutationSendSykmeldingArgs = {
     sykmeldingId: Scalars['ID']
     values: SendSykmeldingValues
-}
-
-export type MutationSubmitSykmeldingArgs = {
-    sykmeldingId: Scalars['ID']
-    values: Scalars['JSON']
 }
 
 export type NaermesteLeder = {
@@ -452,163 +446,6 @@ export type ChangeSykmeldingStatusMutationVariables = Exact<{
 export type ChangeSykmeldingStatusMutation = {
     readonly __typename: 'Mutation'
     readonly changeSykmeldingStatus: {
-        readonly __typename: 'Sykmelding'
-        readonly id: string
-        readonly mottattTidspunkt: string
-        readonly utdypendeOpplysninger: unknown
-        readonly tiltakArbeidsplassen?: string | null
-        readonly tiltakNAV?: string | null
-        readonly andreTiltak?: string | null
-        readonly meldingTilArbeidsgiver?: string | null
-        readonly behandletTidspunkt: string
-        readonly egenmeldt?: boolean | null
-        readonly papirsykmelding?: boolean | null
-        readonly rulesetVersion: number
-        readonly behandlingsutfall: {
-            readonly __typename: 'Behandlingsutfall'
-            readonly status: RegelStatus
-            readonly ruleHits: ReadonlyArray<{
-                readonly __typename: 'RegelInfo'
-                readonly messageForSender: string
-                readonly messageForUser: string
-                readonly ruleName: string
-                readonly ruleStatus: RegelStatus
-            }>
-        }
-        readonly arbeidsgiver?: { readonly __typename: 'ArbeidsgiverSykmelding'; readonly navn?: string | null } | null
-        readonly sykmeldingsperioder: ReadonlyArray<{
-            readonly __typename: 'Periode'
-            readonly fom: string
-            readonly tom: string
-            readonly behandlingsdager?: number | null
-            readonly innspillTilArbeidsgiver?: string | null
-            readonly type: Periodetype
-            readonly reisetilskudd: boolean
-            readonly gradert?: {
-                readonly __typename: 'GradertPeriode'
-                readonly grad: number
-                readonly reisetilskudd: boolean
-            } | null
-            readonly aktivitetIkkeMulig?: {
-                readonly __typename: 'AktivitetIkkeMuligPeriode'
-                readonly medisinskArsak?: {
-                    readonly __typename: 'MedisinskArsak'
-                    readonly beskrivelse?: string | null
-                    readonly arsak: ReadonlyArray<MedisinskArsakType>
-                } | null
-                readonly arbeidsrelatertArsak?: {
-                    readonly __typename: 'ArbeidsrelatertArsak'
-                    readonly beskrivelse?: string | null
-                    readonly arsak: ReadonlyArray<ArbeidsrelatertArsakType>
-                } | null
-            } | null
-        }>
-        readonly sykmeldingStatus: {
-            readonly __typename: 'SykmeldingStatus'
-            readonly statusEvent: StatusEvent
-            readonly timestamp: string
-            readonly arbeidsgiver?: {
-                readonly __typename: 'ArbeidsgiverStatus'
-                readonly orgnummer: string
-                readonly orgNavn: string
-            } | null
-            readonly sporsmalOgSvarListe: ReadonlyArray<{
-                readonly __typename: 'Sporsmal'
-                readonly tekst: string
-                readonly shortName: ShortName
-                readonly svar: { readonly __typename: 'Svar'; readonly svar: string; readonly svarType: Svartype }
-            }>
-        }
-        readonly medisinskVurdering?: {
-            readonly __typename: 'MedisinskVurdering'
-            readonly svangerskap: boolean
-            readonly yrkesskade: boolean
-            readonly yrkesskadeDato?: string | null
-            readonly hovedDiagnose?: {
-                readonly __typename: 'Diagnose'
-                readonly tekst?: string | null
-                readonly kode: string
-                readonly system: string
-            } | null
-            readonly biDiagnoser: ReadonlyArray<{
-                readonly __typename: 'Diagnose'
-                readonly tekst?: string | null
-                readonly kode: string
-                readonly system: string
-            }>
-            readonly annenFraversArsak?: {
-                readonly __typename: 'AnnenFraversArsak'
-                readonly grunn: ReadonlyArray<AnnenFraverGrunn>
-                readonly beskrivelse?: string | null
-            } | null
-        } | null
-        readonly prognose?: {
-            readonly __typename: 'Prognose'
-            readonly arbeidsforEtterPeriode: boolean
-            readonly hensynArbeidsplassen?: string | null
-            readonly erIArbeid?: {
-                readonly __typename: 'ErIArbeid'
-                readonly egetArbeidPaSikt: boolean
-                readonly annetArbeidPaSikt: boolean
-                readonly arbeidFOM?: string | null
-                readonly vurderingsdato?: string | null
-            } | null
-            readonly erIkkeIArbeid?: {
-                readonly __typename: 'ErIkkeIArbeid'
-                readonly arbeidsforPaSikt: boolean
-                readonly arbeidsforFOM?: string | null
-                readonly vurderingsdato?: string | null
-            } | null
-        } | null
-        readonly meldingTilNAV?: {
-            readonly __typename: 'MeldingTilNAV'
-            readonly beskrivBistand?: string | null
-            readonly bistandUmiddelbart: boolean
-        } | null
-        readonly kontaktMedPasient: {
-            readonly __typename: 'KontaktMedPasient'
-            readonly begrunnelseIkkeKontakt?: string | null
-            readonly kontaktDato?: string | null
-        }
-        readonly behandler: {
-            readonly __typename: 'Behandler'
-            readonly fornavn: string
-            readonly mellomnavn?: string | null
-            readonly etternavn: string
-            readonly tlf?: string | null
-            readonly adresse?: {
-                readonly __typename: 'Adresse'
-                readonly gate?: string | null
-                readonly postnummer?: number | null
-                readonly kommune?: string | null
-                readonly postboks?: string | null
-                readonly land?: string | null
-            } | null
-        }
-        readonly merknader?: ReadonlyArray<{
-            readonly __typename: 'Merknad'
-            readonly beskrivelse?: string | null
-            readonly type: string
-        }> | null
-        readonly pasient?: {
-            readonly __typename: 'Pasient'
-            readonly fnr?: string | null
-            readonly fornavn?: string | null
-            readonly mellomnavn?: string | null
-            readonly etternavn?: string | null
-        } | null
-        readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
-    }
-}
-
-export type SubmitSykmeldingMutationVariables = Exact<{
-    sykmeldingId: Scalars['ID']
-    values: Scalars['JSON']
-}>
-
-export type SubmitSykmeldingMutation = {
-    readonly __typename: 'Mutation'
-    readonly submitSykmelding: {
         readonly __typename: 'Sykmelding'
         readonly id: string
         readonly mottattTidspunkt: string
@@ -1984,57 +1821,6 @@ export const ChangeSykmeldingStatusDocument = {
         ...MedisinskVurderingFragmentDoc.definitions,
     ],
 } as unknown as DocumentNode<ChangeSykmeldingStatusMutation, ChangeSykmeldingStatusMutationVariables>
-export const SubmitSykmeldingDocument = {
-    kind: 'Document',
-    definitions: [
-        {
-            kind: 'OperationDefinition',
-            operation: 'mutation',
-            name: { kind: 'Name', value: 'SubmitSykmelding' },
-            variableDefinitions: [
-                {
-                    kind: 'VariableDefinition',
-                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
-                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
-                },
-                {
-                    kind: 'VariableDefinition',
-                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'values' } },
-                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'JSON' } } },
-                },
-            ],
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'submitSykmelding' },
-                        arguments: [
-                            {
-                                kind: 'Argument',
-                                name: { kind: 'Name', value: 'sykmeldingId' },
-                                value: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
-                            },
-                            {
-                                kind: 'Argument',
-                                name: { kind: 'Name', value: 'values' },
-                                value: { kind: 'Variable', name: { kind: 'Name', value: 'values' } },
-                            },
-                        ],
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Sykmelding' } }],
-                        },
-                    },
-                ],
-            },
-        },
-        ...SykmeldingFragmentDoc.definitions,
-        ...PeriodeFragmentDoc.definitions,
-        ...SykmeldingStatusFragmentDoc.definitions,
-        ...MedisinskVurderingFragmentDoc.definitions,
-    ],
-} as unknown as DocumentNode<SubmitSykmeldingMutation, SubmitSykmeldingMutationVariables>
 export const SendSykmeldingDocument = {
     kind: 'Document',
     definitions: [

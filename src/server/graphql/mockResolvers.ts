@@ -82,16 +82,6 @@ const Mutation: MutationResolvers = {
 
         return sykmelding
     },
-    submitSykmelding: async (_, { sykmeldingId }) => {
-        logger.warn('Using mocked data locally or in demo mode')
-
-        const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
-        if (!sykmelding) {
-            throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
-        }
-        sykmelding.sykmeldingStatus.statusEvent = StatusEvent.SENDT
-        return sykmelding
-    },
     sendSykmelding: async (_, { sykmeldingId, values }) => {
         const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
         if (!sykmelding) {

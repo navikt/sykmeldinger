@@ -4,12 +4,6 @@ mutation ChangeSykmeldingStatus($sykmeldingId: ID!, $status: SykmeldingChangeSta
     }
 }
 
-mutation SubmitSykmelding($sykmeldingId: ID!, $values: JSON!) {
-    submitSykmelding(sykmeldingId: $sykmeldingId, values: $values) {
-        ...Sykmelding
-    }
-}
-
 mutation SendSykmelding($sykmeldingId: ID!, $values: SendSykmeldingValues!) {
     sendSykmelding(sykmeldingId: $sykmeldingId, values: $values) {
         ...Sykmelding
