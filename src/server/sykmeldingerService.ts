@@ -68,41 +68,6 @@ export async function changeSykmeldingStatus(
     }
 }
 
-export async function submitSykmelding(
-    sykmeldingId: string,
-    values: unknown,
-    context: RequestContext,
-): Promise<Sykmelding> {
-    const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Submitting sykmelding with ID ${sykmeldingId}, requestId: ${context.requestId}`)
-    try {
-        await fetchApi(
-            { type: 'POST', body: JSON.stringify(values) },
-            `v3/sykmeldinger/${sykmeldingId}/send`,
-            () => null,
-            context,
-        )
-        return getSykmelding(sykmeldingId, context)
-    } catch (e) {
-        if (e instanceof GraphQLError && e.extensions.code === 'UNAUTHENTICATED') {
-            throw e
-        }
-
-        childLogger.error(e)
-        throw new Error(`Failed to submit sykmelding for ${sykmeldingId}, requestId: ${context.requestId}`)
-    }
-}
-
-/**
- * This function reduces the amount of static data the browser needs to provide about the questions and answers.
- * Thus removing the possibility for the user to create unecessary dirty data. This however requires the backend
- * to look up multiple values such as sykmelding, brukerinformasjon and erUtenForVentetid.
- *
- * @param sykmeldingId
- * @param values
- * @param context
- */
 export async function sendSykmelding(
     sykmeldingId: string,
     values: SendSykmeldingValues,
