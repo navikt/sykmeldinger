@@ -1,7 +1,9 @@
 import { onError } from '@apollo/client/link/error'
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 import { RetryLink } from '@apollo/client/link/retry'
 import { logger } from '@navikt/next-logger'
+import { sha256 } from 'crypto-hash'
 
 import { getPublicEnv } from '../utils/env'
 import { getUserRequestId } from '../utils/userRequestId'
@@ -17,10 +19,12 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
             new RetryLink({
                 attempts: { max: 3 },
             }),
-            httpLink,
+            persistedQueriesLink.concat(httpLink),
         ]),
     })
 }
+
+const persistedQueriesLink = createPersistedQueryLink({ sha256 })
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     if (graphQLErrors)
