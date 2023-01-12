@@ -14,7 +14,7 @@ const SykmeldingStatus = ({ sykmelding }: Props): JSX.Element | null => {
 
     switch (behandlingsutfall) {
         case 'INVALID':
-            ;<SykmeldingStatusAvvist sykmelding={sykmelding} />
+            return <SykmeldingStatusAvvist sykmelding={sykmelding} />
         case 'OK':
         case 'MANUAL_PROCESSING':
             switch (status) {

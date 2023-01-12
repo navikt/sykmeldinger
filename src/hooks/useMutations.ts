@@ -1,6 +1,7 @@
 import { MutationResult, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { logger } from '@navikt/next-logger'
+import { useRef } from 'react'
 
 import {
     ChangeSykmeldingStatusDocument,
@@ -19,16 +20,19 @@ export function useChangeSykmeldingStatus(
     onCompleted: () => void,
     onError: () => void,
 ): [MutationResult<ChangeSykmeldingStatusMutation>, () => void] {
+    const dedupeRef = useRef(false)
     const [submit, result] = useMutation(ChangeSykmeldingStatusDocument, {
         variables: {
             sykmeldingId,
             status,
         },
         onCompleted: () => {
+            dedupeRef.current = false
             onCompleted()
             window.scrollTo(0, 0)
         },
         onError: () => {
+            dedupeRef.current = false
             onError()
         },
     })
@@ -36,7 +40,13 @@ export function useChangeSykmeldingStatus(
     return [
         result,
         () => {
+            if (dedupeRef.current) {
+                logger.warn(`Duplicate submit prevented for ${sykmeldingId}`)
+                return
+            }
+
             logger.info(`Client: Changing status for sykmelding ${sykmeldingId} to ${status}`)
+            dedupeRef.current = true
             submit()
         },
     ]
