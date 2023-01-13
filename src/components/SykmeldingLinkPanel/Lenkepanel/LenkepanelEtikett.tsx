@@ -1,4 +1,3 @@
-import React from 'react'
 import { Tag } from '@navikt/ds-react'
 
 import { RegelStatus, StatusEvent } from '../../../fetching/graphql.generated'
@@ -8,7 +7,7 @@ interface LenkepanelEtikettProps {
     behandlingsutfall: RegelStatus
 }
 
-const LenkepanelEtikett: React.FC<LenkepanelEtikettProps> = ({ status, behandlingsutfall }) => {
+function LenkepanelEtikett({ status, behandlingsutfall }: LenkepanelEtikettProps): JSX.Element | null {
     if (behandlingsutfall === 'INVALID') {
         if (status === 'APEN' || status === 'BEKREFTET') {
             return (

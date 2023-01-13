@@ -5,13 +5,12 @@ import styles from './ListEntry.module.css'
 interface ListEntryProps {
     listText: string[]
     listTitle: string
-    headingLevel?: '1' | '2' | '3' | '4' | '5' | '6'
 }
 
-const ListEntry: React.FC<ListEntryProps> = ({ listText, listTitle, headingLevel = '3' }) => {
+function ListEntry({ listText, listTitle }: ListEntryProps): JSX.Element {
     return (
         <div className={styles.listEntry}>
-            <Heading size="xsmall" level={headingLevel}>
+            <Heading size="xsmall" level="4">
                 {listTitle}
             </Heading>
             <ul>

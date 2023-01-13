@@ -15,26 +15,19 @@
 }
 
 .sykmeldingsopplysningerHeader {
-    display: flex;
     border: none;
-    width: 100%;
-    align-items: center;
 }
 
 .expendableHeader {
     display: flex;
-    padding: 0;
-    align-items: flex-start;
+}
+
+.sykmeldingsopplysningerIcon {
+    display: flex;
+    align-self: center;
 }
 
 .sykmeldingsopplysningerIcon svg {
     font-size: var(--a-font-size-heading-medium);
     margin-right: 0.5rem;
-}
-
-.sykmeldingsopplysningerText {
-    align-items: center;
-    display: flex;
-    flex: 1;
-    text-align: start;
 }

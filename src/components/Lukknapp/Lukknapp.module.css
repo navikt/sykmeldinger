@@ -19,4 +19,5 @@
 
 .lukknapp .buttonText {
     margin-right: 0.5rem;
+    font-weight: var(--a-font-weight-bold);
 }

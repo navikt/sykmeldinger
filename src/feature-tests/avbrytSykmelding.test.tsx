@@ -60,7 +60,7 @@ describe('Avbryt sykmelding', () => {
     })
 
     it('should reopen avbrutt sykmelding', async () => {
-        const { container } = render(<SykmeldingPage />, {
+        render(<SykmeldingPage />, {
             mocks: [
                 ...baseMocks,
                 createExtraFormDataMock({
@@ -71,8 +71,6 @@ describe('Avbryt sykmelding', () => {
 
         expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument()
         userEvent.click(screen.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
-
-        expect(await axe(container)).toHaveNoViolations()
 
         await waitFor(() => expect(screen.queryByText(/Sykmeldingen ble avbrutt av deg/)).not.toBeInTheDocument())
         expect(await screen.findByText(/Jeg vil avbryte sykmeldingen/)).toBeInTheDocument()

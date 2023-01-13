@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
@@ -13,7 +11,7 @@ interface InvalidBekreftetSykmeldingProps {
     sykmelding: SykmeldingFragment
 }
 
-const InvalidBekreftetSykmelding: React.FC<InvalidBekreftetSykmeldingProps> = ({ sykmelding }) => {
+function InvalidBekreftetSykmelding({ sykmelding }: InvalidBekreftetSykmeldingProps): JSX.Element {
     useHotjarTrigger('SYKMELDING_INVALID_BEKREFTET')
 
     return (

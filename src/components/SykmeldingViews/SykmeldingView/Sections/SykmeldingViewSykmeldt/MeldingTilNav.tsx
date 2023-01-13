@@ -21,17 +21,12 @@ function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {
             <SykmeldtHeading title="Melding til NAV" Icon={PeopleDialogOutline} />
             {meldingTilNav.bistandUmiddelbart && (
                 <div className={styles.bistandUmiddelbart}>
-                    <JaEntry title="Ønskes bistand fra NAV nå?" headingLevel="4" />
+                    <JaEntry title="Ønskes bistand fra NAV nå?" />
                 </div>
             )}
             {meldingTilNav.beskrivBistand && (
                 <div className={styles.beskrivBistand}>
-                    <SykmeldingEntry
-                        title="Nærmere beskrivelse"
-                        mainText={meldingTilNav.beskrivBistand}
-                        small
-                        headingLevel="4"
-                    />
+                    <SykmeldingEntry title="Nærmere beskrivelse" mainText={meldingTilNav.beskrivBistand} small />
                 </div>
             )}
         </div>

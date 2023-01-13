@@ -29,7 +29,6 @@ const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewPr
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (
                         <SykmeldingEntry
                             title="Beskrivelse"
-                            headingLevel="4"
                             mainText={aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
                             small
                         />

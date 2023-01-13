@@ -29,15 +29,10 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): JSX.Element | 
                             listText={aktivitetIkkeMulig.medisinskArsak.arsak.map((it) =>
                                 medisinskArsakToText(it, isV3),
                             )}
-                            headingLevel="4"
                         />
                     )}
                     {aktivitetIkkeMulig.medisinskArsak?.beskrivelse && (
-                        <SykmeldingEntry
-                            title="Beskrivelse"
-                            mainText={aktivitetIkkeMulig.medisinskArsak.beskrivelse}
-                            headingLevel="4"
-                        />
+                        <SykmeldingEntry title="Beskrivelse" mainText={aktivitetIkkeMulig.medisinskArsak.beskrivelse} />
                     )}
                 </div>
             )}
@@ -47,14 +42,12 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): JSX.Element | 
                         <ListEntry
                             listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
                             listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}
-                            headingLevel="4"
                         />
                     )}
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (
                         <SykmeldingEntry
                             title="Beskrivelse"
                             mainText={aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
-                            headingLevel="4"
                         />
                     )}
                 </div>

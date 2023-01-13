@@ -9,7 +9,7 @@ interface ArbeidsevneViewProps {
     tiltakArbeidsplassen?: string | null
 }
 
-const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({ tiltakArbeidsplassen }) => {
+function ArbeidsevneView({ tiltakArbeidsplassen }: ArbeidsevneViewProps): JSX.Element | null {
     if (!tiltakArbeidsplassen) return null
 
     return (
@@ -19,7 +19,6 @@ const ArbeidsevneView: React.FC<ArbeidsevneViewProps> = ({ tiltakArbeidsplassen 
                 <SykmeldingEntry
                     title="Tilrettelegging/hensyn som bør tas på arbeidsplassen"
                     mainText={tiltakArbeidsplassen}
-                    headingLevel="4"
                 />
             </div>
         </div>

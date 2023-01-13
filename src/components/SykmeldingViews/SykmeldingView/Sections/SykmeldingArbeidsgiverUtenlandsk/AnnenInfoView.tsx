@@ -17,13 +17,13 @@ function AnnenInfoView({ sykmelding }: Props): JSX.Element {
         <div>
             <SykmeldtHeading title="Annen info" Icon={Information} />
             <div className={styles.info}>
-                <Heading className={styles.heading} size="small" level="4">
+                <Heading size="xsmall" level="4">
                     Dato sykmeldingen ble skrevet
                 </Heading>
                 <BodyShort size="small">{toReadableDate(sykmelding.behandletTidspunkt)}</BodyShort>
             </div>
             <div className={styles.info}>
-                <Heading className={styles.heading} size="small" level="4">
+                <Heading size="xsmall" level="4">
                     Landet sykmeldingen ble skrevet
                 </Heading>
                 <BodyShort size="small">{sykmelding.utenlandskSykmelding.land}</BodyShort>

@@ -7,9 +7,12 @@ import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
 import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
+import styles from './PapirInfoheader.module.css'
+
 const skjemanavn = 'avbryt åpen papirsykmelding'
 
 function PapirInfoheader(): JSX.Element {
+    const harIkkeGittVidereId = 'har-ikke-gitt-videre'
     const sykmeldingId = useGetSykmeldingIdParam()
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
         sykmeldingId,
@@ -58,10 +61,10 @@ function PapirInfoheader(): JSX.Element {
                                     Det du gjør her, erstatter papiret.
                                 </BodyLong>
                             </Spacing>
-                            <Label>
+                            <BodyLong className={styles.harGittVidereText}>
                                 Hvis du får ja fra arbeidsgiveren din kan du fortsette utfyllingen på denne siden. Hvis
                                 du i stedet skal fortsette med papiret må du avbryte denne sykmeldingen.
-                            </Label>
+                            </BodyLong>
                         </Alert>
                     </Spacing>
 
@@ -82,8 +85,8 @@ function PapirInfoheader(): JSX.Element {
             {harGittVidere === 'Nei' && (
                 <Spacing direction="top">
                     <Alert variant="info">
-                        <Label>Da kan du sende sykmeldingen herfra</Label>
-                        <BodyLong>
+                        <Label id={harIkkeGittVidereId}>Da kan du sende sykmeldingen herfra</Label>
+                        <BodyLong aria-labelledby={harIkkeGittVidereId}>
                             Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
                             om? Du velger selv om du vil bruke sykmeldingen.
                         </BodyLong>

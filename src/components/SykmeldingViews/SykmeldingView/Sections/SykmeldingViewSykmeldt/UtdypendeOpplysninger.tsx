@@ -25,7 +25,6 @@ function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): JSX.Element | 
                                     <SykmeldingEntry
                                         title={utdypendeOpplysning.sporsmal}
                                         mainText={utdypendeOpplysning.svar}
-                                        headingLevel="4"
                                     />
                                 </div>
                             )

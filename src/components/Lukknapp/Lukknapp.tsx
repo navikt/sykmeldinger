@@ -1,5 +1,5 @@
 import { Collapse } from '@navikt/ds-icons'
-import { Label } from '@navikt/ds-react'
+import { BodyShort } from '@navikt/ds-react'
 
 import styles from './Lukknapp.module.css'
 
@@ -9,10 +9,10 @@ interface LukknappProps {
 
 const Lukknapp = ({ onClick }: LukknappProps): JSX.Element => (
     <button type="button" onClick={onClick} className={styles.lukknapp}>
-        <Label size="small" className={styles.buttonText}>
+        <BodyShort size="small" className={styles.buttonText}>
             Lukk
-        </Label>
-        <Collapse />
+        </BodyShort>
+        <Collapse aria-hidden />
     </button>
 )
 

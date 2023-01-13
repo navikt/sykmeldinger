@@ -24,7 +24,6 @@ function Tilbakedatering({ kontaktMedPasient }: Props): JSX.Element | null {
                     <SykmeldingEntry
                         title="Dato for dokumenterbar kontakt med pasienten"
                         mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
-                        headingLevel="4"
                     />
                 </div>
             )}
@@ -33,7 +32,6 @@ function Tilbakedatering({ kontaktMedPasient }: Props): JSX.Element | null {
                     <SykmeldingEntry
                         title="Begrunnelse for tilbakedatering"
                         mainText={kontaktMedPasient.begrunnelseIkkeKontakt}
-                        headingLevel="4"
                     />
                 </div>
             )}

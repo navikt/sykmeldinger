@@ -25,14 +25,12 @@ function Perioder({ perioder, isV3 }: Props): JSX.Element {
                             title={getPeriodTitle(periode)}
                             mainText={toReadableDatePeriod(periode.fom, periode.tom)}
                             subText={getReadableLength(periode)}
-                            headingLevel="4"
                         />
                         {!!periode.innspillTilArbeidsgiver && (
                             <SykmeldingEntry
                                 title="Innspill til arbeidsgiver om tilrettelegging"
                                 mainText={periode.innspillTilArbeidsgiver}
                                 small
-                                headingLevel="4"
                             />
                         )}
                         {periode.gradert?.reisetilskudd && (
@@ -42,7 +40,6 @@ function Perioder({ perioder, isV3 }: Props): JSX.Element {
                                         ? 'Pasienten kan være delvis i arbeid ved bruk av reisetilskudd'
                                         : 'Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?'
                                 }
-                                headingLevel="4"
                             />
                         )}
                     </div>

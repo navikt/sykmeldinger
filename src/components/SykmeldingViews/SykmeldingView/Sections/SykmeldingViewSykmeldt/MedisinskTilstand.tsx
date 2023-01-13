@@ -23,7 +23,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
             <div className={styles.medisinskTilstand}>
                 {medisinskVurdering.hovedDiagnose?.tekst && (
                     <div className={styles.info}>
-                        <Heading className={styles.heading} size="small" level="4">
+                        <Heading size="xsmall" level="4">
                             Diagnose
                         </Heading>
                         <BodyShort size="small">{medisinskVurdering?.hovedDiagnose?.tekst}</BodyShort>
@@ -33,7 +33,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
                     if (bidiagnose.tekst) {
                         return (
                             <div className={styles.info} key={index}>
-                                <Heading className={styles.heading} size="small" level="4">
+                                <Heading size="xsmall" level="4">
                                     Bidiagnose
                                 </Heading>
                                 <BodyShort size="small">{bidiagnose.tekst}</BodyShort>
@@ -48,7 +48,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
                         medisinskVurdering.annenFraversArsak?.grunn.length > 0
                     ) && (
                         <div className={styles.info}>
-                            <Heading className={styles.heading} size="small" level="4">
+                            <Heading size="xsmall" level="4">
                                 Annen lovfestet fraværsgrunn
                             </Heading>
                             <BodyShort size="small">
@@ -85,7 +85,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
                 </>
                 {!!medisinskVurdering.yrkesskadeDato && (
                     <div className={styles.info}>
-                        <Heading className={styles.heading} size="small" level="4">
+                        <Heading size="xsmall" level="4">
                             Skadedato
                         </Heading>
                         <BodyShort size="small">{toReadableDate(medisinskVurdering.yrkesskadeDato)}</BodyShort>
