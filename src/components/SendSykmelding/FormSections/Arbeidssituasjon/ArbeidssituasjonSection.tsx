@@ -7,6 +7,7 @@ import {
     Periodetype,
     SykmeldingFragment,
     SykmeldingUtenforVentetidFragment,
+    YesOrNo,
 } from '../../../../fetching/graphql.generated'
 import { FormValues } from '../../SendSykmeldingForm'
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
@@ -48,7 +49,12 @@ function ArbeidssituasjonSection({
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             <ArbeidssituasjonStatusInfo />
             {shouldShowStrengtFortroligInfo && <StrengtFortroligInfo />}
-            {shouldShowArbeidsgiverOrgnummer && <ArbeidsgiverSection arbeidsgivere={brukerinformasjon.arbeidsgivere} />}
+            {shouldShowArbeidsgiverOrgnummer && (
+                <ArbeidsgiverSection
+                    sykmeldingFom={getSykmeldingStartDate(sykmelding)}
+                    arbeidsgivere={brukerinformasjon.arbeidsgivere}
+                />
+            )}
             {shouldShowEgenmeldingsperioderSporsmal && (
                 <FrilanserSection
                     oppfolgingsdato={sykmeldingUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding)}
@@ -71,7 +77,12 @@ function useDynamicSubSections(
     sykmeldingUtenforVentetid: SykmeldingUtenforVentetidFragment,
 ): UseDynamicSubSections {
     const { watch } = useFormContext<FormValues>()
-    const [arbeidssituasjon, arbeidsgiverOrgnummer] = watch(['arbeidssituasjon', 'arbeidsgiverOrgnummer'])
+    const [arbeidssituasjon, arbeidsgiverOrgnummer, egenmeldingsperioderAnsatt] = watch([
+        'arbeidssituasjon',
+        'arbeidsgiverOrgnummer',
+        'egenmeldingsperioderAnsatt',
+    ])
+
     const shouldShowStrengtFortroligInfo: boolean =
         arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && brukerinformasjon.strengtFortroligAdresse
     const shouldShowArbeidsgiverOrgnummer: boolean =
@@ -81,10 +92,19 @@ function useDynamicSubSections(
         arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
     const shouldShowEgenmeldingsperioderSporsmal: boolean =
         isFrilanserOrNaeringsdrivende && !sykmeldingUtenforVentetid.erUtenforVentetid
-    const shouldShowSendesTilArbeidsgiverInfo =
+    const hasEgenmeldingsperioderAnsatt: boolean | null =
+        egenmeldingsperioderAnsatt && egenmeldingsperioderAnsatt.length >= 1
+    const hasCompletedEgenmeldingsperioderAnsatt: boolean =
+        (hasEgenmeldingsperioderAnsatt &&
+            egenmeldingsperioderAnsatt?.[egenmeldingsperioderAnsatt.length - 1].harPerioder === YesOrNo.NO) ||
+        (hasEgenmeldingsperioderAnsatt &&
+            egenmeldingsperioderAnsatt?.[egenmeldingsperioderAnsatt.length - 1].hasClickedVidere === true) ||
+        arbeidssituasjon !== ArbeidssituasjonType.ARBEIDSTAKER
+    const shouldShowSendesTilArbeidsgiverInfo: boolean =
         arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER &&
         arbeidsgiverOrgnummer != null &&
-        !brukerinformasjon.strengtFortroligAdresse
+        !brukerinformasjon.strengtFortroligAdresse &&
+        hasCompletedEgenmeldingsperioderAnsatt
 
     return {
         shouldShowStrengtFortroligInfo,

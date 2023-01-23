@@ -1,6 +1,7 @@
 import { sortBy } from 'remeda'
 
 import { ArbeidsrelatertArsakType, MedisinskArsakType, Periode, Periodetype } from '../fetching/graphql.generated'
+import { EgenmeldingsperioderAnsatt } from '../server/graphql/mockData/egenmeldingMock'
 import { AnnenFraverGrunn } from '../server/graphql/resolver-types.generated'
 
 import { diffInDays } from './dateUtils'
@@ -127,3 +128,7 @@ export function getDescription(period: Periode, arbeidsgiverNavn?: string): stri
 export const getSykmeldingperioderSorted = <Periode extends { fom: string; tom: string }>(
     perioder: readonly Periode[],
 ): Periode[] => sortBy(perioder, [(periode) => periode.fom, 'asc'], [(periode) => periode.tom, 'asc'])
+
+export function getEgenmeldingsdagerLength(egenmeldingsperioder: EgenmeldingsperioderAnsatt[]): number {
+    return egenmeldingsperioder.flatMap((periode: EgenmeldingsperioderAnsatt) => periode.datoer).length
+}

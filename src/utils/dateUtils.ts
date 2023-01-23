@@ -11,6 +11,7 @@ import {
     sub,
 } from 'date-fns'
 import nbLocale from 'date-fns/locale/nb'
+import { sortBy } from 'remeda'
 
 export function dateAdd(date: string | Date, duration: Duration): string {
     return toDateString(add(toDate(date), duration))
@@ -42,7 +43,7 @@ export function toReadableDateNoYear(date: string | Date): string {
  * Get a text representation of the period fom to tom
  * @return {string} The period string
  */
-export function toReadableDatePeriod(fom: string, tom: string): string {
+export function toReadableDatePeriod(fom: string | Date, tom: string | Date): string {
     const fomDate = toDate(fom)
     const tomDate = toDate(tom)
 
@@ -59,4 +60,8 @@ export function toReadableDatePeriod(fom: string, tom: string): string {
 
 export function diffInDays(fom: string, tom: string): number {
     return differenceInDays(parseISO(tom), parseISO(fom)) + 1
+}
+
+export function sortDatesASC(dates: Date[]): Date[] {
+    return sortBy(dates, [(date) => date, 'asc'])
 }

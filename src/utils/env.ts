@@ -7,6 +7,7 @@ export interface PublicEnv {
     SYKEFRAVAER_ROOT: string
     SYKEPENGESOKNAD_URL: string
     AMPLITUDE_ENABLED: string
+    DISPLAY_EGENMELDING: string
 }
 
 export interface ServerEnv {

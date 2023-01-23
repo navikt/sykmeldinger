@@ -1,0 +1,21 @@
+.velgDager {
+    margin: var(--a-spacing-4) 0;
+}
+
+.twoDatepickers {
+    display: flex;
+}
+
+.datoError {
+    margin-bottom: var(--a-spacing-4);
+}
+
+.videreError {
+    margin-top: var(--a-spacing-4);
+}
+
+@media (max-width: 350px) {
+    .velgDager :global(.navds-date__standalone-wrapper) {
+        margin-left: -1rem;
+    }
+}

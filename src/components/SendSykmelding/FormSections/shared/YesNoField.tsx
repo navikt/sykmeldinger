@@ -9,7 +9,12 @@ import { YesOrNo } from '../../../../fetching/graphql.generated'
 import styles from './YesNoField.module.css'
 
 interface Props {
-    name: 'erOpplysningeneRiktige' | 'riktigNarmesteLeder' | 'harBruktEgenmelding' | 'harForsikring'
+    name:
+        | 'erOpplysningeneRiktige'
+        | 'riktigNarmesteLeder'
+        | 'harBruktEgenmelding'
+        | 'harForsikring'
+        | `egenmeldingsperioderAnsatt.${number}.harPerioder`
     legend: string
     subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void

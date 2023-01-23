@@ -4,7 +4,8 @@
     column-gap: var(--a-spacing-4);
 }
 
-.perioder .periode {
+.perioder .periode,
+.egenmeldingsperioder {
     flex-grow: 1;
     margin-bottom: var(--a-spacing-3);
     background-color: var(--sykmelding-view-sykmeldt);
@@ -20,6 +21,11 @@
     flex-basis: 100%;
 }
 
+.perioder .periode p:first-of-type,
+.date:first-of-type {
+    margin-top: var(--a-spacing-2);
+}
+
 .perioder .periode p:not(:last-of-type) {
     margin-bottom: 0.3rem;
     font-size: var(--a-font-size-medium);
@@ -28,4 +34,13 @@
 .perioder .periode div:last-of-type,
 .perioder .periode p:last-of-type {
     margin-bottom: 0;
+}
+
+.egenmeldingsperioder ul {
+    list-style: none;
+    padding: 0;
+}
+
+.date:not(:last-of-type) {
+    margin-bottom: 0.3rem;
 }

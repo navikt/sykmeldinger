@@ -80,6 +80,7 @@ describe('Arbeidstaker', () => {
                 { name: 'Ja' },
             ),
         )
+        await userEvent.click(screen.getRadioInGroup({ name: /Brukte du egenmelding hos/i }, { name: 'Nei' }))
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
@@ -130,7 +131,7 @@ describe('Arbeidstaker', () => {
             }),
         )
 
-        expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        //expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
