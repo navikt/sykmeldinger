@@ -19,13 +19,14 @@ interface Props {
     subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void
     rules?: UseControllerProps['rules']
+    shouldUnregister?: boolean
 }
 
-function YesNoField({ name, legend, subtext, onChange, rules }: Props): JSX.Element {
+function YesNoField({ name, legend, subtext, onChange, rules, shouldUnregister = true }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name,
         rules,
-        shouldUnregister: true,
+        shouldUnregister,
         defaultValue: null,
     })
 

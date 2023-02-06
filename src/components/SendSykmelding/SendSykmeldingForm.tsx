@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
+import { DevTool } from '@hookform/devtools'
 
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import {
@@ -84,6 +85,7 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
                 />
                 <ErrorSection ref={errorSectionRef} />
                 <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
+                {process.env.NODE_ENV !== 'production' && <DevTool control={form.control} />}
             </form>
         </FormProvider>
     )

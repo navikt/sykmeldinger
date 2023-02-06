@@ -1,7 +1,5 @@
 import { BodyLong, Link, ReadMore } from '@navikt/ds-react'
-import { ControllerRenderProps } from 'react-hook-form'
 
-import { FormValues } from '../../../SendSykmeldingForm'
 import { QuestionWrapper } from '../../shared/FormStructure'
 import YesNoField from '../../shared/YesNoField'
 import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
@@ -14,7 +12,7 @@ interface Props {
     arbeidsgiverNavn: string
     lastPossibleDate: Date | string
     firstPossibleDate: Date | string
-    datoerField: ControllerRenderProps<FormValues, `egenmeldingsperioderAnsatt.${number}.datoer`>
+    onNo: () => void
 }
 
 function HarbruktEgenmelding({
@@ -22,7 +20,7 @@ function HarbruktEgenmelding({
     lastPossibleDate,
     firstPossibleDate,
     arbeidsgiverNavn,
-    datoerField,
+    onNo,
 }: Props): JSX.Element {
     return (
         <QuestionWrapper>
@@ -38,9 +36,10 @@ function HarbruktEgenmelding({
                 }}
                 onChange={(value: YesOrNo) => {
                     if (value === YesOrNo.NO) {
-                        datoerField.onChange(null)
+                        onNo()
                     }
                 }}
+                shouldUnregister={false}
             />
         </QuestionWrapper>
     )

@@ -54,6 +54,7 @@
         "@graphql-codegen/typed-document-node": "2.3.12",
         "@graphql-codegen/typescript-operations": "2.5.12",
         "@graphql-codegen/typescript-resolvers": "2.7.12",
+        "@hookform/devtools": "^4.3.0",
         "@navikt/eslint-config-teamsykmelding": "^1.4.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^12.1.5",

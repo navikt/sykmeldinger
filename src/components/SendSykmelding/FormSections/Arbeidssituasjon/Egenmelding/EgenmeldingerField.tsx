@@ -1,138 +1,120 @@
-import { Button, ErrorMessage, Label, UNSAFE_DatePicker } from '@navikt/ds-react'
-import { useController, UseFieldArrayAppend, useFormContext } from 'react-hook-form'
-import { endOfMonth, isSameMonth, startOfMonth, sub } from 'date-fns'
+import { Button, ErrorMessage } from '@navikt/ds-react'
+import { useController, useFormContext } from 'react-hook-form'
+import { add, isAfter, isBefore, sub } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
-import { sortDatesASC, toDate } from '../../../../../utils/dateUtils'
+import { sortDatesASC } from '../../../../../utils/dateUtils'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
 
 import HarbruktEgenmelding from './HarbruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
-import styles from './EgenmeldingerField.module.css'
+import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
+import styles from './EgenmeldingerFieldRecursive.module.css'
 
 interface Props {
     index: number
-    sykmeldingFom: Date | string
-    arbeidsgiverNavn: string
-    append: UseFieldArrayAppend<FormValues, 'egenmeldingsperioderAnsatt'>
+    previous: {
+        earliestPossibleDate: Date
+        earliestSelectedDate: Date | null
+    }
+    metadata: {
+        previousSykmeldingTom: Date | null
+        arbeidsgiverNavn: string
+    }
 }
 
-function EgenmeldingerField({ index, sykmeldingFom, arbeidsgiverNavn, append }: Props): JSX.Element {
-    const { watch } = useFormContext<FormValues>()
-    const egenmeldingsperioderAnsatt = watch('egenmeldingsperioderAnsatt')
+function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element | null {
+    const { watch, setValue } = useFormContext<FormValues>()
     const harPerioder: YesOrNo | null = watch(`egenmeldingsperioderAnsatt.${index}.harPerioder`)
+    const selectedDates: Date[] | null = watch(`egenmeldingsperioderAnsatt.${index}.datoer`)
 
-    const firstPossibleDate: Date = sub(toDate(sykmeldingFom), { days: index * 16 + 1 })
-    const lastPossibleDate: Date = sub(firstPossibleDate, { days: 15 }) // TODO: back to previous sykmelding | ?
-
-    const { field: datoerField, fieldState: datoerFieldState } = useController<
-        FormValues,
-        `egenmeldingsperioderAnsatt.${number}.datoer`
-    >({
-        name: `egenmeldingsperioderAnsatt.${index}.datoer`,
-        defaultValue: [],
-        rules: {
-            validate: (value) => {
-                if (harPerioder === YesOrNo.YES && (!value || value.length === 0)) {
-                    return 'Du må velge minst en dato'
-                }
-                return undefined
-            },
-        },
-    })
-
+    const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(previous, metadata.previousSykmeldingTom)
     const { field: videreField } = useController<FormValues, `egenmeldingsperioderAnsatt.${number}.hasClickedVidere`>({
         name: `egenmeldingsperioderAnsatt.${index}.hasClickedVidere`,
         defaultValue: null,
     })
 
-    const sortedDates: Date[] | null =
-        datoerField.value && datoerField.value?.length > 0 ? sortDatesASC(datoerField.value) : null
+    if (isAfter(earliestPossibleDate, latestPossibleDate)) {
+        // The user has hit the previous sykmelding, we don't need to ask anymore.
+        return null
+    }
 
+    const missingDates: boolean = !selectedDates || selectedDates.length === 0
+    const missingDatesOnVidereClick: boolean = missingDates && videreField.value === false
+    const sortedDates: Date[] | null = selectedDates && selectedDates.length > 0 ? sortDatesASC(selectedDates) : null
     const hasPeriod: boolean = harPerioder === YesOrNo.YES
-    const missingDates: boolean = !datoerField.value || datoerField.value.length === 0
-    const missingDatesOnVidereClick: boolean = missingDates && videreField.value === false && !datoerFieldState.error
 
     return (
         <div className="egenmeldingsperiod-ansatt">
             <HarbruktEgenmelding
                 index={index}
-                arbeidsgiverNavn={arbeidsgiverNavn}
-                lastPossibleDate={lastPossibleDate}
-                firstPossibleDate={firstPossibleDate}
-                datoerField={datoerField}
+                arbeidsgiverNavn={metadata.arbeidsgiverNavn}
+                lastPossibleDate={earliestPossibleDate}
+                firstPossibleDate={latestPossibleDate}
+                onNo={() => {
+                    setValue(`egenmeldingsperioderAnsatt.${index}.datoer`, null)
+                }}
             />
             {hasPeriod && videreField.value !== true && (
-                <div className={styles.velgDager}>
-                    <Label>Velg dagene du brukte egenmelding</Label>
-                    {!isSameMonth(lastPossibleDate, firstPossibleDate) && window.innerWidth >= 768 ? (
-                        <div className={styles.twoDatepickers}>
-                            <UNSAFE_DatePicker.Standalone
-                                mode="multiple"
-                                selected={datoerField.value ?? []}
-                                onSelect={(value) => {
-                                    datoerField.onChange(value)
-                                }}
-                                fromDate={lastPossibleDate}
-                                toDate={endOfMonth(lastPossibleDate)}
-                            />
-                            <UNSAFE_DatePicker.Standalone
-                                mode="multiple"
-                                selected={datoerField.value ?? []}
-                                onSelect={(value) => {
-                                    datoerField.onChange(value)
-                                }}
-                                fromDate={startOfMonth(firstPossibleDate)}
-                                toDate={firstPossibleDate}
-                            />
-                        </div>
-                    ) : (
-                        <UNSAFE_DatePicker.Standalone
-                            mode="multiple"
-                            min={1}
-                            max={16}
-                            selected={datoerField.value ?? []}
-                            onSelect={(value) => {
-                                datoerField.onChange(value)
-                            }}
-                            fromDate={lastPossibleDate}
-                            toDate={firstPossibleDate}
-                        />
+                <>
+                    <EgenmeldingDatesPickerSubField
+                        index={index}
+                        earliestPossibleDate={earliestPossibleDate}
+                        latestPossibleDate={latestPossibleDate}
+                    />
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => {
+                            if (missingDates) {
+                                videreField.onChange(false)
+                            } else {
+                                videreField.onChange(true)
+                            }
+                        }}
+                    >
+                        Videre
+                    </Button>
+                    {missingDatesOnVidereClick && (
+                        <ErrorMessage className={styles.videreError}>Du må velge minst en dato</ErrorMessage>
                     )}
-                    {datoerFieldState.error && (
-                        <ErrorMessage className={styles.datoError}>{datoerFieldState.error?.message}</ErrorMessage>
-                    )}
-                    <>
-                        <Button
-                            type="button"
-                            variant="secondary"
-                            onClick={() => {
-                                if (missingDates) {
-                                    videreField.onChange(false)
-                                } else {
-                                    videreField.onChange(true)
-                                    if (
-                                        egenmeldingsperioderAnsatt?.[egenmeldingsperioderAnsatt.length - 1]
-                                            .hasClickedVidere === true
-                                    ) {
-                                        append({ harPerioder: null, datoer: null, hasClickedVidere: null })
-                                    }
-                                }
-                            }}
-                        >
-                            Videre
-                        </Button>
-                        {missingDatesOnVidereClick && (
-                            <ErrorMessage className={styles.videreError}>Du må velge minst en dato</ErrorMessage>
-                        )}
-                    </>
-                </div>
+                </>
             )}
             {hasPeriod && videreField.value === true && sortedDates && sortedDates.length > 0 && (
                 <ValgtEgenmeldingsdager dates={sortedDates} videreField={videreField} />
             )}
+            {videreField.value === true && (
+                <EgenmeldingerField
+                    index={index + 1}
+                    metadata={metadata}
+                    previous={{
+                        earliestSelectedDate: sortedDates ? sortedDates[sortedDates.length - 1] : new Date(),
+                        earliestPossibleDate: earliestPossibleDate,
+                    }}
+                />
+            )}
         </div>
     )
+}
+
+export function currentPeriodDatePicker(
+    previous: Props['previous'],
+    previousSykmeldingTom: Date | null,
+): [earliest: Date, latest: Date] {
+    let earliest
+    if (previous.earliestSelectedDate) {
+        earliest = sub(previous.earliestSelectedDate, { days: 16 })
+    } else {
+        earliest = sub(previous.earliestPossibleDate, { days: 16 })
+    }
+
+    if (previousSykmeldingTom && isBefore(earliest, previousSykmeldingTom)) {
+        earliest = add(previousSykmeldingTom, { days: 1 })
+    }
+
+    const latest = sub(previous.earliestPossibleDate, { days: 1 })
+
+    return [earliest, latest]
 }
 
 export default EgenmeldingerField

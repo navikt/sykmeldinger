@@ -1,11 +1,12 @@
-import React, { useLayoutEffect } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
 
 import { BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../shared/FormStructure'
-import EgenmeldingerField from '../Egenmelding/EgenmeldingerField'
 import { getPublicEnv } from '../../../../../utils/env'
+import EgenmeldingerField from '../Egenmelding/EgenmeldingerField'
+import { toDate } from '../../../../../utils/dateUtils'
 
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
@@ -14,7 +15,7 @@ import styles from './ArbeidsgiverSection.module.css'
 
 interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
-    sykmeldingFom: Date | string
+    sykmeldingFom: Date
 }
 
 const publicEnv = getPublicEnv()
@@ -26,18 +27,6 @@ function ArbeidsgiverSection({ arbeidsgivere, sykmeldingFom }: Props): JSX.Eleme
     const valgtArbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === valgtArbeidsgiverOrgnummer)
     const noArbeidsgivere = arbeidsgivere.length === 0
 
-    const { control } = useFormContext<FormValues>()
-    const { fields, append } = useFieldArray({
-        control,
-        name: 'egenmeldingsperioderAnsatt',
-    })
-
-    useLayoutEffect(() => {
-        if (fields.length === 0) {
-            append({ harPerioder: null, datoer: null, hasClickedVidere: null })
-        }
-    }, [fields, append])
-
     return (
         <SectionWrapper>
             <ArbeidsgiverField arbeidsgivere={arbeidsgivere} />
@@ -47,15 +36,18 @@ function ArbeidsgiverSection({ arbeidsgivere, sykmeldingFom }: Props): JSX.Eleme
             )}
             {publicEnv.DISPLAY_EGENMELDING === 'true' && valgtRiktigNarmesteLeder && valgtArbeidsgiver?.navn && (
                 <div className={styles.egenmeldingsperioder}>
-                    {fields.map((field, index) => (
-                        <EgenmeldingerField
-                            key={field.id}
-                            index={index}
-                            sykmeldingFom={sykmeldingFom}
-                            arbeidsgiverNavn={valgtArbeidsgiver?.navn}
-                            append={append}
-                        />
-                    ))}
+                    <EgenmeldingerField
+                        index={0}
+                        previous={{
+                            earliestPossibleDate: sykmeldingFom,
+                            earliestSelectedDate: null,
+                        }}
+                        metadata={{
+                            arbeidsgiverNavn: valgtArbeidsgiver.navn,
+                            // TODO https://trello.com/c/7Sqn8vbo
+                            previousSykmeldingTom: toDate('2022-11-19'),
+                        }}
+                    />
                 </div>
             )}
         </SectionWrapper>

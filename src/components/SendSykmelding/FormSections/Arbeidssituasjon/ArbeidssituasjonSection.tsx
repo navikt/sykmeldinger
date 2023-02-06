@@ -13,6 +13,7 @@ import { FormValues } from '../../SendSykmeldingForm'
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../shared/FormStructure'
+import { toDate } from '../../../../utils/dateUtils'
 
 import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
@@ -51,7 +52,7 @@ function ArbeidssituasjonSection({
             {shouldShowStrengtFortroligInfo && <StrengtFortroligInfo />}
             {shouldShowArbeidsgiverOrgnummer && (
                 <ArbeidsgiverSection
-                    sykmeldingFom={getSykmeldingStartDate(sykmelding)}
+                    sykmeldingFom={toDate(getSykmeldingStartDate(sykmelding))}
                     arbeidsgivere={brukerinformasjon.arbeidsgivere}
                 />
             )}
