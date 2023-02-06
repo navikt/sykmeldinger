@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
-import { DevTool } from '@hookform/devtools'
+import dynamic from 'next/dynamic'
 
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import {
@@ -19,6 +19,10 @@ import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/Opply
 import ActionSection from './FormSections/ActionSection'
 import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/ArbeidssituasjonSection'
 import ErrorSection from './FormSections/ErrorSection'
+
+const ReactDevTools = dynamic(() => import('@hookform/devtools').then((module) => module.DevTool<FormValues>), {
+    ssr: false,
+})
 
 export interface FormValues {
     erOpplysningeneRiktige: YesOrNo | null
@@ -85,7 +89,7 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
                 />
                 <ErrorSection ref={errorSectionRef} />
                 <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
-                {process.env.NODE_ENV !== 'production' && <DevTool control={form.control} />}
+                {process.env.NODE_ENV !== 'production' && <ReactDevTools control={form.control} />}
             </form>
         </FormProvider>
     )
