@@ -101,20 +101,17 @@ export function currentPeriodDatePicker(
     previous: Props['previous'],
     previousSykmeldingTom: Date | null,
 ): [earliest: Date, latest: Date] {
-    let earliest
-    if (previous.earliestSelectedDate) {
-        earliest = sub(previous.earliestSelectedDate, { days: 16 })
-    } else {
-        earliest = sub(previous.earliestPossibleDate, { days: 16 })
-    }
-
-    if (previousSykmeldingTom && isBefore(earliest, previousSykmeldingTom)) {
-        earliest = add(previousSykmeldingTom, { days: 1 })
-    }
-
     const latest = sub(previous.earliestPossibleDate, { days: 1 })
+    const earliest = previous.earliestSelectedDate
+        ? sub(previous.earliestSelectedDate, { days: 16 })
+        : sub(previous.earliestPossibleDate, { days: 16 })
 
-    return [earliest, latest]
+    // Earliest should be limited by previous sykmelding
+    if (previousSykmeldingTom && isBefore(earliest, previousSykmeldingTom)) {
+        return [add(previousSykmeldingTom, { days: 1 }), latest]
+    } else {
+        return [earliest, latest]
+    }
 }
 
 export default EgenmeldingerField
