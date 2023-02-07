@@ -8,6 +8,7 @@ import styles from './ValgtEgenmeldingsdager.module.css'
 
 interface Props {
     dates: Date[]
+    // TODO: https://trello.com/c/CpK4ExV7/2500-fra-egenmld-pr-oneditclicked
     videreField: ControllerRenderProps<FormValues, `egenmeldingsperioderAnsatt.${number}.hasClickedVidere`>
 }
 

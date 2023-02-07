@@ -1,8 +1,13 @@
 import { sortBy } from 'remeda'
 
-import { ArbeidsrelatertArsakType, MedisinskArsakType, Periode, Periodetype } from '../fetching/graphql.generated'
+import {
+    AnnenFraverGrunn,
+    ArbeidsrelatertArsakType,
+    MedisinskArsakType,
+    Periode,
+    Periodetype,
+} from '../fetching/graphql.generated'
 import { EgenmeldingsperioderAnsatt } from '../server/graphql/mockData/egenmeldingMock'
-import { AnnenFraverGrunn } from '../server/graphql/resolver-types.generated'
 
 import { diffInDays } from './dateUtils'
 

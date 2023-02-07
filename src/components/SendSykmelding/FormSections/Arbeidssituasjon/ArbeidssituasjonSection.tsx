@@ -83,6 +83,9 @@ function useDynamicSubSections(
         'arbeidsgiverOrgnummer',
         'egenmeldingsperioderAnsatt',
     ])
+    // TODO: https://trello.com/c/KMllIcoG/2499-forbedring-av-logikk
+    const valgtArbeidsgiver = brukerinformasjon.arbeidsgivere.find((ag) => ag.orgnummer === arbeidsgiverOrgnummer)
+    const inactiveArbeidsgiver = valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder != null
 
     const shouldShowStrengtFortroligInfo: boolean =
         arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && brukerinformasjon.strengtFortroligAdresse
@@ -93,6 +96,7 @@ function useDynamicSubSections(
         arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
     const shouldShowEgenmeldingsperioderSporsmal: boolean =
         isFrilanserOrNaeringsdrivende && !sykmeldingUtenforVentetid.erUtenforVentetid
+    // TODO: https://trello.com/c/KMllIcoG/2499-forbedring-av-logikk
     const hasEgenmeldingsperioderAnsatt: boolean | null =
         egenmeldingsperioderAnsatt && egenmeldingsperioderAnsatt.length >= 1
     const hasCompletedEgenmeldingsperioderAnsatt: boolean =
@@ -105,7 +109,7 @@ function useDynamicSubSections(
         arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER &&
         arbeidsgiverOrgnummer != null &&
         !brukerinformasjon.strengtFortroligAdresse &&
-        hasCompletedEgenmeldingsperioderAnsatt
+        (!inactiveArbeidsgiver || hasCompletedEgenmeldingsperioderAnsatt)
 
     return {
         shouldShowStrengtFortroligInfo,

@@ -131,7 +131,7 @@ describe('Arbeidstaker', () => {
             }),
         )
 
-        //expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
