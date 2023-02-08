@@ -1,11 +1,17 @@
 import { Calender } from '@navikt/ds-icons'
+import { BodyShort, Heading } from '@navikt/ds-react'
 
-import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
+import { getEgenmeldingsdagerLength, getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode } from '../../../../../fetching/graphql.generated'
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
-import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
+import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
+import {
+    EgenmeldingsperioderAnsatt,
+    egenmeldingsperioderAnsattMock,
+} from '../../../../../server/graphql/mockData/egenmeldingMock'
+import { getPublicEnv } from '../../../../../utils/env'
 
 import styles from './Perioder.module.css'
 
@@ -13,6 +19,8 @@ interface Props {
     perioder: Periode[]
     isV3: boolean
 }
+
+const publicEnv = getPublicEnv()
 
 function Perioder({ perioder, isV3 }: Props): JSX.Element {
     return (
@@ -45,6 +53,37 @@ function Perioder({ perioder, isV3 }: Props): JSX.Element {
                     </div>
                 ))}
             </div>
+            {publicEnv.DISPLAY_EGENMELDING === 'true' &&
+                egenmeldingsperioderAnsattMock &&
+                egenmeldingsperioderAnsattMock.length > 0 && (
+                    <Egenmeldingsperioder egenmeldingsperioder={egenmeldingsperioderAnsattMock} />
+                )}
+        </div>
+    )
+}
+
+interface EgenmeldingsperioderProps {
+    egenmeldingsperioder: EgenmeldingsperioderAnsatt[]
+}
+
+function Egenmeldingsperioder({ egenmeldingsperioder }: EgenmeldingsperioderProps): JSX.Element {
+    return (
+        <div className={styles.egenmeldingsperioder}>
+            <Heading size="xsmall" level="4">
+                Egenmeldingsdager (lagt til av deg)
+            </Heading>
+            <ul>
+                {egenmeldingsperioder
+                    .flatMap((dates: EgenmeldingsperioderAnsatt) => dates.datoer)
+                    .map((date: string) => (
+                        <li className={styles.date} key={toReadableDate(date)}>
+                            <BodyShort size="small">{toReadableDate(date)}</BodyShort>
+                        </li>
+                    ))}
+                <BodyShort size="small" as="li">{`(${getEgenmeldingsdagerLength(
+                    egenmeldingsperioder,
+                )} dager)`}</BodyShort>
+            </ul>
         </div>
     )
 }

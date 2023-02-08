@@ -79,12 +79,15 @@ export function useSendSykmelding(
     ]
 }
 
-function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
+function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues & {
+    egenmeldingsperioderAnsatt?: undefined
+} {
     return {
         ...values,
         egenmeldingsperioder: values.egenmeldingsperioder?.map((periode) => ({
             fom: periode.fom ? toDateString(periode.fom) : null,
             tom: periode.tom ? toDateString(periode.tom) : null,
         })),
+        egenmeldingsperioderAnsatt: undefined,
     }
 }

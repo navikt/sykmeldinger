@@ -9,18 +9,24 @@ import { YesOrNo } from '../../../../fetching/graphql.generated'
 import styles from './YesNoField.module.css'
 
 interface Props {
-    name: 'erOpplysningeneRiktige' | 'riktigNarmesteLeder' | 'harBruktEgenmelding' | 'harForsikring'
+    name:
+        | 'erOpplysningeneRiktige'
+        | 'riktigNarmesteLeder'
+        | 'harBruktEgenmelding'
+        | 'harForsikring'
+        | `egenmeldingsperioderAnsatt.${number}.harPerioder`
     legend: string
     subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void
     rules?: UseControllerProps['rules']
+    shouldUnregister?: boolean
 }
 
-function YesNoField({ name, legend, subtext, onChange, rules }: Props): JSX.Element {
+function YesNoField({ name, legend, subtext, onChange, rules, shouldUnregister = true }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name,
         rules,
-        shouldUnregister: true,
+        shouldUnregister,
         defaultValue: null,
     })
 

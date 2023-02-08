@@ -43,6 +43,7 @@ jest.mock('next/config', () => () => ({
         runtimeEnv: 'test',
         MIN_SIDE_ROOT: '/test-min-side',
         SYKEFRAVAER_ROOT: '/test-ditt-sykefravaer',
+        DISPLAY_EGENMELDING: undefined,
     },
 }))
 

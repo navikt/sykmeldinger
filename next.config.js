@@ -31,6 +31,7 @@ const publicRuntimeConfig = {
     SYKEPENGESOKNAD_URL: process.env.SYKEPENGESOKNAD_URL,
     SYKEFRAVAER_ROOT: process.env.SYKEFRAVAER_ROOT,
     MIN_SIDE_ROOT: process.env.MIN_SIDE_ROOT,
+    DISPLAY_EGENMELDING: process.env.DISPLAY_EGENMELDING,
 }
 
 /**
