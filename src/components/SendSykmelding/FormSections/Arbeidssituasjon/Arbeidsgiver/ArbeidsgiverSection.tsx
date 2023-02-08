@@ -6,7 +6,6 @@ import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../shared/FormStructure'
 import { getPublicEnv } from '../../../../../utils/env'
 import EgenmeldingerField from '../Egenmelding/EgenmeldingerField'
-import { toDate } from '../../../../../utils/dateUtils'
 
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
@@ -45,7 +44,7 @@ function ArbeidsgiverSection({ arbeidsgivere, sykmeldingFom }: Props): JSX.Eleme
                         metadata={{
                             arbeidsgiverNavn: valgtArbeidsgiver.navn,
                             // TODO https://trello.com/c/7Sqn8vbo
-                            previousSykmeldingTom: toDate('2022-11-19'),
+                            previousSykmeldingTom: null,
                         }}
                     />
                 </div>

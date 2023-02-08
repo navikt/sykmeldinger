@@ -88,7 +88,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                     index={index + 1}
                     metadata={metadata}
                     previous={{
-                        earliestSelectedDate: sortedDates ? sortedDates[sortedDates.length - 1] : new Date(),
+                        earliestSelectedDate: sortedDates ? sortedDates[0] : null,
                         earliestPossibleDate: earliestPossibleDate,
                     }}
                 />
