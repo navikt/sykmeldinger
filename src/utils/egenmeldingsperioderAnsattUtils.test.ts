@@ -1,0 +1,69 @@
+import { YesOrNo } from '../fetching/graphql.generated'
+
+import { hasCompletedEgenmeldingsperioderAnsatt } from './egenmeldingsperioderAnsattUtils'
+
+describe('hasCompletedEgenmeldingsperioderAnsatt', () => {
+    it('should return true if harPerioder is NO with one period', () => {
+        const egenmeldingsperioder = [
+            {
+                harPerioder: YesOrNo.NO,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+        ]
+        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(true)
+    })
+
+    it('should return false if harPerioder is YES with one period', () => {
+        const egenmeldingsperioder = [
+            {
+                harPerioder: YesOrNo.YES,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+        ]
+        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(false)
+    })
+
+    it('should return true if harPerioder is NO in the last period', () => {
+        const egenmeldingsperioder = [
+            {
+                harPerioder: YesOrNo.YES,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+            {
+                harPerioder: YesOrNo.YES,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+            {
+                harPerioder: YesOrNo.NO,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+        ]
+        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(true)
+    })
+
+    it('should return false if harPerioder is YES in the last period', () => {
+        const egenmeldingsperioder = [
+            {
+                harPerioder: YesOrNo.YES,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+            {
+                harPerioder: YesOrNo.YES,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+            {
+                harPerioder: YesOrNo.YES,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+        ]
+        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(false)
+    })
+})
