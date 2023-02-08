@@ -1,31 +1,34 @@
 import React from 'react'
-import { useFormContext } from 'react-hook-form'
 
 import {
-    ArbeidssituasjonType,
     BrukerinformasjonFragment,
     Periodetype,
     SykmeldingFragment,
     SykmeldingUtenforVentetidFragment,
-    YesOrNo,
 } from '../../../../fetching/graphql.generated'
-import { FormValues } from '../../SendSykmeldingForm'
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../shared/FormStructure'
 import { toDate } from '../../../../utils/dateUtils'
+import { getPublicEnv } from '../../../../utils/env'
 
 import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
 import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 import FrilanserSection from './Frilanser/FrilanserSection'
 import SendesTilArbeidsgiverInfo from './SendesTilArbeidsgiver/SendesTilArbeidsgiverInfo'
+import { useArbeidssituasjonSubSections, useDynamicSubSections } from './formProgressUtils'
+
+const publicEnv = getPublicEnv()
 
 interface Props {
     sykmelding: SykmeldingFragment
     brukerinformasjon: BrukerinformasjonFragment
     sykmeldingUtenforVentetid: SykmeldingUtenforVentetidFragment
 }
+
+// Hook needs to be feature-toggled  together with the new form component
+const useSubSections = publicEnv.DISPLAY_EGENMELDING ? useArbeidssituasjonSubSections : useDynamicSubSections
 
 function ArbeidssituasjonSection({
     sykmelding,
@@ -39,7 +42,7 @@ function ArbeidssituasjonSection({
         shouldShowEgenmeldingsperioderSporsmal,
         shouldShowStrengtFortroligInfo,
         shouldShowSendesTilArbeidsgiverInfo,
-    } = useDynamicSubSections(brukerinformasjon, sykmeldingUtenforVentetid)
+    } = useSubSections(brukerinformasjon, sykmeldingUtenforVentetid)
 
     // Don't show arbeidssituasjon section given certain criteria
     if (!shouldArbeidssituasjonShow) return null
@@ -64,59 +67,6 @@ function ArbeidssituasjonSection({
             {shouldShowSendesTilArbeidsgiverInfo && <SendesTilArbeidsgiverInfo sykmelding={sykmelding} />}
         </SectionWrapper>
     )
-}
-
-type UseDynamicSubSections = {
-    shouldShowStrengtFortroligInfo: boolean
-    shouldShowArbeidsgiverOrgnummer: boolean
-    shouldShowEgenmeldingsperioderSporsmal: boolean
-    shouldShowSendesTilArbeidsgiverInfo: boolean
-}
-
-function useDynamicSubSections(
-    brukerinformasjon: BrukerinformasjonFragment,
-    sykmeldingUtenforVentetid: SykmeldingUtenforVentetidFragment,
-): UseDynamicSubSections {
-    const { watch } = useFormContext<FormValues>()
-    const [arbeidssituasjon, arbeidsgiverOrgnummer, egenmeldingsperioderAnsatt] = watch([
-        'arbeidssituasjon',
-        'arbeidsgiverOrgnummer',
-        'egenmeldingsperioderAnsatt',
-    ])
-    // TODO: https://trello.com/c/KMllIcoG/2499-forbedring-av-logikk
-    const valgtArbeidsgiver = brukerinformasjon.arbeidsgivere.find((ag) => ag.orgnummer === arbeidsgiverOrgnummer)
-    const inactiveArbeidsgiver = valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder != null
-
-    const shouldShowStrengtFortroligInfo: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && brukerinformasjon.strengtFortroligAdresse
-    const shouldShowArbeidsgiverOrgnummer: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && !brukerinformasjon.strengtFortroligAdresse
-    const isFrilanserOrNaeringsdrivende: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.FRILANSER ||
-        arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
-    const shouldShowEgenmeldingsperioderSporsmal: boolean =
-        isFrilanserOrNaeringsdrivende && !sykmeldingUtenforVentetid.erUtenforVentetid
-    // TODO: https://trello.com/c/KMllIcoG/2499-forbedring-av-logikk
-    const hasEgenmeldingsperioderAnsatt: boolean | null =
-        egenmeldingsperioderAnsatt && egenmeldingsperioderAnsatt.length >= 1
-    const hasCompletedEgenmeldingsperioderAnsatt: boolean =
-        (hasEgenmeldingsperioderAnsatt &&
-            egenmeldingsperioderAnsatt?.[egenmeldingsperioderAnsatt.length - 1].harPerioder === YesOrNo.NO) ||
-        (hasEgenmeldingsperioderAnsatt &&
-            egenmeldingsperioderAnsatt?.[egenmeldingsperioderAnsatt.length - 1].hasClickedVidere === true) ||
-        arbeidssituasjon !== ArbeidssituasjonType.ARBEIDSTAKER
-    const shouldShowSendesTilArbeidsgiverInfo: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER &&
-        arbeidsgiverOrgnummer != null &&
-        !brukerinformasjon.strengtFortroligAdresse &&
-        (!inactiveArbeidsgiver || hasCompletedEgenmeldingsperioderAnsatt)
-
-    return {
-        shouldShowStrengtFortroligInfo,
-        shouldShowArbeidsgiverOrgnummer,
-        shouldShowEgenmeldingsperioderSporsmal,
-        shouldShowSendesTilArbeidsgiverInfo,
-    }
 }
 
 export default ArbeidssituasjonSection
