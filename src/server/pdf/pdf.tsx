@@ -1,4 +1,4 @@
-import { renderToString } from '@react-pdf/renderer'
+import { renderToBuffer } from '@react-pdf/renderer'
 
 import { Sykmelding } from '../api-models/sykmelding/Sykmelding'
 import { getSykmelding } from '../sykmeldingerService'
@@ -8,13 +8,13 @@ import { RequestContext } from '../graphql/resolvers'
 
 import SykmeldingPdf from './components/SykmeldingPdf'
 
-export async function generateSykmeldingPdfServerSide(sykmeldingId: string, context: RequestContext): Promise<string> {
+export async function generateSykmeldingPdfServerSide(sykmeldingId: string, context: RequestContext): Promise<Buffer> {
     const timestamp = new Date().toISOString()
     const sykmelding: Sykmelding = !isLocalOrDemo
         ? await getSykmelding(sykmeldingId, context)
         : await getMockSykmelding(sykmeldingId)
 
-    return await renderToString(<SykmeldingPdf sykmelding={sykmelding} timestamp={timestamp} />)
+    return await renderToBuffer(<SykmeldingPdf sykmelding={sykmelding} timestamp={timestamp} />)
 }
 
 async function getMockSykmelding(id: string): Promise<Sykmelding> {

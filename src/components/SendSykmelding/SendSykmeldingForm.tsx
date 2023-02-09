@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { ComponentType, useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
@@ -20,7 +20,7 @@ import ActionSection from './FormSections/ActionSection'
 import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/ArbeidssituasjonSection'
 import ErrorSection from './FormSections/ErrorSection'
 
-const ReactDevTools = dynamic(() => import('@hookform/devtools').then((module) => module.DevTool<FormValues>), {
+const FormDevTools: ComponentType = dynamic(() => import('./SendSykmeldingFormDevTools'), {
     ssr: false,
 })
 
@@ -89,7 +89,7 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
                 />
                 <ErrorSection ref={errorSectionRef} />
                 <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
-                {process.env.NODE_ENV !== 'production' && <ReactDevTools control={form.control} />}
+                {process.env.NODE_ENV !== 'production' && <FormDevTools />}
             </form>
         </FormProvider>
     )

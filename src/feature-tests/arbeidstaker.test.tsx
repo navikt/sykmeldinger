@@ -124,7 +124,7 @@ describe('Arbeidstaker', () => {
 
         await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
         await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
-        userEvent.click(
+        await userEvent.click(
             await screen.findByRole('radio', {
                 name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
             }),
@@ -132,7 +132,7 @@ describe('Arbeidstaker', () => {
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
-        userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
+        await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')

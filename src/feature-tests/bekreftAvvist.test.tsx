@@ -58,7 +58,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-        userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
+        await userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
 
         await waitFor(() =>
             expect(
@@ -73,7 +73,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-        userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
+        await userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
 
         await waitFor(() =>
             expect(
@@ -83,7 +83,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
         expect(await axe(container)).toHaveNoViolations()
 
-        userEvent.click(
+        await userEvent.click(
             screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
         )
 
@@ -126,13 +126,13 @@ describe('Bekreft avvist sykmelding som lest', () => {
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-        userEvent.click(
+        await userEvent.click(
             screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
         )
 
         expect(await axe(container)).toHaveNoViolations()
 
-        userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
+        await userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
 
         expect(
             await screen.findByText('Du bekreftet at du har lest at sykmeldingen er avvist den 1. januar 2020'),

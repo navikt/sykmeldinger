@@ -78,7 +78,7 @@ describe('Frilanser', () => {
 
             expect(await axe(container)).toHaveNoViolations()
 
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+            await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toEqual(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
@@ -141,7 +141,7 @@ describe('Frilanser', () => {
 
             expect(await axe(container)).toHaveNoViolations()
 
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+            await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
@@ -188,7 +188,7 @@ describe('Frilanser', () => {
 
             expect(await axe(container)).toHaveNoViolations()
 
-            userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
+            await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
@@ -328,7 +328,7 @@ describe('Frilanser', () => {
             )
 
             expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(4)
-            userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
+            await userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
             expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(2)
             expect(await axe(container)).toHaveNoViolations()
         })
