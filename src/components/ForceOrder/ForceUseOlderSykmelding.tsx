@@ -43,7 +43,7 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
                     </div>
                 </ReadMore>
             </div>
-            <Link passHref href={`/${olderSykmeldingId}`}>
+            <Link passHref href={`/${olderSykmeldingId}`} legacyBehavior>
                 <Button
                     as="a"
                     variant="primary"

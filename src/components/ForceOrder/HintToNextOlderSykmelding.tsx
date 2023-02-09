@@ -57,7 +57,7 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
             <BodyLong spacing>
                 Du har {pluralize('sykmelding', unsentSykmeldinger.length)} du må velge om du skal bruke
             </BodyLong>
-            <Link passHref href={`/${earliest.id}`}>
+            <Link passHref href={`/${earliest.id}`} legacyBehavior>
                 <Button
                     as="a"
                     variant="primary"

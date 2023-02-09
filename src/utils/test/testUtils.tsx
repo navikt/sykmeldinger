@@ -1,6 +1,13 @@
 import { PropsWithChildren, ReactElement } from 'react'
-import { render, screen, RenderOptions, Screen } from '@testing-library/react'
-import { renderHook, RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks'
+import {
+    render,
+    renderHook,
+    screen,
+    RenderOptions,
+    Screen,
+    RenderHookOptions,
+    RenderHookResult,
+} from '@testing-library/react'
 import { MockedProvider, MockedResponse, MockLink } from '@apollo/client/testing'
 import { ApolloLink, Cache, InMemoryCache } from '@apollo/client'
 import open from 'open'
@@ -56,7 +63,7 @@ const customRender = (
 const customRenderHook = <TProps, TResult>(
     hook: (props: TProps) => TResult,
     options: Omit<RenderHookOptions<TProps>, 'wrapper'> & ProviderProps = {},
-): RenderHookResult<TProps, TResult> => {
+): RenderHookResult<TResult, TProps> => {
     const { initialState, mocks, ...renderOptions } = options
 
     return renderHook(hook, {
