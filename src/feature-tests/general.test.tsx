@@ -1,9 +1,10 @@
 import mockRouter from 'next-router-mock'
 
-import { axe, render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import { SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
+import { sporsmal } from '../utils/sporsmal'
 
 import { createExtraFormDataMock } from './mockUtils'
 
@@ -23,20 +24,13 @@ describe('sykmelding page tests that are not specific to a user', () => {
         }),
     ]
 
-    it('should show details from sykmelding', async () => {
+    it('should show details from sykmelding without a11y problems', async () => {
         const { container } = render(<SykmeldingPage />, {
             mocks: [...baseMocks, createExtraFormDataMock()],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        expect(await screen.findByText(sporsmal.erOpplysningeneRiktige)).toBeInTheDocument()
         expect(screen.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-        expect(
-            await axe(container, {
-                // This is a false positive on the print button
-                rules: {
-                    'svg-img-alt': { enabled: false },
-                },
-            }),
-        ).toHaveNoViolations()
+        expect(await axe(container)).toHaveNoViolations()
     })
 })

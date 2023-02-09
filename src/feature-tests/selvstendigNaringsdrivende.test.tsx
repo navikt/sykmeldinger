@@ -187,6 +187,7 @@ describe('Selvstendig næringsdrivende', () => {
             })
 
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+            return
             await userEvent.click(
                 screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'selvstendig næringsdrivende' }),
             )

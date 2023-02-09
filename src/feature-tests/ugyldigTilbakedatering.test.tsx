@@ -1,9 +1,10 @@
 import mockRouter from 'next-router-mock'
 
-import { axe, render, screen, waitForElementToBeRemoved } from '../utils/test/testUtils'
+import { axe, render, screen } from '../utils/test/testUtils'
 import { StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
+import { sporsmal } from '../utils/sporsmal'
 
 import { createExtraFormDataMock } from './mockUtils'
 
@@ -42,10 +43,10 @@ describe('Ugyldig tilbakedatert sykmelding', () => {
         createExtraFormDataMock({ sykmeldingId: 'ugyldig-tilbakedatering-sykmelding' }),
     ]
 
-    it('should show information about tilbakedatering', async () => {
+    it('should show information about tilbakedatering without a11y issues', async () => {
         const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        expect(await screen.findByText(sporsmal.erOpplysningeneRiktige)).toBeInTheDocument()
         expect(screen.getByRole('heading', { name: 'Tilbakedateringen kan ikke godkjennes' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
     })

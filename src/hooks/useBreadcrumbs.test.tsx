@@ -1,5 +1,6 @@
-import { renderHook } from '@testing-library/react-hooks'
 import * as dekoratoren from '@navikt/nav-dekoratoren-moduler'
+
+import { renderHook } from '../utils/test/testUtils'
 
 import { createInitialServerSideBreadcrumbs, SsrPathVariants, useUpdateBreadcrumbs } from './useBreadcrumbs'
 

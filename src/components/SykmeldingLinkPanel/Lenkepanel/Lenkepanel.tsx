@@ -24,7 +24,7 @@ function Lenkepanel({ sykmelding, isNew }: LenkepanelProps): JSX.Element {
     const [isHoverState, setIsHoverState] = useState<boolean>(false)
 
     return (
-        <Link href={`/${sykmelding.id}`} passHref>
+        <Link href={`/${sykmelding.id}`} passHref legacyBehavior>
             <LinkPanel
                 onMouseEnter={() => setIsHoverState(true)}
                 onMouseLeave={() => setIsHoverState(false)}
