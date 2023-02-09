@@ -20,8 +20,7 @@ interface Props {
 
 function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
     const { control } = useFormContext<FormValues>()
-
-    const { fields, append, remove } = useFieldArray({
+    const { fields, update, append, remove } = useFieldArray({
         control,
         name: 'egenmeldingsperioder',
         shouldUnregister: true,
@@ -29,8 +28,9 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
 
     // useFieldArray doesn't allow us to set an initial value, so we have to do it manually on mount
     useLayoutEffect(() => {
-        append({ fom: null, tom: null })
-    }, [append])
+        // TODO: Refactor mapping so we don't have to rely on effects and RHF to keep state in sync
+        update(0, { fom: null, tom: null })
+    }, [update])
 
     return (
         <SectionWrapper title={sporsmal.egenmeldingsperioder(oppfolgingsdato)} level="3" size="small">

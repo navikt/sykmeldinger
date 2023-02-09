@@ -1826,44 +1826,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@floating-ui/core@npm:1.0.1"
-  checksum: c8a5f1a491788e5bebfe747e9372df2c7cbee0d8790ddf95e25149ac91ccf1a2cca8f768029826cfd3d687617c1d0f3241b97f1648bdf2a28d421f39e79c2eee
+"@floating-ui/core@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@floating-ui/core@npm:1.2.0"
+  checksum: 1afde471b0d2ba11e2cf416ef5ca9e6280e3f42542a707d958b66631fe2aa551272c1544a1e8ed4815bf562e4462adedb356ce3f2de5c1738d6aab1568f580f4
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^1.0.0":
-  version: 1.0.4
-  resolution: "@floating-ui/dom@npm:1.0.4"
+"@floating-ui/dom@npm:^1.1.1":
+  version: 1.2.0
+  resolution: "@floating-ui/dom@npm:1.2.0"
   dependencies:
-    "@floating-ui/core": ^1.0.1
-  checksum: f038ad74c8c0d4e3668705396c9955018ec4fce5de4a3ebc0d2317fa10a0dbae3ff6c9d331423014ab7558864977a83a1664be2800cb1a1d57cd35647a3d4907
+    "@floating-ui/core": ^1.2.0
+  checksum: 3f5cf02a784286473f451939b5641454e7256cdc7a6899a0ecc67e084a572b52e5e23a08a7e5b8ba186dca668815eba5ed6d69baec543abaeb5092d6c672f6b2
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom-interactions@npm:0.9.2":
-  version: 0.9.2
-  resolution: "@floating-ui/react-dom-interactions@npm:0.9.2"
+"@floating-ui/react-dom@npm:^1.2.0":
+  version: 1.2.2
+  resolution: "@floating-ui/react-dom@npm:1.2.2"
   dependencies:
-    "@floating-ui/react-dom": ^1.0.0
+    "@floating-ui/dom": ^1.1.1
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 5cb7879a8fe53ce4ca8361473d93e18806402d6bcde4e935d5aafa2b72032019e62f7d019d7d7145ead1ed829569ac14d6d8c50d7beedcea04cb3d02af661597
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react@npm:0.17.0":
+  version: 0.17.0
+  resolution: "@floating-ui/react@npm:0.17.0"
+  dependencies:
+    "@floating-ui/react-dom": ^1.2.0
     aria-hidden: ^1.1.3
+    tabbable: ^6.0.1
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 91a1a55be56a37fdb1e39121cf1078c51ff2de1e0bd315dfec17f2545cfc018fe2391192c5f79142f65002c9c54cfed384c5e73711bcf5d55c3382f7c436620b
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react-dom@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@floating-ui/react-dom@npm:1.0.0"
-  dependencies:
-    "@floating-ui/dom": ^1.0.0
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: d79e3c8570b0eaef5e968cd9c69de2c6bb372a5316e4e69a1cd12dae81771863ef430e81b74a0c21cefba663a2f971d8540c7294d7fb3b9807e32ba2a00c1e76
+  checksum: e9729a7825a612df88f588a2299375d4ce7f64a810b32e9f38be4c5f5332c164e24c346e101321ca33c3171afbeced554f7cdbaea19bf67cf31b4af811d433eb
   languageName: node
   linkType: hard
 
@@ -3228,29 +3229,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:2.0.12":
-  version: 2.0.12
-  resolution: "@navikt/ds-css@npm:2.0.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F2.0.12%2F415923ba949853ce4946700f5bf16bbde68512d6"
-  checksum: 7f005c8811a7c1ceb629e776cf4c088246bb9a6ee7dc58c76c31086a680fc4432c88845623c808b23877f4bb43633fdebfaaaa899be26231e0cd5f7523dbba1b
+"@navikt/ds-css@npm:2.1.7":
+  version: 2.1.7
+  resolution: "@navikt/ds-css@npm:2.1.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F2.1.7%2F80f2a8fe2680ad118ccf9e1bdaba75ff3004df05"
+  checksum: 2e155a5e5ecf54c95adde47703a5d05862f03aa9593ecc0fb12ee6a5cd1f2adbdbd5f1421ce424bf886c545265ea5245b5133583af9f8725726bf877d0275114
   languageName: node
   linkType: hard
 
-"@navikt/ds-icons@npm:2.0.12, @navikt/ds-icons@npm:^2.0.12":
-  version: 2.0.12
-  resolution: "@navikt/ds-icons@npm:2.0.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.0.12%2F5a501c8994d587dfee3a6cddb6387ee1f05652f5"
+"@navikt/ds-icons@npm:2.1.7, @navikt/ds-icons@npm:^2.1.7":
+  version: 2.1.7
+  resolution: "@navikt/ds-icons@npm:2.1.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.1.7%2F4c38de9400fff6502ce7ba0509e05f770af66921"
   peerDependencies:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
-  checksum: f92e996af69cff9f9864ab543278f5eca24a254d133f81f9dbb3d6b026ee59267389e6e6eac8e639c39b67321f04ce7b754a9cbcb58fdc1ea7f13c49d803a4f1
+  checksum: 389085ca44ca498c5de8595a2750067e2f7f0aafb5950a681ac1a6cec708d43e6d464f3a3cfee2253d0c05e94d163e34906884dd8adaebff05c78c0937e35995
   languageName: node
   linkType: hard
 
-"@navikt/ds-react@npm:2.0.12":
-  version: 2.0.12
-  resolution: "@navikt/ds-react@npm:2.0.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F2.0.12%2F8336c595bb47b32a004c28a0aa0c43485f9d5484"
+"@navikt/ds-react@npm:2.1.7":
+  version: 2.1.7
+  resolution: "@navikt/ds-react@npm:2.1.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F2.1.7%2F71ac60f7d929a34697b89874d03bd53d6b382691"
   dependencies:
-    "@floating-ui/react-dom-interactions": 0.9.2
-    "@navikt/ds-icons": ^2.0.12
+    "@floating-ui/react": 0.17.0
+    "@navikt/ds-icons": ^2.1.7
     "@radix-ui/react-tabs": 1.0.0
     "@radix-ui/react-toggle-group": 1.0.0
     clsx: ^1.2.1
@@ -3260,7 +3261,7 @@ __metadata:
   peerDependencies:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
-  checksum: b3a9a100b1a25ee9b329837f88da9e86216be30a33f38f7447a1977589b1e3807fa91d5e3ce44915b9d26a380ab9cd55e9c2bc4163eac48d272d1ecfb745a224
+  checksum: bd862a1d81dd8a6f62246f272d721704c6b13ec7c605424ec7205e6730bd34d57e6d5afb3b2792d09e90e2b7fa3b6a454a34d89655bdb1689639d5d18578aec8
   languageName: node
   linkType: hard
 
@@ -13341,9 +13342,9 @@ __metadata:
     "@graphql-tools/schema": ^9.0.16
     "@graphql-typed-document-node/core": ^3.1.1
     "@hookform/devtools": ^4.3.0
-    "@navikt/ds-css": 2.0.12
-    "@navikt/ds-icons": 2.0.12
-    "@navikt/ds-react": 2.0.12
+    "@navikt/ds-css": 2.1.7
+    "@navikt/ds-icons": 2.1.7
+    "@navikt/ds-react": 2.1.7
     "@navikt/eslint-config-teamsykmelding": ^1.4.0
     "@navikt/nav-dekoratoren-moduler": ^1.9.0
     "@navikt/next-auth-wonderwall": ^1.2.0
@@ -13421,6 +13422,13 @@ __metadata:
     "@pkgr/utils": ^2.3.1
     tslib: ^2.5.0
   checksum: 8a9560e5d8f3d94dc3cf5f7b9c83490ffa30d320093560a37b88f59483040771fd1750e76b9939abfbb1b5a23fd6dfbae77f6b338abffe7cae7329cd9b9bb86b
+  languageName: node
+  linkType: hard
+
+"tabbable@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "tabbable@npm:6.0.1"
+  checksum: 65e378ad69a97416f2fdce34ade11b8ff68b33d9b2d978920a9d285c77e1bb88cb35113a8f00af8c4f0163d788d451a48840a216fa918d6a3f0c554951deb984
   languageName: node
   linkType: hard
 
