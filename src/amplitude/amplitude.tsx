@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { track, init } from '@amplitude/analytics-browser'
 import { BaseEvent } from '@amplitude/analytics-types'
 import { logger } from '@navikt/next-logger'
@@ -26,7 +26,7 @@ export function useLogAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?:
     const stableEvent = useRef(event)
     const stableExtraData = useRef(extraData)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         logAmplitudeEvent(stableEvent.current, stableExtraData.current)
     }, [])
 }

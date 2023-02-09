@@ -48,7 +48,7 @@ describe('Bekreftet sykmelding', () => {
             ],
         })
 
-        userEvent.click(await screen.findByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
+        await userEvent.click(await screen.findByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
         expect(await screen.findByRole('button', { name: 'Bekreft sykmelding' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
     })

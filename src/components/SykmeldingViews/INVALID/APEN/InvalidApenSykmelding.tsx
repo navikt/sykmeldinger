@@ -1,6 +1,6 @@
 import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react'
-import { Controller, useForm } from 'react-hook-form'
-import { useEffect } from 'react'
+import { useController, useForm } from 'react-hook-form'
+import { ApolloError } from '@apollo/client'
 
 import { SykmeldingChangeStatus, SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
@@ -24,27 +24,20 @@ interface FormData {
 const skjemanavn = 'invalid åpen sykmelding'
 
 function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.Element {
-    const sykmeldingId = useGetSykmeldingIdParam()
     useHotjarTrigger('SYKMELDING_INVALID_APEN')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
-    const {
-        handleSubmit,
+    const { bekreftInvalid, mutationLoading, mutationError } = useBekreftInvalid()
+    const { control, handleSubmit } = useForm<FormData>()
+    const { field, fieldState } = useController({
+        name: 'bekreftetLest',
         control,
-        formState: { errors },
-    } = useForm<FormData>()
-    const [{ loading: fetchingBekreft, error: errorBekreft }, bekreft] = useChangeSykmeldingStatus(
-        sykmeldingId,
-        SykmeldingChangeStatus.BEKREFT_AVVIST,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
-        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
-    )
-
-    useEffect(() => {
-        if (errors.bekreftetLest) {
-            logAmplitudeEvent({ eventName: 'skjema validering feilet', data: { skjemanavn } })
-        }
-    }, [errors.bekreftetLest])
+        defaultValue: false,
+        rules: {
+            validate: (value) =>
+                value !== true ? 'Du må bekrefte at du har lest at sykmeldingen er avvist.' : undefined,
+        },
+    })
 
     return (
         <div className="sykmelding-container">
@@ -60,58 +53,67 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
             </Spacing>
 
             <form
-                onSubmit={handleSubmit(() => {
-                    bekreft()
+                onSubmit={handleSubmit(bekreftInvalid, () => {
+                    logAmplitudeEvent({ eventName: 'skjema validering feilet', data: { skjemanavn } })
                 })}
             >
                 <CenterItems horizontal>
-                    <Controller
-                        control={control}
-                        name="bekreftetLest"
-                        defaultValue={false}
-                        rules={{
-                            validate: (value) =>
-                                value === true || 'Du må bekrefte at du har lest at sykmeldingen er avvist.',
-                        }}
-                        render={({ field, fieldState }) => (
-                            <Spacing>
-                                <ConfirmationPanel
-                                    {...field}
-                                    checked={field.value}
-                                    label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
-                                    error={fieldState.error?.message}
-                                    onChange={() => {
-                                        const newValue = !field.value
-                                        logAmplitudeEvent({
-                                            eventName: 'skjema spørsmål besvart',
-                                            data: {
-                                                skjemanavn,
-                                                [`spørsmål`]: 'bekreftet lest',
-                                                svar: newValue ? 'Ja' : 'Nei',
-                                            },
-                                        })
-                                        field.onChange(newValue)
-                                    }}
-                                />
-                            </Spacing>
-                        )}
-                    />
+                    <Spacing>
+                        <ConfirmationPanel
+                            {...field}
+                            checked={field.value}
+                            label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
+                            error={fieldState.error?.message}
+                            onChange={() => {
+                                const newValue = !field.value
+                                logAmplitudeEvent({
+                                    eventName: 'skjema spørsmål besvart',
+                                    data: {
+                                        skjemanavn,
+                                        [`spørsmål`]: 'bekreftet lest',
+                                        svar: newValue ? 'Ja' : 'Nei',
+                                    },
+                                })
+                                field.onChange(newValue)
+                            }}
+                        />
+                    </Spacing>
 
-                    {errorBekreft && (
+                    {mutationError && (
                         <Spacing amount="small">
                             <Alert variant="error" role="alert" aria-live="polite">
-                                {errorBekreft.message}
+                                {mutationError.message}
                             </Alert>
                         </Spacing>
                     )}
 
-                    <Button variant="primary" type="submit" disabled={fetchingBekreft} loading={fetchingBekreft}>
+                    <Button variant="primary" type="submit" loading={mutationLoading}>
                         Bekreft
                     </Button>
                 </CenterItems>
             </form>
         </div>
     )
+}
+
+function useBekreftInvalid(): {
+    bekreftInvalid: () => void
+    mutationError: ApolloError | undefined
+    mutationLoading: boolean
+} {
+    const sykmeldingId = useGetSykmeldingIdParam()
+    const [{ loading: mutationLoading, error: mutationError }, bekreftInvalid] = useChangeSykmeldingStatus(
+        sykmeldingId,
+        SykmeldingChangeStatus.BEKREFT_AVVIST,
+        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
+    )
+
+    return {
+        bekreftInvalid,
+        mutationLoading,
+        mutationError,
+    }
 }
 
 export default InvalidApenSykmelding

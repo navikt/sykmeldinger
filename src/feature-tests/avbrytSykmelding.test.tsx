@@ -70,7 +70,7 @@ describe('Avbryt sykmelding', () => {
         })
 
         expect(await screen.findByText(/Sykmeldingen ble avbrutt av deg/)).toBeInTheDocument()
-        userEvent.click(screen.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
+        await userEvent.click(screen.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }))
 
         await waitFor(() => expect(screen.queryByText(/Sykmeldingen ble avbrutt av deg/)).not.toBeInTheDocument())
         expect(await screen.findByText(/Jeg vil avbryte sykmeldingen/)).toBeInTheDocument()
@@ -133,9 +133,9 @@ describe('Avbryt sykmelding', () => {
 
         await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
 
-        userEvent.click(await screen.findByRole('button', { name: 'Jeg vil avbryte sykmeldingen' }))
+        await userEvent.click(await screen.findByRole('button', { name: 'Jeg vil avbryte sykmeldingen' }))
         expect(screen.getByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeInTheDocument()
-        userEvent.click(screen.getByRole('button', { name: 'Ja, jeg er sikker' }))
+        await userEvent.click(screen.getByRole('button', { name: 'Ja, jeg er sikker' }))
 
         expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
         expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument()

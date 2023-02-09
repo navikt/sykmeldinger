@@ -23,11 +23,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void>
     }
 
     childLogger.info(`Creating PDF for sykmeldingId: ${sykmeldingId}, requestId: ${context.requestId}`)
-    const pdfAsString = await generateSykmeldingPdfServerSide(sykmeldingId, context)
+    const pdfAsBuffer: Buffer = await generateSykmeldingPdfServerSide(sykmeldingId, context)
 
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-disposition', 'filename="sykmelding.pdf"')
-    res.end(pdfAsString)
+    res.end(pdfAsBuffer)
 }
 
 export default withAuthenticatedApi(handler)

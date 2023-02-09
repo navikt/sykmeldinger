@@ -17,10 +17,10 @@ describe('ArbeidssituasjonField', () => {
         )
     }
 
-    it('should not disable fields when harAvventendePeriode is false', () => {
+    it('should not disable fields when harAvventendePeriode is false', async () => {
         render(<ArbeidssituasjonFieldInForm harAvventendePeriode={false} />)
 
-        userEvent.click(screen.getByRole('radio', { name: 'permittert' }))
+        await userEvent.click(screen.getByRole('radio', { name: 'permittert' }))
 
         expect(screen.getByRole('radio', { name: 'permittert' })).not.toBeDisabled()
         expect(screen.getByRole('radio', { name: 'permittert' })).toBeChecked()
