@@ -1,18 +1,15 @@
 import { Button, Heading } from '@navikt/ds-react'
-import { ControllerRenderProps } from 'react-hook-form'
 
-import { FormValues } from '../../../SendSykmeldingForm'
 import { toReadableDate } from '../../../../../utils/dateUtils'
 
 import styles from './ValgtEgenmeldingsdager.module.css'
 
 interface Props {
     dates: Date[]
-    // TODO: https://trello.com/c/CpK4ExV7/2500-fra-egenmld-pr-oneditclicked
-    videreField: ControllerRenderProps<FormValues, `egenmeldingsperioderAnsatt.${number}.hasClickedVidere`>
+    onEditClicked: () => void
 }
 
-function ValgtEgenmeldingsdager({ dates, videreField }: Props): JSX.Element {
+function ValgtEgenmeldingsdager({ dates, onEditClicked }: Props): JSX.Element {
     return (
         <div className={styles.egenmeldingListWrapper}>
             <Heading id="egenmeldingList" size="xsmall" level="3">
@@ -23,7 +20,7 @@ function ValgtEgenmeldingsdager({ dates, videreField }: Props): JSX.Element {
                     <li key={date.toISOString()}>{toReadableDate(date)}</li>
                 ))}
             </ul>
-            <Button variant="secondary" onClick={() => videreField.onChange(false)}>
+            <Button variant="secondary" onClick={() => onEditClicked()}>
                 Endre
             </Button>
         </div>

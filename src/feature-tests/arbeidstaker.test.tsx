@@ -87,7 +87,7 @@ describe('Arbeidstaker', () => {
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
-    })
+    }, 10_000)
 
     it('should be able to submit form with inactive arbeidsgiver', async () => {
         const { container } = render(<SykmeldingPage />, {

@@ -1,11 +1,12 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
-import { BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
+import { Arbeidsgiver, BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../shared/FormStructure'
 import { getPublicEnv } from '../../../../../utils/env'
 import EgenmeldingerField from '../Egenmelding/EgenmeldingerField'
+import { findValgtArbeidsgiver } from '../../../../../utils/arbeidsgiverUtils'
 
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
@@ -23,8 +24,8 @@ function ArbeidsgiverSection({ arbeidsgivere, sykmeldingFom }: Props): JSX.Eleme
     const { watch } = useFormContext<FormValues>()
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
     const valgtRiktigNarmesteLeder: string | null = watch('riktigNarmesteLeder')
-    const valgtArbeidsgiver = arbeidsgivere.find((ag) => ag.orgnummer === valgtArbeidsgiverOrgnummer)
-    const noArbeidsgivere = arbeidsgivere.length === 0
+    const valgtArbeidsgiver: Arbeidsgiver | undefined = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
+    const noArbeidsgivere: boolean = arbeidsgivere.length === 0
 
     return (
         <SectionWrapper>

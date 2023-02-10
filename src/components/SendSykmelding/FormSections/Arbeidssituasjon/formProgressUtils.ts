@@ -4,8 +4,10 @@ import {
     ArbeidssituasjonType,
     BrukerinformasjonFragment,
     SykmeldingUtenforVentetidFragment,
-    YesOrNo,
 } from '../../../../fetching/graphql.generated'
+import { isActiveArbeidsgiver } from '../../../../utils/arbeidsgiverUtils'
+import { isArbeidstaker, isFrilanserOrNaeringsdrivende } from '../../../../utils/arbeidssituasjonUtils'
+import { hasCompletedEgenmeldingsperioderAnsatt } from '../../../../utils/egenmeldingsperioderAnsattUtils'
 import { FormValues } from '../../SendSykmeldingForm'
 
 type UseDynamicSubSections = {
@@ -28,33 +30,20 @@ export function useArbeidssituasjonSubSections(
         'arbeidsgiverOrgnummer',
         'egenmeldingsperioderAnsatt',
     ])
-    // TODO: https://trello.com/c/KMllIcoG/2499-forbedring-av-logikk
-    const valgtArbeidsgiver = brukerinformasjon.arbeidsgivere.find((ag) => ag.orgnummer === arbeidsgiverOrgnummer)
-    const inactiveArbeidsgiver = valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder != null
 
-    const shouldShowStrengtFortroligInfo: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && brukerinformasjon.strengtFortroligAdresse
-    const shouldShowArbeidsgiverOrgnummer: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER && !brukerinformasjon.strengtFortroligAdresse
-    const isFrilanserOrNaeringsdrivende: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.FRILANSER ||
-        arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
+    const hasStrengtFortroligAdresse: boolean = brukerinformasjon.strengtFortroligAdresse
+    const hasActiveArbeidsgiver: boolean = isActiveArbeidsgiver(brukerinformasjon.arbeidsgivere, arbeidsgiverOrgnummer)
+    const hasCompletedEgenmeldingsperioder: boolean =
+        hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioderAnsatt) || !isArbeidstaker(arbeidssituasjon)
+
+    const shouldShowStrengtFortroligInfo: boolean = isArbeidstaker(arbeidssituasjon) && hasStrengtFortroligAdresse
+    const shouldShowArbeidsgiverOrgnummer: boolean = isArbeidstaker(arbeidssituasjon) && !hasStrengtFortroligAdresse
     const shouldShowEgenmeldingsperioderSporsmal: boolean =
-        isFrilanserOrNaeringsdrivende && !sykmeldingUtenforVentetid.erUtenforVentetid
-    // TODO: https://trello.com/c/KMllIcoG/2499-forbedring-av-logikk
-    const hasEgenmeldingsperioderAnsatt: boolean | null =
-        egenmeldingsperioderAnsatt && egenmeldingsperioderAnsatt.length >= 1
-    const hasCompletedEgenmeldingsperioderAnsatt: boolean =
-        (hasEgenmeldingsperioderAnsatt &&
-            egenmeldingsperioderAnsatt?.[egenmeldingsperioderAnsatt.length - 1].harPerioder === YesOrNo.NO) ||
-        (hasEgenmeldingsperioderAnsatt &&
-            egenmeldingsperioderAnsatt?.[egenmeldingsperioderAnsatt.length - 1].hasClickedVidere === true) ||
-        arbeidssituasjon !== ArbeidssituasjonType.ARBEIDSTAKER
+        isFrilanserOrNaeringsdrivende(arbeidssituasjon) && !sykmeldingUtenforVentetid.erUtenforVentetid
     const shouldShowSendesTilArbeidsgiverInfo: boolean =
-        arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER &&
+        shouldShowArbeidsgiverOrgnummer &&
         arbeidsgiverOrgnummer != null &&
-        !brukerinformasjon.strengtFortroligAdresse &&
-        (!inactiveArbeidsgiver || hasCompletedEgenmeldingsperioderAnsatt)
+        (!hasActiveArbeidsgiver || hasCompletedEgenmeldingsperioder)
 
     return {
         shouldShowStrengtFortroligInfo,

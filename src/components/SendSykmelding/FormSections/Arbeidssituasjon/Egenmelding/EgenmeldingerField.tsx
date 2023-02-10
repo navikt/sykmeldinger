@@ -81,7 +81,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                 </>
             )}
             {hasPeriod && videreField.value === true && sortedDates && sortedDates.length > 0 && (
-                <ValgtEgenmeldingsdager dates={sortedDates} videreField={videreField} />
+                <ValgtEgenmeldingsdager dates={sortedDates} onEditClicked={() => videreField.onChange(false)} />
             )}
             {videreField.value === true && (
                 <EgenmeldingerField
