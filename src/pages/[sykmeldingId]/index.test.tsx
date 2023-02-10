@@ -75,11 +75,19 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
             mocks: [
                 createMock({
                     request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
-                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                    result: {
+                        data: null,
+                        errors: [new GraphQLError('Some backend error')],
+                        extensions: { dontLog: true },
+                    },
                 }),
                 createMock({
                     request: { query: SykmeldingerDocument },
-                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                    result: {
+                        data: null,
+                        errors: [new GraphQLError('Some backend error')],
+                        extensions: { dontLog: true },
+                    },
                 }),
                 createExtraFormDataMock(),
             ],
@@ -103,7 +111,11 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                 }),
                 createMock({
                     request: { query: ExtraFormDataDocument, variables: { sykmeldingId: 'sykmelding-id' } },
-                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                    result: {
+                        data: null,
+                        errors: [new GraphQLError('Some backend error')],
+                        extensions: { dontLog: true },
+                    },
                 }),
             ],
         })

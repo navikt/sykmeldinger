@@ -18,7 +18,11 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
-                    result: { data: null, errors: [new GraphQLError('Some backend error')] },
+                    result: {
+                        data: null,
+                        errors: [new GraphQLError('Some backend error')],
+                        extensions: { dontLog: true },
+                    },
                 }),
             ],
         })

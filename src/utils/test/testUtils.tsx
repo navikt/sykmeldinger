@@ -24,9 +24,11 @@ type ProviderProps = {
 
 const errorLoggingLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-        graphQLErrors.forEach(({ message, locations, path }) =>
-            logger.error('[GraphQL error]:' + `Message: ${message},` + `Location: ${locations},` + `Path: ${path}`),
-        )
+        graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+            if (extensions.dontLog) {
+                logger.error('[GraphQL error]:' + `Message: ${message},` + `Location: ${locations},` + `Path: ${path}`)
+            }
+        })
     }
 
     if (networkError) {
