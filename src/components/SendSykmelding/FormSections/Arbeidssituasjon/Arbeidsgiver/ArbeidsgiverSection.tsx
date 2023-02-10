@@ -1,12 +1,20 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
-import { Arbeidsgiver, BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
+import {
+    Arbeidsgiver,
+    BrukerinformasjonFragment,
+    SykmeldingFragment,
+    YesOrNo,
+} from '../../../../../fetching/graphql.generated'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../shared/FormStructure'
 import { getPublicEnv } from '../../../../../utils/env'
 import EgenmeldingerField from '../Egenmelding/EgenmeldingerField'
 import { findValgtArbeidsgiver } from '../../../../../utils/arbeidsgiverUtils'
+import { useFindPrevSykmeldingTom } from '../../../../../hooks/useFindPrevSykmeldingTom'
+import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
+import { toDate } from '../../../../../utils/dateUtils'
 
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
@@ -14,18 +22,24 @@ import ArbeidsgiverField from './ArbeidsgiverField'
 import styles from './ArbeidsgiverSection.module.css'
 
 interface Props {
+    sykmelding: SykmeldingFragment
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
-    sykmeldingFom: Date
 }
 
 const publicEnv = getPublicEnv()
 
-function ArbeidsgiverSection({ arbeidsgivere, sykmeldingFom }: Props): JSX.Element {
+function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element | null {
+    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding)
+    const loadingOrError = isLoading || error
     const { watch } = useFormContext<FormValues>()
+
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
-    const valgtRiktigNarmesteLeder: string | null = watch('riktigNarmesteLeder')
+    const valgtRiktigNarmesteLeder: YesOrNo | null = watch('riktigNarmesteLeder')
     const valgtArbeidsgiver: Arbeidsgiver | undefined = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
     const noArbeidsgivere: boolean = arbeidsgivere.length === 0
+
+    const shouldShowEgenmelding =
+        publicEnv.DISPLAY_EGENMELDING === 'true' && valgtArbeidsgiver && valgtRiktigNarmesteLeder && !loadingOrError
 
     return (
         <SectionWrapper>
@@ -34,18 +48,17 @@ function ArbeidsgiverSection({ arbeidsgivere, sykmeldingFom }: Props): JSX.Eleme
             {valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder != null && (
                 <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={valgtArbeidsgiver.naermesteLeder} />
             )}
-            {publicEnv.DISPLAY_EGENMELDING === 'true' && valgtRiktigNarmesteLeder && valgtArbeidsgiver?.navn && (
+            {shouldShowEgenmelding && (
                 <div className={styles.egenmeldingsperioder}>
                     <EgenmeldingerField
                         index={0}
                         previous={{
-                            earliestPossibleDate: sykmeldingFom,
+                            earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
                             earliestSelectedDate: null,
                         }}
                         metadata={{
                             arbeidsgiverNavn: valgtArbeidsgiver.navn,
-                            // TODO https://trello.com/c/7Sqn8vbo
-                            previousSykmeldingTom: null,
+                            previousSykmeldingTom: previousSykmeldingTom,
                         }}
                     />
                 </div>
