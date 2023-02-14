@@ -3883,9 +3883,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-pdf/layout@npm:^3.3.0":
-  version: 3.3.1
-  resolution: "@react-pdf/layout@npm:3.3.1"
+"@react-pdf/layout@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@react-pdf/layout@npm:3.4.0"
   dependencies:
     "@babel/runtime": ^7.16.4
     "@react-pdf/fns": 2.0.0
@@ -3899,7 +3899,7 @@ __metadata:
     cross-fetch: ^3.1.5
     emoji-regex: ^8.0.0
     queue: ^6.0.1
-  checksum: 1df74842636fbee29022bd502be65128c2592b8044d50a8b1fc714d8f55a5bc02b5252cc33f2f6b41baf8d64feafccd820b448c704e750e384182eb06e20e8e4
+  checksum: bf095f40d3f88980ebe43676b6bec6f76a4fc681e4bf8dedd9a92402323dab0576cfa03e44d2c7de5ca2a7867d8e2cc36da5507808281163b1433bd2f93401af
   languageName: node
   linkType: hard
 
@@ -3965,13 +3965,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-pdf/renderer@npm:^3.1.3":
-  version: 3.1.3
-  resolution: "@react-pdf/renderer@npm:3.1.3"
+"@react-pdf/renderer@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "@react-pdf/renderer@npm:3.1.4"
   dependencies:
     "@babel/runtime": ^7.16.4
     "@react-pdf/font": ^2.3.1
-    "@react-pdf/layout": ^3.3.0
+    "@react-pdf/layout": ^3.4.0
     "@react-pdf/pdfkit": ^3.0.1
     "@react-pdf/primitives": ^3.0.0
     "@react-pdf/render": ^3.2.1
@@ -3983,7 +3983,7 @@ __metadata:
     scheduler: ^0.17.0
   peerDependencies:
     react: ^16.8.6 || ^17.0.0 || ^18.0.0
-  checksum: e10aafe3760a53a24c032fcd499c532797886031ccab3851bc48b179cb456197b497fc8008dee736c164f352c7948ed1f17be738257af2332ab154214aa446b9
+  checksum: 4684bbc0187482ce37c713688d7965ae2bb95f116bf91211dce8327a5ad0589289019aa8b9b12e4b84d0cc4604fd312cc5e9995d8999901992c07de6401bb043
   languageName: node
   linkType: hard
 
@@ -4484,7 +4484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.27":
+"@types/react@npm:*":
   version: 18.0.27
   resolution: "@types/react@npm:18.0.27"
   dependencies:
@@ -4492,6 +4492,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 600fdbc39a92ea4a77047db3e12f05f67776a710f5918248c0189a59ac2a38900c9db5a5d2e433a16df528a3ecab1aa114b322cacea573bb1ca2fc0b094c52d1
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.0.28":
+  version: 18.0.28
+  resolution: "@types/react@npm:18.0.28"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: e752df961105e5127652460504785897ca6e77259e0da8f233f694f9e8f451cde7fa0709d4456ade0ff600c8ce909cfe29f9b08b9c247fa9b734e126ec53edd7
   languageName: node
   linkType: hard
 
@@ -7411,9 +7422,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.33.0":
-  version: 8.33.0
-  resolution: "eslint@npm:8.33.0"
+"eslint@npm:^8.34.0":
+  version: 8.34.0
+  resolution: "eslint@npm:8.34.0"
   dependencies:
     "@eslint/eslintrc": ^1.4.1
     "@humanwhocodes/config-array": ^0.11.8
@@ -7456,7 +7467,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 727e63ab8b7acf281442323c5971f6afdd5b656fbcebc4476cf54e35af51b2f180617433fc5e1952f0449ca3f43a905527f9407ea4b8a7ea7562fc9c3f278d4c
+  checksum: 4e13e9eb05ac2248efbb6acae0b2325091235d5c47ba91a4775c7d6760778cbcd358a773ebd42f4629d2ad89e27c02f5d66eb1f737d75d9f5fc411454f83b2e5
   languageName: node
   linkType: hard
 
@@ -10139,9 +10150,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^13.1.1":
-  version: 13.1.1
-  resolution: "lint-staged@npm:13.1.1"
+"lint-staged@npm:^13.1.2":
+  version: 13.1.2
+  resolution: "lint-staged@npm:13.1.2"
   dependencies:
     cli-truncate: ^3.1.0
     colorette: ^2.0.19
@@ -10158,7 +10169,7 @@ __metadata:
     yaml: ^2.1.3
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 8e5093c7e982a2f6d6449927a40156a812644479df1d2760aee8bf05df3a314e022d8f7e275e57fd61769ee57e3cf7b062ed3c6e4934a63848300b877e269daa
+  checksum: f854ad5c88542b8f06e27f3b4046927a4f3d4a451a04e079526559d819a325762268f65bd2df7156bcc0cb5f531f621c42cdb824b403f537c78305adc9e56a54
   languageName: node
   linkType: hard
 
@@ -11649,9 +11660,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino-pretty@npm:^9.1.1":
-  version: 9.1.1
-  resolution: "pino-pretty@npm:9.1.1"
+"pino-pretty@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "pino-pretty@npm:9.2.0"
   dependencies:
     colorette: ^2.0.7
     dateformat: ^4.6.3
@@ -11669,7 +11680,7 @@ __metadata:
     strip-json-comments: ^3.1.1
   bin:
     pino-pretty: bin.js
-  checksum: c1d148aa0c5f2d1034cf76c0b397cf9725923d16343e9dff78d56b564090c1c86208aae94f1208f0fb936f456eece7eab6264095337540f42d91aaa13e5b8935
+  checksum: 28fc4eca16931419a0a8a5696ce511f37d1e57ad67b4b06510b3fd2772a3e6335eb137630b5186c0410980093a7e05d2f55175b2cda540a638f692aba2a2dc20
   languageName: node
   linkType: hard
 
@@ -11708,9 +11719,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:^8.9.0":
-  version: 8.9.0
-  resolution: "pino@npm:8.9.0"
+"pino@npm:^8.10.0":
+  version: 8.10.0
+  resolution: "pino@npm:8.10.0"
   dependencies:
     atomic-sleep: ^1.0.0
     fast-redact: ^3.1.1
@@ -11725,7 +11736,7 @@ __metadata:
     thread-stream: ^2.0.0
   bin:
     pino: bin.js
-  checksum: c7eb9345280383b9af4661b34ae2156c94e535eb33c8deaf525e00212fa9e4f0b9797cdeda17b80b333325d8a0aec6e7566618071506e944736822022b671fa8
+  checksum: c8b87e72a2863e9d2c94fdfa61aec8c7fa782320669df40ce5b9281473324987a227710a0bf067d63aed821dfeeeea3665db4eecece273a60c5d2d58b011a4da
   languageName: node
   linkType: hard
 
@@ -13350,20 +13361,20 @@ __metadata:
     "@navikt/next-auth-wonderwall": ^1.2.0
     "@navikt/next-logger": ^1.14.0
     "@next/bundle-analyzer": ^13.1.6
-    "@react-pdf/renderer": ^3.1.3
+    "@react-pdf/renderer": ^3.1.4
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^14.4.3
     "@types/jest-axe": ^3.5.5
     "@types/jsdom": ^21.1.0
-    "@types/react": ^18.0.27
+    "@types/react": ^18.0.28
     "@types/react-dom": ^18.0.10
     "@types/uuid": ^9.0.0
     classnames: ^2.3.2
     concurrently: ^7.6.0
     crypto-hash: ^2.0.1
     date-fns: ^2.29.3
-    eslint: ^8.33.0
+    eslint: ^8.34.0
     eslint-config-next: ^13.1.6
     graphql: ^16.6.0
     graphql-scalars: ^1.20.1
@@ -13372,14 +13383,14 @@ __metadata:
     jest-axe: ^7.0.0
     jest-environment-jsdom: ^29.4.2
     jsdom: ^21.1.0
-    lint-staged: ^13.1.1
+    lint-staged: ^13.1.2
     next: 13.1.6
     next-logger: ^3.0.1
     next-router-mock: ^0.9.1
     node-gyp: ^9.3.1
     open: ^8.4.1
-    pino: ^8.9.0
-    pino-pretty: ^9.1.1
+    pino: ^8.10.0
+    pino-pretty: ^9.2.0
     prettier: ^2.8.4
     react: ^18.2.0
     react-dom: ^18.2.0
