@@ -2,6 +2,9 @@
     "name": "sykmeldinger",
     "version": "2.0.0",
     "private": true,
+    "engines": {
+        "node": "18"
+    },
     "packageManager": "yarn@3.4.1",
     "scripts": {
         "start": "concurrently -n next,codegen \"yarn start:watch\" \"yarn gen:watch\"",

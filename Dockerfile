@@ -1,4 +1,4 @@
-FROM node:16-alpine as build
+FROM node:18-alpine as build
 
 RUN apk add --no-cache bash
 
@@ -16,7 +16,7 @@ COPY scripts /app/scripts
 
 RUN yarn workspaces focus -A --production
 
-FROM gcr.io/distroless/nodejs:16 as runtime
+FROM gcr.io/distroless/nodejs:18 as runtime
 
 WORKDIR /app
 
