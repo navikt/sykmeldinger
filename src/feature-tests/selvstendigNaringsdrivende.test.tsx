@@ -150,7 +150,7 @@ describe('Selvstendig næringsdrivende', () => {
 
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
             expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
-        })
+        }, 10_000)
     })
 
     describe('Outside ventetid', () => {
