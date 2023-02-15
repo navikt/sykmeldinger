@@ -19,6 +19,13 @@ export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
     )
 }
 
+export function isSendtSykmelding(sykmelding: SykmeldingFragment): boolean {
+    return (
+        sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT ||
+        sykmelding.sykmeldingStatus.statusEvent === StatusEvent.BEKREFTET
+    )
+}
+
 /**
  * Get the type of sykmelding
  * Used for displaying the title.
