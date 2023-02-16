@@ -12,14 +12,18 @@ const publicEnv = getPublicEnv()
 export function initAmplitude(): void {
     if (typeof window === 'undefined' || publicEnv.AMPLITUDE_ENABLED !== 'true') return
 
-    init('default', undefined, {
-        useBatch: true,
-        serverUrl: 'https://amplitude.nav.no/collect-auto',
-        ingestionMetadata: {
-            // This is a hack to provide collect-auto with the correct environment, won't be used within amplitude
-            sourceName: window.location.toString(),
-        },
-    })
+    try {
+        init('default', undefined, {
+            useBatch: true,
+            serverUrl: 'https://amplitude.nav.no/collect-auto',
+            ingestionMetadata: {
+                // This is a hack to provide collect-auto with the correct environment, won't be used within amplitude
+                sourceName: window.location.toString(),
+            },
+        })
+    } catch (e) {
+        logger.warn(new Error('Failed to initialize amplitude', { cause: e }))
+    }
 }
 
 export function useLogAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
@@ -37,7 +41,11 @@ export function logAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Re
         return
     }
 
-    track(taxonomyToAmplitudeEvent(event, extraData))
+    try {
+        track(taxonomyToAmplitudeEvent(event, extraData))
+    } catch (e) {
+        logger.warn(new Error('Failed to log amplitude event', { cause: e }))
+    }
 }
 
 function taxonomyToAmplitudeEvent(
