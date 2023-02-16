@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react'
-import type { BaseEvent, BrowserClient } from '@amplitude/analytics-types'
+import { track, init } from '@amplitude/analytics-browser'
+import { BaseEvent } from '@amplitude/analytics-types'
 import { logger } from '@navikt/next-logger'
 
 import { getPublicEnv } from '../utils/env'
@@ -8,25 +9,17 @@ import { AmplitudeTaxonomyEvents } from './taxonomyEvents'
 
 const publicEnv = getPublicEnv()
 
-let _amplitude: BrowserClient | null = null
-async function getAmplitude(): Promise<BrowserClient> {
-    if (_amplitude) return _amplitude
+export function initAmplitude(): void {
+    if (typeof window === 'undefined' || publicEnv.AMPLITUDE_ENABLED !== 'true') return
 
-    return await initAmplitude()
-}
-
-async function initAmplitude(): Promise<BrowserClient> {
-    _amplitude = await import('@amplitude/analytics-browser')
-    _amplitude.init('default', undefined, {
+    init('default', undefined, {
         useBatch: true,
         serverUrl: 'https://amplitude.nav.no/collect-auto',
         ingestionMetadata: {
-            // This is a hack to provide collect-auto with the correct environment, won't be used within _amplitude
+            // This is a hack to provide collect-auto with the correct environment, won't be used within amplitude
             sourceName: window.location.toString(),
         },
     })
-
-    return _amplitude
 }
 
 export function useLogAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
@@ -38,22 +31,13 @@ export function useLogAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?:
     }, [])
 }
 
-export async function logAmplitudeEvent(
-    event: AmplitudeTaxonomyEvents,
-    extraData?: Record<string, unknown>,
-): Promise<void> {
+export function logAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
     if (publicEnv.AMPLITUDE_ENABLED !== 'true') {
         logDebugEvent(event, extraData)
         return
     }
 
-    try {
-        const amplitude = await getAmplitude()
-        amplitude.track(taxonomyToAmplitudeEvent(event, extraData))
-    } catch (e) {
-        logger.error(new Error(`Amplitude is un-initialized, can't log event: ${event.eventName}`, { cause: e }))
-        return
-    }
+    track(taxonomyToAmplitudeEvent(event, extraData))
 }
 
 function taxonomyToAmplitudeEvent(
