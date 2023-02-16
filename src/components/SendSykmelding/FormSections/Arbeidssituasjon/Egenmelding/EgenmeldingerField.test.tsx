@@ -1,6 +1,7 @@
+import { YesOrNo } from '../../../../../fetching/graphql.generated'
 import { toDate, toDateString } from '../../../../../utils/dateUtils'
 
-import { currentPeriodDatePicker } from './EgenmeldingerField'
+import { currentPeriodDatePicker, laterPeriodsRemoved } from './EgenmeldingerField'
 
 describe('EgenmeldingerField', () => {
     describe('root case', () => {
@@ -98,6 +99,32 @@ describe('EgenmeldingerField', () => {
                 expect(toDateString(earliest)).toEqual('2022-04-15')
                 expect(toDateString(latest)).toEqual('2022-04-14')
             })
+        })
+    })
+
+    describe('edit period', () => {
+        it('should remove periods after editing period based on index', () => {
+            const egenmeldingsperioderAnsatt = [
+                {
+                    harPerioder: YesOrNo.YES,
+                    datoer: [toDate('2022-12-08'), toDate('2022-12-09')],
+                    hasClickedVidere: true,
+                },
+                {
+                    harPerioder: YesOrNo.YES,
+                    datoer: [toDate('2022-11-24'), toDate('2022-11-25')],
+                    hasClickedVidere: true,
+                },
+                {
+                    harPerioder: YesOrNo.YES,
+                    datoer: [toDate('2022-11-19')],
+                    hasClickedVidere: true,
+                },
+            ]
+            expect(laterPeriodsRemoved(1, egenmeldingsperioderAnsatt)).toEqual([
+                egenmeldingsperioderAnsatt[0],
+                egenmeldingsperioderAnsatt[1],
+            ])
         })
     })
 })
