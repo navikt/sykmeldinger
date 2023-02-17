@@ -5,6 +5,7 @@ import { add, isAfter, isBefore, sub } from 'date-fns'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { sortDatesASC } from '../../../../../utils/dateUtils'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
+import { EgenmeldingsperioderAnsattForm } from '../../../../../utils/egenmeldingsperioderAnsattUtils'
 
 import HarbruktEgenmelding from './HarbruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
@@ -25,6 +26,7 @@ interface Props {
 
 function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element | null {
     const { watch, setValue } = useFormContext<FormValues>()
+    const egenmeldingsperioderAnsatt = watch('egenmeldingsperioderAnsatt')
     const harPerioder: YesOrNo | null = watch(`egenmeldingsperioderAnsatt.${index}.harPerioder`)
     const selectedDates: Date[] | null = watch(`egenmeldingsperioderAnsatt.${index}.datoer`)
 
@@ -81,7 +83,13 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                 </>
             )}
             {hasPeriod && videreField.value === true && sortedDates && sortedDates.length > 0 && (
-                <ValgtEgenmeldingsdager dates={sortedDates} onEditClicked={() => videreField.onChange(false)} />
+                <ValgtEgenmeldingsdager
+                    dates={sortedDates}
+                    onEditClicked={() => {
+                        setValue('egenmeldingsperioderAnsatt', laterPeriodsRemoved(index, egenmeldingsperioderAnsatt))
+                        videreField.onChange(false)
+                    }}
+                />
             )}
             {videreField.value === true && (
                 <EgenmeldingerField
@@ -112,6 +120,13 @@ export function currentPeriodDatePicker(
     } else {
         return [earliest, latest]
     }
+}
+
+export function laterPeriodsRemoved(
+    index: number,
+    list?: EgenmeldingsperioderAnsattForm[] | null,
+): EgenmeldingsperioderAnsattForm[] | null {
+    return list?.slice(0, index + 1) ?? null
 }
 
 export default EgenmeldingerField
