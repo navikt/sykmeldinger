@@ -26,13 +26,13 @@ interface Props {
 
 function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element | null {
     const { watch, setValue } = useFormContext<FormValues>()
-    const egenmeldingsperioderAnsatt = watch('egenmeldingsperioderAnsatt')
-    const harPerioder: YesOrNo | null = watch(`egenmeldingsperioderAnsatt.${index}.harPerioder`)
-    const selectedDates: Date[] | null = watch(`egenmeldingsperioderAnsatt.${index}.datoer`)
+    const egenmeldingsdager = watch('egenmeldingsdager')
+    const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
+    const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
 
     const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(previous, metadata.previousSykmeldingTom)
-    const { field: videreField } = useController<FormValues, `egenmeldingsperioderAnsatt.${number}.hasClickedVidere`>({
-        name: `egenmeldingsperioderAnsatt.${index}.hasClickedVidere`,
+    const { field: videreField } = useController<FormValues, `egenmeldingsdager.${number}.hasClickedVidere`>({
+        name: `egenmeldingsdager.${index}.hasClickedVidere`,
         defaultValue: null,
     })
 
@@ -54,7 +54,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                 lastPossibleDate={earliestPossibleDate}
                 firstPossibleDate={latestPossibleDate}
                 onNo={() => {
-                    setValue(`egenmeldingsperioderAnsatt.${index}.datoer`, null)
+                    setValue(`egenmeldingsdager.${index}.datoer`, null)
                 }}
             />
             {hasPeriod && videreField.value !== true && (
@@ -86,7 +86,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                 <ValgtEgenmeldingsdager
                     dates={sortedDates}
                     onEditClicked={() => {
-                        setValue('egenmeldingsperioderAnsatt', laterPeriodsRemoved(index, egenmeldingsperioderAnsatt))
+                        setValue('egenmeldingsdager', laterPeriodsRemoved(index, egenmeldingsdager))
                         videreField.onChange(false)
                     }}
                 />

@@ -9,7 +9,7 @@ import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
 import { getPublicEnv } from '../../../../../utils/env'
 import {
-    EgenmeldingsperioderAnsatt,
+    Egenmeldingsdager,
     egenmeldingsperioderAnsattMock,
 } from '../../../../../server/graphql/mockData/egenmeldingMock'
 
@@ -56,7 +56,7 @@ function PeriodeView({ perioder }: PeriodeViewProps): JSX.Element {
 }
 
 interface EgenmeldingsperioderProps {
-    egenmeldingsperioder: EgenmeldingsperioderAnsatt[]
+    egenmeldingsperioder: Egenmeldingsdager[]
 }
 
 function Egenmeldingsperioder({ egenmeldingsperioder }: EgenmeldingsperioderProps): JSX.Element {
@@ -67,7 +67,7 @@ function Egenmeldingsperioder({ egenmeldingsperioder }: EgenmeldingsperioderProp
             </Heading>
             <ul>
                 {egenmeldingsperioder
-                    .flatMap((dates: EgenmeldingsperioderAnsatt) => dates.datoer)
+                    .flatMap((dates: Egenmeldingsdager) => dates.datoer)
                     .map((date: string) => (
                         <li className={styles.date} key={toReadableDate(date)}>
                             <BodyShort size="small">{toReadableDate(date)}</BodyShort>

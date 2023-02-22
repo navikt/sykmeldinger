@@ -104,7 +104,7 @@ describe('EgenmeldingerField', () => {
 
     describe('edit period', () => {
         it('should remove periods after editing period based on index', () => {
-            const egenmeldingsperioderAnsatt = [
+            const egenmeldingsdager = [
                 {
                     harPerioder: YesOrNo.YES,
                     datoer: [toDate('2022-12-08'), toDate('2022-12-09')],
@@ -121,10 +121,7 @@ describe('EgenmeldingerField', () => {
                     hasClickedVidere: true,
                 },
             ]
-            expect(laterPeriodsRemoved(1, egenmeldingsperioderAnsatt)).toEqual([
-                egenmeldingsperioderAnsatt[0],
-                egenmeldingsperioderAnsatt[1],
-            ])
+            expect(laterPeriodsRemoved(1, egenmeldingsdager)).toEqual([egenmeldingsdager[0], egenmeldingsdager[1]])
         })
     })
 })

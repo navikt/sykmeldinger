@@ -7,7 +7,7 @@ import {
     Periode,
     Periodetype,
 } from '../fetching/graphql.generated'
-import { EgenmeldingsperioderAnsatt } from '../server/graphql/mockData/egenmeldingMock'
+import { Egenmeldingsdager } from '../server/graphql/mockData/egenmeldingMock'
 
 import { diffInDays } from './dateUtils'
 
@@ -134,6 +134,6 @@ export const getSykmeldingperioderSorted = <Periode extends { fom: string; tom: 
     perioder: readonly Periode[],
 ): Periode[] => sortBy(perioder, [(periode) => periode.fom, 'asc'], [(periode) => periode.tom, 'asc'])
 
-export function getEgenmeldingsdagerLength(egenmeldingsperioder: EgenmeldingsperioderAnsatt[]): number {
-    return egenmeldingsperioder.flatMap((periode: EgenmeldingsperioderAnsatt) => periode.datoer).length
+export function getEgenmeldingsdagerLength(egenmeldingsperioder: Egenmeldingsdager[]): number {
+    return egenmeldingsperioder.flatMap((periode: Egenmeldingsdager) => periode.datoer).length
 }

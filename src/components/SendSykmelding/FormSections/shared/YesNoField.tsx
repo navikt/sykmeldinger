@@ -14,7 +14,7 @@ interface Props {
         | 'riktigNarmesteLeder'
         | 'harBruktEgenmelding'
         | 'harForsikring'
-        | `egenmeldingsperioderAnsatt.${number}.harPerioder`
+        | `egenmeldingsdager.${number}.harPerioder`
     legend: string
     subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void

@@ -15,9 +15,9 @@ interface Props {
 function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPossibleDate }: Props): JSX.Element {
     const { field: datoerField, fieldState: datoerFieldState } = useController<
         FormValues,
-        `egenmeldingsperioderAnsatt.${number}.datoer`
+        `egenmeldingsdager.${number}.datoer`
     >({
-        name: `egenmeldingsperioderAnsatt.${index}.datoer`,
+        name: `egenmeldingsdager.${index}.datoer`,
         defaultValue: [],
         rules: {
             validate: (value) => {

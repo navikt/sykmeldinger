@@ -44,6 +44,8 @@ describe('Annet', () => {
                             values: {
                                 erOpplysningeneRiktige: YesOrNo.YES,
                                 arbeidssituasjon: ArbeidssituasjonType.ANNET,
+                                egenmeldingsdager: null,
+                                harEgenmeldingsdager: null,
                             },
                         },
                     },

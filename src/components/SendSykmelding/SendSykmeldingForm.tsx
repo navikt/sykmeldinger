@@ -33,7 +33,7 @@ export interface FormValues {
     harBruktEgenmelding: YesOrNo | null
     egenmeldingsperioder: { fom: Date | null; tom: Date | null }[] | null
     harForsikring: YesOrNo | null
-    egenmeldingsperioderAnsatt: Array<{
+    egenmeldingsdager: Array<{
         harPerioder: YesOrNo | null
         datoer: Date[] | null
         hasClickedVidere: boolean | null

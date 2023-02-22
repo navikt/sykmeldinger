@@ -25,7 +25,7 @@ function HarbruktEgenmelding({
     return (
         <QuestionWrapper>
             <YesNoField
-                name={`egenmeldingsperioderAnsatt.${index}.harPerioder`}
+                name={`egenmeldingsdager.${index}.harPerioder`}
                 legend={`Brukte du egenmelding hos ${arbeidsgiverNavn} i perioden ${toReadableDatePeriod(
                     lastPossibleDate,
                     firstPossibleDate,

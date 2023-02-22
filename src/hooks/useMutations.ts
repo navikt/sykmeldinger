@@ -79,15 +79,33 @@ export function useSendSykmelding(
     ]
 }
 
-function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues & {
-    egenmeldingsperioderAnsatt?: undefined
-} {
+function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
     return {
         ...values,
         egenmeldingsperioder: values.egenmeldingsperioder?.map((periode) => ({
             fom: periode.fom ? toDateString(periode.fom) : null,
             tom: periode.tom ? toDateString(periode.tom) : null,
         })),
-        egenmeldingsperioderAnsatt: undefined,
+        harEgenmeldingsdager: getEgenmeldingsdager(values.egenmeldingsdager),
+        egenmeldingsdager: mapEgenmeldingsdager(values.egenmeldingsdager),
     }
+}
+
+function getEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['harEgenmeldingsdager'] {
+    if (value == null || value.length === 0) {
+        return null
+    }
+
+    return value[0].harPerioder
+}
+
+function mapEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['egenmeldingsdager'] {
+    if (value == null || value.length === 0) {
+        return null
+    }
+
+    return value
+        .flatMap((dager) => dager.datoer)
+        .filter((it): it is Date => it != null)
+        .map(toDateString)
 }

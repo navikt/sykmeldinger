@@ -48,6 +48,8 @@ describe('Permittert', () => {
                             values: {
                                 erOpplysningeneRiktige: YesOrNo.YES,
                                 arbeidssituasjon: ArbeidssituasjonType.PERMITTERT,
+                                egenmeldingsdager: null,
+                                harEgenmeldingsdager: null,
                             },
                         },
                     },

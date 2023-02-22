@@ -1,8 +1,8 @@
-export interface EgenmeldingsperioderAnsatt {
+export interface Egenmeldingsdager {
     datoer: string[]
 }
 
-export const egenmeldingsperioderAnsattMock: EgenmeldingsperioderAnsatt[] = [
+export const egenmeldingsperioderAnsattMock: Egenmeldingsdager[] = [
     {
         datoer: ['2022-01-04', '2022-01-05'],
     },
