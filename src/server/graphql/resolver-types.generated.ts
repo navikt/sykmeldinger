@@ -277,9 +277,11 @@ export enum RegelStatus {
 export type SendSykmeldingValues = {
     arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']>
     arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
+    egenmeldingsdager?: InputMaybe<Array<Scalars['Date']>>
     egenmeldingsperioder?: InputMaybe<Array<DateRange>>
     erOpplysningeneRiktige?: InputMaybe<YesOrNo>
     harBruktEgenmelding?: InputMaybe<YesOrNo>
+    harEgenmeldingsdager?: InputMaybe<YesOrNo>
     harForsikring?: InputMaybe<YesOrNo>
     riktigNarmesteLeder?: InputMaybe<YesOrNo>
     uriktigeOpplysninger?: InputMaybe<Array<UriktigeOpplysningerType>>
