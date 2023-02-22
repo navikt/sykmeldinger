@@ -274,9 +274,11 @@ export enum RegelStatus {
 export type SendSykmeldingValues = {
     readonly arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']>
     readonly arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
+    readonly egenmeldingsdager?: InputMaybe<ReadonlyArray<Scalars['Date']>>
     readonly egenmeldingsperioder?: InputMaybe<ReadonlyArray<DateRange>>
     readonly erOpplysningeneRiktige?: InputMaybe<YesOrNo>
     readonly harBruktEgenmelding?: InputMaybe<YesOrNo>
+    readonly harEgenmeldingsdager?: InputMaybe<YesOrNo>
     readonly harForsikring?: InputMaybe<YesOrNo>
     readonly riktigNarmesteLeder?: InputMaybe<YesOrNo>
     readonly uriktigeOpplysninger?: InputMaybe<ReadonlyArray<UriktigeOpplysningerType>>

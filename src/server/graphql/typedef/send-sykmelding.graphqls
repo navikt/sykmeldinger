@@ -7,6 +7,8 @@ input SendSykmeldingValues {
     harBruktEgenmelding: YesOrNo
     egenmeldingsperioder: [DateRange!]
     harForsikring: YesOrNo
+    egenmeldingsdager: [Date!]
+    harEgenmeldingsdager: YesOrNo
 }
 
 input DateRange {
