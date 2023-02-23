@@ -4,6 +4,7 @@ import { QuestionWrapper } from '../../shared/FormStructure'
 import YesNoField from '../../shared/YesNoField'
 import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
+import { sporsmal } from '../../../../../utils/sporsmal'
 
 import styles from './HarbruktEgenmelding.module.css'
 
@@ -26,7 +27,7 @@ function HarbruktEgenmelding({
         <QuestionWrapper>
             <YesNoField
                 name={`egenmeldingsdager.${index}.harPerioder`}
-                legend={`Brukte du egenmelding hos ${arbeidsgiverNavn} i perioden ${toReadableDatePeriod(
+                legend={`${sporsmal.harBruktEgenmeldingsdager(arbeidsgiverNavn)} i perioden ${toReadableDatePeriod(
                     lastPossibleDate,
                     firstPossibleDate,
                 )}?`}

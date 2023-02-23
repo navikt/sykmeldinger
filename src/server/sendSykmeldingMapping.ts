@@ -102,6 +102,19 @@ export function mapSendSykmeldingValuesToV3Api(
                   sporsmaltekst: sporsmal.uriktigeOpplysninger,
               }
             : null,
+        harBruktEgenmeldingsdager:
+            values.harEgenmeldingsdager && valgtArbeidsgiver
+                ? {
+                      svar: yesOrNoTypeToV3Enum(values.harEgenmeldingsdager),
+                      sporsmaltekst: sporsmal.harBruktEgenmeldingsdager(valgtArbeidsgiver.navn),
+                  }
+                : null,
+        egenmeldingsdager: values.egenmeldingsdager
+            ? {
+                  svar: values.egenmeldingsdager,
+                  sporsmaltekst: sporsmal.egenmeldingsdager,
+              }
+            : null,
     }
 }
 

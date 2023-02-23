@@ -7,6 +7,8 @@ export type SykmeldingUserEventV3Api = {
     harBruktEgenmelding: SporsmalSvar<JaEllerNeiV3> | null
     egenmeldingsperioder: SporsmalSvar<Array<EgenmeldingsperiodeV3>> | null
     harForsikring: SporsmalSvar<JaEllerNeiV3> | null
+    egenmeldingsdager: SporsmalSvar<Array<string>> | null
+    harBruktEgenmeldingsdager: SporsmalSvar<JaEllerNeiV3> | null
 }
 
 type SporsmalSvar<T> = {
