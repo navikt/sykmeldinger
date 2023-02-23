@@ -3,25 +3,22 @@ import { BodyShort, Heading } from '@navikt/ds-react'
 
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { getEgenmeldingsdagerLength, getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
+import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode } from '../../../../../fetching/graphql.generated'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
 import { getPublicEnv } from '../../../../../utils/env'
-import {
-    Egenmeldingsdager,
-    egenmeldingsperioderAnsattMock,
-} from '../../../../../server/graphql/mockData/egenmeldingMock'
 
 import styles from './PeriodeView.module.css'
 
 interface PeriodeViewProps {
     perioder: Periode[]
+    egenmeldingsdager?: string | undefined
 }
 
 const publicEnv = getPublicEnv()
 
-function PeriodeView({ perioder }: PeriodeViewProps): JSX.Element {
+function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Element {
     return (
         <div className="periodeView">
             <SykmeldtHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
@@ -46,36 +43,32 @@ function PeriodeView({ perioder }: PeriodeViewProps): JSX.Element {
                     </div>
                 ))}
             </div>
-            {publicEnv.DISPLAY_EGENMELDING === 'true' &&
-                egenmeldingsperioderAnsattMock &&
-                egenmeldingsperioderAnsattMock.length > 0 && (
-                    <Egenmeldingsperioder egenmeldingsperioder={egenmeldingsperioderAnsattMock} />
-                )}
+            {publicEnv.DISPLAY_EGENMELDING === 'true' && egenmeldingsdager && (
+                <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />
+            )}
         </div>
     )
 }
 
-interface EgenmeldingsperioderProps {
-    egenmeldingsperioder: Egenmeldingsdager[]
+interface EgenmeldingsdagerProps {
+    egenmeldingsdager: string
 }
 
-function Egenmeldingsperioder({ egenmeldingsperioder }: EgenmeldingsperioderProps): JSX.Element {
+function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
     return (
-        <div className={styles.egenmeldingsperioder}>
+        <div className={styles.egenmeldingsdager}>
             <Heading size="xsmall" level="4">
                 Egenmeldingsdager (oppgitt av den sykmeldte)
             </Heading>
             <ul>
-                {egenmeldingsperioder
-                    .flatMap((dates: Egenmeldingsdager) => dates.datoer)
+                {JSON.parse(egenmeldingsdager)
+                    .sort()
                     .map((date: string) => (
                         <li className={styles.date} key={toReadableDate(date)}>
                             <BodyShort size="small">{toReadableDate(date)}</BodyShort>
                         </li>
                     ))}
-                <BodyShort size="small" as="li">{`(${getEgenmeldingsdagerLength(
-                    egenmeldingsperioder,
-                )} dager)`}</BodyShort>
+                <BodyShort size="small" as="li">{`(${egenmeldingsdager.length} dager)`}</BodyShort>
             </ul>
         </div>
     )

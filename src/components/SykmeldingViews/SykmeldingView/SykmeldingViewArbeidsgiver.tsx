@@ -1,5 +1,6 @@
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
+import { findEgenmeldingsdager } from '../../../utils/egenmeldingsperioderAnsattUtils'
 
 import ArbeidsevneView from './Sections/SykmeldingViewArbeidsgiver/ArbeidsevneView'
 import MeldingTilArbeidsgiverView from './Sections/SykmeldingViewArbeidsgiver/MeldingTilArbeidsgiverView'
@@ -20,7 +21,10 @@ function SykmeldingViewArbeidsgiver({ sykmelding }: SykmeldingviewProps): JSX.El
     return (
         <div className={styles.sykmeldingViewArbeidsgiver}>
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />
-            <PeriodeView perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} />
+            <PeriodeView
+                perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
+                egenmeldingsdager={findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)}
+            />
             <AnnenInfoView sykmelding={sykmelding} />
             {sykmelding.medisinskVurdering?.hovedDiagnose && sykmelding.medisinskVurdering.biDiagnoser.length > 0 && (
                 <Diagnoser medisinskVurdering={sykmelding.medisinskVurdering} sladd />

@@ -1,6 +1,7 @@
 import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated'
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
+import { findEgenmeldingsdager } from '../../../utils/egenmeldingsperioderAnsattUtils'
 
 import FlereOpplysninger from './FlereOpplysninger'
 import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav'
@@ -26,7 +27,11 @@ function SykmeldingViewSykmeldt({ sykmelding }: Props): JSX.Element {
     return (
         <div className={styles.sykmeldingViewSykmeldt}>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
-            <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3Sykmelding} />
+            <Perioder
+                perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
+                isV3={isV3Sykmelding}
+                egenmeldingsdager={findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)}
+            />
             <AnnenInfo sykmelding={sykmelding} />
 
             <FlereOpplysninger>
