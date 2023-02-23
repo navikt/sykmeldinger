@@ -4,12 +4,14 @@ enum ShortName {
     FRAVAER
     PERIODE
     FORSIKRING
+    EGENMELDINGSDAGER
 }
 
 enum Svartype {
     ARBEIDSSITUASJON
     PERIODER
     JA_NEI
+    DAGER
 }
 
 enum StatusEvent {
