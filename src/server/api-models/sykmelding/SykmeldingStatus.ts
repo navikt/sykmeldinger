@@ -11,6 +11,11 @@ export enum Svartype {
     DAGER = 'DAGER',
 }
 
+export enum JaEllerNei {
+    JA = 'JA',
+    NEI = 'NEI',
+}
+
 const ArbeidsgiverStatusSchema = z.object({
     orgnummer: z.string(),
     orgNavn: z.string(),
@@ -18,7 +23,7 @@ const ArbeidsgiverStatusSchema = z.object({
 
 const JaNeiSvarSchema = z.object({
     svarType: z.literal(Svartype.JA_NEI),
-    svar: z.nativeEnum(YesOrNo),
+    svar: z.nativeEnum(JaEllerNei).transform((svar) => (svar === JaEllerNei.JA ? YesOrNo.YES : YesOrNo.NO)),
 })
 
 const ArbeidssituasjonSvarSchema = z.object({
