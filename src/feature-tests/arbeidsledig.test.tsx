@@ -43,8 +43,6 @@ describe('Arbeidsledig', () => {
                         values: {
                             erOpplysningeneRiktige: YesOrNo.YES,
                             arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
-                            egenmeldingsdager: null,
-                            harEgenmeldingsdager: null,
                         },
                     },
                 },

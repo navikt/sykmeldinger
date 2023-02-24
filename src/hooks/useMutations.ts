@@ -93,7 +93,7 @@ function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
 
 function getEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['harEgenmeldingsdager'] {
     if (value == null || value.length === 0) {
-        return null
+        return undefined
     }
 
     return value[0].harPerioder
@@ -101,11 +101,14 @@ function getEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykme
 
 function mapEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['egenmeldingsdager'] {
     if (value == null || value.length === 0) {
-        return null
+        return undefined
     }
 
-    return value
-        .flatMap((dager) => dager.datoer)
-        .filter((it): it is Date => it != null)
-        .map(toDateString)
+    const dates = value.flatMap((dager) => dager.datoer).filter((it): it is Date => it != null)
+
+    if (dates.length === 0) {
+        return undefined
+    }
+
+    return dates.map(toDateString)
 }

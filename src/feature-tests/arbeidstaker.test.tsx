@@ -47,8 +47,7 @@ describe('Arbeidstaker', () => {
                                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
                                 arbeidsgiverOrgnummer: arbeidsgivereMock[0].orgnummer,
                                 riktigNarmesteLeder: YesOrNo.YES,
-                                egenmeldingsdager: null,
-                                harEgenmeldingsdager: null,
+                                harEgenmeldingsdager: YesOrNo.NO,
                             },
                         },
                     },
@@ -82,6 +81,12 @@ describe('Arbeidstaker', () => {
                 { name: 'Ja' },
             ),
         )
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Brukte du egenmelding hos PONTYPANDY FIRE SERVICE i perioden 6. - 21. februar 2023\?/ },
+                { name: 'Nei' },
+            ),
+        )
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
@@ -105,8 +110,7 @@ describe('Arbeidstaker', () => {
                                 erOpplysningeneRiktige: YesOrNo.YES,
                                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
                                 arbeidsgiverOrgnummer: arbeidsgivereMock[1].orgnummer,
-                                egenmeldingsdager: null,
-                                harEgenmeldingsdager: null,
+                                harEgenmeldingsdager: YesOrNo.NO,
                             },
                         },
                     },
@@ -132,6 +136,13 @@ describe('Arbeidstaker', () => {
             await screen.findByRole('radio', {
                 name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
             }),
+        )
+        // Should ask about egenmeldingsdager even though arbeidsgiver is inactive
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Brukte du egenmelding hos ANDEBY BRANNSTATION i perioden 6. - 21. februar 2023\?/ },
+                { name: 'Nei' },
+            ),
         )
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
