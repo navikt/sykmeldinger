@@ -1959,6 +1959,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-codegen/fragment-matcher@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@graphql-codegen/fragment-matcher@npm:4.0.1"
+  dependencies:
+    "@graphql-codegen/plugin-helpers": ^4.1.0
+    tslib: ~2.5.0
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: 778b41d07659ff404aeb045b1c86e8d76a9578ceb22b2a41395a5551c91e8eb477e343b9200c9e364f7d2f375b11edc7938b630225891c67242fd7151b384c0b
+  languageName: node
+  linkType: hard
+
 "@graphql-codegen/plugin-helpers@npm:^4.1.0":
   version: 4.1.0
   resolution: "@graphql-codegen/plugin-helpers@npm:4.1.0"
@@ -13427,6 +13439,7 @@ __metadata:
     "@as-integrations/next": ^1.2.0
     "@graphql-codegen/add": 4.0.1
     "@graphql-codegen/cli": 3.2.1
+    "@graphql-codegen/fragment-matcher": ^4.0.1
     "@graphql-codegen/typed-document-node": 3.0.1
     "@graphql-codegen/typescript-operations": 3.0.1
     "@graphql-codegen/typescript-resolvers": 3.1.0
