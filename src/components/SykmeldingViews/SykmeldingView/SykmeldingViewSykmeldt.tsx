@@ -1,7 +1,7 @@
 import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated'
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
-import { findEgenmeldingsdager } from '../../../utils/egenmeldingsperioderAnsattUtils'
+import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
 
 import FlereOpplysninger from './FlereOpplysninger'
 import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav'

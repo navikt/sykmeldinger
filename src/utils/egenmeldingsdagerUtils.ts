@@ -1,14 +1,12 @@
 import { ShortName, Sporsmal, YesOrNo } from '../fetching/graphql.generated'
 
-export interface EgenmeldingsperioderAnsattForm {
+export interface EgenmeldingsdagerForm {
     harPerioder: YesOrNo | null
     datoer: Date[] | null
     hasClickedVidere: boolean | null
 }
 
-export const hasCompletedEgenmeldingsperioderAnsatt = (
-    egenmeldingsperioder?: EgenmeldingsperioderAnsattForm[] | null,
-): boolean =>
+export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerForm[] | null): boolean =>
     egenmeldingsperioder != null && egenmeldingsperioder[egenmeldingsperioder.length - 1].harPerioder === YesOrNo.NO
 
 export function findEgenmeldingsdager(sporsmalOgSvarListe: readonly Sporsmal[]): string | undefined {

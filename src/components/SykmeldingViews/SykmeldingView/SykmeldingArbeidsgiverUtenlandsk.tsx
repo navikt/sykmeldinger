@@ -1,6 +1,6 @@
 import { UtenlandskSykmelding } from '../../../utils/utenlanskUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
-import { findEgenmeldingsdager } from '../../../utils/egenmeldingsperioderAnsattUtils'
+import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
 
 import PeriodeView from './Sections/SykmeldingViewArbeidsgiver/PeriodeView'
 import SykmeldingenGjelderView from './Sections/SykmeldingViewArbeidsgiver/SykmeldingenGjelderView'

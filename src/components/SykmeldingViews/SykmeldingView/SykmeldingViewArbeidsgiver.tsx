@@ -1,6 +1,6 @@
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
-import { findEgenmeldingsdager } from '../../../utils/egenmeldingsperioderAnsattUtils'
+import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
 
 import ArbeidsevneView from './Sections/SykmeldingViewArbeidsgiver/ArbeidsevneView'
 import MeldingTilArbeidsgiverView from './Sections/SykmeldingViewArbeidsgiver/MeldingTilArbeidsgiverView'

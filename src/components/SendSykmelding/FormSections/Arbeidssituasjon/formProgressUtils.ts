@@ -7,7 +7,7 @@ import {
 } from '../../../../fetching/graphql.generated'
 import { isActiveArbeidsgiver } from '../../../../utils/arbeidsgiverUtils'
 import { isArbeidstaker, isFrilanserOrNaeringsdrivende } from '../../../../utils/arbeidssituasjonUtils'
-import { hasCompletedEgenmeldingsperioderAnsatt } from '../../../../utils/egenmeldingsperioderAnsattUtils'
+import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdagerUtils'
 import { FormValues } from '../../SendSykmeldingForm'
 
 type UseDynamicSubSections = {
@@ -34,7 +34,7 @@ export function useArbeidssituasjonSubSections(
     const hasStrengtFortroligAdresse: boolean = brukerinformasjon.strengtFortroligAdresse
     const hasActiveArbeidsgiver: boolean = isActiveArbeidsgiver(brukerinformasjon.arbeidsgivere, arbeidsgiverOrgnummer)
     const hasCompletedEgenmeldingsperioder: boolean =
-        hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsdager) || !isArbeidstaker(arbeidssituasjon)
+        hasCompletedEgenmeldingsdager(egenmeldingsdager) || !isArbeidstaker(arbeidssituasjon)
 
     const shouldShowStrengtFortroligInfo: boolean = isArbeidstaker(arbeidssituasjon) && hasStrengtFortroligAdresse
     const shouldShowArbeidsgiverOrgnummer: boolean = isArbeidstaker(arbeidssituasjon) && !hasStrengtFortroligAdresse

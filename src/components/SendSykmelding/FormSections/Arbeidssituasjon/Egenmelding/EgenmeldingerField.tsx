@@ -5,7 +5,7 @@ import { add, isAfter, isBefore, sub } from 'date-fns'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { sortDatesASC } from '../../../../../utils/dateUtils'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
-import { EgenmeldingsperioderAnsattForm } from '../../../../../utils/egenmeldingsperioderAnsattUtils'
+import { EgenmeldingsdagerForm } from '../../../../../utils/egenmeldingsdagerUtils'
 
 import HarbruktEgenmelding from './HarbruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
@@ -124,8 +124,8 @@ export function currentPeriodDatePicker(
 
 export function laterPeriodsRemoved(
     index: number,
-    list?: EgenmeldingsperioderAnsattForm[] | null,
-): EgenmeldingsperioderAnsattForm[] | null {
+    list?: EgenmeldingsdagerForm[] | null,
+): EgenmeldingsdagerForm[] | null {
     return list?.slice(0, index + 1) ?? null
 }
 
