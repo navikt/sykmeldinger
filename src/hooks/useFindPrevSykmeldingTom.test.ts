@@ -244,6 +244,55 @@ describe('useFindPrevSykmeldingTom', () => {
 
             expect(result.current.previousSykmeldingTom).toEqual(toDate('2023-01-29'))
         })
+
+        it('should only return closest tom for sykmelding with same arbeidsgiver', async () => {
+            const sykmeldinger = [
+                createSykmelding({
+                    id: 'id-1',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.SENDT,
+                        arbeidsgiver: {
+                            __typename: 'ArbeidsgiverStatus',
+                            orgNavn: 'Arby Giver',
+                            orgnummer: 'arbeidsgiver-a',
+                        },
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2022-12-15',
+                            tom: '2022-12-31',
+                        }),
+                    ],
+                }),
+                createSykmelding({
+                    id: 'id-2',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.BEKREFTET,
+                        arbeidsgiver: {
+                            __typename: 'ArbeidsgiverStatus',
+                            orgNavn: 'Arby Taker',
+                            orgnummer: 'arbeidsgiver-b',
+                        },
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2023-01-10',
+                            tom: '2023-01-29',
+                        }),
+                    ],
+                }),
+            ]
+
+            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+                mocks: [sykmeldingerMock(sykmeldinger)],
+            })
+
+            await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+            expect(result.current.previousSykmeldingTom).toEqual(null)
+        })
     })
 })
 

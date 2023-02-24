@@ -21,7 +21,10 @@ export function useFindPrevSykmeldingTom(sykmelding: SykmeldingFragment): {
         }
     }
 
-    const sendtSykmeldinger = data.sykmeldinger.filter((it) => isSendtSykmelding(it))
+    const arbeidsgiverOrgnummer = sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer
+    const sendtSykmeldinger = data.sykmeldinger
+        .filter(isSendtSykmelding)
+        .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer === arbeidsgiverOrgnummer)
 
     const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding))
     const latestTomList: Date[] = sendtSykmeldinger
