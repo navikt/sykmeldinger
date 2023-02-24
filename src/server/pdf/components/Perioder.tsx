@@ -1,11 +1,11 @@
+import * as R from 'remeda'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Sporsmal } from '../../api-models/sykmelding/SykmeldingStatus'
+import { DagerSvar, Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus'
 import { Periode } from '../../api-models/sykmelding/Periode'
 import { getPeriodTitle, getReadableLength } from '../../../utils/periodeUtils'
 import { toReadableDate, toReadableDatePeriod } from '../../../utils/dateUtils'
 import { getPublicEnv } from '../../../utils/env'
-import { ShortName } from '../../graphql/resolver-types.generated'
 
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
 import Calender from './icons/Calender'
@@ -69,7 +69,7 @@ const Perioder = ({ perioder, sporsmalOgSvarListe }: Props): JSX.Element | null 
 }
 
 interface EgenmeldingsdagerProps {
-    egenmeldingsdager: string
+    egenmeldingsdager: DagerSvar
 }
 
 function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
@@ -77,25 +77,25 @@ function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.E
         <View style={styles.content}>
             <Text style={styles.title}>Egenmeldingsdager (lagt til av deg)</Text>
             <ul style={styles.list}>
-                {JSON.parse(egenmeldingsdager)
-                    .sort()
-                    .map((date: string) => (
+                {R.pipe(
+                    egenmeldingsdager.svar,
+                    R.sortBy((it) => it),
+                    R.map((date: string) => (
                         <li style={styles.view} key={toReadableDate(date)}>
                             <Text>{toReadableDate(date)}</Text>
                         </li>
-                    ))}
+                    )),
+                )}
                 <li>
-                    <Text>{`(${egenmeldingsdager.length} dager)`}</Text>
+                    <Text>{`(${egenmeldingsdager.svar.length} dager)`}</Text>
                 </li>
             </ul>
         </View>
     )
 }
 
-function findEgenmeldingsdager(sporsmalOgSvarListe: Sporsmal[]): string | undefined {
-    return sporsmalOgSvarListe.find(
-        (sporsmalOgSvar: Sporsmal) => sporsmalOgSvar.shortName === ShortName.EGENMELDINGSDAGER,
-    )?.svar.svar
+export function findEgenmeldingsdager(sporsmalOgSvarListe: Sporsmal[]): DagerSvar | undefined {
+    return sporsmalOgSvarListe.flatMap((it) => it.svar).find((it): it is DagerSvar => it.svarType === Svartype.DAGER)
 }
 
 export default Perioder

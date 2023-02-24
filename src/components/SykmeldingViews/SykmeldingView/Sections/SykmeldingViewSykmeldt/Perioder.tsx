@@ -2,7 +2,7 @@ import { Calender } from '@navikt/ds-icons'
 import { BodyShort, Heading } from '@navikt/ds-react'
 
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
-import { Periode } from '../../../../../fetching/graphql.generated'
+import { Periode, SvarUnion_DagerSvar_Fragment } from '../../../../../fetching/graphql.generated'
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
@@ -14,7 +14,7 @@ import styles from './Perioder.module.css'
 interface Props {
     perioder: Periode[]
     isV3: boolean
-    egenmeldingsdager?: string | undefined
+    egenmeldingsdager?: SvarUnion_DagerSvar_Fragment | undefined
 }
 
 const publicEnv = getPublicEnv()
@@ -58,7 +58,7 @@ function Perioder({ perioder, isV3, egenmeldingsdager }: Props): JSX.Element {
 }
 
 interface EgenmeldingsdagerProps {
-    egenmeldingsdager: string
+    egenmeldingsdager: SvarUnion_DagerSvar_Fragment
 }
 
 function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
@@ -68,14 +68,12 @@ function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.E
                 Egenmeldingsdager (lagt til av deg)
             </Heading>
             <ul>
-                {JSON.parse(egenmeldingsdager)
-                    .sort()
-                    .map((date: string) => (
-                        <li className={styles.date} key={toReadableDate(date)}>
-                            <BodyShort size="small">{toReadableDate(date)}</BodyShort>
-                        </li>
-                    ))}
-                <BodyShort size="small" as="li">{`(${egenmeldingsdager.length} dager)`}</BodyShort>
+                {[...egenmeldingsdager.dager].sort().map((date: string) => (
+                    <li className={styles.date} key={toReadableDate(date)}>
+                        <BodyShort size="small">{toReadableDate(date)}</BodyShort>
+                    </li>
+                ))}
+                <BodyShort size="small" as="li">{`(${egenmeldingsdager.dager.length} dager)`}</BodyShort>
             </ul>
         </div>
     )

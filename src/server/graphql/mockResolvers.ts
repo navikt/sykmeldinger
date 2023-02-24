@@ -9,6 +9,7 @@ import {
     QueryResolvers,
     Resolvers,
     StatusEvent,
+    Sykmelding,
     SykmeldingChangeStatus,
 } from './resolver-types.generated'
 import { sykmeldingApen } from './mockData/sykmelding-apen'
@@ -25,6 +26,7 @@ import { sykmeldingEgenmeldt } from './mockData/sykmelding-egenmeldt'
 import { sykmeldingUnderbehandlingTilbakedatering } from './mockData/sykmelding-under-behandling-tilbakedatering'
 import { sykmeldingUgyldigTilbakedatering } from './mockData/sykmelding-ugyldig-tilbakedatering'
 import arbeidsgivereMock from './mockData/arbeidsgivereMock'
+import objectResolvers from './objectResolvers'
 
 export const sykmeldinger = [
     sykmeldingApen(),
@@ -44,10 +46,8 @@ export const sykmeldinger = [
 ]
 
 const Query: QueryResolvers = {
-    sykmeldinger: async () => {
-        return sykmeldinger
-    },
-    sykmelding: async (_, { id }) => {
+    sykmeldinger: async (): Promise<Sykmelding[]> => sykmeldinger,
+    sykmelding: async (_, { id }): Promise<Sykmelding> => {
         const relevantSykmelding = sykmeldinger.find((it) => it.id === id)
         if (!relevantSykmelding) {
             throw new Error(`Unable to find sykmelding by id: ${id}`)
@@ -113,6 +113,7 @@ const resolvers: Partial<Resolvers> = {
     Query,
     Mutation,
     JSON: GraphQLJSON,
+    ...objectResolvers,
 }
 
 export default resolvers

@@ -1,4 +1,4 @@
-import { ShortName, Sporsmal, YesOrNo } from '../fetching/graphql.generated'
+import { SvarUnion_DagerSvar_Fragment, SykmeldingStatusFragment, YesOrNo } from '../fetching/graphql.generated'
 
 export interface EgenmeldingsdagerForm {
     harPerioder: YesOrNo | null
@@ -9,8 +9,10 @@ export interface EgenmeldingsdagerForm {
 export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerForm[] | null): boolean =>
     egenmeldingsperioder != null && egenmeldingsperioder[egenmeldingsperioder.length - 1].harPerioder === YesOrNo.NO
 
-export function findEgenmeldingsdager(sporsmalOgSvarListe: readonly Sporsmal[]): string | undefined {
-    return sporsmalOgSvarListe.find(
-        (sporsmalOgSvar: Sporsmal) => sporsmalOgSvar.shortName === ShortName.EGENMELDINGSDAGER,
-    )?.svar.svar
+export function findEgenmeldingsdager(
+    sporsmalOgSvarListe: SykmeldingStatusFragment['sporsmalOgSvarListe'],
+): SvarUnion_DagerSvar_Fragment | undefined {
+    return sporsmalOgSvarListe
+        .flatMap((it) => it.svar)
+        .find((it): it is SvarUnion_DagerSvar_Fragment => it.__typename === 'DagerSvar')
 }

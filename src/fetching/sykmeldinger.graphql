@@ -21,6 +21,29 @@ fragment Periode on Periode {
     reisetilskudd
 }
 
+fragment SvarUnion on SvarTypeUnion {
+    __typename
+    ... on JaNeiSvar {
+        svarType
+        jaNei: svar
+    }
+    ... on ArbeidssituasjonSvar {
+        svarType
+        arbeidsituasjon: svar
+    }
+    ... on PerioderSvar {
+        svarType
+        perioder: svar {
+            fom
+            tom
+        }
+    }
+    ... on DagerSvar {
+        svarType
+        dager: svar
+    }
+}
+
 fragment SykmeldingStatus on SykmeldingStatus {
     statusEvent
     timestamp
@@ -32,8 +55,8 @@ fragment SykmeldingStatus on SykmeldingStatus {
         tekst
         shortName
         svar {
-            svar
-            svarType
+            __typename
+            ...SvarUnion
         }
     }
 }

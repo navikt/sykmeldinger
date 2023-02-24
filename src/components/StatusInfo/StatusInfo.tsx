@@ -1,13 +1,20 @@
 import { BodyShort, GuidePanel, Link } from '@navikt/ds-react'
 
-import { Merknad, Periode, Periodetype, SykmeldingStatus } from '../../fetching/graphql.generated'
+import {
+    ArbeidssituasjonType,
+    Merknad,
+    Periode,
+    Periodetype,
+    SvarUnion_ArbeidssituasjonSvar_Fragment,
+    SykmeldingStatusFragment,
+} from '../../fetching/graphql.generated'
 import Spacing from '../Spacing/Spacing'
 import { Merknadtype } from '../InformationBanner/InformationBanner'
 
 import styles from './StatusInfo.module.css'
 
 interface StatusInfoProps {
-    sykmeldingStatus: SykmeldingStatus
+    sykmeldingStatus: SykmeldingStatusFragment
     sykmeldingsperioder: readonly Periode[]
     sykmeldingMerknader: readonly Merknad[]
 }
@@ -23,12 +30,13 @@ function StatusInfo({
         (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
     )
 
-    const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe.find(
-        (sporsmal) => sporsmal.shortName === 'ARBEIDSSITUASJON',
-    )
+    const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe
+        .flatMap((it) => it.svar)
+        .find((svar): svar is SvarUnion_ArbeidssituasjonSvar_Fragment => svar.__typename === 'ArbeidssituasjonSvar')
+
     const erFlEllerSn =
-        arbeidssituasjonSporsmal?.svar.svar === 'FRILANSER' ||
-        arbeidssituasjonSporsmal?.svar.svar === 'NAERINGSDRIVENDE'
+        arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.FRILANSER ||
+        arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
 
     if (sykmeldingStatus.statusEvent !== 'SENDT' && sykmeldingStatus.statusEvent !== 'BEKREFTET') return null
 

@@ -4,7 +4,7 @@ import { BodyShort, Heading } from '@navikt/ds-react'
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
-import { Periode } from '../../../../../fetching/graphql.generated'
+import { Periode, SvarUnion_DagerSvar_Fragment } from '../../../../../fetching/graphql.generated'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
 import { getPublicEnv } from '../../../../../utils/env'
@@ -13,7 +13,7 @@ import styles from './PeriodeView.module.css'
 
 interface PeriodeViewProps {
     perioder: Periode[]
-    egenmeldingsdager?: string | undefined
+    egenmeldingsdager?: SvarUnion_DagerSvar_Fragment | undefined
 }
 
 const publicEnv = getPublicEnv()
@@ -51,7 +51,7 @@ function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Ele
 }
 
 interface EgenmeldingsdagerProps {
-    egenmeldingsdager: string
+    egenmeldingsdager: SvarUnion_DagerSvar_Fragment
 }
 
 function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
@@ -61,14 +61,12 @@ function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.E
                 Egenmeldingsdager (oppgitt av den sykmeldte)
             </Heading>
             <ul>
-                {JSON.parse(egenmeldingsdager)
-                    .sort()
-                    .map((date: string) => (
-                        <li className={styles.date} key={toReadableDate(date)}>
-                            <BodyShort size="small">{toReadableDate(date)}</BodyShort>
-                        </li>
-                    ))}
-                <BodyShort size="small" as="li">{`(${egenmeldingsdager.length} dager)`}</BodyShort>
+                {[...egenmeldingsdager.dager].sort().map((date: string) => (
+                    <li className={styles.date} key={toReadableDate(date)}>
+                        <BodyShort size="small">{toReadableDate(date)}</BodyShort>
+                    </li>
+                ))}
+                <BodyShort size="small" as="li">{`(${egenmeldingsdager.dager.length} dager)`}</BodyShort>
             </ul>
         </div>
     )

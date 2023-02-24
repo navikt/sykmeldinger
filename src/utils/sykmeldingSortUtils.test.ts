@@ -1,4 +1,4 @@
-import { StatusEvent, SykmeldingStatus } from '../fetching/graphql.generated'
+import { StatusEvent, SykmeldingStatusFragment } from '../fetching/graphql.generated'
 
 import { sortSykmeldingerByArbeidsgiver } from './sykmeldingSortUtils'
 import { createSykmelding } from './test/dataUtils'
@@ -25,7 +25,7 @@ describe('sortSykmeldingerByArbeidsgiver', () => {
     })
 })
 
-function createSykmeldingStatusWithArbeidsgiver(orgNavn: string): SykmeldingStatus {
+function createSykmeldingStatusWithArbeidsgiver(orgNavn: string): SykmeldingStatusFragment {
     return {
         __typename: 'SykmeldingStatus',
         timestamp: '2020-01-01',
