@@ -13,6 +13,7 @@ const SvarSchema = z.object({
     svar: z.string(),
 })
 
+export type Sporsmal = z.infer<typeof SporsmalSchema>
 const SporsmalSchema = z.object({
     tekst: z.string(),
     shortName: z.nativeEnum(ShortName),
