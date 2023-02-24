@@ -26,7 +26,7 @@ function SykmeldingerPage(): JSX.Element {
 
     useFocusRefetch(refetch)
 
-    if (loading) {
+    if (data?.sykmeldinger == null && loading) {
         return (
             <Spacing>
                 <Spinner headline="Henter dine sykmeldinger" />
