@@ -70,9 +70,10 @@ function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['ar
     const hasNoArbeidsgiver: boolean = arbeidsgivere.length === 0
     const hasAktivArbeidsgiverWithNarmesteleder =
         valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver.naermesteLeder != null
+
     const shouldShowEgenmeldingsdager =
         (valgtArbeidsgiver != null && valgtRiktigNarmesteLeder === YesOrNo.YES) ||
-        (valgtArbeidsgiver != null && !valgtArbeidsgiver.aktivtArbeidsforhold)
+        (valgtArbeidsgiver != null && !hasAktivArbeidsgiverWithNarmesteleder)
 
     return {
         hasNoArbeidsgiver,
