@@ -8,7 +8,7 @@ import { renderHook, waitFor } from '../utils/test/testUtils'
 import { useFindPrevSykmeldingTom } from './useFindPrevSykmeldingTom'
 
 describe('useFindPrevSykmeldingTom', () => {
-    it('should find previous sykmelding tom closest and before giver sykmelding tom', async () => {
+    it('should find previous sykmelding tom closest and before given sykmelding tom', async () => {
         const sykmeldinger = [
             createSykmelding({
                 id: 'id-1',
@@ -67,6 +67,45 @@ describe('useFindPrevSykmeldingTom', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false))
 
         expect(result.current.previousSykmeldingTom).toEqual(toDate('2022-10-29'))
+    })
+
+    it('should find previous sykmelding tom if the same day as given sykmelding tom', async () => {
+        const sykmeldinger = [
+            createSykmelding({
+                id: 'id-1',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.SENDT,
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-10-06',
+                        tom: '2022-10-18',
+                    }),
+                ],
+            }),
+            createSykmelding({
+                id: 'id-2',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.SENDT,
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-10-06',
+                        tom: '2022-10-18',
+                    }),
+                ],
+            }),
+        ]
+
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        })
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+        expect(result.current.previousSykmeldingTom).toEqual(toDate('2022-10-18'))
     })
 
     it('should return null if there is no previous sykmelding', async () => {

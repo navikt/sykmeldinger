@@ -1,4 +1,4 @@
-import { closestTo, isBefore } from 'date-fns'
+import { closestTo, isBefore, isSameDay } from 'date-fns'
 
 import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { toDate } from '../utils/dateUtils'
@@ -24,12 +24,13 @@ export function useFindPrevSykmeldingTom(sykmelding: SykmeldingFragment): {
     const arbeidsgiverOrgnummer = sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer
     const sendtSykmeldinger = data.sykmeldinger
         .filter(isSendtSykmelding)
+        .filter((it) => it.id !== sykmelding.id)
         .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer === arbeidsgiverOrgnummer)
 
     const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding))
     const latestTomList: Date[] = sendtSykmeldinger
         .flatMap((it) => toDate(getSykmeldingEndDate(it)))
-        .filter((date) => isBefore(date, latestTomForGivenSykmelding))
+        .filter((date) => isBefore(date, latestTomForGivenSykmelding) || isSameDay(date, latestTomForGivenSykmelding))
 
     const nearestTom: Date | undefined = closestTo(latestTomForGivenSykmelding, latestTomList)
 
