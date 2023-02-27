@@ -1,6 +1,6 @@
 import { differenceInDays, isAfter, isBefore, parseISO } from 'date-fns'
 
-import { StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
+import { RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { toDate, toReadableDatePeriod } from './dateUtils'
 import { isUtenlandsk } from './utenlanskUtils'
@@ -20,10 +20,12 @@ export function isUnderbehandling(sykmelding: SykmeldingFragment): boolean {
 }
 
 export function isSendtSykmelding(sykmelding: SykmeldingFragment): boolean {
-    return (
-        sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT ||
-        sykmelding.sykmeldingStatus.statusEvent === StatusEvent.BEKREFTET
-    )
+    const isNormalSendt = sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT
+    const isBekreftetSendt =
+        sykmelding.sykmeldingStatus.statusEvent === StatusEvent.BEKREFTET &&
+        sykmelding.behandlingsutfall.status === RegelStatus.OK
+
+    return isNormalSendt || isBekreftetSendt
 }
 
 /**

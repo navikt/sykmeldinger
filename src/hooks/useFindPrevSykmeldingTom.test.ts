@@ -1,6 +1,6 @@
 import { MockedResponse } from '@apollo/client/testing'
 
-import { StatusEvent, SykmeldingerDocument, SykmeldingFragment } from '../fetching/graphql.generated'
+import { RegelStatus, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from '../fetching/graphql.generated'
 import { toDate } from '../utils/dateUtils'
 import { createMock, createSykmelding, createSykmeldingPeriode } from '../utils/test/dataUtils'
 import { renderHook, waitFor } from '../utils/test/testUtils'
@@ -108,6 +108,94 @@ describe('useFindPrevSykmeldingTom', () => {
         expect(result.current.previousSykmeldingTom).toEqual(toDate('2022-10-18'))
     })
 
+    it('should only look back to non-INVALID "BEKREFTET" sykmeldinger', async () => {
+        const sykmeldinger = [
+            createSykmelding({
+                id: 'id-1',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.BEKREFTET,
+                },
+                behandlingsutfall: {
+                    __typename: 'Behandlingsutfall',
+                    status: RegelStatus.INVALID,
+                    ruleHits: [],
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-08-06',
+                        tom: '2022-08-18',
+                    }),
+                ],
+            }),
+            createSykmelding({
+                id: 'id-2',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.SENDT,
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-10-06',
+                        tom: '2022-10-18',
+                    }),
+                ],
+            }),
+        ]
+
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        })
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+        expect(result.current.previousSykmeldingTom).toBeNull()
+    })
+
+    it('should look back to "OK" "BEKREFTET" sykmeldinger', async () => {
+        const sykmeldinger = [
+            createSykmelding({
+                id: 'id-1',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.BEKREFTET,
+                },
+                behandlingsutfall: {
+                    __typename: 'Behandlingsutfall',
+                    status: RegelStatus.OK,
+                    ruleHits: [],
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-08-06',
+                        tom: '2022-08-18',
+                    }),
+                ],
+            }),
+            createSykmelding({
+                id: 'id-2',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.SENDT,
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-10-06',
+                        tom: '2022-10-18',
+                    }),
+                ],
+            }),
+        ]
+
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        })
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+        expect(result.current.previousSykmeldingTom).toEqual(toDate('2022-08-18'))
+    })
+
     it('should return null if there is no previous sykmelding', async () => {
         const sykmeldinger = [
             createSykmelding({
@@ -130,7 +218,7 @@ describe('useFindPrevSykmeldingTom', () => {
         expect(result.current.previousSykmeldingTom).toEqual(null)
     })
 
-    it('should return null if other sykmelding tom is after giver sykmelding tom', async () => {
+    it('should return null if other sykmelding tom is after given sykmelding tom', async () => {
         const sykmeldinger = [
             createSykmelding({
                 id: 'id-1',
