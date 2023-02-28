@@ -30,7 +30,10 @@ interface Props {
 const publicEnv = getPublicEnv()
 
 function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element | null {
-    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding)
+    const { watch } = useFormContext<FormValues>()
+    const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
+
+    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
     const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
 
     return (

@@ -6,7 +6,10 @@ import { getSykmeldingEndDate, isSendtSykmelding } from '../utils/sykmeldingUtil
 
 import useSykmeldinger from './useSykmeldinger'
 
-export function useFindPrevSykmeldingTom(sykmelding: SykmeldingFragment): {
+export function useFindPrevSykmeldingTom(
+    sykmelding: SykmeldingFragment,
+    valgtArbeidsgiverOrgnummer?: string | null,
+): {
     previousSykmeldingTom: Date | null
     isLoading: boolean
     error: Error | undefined
@@ -21,11 +24,10 @@ export function useFindPrevSykmeldingTom(sykmelding: SykmeldingFragment): {
         }
     }
 
-    const arbeidsgiverOrgnummer = sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer
     const sendtSykmeldinger = data.sykmeldinger
         .filter(isSendtSykmelding)
         .filter((it) => it.id !== sykmelding.id)
-        .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer === arbeidsgiverOrgnummer)
+        .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer === valgtArbeidsgiverOrgnummer)
 
     const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding))
     const latestTomList: Date[] = sendtSykmeldinger
