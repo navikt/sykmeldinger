@@ -1,10 +1,12 @@
 import { BodyLong, Link, ReadMore } from '@navikt/ds-react'
+import { useState } from 'react'
 
 import { QuestionWrapper } from '../../shared/FormStructure'
 import YesNoField from '../../shared/YesNoField'
 import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
 import { sporsmal } from '../../../../../utils/sporsmal'
+import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 import styles from './HarbruktEgenmelding.module.css'
 
@@ -16,7 +18,7 @@ interface Props {
     onNo: () => void
 }
 
-function HarbruktEgenmelding({
+function HarBruktEgenmelding({
     index,
     lastPossibleDate,
     firstPossibleDate,
@@ -36,6 +38,18 @@ function HarbruktEgenmelding({
                     required: 'Du må svare på om du har brukt egenmelding før du ble syk.',
                 }}
                 onChange={(value: YesOrNo) => {
+                    logAmplitudeEvent(
+                        {
+                            eventName: 'skjema spørsmål besvart',
+                            data: {
+                                skjemanavn: 'åpen sykmelding',
+                                spørsmål: 'Har du brukt egenmeldingsdager i perioden?',
+                                svar: value,
+                            },
+                        },
+                        { level: index },
+                    )
+
                     if (value === YesOrNo.NO) {
                         onNo()
                     }
@@ -47,9 +61,29 @@ function HarbruktEgenmelding({
 }
 
 function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
+    const [open, setOpen] = useState(false)
+    const handleOnReadMoreClick = (): void => {
+        if (!open) {
+            logAmplitudeEvent(
+                {
+                    eventName: 'komponent vist',
+                    data: { komponent: 'EgenmeldingsdagerReadMore' },
+                },
+                { level: index },
+            )
+        }
+
+        setOpen((b) => !b)
+    }
+
     if (index === 0) {
         return (
-            <ReadMore className={styles.readMore} header="Hvorfor betyr dette?">
+            <ReadMore
+                className={styles.readMore}
+                header="Hvorfor betyr dette?"
+                open={open}
+                onClick={handleOnReadMoreClick}
+            >
                 <BodyLong>
                     <Link
                         href="https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/egenmelding#chapter-1"
@@ -69,7 +103,7 @@ function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
     }
 
     return (
-        <ReadMore header="Hvorfor spør vi igjen?">
+        <ReadMore header="Hvorfor spør vi igjen?" open={open} onClick={handleOnReadMoreClick}>
             <BodyLong>
                 Om det har gått mindre enn 16 dager fra du bruke egenmeldingsdager, til den første egenmeldingsdagen du
                 valgte i forrige spørsmål, kommer de med i beregningen av{' '}
@@ -84,4 +118,4 @@ function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
     )
 }
 
-export default HarbruktEgenmelding
+export default HarBruktEgenmelding

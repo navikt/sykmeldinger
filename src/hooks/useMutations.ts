@@ -54,13 +54,12 @@ export function useChangeSykmeldingStatus(
 
 export function useSendSykmelding(
     sykmeldingId: string,
-    onCompleted: () => void,
+    onCompleted: (values: FormValues) => void,
     onError: () => void,
 ): [MutationResult<SendSykmeldingMutation>, (values: FormValues) => void] {
     const router = useRouter()
     const [submit, result] = useMutation(SendSykmeldingDocument, {
         onCompleted: () => {
-            onCompleted()
             window.scrollTo(0, 0)
             router.push(`/${sykmeldingId}/kvittering`)
         },
@@ -71,10 +70,12 @@ export function useSendSykmelding(
 
     return [
         result,
-        (values) => {
+        async (values) => {
             logger.info(`Client: Submitting sykmelding ${sykmeldingId}`)
 
-            submit({ variables: { sykmeldingId, values: mapToSendSykmeldingValues(values) } })
+            await submit({ variables: { sykmeldingId, values: mapToSendSykmeldingValues(values) } })
+
+            onCompleted(values)
         },
     ]
 }

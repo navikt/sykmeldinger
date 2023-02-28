@@ -7,7 +7,7 @@ import { sortDatesASC } from '../../../../../utils/dateUtils'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
 import { EgenmeldingsdagerForm } from '../../../../../utils/egenmeldingsdagerUtils'
 
-import HarbruktEgenmelding from './HarbruktEgenmelding'
+import HarBruktEgenmelding from './HarBruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
 import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
 import styles from './EgenmeldingerFieldRecursive.module.css'
@@ -48,7 +48,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
 
     return (
         <div className="egenmeldingsperiod-ansatt">
-            <HarbruktEgenmelding
+            <HarBruktEgenmelding
                 index={index}
                 arbeidsgiverNavn={metadata.arbeidsgiverNavn}
                 lastPossibleDate={earliestPossibleDate}
