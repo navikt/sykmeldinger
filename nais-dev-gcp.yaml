@@ -60,3 +60,5 @@ spec:
       value: 'https://www.dev.nav.no/minside/'
     - name: ASSET_PREFIX
       value: 'https://cdn.nav.no/teamsykmelding/sykmeldinger'
+    - name: DISPLAY_EGENMELDING
+      value: 'true'
