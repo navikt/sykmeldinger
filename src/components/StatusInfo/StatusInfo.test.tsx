@@ -1,13 +1,14 @@
 import { render, screen } from '@testing-library/react'
 
 import {
+    ArbeidssituasjonType,
     Merknad,
     Periode,
     Periodetype,
     ShortName,
     StatusEvent,
     Svartype,
-    SykmeldingStatus,
+    SykmeldingStatusFragment,
 } from '../../fetching/graphql.generated'
 import { Merknadtype } from '../InformationBanner/InformationBanner'
 
@@ -15,7 +16,7 @@ import StatusInfo from './StatusInfo'
 
 describe('StatusInfo', () => {
     it('Renders nothing when status is not SENDT or BEKREFTET', () => {
-        const sykmeldingStatus: SykmeldingStatus = {
+        const sykmeldingStatus: SykmeldingStatusFragment = {
             __typename: 'SykmeldingStatus',
             statusEvent: StatusEvent.APEN,
             timestamp: '2021-05-01',
@@ -29,7 +30,7 @@ describe('StatusInfo', () => {
 
     describe('Avventende', () => {
         it('Renders avventende info when status is SENDT and periode is AVVENTENDE', () => {
-            const sykmeldingStatus: SykmeldingStatus = {
+            const sykmeldingStatus: SykmeldingStatusFragment = {
                 __typename: 'SykmeldingStatus',
                 statusEvent: StatusEvent.SENDT,
                 timestamp: '2021-05-01',
@@ -62,7 +63,7 @@ describe('StatusInfo', () => {
         })
 
         it('Renders nothing when status is BEKREFTET and periode is AVVENTENDE', () => {
-            const sykmeldingStatus: SykmeldingStatus = {
+            const sykmeldingStatus: SykmeldingStatusFragment = {
                 __typename: 'SykmeldingStatus',
                 statusEvent: StatusEvent.BEKREFTET,
                 timestamp: '2021-05-01',
@@ -93,7 +94,7 @@ describe('StatusInfo', () => {
 
     describe('Tilbakedatert under behandling', () => {
         it('Renders under behandling info when status is SENDT and has merknad of type TILBAKEDATERING_UNDER_BEHANDLING', () => {
-            const sykmeldingStatus: SykmeldingStatus = {
+            const sykmeldingStatus: SykmeldingStatusFragment = {
                 __typename: 'SykmeldingStatus',
                 statusEvent: StatusEvent.SENDT,
                 timestamp: '2021-05-01',
@@ -126,7 +127,7 @@ describe('StatusInfo', () => {
     describe('Standard digital søknad', () => {
         describe('SENDT', () => {
             it('Single reisetilskudd periode not in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.SENDT,
                     timestamp: '2021-05-01',
@@ -157,7 +158,7 @@ describe('StatusInfo', () => {
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.SENDT,
                     timestamp: '2021-05-01',
@@ -203,7 +204,7 @@ describe('StatusInfo', () => {
             })
 
             it('Ansatt with reisetilskudd in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.SENDT,
                     timestamp: '2021-05-01',
@@ -214,9 +215,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'ARBEIDSTAKER',
+                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
                             },
                         },
                     ],
@@ -260,7 +261,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.SENDT,
                     timestamp: '2021-05-01',
@@ -271,9 +272,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'FRILANSER',
+                                arbeidsituasjon: ArbeidssituasjonType.FRILANSER,
                             },
                         },
                     ],
@@ -303,7 +304,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.SENDT,
                     timestamp: '2021-05-01',
@@ -314,9 +315,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'NAERINGSDRIVENDE',
+                                arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
                     ],
@@ -346,7 +347,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.SENDT,
                     timestamp: '2021-05-01',
@@ -357,9 +358,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'ARBEIDSLEDIG',
+                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
                             },
                         },
                     ],
@@ -391,7 +392,7 @@ describe('StatusInfo', () => {
             })
 
             it('Gradert reisetilskudd renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.SENDT,
                     timestamp: '2021-05-01',
@@ -428,7 +429,7 @@ describe('StatusInfo', () => {
 
         describe('BEKREFTET', () => {
             it('Single reisetilskudd periode not in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.BEKREFTET,
                     timestamp: '2021-05-01',
@@ -459,7 +460,7 @@ describe('StatusInfo', () => {
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.BEKREFTET,
                     timestamp: '2021-05-01',
@@ -505,7 +506,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.BEKREFTET,
                     timestamp: '2021-05-01',
@@ -516,9 +517,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'FRILANSER',
+                                arbeidsituasjon: ArbeidssituasjonType.FRILANSER,
                             },
                         },
                     ],
@@ -548,7 +549,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.BEKREFTET,
                     timestamp: '2021-05-01',
@@ -559,9 +560,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'NAERINGSDRIVENDE',
+                                arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
                     ],
@@ -591,7 +592,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.BEKREFTET,
                     timestamp: '2021-05-01',
@@ -602,9 +603,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'ARBEIDSLEDIG',
+                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
                             },
                         },
                     ],
@@ -636,7 +637,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info with frilanser info for gradert reisetilskudd NAERINGSDRIVENDE', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.BEKREFTET,
                     timestamp: '2021-05-01',
@@ -647,9 +648,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'NAERINGSDRIVENDE',
+                                arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
                     ],
@@ -683,7 +684,7 @@ describe('StatusInfo', () => {
             })
 
             it('Renders standard info without frilanser info for gradert reisetilskudd ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatus = {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
                     __typename: 'SykmeldingStatus',
                     statusEvent: StatusEvent.BEKREFTET,
                     timestamp: '2021-05-01',
@@ -694,9 +695,9 @@ describe('StatusInfo', () => {
                             tekst: 'sporsmalstekst',
                             shortName: ShortName.ARBEIDSSITUASJON,
                             svar: {
-                                __typename: 'Svar',
+                                __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
-                                svar: 'ARBEIDSLEDIG',
+                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
                             },
                         },
                     ],

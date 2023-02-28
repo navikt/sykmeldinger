@@ -1,6 +1,7 @@
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { UtenlandskSykmelding } from '../../../utils/utenlanskUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
+import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
 
 import Perioder from './Sections/SykmeldingViewSykmeldt/Perioder'
 import SykmeldingenGjelder from './Sections/SykmeldingViewSykmeldt/SykmeldingenGjelder'
@@ -15,7 +16,11 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding }: Props): JSX.Element {
     return (
         <div className={styles.sykmeldingSykmeldtUtenlandsk}>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
-            <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3(sykmelding)} />
+            <Perioder
+                perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
+                isV3={isV3(sykmelding)}
+                egenmeldingsdager={findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)}
+            />
             <AnnenInfo sykmelding={sykmelding} />
         </div>
     )

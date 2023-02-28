@@ -26,12 +26,19 @@ export function initAmplitude(): void {
     }
 }
 
-export function useLogAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
+export function useLogAmplitudeEvent(
+    event: AmplitudeTaxonomyEvents,
+    extraData?: Record<string, unknown>,
+    condition: () => boolean = () => true,
+): void {
     const stableEvent = useRef(event)
     const stableExtraData = useRef(extraData)
+    const stableCondition = useRef(condition)
 
     useLayoutEffect(() => {
-        logAmplitudeEvent(stableEvent.current, stableExtraData.current)
+        if (stableCondition.current()) {
+            logAmplitudeEvent(stableEvent.current, stableExtraData.current)
+        }
     }, [])
 }
 

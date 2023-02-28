@@ -8,12 +8,16 @@ import { sha256 } from 'crypto-hash'
 import { getPublicEnv } from '../utils/env'
 import { getUserRequestId } from '../utils/userRequestId'
 
+import possibleTypesGenerated from './possible-types.generated'
+
 const publicEnv = getPublicEnv()
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
         connectToDevTools: process.env.NODE_ENV === 'development',
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache({
+            possibleTypes: possibleTypesGenerated.possibleTypes,
+        }),
         link: from([
             errorLink,
             new RetryLink({

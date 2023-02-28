@@ -8,6 +8,9 @@ const config: CodegenConfig = {
         afterOneFileWrite: ['prettier --write'],
     },
     generates: {
+        './src/fetching/possible-types.generated.ts': {
+            plugins: ['fragment-matcher'],
+        },
         './src/fetching/graphql.generated.ts': {
             plugins: ['typescript', 'typescript-operations', 'typed-document-node'],
             config: {

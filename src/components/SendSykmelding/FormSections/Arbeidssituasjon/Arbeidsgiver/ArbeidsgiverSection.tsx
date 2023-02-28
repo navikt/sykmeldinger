@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form'
 import {
     Arbeidsgiver,
     BrukerinformasjonFragment,
+    NaermesteLederFragment,
     SykmeldingFragment,
     YesOrNo,
 } from '../../../../../fetching/graphql.generated'
@@ -29,26 +30,18 @@ interface Props {
 const publicEnv = getPublicEnv()
 
 function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element | null {
-    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding)
-    const loadingOrError = isLoading || error
     const { watch } = useFormContext<FormValues>()
-
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
-    const valgtRiktigNarmesteLeder: YesOrNo | null = watch('riktigNarmesteLeder')
-    const valgtArbeidsgiver: Arbeidsgiver | undefined = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
-    const noArbeidsgivere: boolean = arbeidsgivere.length === 0
 
-    const shouldShowEgenmelding =
-        publicEnv.DISPLAY_EGENMELDING === 'true' && valgtArbeidsgiver && valgtRiktigNarmesteLeder && !loadingOrError
+    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
+    const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
 
     return (
         <SectionWrapper>
             <ArbeidsgiverField arbeidsgivere={arbeidsgivere} />
-            {noArbeidsgivere && <ArbeidsgivereMissingInfo />}
-            {valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver?.naermesteLeder != null && (
-                <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={valgtArbeidsgiver.naermesteLeder} />
-            )}
-            {shouldShowEgenmelding && (
+            {hasNoArbeidsgiver && <ArbeidsgivereMissingInfo />}
+            {hasAktiv && <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />}
+            {publicEnv.DISPLAY_EGENMELDING === 'true' && shouldShowEgenmeldingsdager && !error && !isLoading && (
                 <div className={styles.egenmeldingsperioder}>
                     <EgenmeldingerField
                         index={0}
@@ -57,7 +50,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element 
                             earliestSelectedDate: null,
                         }}
                         metadata={{
-                            arbeidsgiverNavn: valgtArbeidsgiver.navn,
+                            arbeidsgiverNavn: shouldShowEgenmeldingsdager.arbeidsgiverNavn,
                             previousSykmeldingTom: previousSykmeldingTom,
                         }}
                     />
@@ -65,6 +58,39 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element 
             )}
         </SectionWrapper>
     )
+}
+
+function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']): {
+    hasNoArbeidsgiver: boolean
+    hasAktiv: { narmesteleder: NaermesteLederFragment } | null
+    shouldShowEgenmeldingsdager: { arbeidsgiverNavn: string } | null
+} {
+    const { watch } = useFormContext<FormValues>()
+    const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
+    const valgtRiktigNarmesteLeder: YesOrNo | null = watch('riktigNarmesteLeder')
+
+    const valgtArbeidsgiver: Arbeidsgiver | undefined = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
+    const hasNoArbeidsgiver: boolean = arbeidsgivere.length === 0
+    const hasAktivArbeidsgiverWithNarmesteleder =
+        valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver.naermesteLeder != null
+
+    const shouldShowEgenmeldingsdager =
+        (valgtArbeidsgiver != null && valgtRiktigNarmesteLeder === YesOrNo.YES) ||
+        (valgtArbeidsgiver != null && !hasAktivArbeidsgiverWithNarmesteleder)
+
+    return {
+        hasNoArbeidsgiver,
+        hasAktiv: hasAktivArbeidsgiverWithNarmesteleder
+            ? {
+                  narmesteleder: valgtArbeidsgiver.naermesteLeder,
+              }
+            : null,
+        shouldShowEgenmeldingsdager: shouldShowEgenmeldingsdager
+            ? {
+                  arbeidsgiverNavn: valgtArbeidsgiver.navn,
+              }
+            : null,
+    }
 }
 
 export default ArbeidsgiverSection

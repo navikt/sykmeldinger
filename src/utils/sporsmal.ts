@@ -17,6 +17,8 @@ export const sporsmal = {
         `Hvilke dager var du borte fra jobb før ${toReadableDate(oppfolgingsdato)}?`,
     harForsikring: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
     uriktigeOpplysninger: 'Hvilke opplysninger stemmer ikke?',
+    harBruktEgenmeldingsdager: (arbeidsgiverNavn: string) => `Brukte du egenmelding hos ${arbeidsgiverNavn}`,
+    egenmeldingsdager: 'Velg dagene du brukte egenmelding',
 }
 
 export function arbeidsSituasjonEnumToText(arbeidssituasjon: ArbeidssituasjonType): string {

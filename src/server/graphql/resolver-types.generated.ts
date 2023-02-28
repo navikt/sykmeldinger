@@ -6,6 +6,7 @@ export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -83,6 +84,12 @@ export enum ArbeidsrelatertArsakType {
     MANGLENDE_TILRETTELEGGING = 'MANGLENDE_TILRETTELEGGING',
 }
 
+export type ArbeidssituasjonSvar = {
+    __typename?: 'ArbeidssituasjonSvar'
+    svar: ArbeidssituasjonType
+    svarType: Svartype
+}
+
 export enum ArbeidssituasjonType {
     ANNET = 'ANNET',
     ARBEIDSLEDIG = 'ARBEIDSLEDIG',
@@ -113,6 +120,12 @@ export type Brukerinformasjon = {
     strengtFortroligAdresse: Scalars['Boolean']
 }
 
+export type DagerSvar = {
+    __typename?: 'DagerSvar'
+    svar: Array<Scalars['Date']>
+    svarType: Svartype
+}
+
 export type DateRange = {
     fom?: InputMaybe<Scalars['Date']>
     tom?: InputMaybe<Scalars['Date']>
@@ -140,10 +153,22 @@ export type ErIkkeIArbeid = {
     vurderingsdato: Maybe<Scalars['Date']>
 }
 
+export type FomTom = {
+    __typename?: 'FomTom'
+    fom: Scalars['Date']
+    tom: Scalars['Date']
+}
+
 export type GradertPeriode = {
     __typename?: 'GradertPeriode'
     grad: Scalars['Int']
     reisetilskudd: Scalars['Boolean']
+}
+
+export type JaNeiSvar = {
+    __typename?: 'JaNeiSvar'
+    svar: YesOrNo
+    svarType: Svartype
 }
 
 export type KontaktMedPasient = {
@@ -228,6 +253,12 @@ export type Periode = {
     type: Periodetype
 }
 
+export type PerioderSvar = {
+    __typename?: 'PerioderSvar'
+    svar: Array<FomTom>
+    svarType: Svartype
+}
+
 export enum Periodetype {
     AKTIVITET_IKKE_MULIG = 'AKTIVITET_IKKE_MULIG',
     AVVENTENDE = 'AVVENTENDE',
@@ -289,6 +320,7 @@ export type SendSykmeldingValues = {
 
 export enum ShortName {
     ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    EGENMELDINGSDAGER = 'EGENMELDINGSDAGER',
     FORSIKRING = 'FORSIKRING',
     FRAVAER = 'FRAVAER',
     NY_NARMESTE_LEDER = 'NY_NARMESTE_LEDER',
@@ -298,7 +330,7 @@ export enum ShortName {
 export type Sporsmal = {
     __typename?: 'Sporsmal'
     shortName: ShortName
-    svar: Svar
+    svar: SvarTypeUnion
     tekst: Scalars['String']
 }
 
@@ -310,19 +342,16 @@ export enum StatusEvent {
     UTGATT = 'UTGATT',
 }
 
-export type Svar = {
-    __typename?: 'Svar'
-    svar: Scalars['String']
-    svarType: Svartype
-}
-
 export enum SvarRestriksjon {
     SKJERMET_FOR_ARBEIDSGIVER = 'SKJERMET_FOR_ARBEIDSGIVER',
     SKJERMET_FOR_NAV = 'SKJERMET_FOR_NAV',
 }
 
+export type SvarTypeUnion = ArbeidssituasjonSvar | DagerSvar | JaNeiSvar | PerioderSvar
+
 export enum Svartype {
     ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    DAGER = 'DAGER',
     JA_NEI = 'JA_NEI',
     PERIODER = 'PERIODER',
 }
@@ -483,21 +512,25 @@ export type ResolversTypes = ResolversObject<{
     ArbeidsgiverSykmelding: ResolverTypeWrapper<ArbeidsgiverSykmelding>
     ArbeidsrelatertArsak: ResolverTypeWrapper<ArbeidsrelatertArsak>
     ArbeidsrelatertArsakType: ArbeidsrelatertArsakType
+    ArbeidssituasjonSvar: ResolverTypeWrapper<ArbeidssituasjonSvar>
     ArbeidssituasjonType: ArbeidssituasjonType
     Behandler: ResolverTypeWrapper<Behandler>
     Behandlingsutfall: ResolverTypeWrapper<Behandlingsutfall>
     Boolean: ResolverTypeWrapper<Scalars['Boolean']>
     Brukerinformasjon: ResolverTypeWrapper<Brukerinformasjon>
+    DagerSvar: ResolverTypeWrapper<DagerSvar>
     Date: ResolverTypeWrapper<Scalars['Date']>
     DateRange: DateRange
     DateTime: ResolverTypeWrapper<Scalars['DateTime']>
     Diagnose: ResolverTypeWrapper<Diagnose>
     ErIArbeid: ResolverTypeWrapper<ErIArbeid>
     ErIkkeIArbeid: ResolverTypeWrapper<ErIkkeIArbeid>
+    FomTom: ResolverTypeWrapper<FomTom>
     GradertPeriode: ResolverTypeWrapper<GradertPeriode>
     ID: ResolverTypeWrapper<Scalars['ID']>
     Int: ResolverTypeWrapper<Scalars['Int']>
     JSON: ResolverTypeWrapper<Scalars['JSON']>
+    JaNeiSvar: ResolverTypeWrapper<JaNeiSvar>
     KontaktMedPasient: ResolverTypeWrapper<KontaktMedPasient>
     MedisinskArsak: ResolverTypeWrapper<MedisinskArsak>
     MedisinskArsakType: MedisinskArsakType
@@ -508,6 +541,7 @@ export type ResolversTypes = ResolversObject<{
     NaermesteLeder: ResolverTypeWrapper<NaermesteLeder>
     Pasient: ResolverTypeWrapper<Pasient>
     Periode: ResolverTypeWrapper<Periode>
+    PerioderSvar: ResolverTypeWrapper<PerioderSvar>
     Periodetype: Periodetype
     Prognose: ResolverTypeWrapper<Prognose>
     Query: ResolverTypeWrapper<{}>
@@ -515,11 +549,15 @@ export type ResolversTypes = ResolversObject<{
     RegelStatus: RegelStatus
     SendSykmeldingValues: SendSykmeldingValues
     ShortName: ShortName
-    Sporsmal: ResolverTypeWrapper<Sporsmal>
+    Sporsmal: ResolverTypeWrapper<Omit<Sporsmal, 'svar'> & { svar: ResolversTypes['SvarTypeUnion'] }>
     StatusEvent: StatusEvent
     String: ResolverTypeWrapper<Scalars['String']>
-    Svar: ResolverTypeWrapper<Svar>
     SvarRestriksjon: SvarRestriksjon
+    SvarTypeUnion:
+        | ResolversTypes['ArbeidssituasjonSvar']
+        | ResolversTypes['DagerSvar']
+        | ResolversTypes['JaNeiSvar']
+        | ResolversTypes['PerioderSvar']
     Svartype: Svartype
     Sykmelding: ResolverTypeWrapper<Sykmelding>
     SykmeldingChangeStatus: SykmeldingChangeStatus
@@ -540,20 +578,24 @@ export type ResolversParentTypes = ResolversObject<{
     ArbeidsgiverStatus: ArbeidsgiverStatus
     ArbeidsgiverSykmelding: ArbeidsgiverSykmelding
     ArbeidsrelatertArsak: ArbeidsrelatertArsak
+    ArbeidssituasjonSvar: ArbeidssituasjonSvar
     Behandler: Behandler
     Behandlingsutfall: Behandlingsutfall
     Boolean: Scalars['Boolean']
     Brukerinformasjon: Brukerinformasjon
+    DagerSvar: DagerSvar
     Date: Scalars['Date']
     DateRange: DateRange
     DateTime: Scalars['DateTime']
     Diagnose: Diagnose
     ErIArbeid: ErIArbeid
     ErIkkeIArbeid: ErIkkeIArbeid
+    FomTom: FomTom
     GradertPeriode: GradertPeriode
     ID: Scalars['ID']
     Int: Scalars['Int']
     JSON: Scalars['JSON']
+    JaNeiSvar: JaNeiSvar
     KontaktMedPasient: KontaktMedPasient
     MedisinskArsak: MedisinskArsak
     MedisinskVurdering: MedisinskVurdering
@@ -563,13 +605,18 @@ export type ResolversParentTypes = ResolversObject<{
     NaermesteLeder: NaermesteLeder
     Pasient: Pasient
     Periode: Periode
+    PerioderSvar: PerioderSvar
     Prognose: Prognose
     Query: {}
     RegelInfo: RegelInfo
     SendSykmeldingValues: SendSykmeldingValues
-    Sporsmal: Sporsmal
+    Sporsmal: Omit<Sporsmal, 'svar'> & { svar: ResolversParentTypes['SvarTypeUnion'] }
     String: Scalars['String']
-    Svar: Svar
+    SvarTypeUnion:
+        | ResolversParentTypes['ArbeidssituasjonSvar']
+        | ResolversParentTypes['DagerSvar']
+        | ResolversParentTypes['JaNeiSvar']
+        | ResolversParentTypes['PerioderSvar']
     Sykmelding: Sykmelding
     SykmeldingStatus: SykmeldingStatus
     UtdypendeOpplysning: UtdypendeOpplysning
@@ -644,6 +691,15 @@ export type ArbeidsrelatertArsakResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type ArbeidssituasjonSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['ArbeidssituasjonSvar'] = ResolversParentTypes['ArbeidssituasjonSvar'],
+> = ResolversObject<{
+    svar?: Resolver<ResolversTypes['ArbeidssituasjonType'], ParentType, ContextType>
+    svarType?: Resolver<ResolversTypes['Svartype'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type BehandlerResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Behandler'] = ResolversParentTypes['Behandler'],
@@ -671,6 +727,15 @@ export type BrukerinformasjonResolvers<
 > = ResolversObject<{
     arbeidsgivere?: Resolver<Array<ResolversTypes['Arbeidsgiver']>, ParentType, ContextType>
     strengtFortroligAdresse?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type DagerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['DagerSvar'] = ResolversParentTypes['DagerSvar'],
+> = ResolversObject<{
+    svar?: Resolver<Array<ResolversTypes['Date']>, ParentType, ContextType>
+    svarType?: Resolver<ResolversTypes['Svartype'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -713,6 +778,15 @@ export type ErIkkeIArbeidResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type FomTomResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['FomTom'] = ResolversParentTypes['FomTom'],
+> = ResolversObject<{
+    fom?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
+    tom?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type GradertPeriodeResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['GradertPeriode'] = ResolversParentTypes['GradertPeriode'],
@@ -725,6 +799,15 @@ export type GradertPeriodeResolvers<
 export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
     name: 'JSON'
 }
+
+export type JaNeiSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['JaNeiSvar'] = ResolversParentTypes['JaNeiSvar'],
+> = ResolversObject<{
+    svar?: Resolver<ResolversTypes['YesOrNo'], ParentType, ContextType>
+    svarType?: Resolver<ResolversTypes['Svartype'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
 
 export type KontaktMedPasientResolvers<
     ContextType = RequestContext,
@@ -827,6 +910,15 @@ export type PeriodeResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type PerioderSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['PerioderSvar'] = ResolversParentTypes['PerioderSvar'],
+> = ResolversObject<{
+    svar?: Resolver<Array<ResolversTypes['FomTom']>, ParentType, ContextType>
+    svarType?: Resolver<ResolversTypes['Svartype'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type PrognoseResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Prognose'] = ResolversParentTypes['Prognose'],
@@ -874,18 +966,20 @@ export type SporsmalResolvers<
     ParentType extends ResolversParentTypes['Sporsmal'] = ResolversParentTypes['Sporsmal'],
 > = ResolversObject<{
     shortName?: Resolver<ResolversTypes['ShortName'], ParentType, ContextType>
-    svar?: Resolver<ResolversTypes['Svar'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['SvarTypeUnion'], ParentType, ContextType>
     tekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
-export type SvarResolvers<
+export type SvarTypeUnionResolvers<
     ContextType = RequestContext,
-    ParentType extends ResolversParentTypes['Svar'] = ResolversParentTypes['Svar'],
+    ParentType extends ResolversParentTypes['SvarTypeUnion'] = ResolversParentTypes['SvarTypeUnion'],
 > = ResolversObject<{
-    svar?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-    svarType?: Resolver<ResolversTypes['Svartype'], ParentType, ContextType>
-    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+    __resolveType: TypeResolveFn<
+        'ArbeidssituasjonSvar' | 'DagerSvar' | 'JaNeiSvar' | 'PerioderSvar',
+        ParentType,
+        ContextType
+    >
 }>
 
 export type SykmeldingResolvers<
@@ -964,16 +1058,20 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     ArbeidsgiverStatus?: ArbeidsgiverStatusResolvers<ContextType>
     ArbeidsgiverSykmelding?: ArbeidsgiverSykmeldingResolvers<ContextType>
     ArbeidsrelatertArsak?: ArbeidsrelatertArsakResolvers<ContextType>
+    ArbeidssituasjonSvar?: ArbeidssituasjonSvarResolvers<ContextType>
     Behandler?: BehandlerResolvers<ContextType>
     Behandlingsutfall?: BehandlingsutfallResolvers<ContextType>
     Brukerinformasjon?: BrukerinformasjonResolvers<ContextType>
+    DagerSvar?: DagerSvarResolvers<ContextType>
     Date?: GraphQLScalarType
     DateTime?: GraphQLScalarType
     Diagnose?: DiagnoseResolvers<ContextType>
     ErIArbeid?: ErIArbeidResolvers<ContextType>
     ErIkkeIArbeid?: ErIkkeIArbeidResolvers<ContextType>
+    FomTom?: FomTomResolvers<ContextType>
     GradertPeriode?: GradertPeriodeResolvers<ContextType>
     JSON?: GraphQLScalarType
+    JaNeiSvar?: JaNeiSvarResolvers<ContextType>
     KontaktMedPasient?: KontaktMedPasientResolvers<ContextType>
     MedisinskArsak?: MedisinskArsakResolvers<ContextType>
     MedisinskVurdering?: MedisinskVurderingResolvers<ContextType>
@@ -983,11 +1081,12 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     NaermesteLeder?: NaermesteLederResolvers<ContextType>
     Pasient?: PasientResolvers<ContextType>
     Periode?: PeriodeResolvers<ContextType>
+    PerioderSvar?: PerioderSvarResolvers<ContextType>
     Prognose?: PrognoseResolvers<ContextType>
     Query?: QueryResolvers<ContextType>
     RegelInfo?: RegelInfoResolvers<ContextType>
     Sporsmal?: SporsmalResolvers<ContextType>
-    Svar?: SvarResolvers<ContextType>
+    SvarTypeUnion?: SvarTypeUnionResolvers<ContextType>
     Sykmelding?: SykmeldingResolvers<ContextType>
     SykmeldingStatus?: SykmeldingStatusResolvers<ContextType>
     UtdypendeOpplysning?: UtdypendeOpplysningResolvers<ContextType>

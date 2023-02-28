@@ -2,6 +2,7 @@ import React, { ComponentType, useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
+import * as R from 'remeda'
 
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import {
@@ -33,7 +34,7 @@ export interface FormValues {
     harBruktEgenmelding: YesOrNo | null
     egenmeldingsperioder: { fom: Date | null; tom: Date | null }[] | null
     harForsikring: YesOrNo | null
-    egenmeldingsperioderAnsatt: Array<{
+    egenmeldingsdager: Array<{
         harPerioder: YesOrNo | null
         datoer: Date[] | null
         hasClickedVidere: boolean | null
@@ -55,7 +56,11 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     const extraFormData = useExtraFormData(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } }),
+        (values) =>
+            logAmplitudeEvent(
+                { eventName: 'skjema fullført', data: { skjemanavn } },
+                { 'antall egenmeldingsdager': values.egenmeldingsdager?.length ?? null },
+            ),
         () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
@@ -75,7 +80,14 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
     return (
         <FormProvider {...form}>
             <form
-                onSubmit={form.handleSubmit(sendSykmelding, () => {
+                onSubmit={form.handleSubmit(sendSykmelding, (errors) => {
+                    logAmplitudeEvent(
+                        {
+                            eventName: 'skjema validering feilet',
+                            data: { skjemanavn },
+                        },
+                        { ...R.mapValues(errors, () => true) },
+                    )
                     requestAnimationFrame(() => {
                         errorSectionRef.current?.focus()
                     })

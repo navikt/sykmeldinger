@@ -1,12 +1,16 @@
+import { JaEllerNei } from './sykmelding/SykmeldingStatus'
+
 export type SykmeldingUserEventV3Api = {
-    erOpplysningeneRiktige: SporsmalSvar<JaEllerNeiV3>
+    erOpplysningeneRiktige: SporsmalSvar<JaEllerNei>
     uriktigeOpplysninger: SporsmalSvar<Array<UriktigeOpplysningerV3>> | null
     arbeidssituasjon: SporsmalSvar<ArbeidssituasjonV3>
     arbeidsgiverOrgnummer: SporsmalSvar<string> | null
-    riktigNarmesteLeder: SporsmalSvar<JaEllerNeiV3> | null
-    harBruktEgenmelding: SporsmalSvar<JaEllerNeiV3> | null
+    riktigNarmesteLeder: SporsmalSvar<JaEllerNei> | null
+    harBruktEgenmelding: SporsmalSvar<JaEllerNei> | null
     egenmeldingsperioder: SporsmalSvar<Array<EgenmeldingsperiodeV3>> | null
-    harForsikring: SporsmalSvar<JaEllerNeiV3> | null
+    harForsikring: SporsmalSvar<JaEllerNei> | null
+    egenmeldingsdager: SporsmalSvar<Array<string>> | null
+    harBruktEgenmeldingsdager: SporsmalSvar<JaEllerNei> | null
 }
 
 type SporsmalSvar<T> = {
@@ -17,11 +21,6 @@ type SporsmalSvar<T> = {
 type EgenmeldingsperiodeV3 = {
     fom: string
     tom: string
-}
-
-export enum JaEllerNeiV3 {
-    JA = 'JA',
-    NEI = 'NEI',
 }
 
 export enum UriktigeOpplysningerV3 {

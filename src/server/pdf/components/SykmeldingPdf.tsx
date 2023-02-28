@@ -40,7 +40,10 @@ const SykmeldingPdf = ({ sykmelding, timestamp }: Props): JSX.Element => {
                     <Text>Sendt til oss {toReadableDate(sykmelding.mottattTidspunkt)}</Text>
                 </View>
                 <SykmeldingenGjelder pasient={sykmelding.pasient} />
-                <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} />
+                <Perioder
+                    perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
+                    sporsmalOgSvarListe={sykmelding.sykmeldingStatus.sporsmalOgSvarListe}
+                />
                 <AnnenInfo sykmelding={sykmelding} />
                 {!sykmelding.utenlandskSykmelding && (
                     <>

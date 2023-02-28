@@ -3,6 +3,7 @@ import { ErrorMessage, Label, UNSAFE_DatePicker } from '@navikt/ds-react'
 import { endOfMonth, isSameMonth, startOfMonth } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
+import { sporsmal } from '../../../../../utils/sporsmal'
 
 import styles from './EgenmeldingDatesPickerSubField.module.css'
 
@@ -15,9 +16,9 @@ interface Props {
 function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPossibleDate }: Props): JSX.Element {
     const { field: datoerField, fieldState: datoerFieldState } = useController<
         FormValues,
-        `egenmeldingsperioderAnsatt.${number}.datoer`
+        `egenmeldingsdager.${number}.datoer`
     >({
-        name: `egenmeldingsperioderAnsatt.${index}.datoer`,
+        name: `egenmeldingsdager.${index}.datoer`,
         defaultValue: [],
         rules: {
             validate: (value) => {
@@ -31,7 +32,7 @@ function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPos
 
     return (
         <div className={styles.velgDager}>
-            <Label>Velg dagene du brukte egenmelding</Label>
+            <Label>{sporsmal.egenmeldingsdager}</Label>
             {!isSameMonth(earliestPossibleDate, latestPossibleDate) && window.innerWidth >= 768 ? (
                 <div className={styles.twoDatepickers}>
                     <UNSAFE_DatePicker.Standalone

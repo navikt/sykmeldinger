@@ -1,8 +1,8 @@
 import { YesOrNo } from '../fetching/graphql.generated'
 
-import { hasCompletedEgenmeldingsperioderAnsatt } from './egenmeldingsperioderAnsattUtils'
+import { hasCompletedEgenmeldingsdager } from './egenmeldingsdagerUtils'
 
-describe('hasCompletedEgenmeldingsperioderAnsatt', () => {
+describe('hasCompletedEgenmeldingsdager', () => {
     it('should return true if harPerioder is NO with one period', () => {
         const egenmeldingsperioder = [
             {
@@ -11,7 +11,7 @@ describe('hasCompletedEgenmeldingsperioderAnsatt', () => {
                 hasClickedVidere: null,
             },
         ]
-        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(true)
+        expect(hasCompletedEgenmeldingsdager(egenmeldingsperioder)).toBe(true)
     })
 
     it('should return false if harPerioder is YES with one period', () => {
@@ -22,7 +22,7 @@ describe('hasCompletedEgenmeldingsperioderAnsatt', () => {
                 hasClickedVidere: null,
             },
         ]
-        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(false)
+        expect(hasCompletedEgenmeldingsdager(egenmeldingsperioder)).toBe(false)
     })
 
     it('should return true if harPerioder is NO in the last period', () => {
@@ -43,7 +43,7 @@ describe('hasCompletedEgenmeldingsperioderAnsatt', () => {
                 hasClickedVidere: null,
             },
         ]
-        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(true)
+        expect(hasCompletedEgenmeldingsdager(egenmeldingsperioder)).toBe(true)
     })
 
     it('should return false if harPerioder is YES in the last period', () => {
@@ -64,6 +64,6 @@ describe('hasCompletedEgenmeldingsperioderAnsatt', () => {
                 hasClickedVidere: null,
             },
         ]
-        expect(hasCompletedEgenmeldingsperioderAnsatt(egenmeldingsperioder)).toBe(false)
+        expect(hasCompletedEgenmeldingsdager(egenmeldingsperioder)).toBe(false)
     })
 })

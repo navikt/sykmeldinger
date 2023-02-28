@@ -4,12 +4,14 @@ enum ShortName {
     FRAVAER
     PERIODE
     FORSIKRING
+    EGENMELDINGSDAGER
 }
 
 enum Svartype {
     ARBEIDSSITUASJON
     PERIODER
     JA_NEI
+    DAGER
 }
 
 enum StatusEvent {
@@ -25,15 +27,32 @@ type ArbeidsgiverStatus {
     orgNavn: String!
 }
 
-type Svar {
+type JaNeiSvar {
     svarType: Svartype!
-    svar: String!
+    svar: YesOrNo!
 }
+
+type ArbeidssituasjonSvar {
+    svarType: Svartype!
+    svar: ArbeidssituasjonType!
+}
+
+type DagerSvar {
+    svarType: Svartype!
+    svar: [Date!]!
+}
+
+type PerioderSvar {
+    svarType: Svartype!
+    svar: [FomTom!]!
+}
+
+union SvarTypeUnion = JaNeiSvar | ArbeidssituasjonSvar | DagerSvar | PerioderSvar
 
 type Sporsmal {
     tekst: String!
     shortName: ShortName!
-    svar: Svar!
+    svar: SvarTypeUnion!
 }
 
 type SykmeldingStatus {
@@ -41,4 +60,9 @@ type SykmeldingStatus {
     timestamp: Date!
     arbeidsgiver: ArbeidsgiverStatus
     sporsmalOgSvarListe: [Sporsmal!]!
+}
+
+type FomTom {
+    fom: Date!
+    tom: Date!
 }

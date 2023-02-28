@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
 
-import { Behandlingsutfall, RegelStatus, StatusEvent, SykmeldingStatus } from '../../fetching/graphql.generated'
+import { Behandlingsutfall, RegelStatus, StatusEvent, SykmeldingStatusFragment } from '../../fetching/graphql.generated'
 
 import StatusBanner from './StatusBanner'
 
 describe('StatusBanner', () => {
     it('Renders Sendt banner with arbeidsgiver', () => {
-        const sykmeldingStatus: SykmeldingStatus = {
+        const sykmeldingStatus: SykmeldingStatusFragment = {
             __typename: 'SykmeldingStatus',
             statusEvent: StatusEvent.SENDT,
             timestamp: '2021-05-01',
@@ -28,7 +28,7 @@ describe('StatusBanner', () => {
     })
 
     it('Renders Bekreftet banner', () => {
-        const sykmeldingStatus: SykmeldingStatus = {
+        const sykmeldingStatus: SykmeldingStatusFragment = {
             __typename: 'SykmeldingStatus',
             statusEvent: StatusEvent.BEKREFTET,
             timestamp: '2021-05-01',
@@ -46,7 +46,7 @@ describe('StatusBanner', () => {
     })
 
     it('Renders Bekreftet egenmelding banner', () => {
-        const sykmeldingStatus: SykmeldingStatus = {
+        const sykmeldingStatus: SykmeldingStatusFragment = {
             __typename: 'SykmeldingStatus',
             statusEvent: StatusEvent.BEKREFTET,
             timestamp: '2021-05-01',
@@ -64,7 +64,7 @@ describe('StatusBanner', () => {
     })
 
     it('Renders bekreftet avvist banner', () => {
-        const sykmeldingStatus: SykmeldingStatus = {
+        const sykmeldingStatus: SykmeldingStatusFragment = {
             __typename: 'SykmeldingStatus',
             statusEvent: StatusEvent.BEKREFTET,
             timestamp: '2021-05-01',

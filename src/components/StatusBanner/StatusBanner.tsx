@@ -1,10 +1,10 @@
 import { Alert, Detail, Heading } from '@navikt/ds-react'
 
-import { Behandlingsutfall, SykmeldingStatus } from '../../fetching/graphql.generated'
+import { Behandlingsutfall, SykmeldingStatusFragment } from '../../fetching/graphql.generated'
 import { toReadableDate } from '../../utils/dateUtils'
 
 interface StatusBannerProps {
-    sykmeldingStatus: SykmeldingStatus
+    sykmeldingStatus: SykmeldingStatusFragment
     behandlingsutfall: Behandlingsutfall
     egenmeldt?: boolean | null
 }

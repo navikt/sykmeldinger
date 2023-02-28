@@ -1,5 +1,12 @@
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
-import { AnnenFraverGrunn, Periodetype, RegelStatus, StatusEvent } from '../resolver-types.generated'
+import {
+    AnnenFraverGrunn,
+    Periodetype,
+    RegelStatus,
+    ShortName,
+    StatusEvent,
+    Svartype,
+} from '../resolver-types.generated'
 
 export const sykmeldingSendt3: Sykmelding = {
     id: 'SENDT-3',
@@ -30,7 +37,16 @@ export const sykmeldingSendt3: Sykmelding = {
             orgnummer: '123456',
             orgNavn: 'Posten AS',
         },
-        sporsmalOgSvarListe: [],
+        sporsmalOgSvarListe: [
+            {
+                tekst: 'Velg dagene du brukte egenmelding',
+                shortName: ShortName.EGENMELDINGSDAGER,
+                svar: {
+                    svarType: Svartype.DAGER,
+                    svar: ['2023-04-20', '2023-04-21', '2023-04-22', '2023-04-23', '2023-04-11', '2023-04-12'],
+                },
+            },
+        ],
     },
     medisinskVurdering: {
         hovedDiagnose: {

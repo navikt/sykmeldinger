@@ -5,9 +5,9 @@ import { add, isAfter, isBefore, sub } from 'date-fns'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { sortDatesASC } from '../../../../../utils/dateUtils'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
-import { EgenmeldingsperioderAnsattForm } from '../../../../../utils/egenmeldingsperioderAnsattUtils'
+import { EgenmeldingsdagerForm } from '../../../../../utils/egenmeldingsdagerUtils'
 
-import HarbruktEgenmelding from './HarbruktEgenmelding'
+import HarBruktEgenmelding from './HarBruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
 import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
 import styles from './EgenmeldingerFieldRecursive.module.css'
@@ -26,13 +26,13 @@ interface Props {
 
 function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element | null {
     const { watch, setValue } = useFormContext<FormValues>()
-    const egenmeldingsperioderAnsatt = watch('egenmeldingsperioderAnsatt')
-    const harPerioder: YesOrNo | null = watch(`egenmeldingsperioderAnsatt.${index}.harPerioder`)
-    const selectedDates: Date[] | null = watch(`egenmeldingsperioderAnsatt.${index}.datoer`)
+    const egenmeldingsdager = watch('egenmeldingsdager')
+    const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
+    const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
 
     const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(previous, metadata.previousSykmeldingTom)
-    const { field: videreField } = useController<FormValues, `egenmeldingsperioderAnsatt.${number}.hasClickedVidere`>({
-        name: `egenmeldingsperioderAnsatt.${index}.hasClickedVidere`,
+    const { field: videreField } = useController<FormValues, `egenmeldingsdager.${number}.hasClickedVidere`>({
+        name: `egenmeldingsdager.${index}.hasClickedVidere`,
         defaultValue: null,
     })
 
@@ -48,13 +48,13 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
 
     return (
         <div className="egenmeldingsperiod-ansatt">
-            <HarbruktEgenmelding
+            <HarBruktEgenmelding
                 index={index}
                 arbeidsgiverNavn={metadata.arbeidsgiverNavn}
                 lastPossibleDate={earliestPossibleDate}
                 firstPossibleDate={latestPossibleDate}
                 onNo={() => {
-                    setValue(`egenmeldingsperioderAnsatt.${index}.datoer`, null)
+                    setValue(`egenmeldingsdager.${index}.datoer`, null)
                 }}
             />
             {hasPeriod && videreField.value !== true && (
@@ -86,7 +86,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                 <ValgtEgenmeldingsdager
                     dates={sortedDates}
                     onEditClicked={() => {
-                        setValue('egenmeldingsperioderAnsatt', laterPeriodsRemoved(index, egenmeldingsperioderAnsatt))
+                        setValue('egenmeldingsdager', laterPeriodsRemoved(index, egenmeldingsdager))
                         videreField.onChange(false)
                     }}
                 />
@@ -124,8 +124,8 @@ export function currentPeriodDatePicker(
 
 export function laterPeriodsRemoved(
     index: number,
-    list?: EgenmeldingsperioderAnsattForm[] | null,
-): EgenmeldingsperioderAnsattForm[] | null {
+    list?: EgenmeldingsdagerForm[] | null,
+): EgenmeldingsdagerForm[] | null {
     return list?.slice(0, index + 1) ?? null
 }
 

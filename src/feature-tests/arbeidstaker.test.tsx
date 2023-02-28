@@ -47,6 +47,7 @@ describe('Arbeidstaker', () => {
                                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
                                 arbeidsgiverOrgnummer: arbeidsgivereMock[0].orgnummer,
                                 riktigNarmesteLeder: YesOrNo.YES,
+                                harEgenmeldingsdager: YesOrNo.NO,
                             },
                         },
                     },
@@ -80,6 +81,12 @@ describe('Arbeidstaker', () => {
                 { name: 'Ja' },
             ),
         )
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Brukte du egenmelding hos PONTYPANDY FIRE SERVICE i perioden/ },
+                { name: 'Nei' },
+            ),
+        )
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
@@ -103,6 +110,7 @@ describe('Arbeidstaker', () => {
                                 erOpplysningeneRiktige: YesOrNo.YES,
                                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
                                 arbeidsgiverOrgnummer: arbeidsgivereMock[1].orgnummer,
+                                harEgenmeldingsdager: YesOrNo.NO,
                             },
                         },
                     },
@@ -128,6 +136,75 @@ describe('Arbeidstaker', () => {
             await screen.findByRole('radio', {
                 name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
             }),
+        )
+        // Should ask about egenmeldingsdager even though arbeidsgiver is inactive
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Brukte du egenmelding hos ANDEBY BRANNSTATION i perioden/ },
+                { name: 'Nei' },
+            ),
+        )
+
+        expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
+        await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
+
+        await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+        expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+    })
+
+    it('should be able to submit form with missing NL but active arbeidsgiver', async () => {
+        const { container } = render(<SykmeldingPage />, {
+            mocks: [
+                ...baseMocks,
+                createExtraFormDataMock({
+                    brukerinformasjon: {
+                        arbeidsgivere: [{ ...arbeidsgivereMock[1], naermesteLeder: null, aktivtArbeidsforhold: true }],
+                    },
+                }),
+                createMock({
+                    request: {
+                        query: SendSykmeldingDocument,
+                        variables: {
+                            sykmeldingId: 'sykmelding-id',
+                            values: {
+                                erOpplysningeneRiktige: YesOrNo.YES,
+                                arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
+                                arbeidsgiverOrgnummer: arbeidsgivereMock[1].orgnummer,
+                                harEgenmeldingsdager: YesOrNo.NO,
+                            },
+                        },
+                    },
+                    result: {
+                        data: {
+                            __typename: 'Mutation',
+                            sendSykmelding: createSykmelding({
+                                sykmeldingStatus: {
+                                    ...createSykmelding().sykmeldingStatus,
+                                    statusEvent: StatusEvent.BEKREFTET,
+                                    timestamp: '2020-01-01',
+                                },
+                            }),
+                        },
+                    },
+                }),
+            ],
+        })
+
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(
+            await screen.findByRole('radio', {
+                name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
+            }),
+        )
+
+        // Should ask about egenmeldingsdager even though NL is null, but arbeidsforhold is active
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Brukte du egenmelding hos ANDEBY BRANNSTATION i perioden/ },
+                { name: 'Nei' },
+            ),
         )
 
         expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()

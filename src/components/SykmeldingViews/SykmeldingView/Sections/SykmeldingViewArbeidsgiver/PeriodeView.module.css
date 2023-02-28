@@ -5,7 +5,7 @@
 }
 
 .perioder .periode,
-.egenmeldingsperioder {
+.egenmeldingsdager {
     flex-grow: 1;
     margin-bottom: var(--a-spacing-3);
     background-color: var(--sykmelding-view-arbeidsgiver);
@@ -36,7 +36,7 @@
     margin-bottom: 0;
 }
 
-.egenmeldingsperioder ul {
+.egenmeldingsdager ul {
     list-style: none;
     padding: 0;
 }

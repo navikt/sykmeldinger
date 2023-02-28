@@ -80,6 +80,12 @@ export enum ArbeidsrelatertArsakType {
     MANGLENDE_TILRETTELEGGING = 'MANGLENDE_TILRETTELEGGING',
 }
 
+export type ArbeidssituasjonSvar = {
+    readonly __typename: 'ArbeidssituasjonSvar'
+    readonly svar: ArbeidssituasjonType
+    readonly svarType: Svartype
+}
+
 export enum ArbeidssituasjonType {
     ANNET = 'ANNET',
     ARBEIDSLEDIG = 'ARBEIDSLEDIG',
@@ -110,6 +116,12 @@ export type Brukerinformasjon = {
     readonly strengtFortroligAdresse: Scalars['Boolean']
 }
 
+export type DagerSvar = {
+    readonly __typename: 'DagerSvar'
+    readonly svar: ReadonlyArray<Scalars['Date']>
+    readonly svarType: Svartype
+}
+
 export type DateRange = {
     readonly fom?: InputMaybe<Scalars['Date']>
     readonly tom?: InputMaybe<Scalars['Date']>
@@ -137,10 +149,22 @@ export type ErIkkeIArbeid = {
     readonly vurderingsdato?: Maybe<Scalars['Date']>
 }
 
+export type FomTom = {
+    readonly __typename: 'FomTom'
+    readonly fom: Scalars['Date']
+    readonly tom: Scalars['Date']
+}
+
 export type GradertPeriode = {
     readonly __typename: 'GradertPeriode'
     readonly grad: Scalars['Int']
     readonly reisetilskudd: Scalars['Boolean']
+}
+
+export type JaNeiSvar = {
+    readonly __typename: 'JaNeiSvar'
+    readonly svar: YesOrNo
+    readonly svarType: Svartype
 }
 
 export type KontaktMedPasient = {
@@ -225,6 +249,12 @@ export type Periode = {
     readonly type: Periodetype
 }
 
+export type PerioderSvar = {
+    readonly __typename: 'PerioderSvar'
+    readonly svar: ReadonlyArray<FomTom>
+    readonly svarType: Svartype
+}
+
 export enum Periodetype {
     AKTIVITET_IKKE_MULIG = 'AKTIVITET_IKKE_MULIG',
     AVVENTENDE = 'AVVENTENDE',
@@ -286,6 +316,7 @@ export type SendSykmeldingValues = {
 
 export enum ShortName {
     ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    EGENMELDINGSDAGER = 'EGENMELDINGSDAGER',
     FORSIKRING = 'FORSIKRING',
     FRAVAER = 'FRAVAER',
     NY_NARMESTE_LEDER = 'NY_NARMESTE_LEDER',
@@ -295,7 +326,7 @@ export enum ShortName {
 export type Sporsmal = {
     readonly __typename: 'Sporsmal'
     readonly shortName: ShortName
-    readonly svar: Svar
+    readonly svar: SvarTypeUnion
     readonly tekst: Scalars['String']
 }
 
@@ -307,19 +338,16 @@ export enum StatusEvent {
     UTGATT = 'UTGATT',
 }
 
-export type Svar = {
-    readonly __typename: 'Svar'
-    readonly svar: Scalars['String']
-    readonly svarType: Svartype
-}
-
 export enum SvarRestriksjon {
     SKJERMET_FOR_ARBEIDSGIVER = 'SKJERMET_FOR_ARBEIDSGIVER',
     SKJERMET_FOR_NAV = 'SKJERMET_FOR_NAV',
 }
 
+export type SvarTypeUnion = ArbeidssituasjonSvar | DagerSvar | JaNeiSvar | PerioderSvar
+
 export enum Svartype {
     ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
+    DAGER = 'DAGER',
     JA_NEI = 'JA_NEI',
     PERIODER = 'PERIODER',
 }
@@ -512,7 +540,27 @@ export type ChangeSykmeldingStatusMutation = {
                 readonly __typename: 'Sporsmal'
                 readonly tekst: string
                 readonly shortName: ShortName
-                readonly svar: { readonly __typename: 'Svar'; readonly svar: string; readonly svarType: Svartype }
+                readonly svar:
+                    | {
+                          readonly __typename: 'ArbeidssituasjonSvar'
+                          readonly svarType: Svartype
+                          readonly arbeidsituasjon: ArbeidssituasjonType
+                      }
+                    | {
+                          readonly __typename: 'DagerSvar'
+                          readonly svarType: Svartype
+                          readonly dager: ReadonlyArray<string>
+                      }
+                    | { readonly __typename: 'JaNeiSvar'; readonly svarType: Svartype; readonly jaNei: YesOrNo }
+                    | {
+                          readonly __typename: 'PerioderSvar'
+                          readonly svarType: Svartype
+                          readonly perioder: ReadonlyArray<{
+                              readonly __typename: 'FomTom'
+                              readonly fom: string
+                              readonly tom: string
+                          }>
+                      }
             }>
         }
         readonly medisinskVurdering?: {
@@ -669,7 +717,27 @@ export type SendSykmeldingMutation = {
                 readonly __typename: 'Sporsmal'
                 readonly tekst: string
                 readonly shortName: ShortName
-                readonly svar: { readonly __typename: 'Svar'; readonly svar: string; readonly svarType: Svartype }
+                readonly svar:
+                    | {
+                          readonly __typename: 'ArbeidssituasjonSvar'
+                          readonly svarType: Svartype
+                          readonly arbeidsituasjon: ArbeidssituasjonType
+                      }
+                    | {
+                          readonly __typename: 'DagerSvar'
+                          readonly svarType: Svartype
+                          readonly dager: ReadonlyArray<string>
+                      }
+                    | { readonly __typename: 'JaNeiSvar'; readonly svarType: Svartype; readonly jaNei: YesOrNo }
+                    | {
+                          readonly __typename: 'PerioderSvar'
+                          readonly svarType: Svartype
+                          readonly perioder: ReadonlyArray<{
+                              readonly __typename: 'FomTom'
+                              readonly fom: string
+                              readonly tom: string
+                          }>
+                      }
             }>
         }
         readonly medisinskVurdering?: {
@@ -782,6 +850,36 @@ export type PeriodeFragment = {
     } | null
 }
 
+export type SvarUnion_ArbeidssituasjonSvar_Fragment = {
+    readonly __typename: 'ArbeidssituasjonSvar'
+    readonly svarType: Svartype
+    readonly arbeidsituasjon: ArbeidssituasjonType
+}
+
+export type SvarUnion_DagerSvar_Fragment = {
+    readonly __typename: 'DagerSvar'
+    readonly svarType: Svartype
+    readonly dager: ReadonlyArray<string>
+}
+
+export type SvarUnion_JaNeiSvar_Fragment = {
+    readonly __typename: 'JaNeiSvar'
+    readonly svarType: Svartype
+    readonly jaNei: YesOrNo
+}
+
+export type SvarUnion_PerioderSvar_Fragment = {
+    readonly __typename: 'PerioderSvar'
+    readonly svarType: Svartype
+    readonly perioder: ReadonlyArray<{ readonly __typename: 'FomTom'; readonly fom: string; readonly tom: string }>
+}
+
+export type SvarUnionFragment =
+    | SvarUnion_ArbeidssituasjonSvar_Fragment
+    | SvarUnion_DagerSvar_Fragment
+    | SvarUnion_JaNeiSvar_Fragment
+    | SvarUnion_PerioderSvar_Fragment
+
 export type SykmeldingStatusFragment = {
     readonly __typename: 'SykmeldingStatus'
     readonly statusEvent: StatusEvent
@@ -795,7 +893,23 @@ export type SykmeldingStatusFragment = {
         readonly __typename: 'Sporsmal'
         readonly tekst: string
         readonly shortName: ShortName
-        readonly svar: { readonly __typename: 'Svar'; readonly svar: string; readonly svarType: Svartype }
+        readonly svar:
+            | {
+                  readonly __typename: 'ArbeidssituasjonSvar'
+                  readonly svarType: Svartype
+                  readonly arbeidsituasjon: ArbeidssituasjonType
+              }
+            | { readonly __typename: 'DagerSvar'; readonly svarType: Svartype; readonly dager: ReadonlyArray<string> }
+            | { readonly __typename: 'JaNeiSvar'; readonly svarType: Svartype; readonly jaNei: YesOrNo }
+            | {
+                  readonly __typename: 'PerioderSvar'
+                  readonly svarType: Svartype
+                  readonly perioder: ReadonlyArray<{
+                      readonly __typename: 'FomTom'
+                      readonly fom: string
+                      readonly tom: string
+                  }>
+              }
     }>
 }
 
@@ -888,7 +1002,27 @@ export type SykmeldingFragment = {
             readonly __typename: 'Sporsmal'
             readonly tekst: string
             readonly shortName: ShortName
-            readonly svar: { readonly __typename: 'Svar'; readonly svar: string; readonly svarType: Svartype }
+            readonly svar:
+                | {
+                      readonly __typename: 'ArbeidssituasjonSvar'
+                      readonly svarType: Svartype
+                      readonly arbeidsituasjon: ArbeidssituasjonType
+                  }
+                | {
+                      readonly __typename: 'DagerSvar'
+                      readonly svarType: Svartype
+                      readonly dager: ReadonlyArray<string>
+                  }
+                | { readonly __typename: 'JaNeiSvar'; readonly svarType: Svartype; readonly jaNei: YesOrNo }
+                | {
+                      readonly __typename: 'PerioderSvar'
+                      readonly svarType: Svartype
+                      readonly perioder: ReadonlyArray<{
+                          readonly __typename: 'FomTom'
+                          readonly fom: string
+                          readonly tom: string
+                      }>
+                  }
         }>
     }
     readonly medisinskVurdering?: {
@@ -1041,7 +1175,27 @@ export type SykmeldingerQuery = {
                 readonly __typename: 'Sporsmal'
                 readonly tekst: string
                 readonly shortName: ShortName
-                readonly svar: { readonly __typename: 'Svar'; readonly svar: string; readonly svarType: Svartype }
+                readonly svar:
+                    | {
+                          readonly __typename: 'ArbeidssituasjonSvar'
+                          readonly svarType: Svartype
+                          readonly arbeidsituasjon: ArbeidssituasjonType
+                      }
+                    | {
+                          readonly __typename: 'DagerSvar'
+                          readonly svarType: Svartype
+                          readonly dager: ReadonlyArray<string>
+                      }
+                    | { readonly __typename: 'JaNeiSvar'; readonly svarType: Svartype; readonly jaNei: YesOrNo }
+                    | {
+                          readonly __typename: 'PerioderSvar'
+                          readonly svarType: Svartype
+                          readonly perioder: ReadonlyArray<{
+                              readonly __typename: 'FomTom'
+                              readonly fom: string
+                              readonly tom: string
+                          }>
+                      }
             }>
         }
         readonly medisinskVurdering?: {
@@ -1197,7 +1351,27 @@ export type SykmeldingByIdQuery = {
                 readonly __typename: 'Sporsmal'
                 readonly tekst: string
                 readonly shortName: ShortName
-                readonly svar: { readonly __typename: 'Svar'; readonly svar: string; readonly svarType: Svartype }
+                readonly svar:
+                    | {
+                          readonly __typename: 'ArbeidssituasjonSvar'
+                          readonly svarType: Svartype
+                          readonly arbeidsituasjon: ArbeidssituasjonType
+                      }
+                    | {
+                          readonly __typename: 'DagerSvar'
+                          readonly svarType: Svartype
+                          readonly dager: ReadonlyArray<string>
+                      }
+                    | { readonly __typename: 'JaNeiSvar'; readonly svarType: Svartype; readonly jaNei: YesOrNo }
+                    | {
+                          readonly __typename: 'PerioderSvar'
+                          readonly svarType: Svartype
+                          readonly perioder: ReadonlyArray<{
+                              readonly __typename: 'FomTom'
+                              readonly fom: string
+                              readonly tom: string
+                          }>
+                      }
             }>
         }
         readonly medisinskVurdering?: {
@@ -1423,6 +1597,89 @@ export const PeriodeFragmentDoc = {
         },
     ],
 } as unknown as DocumentNode<PeriodeFragment, unknown>
+export const SvarUnionFragmentDoc = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'SvarUnion' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SvarTypeUnion' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'JaNeiSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'jaNei' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ArbeidssituasjonSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'arbeidsituasjon' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PerioderSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'perioder' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'DagerSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'dager' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<SvarUnionFragment, unknown>
 export const SykmeldingStatusFragmentDoc = {
     kind: 'Document',
     definitions: [
@@ -1460,10 +1717,88 @@ export const SykmeldingStatusFragmentDoc = {
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'SvarUnion' } },
                                         ],
                                     },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'SvarUnion' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SvarTypeUnion' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'JaNeiSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'jaNei' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ArbeidssituasjonSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'arbeidsituasjon' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PerioderSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'perioder' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'DagerSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'dager' },
+                                    name: { kind: 'Name', value: 'svar' },
                                 },
                             ],
                         },
@@ -1726,6 +2061,84 @@ export const SykmeldingFragmentDoc = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'SvarUnion' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SvarTypeUnion' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'JaNeiSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'jaNei' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ArbeidssituasjonSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'arbeidsituasjon' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PerioderSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'perioder' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'DagerSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'dager' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'Periode' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Periode' } },
             selectionSet: {
@@ -1816,8 +2229,8 @@ export const SykmeldingFragmentDoc = {
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'SvarUnion' } },
                                         ],
                                     },
                                 },
@@ -2088,6 +2501,84 @@ export const ChangeSykmeldingStatusDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'SvarUnion' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SvarTypeUnion' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'JaNeiSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'jaNei' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ArbeidssituasjonSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'arbeidsituasjon' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PerioderSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'perioder' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'DagerSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'dager' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -2120,8 +2611,8 @@ export const ChangeSykmeldingStatusDocument = {
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'SvarUnion' } },
                                         ],
                                     },
                                 },
@@ -2484,6 +2975,84 @@ export const SendSykmeldingDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'SvarUnion' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SvarTypeUnion' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'JaNeiSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'jaNei' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ArbeidssituasjonSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'arbeidsituasjon' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PerioderSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'perioder' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'DagerSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'dager' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -2516,8 +3085,8 @@ export const SendSykmeldingDocument = {
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'SvarUnion' } },
                                         ],
                                     },
                                 },
@@ -2853,6 +3422,84 @@ export const SykmeldingerDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'SvarUnion' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SvarTypeUnion' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'JaNeiSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'jaNei' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ArbeidssituasjonSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'arbeidsituasjon' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PerioderSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'perioder' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'DagerSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'dager' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -2885,8 +3532,8 @@ export const SykmeldingerDocument = {
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'SvarUnion' } },
                                         ],
                                     },
                                 },
@@ -3236,6 +3883,84 @@ export const SykmeldingByIdDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'SvarUnion' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SvarTypeUnion' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'JaNeiSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'jaNei' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ArbeidssituasjonSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'arbeidsituasjon' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'PerioderSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'perioder' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'DagerSvar' } },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                {
+                                    kind: 'Field',
+                                    alias: { kind: 'Name', value: 'dager' },
+                                    name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -3268,8 +3993,8 @@ export const SykmeldingByIdDocument = {
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'svarType' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'SvarUnion' } },
                                         ],
                                     },
                                 },

@@ -34,6 +34,8 @@ describe('sendSykmeldingMapping', () => {
             harForsikring: null,
             riktigNarmesteLeder: null,
             uriktigeOpplysninger: null,
+            harBruktEgenmeldingsdager: null,
+            egenmeldingsdager: null,
         })
     })
 
@@ -64,6 +66,8 @@ describe('sendSykmeldingMapping', () => {
             harForsikring: null,
             riktigNarmesteLeder: null,
             uriktigeOpplysninger: null,
+            harBruktEgenmeldingsdager: null,
+            egenmeldingsdager: null,
         })
     })
 
@@ -98,6 +102,8 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmelding: null,
             harForsikring: null,
             riktigNarmesteLeder: null,
+            harBruktEgenmeldingsdager: null,
+            egenmeldingsdager: null,
         })
     })
 
@@ -136,6 +142,8 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmelding: null,
             harForsikring: null,
             uriktigeOpplysninger: null,
+            harBruktEgenmeldingsdager: null,
+            egenmeldingsdager: null,
         })
     })
 
@@ -173,6 +181,8 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmelding: null,
             harForsikring: null,
             uriktigeOpplysninger: null,
+            harBruktEgenmeldingsdager: null,
+            egenmeldingsdager: null,
         })
     })
 
@@ -222,6 +232,8 @@ describe('sendSykmeldingMapping', () => {
             arbeidsgiverOrgnummer: null,
             riktigNarmesteLeder: null,
             uriktigeOpplysninger: null,
+            harBruktEgenmeldingsdager: null,
+            egenmeldingsdager: null,
         })
     })
 })

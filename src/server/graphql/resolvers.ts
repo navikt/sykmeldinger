@@ -5,6 +5,7 @@ import * as flexService from '../../server/flexService'
 import { TokenPayload } from '../../auth/withAuthentication'
 
 import { MutationResolvers, QueryResolvers, Resolvers } from './resolver-types.generated'
+import objectResolvers from './objectResolvers'
 
 export interface RequestContext {
     payload: TokenPayload
@@ -30,6 +31,7 @@ const resolvers: Partial<Resolvers> = {
     Query,
     Mutation,
     JSON: GraphQLJSON,
+    ...objectResolvers,
 }
 
 export default resolvers

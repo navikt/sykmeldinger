@@ -37,7 +37,7 @@ function SykmeldingPage(): JSX.Element {
 
     useFocusRefetch(refetch)
 
-    if (loading || olderSykmelding.isLoading) {
+    if (data?.sykmelding == null && (loading || olderSykmelding.isLoading)) {
         return (
             <Spacing>
                 <Spinner headline="Henter sykmelding" />

@@ -9,15 +9,11 @@ import {
     UriktigeOpplysningerType,
     YesOrNo,
 } from './graphql/resolver-types.generated'
-import {
-    ArbeidssituasjonV3,
-    JaEllerNeiV3,
-    SykmeldingUserEventV3Api,
-    UriktigeOpplysningerV3,
-} from './api-models/SendSykmelding'
+import { ArbeidssituasjonV3, SykmeldingUserEventV3Api, UriktigeOpplysningerV3 } from './api-models/SendSykmelding'
 import { Brukerinformasjon } from './api-models/Brukerinformasjon'
 import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
 import { Sykmelding } from './api-models/sykmelding/Sykmelding'
+import { JaEllerNei } from './api-models/sykmelding/SykmeldingStatus'
 
 export function mapSendSykmeldingValuesToV3Api(
     values: SendSykmeldingValues,
@@ -102,11 +98,24 @@ export function mapSendSykmeldingValuesToV3Api(
                   sporsmaltekst: sporsmal.uriktigeOpplysninger,
               }
             : null,
+        harBruktEgenmeldingsdager:
+            values.harEgenmeldingsdager && valgtArbeidsgiver
+                ? {
+                      svar: yesOrNoTypeToV3Enum(values.harEgenmeldingsdager),
+                      sporsmaltekst: sporsmal.harBruktEgenmeldingsdager(valgtArbeidsgiver.navn),
+                  }
+                : null,
+        egenmeldingsdager: values.egenmeldingsdager
+            ? {
+                  svar: values.egenmeldingsdager,
+                  sporsmaltekst: sporsmal.egenmeldingsdager,
+              }
+            : null,
     }
 }
 
-function yesOrNoTypeToV3Enum(value: YesOrNo): JaEllerNeiV3 {
-    return value === YesOrNo.YES ? JaEllerNeiV3.JA : JaEllerNeiV3.NEI
+function yesOrNoTypeToV3Enum(value: YesOrNo): JaEllerNei {
+    return value === YesOrNo.YES ? JaEllerNei.JA : JaEllerNei.NEI
 }
 
 function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonV3 {
