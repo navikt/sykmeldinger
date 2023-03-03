@@ -6,8 +6,21 @@ export interface EgenmeldingsdagerForm {
     hasClickedVidere: boolean | null
 }
 
-export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerForm[] | null): boolean =>
-    egenmeldingsperioder != null && egenmeldingsperioder[egenmeldingsperioder.length - 1].harPerioder === YesOrNo.NO
+export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerForm[] | null): boolean => {
+    if (egenmeldingsperioder == null) return false
+
+    const lastElement = egenmeldingsperioder[egenmeldingsperioder.length - 1]
+    if (lastElement.harPerioder === YesOrNo.NO) return true
+
+    if (
+        lastElement.harPerioder === YesOrNo.YES &&
+        !(lastElement.datoer == null || lastElement.datoer.length === 0 || lastElement.hasClickedVidere == null)
+    ) {
+        return true
+    }
+
+    return false
+}
 
 export function findEgenmeldingsdager(
     sporsmalOgSvarListe: SykmeldingStatusFragment['sporsmalOgSvarListe'],
