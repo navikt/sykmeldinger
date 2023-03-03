@@ -20,9 +20,10 @@ interface Props {
     onChange?: (value: YesOrNo) => void
     rules?: UseControllerProps['rules']
     shouldUnregister?: boolean
+    disabled?: boolean
 }
 
-function YesNoField({ name, legend, subtext, onChange, rules, shouldUnregister = true }: Props): JSX.Element {
+function YesNoField({ name, legend, subtext, onChange, rules, shouldUnregister = true, disabled }: Props): JSX.Element {
     const { field, fieldState } = useController<FormValues>({
         name,
         rules,
@@ -42,8 +43,12 @@ function YesNoField({ name, legend, subtext, onChange, rules, shouldUnregister =
             }}
         >
             {subtext && <div className={styles.subText}>{subtext}</div>}
-            <Radio value={YesOrNo.YES}>Ja</Radio>
-            <Radio value={YesOrNo.NO}>Nei</Radio>
+            <Radio value={YesOrNo.YES} disabled={disabled}>
+                Ja
+            </Radio>
+            <Radio value={YesOrNo.NO} disabled={disabled}>
+                Nei
+            </Radio>
         </RadioGroup>
     )
 }

@@ -16,6 +16,7 @@ interface Props {
     lastPossibleDate: Date | string
     firstPossibleDate: Date | string
     onNo: () => void
+    disabled: boolean
 }
 
 function HarBruktEgenmelding({
@@ -24,6 +25,7 @@ function HarBruktEgenmelding({
     firstPossibleDate,
     arbeidsgiverNavn,
     onNo,
+    disabled,
 }: Props): JSX.Element {
     return (
         <QuestionWrapper>
@@ -55,6 +57,7 @@ function HarBruktEgenmelding({
                     }
                 }}
                 shouldUnregister={false}
+                disabled={disabled}
             />
         </QuestionWrapper>
     )
@@ -78,12 +81,7 @@ function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
 
     if (index === 0) {
         return (
-            <ReadMore
-                className={styles.readMore}
-                header="Hvorfor betyr dette?"
-                open={open}
-                onClick={handleOnReadMoreClick}
-            >
+            <ReadMore className={styles.readMore} header="Hva betyr dette?" open={open} onClick={handleOnReadMoreClick}>
                 <BodyLong>
                     <Link
                         href="https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/egenmelding#chapter-1"

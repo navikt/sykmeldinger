@@ -25,11 +25,8 @@ export function useArbeidssituasjonSubSections(
     sykmeldingUtenforVentetid: SykmeldingUtenforVentetidFragment,
 ): UseDynamicSubSections {
     const { watch } = useFormContext<FormValues>()
-    const [arbeidssituasjon, arbeidsgiverOrgnummer, egenmeldingsdager] = watch([
-        'arbeidssituasjon',
-        'arbeidsgiverOrgnummer',
-        'egenmeldingsdager',
-    ])
+    const [arbeidssituasjon, arbeidsgiverOrgnummer] = watch(['arbeidssituasjon', 'arbeidsgiverOrgnummer'])
+    const egenmeldingsdager = watch('egenmeldingsdager')
 
     const hasStrengtFortroligAdresse: boolean = brukerinformasjon.strengtFortroligAdresse
     const hasActiveArbeidsgiver: boolean = isActiveArbeidsgiver(brukerinformasjon.arbeidsgivere, arbeidsgiverOrgnummer)
