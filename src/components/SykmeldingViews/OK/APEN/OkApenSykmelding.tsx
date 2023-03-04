@@ -2,7 +2,6 @@ import { GuidePanel } from '@navikt/ds-react'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
-import Spacing from '../../../Spacing/Spacing'
 import InformationBanner from '../../../InformationBanner/InformationBanner'
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
@@ -31,12 +30,12 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
     if (sykmelding.egenmeldt) {
         return (
             <div>
-                <Spacing amount="large">
+                <div className="mb-16">
                     <GuidePanel poster>
                         Hei, denne egenmeldingen er utløpt og kan derfor ikke benyttes. Du kan fortsatt se opplysninger
                         fra egenmeldingen under.
                     </GuidePanel>
-                </Spacing>
+                </div>
 
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </div>
@@ -46,20 +45,20 @@ function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount 
     return (
         <div className="sykmelding-container">
             {!olderSykmeldingId && (
-                <Spacing>
+                <div className="mb-8">
                     <InformationBanner merknader={sykmelding.merknader} papirsykmelding={sykmelding.papirsykmelding} />
-                </Spacing>
+                </div>
             )}
 
             {Boolean(sykmelding.papirsykmelding) && (
-                <Spacing amount="large">
+                <div className="mb-16">
                     <PapirInfoheader />
-                </Spacing>
+                </div>
             )}
 
-            <Spacing>
+            <div className="mb-8">
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
-            </Spacing>
+            </div>
             <SendSykmeldingForm sykmelding={sykmelding} />
         </div>
     )

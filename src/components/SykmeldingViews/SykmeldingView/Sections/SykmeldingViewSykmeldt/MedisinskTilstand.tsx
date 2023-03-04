@@ -58,7 +58,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
                     )}
                     {!!medisinskVurdering.annenFraversArsak?.beskrivelse && (
                         <div className={styles.info}>
-                            <Heading className={styles.underHeading} size="xsmall" level="5">
+                            <Heading size="xsmall" level="5">
                                 Beskrivelse av fraværsgrunn
                             </Heading>
                             <BodyShort size="small">{medisinskVurdering.annenFraversArsak.beskrivelse}</BodyShort>
@@ -66,7 +66,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
                     )}
                     {medisinskVurdering.svangerskap && (
                         <div className={styles.info}>
-                            <Heading className={styles.underHeading} size="xsmall" level="5">
+                            <Heading size="xsmall" level="5">
                                 Er sykdommen svangerskapsrelatert?
                             </Heading>
                             <BodyShort size="small">Ja</BodyShort>
@@ -74,7 +74,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
                     )}
                     {medisinskVurdering.yrkesskade && (
                         <div className={styles.info}>
-                            <Heading className={styles.underHeading} size="xsmall" level="5">
+                            <Heading size="xsmall" level="5">
                                 {isV3
                                     ? 'Kan sykmeldingen skyldes en yrkesskade/yrkessykdom?'
                                     : 'Kan sykdommen skyldes en yrkesskade/yrkessykdom?'}

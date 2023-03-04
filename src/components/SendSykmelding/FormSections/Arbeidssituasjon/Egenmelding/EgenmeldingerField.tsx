@@ -11,7 +11,6 @@ import { EgenmeldingsdagerForm } from '../../../../../utils/egenmeldingsdagerUti
 import HarBruktEgenmelding from './HarBruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
 import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
-import styles from './EgenmeldingerFieldRecursive.module.css'
 
 interface Props {
     index: number
@@ -74,7 +73,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                     />
                     <VidereButtonField index={index} missingDates={missingDates} />
                     {missingDatesOnVidereClick && (
-                        <ErrorMessage className={styles.videreError}>Du må velge minst en dato</ErrorMessage>
+                        <ErrorMessage className="mt-4">Du må velge minst en dato</ErrorMessage>
                     )}
                 </>
             )}

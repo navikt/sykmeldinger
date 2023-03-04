@@ -7,7 +7,6 @@ import { Interval, isWithinInterval } from 'date-fns'
 import { FormValues } from '../../../SendSykmeldingForm'
 
 import { EgenmeldingField } from './EgenmeldingerField'
-import styles from './EgenmeldingPeriodSubField.module.css'
 
 interface EgenmeldingPeriodSubFieldProps {
     index: number
@@ -97,7 +96,10 @@ function EgenmeldingPeriodSubField({
 
     return (
         <div>
-            <UNSAFE_DatePicker {...datepickerProps} wrapperClassName={styles.dateFields}>
+            <UNSAFE_DatePicker
+                {...datepickerProps}
+                wrapperClassName="grid gap-2 place-items-start w-[52ch] md:grid-cols-2 grid-cols-1"
+            >
                 <UNSAFE_DatePicker.Input
                     id={fromField.name}
                     {...fromInputProps}
@@ -116,7 +118,7 @@ function EgenmeldingPeriodSubField({
                     error={toFieldState.error?.message}
                 />
             </UNSAFE_DatePicker>
-            <div className={styles.fieldButtons}>
+            <div className="mt-2 flex gap-4">
                 <Button
                     variant="tertiary"
                     type="button"

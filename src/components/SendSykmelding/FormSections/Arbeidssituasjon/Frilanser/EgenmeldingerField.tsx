@@ -10,7 +10,6 @@ import { sporsmal } from '../../../../../utils/sporsmal'
 import { toDate } from '../../../../../utils/dateUtils'
 
 import EgenmeldingPeriodSubField from './EgenmeldingPeriodSubField'
-import styles from './EgenmeldingerField.module.css'
 
 export type EgenmeldingField = `egenmeldingsperioder.${number}`
 
@@ -34,7 +33,7 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
 
     return (
         <SectionWrapper title={sporsmal.egenmeldingsperioder(oppfolgingsdato)} level="3" size="small">
-            <div className={styles.dateFieldsWrapper}>
+            <div className="mt-2 flex flex-col gap-4">
                 {fields.map((field, index) => (
                     <EgenmeldingPeriodSubField
                         key={field.id}
@@ -46,7 +45,7 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
                 ))}
             </div>
             <Button
-                className={styles.addPeriodButton}
+                className="mt-4"
                 variant="tertiary"
                 icon={<Add role="img" aria-hidden />}
                 type="button"

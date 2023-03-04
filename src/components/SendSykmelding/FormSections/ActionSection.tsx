@@ -60,7 +60,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): JSX.Element {
                 />
             )}
             {sendResult.error && (
-                <Alert className={styles.feedbackError} variant="error" role="alert">
+                <Alert className="mt-4" variant="error" role="alert">
                     <Heading size="small" level="3" spacing>
                         Klarte ikke å sende inn sykmeldingen
                     </Heading>
@@ -84,14 +84,14 @@ function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): 
             <Heading size="small" level="3" spacing>
                 Du kan ikke bruke denne sykmeldingen
             </Heading>
-            <BodyShort className={styles.avbrytText}>
+            <BodyShort className="mx-3/4">
                 Du må avbryte denne sykmeldingen og kontakte den som har sykmeldt deg for å få en ny.
             </BodyShort>
-            <Button className={styles.confirmButton} variant="danger" type="button" loading={loading} onClick={avbryt}>
+            <Button className="mt-4" variant="danger" type="button" loading={loading} onClick={avbryt}>
                 Avbryt sykmeldingen
             </Button>
             {error && (
-                <Alert className={styles.feedbackError} variant="error" role="alert">
+                <Alert className="mt-4" variant="error" role="alert">
                     Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
                 </Alert>
             )}
@@ -126,21 +126,21 @@ function AvbrytSykmeldingen({
             role="dialog"
             aria-labelledby={`${sykmeldingId}-avbryt-body`}
         >
-            <BodyShort id={`${sykmeldingId}-avbryt-body`} className={styles.avbrytText}>
+            <BodyShort id={`${sykmeldingId}-avbryt-body`} className="max-w-3/4">
                 Er du sikker på at du vil avbryte sykmeldingen?
             </BodyShort>
-            <Button className={styles.confirmButton} variant="danger" type="button" loading={loading} onClick={avbryt}>
+            <Button className="mt-4" variant="danger" type="button" loading={loading} onClick={avbryt}>
                 Ja, jeg er sikker
             </Button>
             <Button
-                className={styles.closeAvbryt}
+                className="absolute top-1 right-1"
                 variant="tertiary"
                 type="button"
                 icon={<Close title="Lukk avbryt panel" />}
                 onClick={closeAvbryt}
             />
             {error && (
-                <Alert className={styles.feedbackError} variant="error" role="alert">
+                <Alert className="mt-4" variant="error" role="alert">
                     Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
                 </Alert>
             )}

@@ -1,14 +1,11 @@
 import { BodyLong, Button, GuidePanel } from '@navikt/ds-react'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
-import cn from 'classnames'
 
 import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId'
 import { pluralize } from '../../utils/stringUtils'
 import { getPublicEnv } from '../../utils/env'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
-
-import styles from './HintToNextOlderSykmelding.module.css'
 
 const publicEnv = getPublicEnv()
 
@@ -33,7 +30,7 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
     if (dontShowYet) return null
     if (isDone) {
         return (
-            <div className={cn(styles.root, styles.ferdigButtonWrapper)}>
+            <div className="mt-8 flex items-center justify-center">
                 <Button
                     as="a"
                     href={publicEnv.SYKEFRAVAER_ROOT || '#'}
@@ -53,7 +50,7 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
     const earliest = unsentSykmeldinger.reduce(toEarliestSykmelding)
 
     return (
-        <GuidePanel poster className={styles.root}>
+        <GuidePanel poster className="mt-8">
             <BodyLong spacing>
                 Du har {pluralize('sykmelding', unsentSykmeldinger.length)} du må velge om du skal bruke
             </BodyLong>

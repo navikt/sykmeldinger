@@ -1,8 +1,6 @@
 import React from 'react'
 import { Alert, BodyLong, BodyShort, Label, Link, ReadMore } from '@navikt/ds-react'
 
-import styles from './ArbeidssituasjonInfo.module.css'
-
 export function ArbeidssituasjonInfo(): JSX.Element {
     return (
         <div>
@@ -18,7 +16,7 @@ export function ArbeidssituasjonInfo(): JSX.Element {
 
 export function ArbeidssituasjonStatusInfo(): JSX.Element {
     return (
-        <div className={styles.arbeidssituasjonStatusInfo}>
+        <div className="mt-4 mb-1">
             <BodyLong>
                 Sjekk om du er{' '}
                 <Link

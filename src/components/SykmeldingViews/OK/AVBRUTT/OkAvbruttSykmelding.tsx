@@ -5,7 +5,6 @@ import { FillForms } from '@navikt/ds-icons'
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import { toReadableDate } from '../../../../utils/dateUtils'
-import Spacing from '../../../Spacing/Spacing'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
@@ -23,17 +22,17 @@ function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): 
 
     return (
         <div className="sykmelding-container">
-            <Spacing amount="small">
+            <div className="mb-4">
                 <Alert variant="info">
                     <Heading size="small" level="2">
                         {sykmelding.egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble avbrutt av deg
                     </Heading>
                     <Detail>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Detail>
                 </Alert>
-            </Spacing>
+            </div>
             {!Boolean(sykmelding.egenmeldt) && (
-                <Spacing>
-                    <Spacing amount="small">
+                <div className="mb-8">
+                    <div className="mb-4">
                         <Button
                             size="small"
                             variant="secondary"
@@ -45,8 +44,8 @@ function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): 
                         >
                             GJØR UTFYLLINGEN PÅ NYTT
                         </Button>
-                    </Spacing>
-                </Spacing>
+                    </div>
+                </div>
             )}
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
 

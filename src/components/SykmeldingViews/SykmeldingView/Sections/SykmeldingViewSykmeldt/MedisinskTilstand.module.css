@@ -3,11 +3,6 @@
     padding: 0;
 }
 
-.underHeading {
-    font-size: var(--a-font-size-medium);
-    margin-top: var(--a-spacing-4);
-}
-
 .info {
     background-color: var(--sykmelding-view-flere-opplysninger);
     padding: var(--a-spacing-4);

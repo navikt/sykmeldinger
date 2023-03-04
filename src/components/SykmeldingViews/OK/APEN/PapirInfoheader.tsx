@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, BodyLong, Button, Label, Radio, RadioGroup } from '@navikt/ds-react'
 
-import Spacing from '../../../Spacing/Spacing'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
 import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
@@ -50,40 +49,40 @@ function PapirInfoheader(): JSX.Element {
             </RadioGroup>
 
             {harGittVidere === 'Ja' && (
-                <Spacing direction="top">
-                    <Spacing amount="small">
+                <div className="mt-8">
+                    <div className="mb-4">
                         <Alert variant="info">
-                            <Spacing amount="small">
+                            <div className="mb-4">
                                 <BodyLong>
                                     Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i
                                     stedet. Det er en fordel for begge: Da får dere alt her, både sykepengesøknaden og
                                     andre meldinger som handler om sykefraværet. Papirsykmeldingen kan du legge bort.
                                     Det du gjør her, erstatter papiret.
                                 </BodyLong>
-                            </Spacing>
+                            </div>
                             <BodyLong className={styles.harGittVidereText}>
                                 Hvis du får ja fra arbeidsgiveren din kan du fortsette utfyllingen på denne siden. Hvis
                                 du i stedet skal fortsette med papiret må du avbryte denne sykmeldingen.
                             </BodyLong>
                         </Alert>
-                    </Spacing>
+                    </div>
 
                     <Button loading={loading} onClick={() => avbryt()}>
                         Avbryt sykmeldingen
                     </Button>
 
                     {error && (
-                        <Spacing direction="top">
+                        <div className="mt-8">
                             <Alert variant="error">
                                 En feil oppstod som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
                             </Alert>
-                        </Spacing>
+                        </div>
                     )}
-                </Spacing>
+                </div>
             )}
 
             {harGittVidere === 'Nei' && (
-                <Spacing direction="top">
+                <div className="mt-8">
                     <Alert variant="info">
                         <Label id={harIkkeGittVidereId}>Da kan du sende sykmeldingen herfra</Label>
                         <BodyLong aria-labelledby={harIkkeGittVidereId}>
@@ -91,7 +90,7 @@ function PapirInfoheader(): JSX.Element {
                             om? Du velger selv om du vil bruke sykmeldingen.
                         </BodyLong>
                     </Alert>
-                </Spacing>
+                </div>
             )}
         </>
     )

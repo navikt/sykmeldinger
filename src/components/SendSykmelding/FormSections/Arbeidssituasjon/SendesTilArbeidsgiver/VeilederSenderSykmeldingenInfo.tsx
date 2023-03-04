@@ -1,12 +1,10 @@
 import { BodyShort, ReadMore, GuidePanel, Heading } from '@navikt/ds-react'
 import React from 'react'
 
-import styles from './VeilederSenderSykmeldingenInfo.module.css'
-
 function VeilederSenderSykmeldingenInfo(): JSX.Element {
     const veilederSectionId = 'veilederSenderSykmeldingen'
     return (
-        <section className={styles.veilederSenderSykmeldingen} aria-labelledby={veilederSectionId}>
+        <section className="mb-8" aria-labelledby={veilederSectionId}>
             <GuidePanel poster>
                 <Heading id={veilederSectionId} size="small" level="3" spacing>
                     Sykmeldingen sendes til jobben din
@@ -15,11 +13,7 @@ function VeilederSenderSykmeldingenInfo(): JSX.Element {
                     Under ser du hva jobben din får se hvis du sender sykmeldingen. Diagnosen og annen sensitiv data
                     sendes for eksempel ikke.
                 </BodyShort>
-                <ReadMore
-                    className={styles.readMore}
-                    size="medium"
-                    header="Ønsker du ikke å sende informasjonen til jobben?"
-                >
+                <ReadMore className="mt-4" size="medium" header="Ønsker du ikke å sende informasjonen til jobben?">
                     <BodyShort spacing>
                         Arbeidsgiveren din trenger sykmeldingen som dokumentasjon på at du er syk, enten den digitale
                         sykmeldingen du finner her, eller papirsykmeldingen som du kan få hos legen.
