@@ -15,17 +15,18 @@ import useExtraFormData from '../../hooks/useExtraFormData'
 import { useSendSykmelding } from '../../hooks/useMutations'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import Spinner from '../Spinner/Spinner'
+import { EgenmeldingsdagerSubForm } from '../FormComponents/Egenmelding/EgenmeldingerField'
 
 import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/OpplysningerRiktigeSection'
 import ActionSection from './FormSections/ActionSection'
 import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/ArbeidssituasjonSection'
 import ErrorSection from './FormSections/ErrorSection'
 
-const FormDevTools: ComponentType = dynamic(() => import('./SendSykmeldingFormDevTools'), {
+const FormDevTools: ComponentType = dynamic(() => import('../FormComponents/DevTools/FormDevTools'), {
     ssr: false,
 })
 
-export interface FormValues {
+export interface FormValues extends EgenmeldingsdagerSubForm {
     erOpplysningeneRiktige: YesOrNo | null
     uriktigeOpplysninger: UriktigeOpplysningerType[] | null
     arbeidssituasjon: ArbeidssituasjonType | null
@@ -34,11 +35,6 @@ export interface FormValues {
     harBruktEgenmelding: YesOrNo | null
     egenmeldingsperioder: { fom: Date | null; tom: Date | null }[] | null
     harForsikring: YesOrNo | null
-    egenmeldingsdager: Array<{
-        harPerioder: YesOrNo | null
-        datoer: Date[] | null
-        hasClickedVidere: boolean | null
-    }> | null
 }
 
 interface Props {

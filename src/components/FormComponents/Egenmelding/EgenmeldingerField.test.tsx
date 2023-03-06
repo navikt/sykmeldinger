@@ -1,5 +1,5 @@
-import { YesOrNo } from '../../../../../fetching/graphql.generated'
-import { toDate, toDateString } from '../../../../../utils/dateUtils'
+import { YesOrNo } from '../../../fetching/graphql.generated'
+import { toDate, toDateString } from '../../../utils/dateUtils'
 
 import { currentPeriodDatePicker, laterPeriodsRemoved } from './EgenmeldingerField'
 
@@ -121,7 +121,15 @@ describe('EgenmeldingerField', () => {
                     hasClickedVidere: true,
                 },
             ]
-            expect(laterPeriodsRemoved(1, egenmeldingsdager)).toEqual([egenmeldingsdager[0], egenmeldingsdager[1]])
+            expect(laterPeriodsRemoved(1, egenmeldingsdager)).toEqual([
+                egenmeldingsdager[0],
+                egenmeldingsdager[1],
+                {
+                    datoer: null,
+                    harPerioder: null,
+                    hasClickedVidere: null,
+                },
+            ])
         })
     })
 })

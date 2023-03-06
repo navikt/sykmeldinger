@@ -1,12 +1,7 @@
+import { EgenmeldingsdagerFormValue } from '../components/FormComponents/Egenmelding/EgenmeldingerField'
 import { SvarUnion_DagerSvar_Fragment, SykmeldingStatusFragment, YesOrNo } from '../fetching/graphql.generated'
 
-export interface EgenmeldingsdagerForm {
-    harPerioder: YesOrNo | null
-    datoer: Date[] | null
-    hasClickedVidere: boolean | null
-}
-
-export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerForm[] | null): boolean => {
+export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerFormValue[] | null): boolean => {
     if (egenmeldingsperioder == null) return false
 
     const lastElement = egenmeldingsperioder[egenmeldingsperioder.length - 1]

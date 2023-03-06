@@ -15,6 +15,8 @@ import { onError } from '@apollo/client/link/error'
 import { logger } from '@navikt/next-logger'
 import { configureAxe } from 'jest-axe'
 
+import possibleTypesGenerated from '../../fetching/possible-types.generated'
+
 import * as customQueries from './customQueries'
 
 type ProviderProps = {
@@ -37,7 +39,9 @@ const errorLoggingLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<ProviderProps>): JSX.Element {
-    const cache = new InMemoryCache()
+    const cache = new InMemoryCache({
+        possibleTypes: possibleTypesGenerated.possibleTypes,
+    })
     initialState?.forEach((it) => cache.writeQuery(it))
 
     const mockLink = new MockLink(mocks ?? [])

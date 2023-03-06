@@ -1,25 +1,20 @@
 import { Calender } from '@navikt/ds-icons'
-import { BodyShort, Heading } from '@navikt/ds-react'
 
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
-import { Periode, SvarUnion_DagerSvar_Fragment } from '../../../../../fetching/graphql.generated'
+import { Periode } from '../../../../../fetching/graphql.generated'
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
-import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
-import { getPublicEnv } from '../../../../../utils/env'
+import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
 
 import styles from './Perioder.module.css'
 
 interface Props {
     perioder: Periode[]
     isV3: boolean
-    egenmeldingsdager?: SvarUnion_DagerSvar_Fragment | undefined
 }
 
-const publicEnv = getPublicEnv()
-
-function Perioder({ perioder, isV3, egenmeldingsdager }: Props): JSX.Element {
+function Perioder({ perioder, isV3 }: Props): JSX.Element {
     return (
         <div>
             <SykmeldtHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
@@ -50,31 +45,6 @@ function Perioder({ perioder, isV3, egenmeldingsdager }: Props): JSX.Element {
                     </div>
                 ))}
             </div>
-            {publicEnv.DISPLAY_EGENMELDING === 'true' && egenmeldingsdager && (
-                <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />
-            )}
-        </div>
-    )
-}
-
-interface EgenmeldingsdagerProps {
-    egenmeldingsdager: SvarUnion_DagerSvar_Fragment
-}
-
-function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
-    return (
-        <div className={styles.egenmeldingsdager}>
-            <Heading size="xsmall" level="4">
-                Egenmeldingsdager (lagt til av deg)
-            </Heading>
-            <ul>
-                {[...egenmeldingsdager.dager].sort().map((date: string) => (
-                    <li className={styles.date} key={toReadableDate(date)}>
-                        <BodyShort size="small">{toReadableDate(date)}</BodyShort>
-                    </li>
-                ))}
-                <BodyShort size="small" as="li">{`(${egenmeldingsdager.dager.length} dager)`}</BodyShort>
-            </ul>
         </div>
     )
 }

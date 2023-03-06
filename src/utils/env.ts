@@ -28,7 +28,7 @@ export interface ServerEnv {
  */
 declare global {
     // eslint-disable-next-line no-var
-    var publicEnv: PublicEnv
+    var _publicEnv: PublicEnv
 }
 
 export function getPublicEnv(): PublicEnv {
@@ -36,7 +36,7 @@ export function getPublicEnv(): PublicEnv {
         return getConfig().publicRuntimeConfig
     }
 
-    return window.publicEnv
+    return window._publicEnv
 }
 
 export function getServerEnv(): ServerEnv {

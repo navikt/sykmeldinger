@@ -35,7 +35,12 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 Modal.setAppElement(document.createElement('div'))
 
 mockRouter.useParser(
-    createDynamicRouteParser(['/', '/[sykmeldingId]', '/[sykmeldingId]/kvittering', '/[sykmeldingId]/bekreftAvvist']),
+    createDynamicRouteParser([
+        '/',
+        '/[sykmeldingId]',
+        '/[sykmeldingId]/kvittering',
+        '/[sykmeldingId]/endre-egenmeldingsdager',
+    ]),
 )
 
 jest.spyOn(window, 'scrollTo').mockImplementation(() => void 0)

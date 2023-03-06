@@ -1,5 +1,6 @@
 import '../style/global.css'
 
+import * as dateFns from 'date-fns'
 import { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
 import React, { useState } from 'react'
@@ -10,6 +11,12 @@ import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs'
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
 import { initAmplitude } from '../amplitude/amplitude'
+
+if (typeof window !== 'undefined') {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.dateFns = dateFns
+}
 
 initAmplitude()
 configureLogger({

@@ -91,7 +91,7 @@ function SykmeldingkvitteringPage(): JSX.Element {
             </div>
 
             <div className="mb-8">
-                <SykmeldingSykmeldtContainer sykmelding={data.sykmelding} />
+                <SykmeldingSykmeldtContainer sykmelding={data.sykmelding} editableEgenmelding />
             </div>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (

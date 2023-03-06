@@ -11,11 +11,11 @@ import {
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../shared/FormStructure'
 import { getPublicEnv } from '../../../../../utils/env'
-import EgenmeldingerField from '../Egenmelding/EgenmeldingerField'
 import { findValgtArbeidsgiver } from '../../../../../utils/arbeidsgiverUtils'
 import { useFindPrevSykmeldingTom } from '../../../../../hooks/useFindPrevSykmeldingTom'
 import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
 import { toDate } from '../../../../../utils/dateUtils'
+import EgenmeldingerField from '../../../../FormComponents/Egenmelding/EgenmeldingerField'
 
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'

@@ -12,11 +12,12 @@ import styles from './SykmeldingSykmeldtContainer.module.css'
 
 interface Props {
     sykmelding: SykmeldingFragment
+    editableEgenmelding?: boolean
 }
 
 const publicEnv = getPublicEnv()
 
-function SykmeldingSykmeldtContainer({ sykmelding }: Props): JSX.Element {
+function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }: Props): JSX.Element {
     const articleHeadingId = `sykmelding-${sykmelding.id}-header`
 
     return (
@@ -43,9 +44,9 @@ function SykmeldingSykmeldtContainer({ sykmelding }: Props): JSX.Element {
                 </div>
             </header>
             {isUtenlandsk(sykmelding) ? (
-                <SykmeldingSykmeldtUtenlandsk sykmelding={sykmelding} />
+                <SykmeldingSykmeldtUtenlandsk sykmelding={sykmelding} editableEgenmelding={editableEgenmelding} />
             ) : (
-                <SykmeldingViewSykmeldt sykmelding={sykmelding} />
+                <SykmeldingViewSykmeldt sykmelding={sykmelding} editableEgenmelding={editableEgenmelding} />
             )}
         </article>
     )
