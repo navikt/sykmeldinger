@@ -5,7 +5,6 @@ import { ApolloError } from '@apollo/client'
 import { SykmeldingChangeStatus, SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
-import Spacing from '../../../Spacing/Spacing'
 import CenterItems from '../../../CenterItems/CenterItems'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
@@ -41,16 +40,16 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
 
     return (
         <div className="sykmelding-container">
-            <Spacing>
+            <div className="mb-8">
                 <AvvistVeileder
                     behandlerNavn={getBehandlerName(sykmelding.behandler)}
                     behandlingsutfall={sykmelding.behandlingsutfall}
                 />
-            </Spacing>
+            </div>
 
-            <Spacing>
+            <div className="mb-8">
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
-            </Spacing>
+            </div>
 
             <form
                 onSubmit={handleSubmit(bekreftInvalid, () => {
@@ -58,7 +57,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                 })}
             >
                 <CenterItems horizontal>
-                    <Spacing>
+                    <div className="mb-8">
                         <ConfirmationPanel
                             {...field}
                             checked={field.value}
@@ -77,14 +76,14 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
                                 field.onChange(newValue)
                             }}
                         />
-                    </Spacing>
+                    </div>
 
                     {mutationError && (
-                        <Spacing amount="small">
+                        <div className="mb-4">
                             <Alert variant="error" role="alert" aria-live="polite">
                                 {mutationError.message}
                             </Alert>
-                        </Spacing>
+                        </div>
                     )}
 
                     <Button variant="primary" type="submit" loading={mutationLoading}>

@@ -1,9 +1,0 @@
-.root {
-    margin-top: var(--a-spacing-8);
-}
-
-.ferdigButtonWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}

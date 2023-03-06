@@ -1,34 +1,16 @@
-@import '~@navikt/ds-css';
+@import 'tailwindcss/base';
+@import '@navikt/ds-css';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 html {
     --header-farge: #c2eaf7;
-    --skillelinje-farge: #c9c9c9;
     --desktop-limit-width: 42rem;
     --eyes-open-color: #3e3832;
     --eyes-closed-color: #e7e9e9;
     --sykmelding-view-sykmeldt: var(--a-blue-50);
     --sykmelding-view-flere-opplysninger: var(--a-gray-50);
     --sykmelding-view-arbeidsgiver: #fef9ef; /*TODO: fix color var(--a-gray-50); */
-}
-
-html,
-body {
-    height: 100%;
-    background-color: white;
-    margin: 0;
-}
-
-ul {
-    margin: 0;
-    padding-left: 1.2rem;
-}
-
-ul li {
-    font-size: 1rem;
-}
-
-#root {
-    min-height: 50vh;
 }
 
 @media print {

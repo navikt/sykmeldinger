@@ -6,8 +6,6 @@ import { UseControllerProps } from 'react-hook-form/dist/types/controller'
 import { FormValues } from '../../SendSykmeldingForm'
 import { YesOrNo } from '../../../../fetching/graphql.generated'
 
-import styles from './YesNoField.module.css'
-
 interface Props {
     name:
         | 'erOpplysningeneRiktige'
@@ -42,7 +40,7 @@ function YesNoField({ name, legend, subtext, onChange, rules, shouldUnregister =
                 onChange?.(value)
             }}
         >
-            {subtext && <div className={styles.subText}>{subtext}</div>}
+            {subtext && <div className="mb-2">{subtext}</div>}
             <Radio value={YesOrNo.YES} disabled={disabled}>
                 Ja
             </Radio>

@@ -1,10 +1,8 @@
 import React, { PropsWithChildren } from 'react'
 import { Heading, HeadingProps } from '@navikt/ds-react'
 
-import styles from './FormStructure.module.css'
-
 export function QuestionWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
-    return <div className={styles.question}>{children}</div>
+    return <div className="mt-12">{children}</div>
 }
 
 export function SectionWrapper({
@@ -14,7 +12,7 @@ export function SectionWrapper({
     level = '2',
 }: PropsWithChildren<{ title?: string } & Partial<Pick<HeadingProps, 'size' | 'level'>>>): JSX.Element {
     return (
-        <section className={styles.section} aria-label={title}>
+        <section className="mt-6" aria-label={title}>
             {title && (
                 <Heading size={size} level={level}>
                     {title}

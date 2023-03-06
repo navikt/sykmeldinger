@@ -4,7 +4,6 @@ import { FillForms } from '@navikt/ds-icons'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
-import Spacing from '../../../Spacing/Spacing'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
@@ -22,17 +21,17 @@ function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProp
 
     return (
         <div className="sykmelding-container">
-            <Spacing amount="small">
+            <div className="mb-4">
                 <StatusBanner
                     sykmeldingStatus={sykmelding.sykmeldingStatus}
                     behandlingsutfall={sykmelding.behandlingsutfall}
                     egenmeldt={sykmelding.egenmeldt}
                 />
-            </Spacing>
+            </div>
 
             {!Boolean(sykmelding.egenmeldt) && (
-                <Spacing>
-                    <Spacing amount="small">
+                <div className="mb-8">
+                    <div className="mb-4">
                         <Button
                             size="small"
                             variant="secondary"
@@ -44,8 +43,8 @@ function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProp
                         >
                             GJØR UTFYLLINGEN PÅ NYTT
                         </Button>
-                    </Spacing>
-                </Spacing>
+                    </div>
+                </div>
             )}
 
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />

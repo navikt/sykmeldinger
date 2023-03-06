@@ -3,8 +3,6 @@ import { BodyLong, BodyShort, Label } from '@navikt/ds-react'
 
 import { Behandlingsutfall } from '../../fetching/graphql.generated'
 
-import styles from './ForklaringAndre.module.css'
-
 interface ForklaringAndreProps {
     behandlerNavn: string
     ruleHits: Behandlingsutfall['ruleHits']
@@ -15,12 +13,12 @@ const avvistGrunnId = 'avvist-grunn'
 function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): JSX.Element {
     return (
         <>
-            <BodyLong className={styles.trengerNySykmelding}>
+            <BodyLong className="mb-6">
                 Du trenger en ny sykmelding fordi det er gjort en feil i utfyllingen. Vi har gitt beskjed til{' '}
                 {behandlerNavn} om hva som er feil, og at du må få en ny sykmelding.
             </BodyLong>
             <Label id={avvistGrunnId}>Grunnen til at sykmeldingen er avvist:</Label>
-            <ul className={styles.begrunnelseList} aria-labelledby={avvistGrunnId}>
+            <ul className="mb-4" aria-labelledby={avvistGrunnId}>
                 {ruleHits.map((ruleHit, index) => (
                     <li key={index}>
                         <BodyShort>{ruleHit.messageForUser}</BodyShort>

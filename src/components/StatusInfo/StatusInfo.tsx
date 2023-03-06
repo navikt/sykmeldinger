@@ -8,7 +8,6 @@ import {
     SvarUnion_ArbeidssituasjonSvar_Fragment,
     SykmeldingStatusFragment,
 } from '../../fetching/graphql.generated'
-import Spacing from '../Spacing/Spacing'
 import { Merknadtype } from '../InformationBanner/InformationBanner'
 
 import styles from './StatusInfo.module.css'
@@ -46,19 +45,19 @@ function StatusInfo({
         return (
             <div data-testid="status-info">
                 <GuidePanel poster>
-                    <Spacing amount="small">
+                    <div className="mb-4">
                         <BodyShort>
                             Du har sendt beskjed til arbeidsgiveren din om at det er mulig å unngå sykmelding hvis det
                             blir lagt til rette for deg på arbeidsplassen.
                         </BodyShort>
-                    </Spacing>
-                    <Spacing amount="small">
+                    </div>
+                    <div className="mb-4">
                         <BodyShort>
                             Husk at du har mulighet til å lage en digital oppfølgingsplan sammen med arbeidsgiveren din.
                             Hensikten er å finne ut hvilke oppgaver du kan gjøre hvis lederen din legger til rette for
                             det.
                         </BodyShort>
-                    </Spacing>
+                    </div>
                     <a href="/oppfolgingsplan/oppfolgingsplaner" className="knapp">
                         Lag en oppfølgingsplan
                     </a>
@@ -71,20 +70,20 @@ function StatusInfo({
         return (
             <div data-testid="status-info" className={styles.root}>
                 <GuidePanel poster>
-                    <Spacing amount="small">
+                    <div className="mb-4">
                         <BodyShort>Vanligvis fyller du ut en søknad om sykepenger når sykmeldingen er over.</BodyShort>
-                    </Spacing>
-                    <Spacing amount="small">
+                    </div>
+                    <div className="mb-4">
                         <BodyShort>
                             Siden legen har skrevet at sykmeldingen startet før dere hadde kontakt, må NAV først vurdere
                             om det var en gyldig grunn til dette.
                         </BodyShort>
-                    </Spacing>
-                    <Spacing amount="small">
+                    </div>
+                    <div className="mb-4">
                         <BodyShort>
                             Du får en melding fra oss når vurderingen er ferdig og søknaden er klar til utfylling.
                         </BodyShort>
-                    </Spacing>
+                    </div>
                 </GuidePanel>
             </div>
         )
@@ -93,13 +92,13 @@ function StatusInfo({
     return (
         <div data-testid="status-info">
             <GuidePanel poster>
-                <Spacing amount="small">
+                <div className="mb-4">
                     <BodyShort>
                         Når sykefraværet er over, får du en melding fra oss igjen. Da svarer du på noen spørsmål slik at
                         vi kan beregne sykepengene dine riktig.
                     </BodyShort>
-                </Spacing>
-                <Spacing amount="small">
+                </div>
+                <div className="mb-4">
                     <BodyShort>
                         Hvis du vurderer å reise utenfor EØS mens du er sykmeldt, må du{' '}
                         <Link href="https://www.nav.no/syk/sykepengesoknad/sykepengesoknad-utland" target="_blank">
@@ -107,21 +106,21 @@ function StatusInfo({
                         </Link>{' '}
                         før du reiser.
                     </BodyShort>
-                </Spacing>
+                </div>
 
                 {erFlEllerSn && (
-                    <Spacing amount="small">
+                    <div className="mb-4">
                         <BodyShort>
                             Husk at NAV ikke dekker sykepenger de første 16 dagene av sykefraværet, med mindre du har
                             tegnet forsikring. Har du ikke forsikring, trenger du ikke levere søknad hvis sykefraværet
                             er kortere enn 17 dager.
                         </BodyShort>
-                    </Spacing>
+                    </div>
                 )}
 
-                <Spacing amount="small">
+                <div className="mb-4">
                     <BodyShort>God bedring!</BodyShort>
-                </Spacing>
+                </div>
             </GuidePanel>
         </div>
     )

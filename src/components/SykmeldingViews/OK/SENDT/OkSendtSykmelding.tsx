@@ -2,7 +2,6 @@ import React from 'react'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
-import Spacing from '../../../Spacing/Spacing'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 import SykmeldingArbeidsgiverContainer from '../../SykmeldingView/SykmeldingArbeidsgiverContainer'
@@ -18,22 +17,22 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element 
 
     return (
         <div className="sykmelding-container">
-            <Spacing>
+            <div className="mb-8">
                 <StatusBanner
                     sykmeldingStatus={sykmelding.sykmeldingStatus}
                     behandlingsutfall={sykmelding.behandlingsutfall}
                 />
-            </Spacing>
+            </div>
 
             {isUnderbehandling(sykmelding) && (
-                <Spacing>
+                <div className="mb-8">
                     <UnderBehandlingGuidePanel isSent />
-                </Spacing>
+                </div>
             )}
 
-            <Spacing>
+            <div className="mb-8">
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
-            </Spacing>
+            </div>
 
             <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
         </div>

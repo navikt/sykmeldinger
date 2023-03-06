@@ -4,7 +4,6 @@ import { Behandlingsutfall } from '../../fetching/graphql.generated'
 
 import ForklaringZDiagnose from './ForklaringZDiagnose'
 import ForklaringAndre from './ForklaringAndre'
-import styles from './AvvistVeileder.module.css'
 
 interface AvvistVeilederProps {
     behandlerNavn: string
@@ -28,25 +27,24 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall }: AvvistVeilederProp
 
     return (
         <GuidePanel poster>
-            <Heading size="small" className={styles.title}>
+            <Heading size="small" className="my-4 text-center">
                 Sykmeldingen kan dessverre ikke brukes
             </Heading>
-            <hr aria-hidden className={styles.underline} />
             <BodyShort>Beklager at vi må bry deg mens du er syk.</BodyShort>
-            <div className={styles.textWrapper}>
+            <div className="mt-6">
                 {isNotValidInHPR || isMissingAuthorization || isNotCorrectRole || isSuspended ? (
                     <BodyShort>
                         Den som har skrevet sykmeldingen, har ikke autorisasjon til å gjøre det. Du må derfor få en
                         annen til å skrive sykmeldingen.
                     </BodyShort>
                 ) : isOver12Weeks ? (
-                    <div className={styles.over12Weeks}>
-                        <BodyLong>
+                    <>
+                        <BodyLong className="pb-5">
                             Kiropraktorer og manuellterapeuter har ikke lov til å skrive en sykmelding som gjør at det
                             totale sykefraværet ditt blir lenger enn 12 uker.
                         </BodyLong>
                         <BodyLong>Du må få en lege til å skrive sykmeldingen.</BodyLong>
-                    </div>
+                    </>
                 ) : isOver70 ? (
                     <BodyShort>
                         Du har ikke rett til sykepenger fordi du er over 70 år. I stedet for sykmelding kan du be om en

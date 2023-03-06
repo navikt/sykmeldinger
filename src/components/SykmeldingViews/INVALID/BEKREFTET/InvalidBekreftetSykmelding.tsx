@@ -1,7 +1,6 @@
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
-import Spacing from '../../../Spacing/Spacing'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
@@ -16,19 +15,19 @@ function InvalidBekreftetSykmelding({ sykmelding }: InvalidBekreftetSykmeldingPr
 
     return (
         <div className="sykmelding-container">
-            <Spacing amount="large">
+            <div className="mb-16">
                 <StatusBanner
                     sykmeldingStatus={sykmelding.sykmeldingStatus}
                     behandlingsutfall={sykmelding.behandlingsutfall}
                 />
-            </Spacing>
+            </div>
 
-            <Spacing>
+            <div className="mb-8">
                 <AvvistVeileder
                     behandlerNavn={getBehandlerName(sykmelding.behandler)}
                     behandlingsutfall={sykmelding.behandlingsutfall}
                 />
-            </Spacing>
+            </div>
 
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
 

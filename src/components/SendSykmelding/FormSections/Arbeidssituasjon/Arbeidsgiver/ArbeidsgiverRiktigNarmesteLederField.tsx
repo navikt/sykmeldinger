@@ -9,8 +9,6 @@ import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import YesNoField from '../../shared/YesNoField'
 import { FormValues } from '../../../SendSykmeldingForm'
 
-import styles from './ArbeidsgiverRiktigNarmesteLederField.module.css'
-
 interface Props {
     narmesteLeder: NaermesteLederFragment
 }
@@ -46,7 +44,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
                 }}
             />
             {riktigNarmesteLeder != null && (
-                <Alert className={styles.narmestelederInfo} variant="info" role="alert" aria-live="polite">
+                <Alert className="my-8" variant="info" role="alert" aria-live="polite">
                     {riktigNarmesteLeder === YesOrNo.YES
                         ? `Vi sender sykmeldingen til ${narmesteLeder.navn}, som finner den ved å logge inn på nav.no`
                         : 'Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.'}

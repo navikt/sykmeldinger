@@ -4,7 +4,6 @@ import { Alert, GuidePanel } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
-import Spacing from '../../components/Spacing/Spacing'
 import Spinner from '../../components/Spinner/Spinner'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'
 import StatusInfo from '../../components/StatusInfo/StatusInfo'
@@ -72,28 +71,28 @@ function SykmeldingkvitteringPage(): JSX.Element {
 
     return (
         <KvitteringWrapper sykmelding={data.sykmelding}>
-            <Spacing>
+            <div className="mb-8">
                 <StatusBanner
                     sykmeldingStatus={data.sykmelding.sykmeldingStatus}
                     behandlingsutfall={data.sykmelding.behandlingsutfall}
                 />
-            </Spacing>
+            </div>
 
-            <Spacing>
+            <div className="mb-8">
                 <StatusInfo
                     sykmeldingStatus={data.sykmelding.sykmeldingStatus}
                     sykmeldingsperioder={data.sykmelding.sykmeldingsperioder}
                     sykmeldingMerknader={data.sykmelding.merknader ?? []}
                 />
-            </Spacing>
+            </div>
 
-            <Spacing>
+            <div className="mb-8">
                 <UxSignalsWidget />
-            </Spacing>
+            </div>
 
-            <Spacing>
+            <div className="mb-8">
                 <SykmeldingSykmeldtContainer sykmelding={data.sykmelding} />
-            </Spacing>
+            </div>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
                 <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} />

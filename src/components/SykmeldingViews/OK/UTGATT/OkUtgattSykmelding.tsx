@@ -4,7 +4,6 @@ import { Alert, Detail, Heading } from '@navikt/ds-react'
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import { toReadableDate } from '../../../../utils/dateUtils'
-import Spacing from '../../../Spacing/Spacing'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
 interface OkUtgattSykmeldingProps {
@@ -16,14 +15,14 @@ function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Elemen
 
     return (
         <div className="sykmelding-container">
-            <Spacing>
+            <div className="mb-8">
                 <Alert variant="info">
                     <Heading size="small" level="2">
                         Sykmeldingen er utgått
                     </Heading>
                     <Detail>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Detail>
                 </Alert>
-            </Spacing>
+            </div>
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
         </div>
     )

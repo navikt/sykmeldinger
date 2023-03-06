@@ -16,7 +16,6 @@ import InvalidApenSykmelding from '../../components/SykmeldingViews/INVALID/APEN
 import InvalidBekreftetSykmelding from '../../components/SykmeldingViews/INVALID/BEKREFTET/InvalidBekreftetSykmelding'
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import Header from '../../components/Header/Header'
-import Spacing from '../../components/Spacing/Spacing'
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
@@ -39,9 +38,9 @@ function SykmeldingPage(): JSX.Element {
 
     if (data?.sykmelding == null && (loading || olderSykmelding.isLoading)) {
         return (
-            <Spacing>
+            <div className="mb-8">
                 <Spinner headline="Henter sykmelding" />
-            </Spacing>
+            </div>
         )
     }
 
@@ -195,9 +194,9 @@ function SykmeldingerWrapper({
                 />
                 <PageWrapper>
                     {children}
-                    <Spacing direction="top" amount="large">
+                    <div className="mt-16">
                         <TilHovedsiden />
-                    </Spacing>
+                    </div>
                 </PageWrapper>
             </div>
         </div>

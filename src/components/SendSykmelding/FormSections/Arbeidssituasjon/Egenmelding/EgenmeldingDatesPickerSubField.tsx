@@ -5,8 +5,6 @@ import { endOfMonth, isSameMonth, startOfMonth } from 'date-fns'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { sporsmal } from '../../../../../utils/sporsmal'
 
-import styles from './EgenmeldingDatesPickerSubField.module.css'
-
 interface Props {
     index: number
     earliestPossibleDate: Date
@@ -31,10 +29,10 @@ function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPos
     })
 
     return (
-        <div className={styles.velgDager}>
+        <div className="my-4">
             <Label>{sporsmal.egenmeldingsdager}</Label>
             {!isSameMonth(earliestPossibleDate, latestPossibleDate) && window.innerWidth >= 768 ? (
-                <div className={styles.twoDatepickers}>
+                <div className="flex">
                     <UNSAFE_DatePicker.Standalone
                         mode="multiple"
                         selected={datoerField.value ?? []}
@@ -56,6 +54,7 @@ function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPos
                 </div>
             ) : (
                 <UNSAFE_DatePicker.Standalone
+                    className="max-[350px]:-ml-5"
                     mode="multiple"
                     min={1}
                     max={16}
@@ -67,9 +66,7 @@ function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPos
                     toDate={latestPossibleDate}
                 />
             )}
-            {datoerFieldState.error && (
-                <ErrorMessage className={styles.datoError}>{datoerFieldState.error?.message}</ErrorMessage>
-            )}
+            {datoerFieldState.error && <ErrorMessage className="mb-4">{datoerFieldState.error?.message}</ErrorMessage>}
         </div>
     )
 }

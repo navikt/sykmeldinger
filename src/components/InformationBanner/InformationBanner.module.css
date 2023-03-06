@@ -1,20 +1,3 @@
-.merknadBannerSection {
-    margin-bottom: var(--a-spacing-6);
-}
-
-.title {
-    margin-bottom: var(--a-spacing-4);
-}
-
-.paragraph {
-    margin-bottom: var(--a-spacing-2);
-}
-
-.merknadBannerRuler {
-    opacity: 0.5;
-    margin: 22px 0;
-}
-
 .veilederMottattSykmeldingen {
     display: flex;
     margin: 0 var(--a-spacing-12) 0 var(--a-spacing-12);

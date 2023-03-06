@@ -7,7 +7,6 @@ import { logger } from '@navikt/next-logger'
 import Spinner from '../components/Spinner/Spinner'
 import useSykmeldinger from '../hooks/useSykmeldinger'
 import useHotjarTrigger from '../hooks/useHotjarTrigger'
-import Spacing from '../components/Spacing/Spacing'
 import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
 import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
 import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel'
@@ -28,9 +27,9 @@ function SykmeldingerPage(): JSX.Element {
 
     if (data?.sykmeldinger == null && loading) {
         return (
-            <Spacing>
+            <div className="mb-8">
                 <Spinner headline="Henter dine sykmeldinger" />
-            </Spacing>
+            </div>
         )
     }
 
@@ -61,20 +60,20 @@ function SykmeldingerPage(): JSX.Element {
             <SykmeldingLinkPanel title="Under behandling" type="UNDER_BEHANDLING" sykmeldinger={underBehandling} />
             <SykmeldingLinkPanel title="Nye sykmeldinger" type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
 
-            <Spacing amount="small">
+            <div className="mb-4">
                 <InfoOmDigitalSykmelding />
-            </Spacing>
+            </div>
 
             <Accordion>
                 <Accordion.Item>
                     <Accordion.Header>Ser du ikke sykmeldingen din her?</Accordion.Header>
                     <Accordion.Content>
-                        <Spacing amount="small">
+                        <div className="mb-4">
                             <BodyShort>
                                 Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
                                 papirsykmeldingen i stedet.
                             </BodyShort>
-                        </Spacing>
+                        </div>
 
                         <Link href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
                             Mer informasjon om papirsykmelding finner du her.
@@ -92,7 +91,7 @@ function SykmeldingerPage(): JSX.Element {
     )
 }
 
-function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
+function IndexWrapper({ children }: PropsWithChildren): JSX.Element {
     useUpdateBreadcrumbs(() => [])
 
     return (
@@ -103,9 +102,9 @@ function IndexWrapper({ children }: PropsWithChildren<unknown>): JSX.Element {
             <Header title="Dine sykmeldinger" />
             <PageWrapper>
                 {children}
-                <Spacing direction="top" amount="large">
+                <div className="mt-16">
                     <TilHovedsiden />
-                </Spacing>
+                </div>
             </PageWrapper>
         </>
     )

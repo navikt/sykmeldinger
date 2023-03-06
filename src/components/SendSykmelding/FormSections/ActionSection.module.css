@@ -15,21 +15,3 @@
     align-items: center;
     margin-top: var(--a-spacing-8);
 }
-
-.confirmButton {
-    margin-top: var(--a-spacing-4);
-}
-
-.avbrytText {
-    max-width: 75%;
-}
-
-.feedbackError {
-    margin-top: var(--a-spacing-4);
-}
-
-.closeAvbryt {
-    position: absolute;
-    top: var(--a-spacing-1);
-    right: var(--a-spacing-1);
-}
