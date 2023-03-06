@@ -3,13 +3,14 @@ import { logger } from '@navikt/next-logger'
 
 import { dateSub } from '../../utils/dateUtils'
 import { mapSendSykmeldingValuesToV3Api } from '../sendSykmeldingMapping'
+import { Sykmelding as SykmeldingApiModel } from '../api-models/sykmelding/Sykmelding'
 
 import {
     MutationResolvers,
     QueryResolvers,
     Resolvers,
-    StatusEvent,
     Sykmelding,
+    StatusEvent,
     SykmeldingChangeStatus,
 } from './resolver-types.generated'
 import { sykmeldingApen } from './mockData/sykmelding-apen'
@@ -28,7 +29,7 @@ import { sykmeldingUgyldigTilbakedatering } from './mockData/sykmelding-ugyldig-
 import arbeidsgivereMock from './mockData/arbeidsgivereMock'
 import objectResolvers from './objectResolvers'
 
-export const sykmeldinger = [
+export const sykmeldinger: SykmeldingApiModel[] = [
     sykmeldingApen(),
     sykmeldingApen(dateSub(new Date(), { hours: 1 }), 'APENNI'),
     sykmeldingApenPapir(),
@@ -105,6 +106,7 @@ const Mutation: MutationResolvers = {
             )}`,
         )
         sykmelding.sykmeldingStatus.statusEvent = StatusEvent.SENDT
+
         return sykmelding
     },
 }

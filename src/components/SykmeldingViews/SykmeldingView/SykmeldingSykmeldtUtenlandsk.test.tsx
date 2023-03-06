@@ -15,6 +15,7 @@ describe('SykmeldingSykmeldtUtenlandsk', () => {
                         land: 'Finnland',
                     },
                 }}
+                editableEgenmelding={false}
             />,
         )
 

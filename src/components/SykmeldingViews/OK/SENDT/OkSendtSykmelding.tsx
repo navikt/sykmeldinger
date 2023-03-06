@@ -31,7 +31,7 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element 
             )}
 
             <div className="mb-8">
-                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+                <SykmeldingSykmeldtContainer sykmelding={sykmelding} editableEgenmelding />
             </div>
 
             <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />

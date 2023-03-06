@@ -26,13 +26,10 @@ export function createSykmelding(
         __typename: 'Sykmelding',
         id: 'test-sykmelding',
         mottattTidspunkt: mottatt,
-        sykmeldingStatus: {
-            __typename: 'SykmeldingStatus',
+        sykmeldingStatus: createSykmeldingStatus({
             timestamp: mottatt,
             statusEvent,
-            sporsmalOgSvarListe: [],
-            arbeidsgiver: null,
-        },
+        }),
         behandlingsutfall: {
             __typename: 'Behandlingsutfall',
             status: RegelStatus.OK,
@@ -183,6 +180,17 @@ export function createSykmelding(
         ...overrides,
     }
 }
+
+export const createSykmeldingStatus = (
+    overrides?: Partial<SykmeldingFragment['sykmeldingStatus']>,
+): SykmeldingFragment['sykmeldingStatus'] => ({
+    __typename: 'SykmeldingStatus',
+    timestamp: '2020-04-01',
+    statusEvent: StatusEvent.SENDT,
+    sporsmalOgSvarListe: [],
+    arbeidsgiver: null,
+    ...overrides,
+})
 
 export const createSykmeldingPeriode = (overrides?: Partial<PeriodeFragment>): PeriodeFragment => ({
     __typename: 'Periode',

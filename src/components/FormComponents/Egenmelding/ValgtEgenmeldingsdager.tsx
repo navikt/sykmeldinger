@@ -1,6 +1,6 @@
 import { Button, Heading } from '@navikt/ds-react'
 
-import { toReadableDate } from '../../../../../utils/dateUtils'
+import { toReadableDate } from '../../../utils/dateUtils'
 
 import styles from './ValgtEgenmeldingsdager.module.css'
 

@@ -2,8 +2,10 @@ import { useController } from 'react-hook-form'
 import { ErrorMessage, Label, UNSAFE_DatePicker } from '@navikt/ds-react'
 import { endOfMonth, isSameMonth, startOfMonth } from 'date-fns'
 
-import { FormValues } from '../../../SendSykmeldingForm'
-import { sporsmal } from '../../../../../utils/sporsmal'
+import { sporsmal } from '../../../utils/sporsmal'
+
+import { EgenmeldingsdagerSubForm } from './EgenmeldingerField'
+import styles from './EgenmeldingDatesPickerSubField.module.css'
 
 interface Props {
     index: number
@@ -13,7 +15,7 @@ interface Props {
 
 function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPossibleDate }: Props): JSX.Element {
     const { field: datoerField, fieldState: datoerFieldState } = useController<
-        FormValues,
+        EgenmeldingsdagerSubForm,
         `egenmeldingsdager.${number}.datoer`
     >({
         name: `egenmeldingsdager.${index}.datoer`,

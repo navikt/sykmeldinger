@@ -1,16 +1,25 @@
 import { Button, ErrorMessage } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
 import { add, isAfter, isBefore, sub } from 'date-fns'
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useRef } from 'react'
+import * as R from 'remeda'
 
-import { FormValues } from '../../../SendSykmeldingForm'
-import { sortDatesASC } from '../../../../../utils/dateUtils'
-import { YesOrNo } from '../../../../../fetching/graphql.generated'
-import { EgenmeldingsdagerForm } from '../../../../../utils/egenmeldingsdagerUtils'
+import { sortDatesASC } from '../../../utils/dateUtils'
+import { YesOrNo } from '../../../fetching/graphql.generated'
 
 import HarBruktEgenmelding from './HarBruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
 import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
+
+export type EgenmeldingsdagerSubForm = {
+    egenmeldingsdager: EgenmeldingsdagerFormValue[] | null
+}
+
+export type EgenmeldingsdagerFormValue = {
+    harPerioder: YesOrNo | null
+    datoer: Date[] | null
+    hasClickedVidere: boolean | null
+}
 
 interface Props {
     index: number
@@ -25,8 +34,7 @@ interface Props {
 }
 
 function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element | null {
-    const { watch, setValue } = useFormContext<FormValues>()
-    const egenmeldingsdager = watch('egenmeldingsdager')
+    const { watch, setValue, getValues } = useFormContext<EgenmeldingsdagerSubForm>()
     const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
     const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
     const hasClickedVidere: boolean | null = watch(`egenmeldingsdager.${index}.hasClickedVidere`)
@@ -34,11 +42,12 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
     const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(previous, metadata.previousSykmeldingTom)
     const hasHitPreviousSykmeldingTom = isAfter(earliestPossibleDate, latestPossibleDate)
 
+    const harPerioderRef = useRef(harPerioder)
     useLayoutEffect(() => {
         if (hasHitPreviousSykmeldingTom) return
 
         // TODO: This is a hack to fix weird RHF-watch issue. Keep an eye on if it's fixed so we can remove this useEffect.
-        setValue(`egenmeldingsdager.${index}.harPerioder`, null)
+        setValue(`egenmeldingsdager.${index}.harPerioder`, harPerioderRef.current ?? null)
     }, [hasHitPreviousSykmeldingTom, index, setValue])
 
     if (hasHitPreviousSykmeldingTom) {
@@ -81,7 +90,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                 <ValgtEgenmeldingsdager
                     dates={sortedDates}
                     onEditClicked={() => {
-                        setValue('egenmeldingsdager', laterPeriodsRemoved(index, egenmeldingsdager))
+                        setValue('egenmeldingsdager', laterPeriodsRemoved(index, getValues('egenmeldingsdager')))
                         setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
                     }}
                 />
@@ -101,25 +110,34 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
 }
 
 function VidereButtonField({ index, missingDates }: { index: number; missingDates: boolean }): JSX.Element {
-    const { field: videreField } = useController<FormValues, `egenmeldingsdager.${number}.hasClickedVidere`>({
+    const { field, fieldState } = useController<
+        EgenmeldingsdagerSubForm,
+        `egenmeldingsdager.${number}.hasClickedVidere`
+    >({
         name: `egenmeldingsdager.${index}.hasClickedVidere`,
+        rules: {
+            required: 'Du må klikke deg videre når du har valgt datoene du har brukt egenmelding på',
+        },
         defaultValue: null,
     })
 
     return (
-        <Button
-            type="button"
-            variant="secondary"
-            onClick={() => {
-                if (missingDates) {
-                    videreField.onChange(false)
-                } else {
-                    videreField.onChange(true)
-                }
-            }}
-        >
-            Videre
-        </Button>
+        <>
+            <Button
+                type="button"
+                variant="secondary"
+                onClick={() => {
+                    if (missingDates) {
+                        field.onChange(false)
+                    } else {
+                        field.onChange(true)
+                    }
+                }}
+            >
+                Videre
+            </Button>
+            {fieldState.error && <ErrorMessage>{fieldState.error.message}</ErrorMessage>}
+        </>
     )
 }
 
@@ -142,9 +160,20 @@ export function currentPeriodDatePicker(
 
 export function laterPeriodsRemoved(
     index: number,
-    list?: EgenmeldingsdagerForm[] | null,
-): EgenmeldingsdagerForm[] | null {
-    return list?.slice(0, index + 1) ?? null
+    list?: readonly EgenmeldingsdagerFormValue[] | null,
+): EgenmeldingsdagerFormValue[] | null {
+    if (list == null) return null
+
+    return R.pipe(
+        R.take(list, index + 1),
+        R.concat([
+            {
+                harPerioder: null,
+                datoer: null,
+                hasClickedVidere: null,
+            },
+        ]),
+    )
 }
 
 export default EgenmeldingerField

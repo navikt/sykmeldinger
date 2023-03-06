@@ -43,7 +43,7 @@ export const sykmeldingSendt3: Sykmelding = {
                 shortName: ShortName.EGENMELDINGSDAGER,
                 svar: {
                     svarType: Svartype.DAGER,
-                    svar: ['2023-04-20', '2023-04-21', '2023-04-22', '2023-04-23', '2023-04-11', '2023-04-12'],
+                    svar: ['2020-03-07', '2020-03-03', '2020-02-20'],
                 },
             },
         ],

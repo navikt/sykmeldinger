@@ -1,12 +1,13 @@
 import { BodyLong, Link, ReadMore } from '@navikt/ds-react'
 import { useState } from 'react'
 
-import { QuestionWrapper } from '../../shared/FormStructure'
-import YesNoField from '../../shared/YesNoField'
-import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
-import { YesOrNo } from '../../../../../fetching/graphql.generated'
-import { sporsmal } from '../../../../../utils/sporsmal'
-import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
+import { toReadableDatePeriod } from '../../../utils/dateUtils'
+import { YesOrNo } from '../../../fetching/graphql.generated'
+import { sporsmal } from '../../../utils/sporsmal'
+import { logAmplitudeEvent } from '../../../amplitude/amplitude'
+// TODO make common components?
+import { QuestionWrapper } from '../../SendSykmelding/FormSections/shared/FormStructure'
+import YesNoField from '../../SendSykmelding/FormSections/shared/YesNoField'
 
 import styles from './HarbruktEgenmelding.module.css'
 
