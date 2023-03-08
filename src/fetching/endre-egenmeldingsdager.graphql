@@ -1,0 +1,5 @@
+mutation EndreEgenmeldingsdager($sykmeldingId: ID!, $egenmeldingsdager: [Date!]!) {
+    updateEgenmeldingsdager(sykmeldingId: $sykmeldingId, egenmeldingsdager: $egenmeldingsdager) {
+        ...Sykmelding
+    }
+}

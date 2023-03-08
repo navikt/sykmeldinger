@@ -105,6 +105,33 @@ export async function sendSykmelding(
     }
 }
 
+export async function updateEgenmeldingsdager(
+    sykmeldingId: string,
+    egenmeldingsdager: string[],
+    context: RequestContext,
+): Promise<Sykmelding> {
+    const childLogger = createChildLogger(context.requestId)
+
+    childLogger.info(`Updating egenmeldingsdager for sykmelding with ID ${sykmeldingId}`)
+
+    try {
+        await fetchApi(
+            { type: 'POST', body: JSON.stringify({ dager: egenmeldingsdager }) },
+            `v3/sykmeldinger/${sykmeldingId}/endre-egenmeldingsdager`,
+            () => null,
+            context,
+        )
+        return getSykmelding(sykmeldingId, context)
+    } catch (e) {
+        if (e instanceof GraphQLError && e.extensions.code === 'UNAUTHENTICATED') {
+            throw e
+        }
+
+        childLogger.error(e)
+        throw new Error(`Failed to update egenmeldingsdager for ${sykmeldingId}`)
+    }
+}
+
 function statusToEndpoint(status: SykmeldingChangeStatus): 'avbryt' | 'bekreftAvvist' {
     switch (status) {
         case SykmeldingChangeStatus.AVBRYT:

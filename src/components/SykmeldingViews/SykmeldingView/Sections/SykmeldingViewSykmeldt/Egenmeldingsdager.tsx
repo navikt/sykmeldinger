@@ -1,12 +1,10 @@
 import { BodyShort, Button, Heading } from '@navikt/ds-react'
 import Link from 'next/link'
 
-import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../../../../../fetching/graphql.generated'
-import { toReadableDate } from '../../../../../../utils/dateUtils'
-import useGetSykmeldingIdParam from '../../../../../../hooks/useGetSykmeldingIdParam'
-import { getPublicEnv } from '../../../../../../utils/env'
-
-import styles from './Egenmeldingsdager.module.css'
+import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../../../../fetching/graphql.generated'
+import { toReadableDate } from '../../../../../utils/dateUtils'
+import useGetSykmeldingIdParam from '../../../../../hooks/useGetSykmeldingIdParam'
+import { getPublicEnv } from '../../../../../utils/env'
 
 const publicEnv = getPublicEnv()
 
@@ -20,17 +18,21 @@ function Egenmeldingsdager({ egenmeldingsdager, editableEgenmelding }: Egenmeldi
     const sykmedingId = useGetSykmeldingIdParam()
     return (
         <>
-            <div className={styles.egenmeldingsdager}>
+            <div className="mb-3 rounded bg-blue-50 p-4 ">
                 <Heading size="xsmall" level="4">
                     Egenmeldingsdager (lagt til av deg)
                 </Heading>
-                <ul>
+                <ul className="list-none p-0">
                     {[...egenmeldingsdager.dager].sort().map((date: string) => (
-                        <li className={styles.date} key={toReadableDate(date)}>
+                        <li key={toReadableDate(date)}>
                             <BodyShort size="small">{toReadableDate(date)}</BodyShort>
                         </li>
                     ))}
-                    <BodyShort size="small" as="li">{`(${egenmeldingsdager.dager.length} dager)`}</BodyShort>
+                    <BodyShort
+                        size="small"
+                        as="li"
+                        className="mt-2"
+                    >{`(${egenmeldingsdager.dager.length} dager)`}</BodyShort>
                 </ul>
             </div>
             {publicEnv.DISPLAY_EGENMELDING === 'true' && editableEgenmelding && (

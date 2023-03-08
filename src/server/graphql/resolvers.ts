@@ -25,6 +25,8 @@ const Mutation: MutationResolvers = {
         sykmeldingerService.changeSykmeldingStatus(sykmeldingId, status, context),
     sendSykmelding: async (_, { sykmeldingId, values }, context) =>
         sykmeldingerService.sendSykmelding(sykmeldingId, values, context),
+    updateEgenmeldingsdager: async (_, { sykmeldingId, egenmeldingsdager }, context) =>
+        sykmeldingerService.updateEgenmeldingsdager(sykmeldingId, egenmeldingsdager, context),
 }
 
 const resolvers: Partial<Resolvers> = {

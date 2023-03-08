@@ -65,7 +65,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): JSX.Element {
                         Klarte ikke å sende inn sykmeldingen
                     </Heading>
                     <BodyShort spacing>
-                        Innsendingen av ble ikke gjennomført på grunn av en ukjent feil, vi jobber allerede med å løse
+                        Innsendingen ble ikke gjennomført på grunn av en ukjent feil, vi jobber allerede med å løse
                         problemet. Vennligst prøv igjen senere.
                     </BodyShort>
                     <BodyShort>Vennligst kontakt NAV dersom problemet vedvarer.</BodyShort>
