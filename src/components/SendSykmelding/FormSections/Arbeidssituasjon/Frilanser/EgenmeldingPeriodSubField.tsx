@@ -98,7 +98,7 @@ function EgenmeldingPeriodSubField({
         <div>
             <UNSAFE_DatePicker
                 {...datepickerProps}
-                wrapperClassName="grid gap-2 place-items-start w-[52ch] md:grid-cols-2 grid-cols-1"
+                wrapperClassName="grid gap-2 place-items-start sm:w-[52ch] sm:grid-cols-2 grid-cols-1"
             >
                 <UNSAFE_DatePicker.Input
                     id={fromField.name}
