@@ -3,8 +3,6 @@ import { BodyLong, GuidePanel, Heading, Label, Chat } from '@navikt/ds-react'
 import { Merknad } from '../../fetching/graphql.generated'
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg'
 
-import styles from './InformationBanner.module.css'
-
 export enum Merknadtype {
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
     TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER = 'TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER',
@@ -91,8 +89,13 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     const mottattSykmeldingId = 'mottatt-sykmelding'
 
     return (
-        <div className={styles.veilederMottattSykmeldingen}>
-            <Chat avatar={<VeilederMaleSvg />} position="left" aria-labelledby={mottattSykmeldingId}>
+        <div className="sm:px-8">
+            <Chat
+                className="p-0 sm:pr-8"
+                avatar={<VeilederMaleSvg />}
+                position="left"
+                aria-labelledby={mottattSykmeldingId}
+            >
                 <Chat.Bubble>
                     <Label id={mottattSykmeldingId}>Vi har mottatt sykmeldingen din</Label>
                     <BodyLong>
