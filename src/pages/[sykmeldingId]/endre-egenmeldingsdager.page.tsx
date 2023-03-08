@@ -15,8 +15,6 @@ import EndreEgenmelding from '../../components/EndreEgenmelding/EndreEgenmelding
 import { createEndreEgenmeldingsdagerBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import { getPublicEnv } from '../../utils/env'
 
-import styles from './endre-egenmeldingsdager.page.module.css'
-
 const publicEnv = getPublicEnv()
 
 function EndreEgenmeldingsdagerPage(): JSX.Element {
@@ -44,7 +42,7 @@ function EndreEgenmeldingsdagerPage(): JSX.Element {
             {sykmelding != null && (
                 <>
                     {!isSendtSykmelding(sykmelding) && (
-                        <Alert variant="error" className={styles.notSentAlert}>
+                        <Alert variant="error" className="my-8">
                             Sykmeldingen er ikke sendt, og kan derfor ikke redigeres.
                         </Alert>
                     )}

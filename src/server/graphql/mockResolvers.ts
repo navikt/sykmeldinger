@@ -109,6 +109,22 @@ const Mutation: MutationResolvers = {
 
         return sykmelding
     },
+    updateEgenmeldingsdager: async (_, { sykmeldingId, egenmeldingsdager }) => {
+        const sykmelding = sykmeldinger.find((it) => it.id === sykmeldingId)
+        if (!sykmelding) {
+            throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
+        }
+
+        logger.debug(
+            `Hit update egenmeldingsdager mock endpoint. TODO: Implement this properly: ${JSON.stringify(
+                egenmeldingsdager,
+                null,
+                2,
+            )}`,
+        )
+
+        return sykmelding
+    },
 }
 
 const resolvers: Partial<Resolvers> = {

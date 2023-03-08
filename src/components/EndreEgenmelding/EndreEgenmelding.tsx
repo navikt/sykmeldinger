@@ -5,7 +5,7 @@ import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../fetching
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import Spinner from '../Spinner/Spinner'
 
-import { EndreEgenmeldingForm } from './EndreEgenmeldingForm'
+import EndreEgenmeldingForm from './EndreEgenmeldingForm'
 
 type EndreEgenmeldingProps = {
     sykmelding: SykmeldingFragment

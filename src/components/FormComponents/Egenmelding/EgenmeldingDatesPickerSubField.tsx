@@ -5,7 +5,6 @@ import { endOfMonth, isSameMonth, startOfMonth } from 'date-fns'
 import { sporsmal } from '../../../utils/sporsmal'
 
 import { EgenmeldingsdagerSubForm } from './EgenmeldingerField'
-import styles from './EgenmeldingDatesPickerSubField.module.css'
 
 interface Props {
     index: number

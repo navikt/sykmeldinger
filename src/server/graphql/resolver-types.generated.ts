@@ -216,6 +216,7 @@ export type Mutation = {
     __typename?: 'Mutation'
     changeSykmeldingStatus: Sykmelding
     sendSykmelding: Sykmelding
+    updateEgenmeldingsdager: Sykmelding
 }
 
 export type MutationChangeSykmeldingStatusArgs = {
@@ -226,6 +227,11 @@ export type MutationChangeSykmeldingStatusArgs = {
 export type MutationSendSykmeldingArgs = {
     sykmeldingId: Scalars['ID']
     values: SendSykmeldingValues
+}
+
+export type MutationUpdateEgenmeldingsdagerArgs = {
+    egenmeldingsdager: Array<Scalars['Date']>
+    sykmeldingId: Scalars['ID']
 }
 
 export type NaermesteLeder = {
@@ -873,6 +879,12 @@ export type MutationResolvers<
         ParentType,
         ContextType,
         RequireFields<MutationSendSykmeldingArgs, 'sykmeldingId' | 'values'>
+    >
+    updateEgenmeldingsdager?: Resolver<
+        ResolversTypes['Sykmelding'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationUpdateEgenmeldingsdagerArgs, 'egenmeldingsdager' | 'sykmeldingId'>
     >
 }>
 

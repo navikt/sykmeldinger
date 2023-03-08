@@ -16,8 +16,8 @@ import Prognose from './Sections/SykmeldingViewSykmeldt/Prognose'
 import Arbeidsevne from './Sections/SykmeldingViewSykmeldt/Arbeidsevne'
 import MeldingTilArbeidsgiver from './Sections/SykmeldingViewSykmeldt/MeldingTilArbeidsgiver'
 import Tilbakedatering from './Sections/SykmeldingViewSykmeldt/Tilbakedatering'
+import Egenmeldingsdager from './Sections/SykmeldingViewSykmeldt/Egenmeldingsdager'
 import styles from './SykmeldingViewSykmeldt.module.css'
-import Egenmeldingsdager from './Sections/SykmeldingViewSykmeldt/Egenmeldingsdager/Egenmeldingsdager'
 
 const publicEnv = getPublicEnv()
 

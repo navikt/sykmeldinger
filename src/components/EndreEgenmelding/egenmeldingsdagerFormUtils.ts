@@ -52,7 +52,6 @@ function traverseEgenmeldingsdager(
         R.partition((date) => isWithinInterval(toDate(date), interval)),
     )
 
-    // TODO: håndtere når man treffer forgående sykmelding????????
     if (insidePeriod.length > 0) {
         return [
             { harPerioder: YesOrNo.YES, datoer: insidePeriod.map(toDate), hasClickedVidere: true },

@@ -6,6 +6,8 @@ import { useRef } from 'react'
 import {
     ChangeSykmeldingStatusDocument,
     ChangeSykmeldingStatusMutation,
+    EndreEgenmeldingsdagerDocument,
+    EndreEgenmeldingsdagerMutation,
     SendSykmeldingDocument,
     SendSykmeldingMutation,
     SendSykmeldingValues,
@@ -13,6 +15,10 @@ import {
 } from '../fetching/graphql.generated'
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { toDateString } from '../utils/dateUtils'
+import {
+    EgenmeldingsdagerFormValue,
+    EgenmeldingsdagerSubForm,
+} from '../components/FormComponents/Egenmelding/EgenmeldingerField'
 
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,
@@ -80,6 +86,36 @@ export function useSendSykmelding(
     ]
 }
 
+export function useEndreEgenmeldingsdager(
+    sykmeldingId: string,
+    onCompleted: (values: EgenmeldingsdagerSubForm) => void,
+    onError: () => void,
+): [MutationResult<EndreEgenmeldingsdagerMutation>, (values: EgenmeldingsdagerSubForm) => void] {
+    const [endreEgenmeldingsdager, result] = useMutation(EndreEgenmeldingsdagerDocument, {
+        onError,
+    })
+
+    return [
+        result,
+        async (values) => {
+            logger.info(`Client: Submitting 'endre egenmeldingsdager' for ${sykmeldingId}`)
+
+            const egenmeldingsdager = mapEgenmeldingsdager(values.egenmeldingsdager)
+            if (!egenmeldingsdager || egenmeldingsdager.length === 0) {
+                throw new Error(
+                    'Trying to endre egenmeldingsdager, but no egenmeldingsdager was provided. Bug in the form?',
+                )
+            }
+
+            await endreEgenmeldingsdager({
+                variables: { sykmeldingId, egenmeldingsdager },
+            })
+
+            onCompleted(values)
+        },
+    ]
+}
+
 function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
     return {
         ...values,
@@ -100,7 +136,7 @@ function getEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykme
     return value[0].harPerioder
 }
 
-function mapEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['egenmeldingsdager'] {
+function mapEgenmeldingsdager(value: EgenmeldingsdagerFormValue[] | null): readonly string[] | undefined {
     if (value == null || value.length === 0) {
         return undefined
     }

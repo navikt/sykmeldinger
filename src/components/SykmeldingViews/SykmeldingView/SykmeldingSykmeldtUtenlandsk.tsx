@@ -7,8 +7,8 @@ import { getPublicEnv } from '../../../utils/env'
 import Perioder from './Sections/SykmeldingViewSykmeldt/Perioder'
 import SykmeldingenGjelder from './Sections/SykmeldingViewSykmeldt/SykmeldingenGjelder'
 import AnnenInfo from './Sections/SykmeldingSykmeldtUtenlandsk/AnnenInfo'
+import Egenmeldingsdager from './Sections/SykmeldingViewSykmeldt/Egenmeldingsdager'
 import styles from './SykmeldingSykmeldtUtenlandsk.module.css'
-import Egenmeldingsdager from './Sections/SykmeldingViewSykmeldt/Egenmeldingsdager/Egenmeldingsdager'
 
 const publicEnv = getPublicEnv()
 
