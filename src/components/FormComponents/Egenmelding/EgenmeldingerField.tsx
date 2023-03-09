@@ -62,7 +62,10 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
     const hasPeriod: boolean = harPerioder === YesOrNo.YES
 
     return (
-        <div className={cn({ 'mt-10 border-t-2 border-border-divider': index !== 0 })}>
+        <section
+            aria-labelledby={`egenmeldingsdager.${index}.harPerioder`}
+            className={cn({ 'mt-10 border-t-2 border-border-divider': index !== 0 })}
+        >
             <HarBruktEgenmelding
                 index={index}
                 arbeidsgiverNavn={metadata.arbeidsgiverNavn}
@@ -106,7 +109,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                     }}
                 />
             )}
-        </div>
+        </section>
     )
 }
 
@@ -166,7 +169,8 @@ export function laterPeriodsRemoved(
     if (list == null) return null
 
     return R.pipe(
-        R.take(list, index + 1),
+        list,
+        R.take(index + 1),
         R.concat([
             {
                 harPerioder: null,
