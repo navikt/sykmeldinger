@@ -2,31 +2,42 @@ import React, { ReactNode } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
 import { UseControllerProps } from 'react-hook-form/dist/types/controller'
+import { FieldPath, FieldPathValue, FieldValues } from 'react-hook-form/dist/types'
 
-import { FormValues } from '../../SendSykmeldingForm'
-import { YesOrNo } from '../../../../fetching/graphql.generated'
+import { YesOrNo } from '../../../fetching/graphql.generated'
 
-interface Props {
-    name:
-        | 'erOpplysningeneRiktige'
-        | 'riktigNarmesteLeder'
-        | 'harBruktEgenmelding'
-        | 'harForsikring'
-        | `egenmeldingsdager.${number}.harPerioder`
+interface Props<
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> {
+    name: TName
     legend: string
     subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void
+    defaultValue?: FieldPathValue<TFieldValues, TName>
     rules?: UseControllerProps['rules']
     shouldUnregister?: boolean
     disabled?: boolean
 }
 
-function YesNoField({ name, legend, subtext, onChange, rules, shouldUnregister = true, disabled }: Props): JSX.Element {
-    const { field, fieldState } = useController<FormValues>({
+function YesNoField<
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
+    name,
+    legend,
+    subtext,
+    onChange,
+    defaultValue,
+    rules,
+    shouldUnregister = true,
+    disabled,
+}: Props<TFieldValues, TName>): JSX.Element {
+    const { field, fieldState } = useController<TFieldValues, TName>({
         name,
         rules,
         shouldUnregister,
-        defaultValue: null,
+        defaultValue,
     })
 
     return (

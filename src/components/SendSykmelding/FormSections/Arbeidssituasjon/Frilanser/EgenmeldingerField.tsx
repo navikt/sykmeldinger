@@ -5,7 +5,7 @@ import { Add } from '@navikt/ds-icons'
 import { sub } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
-import { SectionWrapper } from '../../shared/FormStructure'
+import { SectionWrapper } from '../../../../FormComponents/FormStructure'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { toDate } from '../../../../../utils/dateUtils'
 

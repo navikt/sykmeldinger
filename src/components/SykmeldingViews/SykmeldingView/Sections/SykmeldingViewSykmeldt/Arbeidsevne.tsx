@@ -3,8 +3,6 @@ import { ShakeHands } from '@navikt/ds-icons'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
-import styles from './Arbeidsevne.module.css'
-
 interface Props {
     tiltakArbeidsplassen?: string | null
     tiltakNAV?: string | null
@@ -20,7 +18,7 @@ function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): J
         <div>
             <SykmeldtHeading title="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands} />
             {!!tiltakArbeidsplassen && (
-                <div className={styles.info}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     <SykmeldingEntry
                         title="Tilrettelegging/hensyn som bør tas på arbeidsplassen"
                         mainText={tiltakArbeidsplassen}
@@ -28,12 +26,12 @@ function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): J
                 </div>
             )}
             {!!tiltakNAV && (
-                <div className={styles.tiltakNAV}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     <SykmeldingEntry title="Tiltak i regi av NAV" mainText={tiltakNAV} />
                 </div>
             )}
             {!!andreTiltak && (
-                <div className={styles.andreTiltak}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     <SykmeldingEntry title="Andre innspill til NAV" mainText={andreTiltak} />
                 </div>
             )}

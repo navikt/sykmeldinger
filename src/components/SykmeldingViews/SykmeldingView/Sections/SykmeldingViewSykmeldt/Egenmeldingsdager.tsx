@@ -18,7 +18,7 @@ function Egenmeldingsdager({ egenmeldingsdager, editableEgenmelding }: Egenmeldi
     const sykmedingId = useGetSykmeldingIdParam()
     return (
         <>
-            <div className="mb-3 rounded bg-blue-50 p-4 ">
+            <div className="mb-3 rounded bg-gray-50 p-4">
                 <Heading size="xsmall" level="4">
                     Egenmeldingsdager (lagt til av deg)
                 </Heading>

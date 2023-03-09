@@ -5,8 +5,6 @@ import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './Diagnoser.module.css'
-
 interface Props {
     medisinskVurdering: MedisinskVurdering
     sladd?: boolean
@@ -16,7 +14,7 @@ function Diagnoser({ medisinskVurdering, sladd }: Props): JSX.Element {
     return (
         <div>
             <SykmeldtHeading title="Medisinsk tilstand" Icon={Bandage} />
-            <div className={styles.diagnoser}>
+            <div className="p-4">
                 {medisinskVurdering.hovedDiagnose?.tekst && (
                     <SykmeldingEntry
                         title="Diagnose"

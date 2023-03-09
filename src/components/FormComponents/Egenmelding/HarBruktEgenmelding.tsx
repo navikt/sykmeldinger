@@ -5,11 +5,11 @@ import { toReadableDatePeriod } from '../../../utils/dateUtils'
 import { YesOrNo } from '../../../fetching/graphql.generated'
 import { sporsmal } from '../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
-// TODO make common components?
-import { QuestionWrapper } from '../../SendSykmelding/FormSections/shared/FormStructure'
-import YesNoField from '../../SendSykmelding/FormSections/shared/YesNoField'
+import YesNoField from '../YesNoField/YesNoField'
+import { QuestionWrapper } from '../FormStructure'
 
 import styles from './HarbruktEgenmelding.module.css'
+import { EgenmeldingsdagerSubForm } from './EgenmeldingerField'
 
 interface Props {
     index: number
@@ -30,7 +30,7 @@ function HarBruktEgenmelding({
 }: Props): JSX.Element {
     return (
         <QuestionWrapper>
-            <YesNoField
+            <YesNoField<EgenmeldingsdagerSubForm>
                 name={`egenmeldingsdager.${index}.harPerioder`}
                 legend={`${sporsmal.harBruktEgenmeldingsdager(arbeidsgiverNavn)} i perioden ${toReadableDatePeriod(
                     lastPossibleDate,
@@ -57,6 +57,7 @@ function HarBruktEgenmelding({
                         onNo()
                     }
                 }}
+                defaultValue={null}
                 shouldUnregister={false}
                 disabled={disabled}
             />

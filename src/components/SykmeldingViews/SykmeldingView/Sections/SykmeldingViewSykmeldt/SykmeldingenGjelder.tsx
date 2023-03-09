@@ -5,8 +5,6 @@ import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import { Pasient } from '../../../../../fetching/graphql.generated'
 import { getPasientName } from '../../../../../utils/pasientUtils'
 
-import styles from './SykmeldingenGjelder.module.css'
-
 interface Props {
     pasient?: Pasient | null
 }
@@ -18,9 +16,9 @@ function SykmeldingenGjelder({ pasient }: Props): JSX.Element | null {
     if (!name) return null
 
     return (
-        <div className={styles.sykmeldingenGjelder}>
+        <div className="mb-4">
             <SykmeldtHeading title="Sykmeldingen gjelder" Icon={People} />
-            <div className={styles.content}>
+            <div className="mb-3 rounded bg-gray-50 p-4">
                 <BodyShort size="small">{name}</BodyShort>
                 {pasient.fnr && <BodyShort size="small">Fødselsnr: {pasient.fnr}</BodyShort>}
             </div>

@@ -6,8 +6,6 @@ import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import ListEntry from '../../Layout/ListEntry/ListEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
-import styles from './AktivitetIkkeMulig.module.css'
-
 interface Props {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
     isV3: boolean
@@ -22,7 +20,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): JSX.Element | 
         <div>
             <SykmeldtHeading title="Aktivitet på arbeidsplassen" Icon={Office2} />
             {!!aktivitetIkkeMulig.medisinskArsak && (
-                <div className={styles.medisinskArsak}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     {aktivitetIkkeMulig.medisinskArsak?.arsak && (
                         <ListEntry
                             listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
@@ -37,7 +35,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): JSX.Element | 
                 </div>
             )}
             {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                <div className={styles.arbeidsrelatertArsak}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
                         <ListEntry
                             listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"

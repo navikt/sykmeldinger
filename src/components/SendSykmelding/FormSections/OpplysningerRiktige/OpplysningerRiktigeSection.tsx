@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form'
 import { FormValues } from '../../SendSykmeldingForm'
 import { YesOrNo } from '../../../../fetching/graphql.generated'
 import { getTrengerNySykmelding } from '../shared/sykmeldingUtils'
-import { SectionWrapper } from '../shared/FormStructure'
+import { SectionWrapper } from '../../../FormComponents/FormStructure'
 
 import UriktigeOpplysningerField from './UriktigeOpplysningerField'
 import ErOpplysningeneRiktigeField from './ErOpplysningeneRiktigeField'

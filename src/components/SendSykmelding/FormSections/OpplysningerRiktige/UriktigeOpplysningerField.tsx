@@ -4,7 +4,7 @@ import { useController } from 'react-hook-form'
 
 import { FormValues } from '../../SendSykmeldingForm'
 import { UriktigeOpplysningerType } from '../../../../fetching/graphql.generated'
-import { QuestionWrapper } from '../shared/FormStructure'
+import { QuestionWrapper } from '../../../FormComponents/FormStructure'
 import { sporsmal, uriktigeOpplysningerEnumToText } from '../../../../utils/sporsmal'
 
 function UriktigeOpplysningerField(): JSX.Element {

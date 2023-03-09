@@ -9,7 +9,7 @@ import {
     YesOrNo,
 } from '../../../../../fetching/graphql.generated'
 import { FormValues } from '../../../SendSykmeldingForm'
-import { SectionWrapper } from '../../shared/FormStructure'
+import { SectionWrapper } from '../../../../FormComponents/FormStructure'
 import { getPublicEnv } from '../../../../../utils/env'
 import { findValgtArbeidsgiver } from '../../../../../utils/arbeidsgiverUtils'
 import { useFindPrevSykmeldingTom } from '../../../../../hooks/useFindPrevSykmeldingTom'

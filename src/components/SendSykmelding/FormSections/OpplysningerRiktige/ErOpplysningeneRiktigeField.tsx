@@ -1,14 +1,15 @@
 import React from 'react'
 
 import { sporsmal } from '../../../../utils/sporsmal'
-import { QuestionWrapper } from '../shared/FormStructure'
-import YesNoField from '../shared/YesNoField'
+import { QuestionWrapper } from '../../../FormComponents/FormStructure'
+import YesNoField from '../../../FormComponents/YesNoField/YesNoField'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { FormValues } from '../../SendSykmeldingForm'
 
 function ErOpplysningeneRiktigeField(): JSX.Element {
     return (
         <QuestionWrapper>
-            <YesNoField
+            <YesNoField<FormValues>
                 name="erOpplysningeneRiktige"
                 legend={sporsmal.erOpplysningeneRiktige}
                 rules={{
@@ -20,6 +21,7 @@ function ErOpplysningeneRiktigeField(): JSX.Element {
                         { 'stemmer opplysningene': value },
                     )
                 }}
+                defaultValue={null}
             />
         </QuestionWrapper>
     )

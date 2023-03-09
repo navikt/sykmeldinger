@@ -2,9 +2,10 @@ import React from 'react'
 import { BodyShort, Label, ReadMore } from '@navikt/ds-react'
 
 import { sporsmal } from '../../../../../utils/sporsmal'
-import YesNoField from '../../shared/YesNoField'
+import YesNoField from '../../../../FormComponents/YesNoField/YesNoField'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
-import { QuestionWrapper } from '../../shared/FormStructure'
+import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
+import { FormValues } from '../../../SendSykmeldingForm'
 
 interface Props {
     oppfolgingsdato: string
@@ -13,7 +14,7 @@ interface Props {
 function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
     return (
         <QuestionWrapper>
-            <YesNoField
+            <YesNoField<FormValues>
                 name="harBruktEgenmelding"
                 legend={sporsmal.harBruktEgenmelding(oppfolgingsdato)}
                 subtext={<HarBruktEgenmeldingReadMore />}
@@ -30,6 +31,7 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
                         },
                     })
                 }}
+                defaultValue={null}
             />
         </QuestionWrapper>
     )

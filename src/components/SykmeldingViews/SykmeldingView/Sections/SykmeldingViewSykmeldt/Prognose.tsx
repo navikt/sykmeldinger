@@ -6,8 +6,6 @@ import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './Prognose.module.css'
-
 interface Props {
     prognose?: Prognose | null
     isV3: boolean
@@ -29,7 +27,7 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
         <div>
             <SykmeldtHeading title="Prognose" Icon={Historic} />
             {prognose.arbeidsforEtterPeriode && (
-                <div className={styles.arbeidsforEtterPeriode}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     <JaEntry
                         title={
                             isV3
@@ -40,7 +38,7 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
                 </div>
             )}
             {!!prognose.hensynArbeidsplassen && (
-                <div className={styles.hensynArbeidsplassen}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     <SykmeldingEntry
                         title="Hensyn som må tas på arbeidsplassen"
                         mainText={prognose.hensynArbeidsplassen}
@@ -49,7 +47,7 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
                 </div>
             )}
             {!!prognose.erIArbeid && (
-                <div className={styles.erIArbeid}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     {prognose.erIArbeid.egetArbeidPaSikt && (
                         <JaEntry title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?" />
                     )}
@@ -73,7 +71,7 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
                 </div>
             )}
             {!!prognose.erIkkeIArbeid && (
-                <div className={styles.erIkkeIArbeid}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     {prognose.erIkkeIArbeid.arbeidsforPaSikt && (
                         <JaEntry title="Antas pasienten å kunne komme i arbeid på sikt?" />
                     )}

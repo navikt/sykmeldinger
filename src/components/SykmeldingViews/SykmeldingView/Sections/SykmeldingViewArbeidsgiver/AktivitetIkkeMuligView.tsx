@@ -6,8 +6,6 @@ import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { arbeidsrelatertArsakToText } from '../../../../../utils/periodeUtils'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './AktivitetIkkeMuligView.module.css'
-
 interface AktivitetIkkeMuligViewProps {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
 }
@@ -19,7 +17,7 @@ const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewPr
         <div>
             <SykmeldtHeading title="Aktivitet på arbeidsplassen" Icon={Office2} />
             {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                <div className={styles.aarsak}>
+                <div className="p-4">
                     {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
                         <ListEntry
                             listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"

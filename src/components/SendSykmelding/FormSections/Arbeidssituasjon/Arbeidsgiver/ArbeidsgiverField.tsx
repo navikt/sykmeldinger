@@ -2,7 +2,7 @@ import { Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 import React from 'react'
 import { useController } from 'react-hook-form'
 
-import { QuestionWrapper } from '../../shared/FormStructure'
+import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { ArbeidssituasjonType, BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { FormValues } from '../../../SendSykmeldingForm'

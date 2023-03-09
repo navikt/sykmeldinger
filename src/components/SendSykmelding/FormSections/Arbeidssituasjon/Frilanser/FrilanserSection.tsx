@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form'
 
 import { FormValues } from '../../../SendSykmeldingForm'
 import { YesOrNo } from '../../../../../fetching/graphql.generated'
-import { SectionWrapper } from '../../shared/FormStructure'
+import { SectionWrapper } from '../../../../FormComponents/FormStructure'
 
 import HarBruktEgenmeldingField from './HarBruktEgenmeldingField'
 import EgenmeldingerField from './EgenmeldingerField'

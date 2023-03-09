@@ -1,14 +1,15 @@
 import React from 'react'
 
-import { QuestionWrapper } from '../../shared/FormStructure'
-import YesNoField from '../../shared/YesNoField'
+import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
+import YesNoField from '../../../../FormComponents/YesNoField/YesNoField'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
+import { FormValues } from '../../../SendSykmeldingForm'
 
 function HarForsikringField(): JSX.Element {
     return (
         <QuestionWrapper>
-            <YesNoField
+            <YesNoField<FormValues>
                 name="harForsikring"
                 legend={sporsmal.harForsikring}
                 rules={{
@@ -25,6 +26,7 @@ function HarForsikringField(): JSX.Element {
                         },
                     })
                 }}
+                defaultValue={null}
             />
         </QuestionWrapper>
     )

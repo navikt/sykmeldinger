@@ -5,8 +5,6 @@ import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './PrognoseView.module.css'
-
 interface Props {
     prognose?: Prognose | null
 }
@@ -24,12 +22,12 @@ function PrognoseView({ prognose }: Props): JSX.Element | null {
         <div>
             <SykmeldtHeading title="Prognose" Icon={Historic} />
             {prognose.arbeidsforEtterPeriode && (
-                <div className={styles.arbeidsforEtterPeriode}>
+                <div className="p-4">
                     <JaEntry title="Er pasienten 100% arbeidsfør etter denne perioden?" />
                 </div>
             )}
             {!!prognose.hensynArbeidsplassen && (
-                <div className={styles.hensynArbeidsplassen}>
+                <div className="p-4">
                     <SykmeldingEntry
                         title="Hensyn som må tas på arbeidsplassen"
                         mainText={prognose.hensynArbeidsplassen}

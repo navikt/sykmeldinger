@@ -3,9 +3,9 @@ import { ForwardedRef, forwardRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { FormValues } from '../SendSykmeldingForm'
+import { QuestionWrapper } from '../../FormComponents/FormStructure'
 
 import { extractAllErrors } from './ErrorSectionUtils'
-import { QuestionWrapper } from './shared/FormStructure'
 
 function ErrorSection(_: unknown, ref: ForwardedRef<HTMLDivElement>): JSX.Element | null {
     const {

@@ -2,11 +2,11 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Alert, ReadMore } from '@navikt/ds-react'
 
-import { QuestionWrapper } from '../../shared/FormStructure'
+import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { NaermesteLederFragment, YesOrNo } from '../../../../../fetching/graphql.generated'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
-import YesNoField from '../../shared/YesNoField'
+import YesNoField from '../../../../FormComponents/YesNoField/YesNoField'
 import { FormValues } from '../../../SendSykmeldingForm'
 
 interface Props {
@@ -20,7 +20,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
 
     return (
         <QuestionWrapper>
-            <YesNoField
+            <YesNoField<FormValues>
                 name="riktigNarmesteLeder"
                 legend={sporsmal.riktigNarmesteLeder(narmesteLeder.navn)}
                 subtext={
@@ -42,6 +42,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Ele
                         },
                     })
                 }}
+                defaultValue={null}
             />
             {riktigNarmesteLeder != null && (
                 <Alert className="my-8" variant="info" role="alert" aria-live="polite">

@@ -5,8 +5,6 @@ import { toReadableDate } from '../../../../../utils/dateUtils'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
-import styles from './Tilbakedatering.module.css'
-
 interface Props {
     kontaktMedPasient: KontaktMedPasient
 }
@@ -20,7 +18,7 @@ function Tilbakedatering({ kontaktMedPasient }: Props): JSX.Element | null {
         <div>
             <SykmeldtHeading title="Tilbakedatering" Icon={Historic} />
             {!!kontaktMedPasient.kontaktDato && (
-                <div className={styles.kontaktDato}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     <SykmeldingEntry
                         title="Dato for dokumenterbar kontakt med pasienten"
                         mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
@@ -28,7 +26,7 @@ function Tilbakedatering({ kontaktMedPasient }: Props): JSX.Element | null {
                 </div>
             )}
             {!!kontaktMedPasient.begrunnelseIkkeKontakt && (
-                <div className={styles.begrunnelseIkkeKontakt}>
+                <div className="mb-3 rounded bg-gray-50 p-4">
                     <SykmeldingEntry
                         title="Begrunnelse for tilbakedatering"
                         mainText={kontaktMedPasient.begrunnelseIkkeKontakt}

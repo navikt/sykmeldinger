@@ -3,7 +3,7 @@ import { useController } from 'react-hook-form'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 
 import { FormValues } from '../../SendSykmeldingForm'
-import { QuestionWrapper } from '../shared/FormStructure'
+import { QuestionWrapper } from '../../../FormComponents/FormStructure'
 import { arbeidsSituasjonEnumToText, sporsmal } from '../../../../utils/sporsmal'
 import { ArbeidssituasjonType } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'

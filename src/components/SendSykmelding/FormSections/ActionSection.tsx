@@ -13,10 +13,10 @@ import {
 } from '../../../fetching/graphql.generated'
 import { useChangeSykmeldingStatus } from '../../../hooks/useMutations'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
+import { QuestionWrapper } from '../../FormComponents/FormStructure'
 
 import { getTrengerNySykmelding } from './shared/sykmeldingUtils'
 import styles from './ActionSection.module.css'
-import { QuestionWrapper } from './shared/FormStructure'
 
 interface Props {
     sykmeldingId: string

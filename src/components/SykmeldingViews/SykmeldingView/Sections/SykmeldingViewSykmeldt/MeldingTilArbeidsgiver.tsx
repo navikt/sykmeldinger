@@ -3,8 +3,6 @@ import { Employer } from '@navikt/ds-icons'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
-import styles from './MeldingTilArbeidsgiver.module.css'
-
 interface Props {
     meldingTilArbeidsgiver?: string | null
 }
@@ -15,7 +13,7 @@ function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): JSX.Element 
     return (
         <div>
             <SykmeldtHeading title="Melding til arbeidsgiver" Icon={Employer} />
-            <div className={styles.info}>
+            <div className="mb-3 rounded bg-gray-50 p-4">
                 <SykmeldingEntry title="Andre innspill til arbeidsgiver" mainText={meldingTilArbeidsgiver} />
             </div>
         </div>

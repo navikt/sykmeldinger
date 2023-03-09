@@ -5,8 +5,6 @@ import { toReadableDate } from '../../../../../utils/dateUtils'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 
-import styles from './TilbakedateringView.module.css'
-
 interface TilbakedateringViewProps {
     kontaktMedPasient: KontaktMedPasient
 }
@@ -19,7 +17,7 @@ function TilbakedateringView({ kontaktMedPasient }: TilbakedateringViewProps): J
     return (
         <div>
             <SykmeldtHeading title="Tilbakedatering" Icon={Historic} />
-            <div className={styles.tilbakedatering}>
+            <div className="p-4">
                 <SykmeldingEntry
                     title="Dato for dokumenterbar kontakt med pasienten"
                     mainText={toReadableDate(kontaktMedPasient.kontaktDato)}

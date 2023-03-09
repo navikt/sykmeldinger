@@ -8,7 +8,7 @@ import {
 } from '../../../../fetching/graphql.generated'
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
-import { SectionWrapper } from '../shared/FormStructure'
+import { SectionWrapper } from '../../../FormComponents/FormStructure'
 import { getPublicEnv } from '../../../../utils/env'
 
 import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
