@@ -5,7 +5,6 @@ import { ApolloError } from '@apollo/client'
 import { SykmeldingChangeStatus, SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
-import CenterItems from '../../../CenterItems/CenterItems'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
@@ -52,44 +51,43 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.
             </div>
 
             <form
+                className="flex flex-col items-center"
                 onSubmit={handleSubmit(bekreftInvalid, () => {
                     logAmplitudeEvent({ eventName: 'skjema validering feilet', data: { skjemanavn } })
                 })}
             >
-                <CenterItems horizontal>
-                    <div className="mb-8">
-                        <ConfirmationPanel
-                            {...field}
-                            checked={field.value}
-                            label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
-                            error={fieldState.error?.message}
-                            onChange={() => {
-                                const newValue = !field.value
-                                logAmplitudeEvent({
-                                    eventName: 'skjema spørsmål besvart',
-                                    data: {
-                                        skjemanavn,
-                                        [`spørsmål`]: 'bekreftet lest',
-                                        svar: newValue ? 'Ja' : 'Nei',
-                                    },
-                                })
-                                field.onChange(newValue)
-                            }}
-                        />
+                <div className="mb-8">
+                    <ConfirmationPanel
+                        {...field}
+                        checked={field.value}
+                        label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
+                        error={fieldState.error?.message}
+                        onChange={() => {
+                            const newValue = !field.value
+                            logAmplitudeEvent({
+                                eventName: 'skjema spørsmål besvart',
+                                data: {
+                                    skjemanavn,
+                                    [`spørsmål`]: 'bekreftet lest',
+                                    svar: newValue ? 'Ja' : 'Nei',
+                                },
+                            })
+                            field.onChange(newValue)
+                        }}
+                    />
+                </div>
+
+                {mutationError && (
+                    <div className="mb-4">
+                        <Alert variant="error" role="alert" aria-live="polite">
+                            {mutationError.message}
+                        </Alert>
                     </div>
+                )}
 
-                    {mutationError && (
-                        <div className="mb-4">
-                            <Alert variant="error" role="alert" aria-live="polite">
-                                {mutationError.message}
-                            </Alert>
-                        </div>
-                    )}
-
-                    <Button variant="primary" type="submit" loading={mutationLoading}>
-                        Bekreft
-                    </Button>
-                </CenterItems>
+                <Button variant="primary" type="submit" loading={mutationLoading}>
+                    Bekreft
+                </Button>
             </form>
         </div>
     )
