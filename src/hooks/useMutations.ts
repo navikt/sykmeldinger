@@ -91,7 +91,12 @@ export function useEndreEgenmeldingsdager(
     onCompleted: (values: EgenmeldingsdagerSubForm) => void,
     onError: () => void,
 ): [MutationResult<EndreEgenmeldingsdagerMutation>, (values: EgenmeldingsdagerSubForm) => void] {
+    const router = useRouter()
     const [endreEgenmeldingsdager, result] = useMutation(EndreEgenmeldingsdagerDocument, {
+        onCompleted: () => {
+            window.scrollTo(0, 0)
+            router.push(`/${sykmeldingId}/kvittering?egenmelding=true`)
+        },
         onError,
     })
 

@@ -30,15 +30,19 @@ function EndreEgenmeldingsdagerPage(): JSX.Element {
 
     return (
         <PageWrapper>
-            <GuidePanel>
+            <GuidePanel className="mb-8">
                 <Heading level="2" size="small" spacing>
                     Endre egenmeldingsdager
                 </Heading>
                 <BodyShort spacing>Under her kan du endre, fjerne eller legge til egenmeldingsdager.</BodyShort>
                 <BodyShort>Når du er ferdig, registrerer du endringene dine på nytt, nederst på siden.</BodyShort>
             </GuidePanel>
-            {!data && loading && <Spinner headline="Laster sykmelding" />}
-            {error && <Alert variant="error">{error.message}</Alert>}
+            {!data && loading && <Spinner className="mt-16" headline="Laster sykmelding" />}
+            {error && (
+                <Alert className="my-8" variant="error">
+                    Vi har problemer med å laste sykmeldingen din for øyeblikket. Vennligst prøv igjen senere.
+                </Alert>
+            )}
             {sykmelding != null && (
                 <>
                     {!isSendtSykmelding(sykmelding) && (

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React, { PropsWithChildren } from 'react'
 import { Alert, GuidePanel } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
+import { useRouter } from 'next/router'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import Spinner from '../../components/Spinner/Spinner'
@@ -24,6 +25,7 @@ import { isUtenlandsk } from '../../utils/utenlanskUtils'
 function SykmeldingkvitteringPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
     const { data, error, loading } = useSykmeldingById(sykmeldingId)
+    const router = useRouter()
 
     useHotjarTrigger(getHotjarType(data?.sykmelding))
 
@@ -75,6 +77,7 @@ function SykmeldingkvitteringPage(): JSX.Element {
                 <StatusBanner
                     sykmeldingStatus={data.sykmelding.sykmeldingStatus}
                     behandlingsutfall={data.sykmelding.behandlingsutfall}
+                    isEgenmeldingsKvittering={router.query.egenmelding === 'true'}
                 />
             </div>
 
