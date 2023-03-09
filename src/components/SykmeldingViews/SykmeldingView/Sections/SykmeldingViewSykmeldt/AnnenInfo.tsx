@@ -16,13 +16,13 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
         <div>
             <SykmeldtHeading title="Annen info" Icon={Information} />
             <div className="pb-4">
-                <div className="mb-3 rounded bg-gray-50 p-4">
+                <div className="mb-3 rounded bg-blue-50 p-4">
                     <Heading size="xsmall" level="4" spacing>
                         Dato sykmeldingen ble skrevet
                     </Heading>
                     <BodyShort size="small">{toReadableDate(sykmelding.behandletTidspunkt)}</BodyShort>
                 </div>
-                <div className="mb-3 rounded bg-gray-50 p-4">
+                <div className="mb-3 rounded bg-blue-50 p-4">
                     <Heading size="xsmall" level="4" spacing>
                         Sykmeldingen ble skrevet av
                     </Heading>
@@ -33,7 +33,7 @@ function AnnenInfo({ sykmelding }: Props): JSX.Element {
                 </div>
 
                 {sykmelding.arbeidsgiver && sykmelding.arbeidsgiver?.navn && (
-                    <div className="mb-3 rounded bg-gray-50 p-4">
+                    <div className="mb-3 rounded bg-blue-50 p-4">
                         <Heading size="xsmall" level="4" spacing>
                             Arbeidsgiver som er oppgitt i sykmeldingen
                         </Heading>
