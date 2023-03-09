@@ -1,7 +1,10 @@
 import React from 'react'
 import mockRouter from 'next-router-mock'
+import userEvent from '@testing-library/user-event'
+import { within } from '@testing-library/react'
+import { MockedResponse } from '@apollo/client/testing'
 
-import { render, screen } from '../../utils/test/testUtils'
+import { render, screen, waitFor } from '../../utils/test/testUtils'
 import {
     createMock,
     createSykmelding,
@@ -10,6 +13,7 @@ import {
 } from '../../utils/test/dataUtils'
 import {
     ArbeidsgiverStatus,
+    EndreEgenmeldingsdagerDocument,
     Periodetype,
     ShortName,
     StatusEvent,
@@ -33,25 +37,26 @@ describe('endre egenmeldingsdager page', () => {
         mockRouter.setCurrentUrl(`/sykmelding-id/endre-egenmeldingsdager`)
     })
 
-    function setup(input: SykmeldingFragment | SykmeldingFragment[], sykmeldingByIdIndex = 0): void {
+    function setup(input: SykmeldingFragment | SykmeldingFragment[], mutationMocks: MockedResponse[] = []): void {
         const sykmeldinger = Array.isArray(input) ? input : [input]
 
         render(<EndreEgenmeldingsdagerPage />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
-                    result: { data: { __typename: 'Query', sykmelding: sykmeldinger[sykmeldingByIdIndex] } },
+                    result: { data: { __typename: 'Query', sykmelding: sykmeldinger[0] } },
                 }),
                 createMock({
                     request: { query: SykmeldingerDocument },
                     result: { data: { __typename: 'Query', sykmeldinger: sykmeldinger } },
                 }),
+                ...mutationMocks,
             ],
         })
     }
 
-    describe('when displaying existing egenmeldingsdager', () => {
-        it('shall correctly handle a single period', async () => {
+    describe('given a single egenmeldingperiod', () => {
+        it('shall correctly display the summary', async () => {
             const sykmelding = createSykmelding({
                 id: 'sykmelding-id',
                 sykmeldingsperioder: [
@@ -87,8 +92,10 @@ describe('endre egenmeldingsdager page', () => {
                 ),
             ).toBeChecked()
         })
+    })
 
-        it('shall correctly handle a two periods', async () => {
+    describe('given two egenmeldingperiods', () => {
+        it('shall correctly display the summary', async () => {
             const sykmelding = createSykmelding({
                 id: 'sykmelding-id',
                 sykmeldingsperioder: [
@@ -134,34 +141,36 @@ describe('endre egenmeldingsdager page', () => {
                 ),
             ).toBeChecked()
         })
+    })
 
-        it('shall correctly handle a three periods', async () => {
-            const sykmelding = createSykmelding({
-                id: 'sykmelding-id',
-                sykmeldingsperioder: [
-                    createSykmeldingPeriode({
-                        type: Periodetype.AKTIVITET_IKKE_MULIG,
-                        fom: '2020-05-01',
-                        tom: '2020-05-10',
-                    }),
-                ],
-                sykmeldingStatus: createSykmeldingStatus({
-                    statusEvent: StatusEvent.SENDT,
-                    arbeidsgiver,
-                    sporsmalOgSvarListe: [
-                        createEgenmeldingsdagerSporsmal([
-                            '2020-03-26',
-                            '2020-04-02',
-                            '2020-04-12',
-                            '2020-04-15',
-                            '2020-04-18',
-                            '2020-04-29',
-                        ]),
-                    ],
+    describe('given three egenmeldingperiods', () => {
+        const sykmeldingWith3EgenemeldingsPeriods = createSykmelding({
+            id: 'sykmelding-id',
+            sykmeldingsperioder: [
+                createSykmeldingPeriode({
+                    type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    fom: '2020-05-01',
+                    tom: '2020-05-10',
                 }),
-            })
+            ],
+            sykmeldingStatus: createSykmeldingStatus({
+                statusEvent: StatusEvent.SENDT,
+                arbeidsgiver,
+                sporsmalOgSvarListe: [
+                    createEgenmeldingsdagerSporsmal([
+                        '2020-03-26',
+                        '2020-04-02',
+                        '2020-04-12',
+                        '2020-04-15',
+                        '2020-04-18',
+                        '2020-04-29',
+                    ]),
+                ],
+            }),
+        })
 
-            setup(sykmelding)
+        it('shall correctly display the summary', async () => {
+            setup(sykmeldingWith3EgenemeldingsPeriods)
 
             expect(
                 await screen.findRadioInGroup(
@@ -197,6 +206,60 @@ describe('endre egenmeldingsdager page', () => {
                     { name: 'Nei' },
                 ),
             ).toBeChecked()
+        })
+
+        it('editing the last of 3 periods should work as expected', async () => {
+            setup(sykmeldingWith3EgenemeldingsPeriods, [
+                createMock({
+                    request: {
+                        query: EndreEgenmeldingsdagerDocument,
+                        variables: {
+                            sykmeldingId: sykmeldingWith3EgenemeldingsPeriods.id,
+                            egenmeldingsdager: [
+                                '2020-04-15',
+                                '2020-04-18',
+                                '2020-04-29',
+                                '2020-04-02',
+                                '2020-04-12',
+                                '2020-03-26',
+                                '2020-03-25',
+                                '2020-03-23',
+                            ],
+                        },
+                    },
+                    result: {
+                        data: {
+                            __typename: 'Mutation',
+                            updateEgenmeldingsdager: sykmeldingWith3EgenemeldingsPeriods,
+                        },
+                    },
+                }),
+            ])
+
+            expect(await screen.findByRole('heading', { name: /Du brukte 1 egenmeldingsdag/ })).toBeInTheDocument()
+
+            const lastSection = within(
+                screen.getByRole('region', {
+                    name: /Brukte du egenmelding hos Arbeidsgiver AS i perioden 17. - 29. mars 2020/,
+                }),
+            )
+
+            // Add some new days to the third section
+            await userEvent.click(lastSection.getByRole('button', { name: 'Endre' }))
+            await userEvent.click(lastSection.getByRole('button', { name: /25\. mars/ }))
+            await userEvent.click(lastSection.getByRole('button', { name: /23\. mars/ }))
+            await userEvent.click(lastSection.getByRole('button', { name: 'Videre' }))
+
+            // We have to select no for the fourth section again since the form state is nuked from the n-th section.
+            await userEvent.click(
+                screen.getRadioInGroup(
+                    { name: /Brukte du egenmelding hos Arbeidsgiver AS i perioden 7. - 16. mars 2020?/ },
+                    { name: 'Nei' },
+                ),
+            )
+
+            await userEvent.click(await screen.findByRole('button', { name: 'Registrer endringene' }))
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         })
     })
 })
