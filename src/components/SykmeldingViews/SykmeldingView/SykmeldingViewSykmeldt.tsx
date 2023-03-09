@@ -17,7 +17,6 @@ import Arbeidsevne from './Sections/SykmeldingViewSykmeldt/Arbeidsevne'
 import MeldingTilArbeidsgiver from './Sections/SykmeldingViewSykmeldt/MeldingTilArbeidsgiver'
 import Tilbakedatering from './Sections/SykmeldingViewSykmeldt/Tilbakedatering'
 import Egenmeldingsdager from './Sections/SykmeldingViewSykmeldt/Egenmeldingsdager'
-import styles from './SykmeldingViewSykmeldt.module.css'
 
 const publicEnv = getPublicEnv()
 
@@ -31,7 +30,7 @@ function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): JSX
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 
     return (
-        <div className={styles.sykmeldingViewSykmeldt}>
+        <div className="p-0">
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
             <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3Sykmelding} />
             {publicEnv.DISPLAY_EGENMELDING === 'true' && egenmeldingsdager && (

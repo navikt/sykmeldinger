@@ -6,8 +6,6 @@ import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
 import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
-import styles from './PapirInfoheader.module.css'
-
 const skjemanavn = 'avbryt åpen papirsykmelding'
 
 function PapirInfoheader(): JSX.Element {
@@ -60,7 +58,7 @@ function PapirInfoheader(): JSX.Element {
                                     Det du gjør her, erstatter papiret.
                                 </BodyLong>
                             </div>
-                            <BodyLong className={styles.harGittVidereText}>
+                            <BodyLong className="font-bold">
                                 Hvis du får ja fra arbeidsgiveren din kan du fortsette utfyllingen på denne siden. Hvis
                                 du i stedet skal fortsette med papiret må du avbryte denne sykmeldingen.
                             </BodyLong>

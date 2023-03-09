@@ -8,7 +8,6 @@ import Perioder from './Sections/SykmeldingViewSykmeldt/Perioder'
 import SykmeldingenGjelder from './Sections/SykmeldingViewSykmeldt/SykmeldingenGjelder'
 import AnnenInfo from './Sections/SykmeldingSykmeldtUtenlandsk/AnnenInfo'
 import Egenmeldingsdager from './Sections/SykmeldingViewSykmeldt/Egenmeldingsdager'
-import styles from './SykmeldingSykmeldtUtenlandsk.module.css'
 
 const publicEnv = getPublicEnv()
 
@@ -21,7 +20,7 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 
     return (
-        <div className={styles.sykmeldingSykmeldtUtenlandsk}>
+        <div className="p-0">
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
             <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3(sykmelding)} />
             {publicEnv.DISPLAY_EGENMELDING === 'true' && egenmeldingsdager && (

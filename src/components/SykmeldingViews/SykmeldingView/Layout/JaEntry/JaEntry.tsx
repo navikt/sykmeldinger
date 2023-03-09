@@ -1,7 +1,5 @@
 import { BodyShort, Heading } from '@navikt/ds-react'
 
-import styles from './JaEntry.module.css'
-
 interface JaEntryProps {
     title: string
 }
@@ -12,7 +10,7 @@ function JaEntry({ title }: JaEntryProps): JSX.Element {
             <Heading size="xsmall" level="4">
                 {title}
             </Heading>
-            <BodyShort size="small" className={styles.jaEntryText}>
+            <BodyShort size="small" className="mb-2 pl-4 pt-2">
                 Ja
             </BodyShort>
         </div>

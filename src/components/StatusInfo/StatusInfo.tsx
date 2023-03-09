@@ -10,8 +10,6 @@ import {
 } from '../../fetching/graphql.generated'
 import { Merknadtype } from '../InformationBanner/InformationBanner'
 
-import styles from './StatusInfo.module.css'
-
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatusFragment
     sykmeldingsperioder: readonly Periode[]
@@ -68,7 +66,7 @@ function StatusInfo({
 
     if (erUnderBehandlingTilbakedatert) {
         return (
-            <div data-testid="status-info" className={styles.root}>
+            <div data-testid="status-info">
                 <GuidePanel poster>
                     <div className="mb-4">
                         <BodyShort>Vanligvis fyller du ut en søknad om sykepenger når sykmeldingen er over.</BodyShort>

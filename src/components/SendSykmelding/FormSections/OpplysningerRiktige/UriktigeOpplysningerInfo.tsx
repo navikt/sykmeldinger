@@ -2,15 +2,13 @@ import { Alert, Heading } from '@navikt/ds-react'
 
 import { UriktigeOpplysningerType } from '../../../../fetching/graphql.generated'
 
-import styles from './UriktigeOpplysningerInfo.module.css'
-
 interface UriktigeOpplysningerInfoProps {
     uriktigeOpplysninger: UriktigeOpplysningerType[]
 }
 
 function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysningerInfoProps): JSX.Element | null {
     return (
-        <Alert variant="info" role="alert" aria-live="polite" className={styles.uriktigeOpplysningerRoot}>
+        <Alert variant="info" role="alert" aria-live="polite" className="my-8">
             <Heading spacing size="small" level="3">
                 Du kan fortsatt bruke sykmeldingen
             </Heading>
