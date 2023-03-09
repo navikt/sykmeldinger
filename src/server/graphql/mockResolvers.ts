@@ -1,16 +1,18 @@
 import { GraphQLJSON } from 'graphql-scalars'
 import { logger } from '@navikt/next-logger'
 
-import { dateSub } from '../../utils/dateUtils'
+import { dateSub, toDateString } from '../../utils/dateUtils'
 import { mapSendSykmeldingValuesToV3Api } from '../sendSykmeldingMapping'
 import { Sykmelding as SykmeldingApiModel } from '../api-models/sykmelding/Sykmelding'
+import { Svartype } from '../api-models/sykmelding/SykmeldingStatus'
 
 import {
     MutationResolvers,
     QueryResolvers,
     Resolvers,
-    Sykmelding,
+    ShortName,
     StatusEvent,
+    Sykmelding,
     SykmeldingChangeStatus,
 } from './resolver-types.generated'
 import { sykmeldingApen } from './mockData/sykmelding-apen'
@@ -115,13 +117,19 @@ const Mutation: MutationResolvers = {
             throw new Error(`Unable to find sykmelding by sykmeldingId: ${sykmeldingId}`)
         }
 
-        logger.debug(
-            `Hit update egenmeldingsdager mock endpoint. TODO: Implement this properly: ${JSON.stringify(
-                egenmeldingsdager,
-                null,
-                2,
-            )}`,
+        const index = sykmelding.sykmeldingStatus.sporsmalOgSvarListe.findIndex(
+            (it) => it.shortName === ShortName.EGENMELDINGSDAGER,
         )
+
+        sykmelding.sykmeldingStatus.sporsmalOgSvarListe[index] = {
+            tekst: sykmelding.sykmeldingStatus.sporsmalOgSvarListe[index].tekst,
+            shortName: ShortName.EGENMELDINGSDAGER,
+            svar: {
+                svarType: Svartype.DAGER,
+                svar: egenmeldingsdager,
+            },
+        }
+        sykmelding.sykmeldingStatus.timestamp = toDateString(new Date())
 
         return sykmelding
     },

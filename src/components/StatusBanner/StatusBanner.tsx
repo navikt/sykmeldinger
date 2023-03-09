@@ -6,12 +6,14 @@ import { toReadableDate } from '../../utils/dateUtils'
 interface StatusBannerProps {
     sykmeldingStatus: SykmeldingStatusFragment
     behandlingsutfall: Behandlingsutfall
+    isEgenmeldingsKvittering?: boolean
     egenmeldt?: boolean | null
 }
 
 function StatusBanner({
     sykmeldingStatus,
     behandlingsutfall,
+    isEgenmeldingsKvittering,
     egenmeldt = false,
 }: StatusBannerProps): JSX.Element | null {
     if (behandlingsutfall.status === 'INVALID') {
@@ -29,7 +31,8 @@ function StatusBanner({
         return (
             <Alert variant="success">
                 <Heading size="small" level="2">
-                    Sykmeldingen ble sendt til {sykmeldingStatus.arbeidsgiver?.orgNavn}
+                    {isEgenmeldingsKvittering ? 'Egenmeldingsdagene' : 'Sykmeldingen'} ble sendt til{' '}
+                    {sykmeldingStatus.arbeidsgiver?.orgNavn}
                 </Heading>
                 <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>

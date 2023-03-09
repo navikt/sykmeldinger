@@ -3,6 +3,7 @@ import { useController, useFormContext } from 'react-hook-form'
 import { add, isAfter, isBefore, sub } from 'date-fns'
 import { useLayoutEffect, useRef } from 'react'
 import * as R from 'remeda'
+import cn from 'classnames'
 
 import { sortDatesASC } from '../../../utils/dateUtils'
 import { YesOrNo } from '../../../fetching/graphql.generated'
@@ -61,7 +62,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
     const hasPeriod: boolean = harPerioder === YesOrNo.YES
 
     return (
-        <div className="egenmeldingsperiod-ansatt">
+        <div className={cn({ 'mt-10 border-t-2 border-border-divider': index !== 0 })}>
             <HarBruktEgenmelding
                 index={index}
                 arbeidsgiverNavn={metadata.arbeidsgiverNavn}

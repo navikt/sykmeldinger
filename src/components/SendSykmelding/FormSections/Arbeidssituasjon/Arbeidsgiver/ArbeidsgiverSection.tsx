@@ -20,7 +20,6 @@ import EgenmeldingerField from '../../../../FormComponents/Egenmelding/Egenmeldi
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
 import ArbeidsgiverField from './ArbeidsgiverField'
-import styles from './ArbeidsgiverSection.module.css'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -42,19 +41,17 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element 
             {hasNoArbeidsgiver && <ArbeidsgivereMissingInfo />}
             {hasAktiv && <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />}
             {publicEnv.DISPLAY_EGENMELDING === 'true' && shouldShowEgenmeldingsdager && !error && !isLoading && (
-                <div className={styles.egenmeldingsperioder}>
-                    <EgenmeldingerField
-                        index={0}
-                        previous={{
-                            earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
-                            earliestSelectedDate: null,
-                        }}
-                        metadata={{
-                            arbeidsgiverNavn: shouldShowEgenmeldingsdager.arbeidsgiverNavn,
-                            previousSykmeldingTom: previousSykmeldingTom,
-                        }}
-                    />
-                </div>
+                <EgenmeldingerField
+                    index={0}
+                    previous={{
+                        earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
+                        earliestSelectedDate: null,
+                    }}
+                    metadata={{
+                        arbeidsgiverNavn: shouldShowEgenmeldingsdager.arbeidsgiverNavn,
+                        previousSykmeldingTom: previousSykmeldingTom,
+                    }}
+                />
             )}
         </SectionWrapper>
     )

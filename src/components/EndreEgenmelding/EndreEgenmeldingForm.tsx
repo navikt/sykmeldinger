@@ -70,7 +70,7 @@ function EndreEgenmeldingForm({
                         previousSykmeldingTom: previousSykmeldingTom,
                     }}
                 />
-                <div className="mt-16 flex flex-col gap-4">
+                <div className="mt-16 flex flex-col gap-4 border-t-2 border-border-divider pt-8">
                     <div>
                         <Button type="submit" loading={loading}>
                             Registrer endringene
@@ -78,7 +78,7 @@ function EndreEgenmeldingForm({
                     </div>
                     <div>
                         <Link href={`/${sykmelding.id}`} legacyBehavior passHref>
-                            <Button as="a" variant="secondary" loading={loading}>
+                            <Button as="a" variant="secondary" disabled={loading}>
                                 Avbryt
                             </Button>
                         </Link>
