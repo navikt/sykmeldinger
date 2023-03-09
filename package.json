@@ -71,8 +71,8 @@
         "@types/uuid": "^9.0.1",
         "autoprefixer": "^10.4.13",
         "concurrently": "^7.6.0",
-        "eslint": "^8.34.0",
-        "eslint-config-next": "^13.2.1",
+        "eslint": "^8.35.0",
+        "eslint-config-next": "^13.2.3",
         "husky": "^8.0.3",
         "jest": "^29.4.3",
         "jest-axe": "^7.0.0",
@@ -84,7 +84,7 @@
         "open": "^8.4.2",
         "pino-pretty": "^9.3.0",
         "postcss": "^8.4.21",
-        "postcss-import": "^15.1.0",
+        "postcss-import": "14.1.0",
         "prettier": "^2.8.4",
         "prettier-plugin-tailwindcss": "^0.2.4",
         "tailwindcss": "^3.2.7",
@@ -98,6 +98,10 @@
         "extends": [
             "@navikt/eslint-config-teamsykmelding",
             "next/core-web-vitals"
-        ]
+        ],
+        "rules": {
+            "postcss-modules/no-undef-class": "off",
+            "postcss-modules/no-unused-class": "off"
+        }
     }
 }
