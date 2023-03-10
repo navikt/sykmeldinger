@@ -43,7 +43,9 @@ mockRouter.useParser(
     ]),
 )
 
+window.innerWidth = 766
 jest.spyOn(window, 'scrollTo').mockImplementation(() => void 0)
+
 jest.mock('next/config', () => () => ({
     publicRuntimeConfig: {
         publicPath: '/fake/basepath',

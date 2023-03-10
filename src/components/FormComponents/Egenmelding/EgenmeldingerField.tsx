@@ -62,43 +62,45 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
     const hasPeriod: boolean = harPerioder === YesOrNo.YES
 
     return (
-        <section
-            aria-labelledby={`egenmeldingsdager.${index}.harPerioder`}
-            className={cn({ 'mt-10 border-t-2 border-border-divider': index !== 0 })}
-        >
-            <HarBruktEgenmelding
-                index={index}
-                arbeidsgiverNavn={metadata.arbeidsgiverNavn}
-                lastPossibleDate={earliestPossibleDate}
-                firstPossibleDate={latestPossibleDate}
-                onNo={() => {
-                    setValue(`egenmeldingsdager.${index}.datoer`, null)
-                    setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
-                }}
-                disabled={!missingDates && hasClickedVidere === true}
-            />
-            {hasPeriod && hasClickedVidere !== true && (
-                <>
-                    <EgenmeldingDatesPickerSubField
-                        index={index}
-                        earliestPossibleDate={earliestPossibleDate}
-                        latestPossibleDate={latestPossibleDate}
-                    />
-                    <VidereButtonField index={index} missingDates={missingDates} />
-                    {missingDatesOnVidereClick && (
-                        <ErrorMessage className="mt-4">Du må velge minst en dato</ErrorMessage>
-                    )}
-                </>
-            )}
-            {hasPeriod && hasClickedVidere === true && sortedDates && sortedDates.length > 0 && (
-                <ValgtEgenmeldingsdager
-                    dates={sortedDates}
-                    onEditClicked={() => {
-                        setValue('egenmeldingsdager', laterPeriodsRemoved(index, getValues('egenmeldingsdager')))
+        <>
+            <section
+                aria-labelledby={`egenmeldingsdager.${index}.harPerioder`}
+                className={cn({ 'mt-10 border-t-2 border-border-divider': index !== 0 })}
+            >
+                <HarBruktEgenmelding
+                    index={index}
+                    arbeidsgiverNavn={metadata.arbeidsgiverNavn}
+                    lastPossibleDate={earliestPossibleDate}
+                    firstPossibleDate={latestPossibleDate}
+                    onNo={() => {
+                        setValue(`egenmeldingsdager.${index}.datoer`, null)
                         setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
                     }}
+                    disabled={!missingDates && hasClickedVidere === true}
                 />
-            )}
+                {hasPeriod && hasClickedVidere !== true && (
+                    <>
+                        <EgenmeldingDatesPickerSubField
+                            index={index}
+                            earliestPossibleDate={earliestPossibleDate}
+                            latestPossibleDate={latestPossibleDate}
+                        />
+                        <VidereButtonField index={index} missingDates={missingDates} />
+                        {missingDatesOnVidereClick && (
+                            <ErrorMessage className="mt-4">Du må velge minst en dato</ErrorMessage>
+                        )}
+                    </>
+                )}
+                {hasPeriod && hasClickedVidere === true && sortedDates && sortedDates.length > 0 && (
+                    <ValgtEgenmeldingsdager
+                        dates={sortedDates}
+                        onEditClicked={() => {
+                            setValue('egenmeldingsdager', laterPeriodsRemoved(index, getValues('egenmeldingsdager')))
+                            setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
+                        }}
+                    />
+                )}
+            </section>
             {hasClickedVidere === true && (
                 <EgenmeldingerField
                     index={index + 1}
@@ -109,7 +111,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                     }}
                 />
             )}
-        </section>
+        </>
     )
 }
 
