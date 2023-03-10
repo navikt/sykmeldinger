@@ -113,7 +113,7 @@ export function useEndreEgenmeldingsdager(
             }
 
             await endreEgenmeldingsdager({
-                variables: { sykmeldingId, egenmeldingsdager },
+                variables: { sykmeldingId, egenmeldingsdager: [...egenmeldingsdager].sort() },
             })
 
             onCompleted(values)

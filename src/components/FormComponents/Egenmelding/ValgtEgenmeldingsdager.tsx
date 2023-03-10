@@ -23,7 +23,7 @@ function ValgtEgenmeldingsdager({ dates, onEditClicked }: Props): JSX.Element {
                     <li key={date.toISOString()}>{toReadableDate(date)}</li>
                 ))}
             </ul>
-            <Button variant="secondary" onClick={() => onEditClicked()}>
+            <Button type="button" variant="secondary" onClick={() => onEditClicked()}>
                 Endre
             </Button>
         </div>
