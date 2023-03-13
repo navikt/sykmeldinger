@@ -2,8 +2,6 @@ import { BodyShort, Heading } from '@navikt/ds-react'
 
 import SladdSvg from '../../Svg/SladdSvg'
 
-import styles from './SykmeldingEntry.module.css'
-
 interface SykmeldingEntryProps {
     title: string
     mainText: string
@@ -15,7 +13,7 @@ interface SykmeldingEntryProps {
 function SykmeldingEntry({ title, mainText, subText, small, sladd = false }: SykmeldingEntryProps): JSX.Element {
     if (small) {
         return (
-            <div className={styles.sykmeldingEntry}>
+            <div className="[&:not(:last-child)]:mb-3">
                 <Heading size="xsmall" level="4">
                     {title}
                 </Heading>
@@ -25,7 +23,7 @@ function SykmeldingEntry({ title, mainText, subText, small, sladd = false }: Syk
     }
 
     return (
-        <div className={styles.sykmeldingEntry}>
+        <div className="[&:not(:last-child)]:mb-3">
             <Heading size="xsmall" level="4">
                 {title}
             </Heading>

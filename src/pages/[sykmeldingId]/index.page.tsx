@@ -26,8 +26,6 @@ import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
 
-import styles from './index.module.css'
-
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
 
@@ -177,14 +175,14 @@ function SykmeldingerWrapper({
     })
 
     return (
-        <div id="index-page">
-            <div className={styles.browserPrintMessage} hidden>
-                <Heading level="1" size="large">
+        <div className="print:h-full print:overflow-hidden">
+            <div className="hidden print:m-24 print:mb-0 print:block" hidden>
+                <Heading level="1" size="large" spacing>
                     Det er ikke mulig å printe på denne måten.
                 </Heading>
                 <BodyLong>Vennligst bruk printknappen øverst til høyre for sykmeldingen for å printe.</BodyLong>
             </div>
-            <div className={styles.hideOnBrowserPrint}>
+            <div className="print:hidden">
                 <Head>
                     <title>Sykmelding - www.nav.no</title>
                 </Head>

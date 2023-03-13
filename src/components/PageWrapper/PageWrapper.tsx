@@ -1,9 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 
-import styles from './PageWrapper.module.css'
-
-const PageWrapper = ({ children }: PropsWithChildren<unknown>): JSX.Element => {
-    return <div className={styles.limit}>{children}</div>
+const PageWrapper = ({ children }: PropsWithChildren): JSX.Element => {
+    return <div className="mx-auto max-w-2xl p-4 pb-32">{children}</div>
 }
 
 export default PageWrapper

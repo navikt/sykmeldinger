@@ -8,7 +8,6 @@ import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import YesNoField from '../YesNoField/YesNoField'
 import { QuestionWrapper } from '../FormStructure'
 
-import styles from './HarbruktEgenmelding.module.css'
 import { EgenmeldingsdagerSubForm } from './EgenmeldingerField'
 
 interface Props {
@@ -83,8 +82,8 @@ function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
 
     if (index === 0) {
         return (
-            <ReadMore className={styles.readMore} header="Hva betyr dette?" open={open} onClick={handleOnReadMoreClick}>
-                <BodyLong>
+            <ReadMore header="Hva betyr dette?" open={open} onClick={handleOnReadMoreClick}>
+                <BodyLong spacing>
                     <Link
                         href="https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/egenmelding#chapter-1"
                         target="_blank"

@@ -4,8 +4,6 @@
 @import 'tailwindcss/utilities';
 
 html {
-    --header-farge: #c2eaf7;
-    --desktop-limit-width: 42rem;
     --eyes-open-color: #3e3832;
     --eyes-closed-color: #e7e9e9;
     --sykmelding-view-sykmeldt: var(--a-blue-50);
@@ -14,15 +12,6 @@ html {
 }
 
 @media print {
-    @page {
-        margin: 0mm;
-    }
-
-    html > body #index-page {
-        height: 100%;
-        overflow: hidden;
-    }
-
     #decorator-header,
     #decorator-footer,
     ._hj_feedback_container {
