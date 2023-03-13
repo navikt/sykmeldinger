@@ -1,16 +1,28 @@
-import { GuidePanel } from '@navikt/ds-react'
+import { BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
+import React from 'react'
 
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
-
-import styles from './404.module.css'
+import PageWrapper from '../components/PageWrapper/PageWrapper'
 
 const NotFoundPage = (): JSX.Element => {
     useUpdateBreadcrumbs(() => [{ title: 'Ukjent side' }])
 
     return (
-        <div className={styles.limit}>
-            <GuidePanel>Oisann! Du har kommet til en side som ikke eksisterer</GuidePanel>
-        </div>
+        <PageWrapper>
+            <GuidePanel poster className="mt-8">
+                <Heading level="2" size="small" spacing>
+                    Oisann! Du har kommet til en side som ikke eksisterer
+                </Heading>
+                <BodyShort>
+                    Dersom du har kommet hit via en lenke, kan du gå tilbake. Fint om du sier i fra til oss hvor du fant
+                    denne lenken på{' '}
+                    <Link href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
+                        skjemaet for feil og mangler
+                    </Link>
+                    .
+                </BodyShort>
+            </GuidePanel>
+        </PageWrapper>
     )
 }
 

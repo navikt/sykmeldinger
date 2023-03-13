@@ -3,15 +3,13 @@ import React from 'react'
 
 import { isLocalOrDemo } from '../../utils/env'
 
-import styles from './LabsWarning.module.css'
-
 export function LabsWarning(): JSX.Element | null {
     if (!isLocalOrDemo) {
         return null
     }
 
     return (
-        <Alert className={styles.limit} variant={'warning'}>
+        <Alert className="mx-auto mb-4 max-w-2xl" variant={'warning'}>
             Dette er en demoside og inneholder ikke dine personlige data.
         </Alert>
     )

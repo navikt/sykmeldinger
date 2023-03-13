@@ -1,7 +1,0 @@
-.limit {
-    width: var(--desktop-limit-width);
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 1rem;
-    padding-bottom: var(--a-spacing-32);
-}
