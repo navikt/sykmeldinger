@@ -5,7 +5,7 @@ import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode, SvarUnion_DagerSvar_Fragment } from '../../../../../fetching/graphql.generated'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
 import { getPublicEnv } from '../../../../../utils/env'
 
@@ -21,7 +21,7 @@ const publicEnv = getPublicEnv()
 function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Element {
     return (
         <div className="periodeView">
-            <SykmeldtHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
+            <SykmeldingSectionHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
             <div className={styles.perioder}>
                 {perioder.map((periode, index) => (
                     <div key={index} className={styles.periode}>

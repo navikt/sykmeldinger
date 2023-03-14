@@ -119,19 +119,19 @@ export function createSykmelding(
         utdypendeOpplysninger: {
             '6.1': {
                 '6.1.1': {
-                    sporsmal: 'Dette er et spørsmål',
+                    sporsmal: 'Dette er et spørsmål 1',
                     svar: 'Dette er et svar',
                     restriksjoner: [],
                 },
             },
             '6.2': {
                 '6.2.1': {
-                    sporsmal: 'Dette er et spørsmål',
+                    sporsmal: 'Dette er et spørsmål 2',
                     svar: 'Dette er et svar',
                     restriksjoner: [],
                 },
                 '6.2.2': {
-                    sporsmal: 'Dette er et spørsmål',
+                    sporsmal: 'Dette er et spørsmål 3',
                     svar: 'Dette er et svar',
                     restriksjoner: [],
                 },

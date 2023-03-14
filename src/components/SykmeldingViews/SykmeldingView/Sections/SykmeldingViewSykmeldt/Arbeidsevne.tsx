@@ -1,7 +1,7 @@
 import { ShakeHands } from '@navikt/ds-icons'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     tiltakArbeidsplassen?: string | null
@@ -15,27 +15,23 @@ function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): J
     }
 
     return (
-        <div>
-            <SykmeldtHeading title="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands} />
-            {!!tiltakArbeidsplassen && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <SykmeldingEntry
-                        title="Tilrettelegging/hensyn som bør tas på arbeidsplassen"
-                        mainText={tiltakArbeidsplassen}
-                    />
-                </div>
+        <SykmeldingGroup heading="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands}>
+            {tiltakArbeidsplassen != null && (
+                <SykmeldingInfo heading="Tilrettelegging/hensyn som bør tas på arbeidsplassen" variant="gray">
+                    {tiltakArbeidsplassen}
+                </SykmeldingInfo>
             )}
-            {!!tiltakNAV && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <SykmeldingEntry title="Tiltak i regi av NAV" mainText={tiltakNAV} />
-                </div>
+            {tiltakNAV != null && (
+                <SykmeldingInfo heading="Tiltak i regi av NAV" variant="gray">
+                    {tiltakNAV}
+                </SykmeldingInfo>
             )}
-            {!!andreTiltak && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <SykmeldingEntry title="Andre innspill til NAV" mainText={andreTiltak} />
-                </div>
+            {andreTiltak != null && (
+                <SykmeldingInfo heading="Andre innspill til NAV" variant="gray">
+                    {andreTiltak}
+                </SykmeldingInfo>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 

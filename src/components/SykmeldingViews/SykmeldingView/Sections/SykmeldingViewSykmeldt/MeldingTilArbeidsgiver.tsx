@@ -1,6 +1,6 @@
 import { Employer } from '@navikt/ds-icons'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
 interface Props {
@@ -12,7 +12,7 @@ function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): JSX.Element 
 
     return (
         <div>
-            <SykmeldtHeading title="Melding til arbeidsgiver" Icon={Employer} />
+            <SykmeldingSectionHeading title="Melding til arbeidsgiver" Icon={Employer} />
             <div className="mb-3 rounded bg-gray-50 p-4">
                 <SykmeldingEntry title="Andre innspill til arbeidsgiver" mainText={meldingTilArbeidsgiver} />
             </div>

@@ -1,3 +1,5 @@
+import * as R from 'remeda'
+
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
 import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
@@ -27,13 +29,20 @@ function SykmeldingViewArbeidsgiver({ sykmelding }: SykmeldingviewProps): JSX.El
             />
             <AnnenInfoView sykmelding={sykmelding} />
             {sykmelding.medisinskVurdering?.hovedDiagnose && sykmelding.medisinskVurdering.biDiagnoser.length > 0 && (
-                <Diagnoser medisinskVurdering={sykmelding.medisinskVurdering} sladd />
+                <Diagnoser medisinskVurdering={sykmelding.medisinskVurdering} />
             )}
-            {sykmelding.sykmeldingsperioder?.map(
-                (periode, index) =>
-                    !!periode.aktivitetIkkeMulig && (
-                        <AktivitetIkkeMuligView key={index} aktivitetIkkeMulig={periode.aktivitetIkkeMulig} />
-                    ),
+            {R.pipe(
+                sykmelding.sykmeldingsperioder,
+                R.map(R.prop('aktivitetIkkeMulig')),
+                R.compact,
+                R.map((it) => (
+                    <AktivitetIkkeMuligView
+                        key={
+                            it.arbeidsrelatertArsak?.arsak.join('-') ?? it.medisinskArsak?.arsak.join('-') ?? 'unknown'
+                        }
+                        aktivitetIkkeMulig={it}
+                    />
+                )),
             )}
             <PrognoseView prognose={sykmelding.prognose} />
             <ArbeidsevneView tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} />

@@ -1,7 +1,7 @@
 import { ShakeHands } from '@navikt/ds-icons'
 
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface ArbeidsevneViewProps {
     tiltakArbeidsplassen?: string | null
@@ -11,15 +11,11 @@ function ArbeidsevneView({ tiltakArbeidsplassen }: ArbeidsevneViewProps): JSX.El
     if (!tiltakArbeidsplassen) return null
 
     return (
-        <div>
-            <SykmeldtHeading title="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands} />
-            <div className="p-4">
-                <SykmeldingEntry
-                    title="Tilrettelegging/hensyn som bør tas på arbeidsplassen"
-                    mainText={tiltakArbeidsplassen}
-                />
-            </div>
-        </div>
+        <SykmeldingGroup heading="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands}>
+            <SykmeldingInfo heading="Tilrettelegging/hensyn som bør tas på arbeidsplassen">
+                {tiltakArbeidsplassen}
+            </SykmeldingInfo>
+        </SykmeldingGroup>
     )
 }
 

@@ -16,7 +16,6 @@ import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import { QuestionWrapper } from '../../FormComponents/FormStructure'
 
 import { getTrengerNySykmelding } from './shared/sykmeldingUtils'
-import styles from './ActionSection.module.css'
 
 interface Props {
     sykmeldingId: string
@@ -37,7 +36,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): JSX.Element {
 
     return (
         <QuestionWrapper>
-            <div className={styles.actionSectionButtons}>
+            <div className="flex flex-col items-center justify-center gap-4">
                 <Button variant="primary" type="submit" loading={sendResult.loading}>
                     {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
                 </Button>
@@ -80,7 +79,7 @@ function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): 
     const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId)
 
     return (
-        <Panel ref={panelRef} className={styles.avbrytPanel}>
+        <Panel ref={panelRef} className="mt-8 flex flex-col items-center justify-center bg-bg-subtle">
             <Heading size="small" level="3" spacing>
                 Du kan ikke bruke denne sykmeldingen
             </Heading>
@@ -116,7 +115,7 @@ function AvbrytSykmeldingen({
     return (
         <Panel
             ref={panelRef}
-            className={styles.avbrytPanel}
+            className="relative mt-8 flex flex-col items-center justify-center bg-bg-subtle"
             onKeyDown={(event) => {
                 if (event.key === 'Escape') {
                     closeAvbryt()

@@ -1,41 +1,29 @@
 import { Historic } from '@navikt/ds-icons'
 
 import { Prognose } from '../../../../../fetching/graphql.generated'
-import JaEntry from '../../Layout/JaEntry/JaEntry'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingInfo, SykmeldingJaInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     prognose?: Prognose | null
 }
 
 function PrognoseView({ prognose }: Props): JSX.Element | null {
-    if (!prognose) {
-        return null
-    }
-
-    if (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen) {
+    if (prognose == null || (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen)) {
         return null
     }
 
     return (
-        <div>
-            <SykmeldtHeading title="Prognose" Icon={Historic} />
+        <SykmeldingGroup heading="Prognose" Icon={Historic}>
             {prognose.arbeidsforEtterPeriode && (
-                <div className="p-4">
-                    <JaEntry title="Er pasienten 100% arbeidsfør etter denne perioden?" />
-                </div>
+                <SykmeldingJaInfo heading="Er pasienten 100% arbeidsfør etter denne perioden?" />
             )}
-            {!!prognose.hensynArbeidsplassen && (
-                <div className="p-4">
-                    <SykmeldingEntry
-                        title="Hensyn som må tas på arbeidsplassen"
-                        mainText={prognose.hensynArbeidsplassen}
-                        small
-                    />
-                </div>
+            {prognose.hensynArbeidsplassen != null && (
+                <SykmeldingInfo heading="Hensyn som må tas på arbeidsplassen">
+                    {prognose.hensynArbeidsplassen}
+                </SykmeldingInfo>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 

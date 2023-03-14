@@ -1,7 +1,7 @@
 import { People } from '@navikt/ds-icons'
 import { BodyShort } from '@navikt/ds-react'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { Pasient } from '../../../../../fetching/graphql.generated'
 import { getPasientName } from '../../../../../utils/pasientUtils'
 
@@ -17,7 +17,7 @@ function SykmeldingenGjelder({ pasient }: Props): JSX.Element | null {
 
     return (
         <div className="mb-4">
-            <SykmeldtHeading title="Sykmeldingen gjelder" Icon={People} />
+            <SykmeldingSectionHeading title="Sykmeldingen gjelder" Icon={People} />
             <div className="mb-3 rounded bg-gray-50 p-4">
                 <BodyShort size="small">{name}</BodyShort>
                 {pasient.fnr && <BodyShort size="small">Fødselsnr: {pasient.fnr}</BodyShort>}

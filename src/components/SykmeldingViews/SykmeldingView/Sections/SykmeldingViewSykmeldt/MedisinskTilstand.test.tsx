@@ -80,7 +80,7 @@ describe('MedisinskTilstand', () => {
             hovedDiagnose: null,
             svangerskap: false,
             yrkesskade: false,
-            yrkesskadeDato: '',
+            yrkesskadeDato: null,
         }
         render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} />)
         expect(screen.getByText('Bidiagnose')).toBeInTheDocument()
@@ -99,7 +99,7 @@ describe('MedisinskTilstand', () => {
             hovedDiagnose: null,
             svangerskap: false,
             yrkesskade: false,
-            yrkesskadeDato: '',
+            yrkesskadeDato: null,
         }
         render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} />)
         expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument()

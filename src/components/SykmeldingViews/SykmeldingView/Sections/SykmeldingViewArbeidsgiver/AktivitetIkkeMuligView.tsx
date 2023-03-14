@@ -1,10 +1,9 @@
 import { Office2 } from '@navikt/ds-icons'
 
 import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
-import ListEntry from '../../Layout/ListEntry/ListEntry'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { arbeidsrelatertArsakToText } from '../../../../../utils/periodeUtils'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingInfo, SykmeldingListInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface AktivitetIkkeMuligViewProps {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
@@ -14,26 +13,17 @@ const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewPr
     if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null
 
     return (
-        <div>
-            <SykmeldtHeading title="Aktivitet på arbeidsplassen" Icon={Office2} />
-            {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                <div className="p-4">
-                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
-                        <ListEntry
-                            listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}
-                        />
-                    )}
-                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (
-                        <SykmeldingEntry
-                            title="Beskrivelse"
-                            mainText={aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
-                            small
-                        />
-                    )}
-                </div>
+        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Office2}>
+            <SykmeldingListInfo
+                heading="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
+                texts={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}
+            />
+            {aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse && (
+                <SykmeldingInfo heading="Beskrivelse">
+                    {aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
+                </SykmeldingInfo>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 
