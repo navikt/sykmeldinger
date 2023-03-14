@@ -2,7 +2,7 @@ import { Historic } from '@navikt/ds-icons'
 
 import { KontaktMedPasient } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 
 interface Props {
@@ -16,7 +16,7 @@ function Tilbakedatering({ kontaktMedPasient }: Props): JSX.Element | null {
 
     return (
         <div>
-            <SykmeldtHeading title="Tilbakedatering" Icon={Historic} />
+            <SykmeldingSectionHeading title="Tilbakedatering" Icon={Historic} />
             {!!kontaktMedPasient.kontaktDato && (
                 <div className="mb-3 rounded bg-gray-50 p-4">
                     <SykmeldingEntry

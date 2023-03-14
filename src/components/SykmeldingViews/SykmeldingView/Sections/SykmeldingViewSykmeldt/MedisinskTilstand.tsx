@@ -1,11 +1,12 @@
 import React from 'react'
-import { BodyShort, Heading } from '@navikt/ds-react'
 import { Bandage } from '@navikt/ds-icons'
+import * as R from 'remeda'
 
 import { toReadableDate } from '../../../../../utils/dateUtils'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
 import { annenFraverGrunnToText } from '../../../../../utils/periodeUtils'
+import { SykmeldingInfo, SykmeldingJaInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     medisinskVurdering: MedisinskVurdering | null | undefined
@@ -16,79 +17,54 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | n
     if (!medisinskVurdering) return null
 
     return (
-        <div>
-            <SykmeldtHeading title="Medisinsk tilstand" Icon={Bandage} />
+        <SykmeldingGroup heading="Medisinsk tilstand" Icon={Bandage}>
             {medisinskVurdering.hovedDiagnose?.tekst && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <Heading size="xsmall" level="4">
-                        Diagnose
-                    </Heading>
-                    <BodyShort size="small">{medisinskVurdering?.hovedDiagnose?.tekst}</BodyShort>
-                </div>
+                <SykmeldingInfo heading="Diagnose" variant="gray">
+                    {medisinskVurdering.hovedDiagnose.tekst}
+                </SykmeldingInfo>
             )}
-            {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
-                if (bidiagnose.tekst) {
-                    return (
-                        <div className="mb-3 rounded bg-gray-50 p-4" key={index}>
-                            <Heading size="xsmall" level="4">
-                                Bidiagnose
-                            </Heading>
-                            <BodyShort size="small">{bidiagnose.tekst}</BodyShort>
-                        </div>
-                    )
-                }
-                return null
-            })}
+            {R.pipe(
+                medisinskVurdering.biDiagnoser,
+                R.map(R.prop('tekst')),
+                R.compact,
+                R.map((tekst) => (
+                    <SykmeldingInfo key={tekst} heading="Bidiagnose" variant="gray">
+                        {tekst}
+                    </SykmeldingInfo>
+                )),
+            )}
             <>
-                {!!(
-                    medisinskVurdering.annenFraversArsak?.grunn &&
-                    medisinskVurdering.annenFraversArsak?.grunn.length > 0
-                ) && (
-                    <div className="mb-3 rounded bg-gray-50 p-4">
-                        <Heading size="xsmall" level="4">
-                            Annen lovfestet fraværsgrunn
-                        </Heading>
-                        <BodyShort size="small">
+                {medisinskVurdering.annenFraversArsak?.grunn &&
+                    medisinskVurdering.annenFraversArsak?.grunn?.length > 0 && (
+                        <SykmeldingInfo heading="Annen lovfestet fraværsgrunn" variant="gray">
                             {medisinskVurdering.annenFraversArsak.grunn.map(annenFraverGrunnToText).join('. ')}
-                        </BodyShort>
-                    </div>
-                )}
-                {!!medisinskVurdering.annenFraversArsak?.beskrivelse && (
-                    <div className="mb-3 rounded bg-gray-50 p-4">
-                        <Heading size="xsmall" level="5">
-                            Beskrivelse av fraværsgrunn
-                        </Heading>
-                        <BodyShort size="small">{medisinskVurdering.annenFraversArsak.beskrivelse}</BodyShort>
-                    </div>
+                        </SykmeldingInfo>
+                    )}
+                {medisinskVurdering.annenFraversArsak?.beskrivelse != null && (
+                    <SykmeldingInfo heading="Beskrivelse av fraværsgrunn" variant="gray">
+                        {medisinskVurdering.annenFraversArsak.beskrivelse}
+                    </SykmeldingInfo>
                 )}
                 {medisinskVurdering.svangerskap && (
-                    <div className="mb-3 rounded bg-gray-50 p-4">
-                        <Heading size="xsmall" level="5">
-                            Er sykdommen svangerskapsrelatert?
-                        </Heading>
-                        <BodyShort size="small">Ja</BodyShort>
-                    </div>
+                    <SykmeldingJaInfo heading="Er sykdommen svangerskapsrelatert?" variant="gray" />
                 )}
                 {medisinskVurdering.yrkesskade && (
-                    <div className="mb-3 rounded bg-gray-50 p-4">
-                        <Heading size="xsmall" level="5">
-                            {isV3
+                    <SykmeldingJaInfo
+                        heading={
+                            isV3
                                 ? 'Kan sykmeldingen skyldes en yrkesskade/yrkessykdom?'
-                                : 'Kan sykdommen skyldes en yrkesskade/yrkessykdom?'}
-                        </Heading>
-                        <BodyShort size="small">Ja</BodyShort>
-                    </div>
+                                : 'Kan sykdommen skyldes en yrkesskade/yrkessykdom?'
+                        }
+                        variant="gray"
+                    />
                 )}
             </>
-            {!!medisinskVurdering.yrkesskadeDato && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <Heading size="xsmall" level="4">
-                        Skadedato
-                    </Heading>
-                    <BodyShort size="small">{toReadableDate(medisinskVurdering.yrkesskadeDato)}</BodyShort>
-                </div>
+            {medisinskVurdering.yrkesskadeDato != null && (
+                <SykmeldingInfo heading="Skadedato" variant="gray">
+                    {toReadableDate(medisinskVurdering.yrkesskadeDato)}
+                </SykmeldingInfo>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 

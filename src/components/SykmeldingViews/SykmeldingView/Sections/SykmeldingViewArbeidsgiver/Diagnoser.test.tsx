@@ -31,7 +31,7 @@ describe('Diagnoser', () => {
             yrkesskade: false,
             yrkesskadeDato: '',
         }
-        render(<Diagnoser medisinskVurdering={medisinskVurdering} sladd />)
+        render(<Diagnoser medisinskVurdering={medisinskVurdering} />)
         expect(screen.getByText('Medisinsk tilstand')).toBeInTheDocument()
     })
 
@@ -49,7 +49,7 @@ describe('Diagnoser', () => {
             yrkesskade: false,
             yrkesskadeDato: '',
         }
-        render(<Diagnoser medisinskVurdering={medisinskVurdering} sladd />)
+        render(<Diagnoser medisinskVurdering={medisinskVurdering} />)
         expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument()
     })
 })

@@ -4,7 +4,7 @@ import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeU
 import { Periode } from '../../../../../fetching/graphql.generated'
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { toReadableDatePeriod } from '../../../../../utils/dateUtils'
 
 import styles from './Perioder.module.css'
@@ -17,7 +17,7 @@ interface Props {
 function Perioder({ perioder, isV3 }: Props): JSX.Element {
     return (
         <div>
-            <SykmeldtHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
+            <SykmeldingSectionHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
             <div className={styles.perioder}>
                 {perioder.map((periode, index) => (
                     <div key={index} className={styles.periode}>

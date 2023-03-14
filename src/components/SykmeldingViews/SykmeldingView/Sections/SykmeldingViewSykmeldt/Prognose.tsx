@@ -2,9 +2,12 @@ import { Historic } from '@navikt/ds-icons'
 
 import { Prognose } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
-import JaEntry from '../../Layout/JaEntry/JaEntry'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import {
+    SykmeldingInfo,
+    SykmeldingInfoSubGroup,
+    SykmeldingJaInfo,
+} from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     prognose?: Prognose | null
@@ -24,74 +27,60 @@ function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
     }
 
     return (
-        <div>
-            <SykmeldtHeading title="Prognose" Icon={Historic} />
+        <SykmeldingGroup heading="Prognose" Icon={Historic}>
             {prognose.arbeidsforEtterPeriode && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <JaEntry
-                        title={
-                            isV3
-                                ? 'Pasienten er 100% arbeidsfør etter denne perioden'
-                                : 'Er pasienten 100% arbeidsfør etter denne perioden?'
-                        }
-                    />
-                </div>
+                <SykmeldingJaInfo
+                    heading={
+                        isV3
+                            ? 'Pasienten er 100% arbeidsfør etter denne perioden'
+                            : 'Er pasienten 100% arbeidsfør etter denne perioden?'
+                    }
+                    variant="gray"
+                />
             )}
-            {!!prognose.hensynArbeidsplassen && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <SykmeldingEntry
-                        title="Hensyn som må tas på arbeidsplassen"
-                        mainText={prognose.hensynArbeidsplassen}
-                        small
-                    />
-                </div>
+            {prognose.hensynArbeidsplassen != null && (
+                <SykmeldingInfo heading="Hensyn som må tas på arbeidsplassen" variant="gray">
+                    {prognose.hensynArbeidsplassen}
+                </SykmeldingInfo>
             )}
             {!!prognose.erIArbeid && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
+                <SykmeldingInfoSubGroup variant="gray">
                     {prognose.erIArbeid.egetArbeidPaSikt && (
-                        <JaEntry title="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?" />
+                        <SykmeldingJaInfo heading="Antas pasienten å kunne komme tilbake til samme arbeidsgiver på sikt?" />
                     )}
                     {prognose.erIArbeid.annetArbeidPaSikt && (
-                        <JaEntry title="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?" />
+                        <SykmeldingJaInfo heading="Antas pasienten å kunne komme tilbake til annen arbeidsgiver på sikt?" />
                     )}
-                    {!!prognose.erIArbeid.arbeidFOM && (
-                        <SykmeldingEntry
-                            title="Pasienten anslås å være tilbake"
-                            mainText={toReadableDate(prognose.erIArbeid.arbeidFOM)}
-                            small
-                        />
+                    {prognose.erIArbeid.arbeidFOM != null && (
+                        <SykmeldingInfo heading="Pasienten anslås å være tilbake">
+                            {toReadableDate(prognose.erIArbeid.arbeidFOM)}
+                        </SykmeldingInfo>
                     )}
-                    {!!prognose.erIArbeid.vurderingsdato && (
-                        <SykmeldingEntry
-                            title="Behandler kan gi tilbakemelding på dette"
-                            mainText={toReadableDate(prognose.erIArbeid.vurderingsdato)}
-                            small
-                        />
+                    {prognose.erIArbeid.vurderingsdato != null && (
+                        <SykmeldingInfo heading="Behandler kan gi tilbakemelding på dette">
+                            {toReadableDate(prognose.erIArbeid.vurderingsdato)}
+                        </SykmeldingInfo>
                     )}
-                </div>
+                </SykmeldingInfoSubGroup>
             )}
             {!!prognose.erIkkeIArbeid && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
+                <SykmeldingInfoSubGroup variant="gray">
                     {prognose.erIkkeIArbeid.arbeidsforPaSikt && (
-                        <JaEntry title="Antas pasienten å kunne komme i arbeid på sikt?" />
+                        <SykmeldingJaInfo heading="Antas pasienten å kunne komme i arbeid på sikt?" />
                     )}
                     {!!prognose.erIkkeIArbeid.arbeidsforFOM && (
-                        <SykmeldingEntry
-                            title="Pasienten anslås å vær være arbeidsfør"
-                            mainText={toReadableDate(prognose.erIkkeIArbeid.arbeidsforFOM)}
-                            small
-                        />
+                        <SykmeldingInfo heading="Pasienten anslås å vær være arbeidsfør">
+                            {toReadableDate(prognose.erIkkeIArbeid.arbeidsforFOM)}
+                        </SykmeldingInfo>
                     )}
                     {!!prognose.erIkkeIArbeid.vurderingsdato && (
-                        <SykmeldingEntry
-                            title="Behandler kan gi tilbakemelding på dette"
-                            mainText={toReadableDate(prognose.erIkkeIArbeid.vurderingsdato)}
-                            small
-                        />
+                        <SykmeldingInfo heading="Behandler kan gi tilbakemelding på dette">
+                            {toReadableDate(prognose.erIkkeIArbeid.vurderingsdato)}
+                        </SykmeldingInfo>
                     )}
-                </div>
+                </SykmeldingInfoSubGroup>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 

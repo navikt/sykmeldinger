@@ -1,37 +1,26 @@
 import { Bandage } from '@navikt/ds-icons'
 import React from 'react'
+import * as R from 'remeda'
 
 import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingSladd } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     medisinskVurdering: MedisinskVurdering
-    sladd?: boolean
 }
 
-function Diagnoser({ medisinskVurdering, sladd }: Props): JSX.Element {
+function Diagnoser({ medisinskVurdering }: Props): JSX.Element {
     return (
-        <div>
-            <SykmeldtHeading title="Medisinsk tilstand" Icon={Bandage} />
-            <div className="p-4">
-                {medisinskVurdering.hovedDiagnose?.tekst && (
-                    <SykmeldingEntry
-                        title="Diagnose"
-                        mainText={medisinskVurdering?.hovedDiagnose?.tekst}
-                        sladd={sladd}
-                    />
-                )}
-                {medisinskVurdering.biDiagnoser.map((bidiagnose, index) => {
-                    if (bidiagnose.tekst) {
-                        return (
-                            <SykmeldingEntry key={index} title="Bidiagnose" mainText={bidiagnose.tekst} sladd={sladd} />
-                        )
-                    }
-                    return null
-                })}
-            </div>
-        </div>
+        <SykmeldingGroup heading="Medisinsk tilstand" Icon={Bandage} tight>
+            {medisinskVurdering.hovedDiagnose?.tekst && <SykmeldingSladd heading="Diagnose" />}
+            {R.pipe(
+                medisinskVurdering.biDiagnoser,
+                R.map(R.prop('tekst')),
+                R.compact,
+                R.map((it) => <SykmeldingSladd key={it} heading="Diagnose" />),
+            )}
+        </SykmeldingGroup>
     )
 }
 

@@ -3,7 +3,7 @@ import { PeopleDialogOutline } from '@navikt/ds-icons'
 import { MeldingTilNav } from '../../../../../fetching/graphql.generated'
 import JaEntry from '../../Layout/JaEntry/JaEntry'
 import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
+import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
 
 interface Props {
     meldingTilNav?: MeldingTilNav | null
@@ -16,7 +16,7 @@ function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {
 
     return (
         <div>
-            <SykmeldtHeading title="Melding til NAV" Icon={PeopleDialogOutline} />
+            <SykmeldingSectionHeading title="Melding til NAV" Icon={PeopleDialogOutline} />
             {meldingTilNav.bistandUmiddelbart && (
                 <div className="mb-3 rounded bg-gray-50 p-4">
                     <JaEntry title="Ønskes bistand fra NAV nå?" />

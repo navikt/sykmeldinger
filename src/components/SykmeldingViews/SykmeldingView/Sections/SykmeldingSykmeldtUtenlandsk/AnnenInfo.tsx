@@ -1,12 +1,10 @@
 import React from 'react'
-import { BodyShort, Heading } from '@navikt/ds-react'
 import { Information } from '@navikt/ds-icons'
 
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
 import { toReadableDate } from '../../../../../utils/dateUtils'
 import { UtenlandskSykmelding } from '../../../../../utils/utenlanskUtils'
-
-import styles from './AnnenInfo.module.css'
+import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
 
 interface Props {
     sykmelding: UtenlandskSykmelding
@@ -14,44 +12,26 @@ interface Props {
 
 function AnnenInfo({ sykmelding }: Props): JSX.Element {
     return (
-        <div>
-            <SykmeldtHeading title="Annen info" Icon={Information} />
-            <div className={styles.annenInfo}>
-                <div className={styles.info}>
-                    <Heading size="xsmall" level="4">
-                        Dato sykmeldingen ble skrevet
-                    </Heading>
-                    <BodyShort size="small">{toReadableDate(sykmelding.behandletTidspunkt)}</BodyShort>
-                </div>
-                <div className={styles.info}>
-                    <Heading size="xsmall" level="4">
-                        Landet sykmeldingen ble skrevet
-                    </Heading>
-                    <BodyShort size="small">{sykmelding.utenlandskSykmelding.land}</BodyShort>
-                </div>
-                {sykmelding.medisinskVurdering?.hovedDiagnose?.tekst && (
-                    <div className={styles.info}>
-                        <Heading size="xsmall" level="4">
-                            Diagnose
-                        </Heading>
-                        <BodyShort size="small">{sykmelding.medisinskVurdering.hovedDiagnose.tekst}</BodyShort>
-                    </div>
-                )}
-                {sykmelding.medisinskVurdering?.biDiagnoser.map((bidiagnose, index) => {
-                    if (bidiagnose.tekst) {
-                        return (
-                            <div className={styles.info} key={index}>
-                                <Heading size="xsmall" level="4">
-                                    Bidiagnose
-                                </Heading>
-                                <BodyShort size="small">{bidiagnose.tekst}</BodyShort>
-                            </div>
-                        )
-                    }
-                    return null
-                })}
-            </div>
-        </div>
+        <SykmeldingGroup heading="Annen info" Icon={Information}>
+            <SykmeldingInfo heading="Dato sykmeldingen ble skrevet" variant="blue">
+                {toReadableDate(sykmelding.behandletTidspunkt)}
+            </SykmeldingInfo>
+            <SykmeldingInfo heading="Landet sykmeldingen ble skrevet" variant="blue">
+                {sykmelding.utenlandskSykmelding.land}
+            </SykmeldingInfo>
+            {sykmelding.medisinskVurdering?.hovedDiagnose?.tekst && (
+                <SykmeldingInfo heading="Diagnose" variant="blue">
+                    {sykmelding.medisinskVurdering.hovedDiagnose.tekst}
+                </SykmeldingInfo>
+            )}
+            {sykmelding.medisinskVurdering?.biDiagnoser.map((bidiagnose) =>
+                bidiagnose.tekst ? (
+                    <SykmeldingInfo key={bidiagnose.tekst} heading="Bidiagnose" variant="blue">
+                        {bidiagnose.tekst}
+                    </SykmeldingInfo>
+                ) : null,
+            )}
+        </SykmeldingGroup>
     )
 }
 

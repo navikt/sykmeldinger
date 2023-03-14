@@ -2,9 +2,12 @@ import { Office2 } from '@navikt/ds-icons'
 
 import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
 import { arbeidsrelatertArsakToText, medisinskArsakToText } from '../../../../../utils/periodeUtils'
-import { SykmeldtHeading } from '../../Layout/SykmeldtHeading/SykmeldtHeading'
-import ListEntry from '../../Layout/ListEntry/ListEntry'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import {
+    SykmeldingInfo,
+    SykmeldingInfoSubGroup,
+    SykmeldingListInfo,
+} from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
@@ -17,40 +20,34 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): JSX.Element | 
     }
 
     return (
-        <div>
-            <SykmeldtHeading title="Aktivitet på arbeidsplassen" Icon={Office2} />
-            {!!aktivitetIkkeMulig.medisinskArsak && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    {aktivitetIkkeMulig.medisinskArsak?.arsak && (
-                        <ListEntry
-                            listTitle="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.medisinskArsak.arsak.map((it) =>
-                                medisinskArsakToText(it, isV3),
-                            )}
-                        />
-                    )}
+        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Office2}>
+            {aktivitetIkkeMulig.medisinskArsak != null && (
+                <SykmeldingInfoSubGroup variant="gray">
+                    <SykmeldingListInfo
+                        heading="Medisinske årsaker hindrer arbeidsrelatert aktivitet"
+                        texts={aktivitetIkkeMulig.medisinskArsak.arsak.map((it) => medisinskArsakToText(it, isV3))}
+                    />
                     {aktivitetIkkeMulig.medisinskArsak?.beskrivelse && (
-                        <SykmeldingEntry title="Beskrivelse" mainText={aktivitetIkkeMulig.medisinskArsak.beskrivelse} />
+                        <SykmeldingInfo heading="Beskrivelse">
+                            {aktivitetIkkeMulig.medisinskArsak.beskrivelse}
+                        </SykmeldingInfo>
                     )}
-                </div>
+                </SykmeldingInfoSubGroup>
             )}
-            {!!aktivitetIkkeMulig.arbeidsrelatertArsak && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.arsak && (
-                        <ListEntry
-                            listTitle="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
-                            listText={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}
-                        />
+            {aktivitetIkkeMulig.arbeidsrelatertArsak != null && (
+                <SykmeldingInfoSubGroup variant="gray">
+                    <SykmeldingListInfo
+                        heading="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
+                        texts={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}
+                    />
+                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse != null && (
+                        <SykmeldingInfo heading="Beskrivelse">
+                            {aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
+                        </SykmeldingInfo>
                     )}
-                    {aktivitetIkkeMulig.arbeidsrelatertArsak?.beskrivelse && (
-                        <SykmeldingEntry
-                            title="Beskrivelse"
-                            mainText={aktivitetIkkeMulig.arbeidsrelatertArsak.beskrivelse}
-                        />
-                    )}
-                </div>
+                </SykmeldingInfoSubGroup>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 
