@@ -8,7 +8,6 @@ import { isUtenlandsk } from '../../../utils/utenlanskUtils'
 
 import SykmeldingSykmeldtUtenlandsk from './SykmeldingSykmeldtUtenlandsk'
 import SykmeldingViewSykmeldt from './SykmeldingViewSykmeldt'
-import styles from './SykmeldingSykmeldtContainer.module.css'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -22,22 +21,22 @@ function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }
 
     return (
         <article aria-labelledby={articleHeadingId}>
-            <header className={styles.sykmeldingsopplysningerHeader}>
-                <div className={styles.sykmeldtHeader}>
+            <header>
+                <div className="relative mb-2 flex flex-col pb-4">
                     <Heading id={articleHeadingId} size="medium" level="2">
                         Opplysninger fra sykmeldingen
                     </Heading>
-                    <div className={styles.sentDateAndPrint}>
-                        <BodyShort className={styles.sendtDato} size="small">
+                    <div className="flex justify-between border-b border-gray-500">
+                        <BodyShort className="pb-2 text-gray-600" size="small">
                             {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
                         </BodyShort>
                         <Button
+                            className="absolute top-0 right-0 hidden md:block"
                             as="a"
                             href={`${publicEnv.publicPath}/${sykmelding.id}/pdf`}
                             target="_blank"
                             rel="noopener noreferrer"
                             variant="tertiary"
-                            className={styles.printButton}
                             icon={<Print title="Åpne PDF av sykmeldingen" />}
                         />
                     </div>

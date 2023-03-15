@@ -28,10 +28,11 @@ function Egenmeldingsdager({
                     ...[...egenmeldingsdager.dager].sort().map(toReadableDate),
                     `(${egenmeldingsdager.dager.length} dager)`,
                 ]}
+                variant="blue"
             />
             {publicEnv.DISPLAY_EGENMELDING === 'true' && editableEgenmelding && (
                 <Link passHref href={`/${sykmeldingId}/endre-egenmeldingsdager`} legacyBehavior>
-                    <Button as="a" variant="secondary">
+                    <Button as="a" variant="secondary" className="mt-4">
                         Endre egenmeldingsdager
                     </Button>
                 </Link>

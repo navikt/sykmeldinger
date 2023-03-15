@@ -1,9 +1,0 @@
-.sykmeldingArbeidsgiverUtenlandsk {
-    border-top: 0;
-    padding-top: 0;
-    padding: 0 var(--a-spacing-4) var(--a-spacing-4) var(--a-spacing-4);
-}
-
-.sykmeldingArbeidsgiverUtenlandsk > div:not(:last-of-type, :global(.periodeView)) {
-    margin-bottom: var(--a-spacing-4);
-}

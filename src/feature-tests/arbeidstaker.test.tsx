@@ -88,7 +88,7 @@ describe('Arbeidstaker', () => {
             ),
         )
 
-        expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
@@ -145,7 +145,7 @@ describe('Arbeidstaker', () => {
             ),
         )
 
-        expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
@@ -207,7 +207,7 @@ describe('Arbeidstaker', () => {
             ),
         )
 
-        expect(await screen.findByRole('heading', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
