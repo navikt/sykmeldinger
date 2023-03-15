@@ -1,12 +1,11 @@
-name: Labs delete
+name: Demo delete
 on: delete
 env:
-  DOCKER_IMAGE: ghcr.io/navikt/sykmeldinger:${{ github.sha }}
   branchname: ${{ github.event.ref }}
 jobs:
-  deploy-branch-to-labs-gcp:
-    if: startsWith(github.event.ref, 'labs')
-    name: Delete branch labs-gcp
+  deploy-branch-to-dev-gcp:
+    if: startsWith(github.event.ref, 'demo')
+    name: Delete branch dev-gcp
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -15,10 +14,10 @@ jobs:
         with:
           to-slug: sykmeldinger-${{ github.ref_name }}
       - uses: nais/deploy/actions/deploy@v1
-      - name: Scale down labs-gcp
+      - name: Scale down dev-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: labs-gcp
-          RESOURCE: nais-labs-branch.yaml
-          VAR: image=${{ env.DOCKER_IMAGE }},appname=${{ steps.slug.outputs.slug }},replicas=0,branchState=deleted
+          CLUSTER: dev-gcp
+          RESOURCE: nais-demo-branch.yaml
+          VAR: image=${{ env.DOCKER_IMAGE }},appname=${{ steps.slug.outputs.slug }}-demo,replicas=0,branchState=deleted

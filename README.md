@@ -6,7 +6,7 @@ Lever under:
 
 -   prod-gcp: https://www.nav.no/syk/sykmeldinger
 -   dev-gcp: https://www-gcp.dev.nav.no/syk/sykmeldinger
--   labs-gcp (demo): https://sykmeldinger.labs.nais.io/syk/sykmeldinger/
+-   dev-gcp (demo): https://sykmeldinger.ekstern.dev.nav.no/syk/sykmeldinger/
 
 Tekniske valg:
 
