@@ -20,11 +20,12 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 
     return (
-        <div className="p-0">
+        <div>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
             <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3(sykmelding)} />
             {publicEnv.DISPLAY_EGENMELDING === 'true' && egenmeldingsdager && (
                 <Egenmeldingsdager
+                    sykmeldingId={sykmelding.id}
                     egenmeldingsdager={egenmeldingsdager}
                     sykmelding={sykmelding}
                     editableEgenmelding={editableEgenmelding}

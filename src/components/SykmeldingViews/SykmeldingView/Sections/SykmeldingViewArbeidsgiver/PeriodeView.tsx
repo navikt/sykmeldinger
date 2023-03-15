@@ -1,15 +1,17 @@
 import { Calender } from '@navikt/ds-icons'
-import { BodyShort, Heading } from '@navikt/ds-react'
 
-import JaEntry from '../../Layout/JaEntry/JaEntry'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode, SvarUnion_DagerSvar_Fragment } from '../../../../../fetching/graphql.generated'
-import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
 import { getPublicEnv } from '../../../../../utils/env'
-
-import styles from './PeriodeView.module.css'
+import {
+    SykmeldingInfo,
+    SykmeldingInfoSubGroup,
+    SykmeldingJaInfo,
+    SykmeldingListInfo,
+    SykmeldingMultilineInfo,
+} from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface PeriodeViewProps {
     perioder: Periode[]
@@ -20,33 +22,27 @@ const publicEnv = getPublicEnv()
 
 function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Element {
     return (
-        <div className="periodeView">
-            <SykmeldingSectionHeading title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} />
-            <div className={styles.perioder}>
-                {perioder.map((periode, index) => (
-                    <div key={index} className={styles.periode}>
-                        <SykmeldingEntry
-                            title={getPeriodTitle(periode)}
-                            mainText={toReadableDatePeriod(periode.fom, periode.tom)}
-                            subText={getReadableLength(periode)}
-                        />
-                        {!!periode.innspillTilArbeidsgiver && (
-                            <SykmeldingEntry
-                                title="Innspill til arbeidsgiver om tilrettelegging"
-                                mainText={periode.innspillTilArbeidsgiver}
-                                small
-                            />
-                        )}
-                        {periode.gradert?.reisetilskudd && (
-                            <JaEntry title="Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?" />
-                        )}
-                    </div>
-                ))}
-            </div>
+        <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={Calender} wrap>
+            {perioder.map((periode, index) => (
+                <SykmeldingInfoSubGroup key={index}>
+                    <SykmeldingMultilineInfo
+                        heading={getPeriodTitle(periode)}
+                        lines={[toReadableDatePeriod(periode.fom, periode.tom), getReadableLength(periode)]}
+                    />
+                    {!!periode.innspillTilArbeidsgiver && (
+                        <SykmeldingInfo heading="Innspill til arbeidsgiver om tilrettelegging">
+                            {periode.innspillTilArbeidsgiver}
+                        </SykmeldingInfo>
+                    )}
+                    {periode.gradert?.reisetilskudd && (
+                        <SykmeldingJaInfo heading="Kan pasienten være i delvis arbeid ved bruk av reisetilskudd?" />
+                    )}
+                </SykmeldingInfoSubGroup>
+            ))}
             {publicEnv.DISPLAY_EGENMELDING === 'true' && egenmeldingsdager && (
                 <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 
@@ -56,19 +52,13 @@ interface EgenmeldingsdagerProps {
 
 function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
     return (
-        <div className={styles.egenmeldingsdager}>
-            <Heading size="xsmall" level="4">
-                Egenmeldingsdager (oppgitt av den sykmeldte)
-            </Heading>
-            <ul>
-                {[...egenmeldingsdager.dager].sort().map((date: string) => (
-                    <li className={styles.date} key={toReadableDate(date)}>
-                        <BodyShort size="small">{toReadableDate(date)}</BodyShort>
-                    </li>
-                ))}
-                <BodyShort size="small" as="li">{`(${egenmeldingsdager.dager.length} dager)`}</BodyShort>
-            </ul>
-        </div>
+        <SykmeldingListInfo
+            heading="Egenmeldingsdager (oppgitt av den sykmeldte)"
+            texts={[
+                ...[...egenmeldingsdager.dager].sort().map(toReadableDate),
+                `(${egenmeldingsdager.dager.length} dager)`,
+            ]}
+        />
     )
 }
 

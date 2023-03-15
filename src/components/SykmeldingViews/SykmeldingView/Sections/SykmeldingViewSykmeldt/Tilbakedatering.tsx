@@ -2,8 +2,8 @@ import { Historic } from '@navikt/ds-icons'
 
 import { KontaktMedPasient } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
-import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     kontaktMedPasient: KontaktMedPasient
@@ -15,25 +15,18 @@ function Tilbakedatering({ kontaktMedPasient }: Props): JSX.Element | null {
     }
 
     return (
-        <div>
-            <SykmeldingSectionHeading title="Tilbakedatering" Icon={Historic} />
-            {!!kontaktMedPasient.kontaktDato && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <SykmeldingEntry
-                        title="Dato for dokumenterbar kontakt med pasienten"
-                        mainText={toReadableDate(kontaktMedPasient.kontaktDato)}
-                    />
-                </div>
+        <SykmeldingGroup heading="Tilbakedatering" Icon={Historic}>
+            {kontaktMedPasient.kontaktDato != null && (
+                <SykmeldingInfo heading="Dato for dokumenterbar kontakt med pasienten" variant="gray">
+                    {toReadableDate(kontaktMedPasient.kontaktDato)}
+                </SykmeldingInfo>
             )}
-            {!!kontaktMedPasient.begrunnelseIkkeKontakt && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <SykmeldingEntry
-                        title="Begrunnelse for tilbakedatering"
-                        mainText={kontaktMedPasient.begrunnelseIkkeKontakt}
-                    />
-                </div>
+            {kontaktMedPasient.begrunnelseIkkeKontakt != null && (
+                <SykmeldingInfo heading="Begrunnelse for tilbakedatering" variant="gray">
+                    {kontaktMedPasient.begrunnelseIkkeKontakt}
+                </SykmeldingInfo>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 

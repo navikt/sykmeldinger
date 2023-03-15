@@ -13,7 +13,6 @@ import PrognoseView from './Sections/SykmeldingViewArbeidsgiver/PrognoseView'
 import SykmeldingenGjelderView from './Sections/SykmeldingViewArbeidsgiver/SykmeldingenGjelderView'
 import Diagnoser from './Sections/SykmeldingViewArbeidsgiver/Diagnoser'
 import AnnenInfoView from './Sections/SykmeldingViewArbeidsgiver/AnnenInfoView'
-import styles from './SykmeldingViewArbeidsgiver.module.css'
 
 interface SykmeldingviewProps {
     sykmelding: SykmeldingFragment
@@ -21,7 +20,7 @@ interface SykmeldingviewProps {
 
 function SykmeldingViewArbeidsgiver({ sykmelding }: SykmeldingviewProps): JSX.Element {
     return (
-        <div className={styles.sykmeldingViewArbeidsgiver}>
+        <div className="p-4 pt-0">
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />
             <PeriodeView
                 perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}

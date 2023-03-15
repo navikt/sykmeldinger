@@ -6,7 +6,7 @@ import SladdSvg from '../../SykmeldingViews/SykmeldingView/Svg/SladdSvg'
 
 interface SykmeldingInfoProps {
     className?: string
-    heading: string
+    heading?: string
     variant?: 'blue' | 'gray' | 'transparent'
 }
 
@@ -26,9 +26,11 @@ export function SykmeldingInfo({
                 'bg-gray-50': variant === 'gray',
             })}
         >
-            <Heading size="xsmall" level="4" spacing>
-                {heading}
-            </Heading>
+            {heading && (
+                <Heading size="xsmall" level="4" spacing>
+                    {heading}
+                </Heading>
+            )}
             {typeof children === 'string' ? <BodyShort>{children}</BodyShort> : children}
         </div>
     )

@@ -1,33 +1,29 @@
 import { PeopleDialogOutline } from '@navikt/ds-icons'
 
 import { MeldingTilNav } from '../../../../../fetching/graphql.generated'
-import JaEntry from '../../Layout/JaEntry/JaEntry'
-import SykmeldingEntry from '../../Layout/SykmeldingEntry/SykmeldingEntry'
-import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingInfo, SykmeldingJaInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     meldingTilNav?: MeldingTilNav | null
 }
 
 function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {
-    if (!meldingTilNav || (meldingTilNav.bistandUmiddelbart === false && !meldingTilNav.beskrivBistand)) {
+    if (meldingTilNav == null || (!meldingTilNav.bistandUmiddelbart && meldingTilNav.beskrivBistand == null)) {
         return null
     }
 
     return (
-        <div>
-            <SykmeldingSectionHeading title="Melding til NAV" Icon={PeopleDialogOutline} />
+        <SykmeldingGroup heading="Melding til NAV" Icon={PeopleDialogOutline}>
             {meldingTilNav.bistandUmiddelbart && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <JaEntry title="Ønskes bistand fra NAV nå?" />
-                </div>
+                <SykmeldingJaInfo heading="Ønskes bistand fra NAV nå?" variant="gray" />
             )}
             {meldingTilNav.beskrivBistand && (
-                <div className="mb-3 rounded bg-gray-50 p-4">
-                    <SykmeldingEntry title="Nærmere beskrivelse" mainText={meldingTilNav.beskrivBistand} small />
-                </div>
+                <SykmeldingInfo heading="Nærmere beskrivelse" variant="gray">
+                    {meldingTilNav.beskrivBistand}
+                </SykmeldingInfo>
             )}
-        </div>
+        </SykmeldingGroup>
     )
 }
 

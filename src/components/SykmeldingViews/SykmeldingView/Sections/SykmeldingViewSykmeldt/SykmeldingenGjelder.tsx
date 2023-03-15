@@ -1,9 +1,9 @@
 import { People } from '@navikt/ds-icons'
-import { BodyShort } from '@navikt/ds-react'
 
-import { SykmeldingSectionHeading } from '../../../../molecules/sykmelding/SykmeldingGroup'
+import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { Pasient } from '../../../../../fetching/graphql.generated'
 import { getPasientName } from '../../../../../utils/pasientUtils'
+import { SykmeldingMultilineInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     pasient?: Pasient | null
@@ -16,13 +16,9 @@ function SykmeldingenGjelder({ pasient }: Props): JSX.Element | null {
     if (!name) return null
 
     return (
-        <div className="mb-4">
-            <SykmeldingSectionHeading title="Sykmeldingen gjelder" Icon={People} />
-            <div className="mb-3 rounded bg-gray-50 p-4">
-                <BodyShort size="small">{name}</BodyShort>
-                {pasient.fnr && <BodyShort size="small">Fødselsnr: {pasient.fnr}</BodyShort>}
-            </div>
-        </div>
+        <SykmeldingGroup heading="Sykmeldingen gjelder" Icon={People}>
+            <SykmeldingMultilineInfo lines={[name, `Fødselsnr: ${pasient.fnr}`]} variant="gray" />
+        </SykmeldingGroup>
     )
 }
 
