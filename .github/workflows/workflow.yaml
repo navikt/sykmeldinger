@@ -83,7 +83,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais-dev-gcp.yaml
-          VAR: image=${{ needs.build.outputs.image }},version=${{ github.sha }}
+          VAR: image=${{ needs.build-and-publish.outputs.image }},version=${{ github.sha }}
 
   deploy-to-main-dev-gcp:
     if: github.ref_name == 'main'
@@ -97,7 +97,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais-dev-demo.yaml
-          VAR: image=${{ needs.build.outputs.image }},ingress=https://sykmeldinger.ekstern.dev.nav.no,appname=sykmeldinger-demo,replicas=1,branchState=alive
+          VAR: image=${{ needs.build-and-publish.outputs.image }},ingress=https://sykmeldinger.ekstern.dev.nav.no,appname=sykmeldinger,replicas=1,branchState=alive
 
   deploy-to-dev-demo-gcp:
     if: startsWith(github.ref_name, 'demo')
@@ -115,7 +115,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais-dev-demo.yaml
-          VAR: image=${{ needs.build.outputs.image }},ingress=https://${{ steps.slug.outputs.slug }}.ekstern.dev.nav.no,appname=${{ steps.slug.outputs.slug }},replicas=1,branchState=alive
+          VAR: image=${{ needs.build-and-publish.outputs.image }},ingress=https://${{ steps.slug.outputs.slug }}.ekstern.dev.nav.no,appname=${{ steps.slug.outputs.slug }},replicas=1,branchState=alive
 
   deploy-to-prod-gcp:
     if: github.ref == 'refs/heads/main'
@@ -129,4 +129,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: nais-prod.yaml
-          VAR: image=${{ needs.build.outputs.image }},version=${{ github.sha }}
+          VAR: image=${{ needs.build-and-publish.outputs.image }},version=${{ github.sha }}
