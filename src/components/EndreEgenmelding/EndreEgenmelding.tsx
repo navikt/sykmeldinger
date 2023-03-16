@@ -9,7 +9,7 @@ import EndreEgenmeldingForm from './EndreEgenmeldingForm'
 
 type EndreEgenmeldingProps = {
     sykmelding: SykmeldingFragment
-    egenmeldingsdager: SvarUnion_DagerSvar_Fragment
+    egenmeldingsdager: SvarUnion_DagerSvar_Fragment | null
 }
 
 function EndreEgenmelding({ sykmelding, egenmeldingsdager }: EndreEgenmeldingProps): JSX.Element {

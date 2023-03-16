@@ -508,6 +508,116 @@ describe('endre egenmeldingsdager page', () => {
             await userEvent.click(await screen.findByRole('button', { name: 'Registrer endringene' }))
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         })
+
+        it('setting the first question to no should remove all egenmeldinsgdager', async () => {
+            setup(sykmeldingWith3EgenemeldingsPeriods, [
+                createMock({
+                    request: {
+                        query: EndreEgenmeldingsdagerDocument,
+                        variables: {
+                            sykmeldingId: 'sykmelding-id',
+                            egenmeldingsdager: [],
+                        },
+                    },
+                    result: {
+                        data: {
+                            __typename: 'Mutation',
+                            updateEgenmeldingsdager: sykmeldingWith3EgenemeldingsPeriods,
+                        },
+                    },
+                }),
+            ])
+
+            expect(await screen.findByRole('heading', { name: /Du brukte 3 egenmeldingsdag/ })).toBeInTheDocument()
+
+            const lastSection = within(
+                screen.getByRole('region', {
+                    name: /Brukte du egenmelding hos Arbeidsgiver AS i perioden 15. - 30. april 2020/,
+                }),
+            )
+
+            // Add some new days to the first section
+            await userEvent.click(lastSection.getByRole('button', { name: 'Endre' }))
+            await userEvent.click(lastSection.getByRole('radio', { name: 'Nei' }))
+
+            await userEvent.click(await screen.findByRole('button', { name: 'Registrer endringene' }))
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+        })
+    })
+
+    describe('given no existing egenmeldingsperiod (e.g. user did not send any to begin with)', () => {
+        const sykmeldingWithNoExistingEgenmeldingsdager = createSykmelding({
+            id: 'sykmelding-id',
+            sykmeldingsperioder: [
+                createSykmeldingPeriode({
+                    type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    fom: '2020-05-01',
+                    tom: '2020-05-10',
+                }),
+            ],
+            sykmeldingStatus: createSykmeldingStatus({
+                statusEvent: StatusEvent.SENDT,
+                arbeidsgiver,
+                sporsmalOgSvarListe: [],
+            }),
+        })
+
+        it('should be allowed to edit and render initial input', async () => {
+            setup(sykmeldingWithNoExistingEgenmeldingsdager, [])
+
+            expect(
+                await screen.findRadioInGroup(
+                    { name: /Brukte du egenmelding hos Arbeidsgiver AS i perioden 15. - 30. april 2020/ },
+                    { name: 'Ja' },
+                ),
+            ).not.toBeChecked()
+            expect(
+                await screen.findRadioInGroup(
+                    { name: /Brukte du egenmelding hos Arbeidsgiver AS i perioden 15. - 30. april 2020/ },
+                    { name: 'Nei' },
+                ),
+            ).not.toBeChecked()
+        })
+
+        it('should be able to add egenmeldinsgdager', async () => {
+            setup(sykmeldingWithNoExistingEgenmeldingsdager, [
+                createMock({
+                    request: {
+                        query: EndreEgenmeldingsdagerDocument,
+                        variables: {
+                            sykmeldingId: 'sykmelding-id',
+                            egenmeldingsdager: ['2020-04-17', '2020-04-23'],
+                        },
+                    },
+                    result: {
+                        data: {
+                            __typename: 'Mutation',
+                            updateEgenmeldingsdager: sykmeldingWithNoExistingEgenmeldingsdager,
+                        },
+                    },
+                }),
+            ])
+
+            const section = within(
+                await screen.findByRole('region', {
+                    name: /Brukte du egenmelding hos Arbeidsgiver AS i perioden 15. - 30. april 2020/,
+                }),
+            )
+
+            await userEvent.click(section.getByRole('radio', { name: 'Ja' }))
+            await clickDays(section, /^17\. april/, /23\. april/)
+            await userEvent.click(section.getByRole('button', { name: 'Videre' }))
+
+            await userEvent.click(
+                screen.getRadioInGroup(
+                    { name: /Brukte du egenmelding hos Arbeidsgiver AS i perioden 1. - 14. april 2020/ },
+                    { name: 'Nei' },
+                ),
+            )
+
+            await userEvent.click(await screen.findByRole('button', { name: 'Registrer endringene' }))
+            await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+        })
     })
 })
 

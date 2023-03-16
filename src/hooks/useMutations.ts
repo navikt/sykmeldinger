@@ -12,6 +12,7 @@ import {
     SendSykmeldingMutation,
     SendSykmeldingValues,
     SykmeldingChangeStatus,
+    YesOrNo,
 } from '../fetching/graphql.generated'
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { toDateString } from '../utils/dateUtils'
@@ -105,13 +106,13 @@ export function useEndreEgenmeldingsdager(
         async (values) => {
             logger.info(`Client: Submitting 'endre egenmeldingsdager' for ${sykmeldingId}`)
 
-            const egenmeldingsdager = mapEgenmeldingsdager(values.egenmeldingsdager)
-            if (!egenmeldingsdager || egenmeldingsdager.length === 0) {
+            if (values.egenmeldingsdager == null || values.egenmeldingsdager.length === 0) {
                 throw new Error(
                     'Trying to endre egenmeldingsdager, but no egenmeldingsdager was provided. Bug in the form?',
                 )
             }
 
+            const egenmeldingsdager = mapEgenmeldingsdager(values.egenmeldingsdager)
             await endreEgenmeldingsdager({
                 variables: { sykmeldingId, egenmeldingsdager: [...egenmeldingsdager].sort() },
             })
@@ -129,7 +130,12 @@ function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
             tom: periode.tom ? toDateString(periode.tom) : null,
         })),
         harEgenmeldingsdager: getEgenmeldingsdager(values.egenmeldingsdager),
-        egenmeldingsdager: mapEgenmeldingsdager(values.egenmeldingsdager),
+        egenmeldingsdager:
+            values.egenmeldingsdager != null &&
+            values.egenmeldingsdager.length > 0 &&
+            values.egenmeldingsdager[0].harPerioder !== YesOrNo.NO
+                ? mapEgenmeldingsdager(values.egenmeldingsdager)
+                : undefined,
     }
 }
 
@@ -141,15 +147,11 @@ function getEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykme
     return value[0].harPerioder
 }
 
-function mapEgenmeldingsdager(value: EgenmeldingsdagerFormValue[] | null): readonly string[] | undefined {
-    if (value == null || value.length === 0) {
-        return undefined
-    }
-
+function mapEgenmeldingsdager(value: EgenmeldingsdagerFormValue[]): readonly string[] {
     const dates = value.flatMap((dager) => dager.datoer).filter((it): it is Date => it != null)
 
     if (dates.length === 0) {
-        return undefined
+        return []
     }
 
     return dates.map(toDateString)

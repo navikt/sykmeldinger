@@ -2,7 +2,6 @@ import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetch
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
 import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
-import { getPublicEnv } from '../../../utils/env'
 
 import FlereOpplysninger from './FlereOpplysninger'
 import MeldingTilNav from './Sections/SykmeldingViewSykmeldt/MeldingTilNav'
@@ -17,8 +16,7 @@ import Arbeidsevne from './Sections/SykmeldingViewSykmeldt/Arbeidsevne'
 import MeldingTilArbeidsgiver from './Sections/SykmeldingViewSykmeldt/MeldingTilArbeidsgiver'
 import Tilbakedatering from './Sections/SykmeldingViewSykmeldt/Tilbakedatering'
 import Egenmeldingsdager from './Sections/SykmeldingViewSykmeldt/Egenmeldingsdager'
-
-const publicEnv = getPublicEnv()
+import RedigerEgenmeldingsdagerLink from './Sections/SykmeldingViewSykmeldt/RedigerEgenmeldingsdagerLink'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -33,12 +31,18 @@ function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): JSX
         <div>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
             <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3Sykmelding} />
-            {publicEnv.DISPLAY_EGENMELDING === 'true' && egenmeldingsdager && (
+            {egenmeldingsdager && (
                 <Egenmeldingsdager
                     sykmeldingId={sykmelding.id}
                     egenmeldingsdager={egenmeldingsdager}
                     sykmelding={sykmelding}
                     editableEgenmelding={editableEgenmelding}
+                />
+            )}
+            {editableEgenmelding && (
+                <RedigerEgenmeldingsdagerLink
+                    sykmeldingId={sykmelding.id}
+                    hasEgenmeldingsdager={egenmeldingsdager != null}
                 />
             )}
             <AnnenInfo sykmelding={sykmelding} />
