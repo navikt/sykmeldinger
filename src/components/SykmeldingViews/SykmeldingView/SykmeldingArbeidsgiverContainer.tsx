@@ -11,9 +11,10 @@ import SykmeldingArbeidsgiverUtenlandsk from './SykmeldingArbeidsgiverUtenlandsk
 
 interface Props {
     sykmelding: SykmeldingFragment
+    chosenEgenmeldingsdager?: string[]
 }
 
-function SykmeldingArbeidsgiverContainer({ sykmelding }: Props): JSX.Element {
+function SykmeldingArbeidsgiverContainer({ sykmelding, chosenEgenmeldingsdager }: Props): JSX.Element {
     const [expanded, setExpanded] = useState(false)
     const elementRef = useRef<HTMLElement>(null)
     const headerId = `sykmelding-${sykmelding.id}-header-arbeidsgiver`
@@ -42,9 +43,15 @@ function SykmeldingArbeidsgiverContainer({ sykmelding }: Props): JSX.Element {
                     </Accordion.Header>
                     <Accordion.Content className="p-0 py-3" id={`sykmelding-${sykmelding.id}-content-arbeidsgiver`}>
                         {isUtenlandsk(sykmelding) ? (
-                            <SykmeldingArbeidsgiverUtenlandsk sykmelding={sykmelding} />
+                            <SykmeldingArbeidsgiverUtenlandsk
+                                sykmelding={sykmelding}
+                                chosenEgenmeldingsdager={chosenEgenmeldingsdager}
+                            />
                         ) : (
-                            <SykmeldingViewArbeidsgiver sykmelding={sykmelding} />
+                            <SykmeldingViewArbeidsgiver
+                                sykmelding={sykmelding}
+                                chosenEgenmeldingsdager={chosenEgenmeldingsdager}
+                            />
                         )}
                         <Lukknapp onClick={() => setExpanded(false)} />
                     </Accordion.Content>
