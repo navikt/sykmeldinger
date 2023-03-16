@@ -19,8 +19,10 @@ export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: Egenmelding
 
 export function findEgenmeldingsdager(
     sporsmalOgSvarListe: SykmeldingStatusFragment['sporsmalOgSvarListe'],
-): SvarUnion_DagerSvar_Fragment | undefined {
-    return sporsmalOgSvarListe
-        .flatMap((it) => it.svar)
-        .find((it): it is SvarUnion_DagerSvar_Fragment => it.__typename === 'DagerSvar')
+): SvarUnion_DagerSvar_Fragment | null {
+    return (
+        sporsmalOgSvarListe
+            .flatMap((it) => it.svar)
+            .find((it): it is SvarUnion_DagerSvar_Fragment => it.__typename === 'DagerSvar') ?? null
+    )
 }

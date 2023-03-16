@@ -55,11 +55,7 @@ function EndreEgenmeldingsdagerPage(): JSX.Element {
                         perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
                         isV3={isV3(sykmelding)}
                     />
-                    {egenmeldingsdager ? (
-                        <EndreEgenmelding sykmelding={sykmelding} egenmeldingsdager={egenmeldingsdager} />
-                    ) : (
-                        <Alert variant="warning">Sykmeldingen har ingen egenmeldingsdager som kan redigeres.</Alert>
-                    )}
+                    <EndreEgenmelding sykmelding={sykmelding} egenmeldingsdager={egenmeldingsdager} />
                 </>
             )}
         </PageWrapper>

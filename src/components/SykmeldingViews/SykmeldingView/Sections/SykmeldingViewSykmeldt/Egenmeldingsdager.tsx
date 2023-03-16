@@ -1,12 +1,7 @@
-import { Button } from '@navikt/ds-react'
-import Link from 'next/link'
-
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
-import { getPublicEnv } from '../../../../../utils/env'
 import { SykmeldingListInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
-
-const publicEnv = getPublicEnv()
+import { isEgenmeldingsdagerEnabled } from '../../../../../utils/env'
 
 interface EgenmeldingsdagerProps {
     sykmeldingId: string
@@ -15,29 +10,18 @@ interface EgenmeldingsdagerProps {
     editableEgenmelding: boolean
 }
 
-function Egenmeldingsdager({
-    sykmeldingId,
-    egenmeldingsdager,
-    editableEgenmelding,
-}: EgenmeldingsdagerProps): JSX.Element {
+function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element | null {
+    if (!isEgenmeldingsdagerEnabled()) return null
+
     return (
-        <>
-            <SykmeldingListInfo
-                heading="Egenmeldingsdager (lagt til av deg)"
-                texts={[
-                    ...[...egenmeldingsdager.dager].sort().map(toReadableDate),
-                    `(${egenmeldingsdager.dager.length} dager)`,
-                ]}
-                variant="blue"
-            />
-            {publicEnv.DISPLAY_EGENMELDING === 'true' && editableEgenmelding && (
-                <Link passHref href={`/${sykmeldingId}/endre-egenmeldingsdager`} legacyBehavior>
-                    <Button as="a" variant="secondary" className="mt-4">
-                        Endre egenmeldingsdager
-                    </Button>
-                </Link>
-            )}
-        </>
+        <SykmeldingListInfo
+            heading="Egenmeldingsdager (lagt til av deg)"
+            texts={[
+                ...[...egenmeldingsdager.dager].sort().map(toReadableDate),
+                `(${egenmeldingsdager.dager.length} dager)`,
+            ]}
+            variant="blue"
+        />
     )
 }
 

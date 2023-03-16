@@ -45,4 +45,11 @@ export function getServerEnv(): ServerEnv {
     return serverRuntimeConfig
 }
 
+/**
+ * Turn this into a function, because we need to make this a timed toggle later
+ */
+export function isEgenmeldingsdagerEnabled(): boolean {
+    return getPublicEnv().DISPLAY_EGENMELDING === 'true'
+}
+
 export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || getPublicEnv().RUNTIME_ENVIRONMENT === 'labs'

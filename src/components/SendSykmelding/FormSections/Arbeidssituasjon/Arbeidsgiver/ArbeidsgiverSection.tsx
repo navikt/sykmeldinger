@@ -10,7 +10,7 @@ import {
 } from '../../../../../fetching/graphql.generated'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../../../FormComponents/FormStructure'
-import { getPublicEnv } from '../../../../../utils/env'
+import { isEgenmeldingsdagerEnabled } from '../../../../../utils/env'
 import { findValgtArbeidsgiver } from '../../../../../utils/arbeidsgiverUtils'
 import { useFindPrevSykmeldingTom } from '../../../../../hooks/useFindPrevSykmeldingTom'
 import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
@@ -26,8 +26,6 @@ interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
 }
 
-const publicEnv = getPublicEnv()
-
 function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element | null {
     const { watch } = useFormContext<FormValues>()
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
@@ -40,7 +38,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element 
             <ArbeidsgiverField arbeidsgivere={arbeidsgivere} />
             {hasNoArbeidsgiver && <ArbeidsgivereMissingInfo />}
             {hasAktiv && <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />}
-            {publicEnv.DISPLAY_EGENMELDING === 'true' && shouldShowEgenmeldingsdager && !error && !isLoading && (
+            {isEgenmeldingsdagerEnabled() && shouldShowEgenmeldingsdager && !error && !isLoading && (
                 <EgenmeldingerField
                     index={0}
                     previous={{

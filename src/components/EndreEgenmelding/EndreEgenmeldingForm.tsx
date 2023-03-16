@@ -20,7 +20,7 @@ const FormDevTools: ComponentType = dynamic(() => import('../FormComponents/DevT
 
 type EndreEgenmeldingFormProps = {
     sykmelding: SykmeldingFragment
-    egenmeldingsdager: SvarUnion_DagerSvar_Fragment
+    egenmeldingsdager: SvarUnion_DagerSvar_Fragment | null
     previousSykmeldingTom: Date | null
 }
 
@@ -43,13 +43,15 @@ function EndreEgenmeldingForm({
             }),
     )
     const form = useForm<EgenmeldingsdagerSubForm>({
-        defaultValues: {
-            egenmeldingsdager: createEgenmeldingsdagerDefaultValues(
-                sykmelding,
-                previousSykmeldingTom,
-                egenmeldingsdager.dager,
-            ),
-        },
+        defaultValues: egenmeldingsdager
+            ? {
+                  egenmeldingsdager: createEgenmeldingsdagerDefaultValues(
+                      sykmelding,
+                      previousSykmeldingTom,
+                      egenmeldingsdager.dager,
+                  ),
+              }
+            : undefined,
     })
 
     return (
