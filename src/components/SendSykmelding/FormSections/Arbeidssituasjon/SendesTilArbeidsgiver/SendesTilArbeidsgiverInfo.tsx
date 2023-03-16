@@ -1,7 +1,11 @@
 import React from 'react'
+import { useFormContext } from 'react-hook-form'
 
 import SykmeldingArbeidsgiverContainer from '../../../../SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
 import { SykmeldingFragment } from '../../../../../fetching/graphql.generated'
+import { FormValues } from '../../../SendSykmeldingForm'
+import { toDateString } from '../../../../../utils/dateUtils'
+import { notNull } from '../../../../../utils/ts-utils'
 
 import VeilederSenderSykmeldingenInfo from './VeilederSenderSykmeldingenInfo'
 
@@ -10,10 +14,21 @@ interface Props {
 }
 
 function SendesTilArbeidsgiverInfo({ sykmelding }: Props): JSX.Element {
+    const { watch } = useFormContext<FormValues>()
+
+    const chosenEgenmeldingsdager: string[] | undefined =
+        watch('egenmeldingsdager')
+            ?.flatMap((it) => it.datoer)
+            ?.filter(notNull)
+            .map(toDateString) ?? undefined
+
     return (
         <div>
             <VeilederSenderSykmeldingenInfo />
-            <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
+            <SykmeldingArbeidsgiverContainer
+                sykmelding={sykmelding}
+                chosenEgenmeldingsdager={chosenEgenmeldingsdager}
+            />
         </div>
     )
 }

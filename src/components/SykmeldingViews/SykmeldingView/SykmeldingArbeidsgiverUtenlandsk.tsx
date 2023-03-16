@@ -8,15 +8,18 @@ import AnnenInfoView from './Sections/SykmeldingArbeidsgiverUtenlandsk/AnnenInfo
 
 interface SykmeldingviewProps {
     sykmelding: UtenlandskSykmelding
+    chosenEgenmeldingsdager?: string[]
 }
 
-function SykmeldingArbeidsgiverUtenlandsk({ sykmelding }: SykmeldingviewProps): JSX.Element {
+function SykmeldingArbeidsgiverUtenlandsk({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): JSX.Element {
     return (
         <div className="px-4">
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />
             <PeriodeView
                 perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
-                egenmeldingsdager={findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)}
+                egenmeldingsdager={
+                    chosenEgenmeldingsdager ?? findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
+                }
             />
             <AnnenInfoView sykmelding={sykmelding} />
         </div>

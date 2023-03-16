@@ -16,15 +16,18 @@ import AnnenInfoView from './Sections/SykmeldingViewArbeidsgiver/AnnenInfoView'
 
 interface SykmeldingviewProps {
     sykmelding: SykmeldingFragment
+    chosenEgenmeldingsdager?: string[]
 }
 
-function SykmeldingViewArbeidsgiver({ sykmelding }: SykmeldingviewProps): JSX.Element {
+function SykmeldingViewArbeidsgiver({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): JSX.Element {
     return (
         <div className="p-4 pt-0">
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />
             <PeriodeView
                 perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
-                egenmeldingsdager={findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)}
+                egenmeldingsdager={
+                    chosenEgenmeldingsdager ?? findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
+                }
             />
             <AnnenInfoView sykmelding={sykmelding} />
             {sykmelding.medisinskVurdering?.hovedDiagnose && sykmelding.medisinskVurdering.biDiagnoser.length > 0 && (

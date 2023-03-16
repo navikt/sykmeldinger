@@ -1,4 +1,5 @@
 import { Calender } from '@navikt/ds-icons'
+import * as R from 'remeda'
 
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode, SvarUnion_DagerSvar_Fragment } from '../../../../../fetching/graphql.generated'
@@ -15,7 +16,10 @@ import {
 
 interface PeriodeViewProps {
     perioder: Periode[]
-    egenmeldingsdager?: SvarUnion_DagerSvar_Fragment | null
+    /**
+     * Egenmeldingsdager can either be the answer from a sykmelding, or the current values in the form.
+     */
+    egenmeldingsdager?: (SvarUnion_DagerSvar_Fragment | string[]) | null
 }
 
 function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Element {
@@ -38,24 +42,30 @@ function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Ele
                 </SykmeldingInfoSubGroup>
             ))}
             {isEgenmeldingsdagerEnabled() && egenmeldingsdager && (
-                <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />
+                <Egenmeldingsdager className="w-full" egenmeldingsdager={egenmeldingsdager} />
             )}
         </SykmeldingGroup>
     )
 }
 
 interface EgenmeldingsdagerProps {
-    egenmeldingsdager: SvarUnion_DagerSvar_Fragment
+    className?: string
+    egenmeldingsdager: SvarUnion_DagerSvar_Fragment | readonly string[]
 }
 
-function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
+function Egenmeldingsdager({ className, egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
+    const dager = R.pipe(
+        egenmeldingsdager,
+        (it) => ('dager' in it ? it.dager : it),
+        R.sortBy((it) => it),
+        R.map(toReadableDate),
+    )
+
     return (
         <SykmeldingListInfo
+            className={className}
             heading="Egenmeldingsdager (oppgitt av den sykmeldte)"
-            texts={[
-                ...[...egenmeldingsdager.dager].sort().map(toReadableDate),
-                `(${egenmeldingsdager.dager.length} dager)`,
-            ]}
+            texts={[...dager, `(${dager.length} dager)`]}
         />
     )
 }
