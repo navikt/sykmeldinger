@@ -47,7 +47,7 @@ function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProp
                 </div>
             )}
 
-            <SykmeldingSykmeldtContainer sykmelding={sykmelding} editableEgenmelding />
+            <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
         </div>
     )
 }
