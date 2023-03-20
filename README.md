@@ -5,7 +5,7 @@ Frontend for visning og behandling av sykmeldinger.
 Lever under:
 
 -   prod-gcp: https://www.nav.no/syk/sykmeldinger
--   dev-gcp: https://www-gcp.dev.nav.no/syk/sykmeldinger
+-   dev-gcp: https://www.ekstern.dev.nav.no/syk/sykmeldinger
 -   labs-gcp (demo): https://sykmeldinger.labs.nais.io/syk/sykmeldinger/
 
 Tekniske valg:
@@ -85,7 +85,7 @@ yarn build
 
 ## Test-miljø
 
-[www-gcp.dev.nav.no/syk/sykmeldinger](www-gcp.dev.nav.no/syk/sykmeldinger) nås lokalt dersom man er pålogget Naisdevice.
+[www.ekstern.dev.nav.no/syk/sykmeldinger](www-gcp.dev.nav.no/syk/sykmeldinger) kan nås uten naisdevice.
 
 ### Kontakt/spørsmål
 

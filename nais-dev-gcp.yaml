@@ -9,7 +9,7 @@ spec:
   image: {{image}}
   port: 3000
   ingresses:
-    - 'https://www-gcp.dev.nav.no/syk/sykmeldinger'
+    - 'https://www.ekstern.dev.nav.no/syk/sykmeldinger'
   idporten:
     enabled: true
     sidecar:
@@ -53,9 +53,9 @@ spec:
     - name: AMPLITUDE_ENABLED
       value: 'true'
     - name: SYKEPENGESOKNAD_URL
-      value: 'https://www-gcp.dev.nav.no/syk/sykepengesoknad'
+      value: 'https://www.ekstern.dev.nav.no/syk/sykepengesoknad'
     - name: SYKEFRAVAER_ROOT
-      value: 'https://www-gcp.dev.nav.no/syk/sykefravaer'
+      value: 'https://www.ekstern.dev.nav.no/syk/sykefravaer'
     - name: MIN_SIDE_ROOT
       value: 'https://www.dev.nav.no/minside/'
     - name: ASSET_PREFIX
