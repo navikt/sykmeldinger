@@ -1,3 +1,5 @@
+'use client'
+
 import { Heading } from '@navikt/ds-react'
 
 interface HeaderProps {

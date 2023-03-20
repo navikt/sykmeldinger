@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import mockRouter from 'next-router-mock'
 
 import { axe, render, screen } from '../utils/test/testUtils'
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import SykmeldingPage from '../_old_pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import { SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 import { sporsmal } from '../utils/sporsmal'

@@ -22,6 +22,12 @@ const config: CodegenConfig = {
                 namingConvention: { enumValues: 'keep' },
             },
         },
+        './src/server/graphql/graphql-operations.generated.ts': {
+            plugins: ['typescript', 'typescript-operations', 'typed-document-node'],
+            config: {
+
+            }
+        },
         './src/server/graphql/resolver-types.generated.ts': {
             plugins: [
                 'typescript',

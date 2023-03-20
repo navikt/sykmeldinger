@@ -11,7 +11,7 @@ import {
     SykmeldingByIdDocument,
     SykmeldingerDocument,
 } from '../fetching/graphql.generated'
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import SykmeldingPage from '../_old_pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 
 describe('Bekreft avvist sykmelding som lest', () => {

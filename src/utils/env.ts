@@ -1,5 +1,3 @@
-import getConfig from 'next/config'
-
 export interface PublicEnv {
     publicPath: string | undefined
     RUNTIME_ENVIRONMENT: 'dev' | 'test' | 'local' | 'demo' | 'production'
@@ -33,16 +31,14 @@ declare global {
 
 export function getPublicEnv(): PublicEnv {
     if (typeof window === 'undefined' || process.env.NODE_ENV === 'test') {
-        return getConfig().publicRuntimeConfig
+        return process.env as unknown as PublicEnv
     }
 
     return window._publicEnv
 }
 
 export function getServerEnv(): ServerEnv {
-    const { serverRuntimeConfig } = getConfig()
-
-    return serverRuntimeConfig
+    return process.env as unknown as ServerEnv
 }
 
 /**

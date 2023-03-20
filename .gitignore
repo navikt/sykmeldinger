@@ -68,4 +68,4 @@ typings/
 .next
 
 # page used for debugging stuff locally
-src/pages/debug.page.tsx
+src/_old_pages/debug.page.tsx

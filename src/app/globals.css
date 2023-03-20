@@ -1,0 +1,20 @@
+@import 'tailwindcss/base';
+@import '@navikt/ds-css';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html {
+    --eyes-open-color: #3e3832;
+    --eyes-closed-color: #e7e9e9;
+    --sykmelding-view-sykmeldt: var(--a-blue-50);
+    --sykmelding-view-flere-opplysninger: var(--a-gray-50);
+    --sykmelding-view-arbeidsgiver: #fef9ef; /*TODO: fix color var(--a-gray-50); */
+}
+
+@media print {
+    #decorator-header,
+    #decorator-footer,
+    ._hj_feedback_container {
+        display: none;
+    }
+}

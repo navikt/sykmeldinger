@@ -1,3 +1,5 @@
+'use client'
+
 import { Back } from '@navikt/ds-icons'
 import { BodyShort, Link } from '@navikt/ds-react'
 

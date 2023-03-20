@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
 import { render, waitFor, screen, axe } from '../utils/test/testUtils'
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import SykmeldingPage from '../_old_pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
     ArbeidssituasjonType,

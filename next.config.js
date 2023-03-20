@@ -38,9 +38,12 @@ const publicRuntimeConfig = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+    experimental: {
+        appDir: true,
+    },
     reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
-    pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
+    // pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.ASSET_PREFIX,
     eslint: {
         dirs: ['src'],
