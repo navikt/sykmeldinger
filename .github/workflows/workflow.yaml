@@ -30,8 +30,30 @@ jobs:
         with:
           command: test
           args: --org=teamsykmelding --severity-threshold=high --all-projects
+
+  test-and-verify:
+    name: Test and lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - run: yarn --immutable
+      - run: yarn lint
+      - run: yarn test
+      - name: Report debt
+        run: ./scripts/debt.sh >> $GITHUB_STEP_SUMMARY
+
   build-and-publish:
-    name: Bygg, test og push Docker image
+    name: Build and push image
     runs-on: ubuntu-latest
     permissions:
       packages: 'write'
@@ -50,18 +72,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn --immutable
-      - run: yarn lint
-      - run: yarn test
       - run: yarn build
-      - name: Report debt
-        run: ./scripts/debt.sh >> $GITHUB_STEP_SUMMARY
       - name: Upload static files to NAV CDN
         uses: navikt/frontend/actions/cdn-upload/v1@main
         with:
           cdn-team-name: teamsykmelding
           source: ./.next/static
           destination: '/sykmeldinger/_next'
-      - name: docker-build-push
+      - name: Push docker image to GAR
         uses: nais/docker-build-push@v0
         id: docker-build-push
         with:
@@ -73,8 +91,8 @@ jobs:
 
   deploy-to-dev-gcp:
     if: ${{ !startsWith(github.ref , 'refs/heads/demo') }}
-    name: Deploy to dev-gcp
-    needs: [build-and-publish, snyk-test]
+    name: Deploy to dev
+    needs: [test-and-verify, build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -87,8 +105,8 @@ jobs:
 
   deploy-to-main-dev-gcp:
     if: github.ref_name == 'main'
-    name: Deploy to dev-gcp (Demo)
-    needs: [build-and-publish, snyk-test]
+    name: Deploy to demo
+    needs: [test-and-verify, build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -101,7 +119,7 @@ jobs:
 
   deploy-to-dev-demo-gcp:
     if: startsWith(github.ref_name, 'demo')
-    name: Deploy branch to dev-gcp (Demo)
+    name: Deploy branch to demo
     needs: [build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
@@ -120,7 +138,7 @@ jobs:
   deploy-to-prod-gcp:
     if: github.ref == 'refs/heads/main'
     name: Deploy to prod
-    needs: [build-and-publish, snyk-test]
+    needs: [test-and-verify, build-and-publish, snyk-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
