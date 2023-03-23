@@ -10,9 +10,15 @@ interface Props {
     index: number
     earliestPossibleDate: Date
     latestPossibleDate: Date
+    resetClickedVidere: () => void
 }
 
-function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPossibleDate }: Props): JSX.Element {
+function EgenmeldingDatesPickerSubField({
+    index,
+    earliestPossibleDate,
+    latestPossibleDate,
+    resetClickedVidere,
+}: Props): JSX.Element {
     const { field: datoerField, fieldState: datoerFieldState } = useController<
         EgenmeldingsdagerSubForm,
         `egenmeldingsdager.${number}.datoer`
@@ -39,6 +45,7 @@ function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPos
                         selected={datoerField.value ?? []}
                         onSelect={(value) => {
                             datoerField.onChange(value)
+                            resetClickedVidere()
                         }}
                         fromDate={earliestPossibleDate}
                         toDate={endOfMonth(earliestPossibleDate)}
@@ -48,6 +55,7 @@ function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPos
                         selected={datoerField.value ?? []}
                         onSelect={(value) => {
                             datoerField.onChange(value)
+                            resetClickedVidere()
                         }}
                         fromDate={startOfMonth(latestPossibleDate)}
                         toDate={latestPossibleDate}
@@ -62,6 +70,7 @@ function EgenmeldingDatesPickerSubField({ index, earliestPossibleDate, latestPos
                     selected={datoerField.value ?? []}
                     onSelect={(value) => {
                         datoerField.onChange(value)
+                        resetClickedVidere()
                     }}
                     fromDate={earliestPossibleDate}
                     toDate={latestPossibleDate}

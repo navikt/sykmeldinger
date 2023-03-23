@@ -84,6 +84,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                             index={index}
                             earliestPossibleDate={earliestPossibleDate}
                             latestPossibleDate={latestPossibleDate}
+                            resetClickedVidere={() => setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)}
                         />
                         <VidereButtonField index={index} missingDates={missingDates} />
                         {missingDatesOnVidereClick && (
