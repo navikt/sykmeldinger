@@ -20,4 +20,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais-demo-branch.yaml
-          VAR: image=${{ europe-north1-docker.pkg.dev/nais-management-233d/teamsykmelding/sykmeldinger:2023.03.16-05.51-e4b85d7 }},appname=${{ steps.slug.outputs.slug }}-demo,replicas=0,branchState=deleted
+          VAR: image=europe-north1-docker.pkg.dev/nais-management-233d/teamsykmelding/sykmeldinger:2023.03.16-05.51-e4b85d7,appname=${{ steps.slug.outputs.slug }}-demo,replicas=0,branchState=deleted
