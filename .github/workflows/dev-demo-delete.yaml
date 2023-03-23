@@ -4,7 +4,7 @@ env:
   branchname: ${{ github.event.ref }}
 jobs:
   deploy-branch-to-dev-gcp:
-    if: startsWith(github.ref_name, 'demo')
+    if: startsWith(github.event.ref, 'demo')
     name: Delete branch dev-gcp
     runs-on: ubuntu-latest
     steps:
