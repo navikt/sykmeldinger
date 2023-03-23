@@ -28,4 +28,4 @@ spec:
     - name: AMPLITUDE_ENABLED
       value: 'false'
     - name: SYKEFRAVAER_ROOT
-      value: 'https://ditt-sykefravaer.labs.nais.io/syk/sykefravaer'
+      value: 'https://demo.ekstern.dev.nav.no/syk/sykefravaer'
