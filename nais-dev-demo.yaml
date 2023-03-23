@@ -1,7 +1,7 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: {{appname}}
+  name: {{appname}}-demo
   namespace: teamsykmelding
   labels:
     team: teamsykmelding
@@ -24,7 +24,7 @@ spec:
     - name: DECORATOR_URL
       value: https://www.nav.no/dekoratoren
     - name: RUNTIME_ENVIRONMENT
-      value: labs
+      value: demo
     - name: AMPLITUDE_ENABLED
       value: 'false'
     - name: SYKEFRAVAER_ROOT

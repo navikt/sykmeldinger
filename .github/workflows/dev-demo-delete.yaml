@@ -1,0 +1,23 @@
+name: Demo delete
+on: delete
+env:
+  branchname: ${{ github.event.ref }}
+jobs:
+  deploy-branch-to-dev-gcp:
+    if: startsWith(github.event.ref, 'demo')
+    name: Delete branch dev-gcp
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: gacts/github-slug@v1
+        id: slug
+        with:
+          to-slug: sykmeldinger-${{ github.ref_name }}
+      - uses: nais/deploy/actions/deploy@v1
+      - name: Scale down dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais-demo-branch.yaml
+          VAR: image=${{ europe-north1-docker.pkg.dev/nais-management-233d/teamsykmelding/sykmeldinger:2023.03.16-05.51-e4b85d7 }},appname=${{ steps.slug.outputs.slug }}-demo,replicas=0,branchState=deleted

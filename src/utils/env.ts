@@ -2,7 +2,7 @@ import getConfig from 'next/config'
 
 export interface PublicEnv {
     publicPath: string | undefined
-    RUNTIME_ENVIRONMENT: 'dev' | 'test' | 'local' | 'labs' | 'production'
+    RUNTIME_ENVIRONMENT: 'dev' | 'test' | 'local' | 'demo' | 'production'
     MIN_SIDE_ROOT: string
     SYKEFRAVAER_ROOT: string
     SYKEPENGESOKNAD_URL: string
@@ -52,4 +52,4 @@ export function isEgenmeldingsdagerEnabled(): boolean {
     return getPublicEnv().DISPLAY_EGENMELDING === 'true'
 }
 
-export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || getPublicEnv().RUNTIME_ENVIRONMENT === 'labs'
+export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || getPublicEnv().RUNTIME_ENVIRONMENT === 'demo'
