@@ -71,6 +71,7 @@ function EndreEgenmeldingForm({
                         arbeidsgiverNavn: sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn ?? '',
                         previousSykmeldingTom: previousSykmeldingTom,
                     }}
+                    editSentEgenmelding
                 />
                 <div className="mt-16 flex flex-col gap-4 border-t-2 border-border-divider pt-8">
                     <div>

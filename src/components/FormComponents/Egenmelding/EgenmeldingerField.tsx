@@ -32,9 +32,10 @@ interface Props {
         previousSykmeldingTom: Date | null
         arbeidsgiverNavn: string
     }
+    editSentEgenmelding?: boolean
 }
 
-function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element | null {
+function EgenmeldingerField({ index, previous, metadata, editSentEgenmelding = false }: Props): JSX.Element | null {
     const { watch, setValue, getValues } = useFormContext<EgenmeldingsdagerSubForm>()
     const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
     const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
@@ -96,7 +97,10 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                     <ValgtEgenmeldingsdager
                         dates={sortedDates}
                         onEditClicked={() => {
-                            setValue('egenmeldingsdager', laterPeriodsRemoved(index, getValues('egenmeldingsdager')))
+                            setValue(
+                                'egenmeldingsdager',
+                                laterPeriodsRemoved(index, editSentEgenmelding, getValues('egenmeldingsdager')),
+                            )
                             setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
                         }}
                     />
@@ -110,6 +114,7 @@ function EgenmeldingerField({ index, previous, metadata }: Props): JSX.Element |
                         earliestSelectedDate: sortedDates ? sortedDates[0] : null,
                         earliestPossibleDate: earliestPossibleDate,
                     }}
+                    editSentEgenmelding={editSentEgenmelding}
                 />
             )}
         </>
@@ -167,21 +172,26 @@ export function currentPeriodDatePicker(
 
 export function laterPeriodsRemoved(
     index: number,
+    editSentEgenmelding: boolean,
     list?: readonly EgenmeldingsdagerFormValue[] | null,
 ): EgenmeldingsdagerFormValue[] | null {
     if (list == null) return null
 
-    return R.pipe(
-        list,
-        R.take(index + 1),
-        R.concat([
-            {
-                harPerioder: null,
-                datoer: null,
-                hasClickedVidere: null,
-            },
-        ]),
-    )
+    if (editSentEgenmelding) {
+        return R.pipe(
+            list,
+            R.take(index + 1),
+            R.concat([
+                {
+                    harPerioder: null,
+                    datoer: null,
+                    hasClickedVidere: null,
+                },
+            ]),
+        )
+    }
+
+    return R.pipe(list, R.take(index + 1))
 }
 
 export default EgenmeldingerField
