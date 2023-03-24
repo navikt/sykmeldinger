@@ -121,14 +121,9 @@ describe('EgenmeldingerField', () => {
                     hasClickedVidere: true,
                 },
             ]
-            expect(laterPeriodsRemoved(1, egenmeldingsdager)).toEqual([
+            expect(laterPeriodsRemoved(1, false, egenmeldingsdager)).toEqual([
                 egenmeldingsdager[0],
                 egenmeldingsdager[1],
-                {
-                    datoer: null,
-                    harPerioder: null,
-                    hasClickedVidere: null,
-                },
             ])
         })
     })
