@@ -76,8 +76,11 @@ function EgenmeldingerField({ index, previous, metadata, editSentEgenmelding = f
                     onNo={() => {
                         setValue(`egenmeldingsdager.${index}.datoer`, null)
                         setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
+                        setValue(
+                            'egenmeldingsdager',
+                            laterPeriodsRemoved(index, editSentEgenmelding, getValues('egenmeldingsdager')),
+                        )
                     }}
-                    disabled={!missingDates && hasClickedVidere === true}
                 />
                 {hasPeriod && hasClickedVidere !== true && (
                     <>

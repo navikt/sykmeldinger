@@ -17,7 +17,6 @@ interface Props<
     defaultValue?: FieldPathValue<TFieldValues, TName>
     rules?: UseControllerProps['rules']
     shouldUnregister?: boolean
-    disabled?: boolean
 }
 
 function YesNoField<
@@ -31,7 +30,6 @@ function YesNoField<
     defaultValue,
     rules,
     shouldUnregister = true,
-    disabled,
 }: Props<TFieldValues, TName>): JSX.Element {
     const { field, fieldState } = useController<TFieldValues, TName>({
         name,
@@ -52,12 +50,8 @@ function YesNoField<
             }}
         >
             {subtext && <div className="mb-2">{subtext}</div>}
-            <Radio value={YesOrNo.YES} disabled={disabled}>
-                Ja
-            </Radio>
-            <Radio value={YesOrNo.NO} disabled={disabled}>
-                Nei
-            </Radio>
+            <Radio value={YesOrNo.YES}>Ja</Radio>
+            <Radio value={YesOrNo.NO}>Nei</Radio>
         </RadioGroup>
     )
 }

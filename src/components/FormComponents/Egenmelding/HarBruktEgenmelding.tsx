@@ -16,7 +16,6 @@ interface Props {
     lastPossibleDate: Date | string
     firstPossibleDate: Date | string
     onNo: () => void
-    disabled: boolean
 }
 
 function HarBruktEgenmelding({
@@ -25,7 +24,6 @@ function HarBruktEgenmelding({
     firstPossibleDate,
     arbeidsgiverNavn,
     onNo,
-    disabled,
 }: Props): JSX.Element {
     return (
         <QuestionWrapper>
@@ -58,7 +56,6 @@ function HarBruktEgenmelding({
                 }}
                 defaultValue={null}
                 shouldUnregister={false}
-                disabled={disabled}
             />
         </QuestionWrapper>
     )
