@@ -4,6 +4,7 @@ import { grantTokenXOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonder
 import { GraphQLError } from 'graphql'
 
 import { getServerEnv } from '../utils/env'
+import { sporsmal } from '../utils/sporsmal'
 
 import { Sykmelding, SykmeldingSchema } from './api-models/sykmelding/Sykmelding'
 import { Brukerinformasjon, BrukerinformasjonSchema } from './api-models/Brukerinformasjon'
@@ -116,7 +117,7 @@ export async function updateEgenmeldingsdager(
 
     try {
         await fetchApi(
-            { type: 'POST', body: JSON.stringify({ dager: egenmeldingsdager }) },
+            { type: 'POST', body: JSON.stringify({ dager: egenmeldingsdager, tekst: sporsmal.egenmeldingsdager }) },
             `v3/sykmeldinger/${sykmeldingId}/endre-egenmeldingsdager`,
             () => null,
             context,
