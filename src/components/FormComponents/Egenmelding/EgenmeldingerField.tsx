@@ -7,6 +7,7 @@ import cn from 'classnames'
 
 import { sortDatesASC } from '../../../utils/dateUtils'
 import { YesOrNo } from '../../../fetching/graphql.generated'
+import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 
 import HarBruktEgenmelding from './HarBruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
@@ -33,9 +34,16 @@ interface Props {
         arbeidsgiverNavn: string
     }
     editSentEgenmelding?: boolean
+    amplitudeSkjemanavn: string
 }
 
-function EgenmeldingerField({ index, previous, metadata, editSentEgenmelding = false }: Props): JSX.Element | null {
+function EgenmeldingerField({
+    index,
+    previous,
+    metadata,
+    editSentEgenmelding = false,
+    amplitudeSkjemanavn,
+}: Props): JSX.Element | null {
     const { watch, setValue, getValues } = useFormContext<EgenmeldingsdagerSubForm>()
     const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
     const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
@@ -54,6 +62,10 @@ function EgenmeldingerField({ index, previous, metadata, editSentEgenmelding = f
 
     if (hasHitPreviousSykmeldingTom) {
         // The user has hit the previous sykmelding, we don't need to ask anymore.
+        logAmplitudeEvent({
+            eventName: 'skjema steg fullført',
+            data: { skjemanavn: amplitudeSkjemanavn, steg: 'Har truffet forrige sykmelding tom' },
+        })
         return null
     }
 
@@ -81,6 +93,7 @@ function EgenmeldingerField({ index, previous, metadata, editSentEgenmelding = f
                             laterPeriodsRemoved(index, editSentEgenmelding, getValues('egenmeldingsdager')),
                         )
                     }}
+                    amplitudeSkjemanavn={amplitudeSkjemanavn}
                 />
                 {hasPeriod && hasClickedVidere !== true && (
                     <>
@@ -105,6 +118,10 @@ function EgenmeldingerField({ index, previous, metadata, editSentEgenmelding = f
                                 laterPeriodsRemoved(index, editSentEgenmelding, getValues('egenmeldingsdager')),
                             )
                             setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
+                            logAmplitudeEvent({
+                                eventName: 'skjema steg fullført',
+                                data: { skjemanavn: amplitudeSkjemanavn, steg: 'Endre periode' },
+                            })
                         }}
                     />
                 )}
@@ -118,6 +135,7 @@ function EgenmeldingerField({ index, previous, metadata, editSentEgenmelding = f
                         earliestPossibleDate: earliestPossibleDate,
                     }}
                     editSentEgenmelding={editSentEgenmelding}
+                    amplitudeSkjemanavn={amplitudeSkjemanavn}
                 />
             )}
         </>
