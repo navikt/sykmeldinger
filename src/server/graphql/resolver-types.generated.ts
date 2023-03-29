@@ -507,6 +507,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
     info: GraphQLResolveInfo,
 ) => TResult | Promise<TResult>
 
+/** Mapping of union types */
+export type ResolversUnionTypes = ResolversObject<{
+    SvarTypeUnion: ArbeidssituasjonSvar | DagerSvar | JaNeiSvar | PerioderSvar
+}>
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
     Adresse: ResolverTypeWrapper<Adresse>
@@ -559,11 +564,7 @@ export type ResolversTypes = ResolversObject<{
     StatusEvent: StatusEvent
     String: ResolverTypeWrapper<Scalars['String']>
     SvarRestriksjon: SvarRestriksjon
-    SvarTypeUnion:
-        | ResolversTypes['ArbeidssituasjonSvar']
-        | ResolversTypes['DagerSvar']
-        | ResolversTypes['JaNeiSvar']
-        | ResolversTypes['PerioderSvar']
+    SvarTypeUnion: ResolverTypeWrapper<ResolversUnionTypes['SvarTypeUnion']>
     Svartype: Svartype
     Sykmelding: ResolverTypeWrapper<Sykmelding>
     SykmeldingChangeStatus: SykmeldingChangeStatus
@@ -618,11 +619,7 @@ export type ResolversParentTypes = ResolversObject<{
     SendSykmeldingValues: SendSykmeldingValues
     Sporsmal: Omit<Sporsmal, 'svar'> & { svar: ResolversParentTypes['SvarTypeUnion'] }
     String: Scalars['String']
-    SvarTypeUnion:
-        | ResolversParentTypes['ArbeidssituasjonSvar']
-        | ResolversParentTypes['DagerSvar']
-        | ResolversParentTypes['JaNeiSvar']
-        | ResolversParentTypes['PerioderSvar']
+    SvarTypeUnion: ResolversUnionTypes['SvarTypeUnion']
     Sykmelding: Sykmelding
     SykmeldingStatus: SykmeldingStatus
     UtdypendeOpplysning: UtdypendeOpplysning

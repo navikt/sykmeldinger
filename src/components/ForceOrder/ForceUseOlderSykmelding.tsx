@@ -20,7 +20,7 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
         <GuidePanel poster>
             <Heading size="small">Før du kan begynne</Heading>
             Du har {pluralize('sykmelding', olderSykmeldingCount)} du må velge om du skal bruke, før du kan bruke denne.
-            <div className="mt-4 mb-6">
+            <div className="mb-6 mt-4">
                 <ReadMore
                     header="Hvorfor må jeg gjøre dette?"
                     onClick={() =>

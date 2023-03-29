@@ -132,7 +132,7 @@ function AvbrytSykmeldingen({
                 Ja, jeg er sikker
             </Button>
             <Button
-                className="absolute top-1 right-1"
+                className="absolute right-1 top-1"
                 variant="tertiary"
                 type="button"
                 icon={<Close title="Lukk avbryt panel" />}
