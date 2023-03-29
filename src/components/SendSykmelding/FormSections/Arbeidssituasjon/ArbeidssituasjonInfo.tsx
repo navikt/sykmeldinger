@@ -16,7 +16,7 @@ export function ArbeidssituasjonInfo(): JSX.Element {
 
 export function ArbeidssituasjonStatusInfo(): JSX.Element {
     return (
-        <div className="mt-4 mb-1">
+        <div className="mb-1 mt-4">
             <BodyLong>
                 Sjekk om du er{' '}
                 <Link

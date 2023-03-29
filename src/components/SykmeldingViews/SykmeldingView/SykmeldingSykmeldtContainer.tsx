@@ -31,7 +31,7 @@ function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }
                             {`Sendt til oss ${toReadableDate(sykmelding.mottattTidspunkt)}`}
                         </BodyShort>
                         <Button
-                            className="absolute top-0 right-0 hidden md:block"
+                            className="absolute right-0 top-0 hidden md:block"
                             as="a"
                             href={`${publicEnv.publicPath}/${sykmelding.id}/pdf`}
                             target="_blank"
