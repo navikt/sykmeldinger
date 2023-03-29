@@ -11,6 +11,7 @@ import { getSykmeldingStartDate } from '../../utils/sykmeldingUtils'
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../fetching/graphql.generated'
 import { useEndreEgenmeldingsdager } from '../../hooks/useMutations'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
+import useWarnUnsavedPopup from '../../hooks/useWarnUnsaved'
 
 import { createEgenmeldingsdagerDefaultValues } from './egenmeldingsdagerFormUtils'
 
@@ -53,6 +54,8 @@ function EndreEgenmeldingForm({
               }
             : undefined,
     })
+
+    useWarnUnsavedPopup(form.formState.isDirty && !form.formState.isSubmitSuccessful)
 
     return (
         <FormProvider {...form}>

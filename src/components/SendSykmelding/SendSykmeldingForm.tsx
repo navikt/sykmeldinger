@@ -16,6 +16,7 @@ import { useSendSykmelding } from '../../hooks/useMutations'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import Spinner from '../Spinner/Spinner'
 import { EgenmeldingsdagerSubForm } from '../FormComponents/Egenmelding/EgenmeldingerField'
+import useWarnUnsavedPopup from '../../hooks/useWarnUnsaved'
 
 import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/OpplysningerRiktigeSection'
 import ActionSection from './FormSections/ActionSection'
@@ -59,6 +60,8 @@ function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
             ),
         () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
+
+    useWarnUnsavedPopup(form.formState.isDirty && !form.formState.isSubmitSuccessful)
 
     if (extraFormData.loading) {
         return <Spinner headline="Henter arbeidsforhold" />
