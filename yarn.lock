@@ -2826,9 +2826,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/devtools@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@hookform/devtools@npm:4.3.0"
+"@hookform/devtools@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "@hookform/devtools@npm:4.3.1"
   dependencies:
     "@emotion/react": ^11.1.5
     "@emotion/styled": ^11.3.0
@@ -2841,7 +2841,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
-  checksum: d56445fb613fd7aad5012d49168692e6a3417b0dfbbaca4af6a15ce47bfac5fda04fd973aaf9e92769e23939f31dd0554473d71a6d25ef5d7e6ef93c7870a2ac
+  checksum: 7d3bd8d395244c49d07ad5cb52450b732e706975171998f1aede383a61ea81271d3010d46fed513712c8828f0b16414f22d724170be95090665ec23405c4eb76
   languageName: node
   linkType: hard
 
@@ -12563,12 +12563,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:7.43.2":
-  version: 7.43.2
-  resolution: "react-hook-form@npm:7.43.2"
+"react-hook-form@npm:7.43.8":
+  version: 7.43.8
+  resolution: "react-hook-form@npm:7.43.8"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: 68d4fb73fec052801d5e7840c3d0afba887676acfdefa33aef342ead0db419cb1a14a0891ed567cea58a78d544d9245445c593e25bc0564a797201cb32c91a01
+  checksum: 1042b68950e1756dd907e7eb904c6efdf04f126a48797b25e8793705d930f7bbff2cc07f0ec7ea4c52272e808a359ae157742c551defa3b3fd0952ff414bd3e3
   languageName: node
   linkType: hard
 
@@ -13815,7 +13815,7 @@ __metadata:
     "@graphql-tools/load": ^7.8.12
     "@graphql-tools/schema": ^9.0.16
     "@graphql-typed-document-node/core": ^3.1.2
-    "@hookform/devtools": ^4.3.0
+    "@hookform/devtools": ^4.3.1
     "@navikt/ds-css": 2.4.0
     "@navikt/ds-icons": 2.4.0
     "@navikt/ds-react": 2.4.0
@@ -13863,7 +13863,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-hook-form: 7.43.2
+    react-hook-form: 7.43.8
     remeda: ^1.8.0
     tailwind-merge: ^1.10.0
     tailwindcss: ^3.2.7
