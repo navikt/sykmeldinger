@@ -49,6 +49,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element 
                         arbeidsgiverNavn: shouldShowEgenmeldingsdager.arbeidsgiverNavn,
                         previousSykmeldingTom: previousSykmeldingTom,
                     }}
+                    amplitudeSkjemanavn="Egenmeldingsdager"
                 />
             )}
         </SectionWrapper>

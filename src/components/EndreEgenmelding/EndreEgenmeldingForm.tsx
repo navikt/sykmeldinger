@@ -30,17 +30,18 @@ function EndreEgenmeldingForm({
     egenmeldingsdager,
     previousSykmeldingTom,
 }: EndreEgenmeldingFormProps): JSX.Element {
+    const skjemanavn = 'Endre egenmeldingsdager'
     const [{ loading, error }, endreEgenmeldingsdager] = useEndreEgenmeldingsdager(
         sykmelding.id,
         (values) =>
             logAmplitudeEvent(
-                { eventName: 'skjema fullført', data: { skjemanavn: 'endre egenmeldingsdager' } },
+                { eventName: 'skjema fullført', data: { skjemanavn: skjemanavn } },
                 { 'antall egenmeldingsdager': values.egenmeldingsdager?.length ?? null },
             ),
         () =>
             logAmplitudeEvent({
                 eventName: 'skjema innsending feilet',
-                data: { skjemanavn: 'endre egenmeldingsdager' },
+                data: { skjemanavn: skjemanavn },
             }),
     )
     const form = useForm<EgenmeldingsdagerSubForm>({
@@ -75,6 +76,7 @@ function EndreEgenmeldingForm({
                         previousSykmeldingTom: previousSykmeldingTom,
                     }}
                     editSentEgenmelding
+                    amplitudeSkjemanavn={skjemanavn}
                 />
                 <div className="mt-16 flex flex-col gap-4 border-t-2 border-border-divider pt-8">
                     <div>

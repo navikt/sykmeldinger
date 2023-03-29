@@ -21,5 +21,6 @@ export type AmplitudeTaxonomyEvents =
     | { eventName: 'skjema validering feilet'; data: { skjemanavn: string /* skjemaId: number */ } }
     | { eventName: 'skjema åpnet'; data: { skjemanavn: string /* skjemaId: number */ } }
     | { eventName: 'guidepanel vist'; data: { komponent: string; tekst?: string } }
+    | { eventName: 'filtervalg'; data: { kategori: string; filternavn: string } }
     // Non-standard event
     | { eventName: 'komponent vist'; data: { komponent: string } }

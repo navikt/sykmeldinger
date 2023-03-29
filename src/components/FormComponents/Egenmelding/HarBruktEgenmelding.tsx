@@ -16,6 +16,7 @@ interface Props {
     lastPossibleDate: Date | string
     firstPossibleDate: Date | string
     onNo: () => void
+    amplitudeSkjemanavn: string
 }
 
 function HarBruktEgenmelding({
@@ -24,6 +25,7 @@ function HarBruktEgenmelding({
     firstPossibleDate,
     arbeidsgiverNavn,
     onNo,
+    amplitudeSkjemanavn,
 }: Props): JSX.Element {
     return (
         <QuestionWrapper>
@@ -42,12 +44,12 @@ function HarBruktEgenmelding({
                         {
                             eventName: 'skjema spørsmål besvart',
                             data: {
-                                skjemanavn: 'åpen sykmelding',
+                                skjemanavn: amplitudeSkjemanavn,
                                 spørsmål: 'Har du brukt egenmeldingsdager i perioden?',
                                 svar: value,
                             },
                         },
-                        { level: index },
+                        { level: index + 1 },
                     )
 
                     if (value === YesOrNo.NO) {
@@ -70,7 +72,7 @@ function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
                     eventName: 'komponent vist',
                     data: { komponent: 'EgenmeldingsdagerReadMore' },
                 },
-                { level: index },
+                { level: index + 1 },
             )
         }
 

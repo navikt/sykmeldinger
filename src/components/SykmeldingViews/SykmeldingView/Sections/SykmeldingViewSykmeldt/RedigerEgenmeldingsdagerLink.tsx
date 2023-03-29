@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@navikt/ds-react'
 
 import { isEgenmeldingsdagerEnabled } from '../../../../../utils/env'
+import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 function RedigerEgenmeldingsdagerLink({
     sykmeldingId,
@@ -13,10 +14,22 @@ function RedigerEgenmeldingsdagerLink({
 }): JSX.Element | null {
     if (!isEgenmeldingsdagerEnabled()) return null
 
+    const typeOfEditEgenmeldingsdager: string = hasEgenmeldingsdager ? 'Endre' : 'Legg til'
+
     return (
         <Link passHref href={`/${sykmeldingId}/endre-egenmeldingsdager`} legacyBehavior>
-            <Button as="a" variant="secondary" className="mt-4">
-                {hasEgenmeldingsdager ? 'Endre' : 'Legg til'} egenmeldingsdager
+            <Button
+                as="a"
+                variant="secondary"
+                className="mt-4"
+                onClick={() => {
+                    logAmplitudeEvent({
+                        eventName: 'skjema startet',
+                        data: { skjemanavn: `${typeOfEditEgenmeldingsdager} egenmeldingsdager i kvittering` },
+                    })
+                }}
+            >
+                {typeOfEditEgenmeldingsdager} egenmeldingsdager
             </Button>
         </Link>
     )
