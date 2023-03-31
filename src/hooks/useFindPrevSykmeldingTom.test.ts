@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { MockedResponse } from '@apollo/client/testing'
 
 import { RegelStatus, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from '../fetching/graphql.generated'

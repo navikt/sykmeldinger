@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest'
+
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 import { ArbeidssituasjonType, UriktigeOpplysningerType, YesOrNo } from './graphql/resolver-types.generated'
 import arbeidsgivereMock from './graphql/mockData/arbeidsgivereMock'

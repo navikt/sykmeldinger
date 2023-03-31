@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest'
+
 import { RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import {
