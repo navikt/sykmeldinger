@@ -18,6 +18,11 @@ spec:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
     path: /syk/sykmeldinger/api/internal/is_ready
+  accessPolicy:
+    outbound:
+      external:
+        - host: nav.no
+        - host: demo.ekstern.dev.nav.no
   env:
     - name: NEXT_PUBLIC_BASE_PATH
       value: /syk/sykmeldinger
