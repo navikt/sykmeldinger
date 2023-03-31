@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest'
+
 import { Pasient } from '../fetching/graphql.generated'
 
 import { getPasientName } from './pasientUtils'

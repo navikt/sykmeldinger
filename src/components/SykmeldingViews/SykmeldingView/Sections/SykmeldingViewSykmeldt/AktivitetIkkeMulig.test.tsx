@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest'
+
 import { render, screen, axe } from '../../../../../utils/test/testUtils'
 import {
     AktivitetIkkeMuligPeriode,

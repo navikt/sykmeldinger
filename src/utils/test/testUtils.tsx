@@ -13,7 +13,7 @@ import { ApolloLink, Cache, InMemoryCache } from '@apollo/client'
 import open from 'open'
 import { onError } from '@apollo/client/link/error'
 import { logger } from '@navikt/next-logger'
-import { configureAxe } from 'jest-axe'
+import { configureAxe } from 'vitest-axe'
 
 import possibleTypesGenerated from '../../fetching/possible-types.generated'
 

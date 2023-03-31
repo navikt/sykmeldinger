@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest'
+
 import { pluralize } from './stringUtils'
 
 describe('stringUtils', function () {

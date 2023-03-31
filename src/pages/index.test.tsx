@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { GraphQLError } from 'graphql'
 
 import { render, screen, waitForElementToBeRemoved, within } from '../utils/test/testUtils'

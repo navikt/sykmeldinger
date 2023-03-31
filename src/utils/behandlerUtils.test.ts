@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest'
+
 import { Behandler } from '../fetching/graphql.generated'
 
 import { getBehandlerName } from './behandlerUtils'
