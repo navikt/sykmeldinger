@@ -51,7 +51,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
             }
         }
 
-        networkError.message = `${networkError.message}. Happened in operation "${
+        const networkMessage = 'statusCode' in networkError ? `Status: ${networkError.statusCode}` : 'No status code'
+
+        networkError.message = `${networkError.message}. ${networkMessage}. Happened in operation "${
             operation.operationName
         }" with variable id (if any): ${
             operation.variables.id ?? operation.variables.sykmeldingId
