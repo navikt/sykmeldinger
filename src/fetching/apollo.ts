@@ -52,13 +52,12 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
         }
 
         const networkMessage = 'statusCode' in networkError ? `Status: ${networkError.statusCode}` : 'No status code'
-
-        networkError.message = `${networkError.message}. ${networkMessage}. Happened in operation "${
-            operation.operationName
-        }" with variable id (if any): ${
+        const operationDetails = `Happened in operation "${operation.operationName}" with variable id (if any): ${
             operation.variables.id ?? operation.variables.sykmeldingId
-        }. User trace id: ${getUserRequestId()}`
+        }`
+        const traceDetails = `User trace id: ${getUserRequestId()}`
 
+        networkError.message = `${networkError.message}. ${networkMessage}. \n\n${operationDetails}. \n\n${traceDetails}`
         logger.error(networkError)
     }
 })
