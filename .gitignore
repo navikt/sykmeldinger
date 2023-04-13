@@ -55,6 +55,9 @@ typings/
 *.iml
 .idea/
 
+# vscode
+.vscode/
+
 # yarn
 .pnp.*
 .yarn/*

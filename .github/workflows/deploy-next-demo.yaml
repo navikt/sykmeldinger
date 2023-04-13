@@ -1,0 +1,83 @@
+on:
+  workflow_call:
+    inputs:
+      app:
+        required: true
+        type: string
+      base-path:
+        required: true
+        type: string
+
+env:
+  NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+jobs:
+  build-and-docker-publish:
+    name: Build & Publish ${{ inputs.app }} demo
+    runs-on: ubuntu-latest
+    permissions:
+      packages: 'write'
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - run: yarn --immutable
+      - run: yarn build
+      - name: Upload static files to NAV CDN
+        uses: navikt/frontend/actions/cdn-upload/v1@main
+        with:
+          cdn-team-name: teamsykmelding
+          source: ./.next/static
+          destination: '/${{ inputs.app }}/_next'
+      - name: Push docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: teamsykmelding
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: demo
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
+
+  build-and-deploy-demo:
+    if: github.ref_name == 'main'
+    name: Deploy to demo
+    needs: [build-and-docker-publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais/nais-demo.yaml
+          VAR: image=${{ needs.build-and-docker-publish.outputs.image }},ingress=https://${{ inputs.app }}.ekstern.dev.nav.no/${{ inputs.base-path }},appname=${{ inputs.app }},replicas=1,branchState=alive
+
+  deploy-to-dev-demo-gcp:
+    if: startsWith(github.ref_name, 'demo')
+    name: Deploy branch to demo
+    needs: [build-and-docker-publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gacts/github-slug@v1
+        id: slug
+        with:
+          to-slug: ${{ inputs.app }}-${{ github.ref_name }}
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais/nais-demo.yaml
+          VAR: image=${{ needs.build-and-docker-publish.outputs.image }},ingress=https://${{ steps.slug.outputs.slug }}.ekstern.dev.nav.no/${{ inputs.base-path }},appname=${{ steps.slug.outputs.slug }},replicas=1,branchState=alive
