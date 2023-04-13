@@ -209,7 +209,13 @@ export type MeldingTilNav = {
 export type Merknad = {
     __typename?: 'Merknad'
     beskrivelse: Maybe<Scalars['String']>
-    type: Scalars['String']
+    type: Merknadtype
+}
+
+export enum Merknadtype {
+    TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER = 'TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER',
+    UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
+    UNDER_BEHANDLING = 'UNDER_BEHANDLING',
 }
 
 export type Mutation = {
@@ -553,6 +559,7 @@ export type ResolversTypes = ResolversObject<{
     MedisinskVurdering: ResolverTypeWrapper<MedisinskVurdering>
     MeldingTilNAV: ResolverTypeWrapper<MeldingTilNav>
     Merknad: ResolverTypeWrapper<Merknad>
+    Merknadtype: Merknadtype
     Mutation: ResolverTypeWrapper<{}>
     NaermesteLeder: ResolverTypeWrapper<NaermesteLeder>
     Pasient: ResolverTypeWrapper<Pasient>
@@ -862,7 +869,7 @@ export type MerknadResolvers<
     ParentType extends ResolversParentTypes['Merknad'] = ResolversParentTypes['Merknad'],
 > = ResolversObject<{
     beskrivelse?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-    type?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    type?: Resolver<ResolversTypes['Merknadtype'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 

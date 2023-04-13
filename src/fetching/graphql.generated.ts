@@ -205,7 +205,13 @@ export type MeldingTilNav = {
 export type Merknad = {
     readonly __typename: 'Merknad'
     readonly beskrivelse?: Maybe<Scalars['String']>
-    readonly type: Scalars['String']
+    readonly type: Merknadtype
+}
+
+export enum Merknadtype {
+    TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER = 'TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER',
+    UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
+    UNDER_BEHANDLING = 'UNDER_BEHANDLING',
 }
 
 export type Mutation = {
@@ -594,7 +600,7 @@ export type EndreEgenmeldingsdagerMutation = {
         readonly merknader?: ReadonlyArray<{
             readonly __typename: 'Merknad'
             readonly beskrivelse?: string | null
-            readonly type: string
+            readonly type: Merknadtype
         }> | null
         readonly pasient?: {
             readonly __typename: 'Pasient'
@@ -815,7 +821,7 @@ export type ChangeSykmeldingStatusMutation = {
         readonly merknader?: ReadonlyArray<{
             readonly __typename: 'Merknad'
             readonly beskrivelse?: string | null
-            readonly type: string
+            readonly type: Merknadtype
         }> | null
         readonly pasient?: {
             readonly __typename: 'Pasient'
@@ -992,7 +998,7 @@ export type SendSykmeldingMutation = {
         readonly merknader?: ReadonlyArray<{
             readonly __typename: 'Merknad'
             readonly beskrivelse?: string | null
-            readonly type: string
+            readonly type: Merknadtype
         }> | null
         readonly pasient?: {
             readonly __typename: 'Pasient'
@@ -1277,7 +1283,7 @@ export type SykmeldingFragment = {
     readonly merknader?: ReadonlyArray<{
         readonly __typename: 'Merknad'
         readonly beskrivelse?: string | null
-        readonly type: string
+        readonly type: Merknadtype
     }> | null
     readonly pasient?: {
         readonly __typename: 'Pasient'
@@ -1450,7 +1456,7 @@ export type SykmeldingerQuery = {
         readonly merknader?: ReadonlyArray<{
             readonly __typename: 'Merknad'
             readonly beskrivelse?: string | null
-            readonly type: string
+            readonly type: Merknadtype
         }> | null
         readonly pasient?: {
             readonly __typename: 'Pasient'
@@ -1626,7 +1632,7 @@ export type SykmeldingByIdQuery = {
         readonly merknader?: ReadonlyArray<{
             readonly __typename: 'Merknad'
             readonly beskrivelse?: string | null
-            readonly type: string
+            readonly type: Merknadtype
         }> | null
         readonly pasient?: {
             readonly __typename: 'Pasient'

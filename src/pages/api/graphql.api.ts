@@ -15,7 +15,10 @@ const server = new ApolloServer<RequestContext>({
 export default withAuthenticatedApi(
     startServerAndCreateNextHandler(server, {
         context: async (req) => {
-            const resolverContextType = createRequestContext(req)
+            const resolverContextType = createRequestContext(
+                req.headers['x-request-id'] as string | undefined,
+                req.headers['authorization'],
+            )
 
             if (!resolverContextType) {
                 throw new GraphQLError('User not logged in', {

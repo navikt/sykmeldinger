@@ -3,6 +3,7 @@ import { SvarRestriksjon } from '../../api-models/sykmelding/UtdypendeOpplysning
 import {
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
+    Merknadtype,
     Periodetype,
     RegelStatus,
     StatusEvent,
@@ -106,7 +107,7 @@ export const sykmeldingUgyldigTilbakedatering: Sykmelding = {
     },
     egenmeldt: false,
     papirsykmelding: false,
-    merknader: [{ type: 'UGYLDIG_TILBAKEDATERING', beskrivelse: null }],
+    merknader: [{ type: Merknadtype.UGYLDIG_TILBAKEDATERING, beskrivelse: null }],
     pasient: { fnr: '06078104285', fornavn: 'KORRUPT', mellomnavn: null, etternavn: 'RISPBÆRBUSK' },
     rulesetVersion: 3,
     utenlandskSykmelding: null,

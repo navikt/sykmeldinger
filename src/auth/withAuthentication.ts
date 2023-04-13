@@ -1,5 +1,3 @@
-import { IncomingMessage } from 'http'
-
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next'
 import { logger } from '@navikt/next-logger'
 import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
@@ -109,14 +107,11 @@ function getRedirectPath(context: GetServerSidePropsContext): string {
 /**
  * Creates the HTTP context that is passed through the resolvers and services, both for prefetching and HTTP-fetching.
  */
-export function createRequestContext(req: IncomingMessage): RequestContext | null {
-    const requestId = req.headers['x-request-id'] as string | undefined
-
+export function createRequestContext(requestId: string | undefined, token: string | undefined): RequestContext | null {
     if (isLocalOrDemo) {
         return { ...require('./fakeLocalAuthTokenSet.json'), requestId: requestId ?? 'not set' }
     }
 
-    const token = req.headers['authorization']
     if (!token) {
         logger.warn('User is missing authorization bearer token')
         return null
