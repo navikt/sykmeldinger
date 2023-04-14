@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
 import React from 'react'
 import mockRouter from 'next-router-mock'
 import userEvent from '@testing-library/user-event'
@@ -36,6 +36,11 @@ const arbeidsgiver: ArbeidsgiverStatus = {
 describe('endre egenmeldingsdager page', () => {
     beforeEach(() => {
         mockRouter.setCurrentUrl(`/sykmelding-id/endre-egenmeldingsdager`)
+        vi.stubGlobal('innerWidth', 766)
+    })
+
+    afterEach(() => {
+        vi.unstubAllGlobals()
     })
 
     function setup(input: SykmeldingFragment | SykmeldingFragment[], mutationMocks: MockedResponse[] = []): void {
@@ -622,7 +627,10 @@ describe('endre egenmeldingsdager page', () => {
     })
 })
 
-async function clickDays(section: Screen | ReturnType<typeof within>, ...days: (string | RegExp)[]): Promise<void> {
+export async function clickDays(
+    section: Screen | ReturnType<typeof within>,
+    ...days: (string | RegExp)[]
+): Promise<void> {
     for (const day of days) {
         await userEvent.click(section.getByRole('button', { name: day }))
     }
