@@ -4,13 +4,11 @@ import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSi
 import { logger } from '@navikt/next-logger'
 import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
 
-import { getPublicEnv, isLocalOrDemo } from '../utils/env'
+import { browserEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
 
 type ApiHandler = (req: NextApiRequest, res: NextApiResponse) => Promise<unknown> | unknown
 type PageHandler = (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<unknown>>
-
-const publicEnv = getPublicEnv()
 
 export interface TokenPayload {
     sub: string
@@ -100,10 +98,12 @@ export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
  * we need a clean URL to redirect the user back to the same page we are on.
  */
 function getRedirectPath(context: GetServerSidePropsContext): string {
-    const basePath = publicEnv.publicPath ?? ''
+    const basePath = browserEnv.NEXT_PUBLIC_BASE_PATH ?? ''
     const cleanUrl = context.resolvedUrl.replace(basePath, '')
 
-    return cleanUrl.startsWith('/null') ? `${publicEnv.publicPath}/` : `${publicEnv.publicPath}${cleanUrl}`
+    return cleanUrl.startsWith('/null')
+        ? `${browserEnv.NEXT_PUBLIC_BASE_PATH}/`
+        : `${browserEnv.NEXT_PUBLIC_BASE_PATH}${cleanUrl}`
 }
 
 /**

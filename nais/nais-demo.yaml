@@ -23,14 +23,5 @@ spec:
       external:
         - host: nav.no
         - host: demo.ekstern.dev.nav.no
-  env:
-    - name: NEXT_PUBLIC_BASE_PATH
-      value: /syk/sykmeldinger
-    - name: DECORATOR_URL
-      value: https://www.nav.no/dekoratoren
-    - name: RUNTIME_ENVIRONMENT
-      value: demo
-    - name: AMPLITUDE_ENABLED
-      value: 'false'
-    - name: SYKEFRAVAER_ROOT
-      value: 'https://demo.ekstern.dev.nav.no/syk/sykefravaer'
+  envFrom:
+    - configmap: sykmeldinger-config

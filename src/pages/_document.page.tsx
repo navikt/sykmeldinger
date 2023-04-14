@@ -1,12 +1,9 @@
 import React from 'react'
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document'
 import { Components, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
-import Script from 'next/script'
 
-import { getPublicEnv } from '../utils/env'
+import { browserEnv } from '../utils/env'
 import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs'
-
-const publicEnv = getPublicEnv()
 
 // The 'head'-field of the document initialProps contains data from <head> (meta-tags etc)
 const getDocumentParameter = (initialProps: DocumentInitialProps, name: string): string => {
@@ -19,7 +16,7 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
         return 'prod'
     }
 
-    switch (publicEnv.RUNTIME_ENVIRONMENT) {
+    switch (browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT) {
         case 'local':
         case 'test':
         case 'dev':
@@ -58,10 +55,6 @@ class MyDocument extends Document<Props> {
             <Html lang={language || 'no'}>
                 <Head>
                     <Decorator.Styles />
-                    <Script
-                        strategy="beforeInteractive"
-                        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/public-env`}
-                    />
                     <link
                         rel="preload"
                         href="https://cdn.nav.no/aksel/fonts/SourceSans3-normal.woff2"

@@ -42,11 +42,9 @@ spec:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
     path: /syk/sykmeldinger/api/internal/is_ready
+  envFrom:
+    - configmap: sykmeldinger-config
   env:
-    - name: NEXT_PUBLIC_BASE_PATH
-      value: /syk/sykmeldinger
-    - name: RUNTIME_ENVIRONMENT
-      value: 'dev'
     - name: SYKMELDINGER_BACKEND
       value: 'http://sykmeldinger-backend'
     - name: FLEX_SYKETILFELLE
@@ -55,15 +53,3 @@ spec:
       value: 'dev-gcp:teamsykmelding:sykmeldinger-backend'
     - name: FLEX_SYKETILFELLE_BACKEND_SCOPE
       value: 'dev-gcp:flex:flex-syketilfelle'
-    - name: AMPLITUDE_ENABLED
-      value: 'true'
-    - name: SYKEPENGESOKNAD_URL
-      value: 'https://www.ekstern.dev.nav.no/syk/sykepengesoknad'
-    - name: SYKEFRAVAER_ROOT
-      value: 'https://www.ekstern.dev.nav.no/syk/sykefravaer'
-    - name: MIN_SIDE_ROOT
-      value: 'https://www.dev.nav.no/minside/'
-    - name: ASSET_PREFIX
-      value: 'https://cdn.nav.no/teamsykmelding/sykmeldinger'
-    - name: DISPLAY_EGENMELDING
-      value: 'true'

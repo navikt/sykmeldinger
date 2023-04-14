@@ -6591,6 +6591,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.0.3":
+  version: 16.0.3
+  resolution: "dotenv@npm:16.0.3"
+  checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
+  languageName: node
+  linkType: hard
+
 "dset@npm:3.1.2, dset@npm:^3.1.0, dset@npm:^3.1.2":
   version: 3.1.2
   resolution: "dset@npm:3.1.2"
@@ -12782,6 +12789,7 @@ __metadata:
     concurrently: ^8.0.1
     crypto-hash: ^2.0.1
     date-fns: ^2.29.3
+    dotenv: ^16.0.3
     eslint: ^8.37.0
     eslint-config-next: ^13.2.4
     globalthis-polyfill: ^1.0.0

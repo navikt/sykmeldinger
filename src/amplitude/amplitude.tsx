@@ -3,14 +3,12 @@ import { track, init } from '@amplitude/analytics-browser'
 import { BaseEvent } from '@amplitude/analytics-types'
 import { logger } from '@navikt/next-logger'
 
-import { getPublicEnv } from '../utils/env'
+import { browserEnv } from '../utils/env'
 
 import { AmplitudeTaxonomyEvents } from './taxonomyEvents'
 
-const publicEnv = getPublicEnv()
-
 export function initAmplitude(): void {
-    if (typeof window === 'undefined' || publicEnv.AMPLITUDE_ENABLED !== 'true') return
+    if (typeof window === 'undefined' || browserEnv.NEXT_PUBLIC_AMPLITUDE_ENABLED !== 'true') return
 
     try {
         init('default', undefined, {
@@ -43,7 +41,7 @@ export function useLogAmplitudeEvent(
 }
 
 export function logAmplitudeEvent(event: AmplitudeTaxonomyEvents, extraData?: Record<string, unknown>): void {
-    if (publicEnv.AMPLITUDE_ENABLED !== 'true') {
+    if (browserEnv.NEXT_PUBLIC_AMPLITUDE_ENABLED !== 'true') {
         logDebugEvent(event, extraData)
         return
     }

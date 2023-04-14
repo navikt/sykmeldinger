@@ -9,7 +9,7 @@ import {
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'
-import { getPublicEnv } from '../../../../utils/env'
+import { browserEnv } from '../../../../utils/env'
 
 import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
@@ -18,8 +18,6 @@ import FrilanserSection from './Frilanser/FrilanserSection'
 import SendesTilArbeidsgiverInfo from './SendesTilArbeidsgiver/SendesTilArbeidsgiverInfo'
 import { useArbeidssituasjonSubSections, useDynamicSubSections } from './formProgressUtils'
 
-const publicEnv = getPublicEnv()
-
 interface Props {
     sykmelding: SykmeldingFragment
     brukerinformasjon: BrukerinformasjonFragment
@@ -27,7 +25,9 @@ interface Props {
 }
 
 // Hook needs to be feature-toggled  together with the new form component
-const useSubSections = publicEnv.DISPLAY_EGENMELDING ? useArbeidssituasjonSubSections : useDynamicSubSections
+const useSubSections = browserEnv.NEXT_PUBLIC_DISPLAY_EGENMELDING
+    ? useArbeidssituasjonSubSections
+    : useDynamicSubSections
 
 function ArbeidssituasjonSection({
     sykmelding,

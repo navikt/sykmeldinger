@@ -29,21 +29,6 @@ dirtyGlobal.scrollTo = vi.fn().mockImplementation(() => 0)
 // @ts-expect-error Difficult to type :))
 HTMLCanvasElement.prototype.getContext = vi.fn()
 
-vi.mock(
-    'next/config',
-    vi.fn(() => ({
-        default: () => ({
-            publicRuntimeConfig: {
-                publicPath: '/fake/basepath',
-                runtimeEnv: 'test',
-                MIN_SIDE_ROOT: '/test-min-side',
-                SYKEFRAVAER_ROOT: '/test-ditt-sykefravaer',
-                DISPLAY_EGENMELDING: 'true',
-            },
-        }),
-    })),
-)
-
 mockRouter.useParser(
     createDynamicRouteParser([
         '/',
