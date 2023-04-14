@@ -16,7 +16,6 @@ expect.extend(vitestAxeMatchers)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const dirtyGlobal = global as any
 
-dirtyGlobal.innerWidth = 766
 dirtyGlobal.TextEncoder = TextEncoder
 dirtyGlobal.TextDecoder = TextDecoder
 dirtyGlobal.ResizeObserver = vi.fn().mockImplementation(() => ({
