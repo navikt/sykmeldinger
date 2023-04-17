@@ -7,6 +7,7 @@
     },
     "packageManager": "yarn@3.4.1",
     "scripts": {
+        "dev": "yarn start",
         "start": "concurrently -n next,codegen \"yarn start:watch\" \"yarn gen:watch\"",
         "start:watch": "next dev | pino-pretty",
         "start:prod": "NODE_OPTIONS='-r next-logger' next start",

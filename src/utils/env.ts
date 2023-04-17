@@ -13,7 +13,7 @@ export const publicEnvSchema = z.object({
     NEXT_PUBLIC_MIN_SIDE_ROOT: z.string(),
     NEXT_PUBLIC_SYKEFRAVAER_ROOT: z.string(),
     NEXT_PUBLIC_SYKEPENGESOKNAD_URL: z.string(),
-    NEXT_PUBLIC_AMPLITUDE_ENABLED: z.string(),
+    NEXT_PUBLIC_AMPLITUDE_ENABLED: z.string().optional(),
     NEXT_PUBLIC_DISPLAY_EGENMELDING: z.string(),
 })
 
