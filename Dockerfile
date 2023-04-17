@@ -18,8 +18,11 @@ RUN yarn workspaces focus -A --production
 
 FROM gcr.io/distroless/nodejs:18 as runtime
 
+ARG ENV
+
 WORKDIR /app
 
+COPY nais/envs/.env.$ENV /app/.env.production
 COPY --from=build /app/package.json /app/
 COPY --from=build /app/node_modules /app/node_modules
 COPY next.config.js /app/

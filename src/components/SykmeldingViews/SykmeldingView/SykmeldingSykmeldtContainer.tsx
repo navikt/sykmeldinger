@@ -3,7 +3,7 @@ import { Print } from '@navikt/ds-icons'
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../utils/dateUtils'
-import { getPublicEnv } from '../../../utils/env'
+import { browserEnv } from '../../../utils/env'
 import { isUtenlandsk } from '../../../utils/utenlanskUtils'
 
 import SykmeldingSykmeldtUtenlandsk from './SykmeldingSykmeldtUtenlandsk'
@@ -13,8 +13,6 @@ interface Props {
     sykmelding: SykmeldingFragment
     editableEgenmelding?: boolean
 }
-
-const publicEnv = getPublicEnv()
 
 function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }: Props): JSX.Element {
     const articleHeadingId = `sykmelding-${sykmelding.id}-header`
@@ -33,7 +31,7 @@ function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }
                         <Button
                             className="absolute right-0 top-0 hidden md:block"
                             as="a"
-                            href={`${publicEnv.publicPath}/${sykmelding.id}/pdf`}
+                            href={`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`}
                             target="_blank"
                             rel="noopener noreferrer"
                             variant="tertiary"

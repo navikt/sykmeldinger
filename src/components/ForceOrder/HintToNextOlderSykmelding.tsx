@@ -4,10 +4,8 @@ import React, { useEffect } from 'react'
 
 import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId'
 import { pluralize } from '../../utils/stringUtils'
-import { getPublicEnv } from '../../utils/env'
+import { browserEnv } from '../../utils/env'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
-
-const publicEnv = getPublicEnv()
 
 function HintToNextOlderSykmelding(): JSX.Element | null {
     const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
@@ -33,7 +31,7 @@ function HintToNextOlderSykmelding(): JSX.Element | null {
             <div className="mt-8 flex items-center justify-center">
                 <Button
                     as="a"
-                    href={publicEnv.SYKEFRAVAER_ROOT || '#'}
+                    href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}
                     onClick={() =>
                         logAmplitudeEvent({
                             eventName: 'navigere',

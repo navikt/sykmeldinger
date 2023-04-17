@@ -20,7 +20,7 @@ import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { SykmeldingFragment } from '../../fetching/graphql.generated'
-import { getPublicEnv } from '../../utils/env'
+import { browserEnv } from '../../utils/env'
 import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
@@ -162,15 +162,13 @@ function SykmeldingerWrapper({
     sykmelding,
     children,
 }: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): JSX.Element {
-    const publicEnv = getPublicEnv()
-
     useUpdateBreadcrumbs(() => [{ title: getSykmeldingTitle(sykmelding) }])
 
     addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
             e.preventDefault()
             e.stopImmediatePropagation()
-            window.open(`${publicEnv.publicPath}/${sykmelding.id}/pdf`, '_ blank')
+            window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`, '_ blank')
         }
     })
 

@@ -13,9 +13,7 @@ import { findEgenmeldingsdager } from '../../utils/egenmeldingsdagerUtils'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import EndreEgenmelding from '../../components/EndreEgenmelding/EndreEgenmelding'
 import { createEndreEgenmeldingsdagerBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
-import { getPublicEnv } from '../../utils/env'
-
-const publicEnv = getPublicEnv()
+import { browserEnv } from '../../utils/env'
 
 function EndreEgenmeldingsdagerPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -63,7 +61,7 @@ function EndreEgenmeldingsdagerPage(): JSX.Element {
 }
 
 export const getServerSideProps = withAuthenticatedPage(async () => {
-    if (publicEnv.DISPLAY_EGENMELDING !== 'true') {
+    if (browserEnv.NEXT_PUBLIC_DISPLAY_EGENMELDING !== 'true') {
         return { notFound: true }
     }
 

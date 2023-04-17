@@ -5,12 +5,10 @@ import { RetryLink } from '@apollo/client/link/retry'
 import { logger } from '@navikt/next-logger'
 import { sha256 } from 'crypto-hash'
 
-import { getPublicEnv } from '../utils/env'
+import { browserEnv } from '../utils/env'
 import { getUserRequestId } from '../utils/userRequestId'
 
 import possibleTypesGenerated from './possible-types.generated'
-
-const publicEnv = getPublicEnv()
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
@@ -63,7 +61,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 })
 
 const httpLink = new HttpLink({
-    uri: `${publicEnv.publicPath ?? ''}/api/graphql`,
+    uri: `${browserEnv.NEXT_PUBLIC_BASE_PATH ?? ''}/api/graphql`,
     credentials: 'same-origin',
     headers: {
         'x-request-id': getUserRequestId(),

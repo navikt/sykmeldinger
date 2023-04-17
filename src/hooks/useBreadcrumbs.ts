@@ -7,28 +7,26 @@ import { logger } from '@navikt/next-logger'
 
 import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { getSykmeldingTitle } from '../utils/sykmeldingUtils'
-import { getPublicEnv } from '../utils/env'
+import { browserEnv } from '../utils/env'
 
 type Breadcrumb = { title: string; url: string }
 type LastCrumb = { title: string }
 type CompleteCrumb = Parameters<typeof setBreadcrumbs>[0][0]
 
-const publicEnv = getPublicEnv()
-
 const baseCrumb: CompleteCrumb[] = [
     {
         title: 'Min side',
-        url: publicEnv.MIN_SIDE_ROOT || '/',
+        url: browserEnv.NEXT_PUBLIC_MIN_SIDE_ROOT || '/',
         handleInApp: false,
     },
     {
         title: 'Ditt sykefravær',
-        url: publicEnv.SYKEFRAVAER_ROOT || '/',
+        url: browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '/',
         handleInApp: false,
     },
     {
         title: 'Sykmeldinger',
-        url: publicEnv.publicPath || '/',
+        url: browserEnv.NEXT_PUBLIC_BASE_PATH || '/',
         handleInApp: true,
     },
 ]
@@ -40,7 +38,7 @@ function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): C
     const prefixedCrumbs: CompleteCrumb[] = breadcrumbs.map(
         (it): CompleteCrumb => ({
             ...it,
-            url: 'url' in it ? `${publicEnv.publicPath}${it.url}` : '/',
+            url: 'url' in it ? `${browserEnv.NEXT_PUBLIC_BASE_PATH}${it.url}` : '/',
             handleInApp: true,
         }),
     )
@@ -78,7 +76,7 @@ export function useHandleDecoratorClicks(): void {
     const callback = useCallback(
         (breadcrumb: Breadcrumb) => {
             // router.push automatically pre-pends the base route of the application
-            router.push(breadcrumb.url.replace(publicEnv.publicPath || '', '') || '/')
+            router.push(breadcrumb.url.replace(browserEnv.NEXT_PUBLIC_BASE_PATH || '', '') || '/')
         },
         [router],
     )

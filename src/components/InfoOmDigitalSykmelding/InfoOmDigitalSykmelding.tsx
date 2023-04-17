@@ -1,8 +1,6 @@
 import { Accordion, BodyLong, Heading, Link } from '@navikt/ds-react'
 
-import { getPublicEnv } from '../../utils/env'
-
-const publicEnv = getPublicEnv()
+import { browserEnv } from '../../utils/env'
 
 const InfoOmDigitalSykmelding = (): JSX.Element => (
     <Accordion>
@@ -12,7 +10,8 @@ const InfoOmDigitalSykmelding = (): JSX.Element => (
                 <section>
                     <BodyLong spacing>
                         NAV får alle sykmeldinger som blir skrevet i Norge. Den som er sykmeldt, finner den på{' '}
-                        <Link href={publicEnv.SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Link>, der du er logget inn nå.
+                        <Link href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Link>, der du er
+                        logget inn nå.
                     </BodyLong>
                     <BodyLong spacing>
                         Du kan kreve at NAV sletter sykmeldingen din. Da kan du bruke{' '}

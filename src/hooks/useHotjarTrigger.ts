@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
 import { logger } from '@navikt/next-logger'
 
-import { getPublicEnv } from '../utils/env'
-
-const publicEnv = getPublicEnv()
+import { browserEnv } from '../utils/env'
 
 type TriggerType =
     | 'SYKMELDING_LISTEVISNING'
@@ -29,7 +27,7 @@ function isHotjarFunction(hj: unknown): hj is HotjarFunction {
 
 const useHotjarTrigger = (triggerType: TriggerType | null): void => {
     useEffect(() => {
-        if (publicEnv.RUNTIME_ENVIRONMENT === 'production') {
+        if (browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'production') {
             setTimeout(() => {
                 const hotjarWindow = window as HotjarWindow
 
