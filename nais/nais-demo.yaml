@@ -23,5 +23,8 @@ spec:
       external:
         - host: nav.no
         - host: demo.ekstern.dev.nav.no
+      rules:
+        - application: nav-dekoratoren
+          namespace: personbruker
   envFrom:
     - configmap: sykmeldinger-config

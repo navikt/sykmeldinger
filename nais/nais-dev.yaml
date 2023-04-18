@@ -33,6 +33,8 @@ spec:
         - application: sykmeldinger-backend
         - application: flex-syketilfelle
           namespace: flex
+        - application: nav-dekoratoren
+          namespace: personbruker
       external:
         - host: flex-syketilfelle.flex
         - host: ekstern.dev.nav.no

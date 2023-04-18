@@ -1,9 +1,10 @@
 import React from 'react'
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document'
-import { Components, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
+import { DecoratorComponents, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 
 import { browserEnv } from '../utils/env'
 import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs'
+import { getFakeDecorator } from '../components/Fakeorator/Fakeorator'
 
 // The 'head'-field of the document initialProps contains data from <head> (meta-tags etc)
 const getDocumentParameter = (initialProps: DocumentInitialProps, name: string): string => {
@@ -30,7 +31,7 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
 }
 
 interface Props {
-    Decorator: Components
+    Decorator: DecoratorComponents
     language: string
 }
 
@@ -38,12 +39,18 @@ class MyDocument extends Document<Props> {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & Props> {
         const initialProps = await Document.getInitialProps(ctx)
 
-        const Decorator = await fetchDecoratorReact({
-            env: createDecoratorEnv(ctx),
-            chatbot: true,
-            context: 'privatperson',
-            breadcrumbs: createInitialServerSideBreadcrumbs(ctx.pathname, ctx.query),
-        })
+        const env = createDecoratorEnv(ctx)
+        const Decorator =
+            browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local'
+                ? getFakeDecorator()
+                : await fetchDecoratorReact({
+                      env: env,
+                      params: {
+                          chatbot: true,
+                          context: 'privatperson',
+                          breadcrumbs: createInitialServerSideBreadcrumbs(ctx.pathname, ctx.query),
+                      },
+                  })
 
         const language = getDocumentParameter(initialProps, 'lang')
 
