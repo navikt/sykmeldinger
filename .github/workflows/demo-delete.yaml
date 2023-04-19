@@ -1,5 +1,8 @@
 name: Demo delete
-on: delete
+on:
+  delete:
+    branches:
+      - demo**
 
 jobs:
   branch-delete:
