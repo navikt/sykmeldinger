@@ -32,8 +32,8 @@ function EndreEgenmeldingsdagerPage(): JSX.Element {
                 <Heading level="2" size="small" spacing>
                     Endre egenmeldingsdager
                 </Heading>
-                <BodyShort spacing>Under her kan du endre, fjerne eller legge til egenmeldingsdager.</BodyShort>
-                <BodyShort>Når du er ferdig, registrerer du endringene dine på nytt, nederst på siden.</BodyShort>
+                <BodyShort spacing>Under kan du endre, fjerne eller legge til egenmeldingsdager.</BodyShort>
+                <BodyShort>Når du er ferdig registrerer du endringene, nederst på siden.</BodyShort>
             </GuidePanel>
             {!data && loading && <Spinner className="mt-16" headline="Laster sykmelding" />}
             {error && (
