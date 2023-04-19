@@ -32,7 +32,7 @@
         "@navikt/ds-css": "2.8.7",
         "@navikt/ds-icons": "2.8.7",
         "@navikt/ds-react": "2.8.7",
-        "@navikt/nav-dekoratoren-moduler": "^1.9.0",
+        "@navikt/nav-dekoratoren-moduler": "^2.0.0",
         "@navikt/next-auth-wonderwall": "^1.2.0",
         "@navikt/next-logger": "^1.14.0",
         "@next/bundle-analyzer": "^13.2.4",
