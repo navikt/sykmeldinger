@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { Merknad } from '../../fetching/graphql.generated'
+import { Merknad, Merknadtype } from '../../fetching/graphql.generated'
 
-import InformationBanner, { Merknadtype } from './InformationBanner'
+import InformationBanner from './InformationBanner'
 
 describe('InformationBanner', () => {
     it('Renders view for merknad UGYLDIG_TILBAKEDATERING', async () => {
@@ -35,7 +35,7 @@ describe('InformationBanner', () => {
     it('Renders view for merknad TILBAKEDATERING_UNDER_BEHANDLING', () => {
         const merknad: Merknad = {
             __typename: 'Merknad',
-            type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
+            type: Merknadtype.UNDER_BEHANDLING,
             beskrivelse: null,
         }
 

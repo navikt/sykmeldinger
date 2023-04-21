@@ -5,7 +5,10 @@ import { generateSykmeldingPdfServerSide } from '../../../server/pdf/pdf'
 import { createRequestContext, withAuthenticatedApi } from '../../../auth/withAuthentication'
 
 async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-    const context = createRequestContext(req)
+    const context = createRequestContext(
+        req.headers['x-request-id'] as string | undefined,
+        req.headers['authorization'],
+    )
 
     if (!context) {
         res.status(401).json({ message: 'Access denied' })

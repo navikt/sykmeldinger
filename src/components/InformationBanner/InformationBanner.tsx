@@ -1,13 +1,7 @@
 import { BodyLong, GuidePanel, Heading, Label, Chat } from '@navikt/ds-react'
 
-import { Merknad } from '../../fetching/graphql.generated'
+import { Merknad, Merknadtype } from '../../fetching/graphql.generated'
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg'
-
-export enum Merknadtype {
-    UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
-    TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER = 'TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER',
-    TILBAKEDATERING_UNDER_BEHANDLING = 'UNDER_BEHANDLING',
-}
 
 interface InformationBannerProps {
     merknader?: readonly Merknad[] | null
@@ -63,7 +57,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
         )
     }
 
-    if (merknader?.some((merknad) => merknad.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING)) {
+    if (merknader?.some((merknad) => merknad.type === Merknadtype.UNDER_BEHANDLING)) {
         return (
             <div data-testid="merknad-banner">
                 <UnderBehandlingGuidePanel isSent={false} />

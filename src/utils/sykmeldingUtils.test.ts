@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-import { RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
+import { Merknadtype, RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import {
     getReadableSykmeldingLength,
@@ -102,7 +102,7 @@ describe('isActiveSykmelding', () => {
                     ...minimalSykmelding.sykmeldingStatus,
                     statusEvent: StatusEvent.SENDT,
                 },
-                merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }],
+                merknader: [{ __typename: 'Merknad', type: Merknadtype.UNDER_BEHANDLING, beskrivelse: null }],
             }),
         ).toBe(false)
     })

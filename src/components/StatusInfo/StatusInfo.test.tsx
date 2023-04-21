@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react'
 import {
     ArbeidssituasjonType,
     Merknad,
+    Merknadtype,
     Periode,
     Periodetype,
     ShortName,
@@ -11,7 +12,6 @@ import {
     Svartype,
     SykmeldingStatusFragment,
 } from '../../fetching/graphql.generated'
-import { Merknadtype } from '../InformationBanner/InformationBanner'
 
 import StatusInfo from './StatusInfo'
 
@@ -104,7 +104,7 @@ describe('StatusInfo', () => {
             }
             const merknad: Merknad = {
                 __typename: 'Merknad',
-                type: Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
+                type: Merknadtype.UNDER_BEHANDLING,
                 beskrivelse: null,
             }
             render(

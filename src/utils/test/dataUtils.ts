@@ -7,6 +7,7 @@ import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
+    Merknadtype,
     PeriodeFragment,
     Periodetype,
     RegelStatus,
@@ -206,7 +207,7 @@ export const createSykmeldingPeriode = (overrides?: Partial<PeriodeFragment>): P
 })
 
 export function createUnderBehandlingMerknad(): Pick<Sykmelding, 'merknader'> {
-    return { merknader: [{ __typename: 'Merknad', type: 'UNDER_BEHANDLING', beskrivelse: null }] }
+    return { merknader: [{ __typename: 'Merknad', type: Merknadtype.UNDER_BEHANDLING, beskrivelse: null }] }
 }
 
 export function createAvvistBehandlingsutfall(

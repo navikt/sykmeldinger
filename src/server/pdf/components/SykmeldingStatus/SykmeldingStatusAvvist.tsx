@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Merknadtype } from '../../../../components/InformationBanner/InformationBanner'
 import { Sykmelding } from '../../../api-models/sykmelding/Sykmelding'
 import { sykmeldingStatusMarginBottom, textMarginBottom } from '../constants'
 import Warning from '../icons/Warning'
+import { Merknadtype } from '../../../graphql/resolver-types.generated'
 
 interface Props {
     sykmelding: Sykmelding

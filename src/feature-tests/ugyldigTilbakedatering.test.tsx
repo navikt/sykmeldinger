@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import mockRouter from 'next-router-mock'
 
 import { axe, render, screen } from '../utils/test/testUtils'
-import { StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
+import { Merknadtype, StatusEvent, SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
 import { sporsmal } from '../utils/sporsmal'
@@ -26,7 +26,7 @@ describe('Ugyldig tilbakedatert sykmelding', () => {
         merknader: [
             {
                 __typename: 'Merknad',
-                type: 'UGYLDIG_TILBAKEDATERING',
+                type: Merknadtype.UGYLDIG_TILBAKEDATERING,
                 beskrivelse: null,
             },
         ],

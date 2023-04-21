@@ -3,12 +3,12 @@ import { BodyShort, GuidePanel, Link } from '@navikt/ds-react'
 import {
     ArbeidssituasjonType,
     Merknad,
+    Merknadtype,
     Periode,
     Periodetype,
     SvarUnion_ArbeidssituasjonSvar_Fragment,
     SykmeldingStatusFragment,
 } from '../../fetching/graphql.generated'
-import { Merknadtype } from '../InformationBanner/InformationBanner'
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatusFragment
@@ -23,9 +23,7 @@ function StatusInfo({
 }: StatusInfoProps): JSX.Element | null {
     const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.AVVENTENDE)
 
-    const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some(
-        (it) => it.type === Merknadtype.TILBAKEDATERING_UNDER_BEHANDLING,
-    )
+    const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some((it) => it.type === Merknadtype.UNDER_BEHANDLING)
 
     const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe
         .flatMap((it) => it.svar)

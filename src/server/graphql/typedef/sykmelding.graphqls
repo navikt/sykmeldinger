@@ -54,8 +54,14 @@ type Behandler {
     tlf: String
 }
 
+enum Merknadtype {
+    UGYLDIG_TILBAKEDATERING
+    TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER
+    UNDER_BEHANDLING
+}
+
 type Merknad {
-    type: String!
+    type: Merknadtype!
     beskrivelse: String
 }
 
