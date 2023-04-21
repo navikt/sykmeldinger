@@ -64,14 +64,14 @@ function SykmeldingLinkPanel({
             <ol className={styles.lenkepanelContainerSykmeldinger}>
                 {sortBy === SortBy.DATE &&
                     sykmeldingerSortedByDate.map((sykmelding, index) => (
-                        <li key={index} className="lenkepanel-container__sykmelding">
-                            <Lenkepanel sykmelding={sykmelding} isNew={type === 'NYE_SYKMELDINGER'} />
+                        <li key={index}>
+                            <Lenkepanel sykmelding={sykmelding} notifying={type === 'NYE_SYKMELDINGER'} />
                         </li>
                     ))}
                 {sortBy === SortBy.ARBEIDSGIVER &&
                     sykmeldingerSortedByArbeidsgiver.map((sykmelding, index) => (
-                        <li key={index} className="lenkepanel-container__sykmelding">
-                            <Lenkepanel sykmelding={sykmelding} isNew={type === 'NYE_SYKMELDINGER'} />
+                        <li key={index}>
+                            <Lenkepanel sykmelding={sykmelding} notifying={type === 'NYE_SYKMELDINGER'} />
                         </li>
                     ))}
             </ol>

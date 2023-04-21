@@ -1,50 +1,46 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react'
-import cn from 'classnames'
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../../utils/sykmeldingUtils'
 import { getDescription } from '../../../utils/periodeUtils'
+import { cn } from '../../../utils/tw-utils'
 
 import LenkepanelIcon from './LenkepanelIcon'
 import LenkepanelEtikett from './LenkepanelEtikett'
-import styles from './Lenkepanel.module.css'
 
 interface LenkepanelProps {
     sykmelding: SykmeldingFragment
-    isNew: boolean
+    notifying: boolean
 }
 
-function Lenkepanel({ sykmelding, isNew }: LenkepanelProps): JSX.Element {
+export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): JSX.Element {
     const status = sykmelding.sykmeldingStatus.statusEvent
     const behandlingsutfallStatus = sykmelding.behandlingsutfall.status
     const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn
 
-    const [isHoverState, setIsHoverState] = useState<boolean>(false)
-
     return (
         <Link href={`/${sykmelding.id}`} passHref legacyBehavior>
             <LinkPanel
-                onMouseEnter={() => setIsHoverState(true)}
-                onMouseLeave={() => setIsHoverState(false)}
-                className={cn(styles.lenkepanel, { [styles.lenkepanelAlert]: isNew })}
+                className={cn('mb-4 p-6 [&>div]:w-full', {
+                    'border-orange-300 bg-orange-50 hover:border-orange-500': notifying,
+                })}
                 border
             >
-                <div className={styles.lenkepanelContent}>
-                    <div className={styles.icon}>
+                <div className={'flex gap-3 max-[560px]:flex-col'}>
+                    <div className="mr-8 hidden sm:block">
                         <LenkepanelIcon
-                            hover={isHoverState}
                             behandlingsutfall={behandlingsutfallStatus}
                             isPaper={Boolean(sykmelding.papirsykmelding)}
                         />
                     </div>
-                    <div className={styles.mainContent}>
+                    <div className="grow">
                         <BodyShort>{getReadableSykmeldingLength(sykmelding)}</BodyShort>
                         <Heading size="small" level="3">
                             {getSykmeldingTitle(sykmelding)}
                         </Heading>
-                        <ul>
+                        <ul className="list-disc pl-4">
                             {sykmelding.sykmeldingsperioder.map((periode, index) => (
                                 <li key={index}>
                                     <BodyShort>{getDescription(periode, arbeidsgiverNavn)}</BodyShort>
@@ -52,7 +48,7 @@ function Lenkepanel({ sykmelding, isNew }: LenkepanelProps): JSX.Element {
                             ))}
                         </ul>
                     </div>
-                    <div className={styles.statusText}>
+                    <div className="flex items-center">
                         <LenkepanelEtikett status={status} behandlingsutfall={behandlingsutfallStatus} />
                     </div>
                 </div>
