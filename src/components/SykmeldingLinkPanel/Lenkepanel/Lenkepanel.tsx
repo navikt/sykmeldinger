@@ -48,7 +48,7 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): JSX.Elem
                             ))}
                         </ul>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex shrink-0 items-center">
                         <LenkepanelEtikett status={status} behandlingsutfall={behandlingsutfallStatus} />
                     </div>
                 </div>
