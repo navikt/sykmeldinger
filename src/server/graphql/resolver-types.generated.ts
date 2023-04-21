@@ -512,6 +512,11 @@ export type ResolversUnionTypes = ResolversObject<{
     SvarTypeUnion: ArbeidssituasjonSvar | DagerSvar | JaNeiSvar | PerioderSvar
 }>
 
+/** Mapping of union parent types */
+export type ResolversUnionParentTypes = ResolversObject<{
+    SvarTypeUnion: ArbeidssituasjonSvar | DagerSvar | JaNeiSvar | PerioderSvar
+}>
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
     Adresse: ResolverTypeWrapper<Adresse>
@@ -619,7 +624,7 @@ export type ResolversParentTypes = ResolversObject<{
     SendSykmeldingValues: SendSykmeldingValues
     Sporsmal: Omit<Sporsmal, 'svar'> & { svar: ResolversParentTypes['SvarTypeUnion'] }
     String: Scalars['String']
-    SvarTypeUnion: ResolversUnionTypes['SvarTypeUnion']
+    SvarTypeUnion: ResolversUnionParentTypes['SvarTypeUnion']
     Sykmelding: Sykmelding
     SykmeldingStatus: SykmeldingStatus
     UtdypendeOpplysning: UtdypendeOpplysning
