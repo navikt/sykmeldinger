@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useCallback, useState } from 'react'
-import { Alert, BodyLong, GuidePanel, Heading } from '@navikt/ds-react'
+import { Alert, BodyLong, BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
 import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
 
@@ -25,6 +25,7 @@ import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
+import { getUserRequestId } from '../../utils/userRequestId'
 
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -46,7 +47,28 @@ function SykmeldingPage(): JSX.Element {
         return (
             <SykmeldingerWrapper>
                 <Alert variant="error" role="alert" aria-live="polite">
-                    Vi har problemer med baksystemene for øyeblikket.
+                    <Heading level="2" size="medium" spacing>
+                        Det har oppstått en feil
+                    </Heading>
+                    <BodyShort spacing>
+                        Du kan prøve å <Link href="">oppfriske</Link> siden for å se om det løser problemet.
+                    </BodyShort>
+                    <BodyShort spacing>
+                        Dersom problemet vedvarer, kan du fortelle oss om feilen på
+                        <Link
+                            className="text-red-500"
+                            href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler"
+                        >
+                            skjemaet for feil og mangler
+                        </Link>
+                        .
+                    </BodyShort>
+                    <BodyShort>
+                        Tar du kontakt så kan du gi oss denne tekniske sporingskoden for å hjelpe oss å løse problemet:{' '}
+                        <code className="border border-border-subtle p-0.5 text-sm">
+                            {getUserRequestId().split('-')[0]}
+                        </code>
+                    </BodyShort>
                 </Alert>
             </SykmeldingerWrapper>
         )

@@ -94,7 +94,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
             ],
         })
 
-        expect(await screen.findByText(/Vi har problemer med baksystemene for øyeblikket./))
+        expect(await screen.findByText(/Det har oppstått en feil/))
     })
 
     it('should show sykmelding, but not form, when brukerinformasjon cant be fetched', async () => {
