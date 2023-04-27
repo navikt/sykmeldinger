@@ -1,5 +1,5 @@
 import { Faro, getWebInstrumentations, initializeFaro, LogLevel } from '@grafana/faro-web-sdk'
-import { TracingInstrumentation } from '@grafana/faro-web-tracing'
+// import { TracingInstrumentation } from '@grafana/faro-web-tracing'
 
 import { browserEnv } from '../utils/env'
 
@@ -22,7 +22,7 @@ export function getFaro(): Faro {
             ...getWebInstrumentations({
                 captureConsole: false,
             }),
-            new TracingInstrumentation(),
+            // new TracingInstrumentation(),
         ],
     })
     return faro
