@@ -15,6 +15,7 @@ export const publicEnvSchema = z.object({
     NEXT_PUBLIC_SYKEPENGESOKNAD_URL: z.string(),
     NEXT_PUBLIC_AMPLITUDE_ENABLED: z.string().optional(),
     NEXT_PUBLIC_DISPLAY_EGENMELDING: z.string(),
+    NEXT_PUBLIC_TELEMETRY_URL: z.string().optional(),
 })
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>
@@ -44,7 +45,8 @@ export const browserEnv = publicEnvSchema.parse({
     NEXT_PUBLIC_SYKEFRAVAER_ROOT: process.env.NEXT_PUBLIC_SYKEFRAVAER_ROOT,
     NEXT_PUBLIC_MIN_SIDE_ROOT: process.env.NEXT_PUBLIC_MIN_SIDE_ROOT,
     NEXT_PUBLIC_DISPLAY_EGENMELDING: process.env.NEXT_PUBLIC_DISPLAY_EGENMELDING,
-})
+    NEXT_PUBLIC_TELEMETRY_URL: process.env.NEXT_PUBLIC_TELEMETRY_URL,
+} satisfies Record<keyof PublicEnv, string | undefined>)
 
 const getRawServerConfig = (): Partial<unknown> => ({
     // Provided by nais-*.yml

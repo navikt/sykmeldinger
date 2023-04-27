@@ -12,9 +12,15 @@ import { createApolloClient } from '../fetching/apollo'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs'
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
+import { getFaro, initInstrumentation, pinoLevelToFaroLevel } from '../faro/faro'
 
+initInstrumentation()
 configureLogger({
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+    onLog: (log) =>
+        getFaro().api.pushLog(log.messages, {
+            level: pinoLevelToFaroLevel(log.level.label),
+        }),
 })
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
