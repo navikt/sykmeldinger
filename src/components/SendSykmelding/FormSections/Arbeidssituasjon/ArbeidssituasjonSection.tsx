@@ -50,7 +50,7 @@ function ArbeidssituasjonSection({
         <SectionWrapper title="Din arbeidssituasjon">
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
-            <ArbeidssituasjonStatusInfo />
+            {!(<ArbeidssituasjonStatusInfo />)}
             {shouldShowStrengtFortroligInfo && <StrengtFortroligInfo />}
             {shouldShowArbeidsgiverOrgnummer && (
                 <ArbeidsgiverSection sykmelding={sykmelding} arbeidsgivere={brukerinformasjon.arbeidsgivere} />

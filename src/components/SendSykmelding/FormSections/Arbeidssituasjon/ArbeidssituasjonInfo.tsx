@@ -15,6 +15,7 @@ export function ArbeidssituasjonInfo(): JSX.Element {
 }
 
 export function ArbeidssituasjonStatusInfo(): JSX.Element {
+    //TODO: fix broken url or remove link
     return (
         <div className="mb-1 mt-4">
             <BodyLong>
