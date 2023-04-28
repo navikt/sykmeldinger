@@ -58,8 +58,9 @@ export function withAuthenticatedPage(handler: PageHandler = async () => ({ prop
             )
             if (validationResult.errorType === 'NOT_ACR_LEVEL4') {
                 logger.warn(error)
+            } else {
+                logger.error(error)
             }
-            logger.error(error)
             return {
                 redirect: { destination: `/oauth2/login?redirect=${getRedirectPath(context)}`, permanent: false },
             }
