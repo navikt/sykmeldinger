@@ -52,12 +52,14 @@ export function withAuthenticatedPage(handler: PageHandler = async () => ({ prop
 
         const validationResult = await validateIdportenToken(bearerToken)
         if (validationResult !== 'valid') {
-            logger.error(
-                new Error(
-                    `Invalid JWT token found (cause: ${validationResult.errorType} ${validationResult.message}, redirecting to login.`,
-                    { cause: validationResult.error },
-                ),
+            const error = new Error(
+                `Invalid JWT token found (cause: ${validationResult.errorType} ${validationResult.message}, redirecting to login.`,
+                { cause: validationResult.error },
             )
+            if (validationResult.errorType === 'NOT_ACR_LEVEL4') {
+                logger.warn(error)
+            }
+            logger.error(error)
             return {
                 redirect: { destination: `/oauth2/login?redirect=${getRedirectPath(context)}`, permanent: false },
             }
