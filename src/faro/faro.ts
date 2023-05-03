@@ -1,7 +1,7 @@
 import { Faro, getWebInstrumentations, initializeFaro, LogLevel } from '@grafana/faro-web-sdk'
 // import { TracingInstrumentation } from '@grafana/faro-web-tracing'
 
-import { browserEnv } from '../utils/env'
+import { browserEnv, isLocalOrDemo } from '../utils/env'
 
 let faro: Faro | null = null
 export function initInstrumentation(): void {
@@ -13,6 +13,7 @@ export function initInstrumentation(): void {
 export function getFaro(): Faro {
     if (faro != null) return faro
     faro = initializeFaro({
+        paused: isLocalOrDemo,
         url: browserEnv.NEXT_PUBLIC_TELEMETRY_URL,
         app: {
             name: 'sykmeldinger',

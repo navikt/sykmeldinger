@@ -12,6 +12,7 @@ import { SendSykmeldingValues, SykmeldingChangeStatus } from './graphql/resolver
 import { RequestContext } from './graphql/resolvers'
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 import { getErUtenforVentetid } from './flexService'
+import { ArbeidssituasjonV3 } from './api-models/SendSykmelding'
 
 const serverEnv = getServerEnv()
 
@@ -93,6 +94,14 @@ export async function sendSykmelding(
             () => null,
             context,
         )
+
+        if (mappedValues.arbeidssituasjon.svar === ArbeidssituasjonV3.ARBEIDSTAKER) {
+            if (mappedValues.harBruktEgenmeldingsdager) {
+                childLogger.info(`Sykmelding sendt WITH egenmeldingsdager-question answered`)
+            } else {
+                childLogger.info(`Sykmelding sendt without egenmeldingsdager-question answered`)
+            }
+        }
 
         // Return the updated sykmelding so apollo can update the cache
         return getSykmelding(sykmeldingId, context)
