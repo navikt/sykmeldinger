@@ -1,4 +1,5 @@
 import { z, ZodError } from 'zod'
+import { isAfter } from 'date-fns'
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>
 export const publicEnvSchema = z.object({
@@ -89,7 +90,7 @@ export function getServerEnv(): ServerEnv & PublicEnv {
  * Turn this into a function, because we need to make this a timed toggle later
  */
 export function isEgenmeldingsdagerEnabled(): boolean {
-    return process.env.NEXT_PUBLIC_DISPLAY_EGENMELDING === 'true'
+    return isAfter(new Date(), new Date('2023-05-04T12:00:00+02:00'))
 }
 
 export const isLocalOrDemo =
