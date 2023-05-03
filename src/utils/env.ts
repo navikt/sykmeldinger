@@ -90,7 +90,7 @@ export function getServerEnv(): ServerEnv & PublicEnv {
  * Turn this into a function, because we need to make this a timed toggle later
  */
 export function isEgenmeldingsdagerEnabled(): boolean {
-    return isAfter(new Date(), new Date('2023-05-04T12:00:00+02:00'))
+    return isAfter(new Date(), new Date('2023-05-04T12:00:00+02:00')) || isLocalOrDemo
 }
 
 export const isLocalOrDemo =
