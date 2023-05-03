@@ -28,8 +28,14 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
 
 const persistedQueriesLink = createPersistedQueryLink({ sha256 })
 
-const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
-    if (graphQLErrors)
+const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+    if (graphQLErrors) {
+        // This is temporary debugging. Backend has a bunch of weird 404's that shouldn't happen.
+        if (graphQLErrors.some((it) => it.message.includes('404 Not Found'))) {
+            logger.error('Backend responded with 404, retrying once...')
+            return forward(operation)
+        }
+
         graphQLErrors.forEach(({ message, locations, path, extensions }) => {
             if (extensions?.code !== 'UNAUTHENTICATED') {
                 logger.error(
@@ -39,6 +45,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
                 )
             }
         })
+    }
 
     if (networkError) {
         if ('statusCode' in networkError) {
@@ -58,6 +65,8 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
         networkError.message = `${networkError.message}. ${networkMessage}. \n\n${operationDetails}. \n\n${traceDetails}`
         logger.error(networkError)
     }
+
+    return
 })
 
 const httpLink = new HttpLink({
