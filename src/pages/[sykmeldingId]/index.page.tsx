@@ -43,7 +43,7 @@ function SykmeldingPage(): JSX.Element {
         )
     }
 
-    if (error || olderSykmelding.error) {
+    if (olderSykmelding.error || (error && data?.sykmelding == null)) {
         return (
             <SykmeldingerWrapper>
                 <Alert variant="error" role="alert" aria-live="polite">
