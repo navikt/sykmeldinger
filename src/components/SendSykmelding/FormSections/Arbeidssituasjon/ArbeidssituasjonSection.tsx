@@ -9,25 +9,19 @@ import {
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'
-import { browserEnv } from '../../../../utils/env'
 
 import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
 import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 import FrilanserSection from './Frilanser/FrilanserSection'
 import SendesTilArbeidsgiverInfo from './SendesTilArbeidsgiver/SendesTilArbeidsgiverInfo'
-import { useArbeidssituasjonSubSections, useDynamicSubSections } from './formProgressUtils'
+import { useArbeidssituasjonSubSections } from './formProgressUtils'
 
 interface Props {
     sykmelding: SykmeldingFragment
     brukerinformasjon: BrukerinformasjonFragment
     sykmeldingUtenforVentetid: SykmeldingUtenforVentetidFragment
 }
-
-// Hook needs to be feature-toggled  together with the new form component
-const useSubSections = browserEnv.NEXT_PUBLIC_DISPLAY_EGENMELDING
-    ? useArbeidssituasjonSubSections
-    : useDynamicSubSections
 
 function ArbeidssituasjonSection({
     sykmelding,
@@ -41,7 +35,7 @@ function ArbeidssituasjonSection({
         shouldShowEgenmeldingsperioderSporsmal,
         shouldShowStrengtFortroligInfo,
         shouldShowSendesTilArbeidsgiverInfo,
-    } = useSubSections(brukerinformasjon, sykmeldingUtenforVentetid)
+    } = useArbeidssituasjonSubSections(brukerinformasjon, sykmeldingUtenforVentetid)
 
     // Don't show arbeidssituasjon section given certain criteria
     if (!shouldArbeidssituasjonShow) return null

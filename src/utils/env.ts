@@ -1,5 +1,4 @@
 import { z, ZodError } from 'zod'
-import { isAfter } from 'date-fns'
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>
 export const publicEnvSchema = z.object({
@@ -15,7 +14,6 @@ export const publicEnvSchema = z.object({
     NEXT_PUBLIC_SYKEFRAVAER_ROOT: z.string(),
     NEXT_PUBLIC_SYKEPENGESOKNAD_URL: z.string(),
     NEXT_PUBLIC_AMPLITUDE_ENABLED: z.string().optional(),
-    NEXT_PUBLIC_DISPLAY_EGENMELDING: z.string(),
     NEXT_PUBLIC_TELEMETRY_URL: z.string().optional(),
 })
 
@@ -45,7 +43,6 @@ export const browserEnv = publicEnvSchema.parse({
     NEXT_PUBLIC_SYKEPENGESOKNAD_URL: process.env.NEXT_PUBLIC_SYKEPENGESOKNAD_URL,
     NEXT_PUBLIC_SYKEFRAVAER_ROOT: process.env.NEXT_PUBLIC_SYKEFRAVAER_ROOT,
     NEXT_PUBLIC_MIN_SIDE_ROOT: process.env.NEXT_PUBLIC_MIN_SIDE_ROOT,
-    NEXT_PUBLIC_DISPLAY_EGENMELDING: process.env.NEXT_PUBLIC_DISPLAY_EGENMELDING,
     NEXT_PUBLIC_TELEMETRY_URL: process.env.NEXT_PUBLIC_TELEMETRY_URL,
 } satisfies Record<keyof PublicEnv, string | undefined>)
 
@@ -90,7 +87,7 @@ export function getServerEnv(): ServerEnv & PublicEnv {
  * Turn this into a function, because we need to make this a timed toggle later
  */
 export function isEgenmeldingsdagerEnabled(): boolean {
-    return isAfter(new Date(), new Date('2023-05-04T12:00:00+02:00')) || isLocalOrDemo
+    return true
 }
 
 export const isLocalOrDemo =

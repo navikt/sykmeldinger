@@ -13,6 +13,7 @@
         "start:prod": "NODE_OPTIONS='-r next-logger' next start",
         "gen": "graphql-codegen",
         "gen:watch": "graphql-codegen -w",
+        "gen:toggles": "UNLEASH_SERVER_API_URL=http://localhost:3000/api/toggles yarn dlx @unleash/nextjs generate-types src/toggles/types.generated.ts",
         "build": "yarn gen && next build",
         "test": "vitest --config ./vitest.config.ts",
         "lint": "next lint",
