@@ -62,10 +62,13 @@ function EgenmeldingerField({
 
     if (hasHitPreviousSykmeldingTom) {
         // The user has hit the previous sykmelding, we don't need to ask anymore.
-        logAmplitudeEvent({
-            eventName: 'skjema steg fullført',
-            data: { skjemanavn: amplitudeSkjemanavn, steg: 'Har truffet forrige sykmelding tom' },
-        })
+        logAmplitudeEvent(
+            {
+                eventName: 'skjema steg fullført',
+                data: { skjemanavn: amplitudeSkjemanavn, steg: 'Har truffet forrige sykmelding tom' },
+            },
+            { level: index + 1 },
+        )
         return null
     }
 
