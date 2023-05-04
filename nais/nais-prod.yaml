@@ -46,8 +46,6 @@ spec:
         - host: flex-syketilfelle.flex
         - host: nav.no
         - host: cdn.nav.no
-  envFrom:
-    - configmap: sykmeldinger-config
   env:
     - name: SYKMELDINGER_BACKEND
       value: 'http://sykmeldinger-backend'

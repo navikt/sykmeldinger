@@ -3,7 +3,7 @@ on: push
 
 jobs:
   next-app:
-    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@main
+    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@simplify-next
     secrets: inherit
     with:
       app: sykmeldinger

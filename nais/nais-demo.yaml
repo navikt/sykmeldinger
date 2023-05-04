@@ -26,5 +26,3 @@ spec:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
-  envFrom:
-    - configmap: sykmeldinger-config
