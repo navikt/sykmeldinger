@@ -1,7 +1,6 @@
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
 import { SykmeldingListInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
-import { isEgenmeldingsdagerEnabled } from '../../../../../utils/env'
 
 interface EgenmeldingsdagerProps {
     sykmeldingId: string
@@ -11,8 +10,6 @@ interface EgenmeldingsdagerProps {
 }
 
 function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element | null {
-    if (!isEgenmeldingsdagerEnabled()) return null
-
     return (
         <SykmeldingListInfo
             heading="Egenmeldingsdager (lagt til av deg)"

@@ -5,7 +5,6 @@ import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeU
 import { Periode, SvarUnion_DagerSvar_Fragment } from '../../../../../fetching/graphql.generated'
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { toReadableDate, toReadableDatePeriod } from '../../../../../utils/dateUtils'
-import { isEgenmeldingsdagerEnabled } from '../../../../../utils/env'
 import {
     SykmeldingInfo,
     SykmeldingInfoSubGroup,
@@ -41,9 +40,7 @@ function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Ele
                     )}
                 </SykmeldingInfoSubGroup>
             ))}
-            {isEgenmeldingsdagerEnabled() && egenmeldingsdager && (
-                <Egenmeldingsdager className="w-full" egenmeldingsdager={egenmeldingsdager} />
-            )}
+            {egenmeldingsdager && <Egenmeldingsdager className="w-full" egenmeldingsdager={egenmeldingsdager} />}
         </SykmeldingGroup>
     )
 }

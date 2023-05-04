@@ -2,7 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '@navikt/ds-react'
 
-import { isEgenmeldingsdagerEnabled } from '../../../../../utils/env'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 function RedigerEgenmeldingsdagerLink({
@@ -12,8 +11,6 @@ function RedigerEgenmeldingsdagerLink({
     sykmeldingId: string
     hasEgenmeldingsdager: boolean
 }): JSX.Element | null {
-    if (!isEgenmeldingsdagerEnabled()) return null
-
     const typeOfEditEgenmeldingsdager: string = hasEgenmeldingsdager ? 'Endre' : 'Legg til'
 
     return (

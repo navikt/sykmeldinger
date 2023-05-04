@@ -83,12 +83,5 @@ export function getServerEnv(): ServerEnv & PublicEnv {
     }
 }
 
-/**
- * Turn this into a function, because we need to make this a timed toggle later
- */
-export function isEgenmeldingsdagerEnabled(): boolean {
-    return true
-}
-
 export const isLocalOrDemo =
     process.env.NODE_ENV !== 'production' || browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'demo'

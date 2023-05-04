@@ -10,7 +10,6 @@ import {
 } from '../../../../../fetching/graphql.generated'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../../../FormComponents/FormStructure'
-import { isEgenmeldingsdagerEnabled } from '../../../../../utils/env'
 import { findValgtArbeidsgiver } from '../../../../../utils/arbeidsgiverUtils'
 import { useFindPrevSykmeldingTom } from '../../../../../hooks/useFindPrevSykmeldingTom'
 import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
@@ -38,7 +37,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element 
             <ArbeidsgiverField arbeidsgivere={arbeidsgivere} />
             {hasNoArbeidsgiver && <ArbeidsgivereMissingInfo />}
             {hasAktiv && <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />}
-            {isEgenmeldingsdagerEnabled() && shouldShowEgenmeldingsdager && !error && !isLoading && (
+            {shouldShowEgenmeldingsdager && !error && !isLoading && (
                 <EgenmeldingerField
                     index={0}
                     previous={{

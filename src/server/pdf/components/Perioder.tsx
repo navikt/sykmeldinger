@@ -5,7 +5,6 @@ import { DagerSvar, Sporsmal, Svartype } from '../../api-models/sykmelding/Sykme
 import { Periode } from '../../api-models/sykmelding/Periode'
 import { getPeriodTitle, getReadableLength } from '../../../utils/periodeUtils'
 import { toReadableDate, toReadableDatePeriod } from '../../../utils/dateUtils'
-import { isEgenmeldingsdagerEnabled } from '../../../utils/env'
 
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
 import Calender from './icons/Calender'
@@ -59,9 +58,7 @@ const Perioder = ({ perioder, sporsmalOgSvarListe }: Props): JSX.Element | null 
                     )}
                 </View>
             ))}
-            {isEgenmeldingsdagerEnabled() && egenmeldingsdager && (
-                <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />
-            )}
+            {egenmeldingsdager && <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />}
         </Section>
     )
 }
