@@ -1,10 +1,7 @@
 FROM gcr.io/distroless/nodejs:18 as runtime
 
-ARG ENV
-
 WORKDIR /app
 
-COPY nais/envs/.env.$ENV /app/.env.production
 COPY package.json /app/
 COPY next-logger.config.js /app/
 COPY src/**/**/**/*.graphqls /app/
