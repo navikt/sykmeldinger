@@ -43,6 +43,7 @@ spec:
         - application: nav-dekoratoren
           namespace: personbruker
       external:
+        - host: teamsykmelding-unleash-api.nav.cloud.nais.io
         - host: flex-syketilfelle.flex
         - host: nav.no
         - host: cdn.nav.no
@@ -55,3 +56,7 @@ spec:
       value: 'prod-gcp:teamsykmelding:sykmeldinger-backend'
     - name: FLEX_SYKETILFELLE_BACKEND_SCOPE
       value: 'prod-gcp:flex:flex-syketilfelle'
+    - name: UNLEASH_SERVER_API_URL
+      value: 'https://teamsykmelding-unleash-api.nav.cloud.nais.io/api'
+  envFrom:
+    - secret: sykmeldinger-unleash-secrets
