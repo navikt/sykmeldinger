@@ -13,6 +13,8 @@ import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs'
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
 import { getFaro, initInstrumentation, pinoLevelToFaroLevel } from '../faro/faro'
+import { ServerSidePropsResult } from '../auth/withAuthentication'
+import { FlagProvider } from '../toggles/context'
 
 initInstrumentation()
 configureLogger({
@@ -23,7 +25,7 @@ configureLogger({
         }),
 })
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): JSX.Element {
     useHandleDecoratorClicks()
 
     const [apolloClient] = useState(() => {
@@ -32,12 +34,14 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
     return (
         <ErrorBoundary>
-            <ApolloProvider client={apolloClient}>
-                <LabsWarning />
-                <main id="maincontent" role="main" tabIndex={-1}>
-                    <Component {...pageProps} />
-                </main>
-            </ApolloProvider>
+            <FlagProvider toggles={pageProps.toggles}>
+                <ApolloProvider client={apolloClient}>
+                    <LabsWarning />
+                    <main id="maincontent" role="main" tabIndex={-1}>
+                        <Component {...pageProps} />
+                    </main>
+                </ApolloProvider>
+            </FlagProvider>
         </ErrorBoundary>
     )
 }

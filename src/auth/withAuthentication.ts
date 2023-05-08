@@ -1,12 +1,18 @@
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next'
 import { logger } from '@navikt/next-logger'
 import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
+import { IToggle } from '@unleash/nextjs'
 
 import { browserEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
+import { getFlagsServerSide } from '../toggles/ssr'
+
+export interface ServerSidePropsResult {
+    toggles: IToggle[]
+}
 
 type ApiHandler = (req: NextApiRequest, res: NextApiResponse) => Promise<unknown> | unknown
-type PageHandler = (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<unknown>>
+type PageHandler = (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<ServerSidePropsResult>>
 
 export interface TokenPayload {
     sub: string
@@ -27,13 +33,21 @@ export interface TokenPayload {
     }
 }
 
+const defaultPageHandler: PageHandler = async (context) => {
+    const flags = await getFlagsServerSide(context.req, context.res)
+
+    return {
+        props: { toggles: flags.toggles },
+    }
+}
+
 /**
  * Used to authenticate Next.JS pages. Assumes application is behind
  * Wonderwall (https://doc.nais.io/security/auth/idporten/sidecar/). Will automatically redirect to login if
  * Wonderwall-cookie is missing.
  *
  */
-export function withAuthenticatedPage(handler: PageHandler = async () => ({ props: {} })) {
+export function withAuthenticatedPage(handler: PageHandler = defaultPageHandler) {
     return async function withBearerTokenHandler(
         context: GetServerSidePropsContext,
     ): Promise<ReturnType<NonNullable<typeof handler>>> {

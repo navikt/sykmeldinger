@@ -38,6 +38,7 @@
         "@navikt/next-logger": "alpha",
         "@next/bundle-analyzer": "^13.3.1",
         "@react-pdf/renderer": "^3.1.9",
+        "@unleash/nextjs": "^1.0.0",
         "classnames": "^2.3.2",
         "crypto-hash": "^2.0.1",
         "date-fns": "^2.29.3",

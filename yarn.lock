@@ -970,6 +970,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commander-js/extra-typings@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@commander-js/extra-typings@npm:10.0.3"
+  peerDependencies:
+    commander: 10.0.x
+  checksum: a9ab69c4a69c65649cc4c6735e9ad6cfe1ed54785f86d718db8897a4695206bc9fcb8f8de1a1f61be629ad97212e9a024d74ac5755558676d5251cfe493459af
+  languageName: node
+  linkType: hard
+
 "@emotion/babel-plugin@npm:^11.10.5":
   version: 11.10.5
   resolution: "@emotion/babel-plugin@npm:11.10.5"
@@ -2309,6 +2318,13 @@ __metadata:
   version: 13.3.1
   resolution: "@next/env@npm:13.3.1"
   checksum: 3bf01e62b7de1de9de0cf7a5904364a2e807ad4f0a6cabfbb288225696a0750163bee23669bd45bfbec17dcf1fe66512212bdfa5be0a341ad187270a3cc27943
+  languageName: node
+  linkType: hard
+
+"@next/env@npm:13.4.1":
+  version: 13.4.1
+  resolution: "@next/env@npm:13.4.1"
+  checksum: 4736c9c6f75d80b16d3ca0ad3ddb3fcaa171f2144fccf516a67110e3bfcd9121d076e838faad46f815e41ee32e9be0ab68591359de06af13be6cbb860eda3639
   languageName: node
   linkType: hard
 
@@ -3747,6 +3763,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@unleash/nextjs@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@unleash/nextjs@npm:1.0.0"
+  dependencies:
+    "@commander-js/extra-typings": 10.0.3
+    "@next/env": 13.4.1
+    "@unleash/proxy-client-react": 3.6.0
+    commander: 10.0.1
+    ip: 1.1.8
+    murmurhash3js: 3.0.1
+    semver: 7.5.0
+    unleash-client: 3.19.1
+    unleash-proxy-client: 2.5.0
+  peerDependencies:
+    next: ">=12"
+    react: ">=17"
+    react-dom: ">=17"
+  bin:
+    unleash: dist/cli/index.js
+  checksum: dc2dc42fc604ba581754f64cf0ab94a75f0618e1ccb8bbf6c87c97cf9dc0c30dc6b9b8cadaccf955fc753f6144626866a46930cd308f31aac9a886b12109bcce
+  languageName: node
+  linkType: hard
+
+"@unleash/proxy-client-react@npm:3.6.0":
+  version: 3.6.0
+  resolution: "@unleash/proxy-client-react@npm:3.6.0"
+  peerDependencies:
+    unleash-proxy-client: ^2.5.0
+  checksum: 010ef403958ebb5dbe8b7e53aa249255af62468f35ecc8984053012ce92913d9006d4c1af6d297aee85d07dfc15bcb713d5af702928a677f4337614c7743d672
+  languageName: node
+  linkType: hard
+
 "@vitejs/plugin-react@npm:^4.0.0":
   version: 4.0.0
   resolution: "@vitejs/plugin-react@npm:4.0.0"
@@ -5044,6 +5092,13 @@ __metadata:
   dependencies:
     delayed-stream: ~1.0.0
   checksum: 49fa4aeb4916567e33ea81d088f6584749fc90c7abec76fd516bf1c5aa5c79f3584b5ba3de6b86d26ddd64bae5329c4c7479343250cfe71c75bb366eae53bb7c
+  languageName: node
+  linkType: hard
+
+"commander@npm:10.0.1":
+  version: 10.0.1
+  resolution: "commander@npm:10.0.1"
+  checksum: 436901d64a818295803c1996cd856621a74f30b9f9e28a588e726b2b1670665bccd7c1a77007ebf328729f0139838a88a19265858a0fa7a8728c4656796db948
   languageName: node
   linkType: hard
 
@@ -7558,6 +7613,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ip@npm:1.1.8, ip@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "ip@npm:1.1.8"
+  checksum: a2ade53eb339fb0cbe9e69a44caab10d6e3784662285eb5d2677117ee4facc33a64679051c35e0dfdb1a3983a51ce2f5d2cb36446d52e10d01881789b76e28fb
+  languageName: node
+  linkType: hard
+
 "ip@npm:^2.0.0":
   version: 2.0.0
   resolution: "ip@npm:2.0.0"
@@ -8477,7 +8539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-fetch-happen@npm:^10.0.3":
+"make-fetch-happen@npm:^10.0.3, make-fetch-happen@npm:^10.2.1":
   version: 10.2.1
   resolution: "make-fetch-happen@npm:10.2.1"
   dependencies:
@@ -8830,6 +8892,13 @@ __metadata:
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d
+  languageName: node
+  linkType: hard
+
+"murmurhash3js@npm:3.0.1, murmurhash3js@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "murmurhash3js@npm:3.0.1"
+  checksum: 8111d0d94bcd7b61d8b47d69e798a3ba4323c8a639cd789ad6259e9e8f319565451b9e1164d321db0b36b1f067202e34532288da4bb587b449052ff677d5281c
   languageName: node
   linkType: hard
 
@@ -10740,16 +10809,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "semver@npm:6.3.0"
-  bin:
-    semver: ./bin/semver.js
-  checksum: 1b26ecf6db9e8292dd90df4e781d91875c0dcc1b1909e70f5d12959a23c7eebb8f01ea581c00783bbee72ceeaad9505797c381756326073850dc36ed284b21b9
-  languageName: node
-  linkType: hard
-
-"semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8":
+"semver@npm:7.5.0, semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8":
   version: 7.5.0
   resolution: "semver@npm:7.5.0"
   dependencies:
@@ -10757,6 +10817,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 2d266937756689a76f124ffb4c1ea3e1bbb2b263219f90ada8a11aebebe1280b13bb76cca2ca96bdee3dbc554cbc0b24752eb895b2a51577aa644427e9229f2b
+  languageName: node
+  linkType: hard
+
+"semver@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "semver@npm:6.3.0"
+  bin:
+    semver: ./bin/semver.js
+  checksum: 1b26ecf6db9e8292dd90df4e781d91875c0dcc1b1909e70f5d12959a23c7eebb8f01ea581c00783bbee72ceeaad9505797c381756326073850dc36ed284b21b9
   languageName: node
   linkType: hard
 
@@ -11432,6 +11501,7 @@ __metadata:
     "@types/react": ^18.0.38
     "@types/react-dom": ^18.0.11
     "@types/uuid": ^9.0.1
+    "@unleash/nextjs": ^1.0.0
     "@vitejs/plugin-react": ^4.0.0
     autoprefixer: ^10.4.14
     classnames: ^2.3.2
@@ -11621,6 +11691,13 @@ __metadata:
   version: 1.0.0
   resolution: "time-zone@npm:1.0.0"
   checksum: e46f5a69b8c236dcd8e91e29d40d4e7a3495ed4f59888c3f84ce1d9678e20461421a6ba41233509d47dd94bc18f1a4377764838b21b584663f942b3426dcbce8
+  languageName: node
+  linkType: hard
+
+"tiny-emitter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tiny-emitter@npm:2.1.0"
+  checksum: fbcfb5145751a0e3b109507a828eb6d6d4501352ab7bb33eccef46e22e9d9ad3953158870a6966a59e57ab7c3f9cfac7cab8521db4de6a5e757012f4677df2dd
   languageName: node
   linkType: hard
 
@@ -12019,6 +12096,28 @@ __metadata:
   dependencies:
     normalize-path: ^2.1.1
   checksum: 3be30e48579fc6c7390bd59b4ab9e745fede0c164dfb7351cf710bd1dbef8484b1441186205af6bcb13b731c0c88caf9b33459f7bf8c89e79c046e656ae433f0
+  languageName: node
+  linkType: hard
+
+"unleash-client@npm:3.19.1":
+  version: 3.19.1
+  resolution: "unleash-client@npm:3.19.1"
+  dependencies:
+    ip: ^1.1.8
+    make-fetch-happen: ^10.2.1
+    murmurhash3js: ^3.0.1
+    semver: ^7.3.8
+  checksum: 2b629227740f5a5c80494d38b7d7ac2d923348bcc18590c3dba2196182eef14e2f4179e8f886ca2618cf43f6979abb7c4f0967ee6de9effe10ae23660889274c
+  languageName: node
+  linkType: hard
+
+"unleash-proxy-client@npm:2.5.0":
+  version: 2.5.0
+  resolution: "unleash-proxy-client@npm:2.5.0"
+  dependencies:
+    tiny-emitter: ^2.1.0
+    uuid: ^8.3.2
+  checksum: 937cb2c0c1b5f9de1f97af379126e79d66accad13cf3b3e9876514e0bb9018ef4bff118baf589ee2d96bc8a617fd5186dbc26b5c4e7a575ac4c327db28cd6bd3
   languageName: node
   linkType: hard
 
