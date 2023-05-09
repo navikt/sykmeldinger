@@ -1,7 +1,10 @@
 import { BodyShort, GuidePanel, Link } from '@navikt/ds-react'
 
 import {
+    ShortName,
+    SvarUnion_JaNeiSvar_Fragment,
     ArbeidssituasjonType,
+    YesOrNo,
     Merknad,
     Merknadtype,
     Periode,
@@ -29,9 +32,15 @@ function StatusInfo({
         .flatMap((it) => it.svar)
         .find((svar): svar is SvarUnion_ArbeidssituasjonSvar_Fragment => svar.__typename === 'ArbeidssituasjonSvar')
 
-    const erFlEllerSn =
-        arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.FRILANSER ||
-        arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
+    const harForsikringSporsmal = sykmeldingStatus.sporsmalOgSvarListe
+        .filter((spmOgSvar) => spmOgSvar.shortName === ShortName.FORSIKRING)
+        .flatMap((it) => it.svar)
+        .find((svar): svar is SvarUnion_JaNeiSvar_Fragment => svar.__typename === 'JaNeiSvar')
+
+    const erFlEllerSnHarForsikring =
+        (arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.FRILANSER ||
+            arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE) &&
+        harForsikringSporsmal?.jaNei === YesOrNo.YES
 
     if (sykmeldingStatus.statusEvent !== 'SENDT' && sykmeldingStatus.statusEvent !== 'BEKREFTET') return null
 
@@ -104,7 +113,7 @@ function StatusInfo({
                     </BodyShort>
                 </div>
 
-                {erFlEllerSn && (
+                {erFlEllerSnHarForsikring && (
                     <div className="mb-4">
                         <BodyShort>
                             Husk at NAV ikke dekker sykepenger de første 16 dagene av sykefraværet, med mindre du har
