@@ -40,7 +40,7 @@ function StatusInfo({
     const erFlEllerSnHarForsikring =
         (arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.FRILANSER ||
             arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE) &&
-        harForsikringSporsmal?.jaNei === YesOrNo.YES
+        harForsikringSporsmal?.jaNei === YesOrNo.NO
 
     if (sykmeldingStatus.statusEvent !== 'SENDT' && sykmeldingStatus.statusEvent !== 'BEKREFTET') return null
 

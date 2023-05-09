@@ -11,6 +11,7 @@ import {
     StatusEvent,
     Svartype,
     SykmeldingStatusFragment,
+    YesOrNo,
 } from '../../fetching/graphql.generated'
 
 import StatusInfo from './StatusInfo'
@@ -278,6 +279,16 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.FRILANSER,
                             },
                         },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
                     ],
                 }
                 const reisetilskuddPeriode: Periode = {
@@ -321,6 +332,16 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
                     ],
                 }
                 const reisetilskuddPeriode: Periode = {
@@ -362,6 +383,16 @@ describe('StatusInfo', () => {
                                 __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
                                 arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                            },
+                        },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
                             },
                         },
                     ],
@@ -523,6 +554,16 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.FRILANSER,
                             },
                         },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
                     ],
                 }
                 const reisetilskuddPeriode: Periode = {
@@ -566,6 +607,16 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
                     ],
                 }
                 const reisetilskuddPeriode: Periode = {
@@ -607,6 +658,16 @@ describe('StatusInfo', () => {
                                 __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
                                 arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                            },
+                        },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
                             },
                         },
                     ],
@@ -654,6 +715,16 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
                     ],
                 }
                 const gradertReisetilskuddPeriode: Periode = {
@@ -699,6 +770,16 @@ describe('StatusInfo', () => {
                                 __typename: 'ArbeidssituasjonSvar',
                                 svarType: Svartype.ARBEIDSSITUASJON,
                                 arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                            },
+                        },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
                             },
                         },
                     ],
