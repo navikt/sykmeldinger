@@ -26,7 +26,7 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
                         eventName: 'skjema spørsmål besvart',
                         data: {
                             skjemanavn: 'åpen sykmelding',
-                            spørsmål: sporsmal.harBruktEgenmelding(oppfolgingsdato),
+                            spørsmål: sporsmal.harBruktEgenmelding(oppfolgingsdato, () => '<dato>'),
                             svar: value,
                         },
                     })
