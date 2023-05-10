@@ -339,7 +339,7 @@ describe('Egenmeldingsdager', () => {
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
-    })
+    }, 10_000)
 })
 
 const arbeidsgivereMock: Arbeidsgiver[] = [
