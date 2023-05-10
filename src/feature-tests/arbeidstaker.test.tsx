@@ -97,6 +97,74 @@ describe('Arbeidstaker', () => {
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
     }, 10_000)
 
+    it('should be able to submit form with active arbeidsgiver and chosing "No" on correct narmeste leder', async () => {
+        const { container } = render(<SykmeldingPage />, {
+            mocks: [
+                ...baseMocks,
+                createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
+                createMock({
+                    request: {
+                        query: SendSykmeldingDocument,
+                        variables: {
+                            sykmeldingId: 'sykmelding-id',
+                            values: {
+                                erOpplysningeneRiktige: YesOrNo.YES,
+                                arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
+                                arbeidsgiverOrgnummer: arbeidsgivereMock[0].orgnummer,
+                                riktigNarmesteLeder: YesOrNo.NO,
+                                harEgenmeldingsdager: YesOrNo.NO,
+                            },
+                        },
+                    },
+                    result: {
+                        data: {
+                            __typename: 'Mutation',
+                            sendSykmelding: createSykmelding({
+                                sykmeldingStatus: {
+                                    ...createSykmelding().sykmeldingStatus,
+                                    statusEvent: StatusEvent.BEKREFTET,
+                                    timestamp: '2020-01-01',
+                                },
+                            }),
+                        },
+                    },
+                }),
+            ],
+        })
+
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Velg arbeidsgiver/i },
+                { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})` },
+            ),
+        )
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Er det station officer steele som skal følge deg opp på jobben mens du er syk/i },
+                { name: 'Nei' },
+            ),
+        )
+        expect(
+            screen.getByText('Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.'),
+        ).toBeInTheDocument()
+
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Brukte du egenmelding hos PONTYPANDY FIRE SERVICE i perioden/ },
+                { name: 'Nei' },
+            ),
+        )
+
+        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await axe(container)).toHaveNoViolations()
+        await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
+
+        await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+        expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
+    }, 10_000)
+
     it('should be able to submit form with inactive arbeidsgiver', async () => {
         const { container } = render(<SykmeldingPage />, {
             mocks: [
@@ -244,7 +312,7 @@ describe('Arbeidstaker', () => {
     })
 })
 
-const arbeidsgivereMock: Arbeidsgiver[] = [
+export const arbeidsgivereMock: Arbeidsgiver[] = [
     {
         __typename: 'Arbeidsgiver',
         naermesteLeder: {

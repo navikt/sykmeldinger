@@ -70,7 +70,7 @@ function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['ar
         valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver.naermesteLeder != null
 
     const shouldShowEgenmeldingsdager =
-        (valgtArbeidsgiver != null && valgtRiktigNarmesteLeder === YesOrNo.YES) ||
+        (valgtArbeidsgiver != null && valgtRiktigNarmesteLeder != null) ||
         (valgtArbeidsgiver != null && !hasAktivArbeidsgiverWithNarmesteleder)
 
     return {
