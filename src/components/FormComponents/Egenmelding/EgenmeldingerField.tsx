@@ -15,6 +15,7 @@ import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
 
 export type EgenmeldingsdagerSubForm = {
     egenmeldingsdager: EgenmeldingsdagerFormValue[] | null
+    egenmeldingsdagerHitPrevious: boolean | null
 }
 
 export type EgenmeldingsdagerFormValue = {
@@ -48,6 +49,7 @@ function EgenmeldingerField({
     const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
     const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
     const hasClickedVidere: boolean | null = watch(`egenmeldingsdager.${index}.hasClickedVidere`)
+    const egenmeldingsdagerHitPrevious: boolean | null = watch('egenmeldingsdagerHitPrevious')
 
     const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(previous, metadata.previousSykmeldingTom)
     const hasHitPreviousSykmeldingTom = isAfter(earliestPossibleDate, latestPossibleDate)
@@ -59,6 +61,12 @@ function EgenmeldingerField({
         // TODO: This is a hack to fix weird RHF-watch issue. Keep an eye on if it's fixed so we can remove this useEffect.
         setValue(`egenmeldingsdager.${index}.harPerioder`, harPerioderRef.current ?? null)
     }, [hasHitPreviousSykmeldingTom, index, setValue])
+
+    useLayoutEffect(() => {
+        if (hasHitPreviousSykmeldingTom && egenmeldingsdagerHitPrevious == null) {
+            setValue('egenmeldingsdagerHitPrevious', true)
+        }
+    }, [setValue, hasHitPreviousSykmeldingTom, egenmeldingsdagerHitPrevious])
 
     if (hasHitPreviousSykmeldingTom) {
         // The user has hit the previous sykmelding, we don't need to ask anymore.

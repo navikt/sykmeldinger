@@ -61,7 +61,7 @@ describe('useFindPrevSykmeldingTom', () => {
             }),
         ]
 
-        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[3]), {
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[3], 'default-arbeidsgiver'), {
             mocks: [sykmeldingerMock(sykmeldinger)],
         })
 
@@ -100,7 +100,7 @@ describe('useFindPrevSykmeldingTom', () => {
             }),
         ]
 
-        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1], 'default-arbeidsgiver'), {
             mocks: [sykmeldingerMock(sykmeldinger)],
         })
 
@@ -144,7 +144,7 @@ describe('useFindPrevSykmeldingTom', () => {
             }),
         ]
 
-        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1], 'default-arbeidsgiver'), {
             mocks: [sykmeldingerMock(sykmeldinger)],
         })
 
@@ -188,7 +188,7 @@ describe('useFindPrevSykmeldingTom', () => {
             }),
         ]
 
-        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1], 'default-arbeidsgiver'), {
             mocks: [sykmeldingerMock(sykmeldinger)],
         })
 
@@ -210,7 +210,7 @@ describe('useFindPrevSykmeldingTom', () => {
             }),
         ]
 
-        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[0]), {
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[0], 'default-arbeidsgiver'), {
             mocks: [sykmeldingerMock(sykmeldinger)],
         })
 
@@ -241,7 +241,7 @@ describe('useFindPrevSykmeldingTom', () => {
             }),
         ]
 
-        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[0]), {
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[0], 'default-arbeidsgiver'), {
             mocks: [sykmeldingerMock(sykmeldinger)],
         })
 
@@ -303,7 +303,7 @@ describe('useFindPrevSykmeldingTom', () => {
                 }),
             ]
 
-            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[3]), {
+            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[3], 'default-arbeidsgiver'), {
                 mocks: [sykmeldingerMock(sykmeldinger)],
             })
 
@@ -364,7 +364,7 @@ describe('useFindPrevSykmeldingTom', () => {
                 }),
             ]
 
-            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[3]), {
+            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[3], 'default-arbeidsgiver'), {
                 mocks: [sykmeldingerMock(sykmeldinger)],
             })
 
@@ -413,7 +413,7 @@ describe('useFindPrevSykmeldingTom', () => {
                 }),
             ]
 
-            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1]), {
+            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[1], 'default-arbeidsgiver'), {
                 mocks: [sykmeldingerMock(sykmeldinger)],
             })
 

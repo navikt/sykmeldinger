@@ -138,7 +138,7 @@ describe('Arbeidsledig', () => {
         await userEvent.click(screen.getByRole('button', { name: 'Videre' }))
         await userEvent.click(
             screen.getRadioInGroup(
-                { name: /Brukte du egenmelding hos PONTYPANDY FIRE SERVICE i perioden 13. - 21. april 2023/i },
+                { name: /Brukte du egenmelding hos PONTYPANDY FIRE SERVICE i perioden 13. - 22. april 2023/i },
                 { name: 'Nei' },
             ),
         )
