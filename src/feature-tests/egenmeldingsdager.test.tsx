@@ -461,6 +461,61 @@ describe('Egenmeldingsdager', () => {
             screen.queryByRole('heading', { name: /egenmeldingsdager \(lagt til av deg\)/i }),
         ).not.toBeInTheDocument()
     })
+
+    it('should not show "Legg til egenmeldingsdager"-button when sykmelding is right against previous sykmelding', async () => {
+        mockRouter.setCurrentUrl(`/current-sykmelding-id`)
+
+        const previousSendtSykmelding = createSykmelding(
+            {
+                id: 'previous-sykmelding-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2023-02-01',
+                        tom: '2023-02-15',
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    }),
+                ],
+            },
+            StatusEvent.SENDT,
+        )
+        const newestSykmelding = createSykmelding(
+            {
+                id: 'current-sykmelding-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2023-02-16',
+                        tom: '2023-02-28',
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    }),
+                ],
+            },
+            StatusEvent.SENDT,
+        )
+
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'current-sykmelding-id' } },
+                    result: {
+                        data: { __typename: 'Query', sykmelding: newestSykmelding },
+                    },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: { __typename: 'Query', sykmeldinger: [previousSendtSykmelding, newestSykmelding] },
+                    },
+                }),
+                createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
+            ],
+        })
+
+        expect(
+            await screen.findByRole('heading', { name: /Sykmeldingen ble sendt til Default Arbeidsgiverssen AS/ }),
+        ).toBeInTheDocument()
+        expect(await screen.findByRole('heading', { name: 'Sykmeldingen gjelder' })).toBeInTheDocument()
+        expect(screen.queryByRole('link', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()
+    })
 })
 
 const arbeidsgivereMock: Arbeidsgiver[] = [

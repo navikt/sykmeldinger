@@ -1,14 +1,11 @@
 import { Alert, BodyShort, Heading, Link as DsLink } from '@navikt/ds-react'
 import Link from 'next/link'
-import { isAfter } from 'date-fns'
 import React from 'react'
 
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../fetching/graphql.generated'
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import Spinner from '../Spinner/Spinner'
-import { toDate } from '../../utils/dateUtils'
-import { getSykmeldingStartDate } from '../../utils/sykmeldingUtils'
-import { currentPeriodDatePicker } from '../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
+import { hasHitPreviousSykmeldingTom } from '../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 
 import EndreEgenmeldingForm from './EndreEgenmeldingForm'
 
@@ -67,18 +64,6 @@ function EndreEgenmelding({ sykmelding, egenmeldingsdager }: EndreEgenmeldingPro
             previousSykmeldingTom={previousSykmeldingTom}
         />
     )
-}
-
-function hasHitPreviousSykmeldingTom(sykmelding: SykmeldingFragment, previousSykmeldingTom: Date | null): boolean {
-    const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(
-        {
-            earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
-            earliestSelectedDate: null,
-        },
-        previousSykmeldingTom,
-    )
-
-    return isAfter(earliestPossibleDate, latestPossibleDate)
 }
 
 export default EndreEgenmelding

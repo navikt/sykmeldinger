@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import React, { PropsWithChildren } from 'react'
-import { Alert, GuidePanel } from '@navikt/ds-react'
+import { Alert, BodyShort, GuidePanel, Heading, Link as DsLink } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import Spinner from '../../components/Spinner/Spinner'
@@ -21,6 +22,8 @@ import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/Sykmel
 import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
+import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
+import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 
 function SykmeldingkvitteringPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -94,7 +97,7 @@ function SykmeldingkvitteringPage(): JSX.Element {
             </div>
 
             <div className="mb-8">
-                <SykmeldingSykmeldtContainer sykmelding={data.sykmelding} editableEgenmelding />
+                <KvitteringSykmeldingSykmeldtContainer sykmelding={data.sykmelding} />
             </div>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
@@ -104,6 +107,41 @@ function SykmeldingkvitteringPage(): JSX.Element {
             <HintToNextOlderSykmelding />
         </KvitteringWrapper>
     )
+}
+
+function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: SykmeldingFragment }): JSX.Element {
+    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
+        sykmelding,
+        sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,
+    )
+
+    const hasHitPrevious = hasHitPreviousSykmeldingTom(sykmelding, previousSykmeldingTom)
+
+    if (isLoading) {
+        return <Spinner headline="Henter sykmeldinger..." />
+    }
+
+    if (error) {
+        return (
+            <Alert variant="error">
+                <Heading spacing size="small" level="3">
+                    Det skjedde en feil ved lasting av sykmeldingene dine.
+                </Heading>
+                <BodyShort spacing>
+                    Du kan prøve å <Link href="">oppfriske</Link> siden for å se om det løser problemet.
+                </BodyShort>
+                <BodyShort spacing>
+                    Dersom problemet vedvarer, kan du fortelle oss om feilen på{' '}
+                    <DsLink href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
+                        skjemaet for feil og mangler
+                    </DsLink>
+                    .
+                </BodyShort>
+            </Alert>
+        )
+    }
+
+    return <SykmeldingSykmeldtContainer sykmelding={sykmelding} editableEgenmelding={!hasHitPrevious} />
 }
 
 function getHotjarType(
