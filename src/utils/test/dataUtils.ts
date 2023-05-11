@@ -189,7 +189,11 @@ export const createSykmeldingStatus = (
     timestamp: '2020-04-01',
     statusEvent: StatusEvent.SENDT,
     sporsmalOgSvarListe: [],
-    arbeidsgiver: null,
+    arbeidsgiver: {
+        __typename: 'ArbeidsgiverStatus',
+        orgnummer: 'default-arbeidsgiver',
+        orgNavn: 'Default Arbeidsgiverssen AS',
+    },
     ...overrides,
 })
 

@@ -20,11 +20,14 @@ export function useArbeidssituasjonSubSections(
     const { watch } = useFormContext<FormValues>()
     const [arbeidssituasjon, arbeidsgiverOrgnummer] = watch(['arbeidssituasjon', 'arbeidsgiverOrgnummer'])
     const egenmeldingsdager = watch('egenmeldingsdager')
+    const egenmeldingsdagerHitPrevious = watch('egenmeldingsdagerHitPrevious')
 
     const hasStrengtFortroligAdresse: boolean = brukerinformasjon.strengtFortroligAdresse
     const hasActiveArbeidsgiver: boolean = isActiveArbeidsgiver(brukerinformasjon.arbeidsgivere, arbeidsgiverOrgnummer)
-    const hasCompletedEgenmeldingsperioder: boolean =
-        hasCompletedEgenmeldingsdager(egenmeldingsdager) || !isArbeidstaker(arbeidssituasjon)
+    const wasEgenmeldingsdagerRelevant: boolean =
+        hasCompletedEgenmeldingsdager(egenmeldingsdager) ||
+        egenmeldingsdagerHitPrevious === true ||
+        !isArbeidstaker(arbeidssituasjon)
 
     const shouldShowStrengtFortroligInfo: boolean = isArbeidstaker(arbeidssituasjon) && hasStrengtFortroligAdresse
     const shouldShowArbeidsgiverOrgnummer: boolean = isArbeidstaker(arbeidssituasjon) && !hasStrengtFortroligAdresse
@@ -33,7 +36,7 @@ export function useArbeidssituasjonSubSections(
     const shouldShowSendesTilArbeidsgiverInfo: boolean =
         shouldShowArbeidsgiverOrgnummer &&
         arbeidsgiverOrgnummer != null &&
-        (!hasActiveArbeidsgiver || hasCompletedEgenmeldingsperioder)
+        (!hasActiveArbeidsgiver || wasEgenmeldingsdagerRelevant)
 
     return {
         shouldShowStrengtFortroligInfo,

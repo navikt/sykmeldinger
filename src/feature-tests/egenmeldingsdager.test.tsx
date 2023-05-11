@@ -1,9 +1,9 @@
-import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 import { within } from '@testing-library/react'
 
-import { render, screen, axe, waitFor } from '../utils/test/testUtils'
+import { axe, render, screen, waitFor } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding, createSykmeldingPeriode } from '../utils/test/dataUtils'
 import {
@@ -340,6 +340,81 @@ describe('Egenmeldingsdager', () => {
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
     }, 10_000)
+
+    it(`should NOT be asked about egenmeldingsdager when sykmelding is right against
+        previous sykmelding tom AND should inform about what will be sent to arbeidsgiver`, async () => {
+        mockRouter.setCurrentUrl(`/current-sykmelding-id`)
+
+        const previousSendtSykmelding = createSykmelding(
+            {
+                id: 'previous-sykmelding-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2023-02-01',
+                        tom: '2023-02-15',
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    }),
+                ],
+            },
+            StatusEvent.SENDT,
+        )
+        const sykmeldingToBeFilledOut = createSykmelding(
+            {
+                id: 'current-sykmelding-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2023-02-16',
+                        tom: '2023-02-28',
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    }),
+                ],
+            },
+            StatusEvent.APEN,
+        )
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'current-sykmelding-id' } },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmelding: sykmeldingToBeFilledOut,
+                        },
+                    },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [previousSendtSykmelding, sykmeldingToBeFilledOut],
+                        },
+                    },
+                }),
+                createExtraFormDataMock({
+                    sykmeldingId: 'current-sykmelding-id',
+                    brukerinformasjon: { arbeidsgivere: arbeidsgivereMock },
+                }),
+            ],
+        })
+
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Velg arbeidsgiver/i },
+                { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})` },
+            ),
+        )
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Er det Ola Vaskeri som skal følge deg opp på jobben mens du er syk/i },
+                { name: 'Ja' },
+            ),
+        )
+
+        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+    })
 })
 
 const arbeidsgivereMock: Arbeidsgiver[] = [
@@ -350,7 +425,7 @@ const arbeidsgivereMock: Arbeidsgiver[] = [
             navn: 'Ola Vaskeri',
         },
         navn: 'Vaskeriet AS',
-        orgnummer: '110110110',
+        orgnummer: 'default-arbeidsgiver',
         aktivtArbeidsforhold: true,
     },
 ]
