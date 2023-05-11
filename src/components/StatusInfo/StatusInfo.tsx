@@ -134,8 +134,9 @@ function StatusInfo({
                     </Link>{' '}
                     av sykefraværet, med mindre du har tegnet{' '}
                     <Link href="https://www.nav.no/forsikring-selvstendig-naringsdrivende" target="_blank">
-                        forsikring.
+                        forsikring
                     </Link>
+                    .
                 </BodyShort>
             )}
 
