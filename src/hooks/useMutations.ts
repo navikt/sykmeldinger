@@ -2,6 +2,7 @@ import { MutationResult, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { logger } from '@navikt/next-logger'
 import { useRef } from 'react'
+import * as R from 'remeda'
 
 import {
     ChangeSykmeldingStatusDocument,
@@ -124,7 +125,7 @@ export function useEndreEgenmeldingsdager(
 
 function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
     return {
-        ...values,
+        ...R.omit(values, ['egenmeldingsdagerHitPrevious']),
         egenmeldingsperioder: values.egenmeldingsperioder?.map((periode) => ({
             fom: periode.fom ? toDateString(periode.fom) : null,
             tom: periode.tom ? toDateString(periode.tom) : null,
