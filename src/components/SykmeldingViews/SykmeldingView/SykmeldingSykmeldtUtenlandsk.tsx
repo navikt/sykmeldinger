@@ -21,7 +21,7 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props
         <div>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
             <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3(sykmelding)} />
-            {egenmeldingsdager && (
+            {egenmeldingsdager && egenmeldingsdager.dager.length > 0 && (
                 <Egenmeldingsdager
                     sykmeldingId={sykmelding.id}
                     egenmeldingsdager={egenmeldingsdager}

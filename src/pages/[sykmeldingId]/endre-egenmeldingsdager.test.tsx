@@ -1,12 +1,13 @@
-import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import React from 'react'
 import mockRouter from 'next-router-mock'
 import userEvent from '@testing-library/user-event'
 import { within } from '@testing-library/react'
 import { MockedResponse } from '@apollo/client/testing'
 
-import { render, screen, waitFor, Screen } from '../../utils/test/testUtils'
+import { render, screen, Screen, waitFor } from '../../utils/test/testUtils'
 import {
+    createEgenmeldingsdagerSporsmal,
     createMock,
     createSykmelding,
     createSykmeldingPeriode,
@@ -16,13 +17,10 @@ import {
     ArbeidsgiverStatus,
     EndreEgenmeldingsdagerDocument,
     Periodetype,
-    ShortName,
     StatusEvent,
-    Svartype,
     SykmeldingByIdDocument,
     SykmeldingerDocument,
     SykmeldingFragment,
-    SykmeldingStatusFragment,
 } from '../../fetching/graphql.generated'
 
 import EndreEgenmeldingsdagerPage from './endre-egenmeldingsdager.page'
@@ -633,18 +631,5 @@ export async function clickDays(
 ): Promise<void> {
     for (const day of days) {
         await userEvent.click(section.getByRole('button', { name: day }))
-    }
-}
-
-function createEgenmeldingsdagerSporsmal(dates: string[]): SykmeldingStatusFragment['sporsmalOgSvarListe'][0] {
-    return {
-        __typename: 'Sporsmal',
-        tekst: '',
-        shortName: ShortName.EGENMELDINGSDAGER,
-        svar: {
-            __typename: 'DagerSvar',
-            svarType: Svartype.DAGER,
-            dager: dates,
-        },
     }
 }

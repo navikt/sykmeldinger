@@ -58,7 +58,9 @@ const Perioder = ({ perioder, sporsmalOgSvarListe }: Props): JSX.Element | null 
                     )}
                 </View>
             ))}
-            {egenmeldingsdager && <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />}
+            {egenmeldingsdager && egenmeldingsdager.svar.length > 0 && (
+                <Egenmeldingsdager egenmeldingsdager={egenmeldingsdager} />
+            )}
         </Section>
     )
 }
