@@ -11,9 +11,12 @@ import {
     PeriodeFragment,
     Periodetype,
     RegelStatus,
+    ShortName,
     StatusEvent,
+    Svartype,
     Sykmelding,
     SykmeldingFragment,
+    SykmeldingStatusFragment,
 } from '../../fetching/graphql.generated'
 import { dateAdd, dateSub } from '../dateUtils'
 
@@ -254,4 +257,17 @@ export function createMock<Query, Variables extends Record<string, unknown>>(moc
     newData?: ResultFunction<FetchResult>
 }): MockedResponse<Query> {
     return mockedResponse
+}
+
+export function createEgenmeldingsdagerSporsmal(dates: string[]): SykmeldingStatusFragment['sporsmalOgSvarListe'][0] {
+    return {
+        __typename: 'Sporsmal',
+        tekst: '',
+        shortName: ShortName.EGENMELDINGSDAGER,
+        svar: {
+            __typename: 'DagerSvar',
+            svarType: Svartype.DAGER,
+            dager: dates,
+        },
+    }
 }

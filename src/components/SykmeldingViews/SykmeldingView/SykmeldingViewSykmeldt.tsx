@@ -31,7 +31,7 @@ function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): JSX
         <div>
             <SykmeldingenGjelder pasient={sykmelding.pasient} />
             <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3Sykmelding} />
-            {egenmeldingsdager && (
+            {egenmeldingsdager && egenmeldingsdager.dager.length > 0 && (
                 <Egenmeldingsdager
                     sykmeldingId={sykmelding.id}
                     egenmeldingsdager={egenmeldingsdager}

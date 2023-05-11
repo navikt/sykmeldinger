@@ -5,7 +5,13 @@ import { within } from '@testing-library/react'
 
 import { axe, render, screen, waitFor } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
-import { createMock, createSykmelding, createSykmeldingPeriode } from '../utils/test/dataUtils'
+import {
+    createEgenmeldingsdagerSporsmal,
+    createMock,
+    createSykmelding,
+    createSykmeldingPeriode,
+    createSykmeldingStatus,
+} from '../utils/test/dataUtils'
 import {
     Arbeidsgiver,
     ArbeidssituasjonType,
@@ -414,6 +420,46 @@ describe('Egenmeldingsdager', () => {
         )
 
         expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+    })
+
+    it('should not show egenmeldingsdager info on SENDT sykmelding when there is an empty svar object', async () => {
+        const sykmeldingWithEmptyDays = createSykmelding({
+            id: 'sykmelding-id',
+            sykmeldingStatus: createSykmeldingStatus({
+                statusEvent: StatusEvent.SENDT,
+                sporsmalOgSvarListe: [createEgenmeldingsdagerSporsmal([])],
+            }),
+            sykmeldingsperioder: [
+                createSykmeldingPeriode({
+                    fom: '2023-02-20',
+                    tom: '2023-03-06',
+                    type: Periodetype.AKTIVITET_IKKE_MULIG,
+                }),
+            ],
+        })
+
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
+                    result: {
+                        data: { __typename: 'Query', sykmelding: sykmeldingWithEmptyDays },
+                    },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: { data: { __typename: 'Query', sykmeldinger: [createSykmelding()] } },
+                }),
+                createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
+            ],
+        })
+
+        expect(
+            await screen.findByRole('heading', { name: /Sykmeldingen ble sendt til Default Arbeidsgiverssen AS/ }),
+        ).toBeInTheDocument()
+        expect(
+            screen.queryByRole('heading', { name: /egenmeldingsdager \(lagt til av deg\)/i }),
+        ).not.toBeInTheDocument()
     })
 })
 
