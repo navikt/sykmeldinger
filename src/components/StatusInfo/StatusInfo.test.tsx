@@ -11,6 +11,7 @@ import {
     StatusEvent,
     Svartype,
     SykmeldingStatusFragment,
+    YesOrNo,
 } from '../../fetching/graphql.generated'
 
 import StatusInfo from './StatusInfo'
@@ -153,9 +154,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -199,9 +198,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
             })
 
             it('Ansatt with reisetilskudd in combination with another period type renders standard info', () => {
@@ -256,9 +253,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -278,6 +273,16 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.FRILANSER,
                             },
                         },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
                     ],
                 }
                 const reisetilskuddPeriode: Periode = {
@@ -298,10 +303,8 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
             })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
@@ -321,47 +324,14 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
-                    ],
-                }
-                const reisetilskuddPeriode: Periode = {
-                    __typename: 'Periode',
-                    fom: '2021-05-01',
-                    tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
-                    behandlingsdager: null,
-                    innspillTilArbeidsgiver: null,
-                    gradert: null,
-                    aktivitetIkkeMulig: null,
-                    reisetilskudd: true,
-                }
-                render(
-                    <StatusInfo
-                        sykmeldingStatus={sykmeldingStatus}
-                        sykmeldingsperioder={[reisetilskuddPeriode]}
-                        sykmeldingMerknader={[]}
-                    />,
-                )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
-            })
-
-            it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatusFragment = {
-                    __typename: 'SykmeldingStatus',
-                    statusEvent: StatusEvent.SENDT,
-                    timestamp: '2021-05-01',
-                    arbeidsgiver: null,
-                    sporsmalOgSvarListe: [
                         {
                             __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: ShortName.ARBEIDSSITUASJON,
+                            shortName: ShortName.FORSIKRING,
                             svar: {
-                                __typename: 'ArbeidssituasjonSvar',
-                                svarType: Svartype.ARBEIDSSITUASJON,
-                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
                             },
                         },
                     ],
@@ -384,9 +354,58 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
+            })
+
+            it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.SENDT,
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.ARBEIDSSITUASJON,
+                            svar: {
+                                __typename: 'ArbeidssituasjonSvar',
+                                svarType: Svartype.ARBEIDSSITUASJON,
+                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                            },
+                        },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
+                    ],
+                }
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: Periodetype.REISETILSKUDD,
+                    behandlingsdager: null,
+                    innspillTilArbeidsgiver: null,
+                    gradert: null,
+                    aktivitetIkkeMulig: null,
+                    reisetilskudd: true,
+                }
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                )
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
@@ -422,9 +441,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
             })
         })
 
@@ -455,9 +472,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -501,9 +516,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -523,6 +536,16 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.FRILANSER,
                             },
                         },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
                     ],
                 }
                 const reisetilskuddPeriode: Periode = {
@@ -543,10 +566,8 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
             })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
@@ -566,47 +587,14 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
-                    ],
-                }
-                const reisetilskuddPeriode: Periode = {
-                    __typename: 'Periode',
-                    fom: '2021-05-01',
-                    tom: '2021-05-05',
-                    type: Periodetype.REISETILSKUDD,
-                    behandlingsdager: null,
-                    innspillTilArbeidsgiver: null,
-                    gradert: null,
-                    aktivitetIkkeMulig: null,
-                    reisetilskudd: true,
-                }
-                render(
-                    <StatusInfo
-                        sykmeldingStatus={sykmeldingStatus}
-                        sykmeldingsperioder={[reisetilskuddPeriode]}
-                        sykmeldingMerknader={[]}
-                    />,
-                )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
-            })
-
-            it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatusFragment = {
-                    __typename: 'SykmeldingStatus',
-                    statusEvent: StatusEvent.BEKREFTET,
-                    timestamp: '2021-05-01',
-                    arbeidsgiver: null,
-                    sporsmalOgSvarListe: [
                         {
                             __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: ShortName.ARBEIDSSITUASJON,
+                            shortName: ShortName.FORSIKRING,
                             svar: {
-                                __typename: 'ArbeidssituasjonSvar',
-                                svarType: Svartype.ARBEIDSSITUASJON,
-                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
                             },
                         },
                     ],
@@ -629,9 +617,58 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
+            })
+
+            it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.BEKREFTET,
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.ARBEIDSSITUASJON,
+                            svar: {
+                                __typename: 'ArbeidssituasjonSvar',
+                                svarType: Svartype.ARBEIDSSITUASJON,
+                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                            },
+                        },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
+                    ],
+                }
+                const reisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: Periodetype.REISETILSKUDD,
+                    behandlingsdager: null,
+                    innspillTilArbeidsgiver: null,
+                    gradert: null,
+                    aktivitetIkkeMulig: null,
+                    reisetilskudd: true,
+                }
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[reisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                )
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
@@ -654,51 +691,14 @@ describe('StatusInfo', () => {
                                 arbeidsituasjon: ArbeidssituasjonType.NAERINGSDRIVENDE,
                             },
                         },
-                    ],
-                }
-                const gradertReisetilskuddPeriode: Periode = {
-                    __typename: 'Periode',
-                    fom: '2021-05-01',
-                    tom: '2021-05-05',
-                    type: Periodetype.GRADERT,
-                    gradert: {
-                        __typename: 'GradertPeriode',
-                        grad: 80,
-                        reisetilskudd: true,
-                    },
-                    reisetilskudd: false,
-                    behandlingsdager: null,
-                    innspillTilArbeidsgiver: null,
-                    aktivitetIkkeMulig: null,
-                }
-                render(
-                    <StatusInfo
-                        sykmeldingStatus={sykmeldingStatus}
-                        sykmeldingsperioder={[gradertReisetilskuddPeriode]}
-                        sykmeldingMerknader={[]}
-                    />,
-                )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
-                expect(screen.getByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/)).toBeInTheDocument()
-            })
-
-            it('Renders standard info without frilanser info for gradert reisetilskudd ARBEIDSLEDIG', () => {
-                const sykmeldingStatus: SykmeldingStatusFragment = {
-                    __typename: 'SykmeldingStatus',
-                    statusEvent: StatusEvent.BEKREFTET,
-                    timestamp: '2021-05-01',
-                    arbeidsgiver: null,
-                    sporsmalOgSvarListe: [
                         {
                             __typename: 'Sporsmal',
                             tekst: 'sporsmalstekst',
-                            shortName: ShortName.ARBEIDSSITUASJON,
+                            shortName: ShortName.FORSIKRING,
                             svar: {
-                                __typename: 'ArbeidssituasjonSvar',
-                                svarType: Svartype.ARBEIDSSITUASJON,
-                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
                             },
                         },
                     ],
@@ -725,9 +725,62 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(
-                    screen.getByText(/Når sykefraværet er over, får du en melding fra oss igjen/),
-                ).toBeInTheDocument()
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
+            })
+
+            it('Renders standard info without frilanser info for gradert reisetilskudd ARBEIDSLEDIG', () => {
+                const sykmeldingStatus: SykmeldingStatusFragment = {
+                    __typename: 'SykmeldingStatus',
+                    statusEvent: StatusEvent.BEKREFTET,
+                    timestamp: '2021-05-01',
+                    arbeidsgiver: null,
+                    sporsmalOgSvarListe: [
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.ARBEIDSSITUASJON,
+                            svar: {
+                                __typename: 'ArbeidssituasjonSvar',
+                                svarType: Svartype.ARBEIDSSITUASJON,
+                                arbeidsituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                            },
+                        },
+                        {
+                            __typename: 'Sporsmal',
+                            tekst: 'sporsmalstekst',
+                            shortName: ShortName.FORSIKRING,
+                            svar: {
+                                __typename: 'JaNeiSvar',
+                                svarType: Svartype.JA_NEI,
+                                jaNei: YesOrNo.NO,
+                            },
+                        },
+                    ],
+                }
+                const gradertReisetilskuddPeriode: Periode = {
+                    __typename: 'Periode',
+                    fom: '2021-05-01',
+                    tom: '2021-05-05',
+                    type: Periodetype.GRADERT,
+                    gradert: {
+                        __typename: 'GradertPeriode',
+                        grad: 80,
+                        reisetilskudd: true,
+                    },
+                    reisetilskudd: false,
+                    behandlingsdager: null,
+                    innspillTilArbeidsgiver: null,
+                    aktivitetIkkeMulig: null,
+                }
+                render(
+                    <StatusInfo
+                        sykmeldingStatus={sykmeldingStatus}
+                        sykmeldingsperioder={[gradertReisetilskuddPeriode]}
+                        sykmeldingMerknader={[]}
+                    />,
+                )
+                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
