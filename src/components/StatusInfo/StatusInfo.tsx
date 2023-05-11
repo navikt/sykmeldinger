@@ -124,29 +124,33 @@ function StatusInfo({
                 )}
             </GuidePanel>
 
-            <Heading className="mb-2 text-heading-medium">Greit å vite</Heading>
+            <div className="my-8 rounded-medium bg-surface-subtle p-8">
+                <Heading spacing size="small" level="3">
+                    Greit å vite
+                </Heading>
 
-            {erFlEllerSnHarForsikring && (
-                <BodyShort className="mb-4">
-                    NAV dekker ikke de{' '}
-                    <Link href="https://www.nav.no/sykepenger#hvem-kan-fa" target="_blank">
-                        første 16 dagene
+                {erFlEllerSnHarForsikring && (
+                    <BodyShort className="mb-4">
+                        NAV dekker ikke de{' '}
+                        <Link href="https://www.nav.no/sykepenger#hvem-kan-fa" target="_blank">
+                            første 16 dagene
+                        </Link>{' '}
+                        av sykefraværet, med mindre du har tegnet{' '}
+                        <Link href="https://www.nav.no/forsikring-selvstendig-naringsdrivende" target="_blank">
+                            forsikring
+                        </Link>
+                        .
+                    </BodyShort>
+                )}
+
+                <BodyShort>
+                    Hvis du vurderer å reise utenfor EØS mens du er sykmeldt, må du{' '}
+                    <Link href="https://www.nav.no/syk/sykepengesoknad/sykepengesoknad-utland" target="_blank">
+                        søke om å beholde
                     </Link>{' '}
-                    av sykefraværet, med mindre du har tegnet{' '}
-                    <Link href="https://www.nav.no/forsikring-selvstendig-naringsdrivende" target="_blank">
-                        forsikring
-                    </Link>
-                    .
+                    sykepengene før du reiser.
                 </BodyShort>
-            )}
-
-            <BodyShort className="mb-8">
-                Hvis du vurderer å reise utenfor EØS mens du er sykmeldt, må du{' '}
-                <Link href="https://www.nav.no/syk/sykepengesoknad/sykepengesoknad-utland" target="_blank">
-                    søke om å beholde
-                </Link>{' '}
-                sykepengene før du reiser.
-            </BodyShort>
+            </div>
         </div>
     )
 }
