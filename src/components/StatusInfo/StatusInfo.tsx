@@ -107,21 +107,6 @@ function StatusInfo({
                 <div>
                     <BodyShort>God bedring!</BodyShort>
                 </div>
-
-                {erFlEllerSnHarForsikring && (
-                    <div className="mb-4">
-                        <BodyShort>
-                            NAV dekker ikke de{' '}
-                            <Link href="https://www.nav.no/sykepenger#hvem-kan-fa" target="_blank">
-                                første 16 dagene
-                            </Link>{' '}
-                            av sykefraværet, med mindre du har tegnet{' '}
-                            <Link href="https://www.nav.no/forsikring-selvstendig-naringsdrivende" target="_blank">
-                                forsikring.
-                            </Link>
-                        </BodyShort>
-                    </div>
-                )}
             </GuidePanel>
 
             <div className="my-8 rounded-medium bg-surface-subtle p-8">
