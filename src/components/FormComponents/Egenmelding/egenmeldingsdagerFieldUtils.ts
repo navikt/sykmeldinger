@@ -1,4 +1,8 @@
-import { add, isBefore, sub } from 'date-fns'
+import { add, isAfter, isBefore, sub } from 'date-fns'
+
+import { SykmeldingFragment } from '../../../fetching/graphql.generated'
+import { toDate } from '../../../utils/dateUtils'
+import { getSykmeldingStartDate } from '../../../utils/sykmeldingUtils'
 
 export function currentPeriodDatePicker(
     previous: {
@@ -18,4 +22,19 @@ export function currentPeriodDatePicker(
     } else {
         return [earliest, latest]
     }
+}
+
+export function hasHitPreviousSykmeldingTom(
+    sykmelding: SykmeldingFragment,
+    previousSykmeldingTom: Date | null,
+): boolean {
+    const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(
+        {
+            earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
+            earliestSelectedDate: null,
+        },
+        previousSykmeldingTom,
+    )
+
+    return isAfter(earliestPossibleDate, latestPossibleDate)
 }

@@ -1,7 +1,7 @@
 import { Button, ErrorMessage } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
 import { isAfter } from 'date-fns'
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import * as R from 'remeda'
 import cn from 'classnames'
 
@@ -69,8 +69,7 @@ function EgenmeldingerField({
         }
     }, [setValue, hasHitPreviousSykmeldingTom, egenmeldingsdagerHitPrevious])
 
-    if (hasHitPreviousSykmeldingTom) {
-        // The user has hit the previous sykmelding, we don't need to ask anymore.
+    useEffect(() => {
         logAmplitudeEvent(
             {
                 eventName: 'skjema steg fullført',
@@ -78,6 +77,10 @@ function EgenmeldingerField({
             },
             { level: index + 1 },
         )
+    }, [index, amplitudeSkjemanavn, hasHitPreviousSykmeldingTom])
+
+    if (hasHitPreviousSykmeldingTom) {
+        // The user has hit the previous sykmelding, we don't need to ask anymore.
         return null
     }
 
