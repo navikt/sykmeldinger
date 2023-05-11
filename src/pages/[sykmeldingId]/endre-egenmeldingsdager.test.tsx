@@ -48,7 +48,7 @@ describe('endre egenmeldingsdager page', () => {
             mocks: [
                 createMock({
                     request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
-                    result: { data: { __typename: 'Query', sykmelding: sykmeldinger[0] } },
+                    result: { data: { __typename: 'Query', sykmelding: sykmeldinger[sykmeldinger.length - 1] } },
                 }),
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -621,6 +621,50 @@ describe('endre egenmeldingsdager page', () => {
 
             await userEvent.click(await screen.findByRole('button', { name: 'Registrer endringene' }))
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
+        })
+    })
+
+    describe('given that the sykmelding is right up against the previous sykmelding', () => {
+        it('should be warned that this sykmelding does not require egenmeldingsdager', async () => {
+            const sykmeldingWithoutEgenmeldingssporsmal = createSykmelding({
+                id: 'sykmelding-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                        fom: '2020-05-01',
+                        tom: '2020-05-10',
+                    }),
+                ],
+                sykmeldingStatus: createSykmeldingStatus({
+                    statusEvent: StatusEvent.SENDT,
+                    arbeidsgiver,
+                    sporsmalOgSvarListe: [],
+                }),
+            })
+            const previousSykmelding = createSykmelding({
+                id: 'previous-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                        fom: '2020-04-15',
+                        tom: '2020-04-30',
+                    }),
+                ],
+                sykmeldingStatus: createSykmeldingStatus({
+                    statusEvent: StatusEvent.SENDT,
+                    arbeidsgiver,
+                    sporsmalOgSvarListe: [],
+                }),
+            })
+
+            setup([previousSykmelding, sykmeldingWithoutEgenmeldingssporsmal])
+
+            expect(await screen.findByRole('heading', { name: 'Sykmeldingen gjelder' })).toBeInTheDocument()
+            expect(
+                await screen.findByRole('heading', {
+                    name: 'Du kan ikke legge til egenmeldingsdager på denne sykmeldingen.',
+                }),
+            ).toBeInTheDocument()
         })
     })
 })

@@ -3,13 +3,10 @@ import { isAfter, isWithinInterval } from 'date-fns'
 import * as R from 'remeda'
 
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment, YesOrNo } from '../../fetching/graphql.generated'
-import {
-    currentPeriodDatePicker,
-    EgenmeldingsdagerFormValue,
-    EgenmeldingsdagerSubForm,
-} from '../FormComponents/Egenmelding/EgenmeldingerField'
+import { EgenmeldingsdagerFormValue, EgenmeldingsdagerSubForm } from '../FormComponents/Egenmelding/EgenmeldingerField'
 import { toDate } from '../../utils/dateUtils'
 import { getSykmeldingStartDate } from '../../utils/sykmeldingUtils'
+import { currentPeriodDatePicker } from '../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 
 export function createEgenmeldingsdagerDefaultValues(
     sykmelding: SykmeldingFragment,

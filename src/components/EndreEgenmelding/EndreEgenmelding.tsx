@@ -1,9 +1,14 @@
-import { Alert, Button } from '@navikt/ds-react'
+import { Alert, BodyShort, Heading, Link as DsLink } from '@navikt/ds-react'
 import Link from 'next/link'
+import { isAfter } from 'date-fns'
+import React from 'react'
 
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../fetching/graphql.generated'
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import Spinner from '../Spinner/Spinner'
+import { toDate } from '../../utils/dateUtils'
+import { getSykmeldingStartDate } from '../../utils/sykmeldingUtils'
+import { currentPeriodDatePicker } from '../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 
 import EndreEgenmeldingForm from './EndreEgenmeldingForm'
 
@@ -17,19 +22,43 @@ function EndreEgenmelding({ sykmelding, egenmeldingsdager }: EndreEgenmeldingPro
         sykmelding,
         sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,
     )
+    const isRightAgainstPreviousSykmelding = hasHitPreviousSykmeldingTom(sykmelding, previousSykmeldingTom)
 
     if (isLoading) return <Spinner headline="Laster egenmeldingsdagerinformasjon" />
     if (error)
         return (
             <Alert variant="error">
-                Det skjedde en feil ved lasting av egenmeldingsdagerinformasjon.
-                <Link href={`/${sykmelding.id}`} legacyBehavior passHref>
-                    <Button as="a" variant="secondary">
-                        Lukk
-                    </Button>
-                </Link>
+                <Heading spacing size="small" level="3">
+                    Det skjedde en feil ved lasting av egenmeldingsdagerinformasjon.
+                </Heading>
+                <BodyShort spacing>
+                    Dersom problemet vedvarer, kan du fortelle oss om feilen på{' '}
+                    <DsLink href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
+                        skjemaet for feil og mangler
+                    </DsLink>
+                    .
+                </BodyShort>
+                <Link href={`/${sykmelding.id}`}>Tilbake til sykmeldingen</Link>
             </Alert>
         )
+
+    if (isRightAgainstPreviousSykmelding) {
+        return (
+            <Alert variant="error">
+                <Heading spacing size="small" level="3">
+                    Du kan ikke legge til egenmeldingsdager på denne sykmeldingen.
+                </Heading>
+                <BodyShort spacing>
+                    Dersom du klikket på en lenke for å komme hit, kan du rapportere det på{' '}
+                    <DsLink href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
+                        skjemaet for feil og mangler
+                    </DsLink>
+                    .
+                </BodyShort>
+                <Link href={`/${sykmelding.id}`}>Tilbake til sykmeldingen</Link>
+            </Alert>
+        )
+    }
 
     return (
         <EndreEgenmeldingForm
@@ -38,6 +67,18 @@ function EndreEgenmelding({ sykmelding, egenmeldingsdager }: EndreEgenmeldingPro
             previousSykmeldingTom={previousSykmeldingTom}
         />
     )
+}
+
+function hasHitPreviousSykmeldingTom(sykmelding: SykmeldingFragment, previousSykmeldingTom: Date | null): boolean {
+    const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(
+        {
+            earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
+            earliestSelectedDate: null,
+        },
+        previousSykmeldingTom,
+    )
+
+    return isAfter(earliestPossibleDate, latestPossibleDate)
 }
 
 export default EndreEgenmelding

@@ -1,6 +1,6 @@
 import { Button, ErrorMessage } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
-import { add, isAfter, isBefore, sub } from 'date-fns'
+import { isAfter } from 'date-fns'
 import { useLayoutEffect, useRef } from 'react'
 import * as R from 'remeda'
 import cn from 'classnames'
@@ -12,6 +12,7 @@ import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import HarBruktEgenmelding from './HarBruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
 import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
+import { currentPeriodDatePicker } from './egenmeldingsdagerFieldUtils'
 
 export type EgenmeldingsdagerSubForm = {
     egenmeldingsdager: EgenmeldingsdagerFormValue[] | null
@@ -183,23 +184,6 @@ function VidereButtonField({ index, missingDates }: { index: number; missingDate
             {fieldState.error && <ErrorMessage>{fieldState.error.message}</ErrorMessage>}
         </>
     )
-}
-
-export function currentPeriodDatePicker(
-    previous: Props['previous'],
-    previousSykmeldingTom: Date | null,
-): [earliest: Date, latest: Date] {
-    const latest = sub(previous.earliestPossibleDate, { days: 1 })
-    const earliest = previous.earliestSelectedDate
-        ? sub(previous.earliestSelectedDate, { days: 16 })
-        : sub(previous.earliestPossibleDate, { days: 16 })
-
-    // Earliest should be limited by previous sykmelding
-    if (previousSykmeldingTom && isBefore(earliest, previousSykmeldingTom)) {
-        return [add(previousSykmeldingTom, { days: 1 }), latest]
-    } else {
-        return [earliest, latest]
-    }
 }
 
 export function laterPeriodsRemoved(
