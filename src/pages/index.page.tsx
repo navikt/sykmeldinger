@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react'
-import { Accordion, Alert, BodyShort, Link } from '@navikt/ds-react'
+import { Accordion, Alert, BodyShort, Link, LinkPanel } from '@navikt/ds-react'
 import Head from 'next/head'
 import { groupBy } from 'remeda'
 import { logger } from '@navikt/next-logger'
@@ -64,23 +64,7 @@ function SykmeldingerPage(): JSX.Element {
                 <InfoOmDigitalSykmelding />
             </div>
 
-            <Accordion>
-                <Accordion.Item>
-                    <Accordion.Header>Ser du ikke sykmeldingen din her?</Accordion.Header>
-                    <Accordion.Content>
-                        <div className="mb-4">
-                            <BodyShort>
-                                Det betyr at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du
-                                papirsykmeldingen i stedet.
-                            </BodyShort>
-                        </div>
-
-                        <Link href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer">
-                            Mer informasjon om papirsykmelding finner du her.
-                        </Link>
-                    </Accordion.Content>
-                </Accordion.Item>
-            </Accordion>
+            <SerIkkeSykmelding />
 
             <SykmeldingLinkPanel
                 title="Tidligere sykmeldinger"
@@ -88,6 +72,48 @@ function SykmeldingerPage(): JSX.Element {
                 sykmeldinger={pastSykmeldinger}
             />
         </IndexWrapper>
+    )
+}
+
+function SerIkkeSykmelding(): JSX.Element {
+    return (
+        <Accordion>
+            <Accordion.Item>
+                <Accordion.Header>Ser du ikke sykmeldingen din her?</Accordion.Header>
+                <Accordion.Content>
+                    <LinkPanel
+                        href="https://person.nav.no/mine-saker/tema/SYM"
+                        target="_blank"
+                        border
+                        className="mb-8 mt-4 rounded-large"
+                    >
+                        <LinkPanel.Title className="text-heading-xsmall">Sjekk dokumentlisten</LinkPanel.Title>
+                    </LinkPanel>
+
+                    <div className="mb-4">
+                        <BodyShort>
+                            Det kan også bety at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du{' '}
+                            <Link
+                                href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer"
+                                target="_blank"
+                            >
+                                papirsykmeldingen
+                            </Link>{' '}
+                            i stedet.
+                        </BodyShort>
+                    </div>
+
+                    <div className="mb-4">
+                        <BodyShort>
+                            <Link href="https://www.nav.no/kontaktoss" target="_blank">
+                                Kontakt oss
+                            </Link>{' '}
+                            om du fortsatt ikke finner det du leter etter.
+                        </BodyShort>
+                    </div>
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
     )
 }
 
