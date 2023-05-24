@@ -103,7 +103,7 @@ function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
     return (
         <ReadMore header="Hvorfor spør vi igjen?" open={open} onClick={handleOnReadMoreClick}>
             <BodyLong>
-                Om det har gått mindre enn 16 dager fra du bruke egenmeldingsdager, til den første egenmeldingsdagen du
+                Om det har gått mindre enn 16 dager fra du brukte egenmeldingsdager, til den første egenmeldingsdagen du
                 valgte i forrige spørsmål, kommer de med i beregningen av{' '}
                 <Link
                     href="https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/sykepenger/sykepenger-i-arbeidsgiverperioden#chapter-1"
