@@ -22,7 +22,7 @@ describe('Arbeidsledig', () => {
         mockRouter.setCurrentUrl(`/sykmelding-id`)
     })
 
-    const sykmelding = createSykmelding({ id: 'sykmelding-id' })
+    const sykmelding = createSykmelding({ id: 'sykmelding-id', mottattTidspunkt: '2023-05-01' })
     const baseMocks = [
         createMock({
             request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
@@ -96,6 +96,7 @@ describe('Arbeidsledig', () => {
                     data: {
                         __typename: 'Mutation',
                         sendSykmelding: createSykmelding({
+                            mottattTidspunkt: '2023-04-28',
                             sykmeldingStatus: {
                                 ...createSykmelding().sykmeldingStatus,
                                 statusEvent: StatusEvent.BEKREFTET,
@@ -138,7 +139,7 @@ describe('Arbeidsledig', () => {
         await userEvent.click(screen.getByRole('button', { name: 'Videre' }))
         await userEvent.click(
             screen.getRadioInGroup(
-                { name: /Brukte du egenmelding hos PONTYPANDY FIRE SERVICE i perioden 13. - 23. april 2023/i },
+                { name: /Brukte du egenmelding hos PONTYPANDY FIRE SERVICE i perioden 15. - 30. april 2023/i },
                 { name: 'Nei' },
             ),
         )
