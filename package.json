@@ -13,7 +13,7 @@
         "start:prod": "NODE_OPTIONS='-r next-logger' next start",
         "gen": "graphql-codegen",
         "gen:watch": "graphql-codegen -w",
-        "build": "yarn gen && next build",
+        "build": "yarn gen && next build && ./scripts/safari12.sh",
         "test": "vitest --config ./vitest.config.ts",
         "lint": "next lint",
         "format": "prettier --write 'src/**/**.{ts,tsx,js,jsx}'",

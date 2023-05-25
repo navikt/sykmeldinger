@@ -13,6 +13,7 @@ const nextConfig = {
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX,
+    transpilePackages: ['tailwind-merge'],
     eslint: {
         dirs: ['src'],
         ignoreDuringBuilds: true,
