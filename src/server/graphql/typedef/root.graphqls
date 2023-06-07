@@ -1,14 +1,14 @@
 type Query {
     sykmeldinger: [Sykmelding!]!
-    sykmelding(id: ID!): Sykmelding!
+    sykmelding(id: String!): Sykmelding!
     brukerinformasjon: Brukerinformasjon!
-    sykmeldingUtenforVentetid(id: ID!): UtenforVentetid!
+    sykmeldingUtenforVentetid(id: String!): UtenforVentetid!
 }
 
 type Mutation {
-    changeSykmeldingStatus(sykmeldingId: ID!, status: SykmeldingChangeStatus!): Sykmelding!
-    sendSykmelding(sykmeldingId: ID!, values: SendSykmeldingValues!): Sykmelding!
-    updateEgenmeldingsdager(sykmeldingId: ID!, egenmeldingsdager: [Date!]!): Sykmelding!
+    changeSykmeldingStatus(sykmeldingId: String!, status: SykmeldingChangeStatus!): Sykmelding!
+    sendSykmelding(sykmeldingId: String!, values: SendSykmeldingValues!): Sykmelding!
+    updateEgenmeldingsdager(sykmeldingId: String!, egenmeldingsdager: [Date!]!): Sykmelding!
 }
 
 enum SykmeldingChangeStatus {

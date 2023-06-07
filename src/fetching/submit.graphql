@@ -1,10 +1,10 @@
-mutation ChangeSykmeldingStatus($sykmeldingId: ID!, $status: SykmeldingChangeStatus!) {
+mutation ChangeSykmeldingStatus($sykmeldingId: String!, $status: SykmeldingChangeStatus!) {
     changeSykmeldingStatus(sykmeldingId: $sykmeldingId, status: $status) {
         ...Sykmelding
     }
 }
 
-mutation SendSykmelding($sykmeldingId: ID!, $values: SendSykmeldingValues!) {
+mutation SendSykmelding($sykmeldingId: String!, $values: SendSykmeldingValues!) {
     sendSykmelding(sykmeldingId: $sykmeldingId, values: $values) {
         ...Sykmelding
     }

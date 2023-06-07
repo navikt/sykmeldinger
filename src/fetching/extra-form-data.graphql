@@ -19,7 +19,7 @@ fragment SykmeldingUtenforVentetid on UtenforVentetid {
     oppfolgingsdato
 }
 
-query ExtraFormData($sykmeldingId: ID!) {
+query ExtraFormData($sykmeldingId: String!) {
     brukerinformasjon {
         ...Brukerinformasjon
     }
