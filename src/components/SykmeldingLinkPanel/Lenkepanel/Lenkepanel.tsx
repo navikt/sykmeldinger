@@ -28,7 +28,7 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): JSX.Elem
                 })}
                 border
             >
-                <div className={'flex gap-3 max-[560px]:flex-col'}>
+                <div className="flex gap-3 max-[560px]:flex-col">
                     <div className="mr-8 hidden sm:block">
                         <LenkepanelIcon
                             behandlingsutfall={behandlingsutfallStatus}
