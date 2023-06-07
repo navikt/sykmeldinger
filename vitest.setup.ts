@@ -1,9 +1,9 @@
 import { TextDecoder, TextEncoder } from 'util'
 
 import 'vitest-axe/extend-expect'
+import 'vitest-dom/extend-expect'
 
-// @ts-expect-error Missing types
-import matchers from '@testing-library/jest-dom/matchers'
+import * as matchers from 'vitest-dom/matchers'
 import * as vitestAxeMatchers from 'vitest-axe/matchers'
 import { vi, expect, afterEach } from 'vitest'
 import { cleanup } from '@testing-library/react'
