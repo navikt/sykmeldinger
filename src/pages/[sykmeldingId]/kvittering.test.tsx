@@ -105,7 +105,7 @@ describe('kvittering page', () => {
             await waitForQueriesLoaded()
 
             // Should have the link
-            expect(screen.getByRole('link', { name: /Legg til egenmeldingsdager/ })).toBeInTheDocument()
+            expect(await screen.findByRole('link', { name: /Legg til egenmeldingsdager/ })).toBeInTheDocument()
         })
     })
 })

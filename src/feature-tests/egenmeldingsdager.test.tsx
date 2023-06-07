@@ -506,7 +506,14 @@ describe('Egenmeldingsdager', () => {
             expect(
                 await screen.findByRole('heading', { name: /Sykmeldingen ble sendt til Default Arbeidsgiverssen AS/ }),
             ).toBeInTheDocument()
-            expect(await screen.findByRole('heading', { name: 'Sykmeldingen gjelder' })).toBeInTheDocument()
+
+            const opplysningerSection = screen.getByRole('article', {
+                name: /opplysninger fra sykmeldingen/i,
+            })
+
+            expect(
+                await within(opplysningerSection).findByRole('heading', { name: 'Sykmeldingen gjelder' }),
+            ).toBeInTheDocument()
         }
 
         it('should not show "Legg til egenmeldingsdager"-button when sykmelding is right against previous sykmelding', async () => {

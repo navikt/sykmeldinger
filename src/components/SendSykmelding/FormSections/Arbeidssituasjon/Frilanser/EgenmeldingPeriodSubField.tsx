@@ -1,5 +1,5 @@
 import { useController } from 'react-hook-form'
-import { Button, RangeValidationT, UNSAFE_DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react'
+import { Button, RangeValidationT, DatePicker, useRangeDatepicker } from '@navikt/ds-react'
 import { Close } from '@navikt/ds-icons'
 import React, { useState } from 'react'
 import { Interval, isWithinInterval } from 'date-fns'
@@ -80,7 +80,7 @@ function EgenmeldingPeriodSubField({
         defaultValue: null,
     })
 
-    const { datepickerProps, toInputProps, fromInputProps, setSelected } = UNSAFE_useRangeDatepicker({
+    const { datepickerProps, toInputProps, fromInputProps, setSelected } = useRangeDatepicker({
         toDate: oppfolgingsdato,
         today: oppfolgingsdato,
         defaultSelected: {
@@ -96,11 +96,11 @@ function EgenmeldingPeriodSubField({
 
     return (
         <div>
-            <UNSAFE_DatePicker
+            <DatePicker
                 {...datepickerProps}
                 wrapperClassName="grid gap-2 place-items-start sm:w-[52ch] sm:grid-cols-2 grid-cols-1"
             >
-                <UNSAFE_DatePicker.Input
+                <DatePicker.Input
                     id={fromField.name}
                     {...fromInputProps}
                     ref={fromField.ref}
@@ -109,7 +109,7 @@ function EgenmeldingPeriodSubField({
                     error={fromFieldState.error?.message}
                 />
 
-                <UNSAFE_DatePicker.Input
+                <DatePicker.Input
                     id={toField.name}
                     {...toInputProps}
                     ref={toField.ref}
@@ -117,7 +117,7 @@ function EgenmeldingPeriodSubField({
                     placeholder="DD.MM.ÅÅÅÅ"
                     error={toFieldState.error?.message}
                 />
-            </UNSAFE_DatePicker>
+            </DatePicker>
             <div className="mt-2 flex gap-4">
                 <Button
                     variant="tertiary"
