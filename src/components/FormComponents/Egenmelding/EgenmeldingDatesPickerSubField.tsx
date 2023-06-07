@@ -1,5 +1,5 @@
 import { useController } from 'react-hook-form'
-import { ErrorMessage, Label, UNSAFE_DatePicker } from '@navikt/ds-react'
+import { ErrorMessage, Label, DatePicker } from '@navikt/ds-react'
 import { endOfMonth, isSameMonth, startOfMonth } from 'date-fns'
 
 import { sporsmal } from '../../../utils/sporsmal'
@@ -40,7 +40,7 @@ function EgenmeldingDatesPickerSubField({
             <Label>{sporsmal.egenmeldingsdager}</Label>
             {!isSameMonth(earliestPossibleDate, latestPossibleDate) && window.innerWidth >= 768 ? (
                 <div className="flex">
-                    <UNSAFE_DatePicker.Standalone
+                    <DatePicker.Standalone
                         mode="multiple"
                         selected={datoerField.value ?? []}
                         onSelect={(value) => {
@@ -50,7 +50,7 @@ function EgenmeldingDatesPickerSubField({
                         fromDate={earliestPossibleDate}
                         toDate={endOfMonth(earliestPossibleDate)}
                     />
-                    <UNSAFE_DatePicker.Standalone
+                    <DatePicker.Standalone
                         mode="multiple"
                         selected={datoerField.value ?? []}
                         onSelect={(value) => {
@@ -62,7 +62,7 @@ function EgenmeldingDatesPickerSubField({
                     />
                 </div>
             ) : (
-                <UNSAFE_DatePicker.Standalone
+                <DatePicker.Standalone
                     className="max-[350px]:-ml-5"
                     mode="multiple"
                     min={1}
