@@ -4,25 +4,27 @@ export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never }
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-    ID: string
-    String: string
-    Boolean: boolean
-    Int: number
-    Float: number
-    Date: string
-    DateTime: string
-    JSON: unknown
+    ID: { input: string | number; output: string }
+    String: { input: string; output: string }
+    Boolean: { input: boolean; output: boolean }
+    Int: { input: number; output: number }
+    Float: { input: number; output: number }
+    Date: { input: string; output: string }
+    DateTime: { input: string; output: string }
+    JSON: { input: unknown; output: unknown }
 }
 
 export type Adresse = {
     readonly __typename: 'Adresse'
-    readonly gate?: Maybe<Scalars['String']>
-    readonly kommune?: Maybe<Scalars['String']>
-    readonly land?: Maybe<Scalars['String']>
-    readonly postboks?: Maybe<Scalars['String']>
-    readonly postnummer?: Maybe<Scalars['Int']>
+    readonly gate?: Maybe<Scalars['String']['output']>
+    readonly kommune?: Maybe<Scalars['String']['output']>
+    readonly land?: Maybe<Scalars['String']['output']>
+    readonly postboks?: Maybe<Scalars['String']['output']>
+    readonly postnummer?: Maybe<Scalars['Int']['output']>
 }
 
 export type AktivitetIkkeMuligPeriode = {
@@ -46,33 +48,33 @@ export enum AnnenFraverGrunn {
 
 export type AnnenFraversArsak = {
     readonly __typename: 'AnnenFraversArsak'
-    readonly beskrivelse?: Maybe<Scalars['String']>
+    readonly beskrivelse?: Maybe<Scalars['String']['output']>
     readonly grunn: ReadonlyArray<AnnenFraverGrunn>
 }
 
 export type Arbeidsgiver = {
     readonly __typename: 'Arbeidsgiver'
-    readonly aktivtArbeidsforhold: Scalars['Boolean']
+    readonly aktivtArbeidsforhold: Scalars['Boolean']['output']
     readonly naermesteLeder?: Maybe<NaermesteLeder>
-    readonly navn: Scalars['String']
-    readonly orgnummer: Scalars['String']
+    readonly navn: Scalars['String']['output']
+    readonly orgnummer: Scalars['String']['output']
 }
 
 export type ArbeidsgiverStatus = {
     readonly __typename: 'ArbeidsgiverStatus'
-    readonly orgNavn: Scalars['String']
-    readonly orgnummer: Scalars['String']
+    readonly orgNavn: Scalars['String']['output']
+    readonly orgnummer: Scalars['String']['output']
 }
 
 export type ArbeidsgiverSykmelding = {
     readonly __typename: 'ArbeidsgiverSykmelding'
-    readonly navn?: Maybe<Scalars['String']>
+    readonly navn?: Maybe<Scalars['String']['output']>
 }
 
 export type ArbeidsrelatertArsak = {
     readonly __typename: 'ArbeidsrelatertArsak'
     readonly arsak: ReadonlyArray<ArbeidsrelatertArsakType>
-    readonly beskrivelse?: Maybe<Scalars['String']>
+    readonly beskrivelse?: Maybe<Scalars['String']['output']>
 }
 
 export enum ArbeidsrelatertArsakType {
@@ -98,10 +100,10 @@ export enum ArbeidssituasjonType {
 export type Behandler = {
     readonly __typename: 'Behandler'
     readonly adresse?: Maybe<Adresse>
-    readonly etternavn: Scalars['String']
-    readonly fornavn: Scalars['String']
-    readonly mellomnavn?: Maybe<Scalars['String']>
-    readonly tlf?: Maybe<Scalars['String']>
+    readonly etternavn: Scalars['String']['output']
+    readonly fornavn: Scalars['String']['output']
+    readonly mellomnavn?: Maybe<Scalars['String']['output']>
+    readonly tlf?: Maybe<Scalars['String']['output']>
 }
 
 export type Behandlingsutfall = {
@@ -113,52 +115,52 @@ export type Behandlingsutfall = {
 export type Brukerinformasjon = {
     readonly __typename: 'Brukerinformasjon'
     readonly arbeidsgivere: ReadonlyArray<Arbeidsgiver>
-    readonly strengtFortroligAdresse: Scalars['Boolean']
+    readonly strengtFortroligAdresse: Scalars['Boolean']['output']
 }
 
 export type DagerSvar = {
     readonly __typename: 'DagerSvar'
-    readonly svar: ReadonlyArray<Scalars['Date']>
+    readonly svar: ReadonlyArray<Scalars['Date']['output']>
     readonly svarType: Svartype
 }
 
 export type DateRange = {
-    readonly fom?: InputMaybe<Scalars['Date']>
-    readonly tom?: InputMaybe<Scalars['Date']>
+    readonly fom?: InputMaybe<Scalars['Date']['input']>
+    readonly tom?: InputMaybe<Scalars['Date']['input']>
 }
 
 export type Diagnose = {
     readonly __typename: 'Diagnose'
-    readonly kode: Scalars['String']
-    readonly system: Scalars['String']
-    readonly tekst?: Maybe<Scalars['String']>
+    readonly kode: Scalars['String']['output']
+    readonly system: Scalars['String']['output']
+    readonly tekst?: Maybe<Scalars['String']['output']>
 }
 
 export type ErIArbeid = {
     readonly __typename: 'ErIArbeid'
-    readonly annetArbeidPaSikt: Scalars['Boolean']
-    readonly arbeidFOM?: Maybe<Scalars['Date']>
-    readonly egetArbeidPaSikt: Scalars['Boolean']
-    readonly vurderingsdato?: Maybe<Scalars['Date']>
+    readonly annetArbeidPaSikt: Scalars['Boolean']['output']
+    readonly arbeidFOM?: Maybe<Scalars['Date']['output']>
+    readonly egetArbeidPaSikt: Scalars['Boolean']['output']
+    readonly vurderingsdato?: Maybe<Scalars['Date']['output']>
 }
 
 export type ErIkkeIArbeid = {
     readonly __typename: 'ErIkkeIArbeid'
-    readonly arbeidsforFOM?: Maybe<Scalars['Date']>
-    readonly arbeidsforPaSikt: Scalars['Boolean']
-    readonly vurderingsdato?: Maybe<Scalars['Date']>
+    readonly arbeidsforFOM?: Maybe<Scalars['Date']['output']>
+    readonly arbeidsforPaSikt: Scalars['Boolean']['output']
+    readonly vurderingsdato?: Maybe<Scalars['Date']['output']>
 }
 
 export type FomTom = {
     readonly __typename: 'FomTom'
-    readonly fom: Scalars['Date']
-    readonly tom: Scalars['Date']
+    readonly fom: Scalars['Date']['output']
+    readonly tom: Scalars['Date']['output']
 }
 
 export type GradertPeriode = {
     readonly __typename: 'GradertPeriode'
-    readonly grad: Scalars['Int']
-    readonly reisetilskudd: Scalars['Boolean']
+    readonly grad: Scalars['Int']['output']
+    readonly reisetilskudd: Scalars['Boolean']['output']
 }
 
 export type JaNeiSvar = {
@@ -169,14 +171,14 @@ export type JaNeiSvar = {
 
 export type KontaktMedPasient = {
     readonly __typename: 'KontaktMedPasient'
-    readonly begrunnelseIkkeKontakt?: Maybe<Scalars['String']>
-    readonly kontaktDato?: Maybe<Scalars['Date']>
+    readonly begrunnelseIkkeKontakt?: Maybe<Scalars['String']['output']>
+    readonly kontaktDato?: Maybe<Scalars['Date']['output']>
 }
 
 export type MedisinskArsak = {
     readonly __typename: 'MedisinskArsak'
     readonly arsak: ReadonlyArray<MedisinskArsakType>
-    readonly beskrivelse?: Maybe<Scalars['String']>
+    readonly beskrivelse?: Maybe<Scalars['String']['output']>
 }
 
 export enum MedisinskArsakType {
@@ -191,20 +193,20 @@ export type MedisinskVurdering = {
     readonly annenFraversArsak?: Maybe<AnnenFraversArsak>
     readonly biDiagnoser: ReadonlyArray<Diagnose>
     readonly hovedDiagnose?: Maybe<Diagnose>
-    readonly svangerskap: Scalars['Boolean']
-    readonly yrkesskade: Scalars['Boolean']
-    readonly yrkesskadeDato?: Maybe<Scalars['Date']>
+    readonly svangerskap: Scalars['Boolean']['output']
+    readonly yrkesskade: Scalars['Boolean']['output']
+    readonly yrkesskadeDato?: Maybe<Scalars['Date']['output']>
 }
 
 export type MeldingTilNav = {
     readonly __typename: 'MeldingTilNAV'
-    readonly beskrivBistand?: Maybe<Scalars['String']>
-    readonly bistandUmiddelbart: Scalars['Boolean']
+    readonly beskrivBistand?: Maybe<Scalars['String']['output']>
+    readonly bistandUmiddelbart: Scalars['Boolean']['output']
 }
 
 export type Merknad = {
     readonly __typename: 'Merknad'
-    readonly beskrivelse?: Maybe<Scalars['String']>
+    readonly beskrivelse?: Maybe<Scalars['String']['output']>
     readonly type: Merknadtype
 }
 
@@ -224,41 +226,41 @@ export type Mutation = {
 
 export type MutationChangeSykmeldingStatusArgs = {
     status: SykmeldingChangeStatus
-    sykmeldingId: Scalars['ID']
+    sykmeldingId: Scalars['String']['input']
 }
 
 export type MutationSendSykmeldingArgs = {
-    sykmeldingId: Scalars['ID']
+    sykmeldingId: Scalars['String']['input']
     values: SendSykmeldingValues
 }
 
 export type MutationUpdateEgenmeldingsdagerArgs = {
-    egenmeldingsdager: ReadonlyArray<Scalars['Date']>
-    sykmeldingId: Scalars['ID']
+    egenmeldingsdager: ReadonlyArray<Scalars['Date']['input']>
+    sykmeldingId: Scalars['String']['input']
 }
 
 export type NaermesteLeder = {
     readonly __typename: 'NaermesteLeder'
-    readonly navn: Scalars['String']
+    readonly navn: Scalars['String']['output']
 }
 
 export type Pasient = {
     readonly __typename: 'Pasient'
-    readonly etternavn?: Maybe<Scalars['String']>
-    readonly fnr?: Maybe<Scalars['String']>
-    readonly fornavn?: Maybe<Scalars['String']>
-    readonly mellomnavn?: Maybe<Scalars['String']>
+    readonly etternavn?: Maybe<Scalars['String']['output']>
+    readonly fnr?: Maybe<Scalars['String']['output']>
+    readonly fornavn?: Maybe<Scalars['String']['output']>
+    readonly mellomnavn?: Maybe<Scalars['String']['output']>
 }
 
 export type Periode = {
     readonly __typename: 'Periode'
     readonly aktivitetIkkeMulig?: Maybe<AktivitetIkkeMuligPeriode>
-    readonly behandlingsdager?: Maybe<Scalars['Int']>
-    readonly fom: Scalars['Date']
+    readonly behandlingsdager?: Maybe<Scalars['Int']['output']>
+    readonly fom: Scalars['Date']['output']
     readonly gradert?: Maybe<GradertPeriode>
-    readonly innspillTilArbeidsgiver?: Maybe<Scalars['String']>
-    readonly reisetilskudd: Scalars['Boolean']
-    readonly tom: Scalars['Date']
+    readonly innspillTilArbeidsgiver?: Maybe<Scalars['String']['output']>
+    readonly reisetilskudd: Scalars['Boolean']['output']
+    readonly tom: Scalars['Date']['output']
     readonly type: Periodetype
 }
 
@@ -278,10 +280,10 @@ export enum Periodetype {
 
 export type Prognose = {
     readonly __typename: 'Prognose'
-    readonly arbeidsforEtterPeriode: Scalars['Boolean']
+    readonly arbeidsforEtterPeriode: Scalars['Boolean']['output']
     readonly erIArbeid?: Maybe<ErIArbeid>
     readonly erIkkeIArbeid?: Maybe<ErIkkeIArbeid>
-    readonly hensynArbeidsplassen?: Maybe<Scalars['String']>
+    readonly hensynArbeidsplassen?: Maybe<Scalars['String']['output']>
 }
 
 export type Query = {
@@ -293,18 +295,18 @@ export type Query = {
 }
 
 export type QuerySykmeldingArgs = {
-    id: Scalars['ID']
+    id: Scalars['String']['input']
 }
 
 export type QuerySykmeldingUtenforVentetidArgs = {
-    id: Scalars['ID']
+    id: Scalars['String']['input']
 }
 
 export type RegelInfo = {
     readonly __typename: 'RegelInfo'
-    readonly messageForSender: Scalars['String']
-    readonly messageForUser: Scalars['String']
-    readonly ruleName: Scalars['String']
+    readonly messageForSender: Scalars['String']['output']
+    readonly messageForUser: Scalars['String']['output']
+    readonly ruleName: Scalars['String']['output']
     readonly ruleStatus: RegelStatus
 }
 
@@ -315,9 +317,9 @@ export enum RegelStatus {
 }
 
 export type SendSykmeldingValues = {
-    readonly arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']>
+    readonly arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']['input']>
     readonly arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
-    readonly egenmeldingsdager?: InputMaybe<ReadonlyArray<Scalars['Date']>>
+    readonly egenmeldingsdager?: InputMaybe<ReadonlyArray<Scalars['Date']['input']>>
     readonly egenmeldingsperioder?: InputMaybe<ReadonlyArray<DateRange>>
     readonly erOpplysningeneRiktige?: InputMaybe<YesOrNo>
     readonly harBruktEgenmelding?: InputMaybe<YesOrNo>
@@ -340,7 +342,7 @@ export type Sporsmal = {
     readonly __typename: 'Sporsmal'
     readonly shortName: ShortName
     readonly svar: SvarTypeUnion
-    readonly tekst: Scalars['String']
+    readonly tekst: Scalars['String']['output']
 }
 
 export enum StatusEvent {
@@ -367,28 +369,28 @@ export enum Svartype {
 
 export type Sykmelding = {
     readonly __typename: 'Sykmelding'
-    readonly andreTiltak?: Maybe<Scalars['String']>
+    readonly andreTiltak?: Maybe<Scalars['String']['output']>
     readonly arbeidsgiver?: Maybe<ArbeidsgiverSykmelding>
     readonly behandler: Behandler
-    readonly behandletTidspunkt: Scalars['Date']
+    readonly behandletTidspunkt: Scalars['Date']['output']
     readonly behandlingsutfall: Behandlingsutfall
-    readonly egenmeldt?: Maybe<Scalars['Boolean']>
-    readonly id: Scalars['String']
+    readonly egenmeldt?: Maybe<Scalars['Boolean']['output']>
+    readonly id: Scalars['String']['output']
     readonly kontaktMedPasient: KontaktMedPasient
     readonly medisinskVurdering?: Maybe<MedisinskVurdering>
-    readonly meldingTilArbeidsgiver?: Maybe<Scalars['String']>
+    readonly meldingTilArbeidsgiver?: Maybe<Scalars['String']['output']>
     readonly meldingTilNAV?: Maybe<MeldingTilNav>
     readonly merknader?: Maybe<ReadonlyArray<Merknad>>
-    readonly mottattTidspunkt: Scalars['Date']
-    readonly papirsykmelding?: Maybe<Scalars['Boolean']>
+    readonly mottattTidspunkt: Scalars['Date']['output']
+    readonly papirsykmelding?: Maybe<Scalars['Boolean']['output']>
     readonly pasient?: Maybe<Pasient>
     readonly prognose?: Maybe<Prognose>
-    readonly rulesetVersion: Scalars['Int']
+    readonly rulesetVersion: Scalars['Int']['output']
     readonly sykmeldingStatus: SykmeldingStatus
     readonly sykmeldingsperioder: ReadonlyArray<Periode>
-    readonly tiltakArbeidsplassen?: Maybe<Scalars['String']>
-    readonly tiltakNAV?: Maybe<Scalars['String']>
-    readonly utdypendeOpplysninger: Scalars['JSON']
+    readonly tiltakArbeidsplassen?: Maybe<Scalars['String']['output']>
+    readonly tiltakNAV?: Maybe<Scalars['String']['output']>
+    readonly utdypendeOpplysninger: Scalars['JSON']['output']
     readonly utenlandskSykmelding?: Maybe<UtenlandskSykmelding>
 }
 
@@ -402,7 +404,7 @@ export type SykmeldingStatus = {
     readonly arbeidsgiver?: Maybe<ArbeidsgiverStatus>
     readonly sporsmalOgSvarListe: ReadonlyArray<Sporsmal>
     readonly statusEvent: StatusEvent
-    readonly timestamp: Scalars['Date']
+    readonly timestamp: Scalars['Date']['output']
 }
 
 export enum UriktigeOpplysningerType {
@@ -417,19 +419,19 @@ export enum UriktigeOpplysningerType {
 export type UtdypendeOpplysning = {
     readonly __typename: 'UtdypendeOpplysning'
     readonly restriksjoner: ReadonlyArray<SvarRestriksjon>
-    readonly sporsmal?: Maybe<Scalars['String']>
-    readonly svar: Scalars['String']
+    readonly sporsmal?: Maybe<Scalars['String']['output']>
+    readonly svar: Scalars['String']['output']
 }
 
 export type UtenforVentetid = {
     readonly __typename: 'UtenforVentetid'
-    readonly erUtenforVentetid: Scalars['Boolean']
-    readonly oppfolgingsdato?: Maybe<Scalars['Date']>
+    readonly erUtenforVentetid: Scalars['Boolean']['output']
+    readonly oppfolgingsdato?: Maybe<Scalars['Date']['output']>
 }
 
 export type UtenlandskSykmelding = {
     readonly __typename: 'UtenlandskSykmelding'
-    readonly land: Scalars['String']
+    readonly land: Scalars['String']['output']
 }
 
 export enum YesOrNo {
@@ -438,8 +440,8 @@ export enum YesOrNo {
 }
 
 export type EndreEgenmeldingsdagerMutationVariables = Exact<{
-    sykmeldingId: Scalars['ID']
-    egenmeldingsdager: ReadonlyArray<Scalars['Date']> | Scalars['Date']
+    sykmeldingId: Scalars['String']['input']
+    egenmeldingsdager: ReadonlyArray<Scalars['Date']['input']> | Scalars['Date']['input']
 }>
 
 export type EndreEgenmeldingsdagerMutation = {
@@ -635,7 +637,7 @@ export type SykmeldingUtenforVentetidFragment = {
 }
 
 export type ExtraFormDataQueryVariables = Exact<{
-    sykmeldingId: Scalars['ID']
+    sykmeldingId: Scalars['String']['input']
 }>
 
 export type ExtraFormDataQuery = {
@@ -659,7 +661,7 @@ export type ExtraFormDataQuery = {
 }
 
 export type ChangeSykmeldingStatusMutationVariables = Exact<{
-    sykmeldingId: Scalars['ID']
+    sykmeldingId: Scalars['String']['input']
     status: SykmeldingChangeStatus
 }>
 
@@ -836,7 +838,7 @@ export type ChangeSykmeldingStatusMutation = {
 }
 
 export type SendSykmeldingMutationVariables = Exact<{
-    sykmeldingId: Scalars['ID']
+    sykmeldingId: Scalars['String']['input']
     values: SendSykmeldingValues
 }>
 
@@ -1471,7 +1473,7 @@ export type SykmeldingerQuery = {
 }
 
 export type SykmeldingByIdQueryVariables = Exact<{
-    id: Scalars['ID']
+    id: Scalars['String']['input']
 }>
 
 export type SykmeldingByIdQuery = {
@@ -2491,7 +2493,7 @@ export const EndreEgenmeldingsdagerDocument = {
                 {
                     kind: 'VariableDefinition',
                     variable: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
-                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
                 },
                 {
                     kind: 'VariableDefinition',
@@ -2971,7 +2973,7 @@ export const ExtraFormDataDocument = {
                 {
                     kind: 'VariableDefinition',
                     variable: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
-                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
                 },
             ],
             selectionSet: {
@@ -3074,7 +3076,7 @@ export const ChangeSykmeldingStatusDocument = {
                 {
                     kind: 'VariableDefinition',
                     variable: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
-                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
                 },
                 {
                     kind: 'VariableDefinition',
@@ -3548,7 +3550,7 @@ export const SendSykmeldingDocument = {
                 {
                     kind: 'VariableDefinition',
                     variable: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
-                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
                 },
                 {
                     kind: 'VariableDefinition',
@@ -4469,7 +4471,7 @@ export const SykmeldingByIdDocument = {
                 {
                     kind: 'VariableDefinition',
                     variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
                 },
             ],
             selectionSet: {

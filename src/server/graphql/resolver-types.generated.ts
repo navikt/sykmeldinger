@@ -6,27 +6,29 @@ export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never }
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never }
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-    ID: string
-    String: string
-    Boolean: boolean
-    Int: number
-    Float: number
-    Date: string
-    DateTime: string
-    JSON: unknown
+    ID: { input: string | number; output: string }
+    String: { input: string; output: string }
+    Boolean: { input: boolean; output: boolean }
+    Int: { input: number; output: number }
+    Float: { input: number; output: number }
+    Date: { input: string; output: string }
+    DateTime: { input: string; output: string }
+    JSON: { input: unknown; output: unknown }
 }
 
 export type Adresse = {
     __typename?: 'Adresse'
-    gate: Maybe<Scalars['String']>
-    kommune: Maybe<Scalars['String']>
-    land: Maybe<Scalars['String']>
-    postboks: Maybe<Scalars['String']>
-    postnummer: Maybe<Scalars['Int']>
+    gate: Maybe<Scalars['String']['output']>
+    kommune: Maybe<Scalars['String']['output']>
+    land: Maybe<Scalars['String']['output']>
+    postboks: Maybe<Scalars['String']['output']>
+    postnummer: Maybe<Scalars['Int']['output']>
 }
 
 export type AktivitetIkkeMuligPeriode = {
@@ -50,33 +52,33 @@ export enum AnnenFraverGrunn {
 
 export type AnnenFraversArsak = {
     __typename?: 'AnnenFraversArsak'
-    beskrivelse: Maybe<Scalars['String']>
+    beskrivelse: Maybe<Scalars['String']['output']>
     grunn: Array<AnnenFraverGrunn>
 }
 
 export type Arbeidsgiver = {
     __typename?: 'Arbeidsgiver'
-    aktivtArbeidsforhold: Scalars['Boolean']
+    aktivtArbeidsforhold: Scalars['Boolean']['output']
     naermesteLeder: Maybe<NaermesteLeder>
-    navn: Scalars['String']
-    orgnummer: Scalars['String']
+    navn: Scalars['String']['output']
+    orgnummer: Scalars['String']['output']
 }
 
 export type ArbeidsgiverStatus = {
     __typename?: 'ArbeidsgiverStatus'
-    orgNavn: Scalars['String']
-    orgnummer: Scalars['String']
+    orgNavn: Scalars['String']['output']
+    orgnummer: Scalars['String']['output']
 }
 
 export type ArbeidsgiverSykmelding = {
     __typename?: 'ArbeidsgiverSykmelding'
-    navn: Maybe<Scalars['String']>
+    navn: Maybe<Scalars['String']['output']>
 }
 
 export type ArbeidsrelatertArsak = {
     __typename?: 'ArbeidsrelatertArsak'
     arsak: Array<ArbeidsrelatertArsakType>
-    beskrivelse: Maybe<Scalars['String']>
+    beskrivelse: Maybe<Scalars['String']['output']>
 }
 
 export enum ArbeidsrelatertArsakType {
@@ -102,10 +104,10 @@ export enum ArbeidssituasjonType {
 export type Behandler = {
     __typename?: 'Behandler'
     adresse: Maybe<Adresse>
-    etternavn: Scalars['String']
-    fornavn: Scalars['String']
-    mellomnavn: Maybe<Scalars['String']>
-    tlf: Maybe<Scalars['String']>
+    etternavn: Scalars['String']['output']
+    fornavn: Scalars['String']['output']
+    mellomnavn: Maybe<Scalars['String']['output']>
+    tlf: Maybe<Scalars['String']['output']>
 }
 
 export type Behandlingsutfall = {
@@ -117,52 +119,52 @@ export type Behandlingsutfall = {
 export type Brukerinformasjon = {
     __typename?: 'Brukerinformasjon'
     arbeidsgivere: Array<Arbeidsgiver>
-    strengtFortroligAdresse: Scalars['Boolean']
+    strengtFortroligAdresse: Scalars['Boolean']['output']
 }
 
 export type DagerSvar = {
     __typename?: 'DagerSvar'
-    svar: Array<Scalars['Date']>
+    svar: Array<Scalars['Date']['output']>
     svarType: Svartype
 }
 
 export type DateRange = {
-    fom?: InputMaybe<Scalars['Date']>
-    tom?: InputMaybe<Scalars['Date']>
+    fom?: InputMaybe<Scalars['Date']['input']>
+    tom?: InputMaybe<Scalars['Date']['input']>
 }
 
 export type Diagnose = {
     __typename?: 'Diagnose'
-    kode: Scalars['String']
-    system: Scalars['String']
-    tekst: Maybe<Scalars['String']>
+    kode: Scalars['String']['output']
+    system: Scalars['String']['output']
+    tekst: Maybe<Scalars['String']['output']>
 }
 
 export type ErIArbeid = {
     __typename?: 'ErIArbeid'
-    annetArbeidPaSikt: Scalars['Boolean']
-    arbeidFOM: Maybe<Scalars['Date']>
-    egetArbeidPaSikt: Scalars['Boolean']
-    vurderingsdato: Maybe<Scalars['Date']>
+    annetArbeidPaSikt: Scalars['Boolean']['output']
+    arbeidFOM: Maybe<Scalars['Date']['output']>
+    egetArbeidPaSikt: Scalars['Boolean']['output']
+    vurderingsdato: Maybe<Scalars['Date']['output']>
 }
 
 export type ErIkkeIArbeid = {
     __typename?: 'ErIkkeIArbeid'
-    arbeidsforFOM: Maybe<Scalars['Date']>
-    arbeidsforPaSikt: Scalars['Boolean']
-    vurderingsdato: Maybe<Scalars['Date']>
+    arbeidsforFOM: Maybe<Scalars['Date']['output']>
+    arbeidsforPaSikt: Scalars['Boolean']['output']
+    vurderingsdato: Maybe<Scalars['Date']['output']>
 }
 
 export type FomTom = {
     __typename?: 'FomTom'
-    fom: Scalars['Date']
-    tom: Scalars['Date']
+    fom: Scalars['Date']['output']
+    tom: Scalars['Date']['output']
 }
 
 export type GradertPeriode = {
     __typename?: 'GradertPeriode'
-    grad: Scalars['Int']
-    reisetilskudd: Scalars['Boolean']
+    grad: Scalars['Int']['output']
+    reisetilskudd: Scalars['Boolean']['output']
 }
 
 export type JaNeiSvar = {
@@ -173,14 +175,14 @@ export type JaNeiSvar = {
 
 export type KontaktMedPasient = {
     __typename?: 'KontaktMedPasient'
-    begrunnelseIkkeKontakt: Maybe<Scalars['String']>
-    kontaktDato: Maybe<Scalars['Date']>
+    begrunnelseIkkeKontakt: Maybe<Scalars['String']['output']>
+    kontaktDato: Maybe<Scalars['Date']['output']>
 }
 
 export type MedisinskArsak = {
     __typename?: 'MedisinskArsak'
     arsak: Array<MedisinskArsakType>
-    beskrivelse: Maybe<Scalars['String']>
+    beskrivelse: Maybe<Scalars['String']['output']>
 }
 
 export enum MedisinskArsakType {
@@ -195,20 +197,20 @@ export type MedisinskVurdering = {
     annenFraversArsak: Maybe<AnnenFraversArsak>
     biDiagnoser: Array<Diagnose>
     hovedDiagnose: Maybe<Diagnose>
-    svangerskap: Scalars['Boolean']
-    yrkesskade: Scalars['Boolean']
-    yrkesskadeDato: Maybe<Scalars['Date']>
+    svangerskap: Scalars['Boolean']['output']
+    yrkesskade: Scalars['Boolean']['output']
+    yrkesskadeDato: Maybe<Scalars['Date']['output']>
 }
 
 export type MeldingTilNav = {
     __typename?: 'MeldingTilNAV'
-    beskrivBistand: Maybe<Scalars['String']>
-    bistandUmiddelbart: Scalars['Boolean']
+    beskrivBistand: Maybe<Scalars['String']['output']>
+    bistandUmiddelbart: Scalars['Boolean']['output']
 }
 
 export type Merknad = {
     __typename?: 'Merknad'
-    beskrivelse: Maybe<Scalars['String']>
+    beskrivelse: Maybe<Scalars['String']['output']>
     type: Merknadtype
 }
 
@@ -228,41 +230,41 @@ export type Mutation = {
 
 export type MutationChangeSykmeldingStatusArgs = {
     status: SykmeldingChangeStatus
-    sykmeldingId: Scalars['ID']
+    sykmeldingId: Scalars['String']['input']
 }
 
 export type MutationSendSykmeldingArgs = {
-    sykmeldingId: Scalars['ID']
+    sykmeldingId: Scalars['String']['input']
     values: SendSykmeldingValues
 }
 
 export type MutationUpdateEgenmeldingsdagerArgs = {
-    egenmeldingsdager: Array<Scalars['Date']>
-    sykmeldingId: Scalars['ID']
+    egenmeldingsdager: Array<Scalars['Date']['input']>
+    sykmeldingId: Scalars['String']['input']
 }
 
 export type NaermesteLeder = {
     __typename?: 'NaermesteLeder'
-    navn: Scalars['String']
+    navn: Scalars['String']['output']
 }
 
 export type Pasient = {
     __typename?: 'Pasient'
-    etternavn: Maybe<Scalars['String']>
-    fnr: Maybe<Scalars['String']>
-    fornavn: Maybe<Scalars['String']>
-    mellomnavn: Maybe<Scalars['String']>
+    etternavn: Maybe<Scalars['String']['output']>
+    fnr: Maybe<Scalars['String']['output']>
+    fornavn: Maybe<Scalars['String']['output']>
+    mellomnavn: Maybe<Scalars['String']['output']>
 }
 
 export type Periode = {
     __typename?: 'Periode'
     aktivitetIkkeMulig: Maybe<AktivitetIkkeMuligPeriode>
-    behandlingsdager: Maybe<Scalars['Int']>
-    fom: Scalars['Date']
+    behandlingsdager: Maybe<Scalars['Int']['output']>
+    fom: Scalars['Date']['output']
     gradert: Maybe<GradertPeriode>
-    innspillTilArbeidsgiver: Maybe<Scalars['String']>
-    reisetilskudd: Scalars['Boolean']
-    tom: Scalars['Date']
+    innspillTilArbeidsgiver: Maybe<Scalars['String']['output']>
+    reisetilskudd: Scalars['Boolean']['output']
+    tom: Scalars['Date']['output']
     type: Periodetype
 }
 
@@ -282,10 +284,10 @@ export enum Periodetype {
 
 export type Prognose = {
     __typename?: 'Prognose'
-    arbeidsforEtterPeriode: Scalars['Boolean']
+    arbeidsforEtterPeriode: Scalars['Boolean']['output']
     erIArbeid: Maybe<ErIArbeid>
     erIkkeIArbeid: Maybe<ErIkkeIArbeid>
-    hensynArbeidsplassen: Maybe<Scalars['String']>
+    hensynArbeidsplassen: Maybe<Scalars['String']['output']>
 }
 
 export type Query = {
@@ -297,18 +299,18 @@ export type Query = {
 }
 
 export type QuerySykmeldingArgs = {
-    id: Scalars['ID']
+    id: Scalars['String']['input']
 }
 
 export type QuerySykmeldingUtenforVentetidArgs = {
-    id: Scalars['ID']
+    id: Scalars['String']['input']
 }
 
 export type RegelInfo = {
     __typename?: 'RegelInfo'
-    messageForSender: Scalars['String']
-    messageForUser: Scalars['String']
-    ruleName: Scalars['String']
+    messageForSender: Scalars['String']['output']
+    messageForUser: Scalars['String']['output']
+    ruleName: Scalars['String']['output']
     ruleStatus: RegelStatus
 }
 
@@ -319,9 +321,9 @@ export enum RegelStatus {
 }
 
 export type SendSykmeldingValues = {
-    arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']>
+    arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']['input']>
     arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
-    egenmeldingsdager?: InputMaybe<Array<Scalars['Date']>>
+    egenmeldingsdager?: InputMaybe<Array<Scalars['Date']['input']>>
     egenmeldingsperioder?: InputMaybe<Array<DateRange>>
     erOpplysningeneRiktige?: InputMaybe<YesOrNo>
     harBruktEgenmelding?: InputMaybe<YesOrNo>
@@ -344,7 +346,7 @@ export type Sporsmal = {
     __typename?: 'Sporsmal'
     shortName: ShortName
     svar: SvarTypeUnion
-    tekst: Scalars['String']
+    tekst: Scalars['String']['output']
 }
 
 export enum StatusEvent {
@@ -371,28 +373,28 @@ export enum Svartype {
 
 export type Sykmelding = {
     __typename?: 'Sykmelding'
-    andreTiltak: Maybe<Scalars['String']>
+    andreTiltak: Maybe<Scalars['String']['output']>
     arbeidsgiver: Maybe<ArbeidsgiverSykmelding>
     behandler: Behandler
-    behandletTidspunkt: Scalars['Date']
+    behandletTidspunkt: Scalars['Date']['output']
     behandlingsutfall: Behandlingsutfall
-    egenmeldt: Maybe<Scalars['Boolean']>
-    id: Scalars['String']
+    egenmeldt: Maybe<Scalars['Boolean']['output']>
+    id: Scalars['String']['output']
     kontaktMedPasient: KontaktMedPasient
     medisinskVurdering: Maybe<MedisinskVurdering>
-    meldingTilArbeidsgiver: Maybe<Scalars['String']>
+    meldingTilArbeidsgiver: Maybe<Scalars['String']['output']>
     meldingTilNAV: Maybe<MeldingTilNav>
     merknader: Maybe<Array<Merknad>>
-    mottattTidspunkt: Scalars['Date']
-    papirsykmelding: Maybe<Scalars['Boolean']>
+    mottattTidspunkt: Scalars['Date']['output']
+    papirsykmelding: Maybe<Scalars['Boolean']['output']>
     pasient: Maybe<Pasient>
     prognose: Maybe<Prognose>
-    rulesetVersion: Scalars['Int']
+    rulesetVersion: Scalars['Int']['output']
     sykmeldingStatus: SykmeldingStatus
     sykmeldingsperioder: Array<Periode>
-    tiltakArbeidsplassen: Maybe<Scalars['String']>
-    tiltakNAV: Maybe<Scalars['String']>
-    utdypendeOpplysninger: Scalars['JSON']
+    tiltakArbeidsplassen: Maybe<Scalars['String']['output']>
+    tiltakNAV: Maybe<Scalars['String']['output']>
+    utdypendeOpplysninger: Scalars['JSON']['output']
     utenlandskSykmelding: Maybe<UtenlandskSykmelding>
 }
 
@@ -406,7 +408,7 @@ export type SykmeldingStatus = {
     arbeidsgiver: Maybe<ArbeidsgiverStatus>
     sporsmalOgSvarListe: Array<Sporsmal>
     statusEvent: StatusEvent
-    timestamp: Scalars['Date']
+    timestamp: Scalars['Date']['output']
 }
 
 export enum UriktigeOpplysningerType {
@@ -421,19 +423,19 @@ export enum UriktigeOpplysningerType {
 export type UtdypendeOpplysning = {
     __typename?: 'UtdypendeOpplysning'
     restriksjoner: Array<SvarRestriksjon>
-    sporsmal: Maybe<Scalars['String']>
-    svar: Scalars['String']
+    sporsmal: Maybe<Scalars['String']['output']>
+    svar: Scalars['String']['output']
 }
 
 export type UtenforVentetid = {
     __typename?: 'UtenforVentetid'
-    erUtenforVentetid: Scalars['Boolean']
-    oppfolgingsdato: Maybe<Scalars['Date']>
+    erUtenforVentetid: Scalars['Boolean']['output']
+    oppfolgingsdato: Maybe<Scalars['Date']['output']>
 }
 
 export type UtenlandskSykmelding = {
     __typename?: 'UtenlandskSykmelding'
-    land: Scalars['String']
+    land: Scalars['String']['output']
 }
 
 export enum YesOrNo {
@@ -515,12 +517,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>
 
 /** Mapping of union types */
-export type ResolversUnionTypes = ResolversObject<{
-    SvarTypeUnion: ArbeidssituasjonSvar | DagerSvar | JaNeiSvar | PerioderSvar
-}>
-
-/** Mapping of union parent types */
-export type ResolversUnionParentTypes = ResolversObject<{
+export type ResolversUnionTypes<RefType extends Record<string, unknown>> = ResolversObject<{
     SvarTypeUnion: ArbeidssituasjonSvar | DagerSvar | JaNeiSvar | PerioderSvar
 }>
 
@@ -539,20 +536,19 @@ export type ResolversTypes = ResolversObject<{
     ArbeidssituasjonType: ArbeidssituasjonType
     Behandler: ResolverTypeWrapper<Behandler>
     Behandlingsutfall: ResolverTypeWrapper<Behandlingsutfall>
-    Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+    Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
     Brukerinformasjon: ResolverTypeWrapper<Brukerinformasjon>
     DagerSvar: ResolverTypeWrapper<DagerSvar>
-    Date: ResolverTypeWrapper<Scalars['Date']>
+    Date: ResolverTypeWrapper<Scalars['Date']['output']>
     DateRange: DateRange
-    DateTime: ResolverTypeWrapper<Scalars['DateTime']>
+    DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
     Diagnose: ResolverTypeWrapper<Diagnose>
     ErIArbeid: ResolverTypeWrapper<ErIArbeid>
     ErIkkeIArbeid: ResolverTypeWrapper<ErIkkeIArbeid>
     FomTom: ResolverTypeWrapper<FomTom>
     GradertPeriode: ResolverTypeWrapper<GradertPeriode>
-    ID: ResolverTypeWrapper<Scalars['ID']>
-    Int: ResolverTypeWrapper<Scalars['Int']>
-    JSON: ResolverTypeWrapper<Scalars['JSON']>
+    Int: ResolverTypeWrapper<Scalars['Int']['output']>
+    JSON: ResolverTypeWrapper<Scalars['JSON']['output']>
     JaNeiSvar: ResolverTypeWrapper<JaNeiSvar>
     KontaktMedPasient: ResolverTypeWrapper<KontaktMedPasient>
     MedisinskArsak: ResolverTypeWrapper<MedisinskArsak>
@@ -575,9 +571,9 @@ export type ResolversTypes = ResolversObject<{
     ShortName: ShortName
     Sporsmal: ResolverTypeWrapper<Omit<Sporsmal, 'svar'> & { svar: ResolversTypes['SvarTypeUnion'] }>
     StatusEvent: StatusEvent
-    String: ResolverTypeWrapper<Scalars['String']>
+    String: ResolverTypeWrapper<Scalars['String']['output']>
     SvarRestriksjon: SvarRestriksjon
-    SvarTypeUnion: ResolverTypeWrapper<ResolversUnionTypes['SvarTypeUnion']>
+    SvarTypeUnion: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SvarTypeUnion']>
     Svartype: Svartype
     Sykmelding: ResolverTypeWrapper<Sykmelding>
     SykmeldingChangeStatus: SykmeldingChangeStatus
@@ -601,20 +597,19 @@ export type ResolversParentTypes = ResolversObject<{
     ArbeidssituasjonSvar: ArbeidssituasjonSvar
     Behandler: Behandler
     Behandlingsutfall: Behandlingsutfall
-    Boolean: Scalars['Boolean']
+    Boolean: Scalars['Boolean']['output']
     Brukerinformasjon: Brukerinformasjon
     DagerSvar: DagerSvar
-    Date: Scalars['Date']
+    Date: Scalars['Date']['output']
     DateRange: DateRange
-    DateTime: Scalars['DateTime']
+    DateTime: Scalars['DateTime']['output']
     Diagnose: Diagnose
     ErIArbeid: ErIArbeid
     ErIkkeIArbeid: ErIkkeIArbeid
     FomTom: FomTom
     GradertPeriode: GradertPeriode
-    ID: Scalars['ID']
-    Int: Scalars['Int']
-    JSON: Scalars['JSON']
+    Int: Scalars['Int']['output']
+    JSON: Scalars['JSON']['output']
     JaNeiSvar: JaNeiSvar
     KontaktMedPasient: KontaktMedPasient
     MedisinskArsak: MedisinskArsak
@@ -631,8 +626,8 @@ export type ResolversParentTypes = ResolversObject<{
     RegelInfo: RegelInfo
     SendSykmeldingValues: SendSykmeldingValues
     Sporsmal: Omit<Sporsmal, 'svar'> & { svar: ResolversParentTypes['SvarTypeUnion'] }
-    String: Scalars['String']
-    SvarTypeUnion: ResolversUnionParentTypes['SvarTypeUnion']
+    String: Scalars['String']['output']
+    SvarTypeUnion: ResolversUnionTypes<ResolversParentTypes>['SvarTypeUnion']
     Sykmelding: Sykmelding
     SykmeldingStatus: SykmeldingStatus
     UtdypendeOpplysning: UtdypendeOpplysning
