@@ -7049,14 +7049,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-scalars@npm:^1.22.1":
-  version: 1.22.1
-  resolution: "graphql-scalars@npm:1.22.1"
+"graphql-scalars@npm:^1.22.2":
+  version: 1.22.2
+  resolution: "graphql-scalars@npm:1.22.2"
   dependencies:
     tslib: ^2.5.0
   peerDependencies:
     graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 90de9e68fa659920df47ce3add146d97a630987903101e7ec545d30e0a14a1b831ea73e13556c68f6ddbc03fdace7a63d3f482a01fa6b66cd083c32372a612dd
+  checksum: 4a5e7aa2d81fbdeeef10ca77b44b4d171f5798640db4b57f65dd3285ce9d17e55714cc3e0460e917041c0432f25881955204552937876397f135fd95eddb8b0a
   languageName: node
   linkType: hard
 
@@ -11407,7 +11407,7 @@ __metadata:
     eslint-config-next: ^13.4.4
     globalthis-polyfill: ^1.0.0
     graphql: ^16.6.0
-    graphql-scalars: ^1.22.1
+    graphql-scalars: ^1.22.2
     husky: ^8.0.3
     jsdom: ^22.1.0
     lint-staged: ^13.2.2
