@@ -1,20 +1,20 @@
-import { PropsWithChildren } from 'react'
-import { Accordion } from '@navikt/ds-react'
+import React, { PropsWithChildren, ReactElement } from 'react'
+import { ExpansionCard } from '@navikt/ds-react'
 import { Findout } from '@navikt/ds-icons'
 
-function FlereOpplysninger({ children }: PropsWithChildren): JSX.Element {
+function FlereOpplysninger({ children }: PropsWithChildren): ReactElement {
     return (
-        <Accordion>
-            <Accordion.Item>
-                <Accordion.Header className="aria-expanded:bg-transparent">
-                    <div className="flex items-center gap-3 text-blue-600">
-                        <Findout role="img" aria-hidden className="shrink-0 text-2xl" />
-                        Flere opplysninger
+        <ExpansionCard aria-labelledby="flere-opplysninger-heading">
+            <ExpansionCard.Header>
+                <div className="flex items-center gap-4">
+                    <div className="mt-1.5 grid shrink-0 place-content-center text-4xl">
+                        <Findout role="img" aria-hidden />
                     </div>
-                </Accordion.Header>
-                <Accordion.Content className="p-0 px-2">{children}</Accordion.Content>
-            </Accordion.Item>
-        </Accordion>
+                    <ExpansionCard.Title id="flere-opplysninger-heading">Flere opplysninger</ExpansionCard.Title>
+                </div>
+            </ExpansionCard.Header>
+            <ExpansionCard.Content>{children}</ExpansionCard.Content>
+        </ExpansionCard>
     )
 }
 

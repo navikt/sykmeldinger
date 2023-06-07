@@ -134,7 +134,7 @@ describe('Egenmeldingsdager', () => {
             ),
         )
 
-        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
@@ -234,7 +234,7 @@ describe('Egenmeldingsdager', () => {
             ),
         )
 
-        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
@@ -327,7 +327,7 @@ describe('Egenmeldingsdager', () => {
                 { name: 'Nei' },
             ),
         )
-        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
 
         await userEvent.click(sectionOne.getByRole('button', { name: 'Endre' }))
         await clickDays(sectionOne, /^8\. februar/, /^9\. februar/, /^5\. februar/, /^6\. februar/)
@@ -340,7 +340,7 @@ describe('Egenmeldingsdager', () => {
             ),
         )
 
-        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
@@ -420,7 +420,7 @@ describe('Egenmeldingsdager', () => {
             ),
         )
 
-        expect(await screen.findByRole('button', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
     })
 
     it('should not show egenmeldingsdager info on SENDT sykmelding when there is an empty svar object', async () => {

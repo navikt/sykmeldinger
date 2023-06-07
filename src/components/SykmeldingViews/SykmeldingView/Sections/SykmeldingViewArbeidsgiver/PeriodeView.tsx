@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Calender } from '@navikt/ds-icons'
 import * as R from 'remeda'
 
@@ -50,13 +51,17 @@ interface EgenmeldingsdagerProps {
     egenmeldingsdager: SvarUnion_DagerSvar_Fragment | readonly string[]
 }
 
-function Egenmeldingsdager({ className, egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
+function Egenmeldingsdager({ className, egenmeldingsdager }: EgenmeldingsdagerProps): ReactElement | null {
     const dager = R.pipe(
         egenmeldingsdager,
         (it) => ('dager' in it ? it.dager : it),
         R.sortBy((it) => it),
         R.map(toReadableDate),
     )
+
+    if (dager.length === 0) {
+        return null
+    }
 
     return (
         <SykmeldingListInfo
