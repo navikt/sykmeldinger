@@ -21,11 +21,12 @@ import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { SykmeldingFragment } from '../../fetching/graphql.generated'
 import { browserEnv } from '../../utils/env'
-import { createSykmeldingBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { getUserRequestId } from '../../utils/userRequestId'
+import {createSykmeldingBreadcrumbs} from "../../utils/breadcrumbs";
 
 function SykmeldingPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()

@@ -6,7 +6,12 @@ import { Scenarios } from './mock-db/scenarios'
 import mockDb from './mock-db'
 
 const Query: QueryResolvers = {
-    sykmeldinger: async (_, args, { sessionId }): Promise<Sykmelding[]> => mockDb().get(sessionId).sykmeldinger(),
+    sykmeldinger: async (_, args, { sessionId }): Promise<Sykmelding[]> => {
+        // fake wait 3 seconds
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+
+        return mockDb().get(sessionId).sykmeldinger();
+    },
     sykmelding: async (_, { id }, { sessionId }): Promise<Sykmelding> => mockDb().get(sessionId).sykmelding(id),
     brukerinformasjon: async (_, args, { sessionId }) => mockDb().get(sessionId).brukerinformasjon(),
     sykmeldingUtenforVentetid: async (_, args, { sessionId }) => mockDb().get(sessionId).sykeldingErUtenforVentetid(),

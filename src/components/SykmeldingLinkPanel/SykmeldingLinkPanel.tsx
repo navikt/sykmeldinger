@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, useState } from 'react'
 import { BodyShort, Heading, Select } from '@navikt/ds-react'
 
@@ -5,7 +7,6 @@ import { SykmeldingFragment } from '../../fetching/graphql.generated'
 import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/sykmeldingSortUtils'
 
 import Lenkepanel from './Lenkepanel/Lenkepanel'
-import styles from './SykmeldingLinkPanel.module.css'
 
 export enum SortBy {
     DATE = 'DATE',
@@ -45,8 +46,8 @@ function SykmeldingLinkPanel({
     }
 
     return (
-        <section aria-labelledby={type} className={styles.lenkepanelContainer}>
-            <header className={styles.lenkepanelContainerHeader}>
+        <section aria-labelledby={type} className="mb-8 [&:not(:first-child)]:mt-16">
+            <header className="mb-2 flex items-end justify-between">
                 <Heading size="medium" level="2" id={type}>
                     {title}
                 </Heading>
@@ -61,7 +62,7 @@ function SykmeldingLinkPanel({
                     </Select>
                 )}
             </header>
-            <ol className={styles.lenkepanelContainerSykmeldinger}>
+            <ol>
                 {sortBy === SortBy.DATE &&
                     sykmeldingerSortedByDate.map((sykmelding, index) => (
                         <li key={index}>

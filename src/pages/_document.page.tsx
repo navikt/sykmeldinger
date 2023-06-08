@@ -6,7 +6,7 @@ import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, Next
 import { DecoratorComponents, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 
 import { browserEnv } from '../utils/env'
-import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs'
+import { createInitialServerSideBreadcrumbs } from '../utils/breadcrumbs'
 
 // The 'head'-field of the document initialProps contains data from <head> (meta-tags etc)
 const getDocumentParameter = (initialProps: DocumentInitialProps, name: string): string => {

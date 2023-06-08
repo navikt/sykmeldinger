@@ -1,3 +1,5 @@
+'use client'
+
 import { Alert } from '@navikt/ds-react'
 import React, { ReactElement } from 'react'
 
