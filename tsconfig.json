@@ -16,11 +16,7 @@
         "incremental": true,
         "noImplicitReturns": true,
         "experimentalDecorators": true,
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ]
+        "plugins": [{ "name": "next" }]
     },
     "include": ["next-env.d.ts", "src/app-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]

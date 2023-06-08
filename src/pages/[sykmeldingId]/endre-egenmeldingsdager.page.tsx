@@ -12,7 +12,8 @@ import { getSykmeldingperioderSorted } from '../../utils/periodeUtils'
 import { findEgenmeldingsdager } from '../../utils/egenmeldingsdagerUtils'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import EndreEgenmelding from '../../components/EndreEgenmelding/EndreEgenmelding'
-import { createEndreEgenmeldingsdagerBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import { createEndreEgenmeldingsdagerBreadcrumbs } from '../../utils/breadcrumbs'
 
 function EndreEgenmeldingsdagerPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()

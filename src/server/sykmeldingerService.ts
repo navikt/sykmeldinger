@@ -14,8 +14,6 @@ import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 import { getErUtenforVentetid } from './flexService'
 import { ArbeidssituasjonV3 } from './api-models/SendSykmelding'
 
-const serverEnv = getServerEnv()
-
 export async function getSykmeldinger(context: RequestContext): Promise<Sykmelding[]> {
     const childLogger = createChildLogger(context.requestId)
 
@@ -157,6 +155,7 @@ async function fetchApi<ResponseObject>(
     parse: (json?: unknown) => ResponseObject,
     context: RequestContext,
 ): Promise<ResponseObject> {
+    const serverEnv = getServerEnv()
     const childLogger = createChildLogger(context.requestId)
 
     const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE)

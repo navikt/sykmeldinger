@@ -1,22 +1,20 @@
 import { PropsWithChildren } from 'react'
-import { Accordion, Alert, BodyShort, Link, LinkPanel } from '@navikt/ds-react'
+import { Alert } from '@navikt/ds-react'
 import Head from 'next/head'
-import { groupBy } from 'remeda'
 import { logger } from '@navikt/next-logger'
 
 import Spinner from '../components/Spinner/Spinner'
 import useSykmeldinger from '../hooks/useSykmeldinger'
 import useHotjarTrigger from '../hooks/useHotjarTrigger'
-import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
-import { isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
+import { SykmeldingInfoAccordion } from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
 import SykmeldingLinkPanel from '../components/SykmeldingLinkPanel/SykmeldingLinkPanel'
 import Header from '../components/Header/Header'
 import TilHovedsiden from '../components/TilHovedsiden/TilHovedsiden'
 import { withAuthenticatedPage } from '../auth/withAuthentication'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
-import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 import useFocusRefetch from '../hooks/useFocusRefetch'
+import { filterSykmeldinger } from '../utils/sykmeldingFilterUtils'
 
 function SykmeldingerPage(): JSX.Element {
     useHotjarTrigger('SYKMELDING_LISTEVISNING')
@@ -59,58 +57,13 @@ function SykmeldingerPage(): JSX.Element {
         <IndexWrapper>
             <SykmeldingLinkPanel title="Under behandling" type="UNDER_BEHANDLING" sykmeldinger={underBehandling} />
             <SykmeldingLinkPanel title="Nye sykmeldinger" type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
-
-            <Accordion>
-                <InfoOmDigitalSykmelding />
-                <SerIkkeSykmelding />
-            </Accordion>
-
+            <SykmeldingInfoAccordion />
             <SykmeldingLinkPanel
                 title="Tidligere sykmeldinger"
                 type="TIDLIGERE_SYKMELDINGER"
                 sykmeldinger={pastSykmeldinger}
             />
         </IndexWrapper>
-    )
-}
-
-function SerIkkeSykmelding(): JSX.Element {
-    return (
-        <Accordion.Item>
-            <Accordion.Header>Ser du ikke sykmeldingen din her?</Accordion.Header>
-            <Accordion.Content>
-                <LinkPanel
-                    href="https://person.nav.no/mine-saker/tema/SYM"
-                    target="_blank"
-                    border
-                    className="mb-8 mt-4 rounded-large"
-                >
-                    <LinkPanel.Title className="text-heading-xsmall">Sjekk dokumentlisten</LinkPanel.Title>
-                </LinkPanel>
-
-                <div className="mb-4">
-                    <BodyShort>
-                        Det kan også bety at den som har sykmeldt deg ikke sender den digitalt til NAV. Da bruker du{' '}
-                        <Link
-                            href="https://www.helsedirektoratet.no/veiledere/sykmelderveileder/sykmelding-og-erklaeringer"
-                            target="_blank"
-                        >
-                            papirsykmeldingen
-                        </Link>{' '}
-                        i stedet.
-                    </BodyShort>
-                </div>
-
-                <div className="mb-4">
-                    <BodyShort>
-                        <Link href="https://www.nav.no/kontaktoss" target="_blank">
-                            Kontakt oss
-                        </Link>{' '}
-                        om du fortsatt ikke finner det du leter etter.
-                    </BodyShort>
-                </div>
-            </Accordion.Content>
-        </Accordion.Item>
     )
 }
 
@@ -131,28 +84,6 @@ function IndexWrapper({ children }: PropsWithChildren): JSX.Element {
             </PageWrapper>
         </>
     )
-}
-
-type SykmeldingSections = {
-    apenSykmeldinger: SykmeldingFragment[]
-    pastSykmeldinger: SykmeldingFragment[]
-    underBehandling: SykmeldingFragment[]
-}
-
-const groupByPredicate = (sykmelding: SykmeldingFragment): keyof SykmeldingSections => {
-    if (isUnderbehandling(sykmelding)) return 'underBehandling'
-    else if (isActiveSykmelding(sykmelding)) return 'apenSykmeldinger'
-    else return 'pastSykmeldinger'
-}
-
-function filterSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]): SykmeldingSections {
-    const grouped: Record<keyof SykmeldingSections, SykmeldingFragment[]> = groupBy(sykmeldinger, groupByPredicate)
-
-    return {
-        apenSykmeldinger: grouped.apenSykmeldinger ?? [],
-        pastSykmeldinger: grouped.pastSykmeldinger ?? [],
-        underBehandling: grouped.underBehandling ?? [],
-    }
 }
 
 export const getServerSideProps = withAuthenticatedPage()

@@ -1,43 +1,40 @@
 import { IToggle, getDefinitions, evaluateFlags } from '@unleash/nextjs'
 import { logger } from '@navikt/next-logger'
-import { GetServerSidePropsContext } from 'next/types'
 import * as R from 'remeda'
 
 import { isLocalOrDemo } from '../utils/env'
+import { getUserContext } from '../auth/rscAuthentication'
 
 import { getUnleashEnvironment, localDevelopmentToggles } from './utils'
 import { EXPECTED_TOGGLES } from './toggles'
 
-export async function getFlagsServerSide(
-    req: GetServerSidePropsContext['req'],
-    res: GetServerSidePropsContext['res'],
-): Promise<{ toggles: IToggle[] }> {
-    const sessionId = req.cookies['unleash-session-id'] || `${Math.floor(Math.random() * 1_000_000_000)}`
-    res.setHeader('set-cookie', `unleash-session-id=${sessionId}; path=/;`)
+export async function getFlagsServerComponent(): Promise<IToggle[]> {
+    const sessionId = getUserContext()?.payload.pid
+    if (!sessionId) {
+        throw new Error('User is missing pid. Is the user even logged in?')
+    }
 
     if (isLocalOrDemo) {
         logger.warn('Running in local or demo mode, falling back to development toggles.')
-        return { toggles: localDevelopmentToggles() }
+        return localDevelopmentToggles()
     }
 
     try {
         const definitions = await getAndValidateDefinitions()
-        return evaluateFlags(definitions, { sessionId, environment: getUnleashEnvironment() })
+        return evaluateFlags(definitions, { sessionId, environment: getUnleashEnvironment() }).toggles
     } catch (e) {
         logger.error(new Error('Failed to get flags from Unleash. Falling back to default flags.', { cause: e }))
-        return {
-            toggles: EXPECTED_TOGGLES.map(
-                (it): IToggle => ({
-                    name: it,
-                    variant: {
-                        name: 'default',
-                        enabled: false,
-                    },
-                    impressionData: false,
+        return EXPECTED_TOGGLES.map(
+            (it): IToggle => ({
+                name: it,
+                variant: {
+                    name: 'default',
                     enabled: false,
-                }),
-            ),
-        }
+                },
+                impressionData: false,
+                enabled: false,
+            }),
+        )
     }
 }
 
@@ -47,6 +44,7 @@ export async function getFlagsServerSide(
 async function getAndValidateDefinitions(): Promise<ReturnType<typeof getDefinitions>> {
     const definitions = await getDefinitions({
         appName: 'sykmeldinger',
+        fetchOptions: { next: { revalidate: 15 } },
     })
 
     const diff = R.difference(
@@ -63,7 +61,7 @@ async function getAndValidateDefinitions(): Promise<ReturnType<typeof getDefinit
     logger.info(
         `Fetched ${definitions.features.length} flags from unleash: ${definitions.features
             .map((it) => it.name)
-            .join(', ')}\n`,
+            .join('\n')}\n`,
     )
 
     return definitions

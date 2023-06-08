@@ -7,9 +7,9 @@ import { getServerEnv } from '../utils/env'
 import { ErUtenforVentetid, ErUtenforVentetidSchema } from './api-models/ErUtenforVentetid'
 import { RequestContext } from './graphql/resolvers'
 
-const serverEnv = getServerEnv()
-
 export async function getErUtenforVentetid(sykmeldingId: string, context: RequestContext): Promise<ErUtenforVentetid> {
+    const serverEnv = getServerEnv()
+
     const childLogger = createChildLogger(context.requestId)
 
     childLogger.info(

@@ -1,3 +1,5 @@
+'use client'
+
 import { Alert } from '@navikt/ds-react'
 import React from 'react'
 
@@ -9,7 +11,7 @@ export function LabsWarning(): JSX.Element | null {
     }
 
     return (
-        <Alert className="mx-auto mb-4 max-w-2xl" variant="warning">
+        <Alert className="mx-auto my-4 max-w-2xl" variant="warning">
             Dette er en demoside og inneholder ikke dine personlige data.
         </Alert>
     )

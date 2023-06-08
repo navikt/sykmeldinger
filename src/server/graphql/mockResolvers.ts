@@ -52,7 +52,12 @@ export const sykmeldinger: SykmeldingApiModel[] = [
 ]
 
 const Query: QueryResolvers = {
-    sykmeldinger: async (): Promise<Sykmelding[]> => sykmeldinger,
+    sykmeldinger: async (): Promise<Sykmelding[]> => {
+        // fake wait 3 seconds
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+
+        return sykmeldinger
+    },
     sykmelding: async (_, { id }): Promise<Sykmelding> => {
         const relevantSykmelding = sykmeldinger.find((it) => it.id === id)
         if (!relevantSykmelding) {
