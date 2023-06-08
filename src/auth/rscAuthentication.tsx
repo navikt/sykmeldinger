@@ -7,6 +7,7 @@ import { RequestContext } from '../server/graphql/resolvers'
 import { isLocalOrDemo } from '../utils/env'
 
 export async function verifyUserLoggedIn(): Promise<void> {
+    logger.info('Getting headers')
     const requestHeaders = headers()
 
     if (isLocalOrDemo) {
@@ -18,9 +19,11 @@ export async function verifyUserLoggedIn(): Promise<void> {
     if (!redirectPath == null) {
         logger.warn("Missing 'x-path' header, is middleware middlewaring?")
     }
+    logger.info(`Redirect path is ${redirectPath}`)
 
     const bearerToken: string | null | undefined = requestHeaders.get('authorization')
     if (!bearerToken) {
+        logger.info('Found no token, redirecting to login')
         redirect(`/oauth2/login?redirect=${redirectPath}`)
     }
 
