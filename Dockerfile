@@ -2,7 +2,6 @@ FROM gcr.io/distroless/nodejs18-debian11@sha256:2b5a7f28895b399a6d16b057a8ca5d72
 
 WORKDIR /app
 
-COPY package.json /app/
 COPY next-logger.config.js /app/
 COPY src/**/**/**/*.graphqls /app/
 COPY .next/standalone /app/

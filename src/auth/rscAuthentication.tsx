@@ -4,7 +4,7 @@ import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
 import { redirect } from 'next/navigation'
 
 import { RequestContext } from '../server/graphql/resolvers'
-import { isLocalOrDemo } from '../utils/env'
+import { getServerEnv, isLocalOrDemo } from '../utils/env'
 
 export async function verifyUserLoggedIn(): Promise<void> {
     logger.info('Getting headers')
@@ -24,7 +24,7 @@ export async function verifyUserLoggedIn(): Promise<void> {
     const bearerToken: string | null | undefined = requestHeaders.get('authorization')
     if (!bearerToken) {
         logger.info('Found no token, redirecting to login')
-        redirect(`/oauth2/login?redirect=${redirectPath}`)
+        redirect(`${getServerEnv().NEXT_PUBLIC_BASE_PATH ?? ''}/oauth2/login?redirect=${redirectPath}`)
     }
 
     const validationResult = await validateIdportenToken(bearerToken)
@@ -38,7 +38,7 @@ export async function verifyUserLoggedIn(): Promise<void> {
         } else {
             logger.error(error)
         }
-        redirect(`/oauth2/login?redirect=${redirectPath}`)
+        redirect(`${getServerEnv().NEXT_PUBLIC_BASE_PATH ?? ''}/oauth2/login?redirect=${redirectPath}`)
     }
 }
 

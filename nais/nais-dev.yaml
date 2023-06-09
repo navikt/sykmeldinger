@@ -17,7 +17,7 @@ spec:
   tokenx:
     enabled: true
   replicas:
-    min: 2
+    min: 1
     max: 2
     cpuThresholdPercentage: 50
   resources:
@@ -46,6 +46,11 @@ spec:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
     path: /syk/sykmeldinger/api/internal/is_ready
+  # nextjs caches to .next/cache, but docker image file system is ready only, this hack should fix that
+  filesFrom:
+    - emptyDir:
+        medium: Memory
+      mountPath: /app/.next/cache
   env:
     - name: SYKMELDINGER_BACKEND
       value: 'http://sykmeldinger-backend'
