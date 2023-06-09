@@ -6,7 +6,7 @@ import { DecoratorBreadcrumb } from '@navikt/nav-dekoratoren-server-component/di
 import { headers } from 'next/headers'
 import { logger } from '@navikt/next-logger'
 
-import { browserEnv } from '../utils/env'
+import { getServerEnv } from '../utils/env'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 import { getFlagsServerComponent } from '../toggles/rsc'
 import { verifyUserLoggedIn } from '../auth/rscAuthentication'
@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: PropsWithChildren): Promi
 }
 
 function createDecoratorEnv(): 'dev' | 'prod' {
-    switch (browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT) {
+    switch (getServerEnv().NEXT_PUBLIC_RUNTIME_ENVIRONMENT) {
         case 'test':
         case 'dev':
             return 'dev'
@@ -44,12 +44,14 @@ function createDecoratorEnv(): 'dev' | 'prod' {
         case 'production':
             return 'prod'
         default:
-            throw new Error(`Unknown runtime environment: ${browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT}`)
+            throw new Error(`Unknown runtime environment: ${getServerEnv().NEXT_PUBLIC_RUNTIME_ENVIRONMENT}`)
     }
 }
 
 function createBreadcrumbs(): DecoratorBreadcrumb[] {
-    const path = headers().get('x-path')
+    const path = headers()
+        .get('x-path')
+        ?.replace(getServerEnv().NEXT_PUBLIC_BASE_PATH ?? '', '')
 
     if (path === '/new') return createInitialServerSideBreadcrumbs(SsrPathVariants.Root, {})
 
