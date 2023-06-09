@@ -22,10 +22,9 @@ spec:
     cpuThresholdPercentage: 50
   resources:
     limits:
-      cpu: 500m
-      memory: 768Mi
+      memory: 1024Mi
     requests:
-      cpu: 50m
+      cpu: 400m
       memory: 512Mi
   accessPolicy:
     outbound:
