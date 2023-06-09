@@ -33,7 +33,12 @@ function loadSchema(): GraphQLSchema {
     })
 }
 
+let loadedSchema: string | null = null
 function loadSchemaFiles(dirPath: string): string {
+    if (loadedSchema) {
+        return loadedSchema
+    }
+
     logger.info(`Loading schema files from ${dirPath}`)
     const files = fs.readdirSync(dirPath)
     const schemaFiles = files.filter((file) => file.endsWith('.graphqls'))
@@ -41,5 +46,7 @@ function loadSchemaFiles(dirPath: string): string {
         const filePath = path.join(dirPath, file)
         return fs.readFileSync(filePath, 'utf-8')
     })
-    return schema.join('\n')
+
+    loadedSchema = schema.join('\n')
+    return loadedSchema
 }
