@@ -16,10 +16,14 @@ import Providers from './_providers'
 
 export default async function RootLayout({ children }: PropsWithChildren): Promise<ReactElement> {
     logger.info('At root of layout')
+    console.time('RSC: verifyUserLoggedIn')
     await verifyUserLoggedIn()
+    console.timeEnd('RSC: verifyUserLoggedIn')
 
     logger.info('Getting flags')
+    console.time('RSC: flagsRsc')
     const toggles = await getFlagsServerComponent()
+    console.timeEnd('RSC: flagsRsc')
 
     logger.info('Reached JSX.')
     return (

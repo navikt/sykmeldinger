@@ -46,6 +46,7 @@ const nextConfig = {
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX,
     transpilePackages: ['tailwind-merge'],
+    productionBrowserSourceMaps: true,
     eslint: {
         dirs: ['src'],
         ignoreDuringBuilds: true,
@@ -74,7 +75,6 @@ const nextConfig = {
             },
         ]
     },
-    productionBrowserSourceMaps: true,
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
