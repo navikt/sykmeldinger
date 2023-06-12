@@ -57,7 +57,14 @@ function createBreadcrumbs(): DecoratorBreadcrumb[] {
         .get('x-path')
         ?.replace(getServerEnv().NEXT_PUBLIC_BASE_PATH ?? '', '')
 
-    if (path === '/new') return createInitialServerSideBreadcrumbs(SsrPathVariants.Root, {})
+    return createInitialServerSideBreadcrumbs(pathToVariant(path), {})
+}
 
-    throw new Error(`Unknown path: ${path}`)
+function pathToVariant(path: string | undefined): SsrPathVariants | 'unknown' {
+    if (!path) return 'unknown'
+
+    if (path === '/new') return SsrPathVariants.Root
+    else if (path.startsWith('/new/')) return SsrPathVariants.Sykmelding
+
+    return 'unknown'
 }
