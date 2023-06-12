@@ -7,6 +7,7 @@ import { configureLogger } from '@navikt/next-logger'
 import { FlagProvider } from '../toggles/context'
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
 import { getFaro, initInstrumentation, pinoLevelToFaroLevel } from '../faro/faro'
+import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs'
 
 type Props = {
     toggles: IToggle[]
@@ -22,6 +23,8 @@ configureLogger({
 })
 
 function Providers({ children, toggles }: PropsWithChildren<Props>): ReactElement {
+    useHandleDecoratorClicks()
+
     return (
         <ErrorBoundary>
             <FlagProvider toggles={toggles}>{children}</FlagProvider>

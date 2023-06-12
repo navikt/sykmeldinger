@@ -26,7 +26,7 @@ import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { getUserRequestId } from '../../utils/userRequestId'
-import {createSykmeldingBreadcrumbs} from "../../utils/breadcrumbs";
+import { createSykmeldingBreadcrumbs } from '../../utils/breadcrumbs'
 
 function SykmeldingPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -185,7 +185,7 @@ function SykmeldingerWrapper({
     sykmelding,
     children,
 }: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): ReactElement {
-    useUpdateBreadcrumbs(() => createSykmeldingBreadcrumbs(sykmelding))
+    useUpdateBreadcrumbs(() => createSykmeldingBreadcrumbs(sykmelding), [sykmelding])
 
     useEffect(() => {
         const listener = (e: KeyboardEvent): void => {

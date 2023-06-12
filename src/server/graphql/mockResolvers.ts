@@ -12,7 +12,12 @@ const Query: QueryResolvers = {
 
         return mockDb().get(sessionId).sykmeldinger();
     },
-    sykmelding: async (_, { id }, { sessionId }): Promise<Sykmelding> => mockDb().get(sessionId).sykmelding(id),
+    sykmelding: async (_, { id }, { sessionId }): Promise<Sykmelding> => {
+        // fake wait some time
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+
+        return mockDb().get(sessionId).sykmelding(id);
+    },
     brukerinformasjon: async (_, args, { sessionId }) => mockDb().get(sessionId).brukerinformasjon(),
     sykmeldingUtenforVentetid: async (_, args, { sessionId }) => mockDb().get(sessionId).sykeldingErUtenforVentetid(),
 }

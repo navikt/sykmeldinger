@@ -57,7 +57,7 @@ function createBreadcrumbs(): DecoratorBreadcrumb[] {
         .get('x-path')
         ?.replace(getServerEnv().NEXT_PUBLIC_BASE_PATH ?? '', '')
 
-    return createInitialServerSideBreadcrumbs(pathToVariant(path), {})
+    return createInitialServerSideBreadcrumbs(pathToVariant(path), {}, true)
 }
 
 function pathToVariant(path: string | undefined): SsrPathVariants | 'unknown' {

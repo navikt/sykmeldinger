@@ -68,7 +68,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'))
+        await waitForElementToBeRemoved(() => screen.queryByRole('progressbar', { name: 'Henter dine sykmeldinger' }))
 
         expect(await screen.findByText('Du har ingen nye sykmeldinger'))
         expect(await screen.findByText('Tidligere sykmeldinger'))
@@ -116,7 +116,8 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'))
+        await waitForElementToBeRemoved(() => screen.queryByRole('progressbar', { name: 'Henter dine sykmeldinger' }))
+
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument()
         const lenkepanelContainer = screen.getByRole('region', { name: 'Nye sykmeldinger' })
         const sykmeldinger = within(lenkepanelContainer).getAllByRole('link')
@@ -146,7 +147,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'))
+        await waitForElementToBeRemoved(() => screen.queryByRole('progressbar', { name: 'Henter dine sykmeldinger' }))
         const lenkepanelContainer = screen.getByRole('region', { name: 'Under behandling' })
         const sykmeldinger = within(lenkepanelContainer).getAllByRole('link')
         expect(sykmeldinger).toHaveLength(1)
@@ -171,7 +172,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'))
+        await waitForElementToBeRemoved(() => screen.queryByRole('progressbar', { name: 'Henter dine sykmeldinger' }))
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument()
 
         const newSection = screen.getByRole('region', { name: 'Nye sykmeldinger' })
@@ -202,7 +203,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'))
+        await waitForElementToBeRemoved(() => screen.queryByRole('progressbar', { name: 'Henter dine sykmeldinger' }))
         expect(screen.getByText('Du har ingen nye sykmeldinger')).toBeInTheDocument()
 
         const previousSection = screen.getByRole('region', { name: 'Tidligere sykmeldinger' })
@@ -226,7 +227,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter dine sykmeldinger'))
+        await waitForElementToBeRemoved(() => screen.queryByRole('progressbar', { name: 'Henter dine sykmeldinger' }))
 
         expect(screen.queryByText('Du har ingen nye sykmeldinger')).not.toBeInTheDocument()
 

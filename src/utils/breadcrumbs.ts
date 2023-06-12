@@ -12,7 +12,7 @@ export type Breadcrumb = { title: string; url: string }
 export type LastCrumb = { title: string }
 export type CompleteCrumb = Parameters<typeof setBreadcrumbs>[0][0]
 
-export const baseCrumb: CompleteCrumb[] = [
+export const createBaseCrumb = (isNew: boolean): CompleteCrumb[] => [
     {
         title: 'Min side',
         url: browserEnv.NEXT_PUBLIC_MIN_SIDE_ROOT || '/',
@@ -25,7 +25,7 @@ export const baseCrumb: CompleteCrumb[] = [
     },
     {
         title: 'Sykmeldinger',
-        url: browserEnv.NEXT_PUBLIC_BASE_PATH || '/',
+        url: `${browserEnv.NEXT_PUBLIC_BASE_PATH}${isNew ? '/new' : ''}` || `/${isNew ? 'new' : ''}`,
         handleInApp: true,
     },
 ]
@@ -33,16 +33,20 @@ export const baseCrumb: CompleteCrumb[] = [
 /**
  * The last crumb does not need to provide a URL, since it's only used to display the text for the "active" crumb.
  */
-export function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): CompleteCrumb[] {
+export function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | [], isNew: boolean): CompleteCrumb[] {
     const prefixedCrumbs: CompleteCrumb[] = breadcrumbs.map(
         (it): CompleteCrumb => ({
             ...it,
-            url: 'url' in it ? `${browserEnv.NEXT_PUBLIC_BASE_PATH}${it.url}` : '/',
+            url: 'url' in it ? `${browserEnv.NEXT_PUBLIC_BASE_PATH}${isNew ? '/new' : ''}${it.url}` : `/`,
             handleInApp: true,
         }),
     )
 
-    return [...baseCrumb, ...prefixedCrumbs]
+    return [...createBaseCrumb(isNew), ...prefixedCrumbs]
+}
+
+export function createSykmeldingBreadcrumbs(sykmelding: SykmeldingFragment | undefined): [LastCrumb] {
+    return [{ title: getSykmeldingTitle(sykmelding) }]
 }
 
 export function createKvitteringBreadcrumbs(
@@ -57,10 +61,6 @@ export function createEndreEgenmeldingsdagerBreadcrumbs(
     sykmelding: SykmeldingFragment | undefined,
 ): [Breadcrumb, LastCrumb] {
     return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Endre egenmeldingsdager' }]
-}
-
-export function createSykmeldingBreadcrumbs(sykmelding: SykmeldingFragment | undefined): [LastCrumb] {
-    return [{ title: getSykmeldingTitle(sykmelding) }]
 }
 
 /**
@@ -88,22 +88,24 @@ export enum SsrPathVariants {
 export function createInitialServerSideBreadcrumbs(
     pathname: SsrPathVariants | string,
     query: ParsedUrlQuery,
+    isNew: boolean,
 ): CompleteCrumb[] {
     switch (pathname) {
         case SsrPathVariants.Root:
         case SsrPathVariants.NotFound:
         case SsrPathVariants.Error:
-            return createCompleteCrumbs([])
+            return createCompleteCrumbs([], isNew)
         case SsrPathVariants.Sykmelding:
-            return createCompleteCrumbs(createSykmeldingBreadcrumbs(undefined))
+            return createCompleteCrumbs(createSykmeldingBreadcrumbs(undefined), isNew)
         case SsrPathVariants.Kvittering:
-            return createCompleteCrumbs(createKvitteringBreadcrumbs(query.sykmeldingId as string, undefined))
+            return createCompleteCrumbs(createKvitteringBreadcrumbs(query.sykmeldingId as string, undefined), isNew)
         case SsrPathVariants.EndreEgenmeldingsdager:
             return createCompleteCrumbs(
                 createEndreEgenmeldingsdagerBreadcrumbs(query.sykmeldingId as string, undefined),
+                isNew,
             )
         default:
             logger.error(`Unknown initial path (${pathname}), defaulting to just base breadcrumb`)
-            return createCompleteCrumbs([])
+            return createCompleteCrumbs([], isNew)
     }
 }
