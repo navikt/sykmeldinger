@@ -39,7 +39,6 @@ interface Props {
 
 class MyDocument extends Document<Props> {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & Props> {
-        console.log('GET INITIOL PROPS')
         console.time('Normal: getInitialProps')
         const initialProps = await Document.getInitialProps(ctx)
 
@@ -48,7 +47,7 @@ class MyDocument extends Document<Props> {
             params: {
                 chatbot: true,
                 context: 'privatperson',
-                breadcrumbs: createInitialServerSideBreadcrumbs(ctx.pathname, ctx.query),
+                breadcrumbs: createInitialServerSideBreadcrumbs(ctx.pathname, ctx.query, false),
             },
         })
 
@@ -61,8 +60,6 @@ class MyDocument extends Document<Props> {
 
     render(): JSX.Element {
         const { Decorator, language } = this.props
-
-        console.log('RENDER decorator')
 
         return (
             <Html lang={language || 'no'}>

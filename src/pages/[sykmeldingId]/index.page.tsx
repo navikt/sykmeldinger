@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useCallback, useState } from 'react'
+import React, { PropsWithChildren, useCallback, useEffect, useState } from 'react'
 import { Alert, BodyLong, BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
 import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
@@ -26,6 +26,7 @@ import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { getUserRequestId } from '../../utils/userRequestId'
+import { createSykmeldingBreadcrumbs } from '../../utils/breadcrumbs'
 
 function SykmeldingPage(): JSX.Element {
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -184,15 +185,17 @@ function SykmeldingerWrapper({
     sykmelding,
     children,
 }: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): JSX.Element {
-    useUpdateBreadcrumbs(() => [{ title: getSykmeldingTitle(sykmelding) }])
+    useUpdateBreadcrumbs(() => createSykmeldingBreadcrumbs(sykmelding), [sykmelding])
 
-    addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
-            e.preventDefault()
-            e.stopImmediatePropagation()
-            window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`, '_ blank')
-        }
-    })
+    useEffect(() => {
+        addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
+                e.preventDefault()
+                e.stopImmediatePropagation()
+                window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`, '_ blank')
+            }
+        })
+    }, [sykmelding?.id])
 
     return (
         <div className="print:h-full print:overflow-hidden">

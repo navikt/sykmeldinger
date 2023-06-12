@@ -1,9 +1,8 @@
-import { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Alert } from '@navikt/ds-react'
 import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
 
-import Spinner from '../components/Spinner/Spinner'
 import useSykmeldinger from '../hooks/useSykmeldinger'
 import useHotjarTrigger from '../hooks/useHotjarTrigger'
 import { SykmeldingInfoAccordion } from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
@@ -25,9 +24,23 @@ function SykmeldingerPage(): JSX.Element {
 
     if (data?.sykmeldinger == null && loading) {
         return (
-            <div className="mb-8">
-                <Spinner headline="Henter dine sykmeldinger" />
-            </div>
+            <IndexWrapper>
+                <div role="progressbar" aria-label="Henter dine sykmeldinger" aria-busy>
+                    <div aria-hidden className="flex animate-pulse flex-col">
+                        <div className="mb-2 h-8 w-1/6 rounded bg-gray-400"></div>
+                        <div className="h-32 w-full rounded bg-gray-400"></div>
+                        <div className="mb-2 mt-16 h-8 w-18 rounded bg-gray-400"></div>
+                        <div className="flex flex-col gap-4">
+                            <div className="h-32 w-full rounded bg-gray-400"></div>
+                            <div className="h-32 w-full rounded bg-gray-400"></div>
+                            <div className="h-32 w-full rounded bg-gray-400"></div>
+                            <div className="h-32 w-full rounded bg-gray-400"></div>
+                            <div className="h-32 w-full rounded bg-gray-400"></div>
+                            <div className="h-32 w-full rounded bg-gray-400"></div>
+                        </div>
+                    </div>
+                </div>
+            </IndexWrapper>
         )
     }
 

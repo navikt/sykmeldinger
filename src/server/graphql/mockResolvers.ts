@@ -59,6 +59,9 @@ const Query: QueryResolvers = {
         return sykmeldinger
     },
     sykmelding: async (_, { id }): Promise<Sykmelding> => {
+        // fake wait some time
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+
         const relevantSykmelding = sykmeldinger.find((it) => it.id === id)
         if (!relevantSykmelding) {
             throw new Error(`Unable to find sykmelding by id: ${id}`)

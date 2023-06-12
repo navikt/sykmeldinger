@@ -13,15 +13,16 @@ import LenkepanelEtikett from './LenkepanelEtikett'
 interface LenkepanelProps {
     sykmelding: SykmeldingFragment
     notifying: boolean
+    useNewRoute: boolean
 }
 
-export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): JSX.Element {
+export function Lenkepanel({ sykmelding, notifying, useNewRoute }: LenkepanelProps): JSX.Element {
     const status = sykmelding.sykmeldingStatus.statusEvent
     const behandlingsutfallStatus = sykmelding.behandlingsutfall.status
     const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn
 
     return (
-        <Link href={`/${sykmelding.id}`} passHref legacyBehavior>
+        <Link href={`${useNewRoute ? '/new' : ''}/${sykmelding.id}`} passHref legacyBehavior>
             <LinkPanel
                 className={cn('mb-4 p-6 [&>div]:w-full', {
                     'border-orange-300 bg-orange-50 hover:border-orange-500': notifying,

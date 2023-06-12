@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { ReactElement, useMemo, useState } from 'react'
 import { BodyShort, Heading, Select } from '@navikt/ds-react'
 
 import { SykmeldingFragment } from '../../fetching/graphql.generated'
@@ -18,6 +18,7 @@ interface LenkepanelContainerProps {
     type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER' | 'UNDER_BEHANDLING'
     title: string
     defaultSortBy?: SortBy
+    useNewRoute?: boolean
 }
 
 function SykmeldingLinkPanel({
@@ -25,7 +26,8 @@ function SykmeldingLinkPanel({
     type,
     title,
     defaultSortBy = SortBy.DATE,
-}: LenkepanelContainerProps): JSX.Element | null {
+    useNewRoute = false,
+}: LenkepanelContainerProps): ReactElement | null {
     const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy)
     const sykmeldingerSortedByArbeidsgiver = useMemo(() => sortSykmeldingerByArbeidsgiver(sykmeldinger), [sykmeldinger])
 
@@ -66,13 +68,21 @@ function SykmeldingLinkPanel({
                 {sortBy === SortBy.DATE &&
                     sykmeldingerSortedByDate.map((sykmelding, index) => (
                         <li key={index}>
-                            <Lenkepanel sykmelding={sykmelding} notifying={type === 'NYE_SYKMELDINGER'} />
+                            <Lenkepanel
+                                sykmelding={sykmelding}
+                                notifying={type === 'NYE_SYKMELDINGER'}
+                                useNewRoute={useNewRoute}
+                            />
                         </li>
                     ))}
                 {sortBy === SortBy.ARBEIDSGIVER &&
                     sykmeldingerSortedByArbeidsgiver.map((sykmelding, index) => (
                         <li key={index}>
-                            <Lenkepanel sykmelding={sykmelding} notifying={type === 'NYE_SYKMELDINGER'} />
+                            <Lenkepanel
+                                sykmelding={sykmelding}
+                                notifying={type === 'NYE_SYKMELDINGER'}
+                                useNewRoute={useNewRoute}
+                            />
                         </li>
                     ))}
             </ol>

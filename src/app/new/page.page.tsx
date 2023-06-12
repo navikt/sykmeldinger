@@ -1,11 +1,13 @@
 import React, { ReactElement, Suspense } from 'react'
-import { Heading } from '@navikt/ds-react/esm/typography'
 
 import { rscApolloClient } from '../_apollo'
 import { SykmeldingerDocument } from '../../fetching/graphql.generated'
 import { filterSykmeldinger } from '../../utils/sykmeldingFilterUtils'
 import SykmeldingLinkPanel from '../../components/SykmeldingLinkPanel/SykmeldingLinkPanel'
 import { SykmeldingInfoAccordion } from '../../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
+
+import { PageHeader } from './_shared/page-header'
+import SykmeldingerRoot from './_sykmeldinger-root'
 
 export const dynamic = 'force-dynamic'
 
@@ -33,23 +35,34 @@ async function SykmeldingList(): Promise<ReactElement> {
     const { underBehandling, apenSykmeldinger, pastSykmeldinger } = filterSykmeldinger(sykmeldinger.data.sykmeldinger)
 
     return (
-        <div>
-            <SykmeldingLinkPanel title="Under behandling" type="UNDER_BEHANDLING" sykmeldinger={underBehandling} />
-            <SykmeldingLinkPanel title="Nye sykmeldinger" type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
+        <SykmeldingerRoot>
+            <SykmeldingLinkPanel
+                title="Under behandling"
+                type="UNDER_BEHANDLING"
+                sykmeldinger={underBehandling}
+                useNewRoute
+            />
+            <SykmeldingLinkPanel
+                title="Nye sykmeldinger"
+                type="NYE_SYKMELDINGER"
+                sykmeldinger={apenSykmeldinger}
+                useNewRoute
+            />
             <SykmeldingInfoAccordion />
             <SykmeldingLinkPanel
                 title="Tidligere sykmeldinger"
                 type="TIDLIGERE_SYKMELDINGER"
                 sykmeldinger={pastSykmeldinger}
+                useNewRoute
             />
-        </div>
+        </SykmeldingerRoot>
     )
 }
 
 function SykmeldingSkeleton(): ReactElement {
     return (
-        <div>
-            <div className="flex animate-pulse flex-col">
+        <div aria-label="Henter dine sykmeldinger" role="progressbar" aria-busy>
+            <div className="flex animate-pulse flex-col" aria-hidden>
                 <div className="mb-2 h-8 w-1/6 rounded bg-gray-400"></div>
                 <div className="h-32 w-full rounded bg-gray-400"></div>
                 <div className="mb-2 mt-16 h-8 w-18 rounded bg-gray-400"></div>
@@ -62,16 +75,6 @@ function SykmeldingSkeleton(): ReactElement {
                     <div className="h-32 w-full rounded bg-gray-400"></div>
                 </div>
             </div>
-        </div>
-    )
-}
-
-function PageHeader({ title }: { title: string }): ReactElement {
-    return (
-        <div className="mb-8 flex items-center">
-            <Heading size="xlarge" level="1">
-                {title}
-            </Heading>
         </div>
     )
 }
