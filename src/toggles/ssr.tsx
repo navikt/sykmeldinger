@@ -7,7 +7,7 @@ import * as R from 'remeda'
 
 import { isLocalOrDemo } from '../utils/env'
 
-import { getUnleashEnvironment, localDevelopmentToggles } from './utils'
+import { getUnleashEnvironment, getLocalDevelopmentToggles } from './utils'
 import { EXPECTED_TOGGLES } from './toggles'
 
 export async function getFlagsServerSide(
@@ -26,7 +26,7 @@ export async function getFlagsServerSide(
 
     if (isLocalOrDemo) {
         logger.warn('Running in local or demo mode, falling back to development toggles.')
-        return { toggles: localDevelopmentToggles() }
+        return { toggles: getLocalDevelopmentToggles() }
     }
 
     try {

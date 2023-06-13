@@ -6,12 +6,13 @@ import { SchemaLink } from '@apollo/client/link/schema'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { GraphQLSchema } from 'graphql'
 import { logger } from '@navikt/next-logger'
+import { headers } from 'next/headers'
 
 import possibleTypesGenerated from '../fetching/possible-types.generated'
 import { isLocalOrDemo } from '../utils/env'
 import mockResolvers from '../server/graphql/mockResolvers'
 import resolvers from '../server/graphql/resolvers'
-import { getUserContext } from '../auth/rscAuthentication'
+import { getUserContext } from '../auth/user-context'
 
 export function rscApolloClient(): ApolloClient<NormalizedCacheObject> {
     return new ApolloClient({
@@ -19,7 +20,7 @@ export function rscApolloClient(): ApolloClient<NormalizedCacheObject> {
         cache: new InMemoryCache({
             possibleTypes: possibleTypesGenerated.possibleTypes,
         }),
-        link: from([new SchemaLink({ schema: loadSchema(), context: () => getUserContext() })]),
+        link: from([new SchemaLink({ schema: loadSchema(), context: () => getUserContext(headers()) })]),
     })
 }
 

@@ -2,20 +2,31 @@ import { IToggle } from '@unleash/nextjs'
 
 import { browserEnv } from '../utils/env'
 
-import { EXPECTED_TOGGLES } from './toggles'
+import { ExpectedToggles } from './toggles'
 
-export function localDevelopmentToggles(): IToggle[] {
-    return EXPECTED_TOGGLES.map(
-        (it): IToggle => ({
-            name: it,
-            enabled: true,
-            impressionData: false,
-            variant: {
-                name: 'disabled',
-                enabled: false,
-            },
-        }),
-    )
+const localDevelopmentToggles: Record<ExpectedToggles, IToggle> = {
+    SYKMELDINGER_INSTRUMENTATION: {
+        name: 'SYKMELDINGER_INSTRUMENTATION',
+        enabled: true,
+        impressionData: false,
+        variant: {
+            name: 'disabled',
+            enabled: false,
+        },
+    },
+    SYKMELDINGER_NEW_ROUTES: {
+        name: 'SYKMELDINGER_NEW_ROUTES',
+        enabled: false,
+        impressionData: false,
+        variant: {
+            name: 'disabled',
+            enabled: false,
+        },
+    },
+}
+
+export function getLocalDevelopmentToggles(): IToggle[] {
+    return Object.values(localDevelopmentToggles)
 }
 
 export function getUnleashEnvironment(): 'development' | 'production' {

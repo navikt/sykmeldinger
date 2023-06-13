@@ -4,7 +4,6 @@ import React, { PropsWithChildren, ReactElement } from 'react'
 import { Decorator } from '@navikt/nav-dekoratoren-server-component'
 import { DecoratorBreadcrumb } from '@navikt/nav-dekoratoren-server-component/dist/common-types'
 import { headers } from 'next/headers'
-import { logger } from '@navikt/next-logger'
 
 import { getServerEnv } from '../utils/env'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
@@ -15,17 +14,10 @@ import { createInitialServerSideBreadcrumbs, SsrPathVariants } from '../utils/br
 import Providers from './_providers'
 
 export default async function RootLayout({ children }: PropsWithChildren): Promise<ReactElement> {
-    logger.info('At root of layout')
-    console.time('RSC: verifyUserLoggedIn')
     await verifyUserLoggedIn()
-    console.timeEnd('RSC: verifyUserLoggedIn')
 
-    logger.info('Getting flags')
-    console.time('RSC: flagsRsc')
-    const toggles = await getFlagsServerComponent()
-    console.timeEnd('RSC: flagsRsc')
+    const toggles = await getFlagsServerComponent(headers())
 
-    logger.info('Reached JSX.')
     return (
         <html lang="en">
             <Decorator decoratorProps={{ env: createDecoratorEnv(), params: { breadcrumbs: createBreadcrumbs() } }}>
