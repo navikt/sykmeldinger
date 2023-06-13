@@ -1,4 +1,5 @@
 import React, { ReactElement, Suspense } from 'react'
+import { range } from 'remeda'
 
 import { rscApolloClient } from '../_apollo'
 import { SykmeldingerDocument } from '../../fetching/graphql.generated'
@@ -8,6 +9,9 @@ import { SykmeldingInfoAccordion } from '../../components/InfoOmDigitalSykmeldin
 
 import { PageHeader } from './_shared/page-header'
 import SykmeldingerRoot from './_sykmeldinger-root'
+import UnsentSykmeldinger from './_unsent-sykmeldinger'
+import ProcessingSykmeldinger from './_processing-sykmeldinger'
+import OlderSykmeldinger from './_older-sykmeldinger'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,12 +20,25 @@ async function SykmeldingerPage(): Promise<ReactElement> {
         <>
             <PageHeader title="Dine Sykmeldinger" />
             <Suspense fallback={<SykmeldingSkeleton />}>
-                <SykmeldingList />
+                <ProcessingSykmeldinger />
             </Suspense>
+            <Suspense fallback={<SykmeldingSkeleton count={2} />}>
+                <UnsentSykmeldinger />
+            </Suspense>
+            <div className="my-8">
+                <SykmeldingInfoAccordion />
+            </div>
+            <Suspense fallback={<SykmeldingSkeleton count={10} />}>
+                <OlderSykmeldinger />
+            </Suspense>
+            {/*<Suspense fallback={<SykmeldingSkeleton />}>
+                <SykmeldingList />
+            </Suspense>*/}
         </>
     )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function SykmeldingList(): Promise<ReactElement> {
     const client = rscApolloClient()
     const sykmeldinger = await client.query({
@@ -59,20 +76,15 @@ async function SykmeldingList(): Promise<ReactElement> {
     )
 }
 
-function SykmeldingSkeleton(): ReactElement {
+function SykmeldingSkeleton({ count = 1 }: { count?: number }): ReactElement {
     return (
         <div aria-label="Henter dine sykmeldinger" role="progressbar" aria-busy>
-            <div className="flex animate-pulse flex-col" aria-hidden>
-                <div className="mb-2 h-8 w-1/6 rounded bg-gray-400"></div>
-                <div className="h-32 w-full rounded bg-gray-400"></div>
-                <div className="mb-2 mt-16 h-8 w-18 rounded bg-gray-400"></div>
+            <div className="mb-16 flex animate-pulse flex-col" aria-hidden>
+                <div className="mb-2 h-8 w-18 rounded bg-gray-400"></div>
                 <div className="flex flex-col gap-4">
-                    <div className="h-32 w-full rounded bg-gray-400"></div>
-                    <div className="h-32 w-full rounded bg-gray-400"></div>
-                    <div className="h-32 w-full rounded bg-gray-400"></div>
-                    <div className="h-32 w-full rounded bg-gray-400"></div>
-                    <div className="h-32 w-full rounded bg-gray-400"></div>
-                    <div className="h-32 w-full rounded bg-gray-400"></div>
+                    {range(0, count).map((i) => (
+                        <div key={i} className="h-32 w-full rounded bg-gray-400"></div>
+                    ))}
                 </div>
             </div>
         </div>

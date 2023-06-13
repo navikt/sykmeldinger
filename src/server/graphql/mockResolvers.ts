@@ -8,7 +8,7 @@ import mockDb from './mock-db'
 const Query: QueryResolvers = {
     sykmeldinger: async (_, args, { sessionId }): Promise<Sykmelding[]> => {
         // fake wait 3 seconds
-        await new Promise((resolve) => setTimeout(resolve, 3000))
+        // await new Promise((resolve) => setTimeout(resolve, 3000))
 
         return mockDb().get(sessionId).sykmeldinger();
     },

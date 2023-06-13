@@ -16,7 +16,7 @@ const localDevelopmentToggles: Record<ExpectedToggles, IToggle> = {
     },
     SYKMELDINGER_NEW_ROUTES: {
         name: 'SYKMELDINGER_NEW_ROUTES',
-        enabled: false,
+        enabled: true,
         impressionData: false,
         variant: {
             name: 'disabled',

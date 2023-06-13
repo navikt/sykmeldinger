@@ -39,7 +39,6 @@ interface Props {
 
 class MyDocument extends Document<Props> {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & Props> {
-        console.time('Normal: getInitialProps')
         const initialProps = await Document.getInitialProps(ctx)
 
         const Decorator = await fetchDecoratorReact({
@@ -52,8 +51,6 @@ class MyDocument extends Document<Props> {
         })
 
         const language = getDocumentParameter(initialProps, 'lang')
-
-        console.timeEnd('Normal: getInitialProps')
 
         return { ...initialProps, Decorator, language }
     }
