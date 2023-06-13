@@ -2,7 +2,7 @@ import { IToggle } from '@unleash/nextjs'
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { logger } from '@navikt/next-logger'
 
-import { ExpectedToggles } from './toggles'
+import { ExpectedToggles, getFlag } from './toggles'
 
 const FlagContext = createContext<{ toggles: IToggle[] }>({ toggles: [] })
 
@@ -18,11 +18,6 @@ export function FlagProvider({ toggles, children }: PropsWithChildren<{ toggles:
 
 export function useFlag(name: ExpectedToggles): IToggle {
     const context = useContext(FlagContext)
-    const toggle = context.toggles.find((toggle) => toggle.name === name)
 
-    if (toggle == null) {
-        return { name, enabled: false, impressionData: false, variant: { name: 'disabled', enabled: false } }
-    }
-
-    return toggle
+    return getFlag(name, context.toggles)
 }

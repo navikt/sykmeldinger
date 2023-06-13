@@ -3,20 +3,20 @@ import { logger } from '@navikt/next-logger'
 import * as R from 'remeda'
 
 import { isLocalOrDemo } from '../utils/env'
-import { getUserContext } from '../auth/rscAuthentication'
+import { getUserContext } from '../auth/user-context'
 
-import { getUnleashEnvironment, localDevelopmentToggles } from './utils'
+import { getUnleashEnvironment, getLocalDevelopmentToggles } from './utils'
 import { EXPECTED_TOGGLES } from './toggles'
 
-export async function getFlagsServerComponent(): Promise<IToggle[]> {
-    const sessionId = getUserContext()?.payload.pid
+export async function getFlagsServerComponent(headers: Headers): Promise<IToggle[]> {
+    const sessionId = getUserContext(headers)?.payload.pid
     if (!sessionId) {
         throw new Error('User is missing pid. Is the user even logged in?')
     }
 
     if (isLocalOrDemo) {
         logger.warn('Running in local or demo mode, falling back to development toggles.')
-        return localDevelopmentToggles()
+        return getLocalDevelopmentToggles()
     }
 
     try {
