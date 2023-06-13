@@ -4,7 +4,7 @@
         "sub": "3d8a4dc8-ac09-4de2-bba8-2b87e0f2ef66",
         "iss": "https://example.com/oidc-provider/",
         "client_amr": "private_key_jwt",
-        "pid": "08089408084",
+        "pid": "45847100951",
         "token_type": "Bearer",
         "client_id": "21f19b49-904c-491a-b07e-7a702cdf54aa",
         "aud": "https://example.com",

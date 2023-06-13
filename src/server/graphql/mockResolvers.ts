@@ -54,7 +54,7 @@ export const sykmeldinger: SykmeldingApiModel[] = [
 const Query: QueryResolvers = {
     sykmeldinger: async (): Promise<Sykmelding[]> => {
         // fake wait 3 seconds
-        await new Promise((resolve) => setTimeout(resolve, 3000))
+        // await new Promise((resolve) => setTimeout(resolve, 3000))
 
         return sykmeldinger
     },

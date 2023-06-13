@@ -27,5 +27,5 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-    matcher: ['/new', '/((?!api|_next/static|_next/image|favicon.ico).*)'],
+    matcher: ['/new', '/new/:sykmeldingId*'],
 }
