@@ -1,14 +1,18 @@
 import React, { ReactElement } from 'react'
+import { headers } from 'next/headers'
 
 import { Heading } from '../../canary/components/aksel/server'
 import { getProcessingSykmeldnger } from '../../canary/db'
 import SykmeldingLinkPanel from '../../canary/components/sykmeldinger/sykmelding-link-panel'
+import { getServerEnv } from '../../utils/env'
+import { getProcessingSykmeldngerFromAPI } from '../../server/sykmeldingerService'
+import { getUserContext } from '../../auth/user-context'
 
 async function ProcessingSykmeldinger(): Promise<ReactElement | ReactElement[] | null> {
-    // fake wait 1 second
-    //await new Promise((resolve) => setTimeout(resolve, 1000))
+    const sykmeldinger = await (getServerEnv().NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev'
+        ? getProcessingSykmeldngerFromAPI(getUserContext(headers()))
+        : getProcessingSykmeldnger())
 
-    const sykmeldinger = await getProcessingSykmeldnger()
     if (sykmeldinger.length === 0) {
         return null
     }

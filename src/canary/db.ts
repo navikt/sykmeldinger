@@ -5,6 +5,7 @@ import { headers } from 'next/headers'
 import { z } from 'zod'
 
 import { getUserContext } from '../auth/user-context'
+import { toDate } from '../utils/dateUtils'
 
 export const db = lazyNextleton('db', async () => {
     const client = new Client({
@@ -116,7 +117,7 @@ export async function getUnsentSykmeldinger(): Promise<Sykmelding[]> {
 }
 
 export type Sykmelding = z.infer<typeof SykmeldingSchema>
-const SykmeldingSchema = z.object({
+export const SykmeldingSchema = z.object({
     sykmelding_id: z.string(),
     event: z.string(),
     arbeidsgiver: z
@@ -134,7 +135,7 @@ const SykmeldingSchema = z.object({
             messageForSender: z.string(),
         }),
     ),
-    timestamp: z.date(),
+    timestamp: z.union([z.string(), z.date()]).transform(toDate),
     behandlingsutfall: z.string(),
     sykmelding: z.object({
         papirsykmelding: z.boolean(),

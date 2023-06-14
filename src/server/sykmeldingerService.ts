@@ -3,6 +3,7 @@ import { createChildLogger } from '@navikt/next-logger'
 import { grantTokenXOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall'
 import { GraphQLError } from 'graphql'
 
+import { Sykmelding as SykmeldingMinimal, SykmeldingSchema as SykmeldingSchemaMinimal } from '../canary/db'
 import { getServerEnv } from '../utils/env'
 import { sporsmal } from '../utils/sporsmal'
 
@@ -20,6 +21,43 @@ export async function getSykmeldinger(context: RequestContext): Promise<Sykmeldi
     childLogger.info(`Fetching sykmeldinger from backend, requestId: ${context.requestId}`)
 
     return fetchApi({ type: 'GET' }, 'v2/sykmeldinger', (it) => z.array(SykmeldingSchema).parse(it), context)
+}
+
+export async function getProcessingSykmeldngerFromAPI(context: RequestContext | null): Promise<SykmeldingMinimal[]> {
+    const childLogger = createChildLogger(context?.requestId ?? 'none')
+
+    childLogger.info(`Fetching processing sykmeldinger from backend, requestId: ${context?.requestId}`)
+
+    return fetchApi(
+        { type: 'GET' },
+        'v4/sykmeldinger/processing',
+        (it) => z.array(SykmeldingSchemaMinimal).parse(it),
+        context,
+    )
+}
+export async function getOlderSykmeldingerFromAPI(context: RequestContext | null): Promise<SykmeldingMinimal[]> {
+    const childLogger = createChildLogger(context?.requestId ?? 'none')
+
+    childLogger.info(`Fetching older sykmeldinger from backend, requestId: ${context?.requestId}`)
+
+    return fetchApi(
+        { type: 'GET' },
+        'v4/sykmeldinger/older',
+        (it) => z.array(SykmeldingSchemaMinimal).parse(it),
+        context,
+    )
+}
+export async function getUnsentSykmeldingerFromAPI(context: RequestContext | null): Promise<SykmeldingMinimal[]> {
+    const childLogger = createChildLogger(context?.requestId ?? 'none')
+
+    childLogger.info(`Fetching unsent sykmeldinger from backend, requestId: ${context?.requestId}`)
+
+    return fetchApi(
+        { type: 'GET' },
+        'v4/sykmeldinger/unsent',
+        (it) => z.array(SykmeldingSchemaMinimal).parse(it),
+        context,
+    )
 }
 
 export async function getSykmelding(sykmeldingId: string, context: RequestContext): Promise<Sykmelding> {
@@ -153,8 +191,12 @@ async function fetchApi<ResponseObject>(
     method: { type: 'GET' } | { type: 'POST'; body: string | undefined },
     path: string,
     parse: (json?: unknown) => ResponseObject,
-    context: RequestContext,
+    context: RequestContext | null,
 ): Promise<ResponseObject> {
+    if (context == null) {
+        throw new Error('Illegal state: context is null')
+    }
+
     const serverEnv = getServerEnv()
     const childLogger = createChildLogger(context.requestId)
 
