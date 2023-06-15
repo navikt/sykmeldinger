@@ -10,9 +10,17 @@ import { getFlagsServerComponent } from './toggles/rsc'
  * login.
  */
 export async function middleware(request: NextRequest): Promise<NextResponse> {
-    const requestUrl = new URL(request.url)
+    const requestUrl: URL = new URL(request.url)
     const requestHeaders = new Headers(request.headers)
     requestHeaders.set('x-path', requestUrl.pathname)
+
+    if (requestHeaders.get('authorization') == null) {
+        const redirectUrl = request.nextUrl.clone()
+        redirectUrl.pathname = `/oauth2/login`
+        redirectUrl.searchParams.set('redirect', requestUrl.pathname)
+
+        return NextResponse.redirect(redirectUrl)
+    }
 
     const toggles = await getFlagsServerComponent(requestHeaders)
     if (!getFlag('SYKMELDINGER_NEW_ROUTES', toggles).enabled) {
