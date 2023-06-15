@@ -1,6 +1,7 @@
 import { closestTo, isBefore, isSameDay } from 'date-fns'
+import { intersection } from 'remeda'
 
-import { SykmeldingFragment } from '../fetching/graphql.generated'
+import { Periodetype, SykmeldingFragment } from '../fetching/graphql.generated'
 import { toDate } from '../utils/dateUtils'
 import { getSykmeldingEndDate, isSendtSykmelding } from '../utils/sykmeldingUtils'
 
@@ -9,6 +10,7 @@ import useSykmeldinger from './useSykmeldinger'
 export function useFindPrevSykmeldingTom(
     sykmelding: SykmeldingFragment,
     valgtArbeidsgiverOrgnummer: string | null | undefined,
+    ignore?: Periodetype[],
 ): {
     previousSykmeldingTom: Date | null
     isLoading: boolean
@@ -28,6 +30,7 @@ export function useFindPrevSykmeldingTom(
         .filter(isSendtSykmelding)
         .filter((it) => it.id !== sykmelding.id)
         .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer == valgtArbeidsgiverOrgnummer)
+        .filter(removeIgnored(ignore))
 
     const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding))
     const latestTomList: Date[] = sendtSykmeldinger
@@ -41,4 +44,14 @@ export function useFindPrevSykmeldingTom(
         isLoading: false,
         error: undefined,
     }
+}
+
+function removeIgnored(ignored: Periodetype[] | undefined) {
+    return (sykmelding: SykmeldingFragment): boolean =>
+        ignored == null
+            ? true
+            : intersection(
+                  ignored,
+                  sykmelding.sykmeldingsperioder.map((it) => it.type),
+              ).length === 0
 }

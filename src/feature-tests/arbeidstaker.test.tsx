@@ -1,19 +1,20 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, waitFor, screen, axe } from '../utils/test/testUtils'
+import { axe, render, screen, waitFor } from '../utils/test/testUtils'
 import {
     Arbeidsgiver,
-    StatusEvent,
+    ArbeidssituasjonType,
+    Periodetype,
     SendSykmeldingDocument,
+    StatusEvent,
     SykmeldingByIdDocument,
     SykmeldingerDocument,
     YesOrNo,
-    ArbeidssituasjonType,
 } from '../fetching/graphql.generated'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
-import { createMock, createSykmelding } from '../utils/test/dataUtils'
+import { createMock, createSykmelding, createSykmeldingPeriode, createSykmeldingStatus } from '../utils/test/dataUtils'
 
 import { createExtraFormDataMock } from './mockUtils'
 
@@ -309,6 +310,48 @@ describe('Arbeidstaker', () => {
         expect(await screen.findByText(/Du er registrert med adressesperre/)).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         expect(screen.queryByRole('button', { name: 'Bekreft sykmelding' })).not.toBeInTheDocument()
+    })
+
+    describe('given previous sykmeldinger', () => {
+        it('should not collide with AVVENTENDE sykmeldinger and still show "Legg til egenmeldingsdager"', async () => {
+            const sykmelding = createSykmelding({
+                id: 'sykmelding-id',
+                sykmeldingStatus: createSykmeldingStatus({ statusEvent: StatusEvent.SENDT }),
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                        fom: '2023-05-04',
+                        tom: '2023-05-15',
+                    }),
+                ],
+            })
+            const previousSykmelding = createSykmelding({
+                id: 'previous-one',
+                sykmeldingStatus: createSykmeldingStatus({ statusEvent: StatusEvent.SENDT }),
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({ type: Periodetype.AVVENTENDE, fom: '2023-05-04', tom: '2023-05-15' }),
+                ],
+            })
+
+            render(<SykmeldingPage />, {
+                mocks: [
+                    createMock({
+                        request: { query: SykmeldingByIdDocument, variables: { id: 'sykmelding-id' } },
+                        result: {
+                            data: { __typename: 'Query', sykmelding: sykmelding },
+                        },
+                    }),
+                    createMock({
+                        request: { query: SykmeldingerDocument },
+                        result: { data: { __typename: 'Query', sykmeldinger: [sykmelding, previousSykmelding] } },
+                    }),
+                    createExtraFormDataMock(),
+                ],
+            })
+
+            expect(await screen.findByText(/Sykmeldingen ble sendt til/i)).toBeInTheDocument()
+            expect(screen.getByText(/Legg til egenmeldingsdager/)).toBeInTheDocument()
+        })
     })
 })
 
