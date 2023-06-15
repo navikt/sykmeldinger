@@ -5,6 +5,7 @@ import {
     Arbeidsgiver,
     BrukerinformasjonFragment,
     NaermesteLederFragment,
+    Periodetype,
     SykmeldingFragment,
     YesOrNo,
 } from '../../../../../fetching/graphql.generated'
@@ -29,7 +30,11 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element 
     const { watch } = useFormContext<FormValues>()
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
 
-    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
+    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
+        sykmelding,
+        valgtArbeidsgiverOrgnummer,
+        [Periodetype.AVVENTENDE],
+    )
     const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
 
     return (

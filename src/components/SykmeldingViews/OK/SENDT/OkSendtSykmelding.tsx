@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, BodyShort, Heading, Link as DsLink } from '@navikt/ds-react'
 import Link from 'next/link'
 
-import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
+import { Periodetype, SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
@@ -48,6 +48,7 @@ function OkSendtSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Sykmel
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
         sykmelding,
         sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,
+        [Periodetype.AVVENTENDE],
     )
 
     const hasHitPrevious = hasHitPreviousSykmeldingTom(sykmelding, previousSykmeldingTom)

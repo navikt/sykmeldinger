@@ -423,6 +423,87 @@ describe('Egenmeldingsdager', () => {
         expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
     })
 
+    it(`should be asked about egenmeldingsdager when sykmelding is right against AVVENTENDE sykmelding`, async () => {
+        mockRouter.setCurrentUrl(`/current-sykmelding-id`)
+
+        const previousSendtSykmelding = createSykmelding(
+            {
+                id: 'previous-sykmelding-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2023-02-01',
+                        tom: '2023-02-15',
+                        type: Periodetype.AVVENTENDE,
+                    }),
+                ],
+            },
+            StatusEvent.SENDT,
+        )
+        const sykmeldingToBeFilledOut = createSykmelding(
+            {
+                id: 'current-sykmelding-id',
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2023-02-16',
+                        tom: '2023-02-28',
+                        type: Periodetype.AKTIVITET_IKKE_MULIG,
+                    }),
+                ],
+            },
+            StatusEvent.APEN,
+        )
+        render(<SykmeldingPage />, {
+            mocks: [
+                createMock({
+                    request: { query: SykmeldingByIdDocument, variables: { id: 'current-sykmelding-id' } },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmelding: sykmeldingToBeFilledOut,
+                        },
+                    },
+                }),
+                createMock({
+                    request: { query: SykmeldingerDocument },
+                    result: {
+                        data: {
+                            __typename: 'Query',
+                            sykmeldinger: [sykmeldingToBeFilledOut, previousSendtSykmelding],
+                        },
+                    },
+                }),
+                createExtraFormDataMock({
+                    sykmeldingId: 'current-sykmelding-id',
+                    brukerinformasjon: { arbeidsgivere: arbeidsgivereMock },
+                }),
+            ],
+        })
+
+        await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
+        await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Velg arbeidsgiver/i },
+                { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})` },
+            ),
+        )
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Er det Ola Vaskeri som skal følge deg opp på jobben mens du er syk/i },
+                { name: 'Ja' },
+            ),
+        )
+
+        await userEvent.click(
+            screen.getRadioInGroup(
+                { name: /Brukte du egenmelding hos Vaskeriet AS i perioden 31. januar - 15. februar 2023/i },
+                { name: 'Nei' },
+            ),
+        )
+
+        expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+    })
+
     it('should not show egenmeldingsdager info on SENDT sykmelding when there is an empty svar object', async () => {
         const sykmeldingWithEmptyDays = createSykmelding({
             id: 'sykmelding-id',
