@@ -31,9 +31,6 @@ async function SykmeldingerPage(): Promise<ReactElement> {
             <Suspense fallback={<SykmeldingSkeleton count={10} />}>
                 <OlderSykmeldinger />
             </Suspense>
-            {/*<Suspense fallback={<SykmeldingSkeleton />}>
-                <SykmeldingList />
-            </Suspense>*/}
         </>
     )
 }
