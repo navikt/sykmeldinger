@@ -1,23 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { lazyNextleton } from 'nextleton'
-import { Client } from 'pg'
-import { headers } from 'next/headers'
+import pg from 'pg'
 import { z } from 'zod'
 
-import { getUserContext } from '../auth/user-context'
 import { toDate } from '../utils/dateUtils'
+import type { RequestContext } from '../server/graphql/resolvers'
 
-export const db = lazyNextleton('db', async () => {
-    const client = new Client({
-        connectionString: 'postgresql://localhost:5432/sykmeldinger?user=karl.jorgen.overa@nav.no',
+export const db = lazyNextleton('db_', async () => {
+    const client = new pg.Client({
+        connectionString: 'postgresql://127.0.0.1:6969/sykmeldinger?user=karl.jorgen.overa@nav.no',
     })
     await client.connect()
 
     return client
 })
 
-export async function getProcessingSykmeldnger(): Promise<Sykmelding[]> {
-    const user = getUserContext(headers())
+export async function getProcessingSykmeldnger(context: RequestContext): Promise<Sykmelding[]> {
     const client = await db()
 
     console.time('getProcessingSykmeldnger')
@@ -43,15 +41,14 @@ export async function getProcessingSykmeldnger(): Promise<Sykmelding[]> {
               AND sykmelding @> '{"merknader": [{"type": "UNDER_BEHANDLING"}]}'
 
         `,
-        [user?.payload.pid],
+        [context?.payload.pid],
     )
     console.timeEnd('getProcessingSykmeldnger')
 
     return z.array(SykmeldingSchema).parse(queryResult.rows)
 }
 
-export async function getOlderSykmeldinger(): Promise<Sykmelding[]> {
-    const user = getUserContext(headers())
+export async function getOlderSykmeldinger(context: RequestContext): Promise<Sykmelding[]> {
     const client = await db()
 
     console.time('OlderSykmeldinger')
@@ -77,16 +74,17 @@ export async function getOlderSykmeldinger(): Promise<Sykmelding[]> {
               AND NOT sykmelding @> '{"merknader": [{"type": "UNDER_BEHANDLING"}]}'
 
         `,
-        [user?.payload.pid],
+        [context?.payload.pid],
     )
     console.timeEnd('OlderSykmeldinger')
 
     return z.array(SykmeldingSchema).parse(queryResult.rows)
 }
 
-export async function getUnsentSykmeldinger(): Promise<Sykmelding[]> {
-    const user = getUserContext(headers())
+export async function getUnsentSykmeldinger(context: RequestContext): Promise<Sykmelding[]> {
     const client = await db()
+
+    await new Promise((resolve) => setTimeout(resolve, 5000))
 
     console.time('UnsentSykmeldinger')
     const queryResult = await client.query(
@@ -109,7 +107,7 @@ export async function getUnsentSykmeldinger(): Promise<Sykmelding[]> {
             where sykmelding.fnr = $1
               AND ss.event = 'APEN';
         `,
-        [user?.payload.pid],
+        [context?.payload.pid],
     )
     console.timeEnd('UnsentSykmeldinger')
 

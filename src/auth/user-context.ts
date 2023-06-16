@@ -1,14 +1,16 @@
 import { logger } from '@navikt/next-logger'
 
-import { RequestContext } from '../server/graphql/resolvers'
+import type { RequestContext } from '../server/graphql/resolvers'
 import { isLocalOrDemo } from '../utils/env'
+
+import fakeAuthToken from './fakeLocalAuthTokenSet.json'
 
 /**
  * Creates the HTTP context that is passed through the resolvers and services, both for prefetching and HTTP-fetching.
  */
 export function getUserContext(headers: Headers): RequestContext | null {
     if (isLocalOrDemo) {
-        return { ...require('./fakeLocalAuthTokenSet.json') }
+        return { ...fakeAuthToken, requestId: 'local-dev' }
     }
 
     const token = headers.get('authorization')

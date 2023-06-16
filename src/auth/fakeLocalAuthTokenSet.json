@@ -10,8 +10,8 @@
         "aud": "https://example.com",
         "acr": "Level4",
         "scope": "openid profile",
-        "exp": 1628090270,
-        "iat": 1628086670,
+        "exp": "1628090270",
+        "iat": "1628086670",
         "client_orgno": "889640782",
         "jti": "2699e0a2-b02a-4783-aa83-59183e6e001e",
         "consumer": {

@@ -1,0 +1,30 @@
+---
+import * as ds from '@navikt/ds-react'
+
+import SykmeldingLinkPanel from '../../canary/components/sykmeldinger/sykmelding-link-panel'
+
+import { getUnsentSykmeldingerFromAPI } from '../../server/sykmeldingerService'
+import { getUserContext } from '../../auth/user-context'
+import { getUnsentSykmeldinger } from '../../canary/db'
+import { getServerEnv } from '../../utils/env'
+
+const context = getUserContext(Astro.request.headers)
+const sykmeldinger = await (getServerEnv().PUBLIC_RUNTIME_ENVIRONMENT === 'dev'
+    ? getUnsentSykmeldingerFromAPI(context)
+    : getUnsentSykmeldinger(context))
+---
+
+{
+    sykmeldinger.length === 0 ? (
+        <div class="mt-8">Du har ingen nye sykmeldinger</div>
+    ) : (
+        <section aria-labelledby="nye-sykmeldinger-section" class="mb-16">
+            <ds.Heading size="medium" level="2" id="nye-sykmeldinger-section" class="mb-2">
+                Nye sykmeldinger
+            </ds.Heading>
+            {sykmeldinger.map((row) => (
+                <SykmeldingLinkPanel key={row.sykmelding_id} notifying sykmelding={row} />
+            ))}
+        </section>
+    )
+}

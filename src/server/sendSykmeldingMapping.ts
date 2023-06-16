@@ -10,9 +10,9 @@ import {
     YesOrNo,
 } from './graphql/resolver-types.generated'
 import { ArbeidssituasjonV3, SykmeldingUserEventV3Api, UriktigeOpplysningerV3 } from './api-models/SendSykmelding'
-import { Brukerinformasjon } from './api-models/Brukerinformasjon'
-import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
-import { Sykmelding } from './api-models/sykmelding/Sykmelding'
+import type { Brukerinformasjon } from './api-models/Brukerinformasjon'
+import type { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
+import type { Sykmelding } from './api-models/sykmelding/Sykmelding'
 import { JaEllerNei } from './api-models/sykmelding/SykmeldingStatus'
 
 export function mapSendSykmeldingValuesToV3Api(

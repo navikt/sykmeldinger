@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro'
+import ProcessingSykmelding from '../components/sykmelding/ProcessingSykmelding.astro'
+import UnsentSykmeldinger from '../components/sykmelding/UnsentSykmeldinger.astro'
+import OlderSykmeldinger from '../components/sykmelding/OlderSykmeldinger.astro'
+
+import { PageHeader } from '../canary/components/page-header'
+import { SykmeldingInfoAccordion } from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
+---
+
+<Layout title="Welcome to Astro.">
+    <div class="mx-auto max-w-2xl p-4 pb-32">
+        <PageHeader title="Dine Sykmeldinger" />
+        {/* Disse 3 har hver sin data fetching */}
+        <div>En</div>
+        <ProcessingSykmelding />
+        <div>To</div>
+        <UnsentSykmeldinger />
+        <div className="my-8">
+            <SykmeldingInfoAccordion client:load />
+        </div>
+        <div>Tre</div>
+        <OlderSykmeldinger />
+    </div>
+</Layout>
+
+<style></style>

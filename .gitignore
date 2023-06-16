@@ -74,3 +74,9 @@ typings/
 
 # page used for debugging stuff locally
 src/pages/debug.page.tsx
+
+# build output
+dist/
+
+# generated types
+.astro/

@@ -1,11 +1,9 @@
-'use client'
-
 import React, { ReactElement, useState } from 'react'
 import { sortBy } from 'remeda'
 import { min } from 'date-fns'
-import { Select, Heading } from '@navikt/ds-react'
+import * as ds from '@navikt/ds-react'
 
-import { Sykmelding } from '../../db'
+import type { Sykmelding } from '../../db'
 import { toDate } from '../../../utils/dateUtils'
 
 import SykmeldingLinkPanel from './sykmelding-link-panel'
@@ -36,13 +34,17 @@ function SortableSykmeldingSection({ sykmeldinger }: Props): ReactElement {
     return (
         <div>
             <div className="mb-2 flex items-end justify-between">
-                <Heading size="medium" level="2" id="older-sykmeldinger-section">
+                <ds.Heading size="medium" level="2" id="older-sykmeldinger-section">
                     Tidligere sykmeldinger
-                </Heading>
-                <Select value={sort} label="Sorter etter" onChange={(event) => setSort(event.target.value as SortBy)}>
+                </ds.Heading>
+                <ds.Select
+                    value={sort}
+                    label="Sorter etter"
+                    onChange={(event) => setSort(event.target.value as SortBy)}
+                >
                     <option value={SortBy.DATE}>Dato</option>
                     <option value={SortBy.ARBEIDSGIVER}>Arbeidsgiver</option>
-                </Select>
+                </ds.Select>
             </div>
             {sorter(sykmeldinger).map((row) => (
                 <SykmeldingLinkPanel key={row.sykmelding_id} notifying={false} sykmelding={row} />

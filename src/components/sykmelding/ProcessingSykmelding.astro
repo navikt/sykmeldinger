@@ -1,0 +1,28 @@
+---
+import * as ds from '@navikt/ds-react'
+
+import SykmeldingLinkPanel from '../../canary/components/sykmeldinger/sykmelding-link-panel'
+
+import { getProcessingSykmeldngerFromAPI } from '../../server/sykmeldingerService'
+import { getUserContext } from '../../auth/user-context'
+import { getProcessingSykmeldnger } from '../../canary/db'
+import { getServerEnv } from '../../utils/env'
+
+const context = getUserContext(Astro.request.headers)
+const sykmeldinger = await (getServerEnv().PUBLIC_RUNTIME_ENVIRONMENT === 'dev'
+    ? getProcessingSykmeldngerFromAPI(context)
+    : getProcessingSykmeldnger(context))
+---
+
+{
+    sykmeldinger.length === 0 ? null : (
+        <section aria-labelledby="under-behandling-section" class="mb-16">
+            <ds.Heading size="medium" level="2" id="under-behandling-section" class="mb-2">
+                Under behandling
+            </ds.Heading>
+            {sykmeldinger.map((row) => (
+                <SykmeldingLinkPanel key={row.sykmelding_id} sykmelding={row} notifying={false} />
+            ))}
+        </section>
+    )
+}

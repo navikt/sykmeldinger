@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 
-import { RegelStatus } from '../../../fetching/graphql.generated'
+import type { RegelStatus } from '../../../fetching/graphql.generated'
 
 function DeclinedIcon(): ReactElement {
     return (
@@ -23,7 +23,7 @@ function DeclinedIcon(): ReactElement {
     )
 }
 
-function PapersykmeldingIcon(): JSX.Element {
+function PapersykmeldingIcon(): ReactElement {
     return (
         <svg
             width="48"
@@ -50,7 +50,7 @@ function PapersykmeldingIcon(): JSX.Element {
     )
 }
 
-function StethoscopeIcon(): JSX.Element {
+function StethoscopeIcon(): ReactElement {
     return (
         <svg
             width="42"
@@ -76,7 +76,7 @@ interface LenkepanelIconProps {
     isPaper: boolean
 }
 
-function LenkepanelIcon({ behandlingsutfall, isPaper }: LenkepanelIconProps): JSX.Element {
+function LenkepanelIcon({ behandlingsutfall, isPaper }: LenkepanelIconProps): ReactElement {
     if (behandlingsutfall === 'INVALID') {
         return <DeclinedIcon />
     }

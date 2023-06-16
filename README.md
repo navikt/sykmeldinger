@@ -1,98 +1,55 @@
-# Sykmeldinger 📝
+# Astro Starter Kit: Basics
 
-Frontend for visning og behandling av sykmeldinger.
-
-Lever under:
-
--   prod-gcp: https://www.nav.no/syk/sykmeldinger
--   dev-gcp: https://www.ekstern.dev.nav.no/syk/sykmeldinger
--   dev-gcp (demo): https://sykmeldinger.ekstern.dev.nav.no/syk/sykmeldinger/
-
-
-Tekniske valg:
-
--   NextJS
--   apollo-server for GraphQL API.
--   apollo-client for håndtering av fetching og server state.
--   zod for validering av "ukjent" data fra diverse API.
--   react-testing-library for enhetstesting av enkeltkomponenter.
-
-Data-flyt:
-
-```mermaid
-graph TD
-  browser[Browser] --> apollo
-  subgraph next[NextJS App]
-    apollo[Apollo Server] --> gql
-    gql[GraphQL resolvers] --> ss.ts & fs.ts
-  end
-  ss.ts[sykmeldingerService.ts] --> sb
-  fs.ts[flesService.ts] --> fg
-  subgraph ext[External Services]
-    sb[sykmeldinger-backend]
-    fg[flex-gateway]
-  end
+```
+npm create astro@latest -- --template basics
 ```
 
-## Kjør lokalt
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
+[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
 
-### Tilgang til Github Package Registry
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-Siden vi bruker avhengigheter som ligger i GPR, så må man sette opp tilgang til GPR med en PAT (personal access token) som har `read:packages`. Du kan [opprette PAT her](https://github.com/settings/tokens). Dersom du har en PAT som du bruker for tilgang til maven-packages i github kan du gjenbruke denne.
+![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
 
-I din `.bashrc` eller `.zshrc`, sett følgende miljøvariabel:
 
-`export NPM_AUTH_TOKEN=<din PAT med read:packages>`
+## 🚀 Project Structure
 
-### Kjør appen
+Inside of your Astro project, you'll see the following folders and files:
 
-Installer avhengigheter, dette trenger du kun å gjøre når avhengigheter endrer seg:
-
-```bash
-yarn
+```
+/
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── components/
+│   │   └── Card.astro
+│   ├── layouts/
+│   │   └── Layout.astro
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
 
-Kjør appen i utviklingsmodus:
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-```bash
-yarn start
-```
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-Verifisering av appen lokalt:
+Any static assets, like images, can be placed in the `public/` directory.
 
--   kjør lint:
+## 🧞 Commands
 
-```bash
-yarn lint
-```
+All commands are run from the root of the project, from a terminal:
 
--   sjekk typescript:
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:3000`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-```bash
-yarn tsc
-```
+## 👀 Want to learn more?
 
--   kjør tester:
-
-```bash
-yarn test
-```
-
--   bygg appen:
-
-```bash
-yarn build
-```
-
-## Test-miljø
-
-[www.ekstern.dev.nav.no/syk/sykmeldinger](www-gcp.dev.nav.no/syk/sykmeldinger) kan nås uten naisdevice.
-
-### Kontakt/spørsmål
-
-Prosjektet er vedlikeholdt av [teamsykmelding](CODEOWNERS)
-
-Spørsmål og/eller feature requests? Vennligst lag ein [issue](https://github.com/navikt/sykmeldinger/issues).
-
-Dersom du jobber i [@navikt](https://github.com/navikt) kan du nå oss på slack
-kanalen [#team-sykmelding](https://nav-it.slack.com/archives/CMA3XV997).
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

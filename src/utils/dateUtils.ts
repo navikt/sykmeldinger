@@ -10,7 +10,7 @@ import {
     parseISO,
     sub,
 } from 'date-fns'
-import nbLocale from 'date-fns/locale/nb'
+import * as locale from 'date-fns/locale/index'
 import { sortBy } from 'remeda'
 
 export function dateAdd(date: string | Date, duration: Duration): string {
@@ -32,11 +32,11 @@ export function toDateString(date: Date): string {
 }
 
 export function toReadableDate(date: string | Date): string {
-    return format(toDate(date), `d. MMMM yyyy`, { locale: nbLocale })
+    return format(toDate(date), `d. MMMM yyyy`, { locale: locale.nb })
 }
 
 export function toReadableDateNoYear(date: string | Date): string {
-    return format(toDate(date), 'd. MMMM', { locale: nbLocale })
+    return format(toDate(date), 'd. MMMM', { locale: locale.nb })
 }
 
 /**

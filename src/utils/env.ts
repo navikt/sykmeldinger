@@ -2,19 +2,19 @@ import { z, ZodError } from 'zod'
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>
 export const publicEnvSchema = z.object({
-    NEXT_PUBLIC_BASE_PATH: z.union([z.string(), z.undefined()]),
-    NEXT_PUBLIC_RUNTIME_ENVIRONMENT: z.union([
+    PUBLIC_BASE_PATH: z.union([z.string(), z.undefined()]),
+    PUBLIC_RUNTIME_ENVIRONMENT: z.union([
         z.literal('dev'),
         z.literal('test'),
         z.literal('local'),
         z.literal('demo'),
         z.literal('production'),
     ]),
-    NEXT_PUBLIC_MIN_SIDE_ROOT: z.string(),
-    NEXT_PUBLIC_SYKEFRAVAER_ROOT: z.string(),
-    NEXT_PUBLIC_SYKEPENGESOKNAD_URL: z.string(),
-    NEXT_PUBLIC_AMPLITUDE_ENABLED: z.string().optional(),
-    NEXT_PUBLIC_TELEMETRY_URL: z.string().optional(),
+    PUBLIC_MIN_SIDE_ROOT: z.string(),
+    PUBLIC_SYKEFRAVAER_ROOT: z.string(),
+    PUBLIC_SYKEPENGESOKNAD_URL: z.string(),
+    PUBLIC_AMPLITUDE_ENABLED: z.string().optional(),
+    PUBLIC_TELEMETRY_URL: z.string().optional(),
 })
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>
@@ -40,30 +40,30 @@ export const serverEnvSchema = z.object({
  * They MUST be provided during the build step.
  */
 export const browserEnv = publicEnvSchema.parse({
-    NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
-    NEXT_PUBLIC_RUNTIME_ENVIRONMENT: process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT,
-    NEXT_PUBLIC_AMPLITUDE_ENABLED: process.env.NEXT_PUBLIC_AMPLITUDE_ENABLED,
-    NEXT_PUBLIC_SYKEPENGESOKNAD_URL: process.env.NEXT_PUBLIC_SYKEPENGESOKNAD_URL,
-    NEXT_PUBLIC_SYKEFRAVAER_ROOT: process.env.NEXT_PUBLIC_SYKEFRAVAER_ROOT,
-    NEXT_PUBLIC_MIN_SIDE_ROOT: process.env.NEXT_PUBLIC_MIN_SIDE_ROOT,
-    NEXT_PUBLIC_TELEMETRY_URL: process.env.NEXT_PUBLIC_TELEMETRY_URL,
+    PUBLIC_BASE_PATH: import.meta.env.PUBLIC_BASE_PATH,
+    PUBLIC_RUNTIME_ENVIRONMENT: import.meta.env.PUBLIC_RUNTIME_ENVIRONMENT,
+    PUBLIC_AMPLITUDE_ENABLED: import.meta.env.PUBLIC_AMPLITUDE_ENABLED,
+    PUBLIC_SYKEPENGESOKNAD_URL: import.meta.env.PUBLIC_SYKEPENGESOKNAD_URL,
+    PUBLIC_SYKEFRAVAER_ROOT: import.meta.env.PUBLIC_SYKEFRAVAER_ROOT,
+    PUBLIC_MIN_SIDE_ROOT: import.meta.env.PUBLIC_MIN_SIDE_ROOT,
+    PUBLIC_TELEMETRY_URL: import.meta.env.PUBLIC_TELEMETRY_URL,
 } satisfies Record<keyof PublicEnv, string | undefined>)
 
 const getRawServerConfig = (): Partial<unknown> => ({
     // Provided by nais-*.yml
-    SYKMELDINGER_BACKEND: process.env.SYKMELDINGER_BACKEND,
-    FLEX_SYKETILFELLE: process.env.FLEX_SYKETILFELLE,
-    SYKMELDINGER_BACKEND_SCOPE: process.env.SYKMELDINGER_BACKEND_SCOPE,
-    FLEX_SYKETILFELLE_BACKEND_SCOPE: process.env.FLEX_SYKETILFELLE_BACKEND_SCOPE,
+    SYKMELDINGER_BACKEND: import.meta.env.SYKMELDINGER_BACKEND,
+    FLEX_SYKETILFELLE: import.meta.env.FLEX_SYKETILFELLE,
+    SYKMELDINGER_BACKEND_SCOPE: import.meta.env.SYKMELDINGER_BACKEND_SCOPE,
+    FLEX_SYKETILFELLE_BACKEND_SCOPE: import.meta.env.FLEX_SYKETILFELLE_BACKEND_SCOPE,
     // Provided by nais
-    IDPORTEN_CLIENT_ID: process.env.IDPORTEN_CLIENT_ID,
-    IDPORTEN_WELL_KNOWN_URL: process.env.IDPORTEN_WELL_KNOWN_URL,
-    TOKEN_X_WELL_KNOWN_URL: process.env.TOKEN_X_WELL_KNOWN_URL,
-    TOKEN_X_PRIVATE_JWK: process.env.TOKEN_X_PRIVATE_JWK,
-    TOKEN_X_CLIENT_ID: process.env.TOKEN_X_CLIENT_ID,
+    IDPORTEN_CLIENT_ID: import.meta.env.IDPORTEN_CLIENT_ID,
+    IDPORTEN_WELL_KNOWN_URL: import.meta.env.IDPORTEN_WELL_KNOWN_URL,
+    TOKEN_X_WELL_KNOWN_URL: import.meta.env.TOKEN_X_WELL_KNOWN_URL,
+    TOKEN_X_PRIVATE_JWK: import.meta.env.TOKEN_X_PRIVATE_JWK,
+    TOKEN_X_CLIENT_ID: import.meta.env.TOKEN_X_CLIENT_ID,
     // for unleash
-    UNLEASH_SERVER_API_URL: process.env.UNLEASH_SERVER_API_URL,
-    UNLEASH_SERVER_API_TOKEN: process.env.UNLEASH_SERVER_API_TOKEN,
+    UNLEASH_SERVER_API_URL: import.meta.env.UNLEASH_SERVER_API_URL,
+    UNLEASH_SERVER_API_TOKEN: import.meta.env.UNLEASH_SERVER_API_TOKEN,
 })
 
 /**
@@ -89,5 +89,4 @@ export function getServerEnv(): ServerEnv & PublicEnv {
     }
 }
 
-export const isLocalOrDemo =
-    process.env.NODE_ENV !== 'production' || browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'demo'
+export const isLocalOrDemo = process.env.NODE_ENV !== 'production' || browserEnv.PUBLIC_RUNTIME_ENVIRONMENT === 'demo'

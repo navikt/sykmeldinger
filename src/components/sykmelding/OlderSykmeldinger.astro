@@ -1,0 +1,25 @@
+---
+import * as ds from '@navikt/ds-react'
+
+import { getOlderSykmeldingerFromAPI } from '../../server/sykmeldingerService'
+import { getUserContext } from '../../auth/user-context'
+import { getOlderSykmeldinger } from '../../canary/db'
+import { getServerEnv } from '../../utils/env'
+
+import SortableSykmeldingSection from '../../canary/components/sykmeldinger/sortable-sykmelding-section'
+
+const context = getUserContext(Astro.request.headers)
+const sykmeldinger = await (getServerEnv().PUBLIC_RUNTIME_ENVIRONMENT === 'dev'
+    ? getOlderSykmeldingerFromAPI(context)
+    : getOlderSykmeldinger(context))
+---
+
+{
+    sykmeldinger.length === 0 ? (
+        <div class="mt-8">Du har ingen nye sykmeldinger</div>
+    ) : (
+        <section aria-labelledby="older-sykmeldinger-section" class="mb-16">
+            <SortableSykmeldingSection client:load sykmeldinger={sykmeldinger} />
+        </section>
+    )
+}
