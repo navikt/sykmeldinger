@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server'
 
 import { getFlag } from './toggles/toggles'
 import { getFlagsServerComponent } from './toggles/rsc'
+import { isLocalOrDemo } from './utils/env'
 
 /**
  * This middleware is purely a hack to be able to provide the react server component auth
@@ -14,7 +15,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     const requestHeaders = new Headers(request.headers)
     requestHeaders.set('x-path', requestUrl.pathname)
 
-    if (requestHeaders.get('authorization') == null) {
+    if (requestHeaders.get('authorization') == null && !isLocalOrDemo) {
         const redirectUrl = request.nextUrl.clone()
         redirectUrl.pathname = `/oauth2/login`
         redirectUrl.searchParams.set('redirect', requestUrl.pathname)

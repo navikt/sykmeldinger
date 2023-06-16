@@ -60,6 +60,8 @@ const nextConfig = {
         ]
     },
     async headers() {
+        if (process.env.NODE_ENV !== 'production') return []
+
         const environment = process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'production' ? 'prod' : 'dev'
         const cspValue = await buildCspHeader(appDirectives, { env: environment })
 

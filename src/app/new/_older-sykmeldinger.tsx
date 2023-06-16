@@ -5,7 +5,7 @@ import { getOlderSykmeldinger } from '../../canary/db'
 import SortableSykmeldingSection from '../../canary/components/sykmeldinger/sortable-sykmelding-section'
 import { getServerEnv } from '../../utils/env'
 import { getOlderSykmeldingerFromAPI } from '../../server/sykmeldingerService'
-import { getUserContext } from '../../auth/user-context'
+import { getUserContext } from '../../auth/rsc-user-context'
 
 async function OlderSykmeldinger(): Promise<ReactElement | ReactElement[] | null> {
     const sykmeldinger = await (getServerEnv().NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev'

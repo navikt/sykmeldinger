@@ -1,14 +1,13 @@
 import '../style/global.css'
 
 import React, { PropsWithChildren, ReactElement } from 'react'
-import { Decorator } from '@navikt/nav-dekoratoren-server-component'
-import { DecoratorBreadcrumb } from '@navikt/nav-dekoratoren-server-component/dist/common-types'
+import { Decorator, DecoratorBreadcrumb } from '@navikt/nav-dekoratoren-server-component'
 import { headers } from 'next/headers'
 
 import { getServerEnv } from '../utils/env'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
 import { getFlagsServerComponent } from '../toggles/rsc'
-import { verifyUserLoggedIn } from '../auth/rscAuthentication'
+import { verifyUserLoggedIn } from '../auth/rsc-authentication'
 import { createInitialServerSideBreadcrumbs, SsrPathVariants } from '../utils/breadcrumbs'
 
 import Providers from './_providers'

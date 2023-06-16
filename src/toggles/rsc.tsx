@@ -3,7 +3,7 @@ import { logger } from '@navikt/next-logger'
 import * as R from 'remeda'
 
 import { isLocalOrDemo } from '../utils/env'
-import { getUserContext } from '../auth/user-context'
+import { getUserContext } from '../auth/rsc-user-context'
 
 import { getUnleashEnvironment, getLocalDevelopmentToggles } from './utils'
 import { EXPECTED_TOGGLES } from './toggles'

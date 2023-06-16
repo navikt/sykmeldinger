@@ -12,7 +12,7 @@ import possibleTypesGenerated from '../fetching/possible-types.generated'
 import { isLocalOrDemo } from '../utils/env'
 import mockResolvers from '../server/graphql/mockResolvers'
 import resolvers from '../server/graphql/resolvers'
-import { getUserContext } from '../auth/user-context'
+import { getUserContext } from '../auth/rsc-user-context'
 
 export function rscApolloClient(): ApolloClient<NormalizedCacheObject> {
     return new ApolloClient({

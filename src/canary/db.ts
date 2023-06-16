@@ -3,13 +3,17 @@ import { lazyNextleton } from 'nextleton'
 import { Client } from 'pg'
 import { headers } from 'next/headers'
 import { z } from 'zod'
+import { parseISO } from 'date-fns'
 
-import { getUserContext } from '../auth/user-context'
+import { Sykmelding as SykmeldingApi } from '../server/api-models/sykmelding/Sykmelding'
+import { getUserContext } from '../auth/rsc-user-context'
 import { toDate } from '../utils/dateUtils'
+import { isLocalOrDemo } from '../utils/env'
+import mockDb from '../server/graphql/mock-db'
 
-export const db = lazyNextleton('db', async () => {
+export const db = lazyNextleton('db-4', async () => {
     const client = new Client({
-        connectionString: 'postgresql://localhost:5432/sykmeldinger?user=karl.jorgen.overa@nav.no',
+        connectionString: 'postgresql://127.0.0.1:6969/sykmeldinger?user=karl.jorgen.overa@nav.no',
     })
     await client.connect()
 
@@ -18,6 +22,14 @@ export const db = lazyNextleton('db', async () => {
 
 export async function getProcessingSykmeldnger(): Promise<Sykmelding[]> {
     const user = getUserContext(headers())
+    if (!user) {
+        throw new Error('User is missing authorization bearer token')
+    }
+
+    if (isLocalOrDemo) {
+        return mockDb().get(user.sessionId).sykmeldinger().map(bigToSmol)
+    }
+
     const client = await db()
 
     console.time('getProcessingSykmeldnger')
@@ -52,6 +64,14 @@ export async function getProcessingSykmeldnger(): Promise<Sykmelding[]> {
 
 export async function getOlderSykmeldinger(): Promise<Sykmelding[]> {
     const user = getUserContext(headers())
+    if (!user) {
+        throw new Error('User is missing authorization bearer token')
+    }
+
+    if (isLocalOrDemo) {
+        return mockDb().get(user.sessionId).sykmeldinger().map(bigToSmol)
+    }
+
     const client = await db()
 
     console.time('OlderSykmeldinger')
@@ -86,6 +106,13 @@ export async function getOlderSykmeldinger(): Promise<Sykmelding[]> {
 
 export async function getUnsentSykmeldinger(): Promise<Sykmelding[]> {
     const user = getUserContext(headers())
+    if (!user) {
+        throw new Error('User is missing authorization bearer token')
+    }
+
+    if (isLocalOrDemo) {
+        return mockDb().get(user.sessionId).sykmeldinger().map(bigToSmol)
+    }
     const client = await db()
 
     console.time('UnsentSykmeldinger')
@@ -150,3 +177,35 @@ export const SykmeldingSchema = z.object({
         ),
     }),
 })
+
+function bigToSmol(sykmelding: SykmeldingApi): Sykmelding {
+    return {
+        sykmelding_id: sykmelding.id,
+        event: sykmelding.sykmeldingStatus.statusEvent,
+        arbeidsgiver: sykmelding.arbeidsgiver
+            ? ({
+                  orgNavn: sykmelding.arbeidsgiver.navn ?? 'Missing',
+                  juridiskOrgnummer: sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer ?? 'Missing',
+                  orgnummer: sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer ?? 'Missing',
+              } satisfies Sykmelding['arbeidsgiver'])
+            : null,
+        rule_hits: sykmelding.behandlingsutfall.ruleHits.map((it) => ({
+            ruleName: it.ruleName,
+            ruleStatus: it.ruleStatus,
+            messageForUser: it.messageForUser,
+            messageForSender: it.messageForSender,
+        })),
+        timestamp: parseISO(sykmelding.sykmeldingStatus.timestamp),
+        behandlingsutfall: sykmelding.behandlingsutfall.status,
+        sykmelding: {
+            papirsykmelding: sykmelding.papirsykmelding ?? false,
+            sykmeldingsperioder: sykmelding.sykmeldingsperioder.map((it) => ({
+                fom: it.fom,
+                tom: it.tom,
+                type: it.type,
+                gradert: it.gradert ?? null,
+                behandlingsdager: it.behandlingsdager ?? null,
+            })),
+        },
+    }
+}

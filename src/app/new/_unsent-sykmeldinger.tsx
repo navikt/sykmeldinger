@@ -6,7 +6,7 @@ import SykmeldingLinkPanel from '../../canary/components/sykmeldinger/sykmelding
 import { Heading } from '../../canary/components/aksel/server'
 import { getServerEnv } from '../../utils/env'
 import { getUnsentSykmeldingerFromAPI } from '../../server/sykmeldingerService'
-import { getUserContext } from '../../auth/user-context'
+import { getUserContext } from '../../auth/rsc-user-context'
 
 async function UnsentSykmeldinger(): Promise<ReactElement | ReactElement[]> {
     const sykmeldinger = await (getServerEnv().NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev'

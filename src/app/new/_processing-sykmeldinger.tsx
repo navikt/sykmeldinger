@@ -6,7 +6,7 @@ import { getProcessingSykmeldnger } from '../../canary/db'
 import SykmeldingLinkPanel from '../../canary/components/sykmeldinger/sykmelding-link-panel'
 import { getServerEnv } from '../../utils/env'
 import { getProcessingSykmeldngerFromAPI } from '../../server/sykmeldingerService'
-import { getUserContext } from '../../auth/user-context'
+import { getUserContext } from '../../auth/rsc-user-context'
 
 async function ProcessingSykmeldinger(): Promise<ReactElement | ReactElement[] | null> {
     const sykmeldinger = await (getServerEnv().NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev'

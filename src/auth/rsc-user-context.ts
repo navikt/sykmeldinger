@@ -8,7 +8,11 @@ import { isLocalOrDemo } from '../utils/env'
  */
 export function getUserContext(headers: Headers): RequestContext | null {
     if (isLocalOrDemo) {
-        return { ...require('./fakeLocalAuthTokenSet.json') }
+        return {
+            ...require('./fakeLocalAuthTokenSet.json'),
+            requestId: 'not set',
+            sessionId: 'not set',
+        }
     }
 
     const token = headers.get('authorization')
@@ -23,5 +27,6 @@ export function getUserContext(headers: Headers): RequestContext | null {
         accessToken,
         payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
         requestId: headers.get('x-request-id') ?? 'not set',
+        sessionId: 'unused',
     }
 }

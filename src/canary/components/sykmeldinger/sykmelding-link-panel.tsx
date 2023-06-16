@@ -21,7 +21,7 @@ function SykmeldingLinkPanel({ sykmelding, notifying }: { sykmelding: Sykmelding
                 <div className="flex gap-3 max-[560px]:flex-col">
                     <div className="mr-8 hidden sm:block">
                         <LenkepanelIcon
-                            behandlingsutfall={sykmelding.rule_hits[0].ruleStatus as RegelStatus}
+                            behandlingsutfall={sykmelding.behandlingsutfall as RegelStatus}
                             isPaper={sykmelding.sykmelding.papirsykmelding}
                         />
                     </div>
@@ -41,7 +41,7 @@ function SykmeldingLinkPanel({ sykmelding, notifying }: { sykmelding: Sykmelding
                     <div className="flex shrink-0 items-center">
                         <SykmeldingLinkPanelTag
                             status={sykmelding.event as StatusEvent}
-                            behandlingsutfall={sykmelding.rule_hits[0].ruleStatus as RegelStatus}
+                            behandlingsutfall={sykmelding.behandlingsutfall as RegelStatus}
                         />
                     </div>
                 </div>

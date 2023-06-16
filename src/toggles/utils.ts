@@ -5,23 +5,17 @@ import { browserEnv } from '../utils/env'
 import { ExpectedToggles } from './toggles'
 
 const localDevelopmentToggles: Record<ExpectedToggles, IToggle> = {
-    SYKMELDINGER_INSTRUMENTATION: {
-        name: 'SYKMELDINGER_INSTRUMENTATION',
+    SYKMELDINGER_FLEXJAR_KVITTERING: {
+        name: 'SYKMELDINGER_FLEXJAR_KVITTERING',
         enabled: true,
         impressionData: false,
-        variant: {
-            name: 'disabled',
-            enabled: false,
-        },
+        variant: { name: 'disabled', enabled: false },
     },
     SYKMELDINGER_NEW_ROUTES: {
         name: 'SYKMELDINGER_NEW_ROUTES',
         enabled: true,
         impressionData: false,
-        variant: {
-            name: 'disabled',
-            enabled: false,
-        },
+        variant: { name: 'disabled', enabled: false },
     },
 }
 
