@@ -1,5 +1,7 @@
 import { Heading } from '@navikt/ds-react'
 
+import SykmeldingIcon from './SykmeldingIcon'
+
 interface HeaderProps {
     title?: string
     subTitle?: string
@@ -11,13 +13,16 @@ function Header({ title, subTitle }: HeaderProps): JSX.Element | null {
     }
 
     return (
-        <div className="flex flex-col items-center bg-blue-100 py-5">
-            <Heading size="large">{title}</Heading>
-            {subTitle ? (
-                <Heading size="medium" level="2">
-                    {subTitle}
-                </Heading>
-            ) : null}
+        <div className="mx-auto flex max-w-2xl items-center p-4">
+            <SykmeldingIcon className="mr-8 h-16 w-16" />
+            <div>
+                <Heading size="xlarge">{title}</Heading>
+                {subTitle ? (
+                    <Heading size="medium" level="2">
+                        {subTitle}
+                    </Heading>
+                ) : null}
+            </div>
         </div>
     )
 }
