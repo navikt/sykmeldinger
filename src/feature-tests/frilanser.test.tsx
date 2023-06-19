@@ -131,7 +131,7 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
             await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
@@ -182,7 +182,7 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
             await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
@@ -295,7 +295,7 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
             await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
@@ -318,7 +318,7 @@ describe('Frilanser', () => {
                 ],
             })
 
-            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+            await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
             await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))

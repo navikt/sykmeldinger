@@ -132,7 +132,7 @@ describe('Avbryt sykmelding', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
         await userEvent.click(await screen.findByRole('button', { name: 'Jeg vil avbryte sykmeldingen' }))
         expect(screen.getByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeInTheDocument()
@@ -183,7 +183,7 @@ describe('Avbryt sykmelding', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
         expect(screen.getByRole('heading', { name: 'Egenmeldingen ble avbrutt av deg' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
     })

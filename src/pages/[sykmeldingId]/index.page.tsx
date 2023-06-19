@@ -1,9 +1,9 @@
-import React, { PropsWithChildren, useCallback, useState } from 'react'
-import { Alert, BodyLong, BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
+import React, { Fragment, PropsWithChildren, ReactElement, useCallback, useEffect, useState } from 'react'
+import { Alert, BodyLong, BodyShort, GuidePanel, Heading, Link, Skeleton } from '@navikt/ds-react'
 import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
+import { range } from 'remeda'
 
-import Spinner from '../../components/Spinner/Spinner'
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
 import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId'
@@ -37,9 +37,9 @@ function SykmeldingPage(): JSX.Element {
 
     if (data?.sykmelding == null && (loading || olderSykmelding.isLoading)) {
         return (
-            <div className="mb-8">
-                <Spinner headline="Henter sykmelding" />
-            </div>
+            <SykmeldingerWrapper>
+                <SykmeldingSkeleton />
+            </SykmeldingerWrapper>
         )
     }
 
@@ -104,7 +104,7 @@ function SykmeldingComponent({
     sykmelding: SykmeldingFragment
     olderSykmeldingId: string | null
     olderSykmeldingCount: number
-}): JSX.Element | null {
+}): ReactElement | null {
     useLogSykmeldingPageAmplitude(sykmelding, olderSykmeldingCount)
 
     const [hasReopenedSykmelding, setHasReopenedSykmelding] = useState(false)
@@ -183,16 +183,21 @@ function useLogSykmeldingPageAmplitude(sykmelding: SykmeldingFragment, olderSykm
 function SykmeldingerWrapper({
     sykmelding,
     children,
-}: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): JSX.Element {
+}: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): ReactElement {
     useUpdateBreadcrumbs(() => [{ title: getSykmeldingTitle(sykmelding) }])
 
-    addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
-            e.preventDefault()
-            e.stopImmediatePropagation()
-            window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`, '_ blank')
+    useEffect(() => {
+        const listener = (e: KeyboardEvent): void => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
+                e.preventDefault()
+                e.stopImmediatePropagation()
+                window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`, '_ blank')
+            }
         }
-    })
+        addEventListener('keydown', listener)
+
+        return () => removeEventListener('keydown', listener)
+    }, [sykmelding?.id])
 
     return (
         <div className="print:h-full print:overflow-hidden">
@@ -206,10 +211,11 @@ function SykmeldingerWrapper({
                 <Head>
                     <title>Sykmelding - www.nav.no</title>
                 </Head>
-                <Header
-                    title={sykmelding ? getSykmeldingTitle(sykmelding) : undefined}
-                    subTitle={sykmelding ? getReadableSykmeldingLength(sykmelding) : undefined}
-                />
+                {sykmelding == null ? (
+                    <Header skeleton />
+                ) : (
+                    <Header title={getSykmeldingTitle(sykmelding)} subTitle={getReadableSykmeldingLength(sykmelding)} />
+                )}
                 <PageWrapper>
                     {children}
                     <div className="mt-16">
@@ -218,6 +224,35 @@ function SykmeldingerWrapper({
                 </PageWrapper>
             </div>
         </div>
+    )
+}
+
+function SykmeldingSkeleton(): ReactElement {
+    return (
+        <section aria-labelledby="sykmelding-loading-skeleton">
+            <Heading id="sykmelding-loading-skeleton" size="medium" level="3" hidden>
+                Henter sykmeldingen
+            </Heading>
+            <div className="sm:px-8">
+                <div className="flex w-full items-end gap-4 sm:pr-8">
+                    <Skeleton variant="circle" width="var(--a-spacing-12)" height="var(--a-spacing-12)" className="" />
+                    <div className="grow rounded-xl border border-border-subtle p-4">
+                        <Skeleton width="50%" className="mb-2" />
+                        <Skeleton width="100%" />
+                        <Skeleton width="69%" />
+                        <Skeleton width="80%" className="mt-2" />
+                    </div>
+                </div>
+            </div>
+            <Skeleton width="50%" height="3rem" className="mt-8" />
+            <Skeleton width="40%" />
+            {range(0, 8).map((index) => (
+                <Fragment key={index}>
+                    <Skeleton width="35%" height="3rem" className="mt-8" />
+                    <Skeleton variant="rounded" width="100%" height="4rem" />
+                </Fragment>
+            ))}
+        </section>
     )
 }
 
