@@ -1,11 +1,16 @@
 ---
-import Decorator from '../components/Decorator.tsx'
+import { fetchDecoratorHtml } from '@navikt/nav-dekoratoren-moduler/ssr'
 
 export interface Props {
     title: string
 }
 
 const { title } = Astro.props
+
+const decorator = await fetchDecoratorHtml({
+    env: 'prod',
+    params: {},
+})
 ---
 
 <!DOCTYPE html>
@@ -17,13 +22,15 @@ const { title } = Astro.props
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
+        <Fragment set:html={decorator.DECORATOR_STYLES} />
     </head>
     <body>
-        <Decorator>
-            <main id="maincontent" role="main" tabIndex={-1}>
-                <slot />
-            </main>
-        </Decorator>
+        <div set:html={decorator.DECORATOR_HEADER} />
+        <main id="maincontent" role="main" tabIndex={-1}>
+            <slot />
+        </main>
+        <div set:html={decorator.DECORATOR_FOOTER} />
+        <Fragment set:html={decorator.DECORATOR_SCRIPTS} />
     </body>
 </html>
 
