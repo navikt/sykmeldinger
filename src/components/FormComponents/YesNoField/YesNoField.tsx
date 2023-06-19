@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactElement, ReactNode } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
 import { UseControllerProps } from 'react-hook-form/dist/types/controller'
@@ -30,7 +30,7 @@ function YesNoField<
     defaultValue,
     rules,
     shouldUnregister = true,
-}: Props<TFieldValues, TName>): JSX.Element {
+}: Props<TFieldValues, TName>): ReactElement {
     const { field, fieldState } = useController<TFieldValues, TName>({
         name,
         rules,
