@@ -57,7 +57,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
     it('should get error message when trying to submit without checking checkbox', async () => {
         const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
         await userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
 
@@ -72,7 +72,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
     it('should remove error message after clicking checkbox', async () => {
         const { container } = render(<SykmeldingPage />, { mocks: [...baseMocks] })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
         await userEvent.click(screen.getByRole('button', { name: 'Bekreft' }))
 
@@ -125,7 +125,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
             ],
         })
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmelding'))
+        await waitForElementToBeRemoved(() => screen.queryByText('Henter sykmeldingen'))
 
         await userEvent.click(
             screen.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),

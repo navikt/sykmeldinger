@@ -166,10 +166,11 @@ function KvitteringWrapper({
             <Head>
                 <title>Kvittering - www.nav.no</title>
             </Head>
-            <Header
-                title={sykmelding ? getSykmeldingTitle(sykmelding) : undefined}
-                subTitle={sykmelding ? getReadableSykmeldingLength(sykmelding) : undefined}
-            />
+            {sykmelding == null ? (
+                <Header skeleton />
+            ) : (
+                <Header title={getSykmeldingTitle(sykmelding)} subTitle={getReadableSykmeldingLength(sykmelding)} />
+            )}
             <PageWrapper>{children}</PageWrapper>
         </>
     )

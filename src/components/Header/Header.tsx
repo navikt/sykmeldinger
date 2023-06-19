@@ -1,27 +1,42 @@
-import { Heading } from '@navikt/ds-react'
+import { Heading, Skeleton } from '@navikt/ds-react'
+import { ReactElement } from 'react'
 
 import SykmeldingIcon from './SykmeldingIcon'
 
-interface HeaderProps {
-    title?: string
+type HeaderNormalProps = {
+    title: string
     subTitle?: string
 }
 
-function Header({ title, subTitle }: HeaderProps): JSX.Element | null {
-    if (!title) {
-        return null
-    }
+type HeaderSkeletonProps = {
+    skeleton: true
+}
 
+export type HeaderProps = HeaderNormalProps | HeaderSkeletonProps
+
+function Header(props: HeaderProps): ReactElement | null {
     return (
         <div className="mx-auto flex max-w-2xl items-center p-4">
             <SykmeldingIcon className="mr-8 h-16 w-16" />
             <div>
-                <Heading size="xlarge">{title}</Heading>
-                {subTitle ? (
-                    <Heading size="medium" level="2">
-                        {subTitle}
-                    </Heading>
-                ) : null}
+                {!('skeleton' in props) ? (
+                    <Heading size="xlarge">{props.title ?? 'Sykmelding'}</Heading>
+                ) : (
+                    <Skeleton>
+                        <Heading size="xlarge">Sykmelding</Heading>
+                    </Skeleton>
+                )}
+                {!('skeleton' in props) ? (
+                    props.subTitle ? (
+                        <Heading size="medium" level="2">
+                            {props.subTitle}
+                        </Heading>
+                    ) : null
+                ) : (
+                    <Skeleton>
+                        <Heading size="medium">X. - XX. XXXX</Heading>
+                    </Skeleton>
+                )}
             </div>
         </div>
     )
