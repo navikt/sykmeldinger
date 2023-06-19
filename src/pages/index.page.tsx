@@ -135,7 +135,7 @@ function IndexWrapper({ children }: PropsWithChildren): ReactElement {
 function SykmeldingerListSkeleton(): ReactElement {
     return (
         <section aria-labelledby="sykmeldinger-list-skeleton">
-            <Heading size="small" level="2" aria-busy hidden id="sykmeldinger-list-skeleton">
+            <Heading size="small" level="2" hidden id="sykmeldinger-list-skeleton">
                 Henter dine sykmeldinger
             </Heading>
             <Skeleton variant="text" height="var(--a-font-size-heading-xlarge)" width="40%" className="mb-2" />
