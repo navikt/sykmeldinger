@@ -1,10 +1,9 @@
-import { PropsWithChildren } from 'react'
-import { Accordion, Alert, BodyShort, Link, LinkPanel } from '@navikt/ds-react'
+import { PropsWithChildren, ReactElement } from 'react'
+import { Accordion, Alert, BodyShort, Heading, Link, LinkPanel, Skeleton } from '@navikt/ds-react'
 import Head from 'next/head'
-import { groupBy } from 'remeda'
+import { groupBy, range } from 'remeda'
 import { logger } from '@navikt/next-logger'
 
-import Spinner from '../components/Spinner/Spinner'
 import useSykmeldinger from '../hooks/useSykmeldinger'
 import useHotjarTrigger from '../hooks/useHotjarTrigger'
 import InfoOmDigitalSykmelding from '../components/InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
@@ -18,7 +17,7 @@ import { SykmeldingFragment } from '../fetching/graphql.generated'
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 import useFocusRefetch from '../hooks/useFocusRefetch'
 
-function SykmeldingerPage(): JSX.Element {
+function SykmeldingerPage(): ReactElement {
     useHotjarTrigger('SYKMELDING_LISTEVISNING')
 
     const { data, error, loading, refetch } = useSykmeldinger()
@@ -27,9 +26,9 @@ function SykmeldingerPage(): JSX.Element {
 
     if (data?.sykmeldinger == null && loading) {
         return (
-            <div className="mb-8">
-                <Spinner headline="Henter dine sykmeldinger" />
-            </div>
+            <IndexWrapper>
+                <SykmeldingerListSkeleton />
+            </IndexWrapper>
         )
     }
 
@@ -74,7 +73,7 @@ function SykmeldingerPage(): JSX.Element {
     )
 }
 
-function SerIkkeSykmelding(): JSX.Element {
+function SerIkkeSykmelding(): ReactElement {
     return (
         <Accordion.Item>
             <Accordion.Header>Ser du ikke sykmeldingen din her?</Accordion.Header>
@@ -114,7 +113,7 @@ function SerIkkeSykmelding(): JSX.Element {
     )
 }
 
-function IndexWrapper({ children }: PropsWithChildren): JSX.Element {
+function IndexWrapper({ children }: PropsWithChildren): ReactElement {
     useUpdateBreadcrumbs(() => [])
 
     return (
@@ -130,6 +129,47 @@ function IndexWrapper({ children }: PropsWithChildren): JSX.Element {
                 </div>
             </PageWrapper>
         </>
+    )
+}
+
+function SykmeldingerListSkeleton(): ReactElement {
+    return (
+        <section aria-labelledby="sykmeldinger-list-skeleton">
+            <Heading size="small" level="2" aria-busy hidden id="sykmeldinger-list-skeleton">
+                Henter dine sykmeldinger
+            </Heading>
+            <Skeleton variant="text" height="var(--a-font-size-heading-xlarge)" width="40%" className="mb-2" />
+            <SingleSykmeldingSkeleton />
+            <Skeleton variant="text" height="var(--a-font-size-heading-xlarge)" width="40%" className="mb-2 mt-16" />
+            <div className="flex flex-col gap-4">
+                <SingleSykmeldingSkeleton />
+                <SingleSykmeldingSkeleton />
+            </div>
+            <Skeleton variant="text" height="var(--a-font-size-heading-xlarge)" width="40%" className="mb-2 mt-16" />
+            <div className="flex flex-col gap-4">
+                {range(0, 10).map((index) => (
+                    <SingleSykmeldingSkeleton key={index} />
+                ))}
+            </div>
+        </section>
+    )
+}
+
+function SingleSykmeldingSkeleton(): ReactElement {
+    return (
+        <div className="flex rounded border border-border-subtle p-6 max-[560px]:flex-col">
+            <div className="mr-8 max-[560px]:hidden">
+                <Skeleton variant="circle" width="48px" height="48px" />
+            </div>
+            <div className="grow">
+                <Skeleton width="29%" />
+                <Skeleton width="20%" height="2rem" />
+                <Skeleton width="49%" />
+            </div>
+            <div className="mr-16 mt-2 flex items-center">
+                <Skeleton width="120px" />
+            </div>
+        </div>
     )
 }
 
