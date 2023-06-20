@@ -26,7 +26,7 @@ spec:
       memory: 768Mi
     requests:
       cpu: 50m
-      memory: 384Mi
+      memory: 512Mi
   accessPolicy:
     outbound:
       rules:
