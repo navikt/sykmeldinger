@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { range } from 'remeda'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
-import Spinner from '../../components/Spinner/Spinner'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'
 import StatusInfo from '../../components/StatusInfo/StatusInfo'
 import useHotjarTrigger from '../../hooks/useHotjarTrigger'
@@ -36,7 +35,9 @@ function SykmeldingkvitteringPage(): ReactElement {
     if (loading) {
         return (
             <KvitteringWrapper>
-                <KvitteringSkeleton />
+                <KvitteringSkeletonTop>
+                    <KvitteringSkeletonBottom />
+                </KvitteringSkeletonTop>
             </KvitteringWrapper>
         )
     }
@@ -80,7 +81,7 @@ function SykmeldingkvitteringPage(): ReactElement {
                         kontakt med oss hvis det ikke har løst seg til i morgen.
                     </BodyShort>
                     <BodyShort>
-                        Du kan prøve å gå tilbake til
+                        Du kan prøve å gå tilbake til{' '}
                         <DsLink as={Link} href={`/${sykmeldingId}`}>
                             selve sykmeldingen
                         </DsLink>
@@ -135,7 +136,14 @@ function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Syk
     const hasHitPrevious = hasHitPreviousSykmeldingTom(sykmelding, previousSykmeldingTom)
 
     if (isLoading) {
-        return <Spinner headline="Henter sykmeldinger..." />
+        return (
+            <section aria-labelledby="sykmeldinger-loading-skeleton">
+                <Heading id="sykmeldinger-loading-skeleton" size="medium" level="3" hidden>
+                    Henter sykmeldinger
+                </Heading>
+                <KvitteringSkeletonBottom />
+            </section>
+        )
     }
 
     if (error) {
@@ -193,7 +201,7 @@ function KvitteringWrapper({
     )
 }
 
-function KvitteringSkeleton(): ReactElement {
+function KvitteringSkeletonTop({ children }: PropsWithChildren): ReactElement {
     return (
         <section aria-labelledby="sykmelding-loading-skeleton">
             <Heading id="sykmelding-loading-skeleton" size="medium" level="3" hidden>
@@ -219,6 +227,14 @@ function KvitteringSkeleton(): ReactElement {
                 </div>
             </div>
             <Skeleton variant="rectangle" height="10rem" />
+            {children}
+        </section>
+    )
+}
+
+function KvitteringSkeletonBottom(): ReactElement {
+    return (
+        <>
             <Skeleton width="50%" height="3rem" className="mt-8" />
             <Skeleton width="40%" />
             {range(0, 8).map((index) => (
@@ -227,7 +243,7 @@ function KvitteringSkeleton(): ReactElement {
                     <Skeleton variant="rounded" width="100%" height="4rem" />
                 </Fragment>
             ))}
-        </section>
+        </>
     )
 }
 
