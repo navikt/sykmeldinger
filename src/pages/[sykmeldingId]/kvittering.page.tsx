@@ -1,9 +1,10 @@
 import Head from 'next/head'
-import React, { PropsWithChildren } from 'react'
-import { Alert, BodyShort, GuidePanel, Heading, Link as DsLink } from '@navikt/ds-react'
+import React, { Fragment, PropsWithChildren, ReactElement } from 'react'
+import { Alert, BodyShort, GuidePanel, Heading, Link as DsLink, Skeleton } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { range } from 'remeda'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import Spinner from '../../components/Spinner/Spinner'
@@ -25,7 +26,7 @@ import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 
-function SykmeldingkvitteringPage(): JSX.Element {
+function SykmeldingkvitteringPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
     const { data, error, loading } = useSykmeldingById(sykmeldingId)
     const router = useRouter()
@@ -33,7 +34,11 @@ function SykmeldingkvitteringPage(): JSX.Element {
     useHotjarTrigger(getHotjarType(data?.sykmelding))
 
     if (loading) {
-        return <Spinner headline="Laster kvittering" />
+        return (
+            <KvitteringWrapper>
+                <KvitteringSkeleton />
+            </KvitteringWrapper>
+        )
     }
 
     if (error) {
@@ -65,10 +70,22 @@ function SykmeldingkvitteringPage(): JSX.Element {
             `Trying to display kvittering for sykmelding with id: ${sykmeldingId}, but the status is wrong, sykmeldingstatus: ${data.sykmelding.sykmeldingStatus.statusEvent}, behandlingsutfall: ${data.sykmelding.behandlingsutfall.status}`,
         )
         return (
-            <KvitteringWrapper>
+            <KvitteringWrapper sykmelding={data.sykmelding}>
                 <GuidePanel poster>
-                    Beklager! En uventet feil har oppstått. Sannsynligvis jobber vi med saken allerede, men ta kontakt
-                    med oss hvis det ikke har løst seg til i morgen.
+                    <Heading size="medium" level="2" spacing>
+                        Klarer ikke å vise kvittering
+                    </Heading>
+                    <BodyShort spacing>
+                        Beklager! En uventet feil har oppstått. Sannsynligvis jobber vi med saken allerede, men ta
+                        kontakt med oss hvis det ikke har løst seg til i morgen.
+                    </BodyShort>
+                    <BodyShort>
+                        Du kan prøve å gå tilbake til
+                        <DsLink as={Link} href={`/${sykmeldingId}`}>
+                            selve sykmeldingen
+                        </DsLink>
+                        .
+                    </BodyShort>
                 </GuidePanel>
             </KvitteringWrapper>
         )
@@ -109,7 +126,7 @@ function SykmeldingkvitteringPage(): JSX.Element {
     )
 }
 
-function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: SykmeldingFragment }): JSX.Element {
+function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: SykmeldingFragment }): ReactElement {
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
         sykmelding,
         sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,
@@ -157,7 +174,7 @@ function getHotjarType(
 function KvitteringWrapper({
     sykmelding,
     children,
-}: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): JSX.Element {
+}: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
     useUpdateBreadcrumbs(() => createKvitteringBreadcrumbs(sykmeldingId, sykmelding), [sykmeldingId, sykmelding])
 
@@ -173,6 +190,44 @@ function KvitteringWrapper({
             )}
             <PageWrapper>{children}</PageWrapper>
         </>
+    )
+}
+
+function KvitteringSkeleton(): ReactElement {
+    return (
+        <section aria-labelledby="sykmelding-loading-skeleton">
+            <Heading id="sykmelding-loading-skeleton" size="medium" level="3" hidden>
+                Henter kvitteringen
+            </Heading>
+            <div className="rounded border border-border-subtle p-4">
+                <Skeleton width="50%" />
+                <Skeleton width="30%" />
+            </div>
+            <div className="navds-guide-panel navds-guide-panel--poster mb-8 mt-8">
+                <Skeleton
+                    className="navds-guide !border-none"
+                    variant="circle"
+                    width="var(--a-spacing-24)"
+                    height="var(--a-spacing-24)"
+                />
+                <div className="border border-border-subtle p-8 [clip-path:polygon(0%_0%,_0%_100%,_calc(50%_-_3rem)_100%,_calc(50%_-_3rem)_0%,_calc(50%_+_3rem)_0%,_calc(50%_+_3rem)_8px,_calc(50%_-_3rem)_8px,_calc(50%_-_3rem)_100%,_100%_100%,_100%_0%)]">
+                    <div className="pt-8">
+                        <Skeleton />
+                        <Skeleton width="30%" />
+                        <Skeleton width="15%" className="mt-4" />
+                    </div>
+                </div>
+            </div>
+            <Skeleton variant="rectangle" height="10rem" />
+            <Skeleton width="50%" height="3rem" className="mt-8" />
+            <Skeleton width="40%" />
+            {range(0, 8).map((index) => (
+                <Fragment key={index}>
+                    <Skeleton width="35%" height="3rem" className="mt-8" />
+                    <Skeleton variant="rounded" width="100%" height="4rem" />
+                </Fragment>
+            ))}
+        </section>
     )
 }
 
