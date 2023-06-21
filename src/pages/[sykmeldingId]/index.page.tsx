@@ -21,13 +21,13 @@ import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { SykmeldingFragment } from '../../fetching/graphql.generated'
 import { browserEnv } from '../../utils/env'
-import { useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import { createSykmeldingBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { getUserRequestId } from '../../utils/userRequestId'
 
-function SykmeldingPage(): JSX.Element {
+function SykmeldingPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
 
     const { data, error, loading, refetch } = useSykmeldingById(sykmeldingId)
@@ -184,7 +184,7 @@ function SykmeldingerWrapper({
     sykmelding,
     children,
 }: PropsWithChildren<{ sykmelding?: SykmeldingFragment }>): ReactElement {
-    useUpdateBreadcrumbs(() => [{ title: getSykmeldingTitle(sykmelding) }])
+    useUpdateBreadcrumbs(() => createSykmeldingBreadcrumbs(sykmelding))
 
     useEffect(() => {
         const listener = (e: KeyboardEvent): void => {

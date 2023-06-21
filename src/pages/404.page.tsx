@@ -1,11 +1,11 @@
 import { logger } from '@navikt/next-logger'
 import { BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
-import React, { useEffect } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 
-const NotFoundPage = (): JSX.Element => {
+const NotFoundPage = (): ReactElement => {
     useUpdateBreadcrumbs(() => [{ title: 'Ukjent side' }])
 
     useEffect(() => {

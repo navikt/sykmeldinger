@@ -93,6 +93,10 @@ export function createKvitteringBreadcrumbs(
     return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Kvittering' }]
 }
 
+export function createSykmeldingBreadcrumbs(sykmelding: SykmeldingFragment | undefined): [LastCrumb] {
+    return [{ title: getSykmeldingTitle(sykmelding) }]
+}
+
 export function createEndreEgenmeldingsdagerBreadcrumbs(
     sykmeldingId: string,
     sykmelding: SykmeldingFragment | undefined,
@@ -128,8 +132,9 @@ export function createInitialServerSideBreadcrumbs(
     switch (pathname) {
         case SsrPathVariants.Root:
         case SsrPathVariants.NotFound:
-        case SsrPathVariants.Sykmelding:
             return createCompleteCrumbs([])
+        case SsrPathVariants.Sykmelding:
+            return createCompleteCrumbs(createSykmeldingBreadcrumbs(undefined))
         case SsrPathVariants.Kvittering:
             return createCompleteCrumbs(createKvitteringBreadcrumbs(query.sykmeldingId as string, undefined))
         case SsrPathVariants.EndreEgenmeldingsdager:

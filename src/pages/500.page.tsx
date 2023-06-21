@@ -1,10 +1,10 @@
 import { BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 
-const NotFoundPage = (): JSX.Element => {
+const NotFoundPage = (): ReactElement => {
     useUpdateBreadcrumbs(() => [{ title: 'Ukjent feil' }])
 
     return (
