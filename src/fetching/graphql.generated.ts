@@ -220,6 +220,9 @@ export enum Merknadtype {
 export type Mutation = {
     readonly __typename: 'Mutation'
     readonly changeSykmeldingStatus: Sykmelding
+    readonly dev_changeScenario: Scalars['Boolean']['output']
+    readonly dev_setAntallArbeidsgivere: Scalars['Boolean']['output']
+    readonly dev_toggleStrengtFortroligAdresse: Scalars['Boolean']['output']
     readonly sendSykmelding: Sykmelding
     readonly updateEgenmeldingsdager: Sykmelding
 }
@@ -227,6 +230,14 @@ export type Mutation = {
 export type MutationChangeSykmeldingStatusArgs = {
     status: SykmeldingChangeStatus
     sykmeldingId: Scalars['String']['input']
+}
+
+export type MutationDev_ChangeScenarioArgs = {
+    scenario: Scalars['String']['input']
+}
+
+export type MutationDev_SetAntallArbeidsgivereArgs = {
+    antall: Scalars['Int']['input']
 }
 
 export type MutationSendSykmeldingArgs = {
@@ -437,6 +448,45 @@ export type UtenlandskSykmelding = {
 export enum YesOrNo {
     NO = 'NO',
     YES = 'YES',
+}
+
+export type Dev_ChangeUserScenarioMutationVariables = Exact<{
+    scenario: Scalars['String']['input']
+}>
+
+export type Dev_ChangeUserScenarioMutation = { readonly __typename: 'Mutation'; readonly dev_changeScenario: boolean }
+
+export type Dev_ToggleStrengtFortroligAdresseMutationVariables = Exact<{ [key: string]: never }>
+
+export type Dev_ToggleStrengtFortroligAdresseMutation = {
+    readonly __typename: 'Mutation'
+    readonly dev_toggleStrengtFortroligAdresse: boolean
+}
+
+export type Dev_SetAntallArbeidsgivereMutationVariables = Exact<{
+    antall: Scalars['Int']['input']
+}>
+
+export type Dev_SetAntallArbeidsgivereMutation = {
+    readonly __typename: 'Mutation'
+    readonly dev_setAntallArbeidsgivere: boolean
+}
+
+export type Dev_BrukerinformasjonQueryVariables = Exact<{ [key: string]: never }>
+
+export type Dev_BrukerinformasjonQuery = {
+    readonly __typename: 'Query'
+    readonly brukerinformasjon: {
+        readonly __typename: 'Brukerinformasjon'
+        readonly strengtFortroligAdresse: boolean
+        readonly arbeidsgivere: ReadonlyArray<{
+            readonly __typename: 'Arbeidsgiver'
+            readonly orgnummer: string
+            readonly navn: string
+            readonly aktivtArbeidsforhold: boolean
+            readonly naermesteLeder?: { readonly __typename: 'NaermesteLeder'; readonly navn: string } | null
+        }>
+    }
 }
 
 export type EndreEgenmeldingsdagerMutationVariables = Exact<{
@@ -2482,6 +2532,156 @@ export const SykmeldingFragmentDoc = {
         },
     ],
 } as unknown as DocumentNode<SykmeldingFragment, unknown>
+export const Dev_ChangeUserScenarioDocument = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'OperationDefinition',
+            operation: 'mutation',
+            name: { kind: 'Name', value: 'Dev_ChangeUserScenario' },
+            variableDefinitions: [
+                {
+                    kind: 'VariableDefinition',
+                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'scenario' } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+                },
+            ],
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'dev_changeScenario' },
+                        arguments: [
+                            {
+                                kind: 'Argument',
+                                name: { kind: 'Name', value: 'scenario' },
+                                value: { kind: 'Variable', name: { kind: 'Name', value: 'scenario' } },
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<Dev_ChangeUserScenarioMutation, Dev_ChangeUserScenarioMutationVariables>
+export const Dev_ToggleStrengtFortroligAdresseDocument = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'OperationDefinition',
+            operation: 'mutation',
+            name: { kind: 'Name', value: 'Dev_ToggleStrengtFortroligAdresse' },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'dev_toggleStrengtFortroligAdresse' } }],
+            },
+        },
+    ],
+} as unknown as DocumentNode<
+    Dev_ToggleStrengtFortroligAdresseMutation,
+    Dev_ToggleStrengtFortroligAdresseMutationVariables
+>
+export const Dev_SetAntallArbeidsgivereDocument = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'OperationDefinition',
+            operation: 'mutation',
+            name: { kind: 'Name', value: 'Dev_SetAntallArbeidsgivere' },
+            variableDefinitions: [
+                {
+                    kind: 'VariableDefinition',
+                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'antall' } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } } },
+                },
+            ],
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'dev_setAntallArbeidsgivere' },
+                        arguments: [
+                            {
+                                kind: 'Argument',
+                                name: { kind: 'Name', value: 'antall' },
+                                value: { kind: 'Variable', name: { kind: 'Name', value: 'antall' } },
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<Dev_SetAntallArbeidsgivereMutation, Dev_SetAntallArbeidsgivereMutationVariables>
+export const Dev_BrukerinformasjonDocument = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'OperationDefinition',
+            operation: 'query',
+            name: { kind: 'Name', value: 'Dev_Brukerinformasjon' },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerinformasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Brukerinformasjon' } },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'NaermesteLeder' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'NaermesteLeder' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'navn' } }],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'Brukerinformasjon' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Brukerinformasjon' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'strengtFortroligAdresse' } },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgivere' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'navn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'aktivtArbeidsforhold' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'naermesteLeder' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'NaermesteLeder' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<Dev_BrukerinformasjonQuery, Dev_BrukerinformasjonQueryVariables>
 export const EndreEgenmeldingsdagerDocument = {
     kind: 'Document',
     definitions: [

@@ -5,8 +5,9 @@ import '../style/global.css'
 
 import { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
-import React, { useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { configureLogger } from '@navikt/next-logger'
+import dynamic from 'next/dynamic'
 
 import { createApolloClient } from '../fetching/apollo'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
@@ -15,6 +16,9 @@ import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
 import { getFaro, initInstrumentation, pinoLevelToFaroLevel } from '../faro/faro'
 import { ServerSidePropsResult } from '../auth/withAuthentication'
 import { FlagProvider } from '../toggles/context'
+import { isLocalOrDemo } from '../utils/env'
+
+const DevTools = dynamic(() => import('../components/DevTools'), { ssr: false })
 
 initInstrumentation()
 configureLogger({
@@ -25,7 +29,7 @@ configureLogger({
         }),
 })
 
-function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): JSX.Element {
+function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): ReactElement {
     useHandleDecoratorClicks()
 
     const [apolloClient] = useState(() => {
@@ -36,6 +40,7 @@ function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): JSX.E
         <ErrorBoundary>
             <FlagProvider toggles={pageProps.toggles}>
                 <ApolloProvider client={apolloClient}>
+                    {isLocalOrDemo && <DevTools />}
                     <LabsWarning />
                     <main id="maincontent" role="main" tabIndex={-1}>
                         <Component {...pageProps} />

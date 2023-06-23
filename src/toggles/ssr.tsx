@@ -14,8 +14,15 @@ export async function getFlagsServerSide(
     req: GetServerSidePropsContext['req'],
     res: GetServerSidePropsContext['res'],
 ): Promise<{ toggles: IToggle[] }> {
-    const sessionId = req.cookies['unleash-session-id'] || `${getRandomValues(new Uint32Array(16)).join('')}}`
-    res.setHeader('set-cookie', `unleash-session-id=${sessionId}; path=/;`)
+    const existingHeader = safeCoerceHeader(res.getHeader('set-cookie'))
+    const existingUnleashId = req.cookies['unleash-session-id']
+
+    let sessionId
+    if (existingUnleashId == null) {
+        const newId = `${getRandomValues(new Uint32Array(16)).join('')}}`
+        res.setHeader('set-cookie', [...existingHeader, `unleash-session-id=${newId}; path=/;`])
+        sessionId = newId
+    }
 
     if (isLocalOrDemo) {
         logger.warn('Running in local or demo mode, falling back to development toggles.')
@@ -69,4 +76,17 @@ async function getAndValidateDefinitions(): Promise<ReturnType<typeof getDefinit
     )
 
     return definitions
+}
+
+function safeCoerceHeader(header: string | string[] | number | undefined | null): string[] {
+    if (header == null) {
+        return []
+    }
+    if (typeof header === 'string') {
+        return [header]
+    }
+    if (typeof header === 'number') {
+        return [header.toString()]
+    }
+    return header
 }
