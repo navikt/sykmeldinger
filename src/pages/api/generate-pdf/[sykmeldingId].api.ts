@@ -3,11 +3,13 @@ import { createChildLogger } from '@navikt/next-logger'
 
 import { generateSykmeldingPdfServerSide } from '../../../server/pdf/pdf'
 import { createRequestContext, withAuthenticatedApi } from '../../../auth/withAuthentication'
+import { getSessionId } from '../../../utils/userSessionId'
 
 async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const context = createRequestContext(
         req.headers['x-request-id'] as string | undefined,
         req.headers['authorization'],
+        getSessionId(req),
     )
 
     if (!context) {

@@ -11,6 +11,7 @@ export interface RequestContext {
     payload: TokenPayload
     accessToken: string
     requestId: string
+    sessionId: string
 }
 
 const Query: QueryResolvers = {

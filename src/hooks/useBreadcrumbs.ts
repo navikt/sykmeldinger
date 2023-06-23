@@ -110,6 +110,7 @@ export function createEndreEgenmeldingsdagerBreadcrumbs(
 export enum SsrPathVariants {
     Root = '/',
     NotFound = '/404',
+    Error = '/500',
     Sykmelding = '/[sykmeldingId]',
     Kvittering = '/[sykmeldingId]/kvittering',
     EndreEgenmeldingsdager = '/[sykmeldingId]/endre-egenmeldingsdager',
@@ -132,6 +133,7 @@ export function createInitialServerSideBreadcrumbs(
     switch (pathname) {
         case SsrPathVariants.Root:
         case SsrPathVariants.NotFound:
+        case SsrPathVariants.Error:
             return createCompleteCrumbs([])
         case SsrPathVariants.Sykmelding:
             return createCompleteCrumbs(createSykmeldingBreadcrumbs(undefined))

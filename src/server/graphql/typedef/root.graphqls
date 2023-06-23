@@ -9,6 +9,11 @@ type Mutation {
     changeSykmeldingStatus(sykmeldingId: String!, status: SykmeldingChangeStatus!): Sykmelding!
     sendSykmelding(sykmeldingId: String!, values: SendSykmeldingValues!): Sykmelding!
     updateEgenmeldingsdager(sykmeldingId: String!, egenmeldingsdager: [Date!]!): Sykmelding!
+
+    # developer tools, not available in production
+    dev_changeScenario(scenario: String!): Boolean!
+    dev_toggleStrengtFortroligAdresse: Boolean!
+    dev_setAntallArbeidsgivere(antall: Int!): Boolean!
 }
 
 enum SykmeldingChangeStatus {

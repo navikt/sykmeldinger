@@ -2,6 +2,7 @@ import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSi
 import { logger } from '@navikt/next-logger'
 import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
 import { IToggle } from '@unleash/nextjs'
+import { v4 } from 'uuid'
 
 import { browserEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
@@ -52,6 +53,12 @@ export function withAuthenticatedPage(handler: PageHandler = defaultPageHandler)
         context: GetServerSidePropsContext,
     ): Promise<ReturnType<NonNullable<typeof handler>>> {
         if (isLocalOrDemo) {
+            if (!context.req.cookies['next-session-id']) {
+                const newId = v4()
+
+                context.res.setHeader('set-cookie', `next-session-id=${newId}; Path=/`)
+            }
+
             return handler(context)
         }
 
@@ -124,9 +131,13 @@ function getRedirectPath(context: GetServerSidePropsContext): string {
 /**
  * Creates the HTTP context that is passed through the resolvers and services, both for prefetching and HTTP-fetching.
  */
-export function createRequestContext(requestId: string | undefined, token: string | undefined): RequestContext | null {
+export function createRequestContext(
+    requestId: string | undefined,
+    token: string | undefined,
+    sessionId: string,
+): RequestContext | null {
     if (isLocalOrDemo) {
-        return { ...require('./fakeLocalAuthTokenSet.json'), requestId: requestId ?? 'not set' }
+        return { ...require('./fakeLocalAuthTokenSet.json'), requestId: requestId ?? 'not set', sessionId }
     }
 
     if (!token) {
@@ -140,5 +151,6 @@ export function createRequestContext(requestId: string | undefined, token: strin
         accessToken,
         payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
         requestId: requestId ?? 'not set',
+        sessionId: 'unused',
     }
 }

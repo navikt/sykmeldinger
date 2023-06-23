@@ -224,6 +224,9 @@ export enum Merknadtype {
 export type Mutation = {
     __typename?: 'Mutation'
     changeSykmeldingStatus: Sykmelding
+    dev_changeScenario: Scalars['Boolean']['output']
+    dev_setAntallArbeidsgivere: Scalars['Boolean']['output']
+    dev_toggleStrengtFortroligAdresse: Scalars['Boolean']['output']
     sendSykmelding: Sykmelding
     updateEgenmeldingsdager: Sykmelding
 }
@@ -231,6 +234,14 @@ export type Mutation = {
 export type MutationChangeSykmeldingStatusArgs = {
     status: SykmeldingChangeStatus
     sykmeldingId: Scalars['String']['input']
+}
+
+export type MutationDev_ChangeScenarioArgs = {
+    scenario: Scalars['String']['input']
+}
+
+export type MutationDev_SetAntallArbeidsgivereArgs = {
+    antall: Scalars['Int']['input']
 }
 
 export type MutationSendSykmeldingArgs = {
@@ -879,6 +890,19 @@ export type MutationResolvers<
         ContextType,
         RequireFields<MutationChangeSykmeldingStatusArgs, 'status' | 'sykmeldingId'>
     >
+    dev_changeScenario?: Resolver<
+        ResolversTypes['Boolean'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationDev_ChangeScenarioArgs, 'scenario'>
+    >
+    dev_setAntallArbeidsgivere?: Resolver<
+        ResolversTypes['Boolean'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationDev_SetAntallArbeidsgivereArgs, 'antall'>
+    >
+    dev_toggleStrengtFortroligAdresse?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
     sendSykmelding?: Resolver<
         ResolversTypes['Sykmelding'],
         ParentType,
