@@ -1,3 +1,5 @@
+import { getRandomValues } from 'crypto'
+
 import { IToggle, getDefinitions, evaluateFlags } from '@unleash/nextjs'
 import { logger } from '@navikt/next-logger'
 import { GetServerSidePropsContext } from 'next/types'
@@ -12,7 +14,7 @@ export async function getFlagsServerSide(
     req: GetServerSidePropsContext['req'],
     res: GetServerSidePropsContext['res'],
 ): Promise<{ toggles: IToggle[] }> {
-    const sessionId = req.cookies['unleash-session-id'] || `${Math.floor(Math.random() * 1_000_000_000)}`
+    const sessionId = req.cookies['unleash-session-id'] || `${getRandomValues(new Uint32Array(16)).join('')}}`
     res.setHeader('set-cookie', `unleash-session-id=${sessionId}; path=/;`)
 
     if (isLocalOrDemo) {
