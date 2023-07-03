@@ -3,6 +3,7 @@ import { Button, Tooltip, Popover, Heading, Link, Alert, Checkbox, Select } from
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
+import { toPairs } from 'remeda'
 
 import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
 import {
@@ -12,6 +13,7 @@ import {
     Dev_ToggleStrengtFortroligAdresseDocument,
 } from '../../fetching/graphql.generated'
 import { cn } from '../../utils/tw-utils'
+import scenarios from '../../server/graphql/mock-db/scenarios'
 
 function Index(): ReactElement {
     const [showHint, setShowHint] = useState(false)
@@ -98,21 +100,15 @@ function ScenarioPicker(): ReactElement {
                     'pointer-events-none': loading,
                 })}
             >
-                <li>
-                    <Link role="button" onClick={handleChangeUserScenario('normal')}>
-                        En ny og noen gamle
-                    </Link>
-                </li>
-                <li>
-                    <Link role="button" onClick={handleChangeUserScenario('emptyState')}>
-                        Ingen sykmeldinger
-                    </Link>
-                </li>
-                <li>
-                    <Link role="button" onClick={handleChangeUserScenario('harUnderBehandling')}>
-                        Har en innsendt under behandling
-                    </Link>
-                </li>
+                {toPairs.strict(scenarios).map(([key, { description }]) => {
+                    return (
+                        <li key={key}>
+                            <Link role="button" onClick={handleChangeUserScenario(key)}>
+                                {description}
+                            </Link>
+                        </li>
+                    )
+                })}
             </ul>
             <Alert variant="info" size="small" className="mt-2">
                 Endring av scenario vil slette eventuelle innsendinger og endringer du har gjort.

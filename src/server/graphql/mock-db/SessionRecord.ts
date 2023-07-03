@@ -8,7 +8,7 @@ class SessionRecord {
 
     get(sessionId: string): MockDb {
         if (this._dbs[sessionId] == null) {
-            this._dbs[sessionId] = new MockDb(scenarios['normal']())
+            this._dbs[sessionId] = new MockDb(scenarios.normal.scenario())
         }
 
         return this._dbs[sessionId]
@@ -16,7 +16,7 @@ class SessionRecord {
 
     set(sessionId: string, scenario: Scenarios): void {
         logger.info(`Setting scenario ${scenario} for session ${sessionId}`)
-        this._dbs[sessionId] = new MockDb(scenarios[scenario]())
+        this._dbs[sessionId] = new MockDb(scenarios[scenario].scenario())
     }
 }
 

@@ -10,6 +10,8 @@ import { sporsmal } from '../../../utils/sporsmal'
 import { toDateString } from '../../../utils/dateUtils'
 import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
 
+import { defaultArbeidsgivere } from './data-creators'
+
 class MockDb {
     private readonly _sykmeldinger: Sykmelding[]
     private _strengtFortroligAdresse = false
@@ -128,32 +130,7 @@ class MockDb {
     }
 
     private arbeidsgivere(): Arbeidsgiver[] {
-        return [
-            {
-                naermesteLeder: {
-                    navn: 'Station Officer Steele',
-                },
-                navn: 'PONTYPANDY FIRE SERVICE',
-                orgnummer: '110110110',
-                aktivtArbeidsforhold: true,
-            },
-            {
-                naermesteLeder: {
-                    navn: 'Brannkonstabel Sam',
-                },
-                navn: 'ANDEBY BRANNSTATION',
-                orgnummer: '110110112',
-                aktivtArbeidsforhold: false,
-            },
-            {
-                naermesteLeder: {
-                    navn: 'Steve Cook',
-                },
-                navn: 'Nottinghamshire Fire and Rescue Service',
-                orgnummer: '110110113',
-                aktivtArbeidsforhold: true,
-            },
-        ].slice(0, this._antallArbeidsgivere)
+        return defaultArbeidsgivere.slice(0, this._antallArbeidsgivere)
     }
 }
 

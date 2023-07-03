@@ -1,6 +1,8 @@
 import { v4 } from 'uuid'
 
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
+import { Merknad } from '../../api-models/sykmelding/Merknad'
+import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
 import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
@@ -11,7 +13,6 @@ import {
 } from '../resolver-types.generated'
 import { AktivitetIkkeMuligPeriode, Periode } from '../../api-models/sykmelding/Periode'
 import { dateAdd } from '../../../utils/dateUtils'
-import { Merknad } from '../../api-models/sykmelding/Merknad'
 
 export class SykmeldingBuilder {
     private readonly mottatt: string = '2020-02-01'
@@ -29,10 +30,7 @@ export class SykmeldingBuilder {
         sykmeldingStatus: {
             timestamp: this.mottatt,
             statusEvent: StatusEvent.SENDT,
-            arbeidsgiver: {
-                orgnummer: '123456',
-                orgNavn: 'Posten AS',
-            },
+            arbeidsgiver: null,
             sporsmalOgSvarListe: [],
         },
         medisinskVurdering: {
@@ -134,7 +132,9 @@ export class SykmeldingBuilder {
         return this
     }
 
-    standardAktivitetIkkeMuligPeriode(relative: { offset: number; days: number }): SykmeldingBuilder {
+    standardAktivitetIkkeMuligPeriode(
+        relative: { offset: number; days: number } = { offset: 0, days: 7 },
+    ): SykmeldingBuilder {
         const periode: BuilderPeriodeVariations = {
             type: Periodetype.AKTIVITET_IKKE_MULIG,
             medisinskArsak: {
@@ -154,11 +154,32 @@ export class SykmeldingBuilder {
         this._sykmelding.sykmeldingStatus.statusEvent = status
         this._sykmelding.sykmeldingStatus.timestamp = timestamp
 
+        if (status === StatusEvent.SENDT) {
+            this._sykmelding.sykmeldingStatus.arbeidsgiver = {
+                orgNavn: defaultArbeidsgivere[0].navn,
+                orgnummer: defaultArbeidsgivere[0].orgnummer,
+            }
+        }
+
         return this
     }
 
     merknader(merknader: Merknad[]): SykmeldingBuilder {
         this._sykmelding.merknader = merknader
+
+        return this
+    }
+
+    papir(): SykmeldingBuilder {
+        this._sykmelding.papirsykmelding = true
+
+        return this
+    }
+
+    utenlandsk(): SykmeldingBuilder {
+        this._sykmelding.utenlandskSykmelding = {
+            land: 'SE',
+        }
 
         return this
     }
@@ -227,3 +248,30 @@ function builderPeriodeToPeriod(periode: BuilderPeriode): Periode {
             throw new Error(`Type not implemented: ${periode.type}`)
     }
 }
+
+export const defaultArbeidsgivere: readonly Arbeidsgiver[] = [
+    {
+        naermesteLeder: {
+            navn: 'Station Officer Steele',
+        },
+        navn: 'PONTYPANDY FIRE SERVICE',
+        orgnummer: '110110110',
+        aktivtArbeidsforhold: true,
+    },
+    {
+        naermesteLeder: {
+            navn: 'Brannkonstabel Sam',
+        },
+        navn: 'ANDEBY BRANNSTATION',
+        orgnummer: '110110112',
+        aktivtArbeidsforhold: false,
+    },
+    {
+        naermesteLeder: {
+            navn: 'Steve Cook',
+        },
+        navn: 'Nottinghamshire Fire and Rescue Service',
+        orgnummer: '110110113',
+        aktivtArbeidsforhold: true,
+    },
+]
