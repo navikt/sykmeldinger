@@ -1,13 +1,24 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
-import { ArbeidssituasjonType, UriktigeOpplysningerType, YesOrNo } from './graphql/resolver-types.generated'
-import arbeidsgivereMock from './graphql/mockData/arbeidsgivereMock'
-import { sykmeldingApen } from './graphql/mockData/sykmelding-apen'
+import {
+    ArbeidssituasjonType,
+    StatusEvent,
+    UriktigeOpplysningerType,
+    YesOrNo,
+} from './graphql/resolver-types.generated'
+import { defaultArbeidsgivere, SykmeldingBuilder } from './graphql/mock-db/data-creators'
+import { Sykmelding } from './api-models/sykmelding/Sykmelding'
 
 describe('sendSykmeldingMapping', () => {
-    const brukerinformasjon = { strengtFortroligAdresse: false, arbeidsgivere: arbeidsgivereMock }
+    const brukerinformasjon = { strengtFortroligAdresse: false, arbeidsgivere: defaultArbeidsgivere.slice(0, 2) }
     const erUtenforVentetid = { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' }
+
+    const sykmeldingApen = (): Sykmelding =>
+        new SykmeldingBuilder()
+            .status(StatusEvent.APEN)
+            .standardAktivitetIkkeMuligPeriode({ offset: 0, days: 7 })
+            .build()
 
     it('should map a bare minimum result correctly', () => {
         const sykmelding = sykmeldingApen()
@@ -160,7 +171,7 @@ describe('sendSykmeldingMapping', () => {
             sykmelding,
             {
                 ...brukerinformasjon,
-                arbeidsgivere: [{ ...arbeidsgivereMock[0], aktivtArbeidsforhold: false, naermesteLeder: null }],
+                arbeidsgivere: [{ ...defaultArbeidsgivere[0], aktivtArbeidsforhold: false, naermesteLeder: null }],
             },
             erUtenforVentetid,
         )
