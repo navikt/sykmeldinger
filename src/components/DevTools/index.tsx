@@ -1,5 +1,5 @@
 import React, { CSSProperties, ReactElement, useEffect, useRef, useState } from 'react'
-import { Button, Tooltip, Popover, Heading, Alert, Checkbox, Select, LinkPanel, Modal, Link } from '@navikt/ds-react'
+import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link, Switch } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -187,14 +187,14 @@ function ScenarioOptions(): ReactElement {
             <Heading size="small" level="4" className="mt-4">
                 Oppdater scenario
             </Heading>
-            <Checkbox
+            <Switch
                 value="strengtFortroligAdresse"
                 disabled={anyLoading}
                 onChange={() => toggleMutation()}
                 checked={brukerinformasjonQuery.data?.brukerinformasjon.strengtFortroligAdresse ?? false}
             >
                 Strengt fortrolig adresse
-            </Checkbox>
+            </Switch>
             <Select
                 label="Antall arbeidsgivere"
                 onChange={(event) =>
