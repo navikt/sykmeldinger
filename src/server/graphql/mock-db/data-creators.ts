@@ -13,6 +13,7 @@ import {
 } from '../resolver-types.generated'
 import { AktivitetIkkeMuligPeriode, Periode } from '../../api-models/sykmelding/Periode'
 import { dateAdd } from '../../../utils/dateUtils'
+import { RuleHit } from '../../api-models/sykmelding/Behandlingsutfall'
 
 export class SykmeldingBuilder {
     private readonly mottatt: string = '2020-02-01'
@@ -132,9 +133,7 @@ export class SykmeldingBuilder {
         return this
     }
 
-    standardAktivitetIkkeMuligPeriode(
-        relative: { offset: number; days: number } = { offset: 0, days: 7 },
-    ): SykmeldingBuilder {
+    enkelPeriode(relative: { offset: number; days: number } = { offset: 0, days: 7 }): SykmeldingBuilder {
         const periode: BuilderPeriodeVariations = {
             type: Periodetype.AKTIVITET_IKKE_MULIG,
             medisinskArsak: {
@@ -179,6 +178,21 @@ export class SykmeldingBuilder {
     utenlandsk(): SykmeldingBuilder {
         this._sykmelding.utenlandskSykmelding = {
             land: 'SE',
+        }
+
+        return this
+    }
+
+    egenmeldt(): SykmeldingBuilder {
+        this._sykmelding.egenmeldt = true
+
+        return this
+    }
+
+    behandlingsutfall(status: RegelStatus.INVALID, ruleHits: RuleHit[]): SykmeldingBuilder {
+        this._sykmelding.behandlingsutfall = {
+            status,
+            ruleHits,
         }
 
         return this
