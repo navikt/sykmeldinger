@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
-import { Button, Tooltip, Popover, Heading, Link, Alert, Checkbox, Select } from '@navikt/ds-react'
+import { Button, Tooltip, Popover, Heading, Alert, Checkbox, Select, LinkPanel, Modal } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -29,53 +29,56 @@ function Index(): ReactElement {
     }, [])
 
     return (
-        <div className="fixed right-4 top-24">
-            <Tooltip content="Verktøy for testing">
-                <Button
-                    ref={buttonRef}
-                    onClick={() => setOpenState((b) => !b)}
-                    icon={<SandboxIcon title="Åpne testdataverktøy" />}
-                    variant="tertiary-neutral"
-                />
-            </Tooltip>
-            <Popover
-                open={showHint}
-                onClose={() => {
-                    localStorage.setItem('devtools-hint', 'true')
-                    setShowHint(false)
-                }}
-                placement="bottom-end"
-                anchorEl={buttonRef.current}
-            >
-                <Popover.Content>
-                    <Heading size="small" level="3">
-                        Tips!
-                    </Heading>
-                    <div className="w-[220px]">Her finner du verktøy for å endre mellom forskjellige brukere</div>
-                </Popover.Content>
-            </Popover>
-            <Popover
-                placement="bottom-end"
+        <>
+            <div className="fixed right-4 top-24" hidden={openState}>
+                <Tooltip content="Verktøy for testing">
+                    <Button
+                        ref={buttonRef}
+                        onClick={() => setOpenState((b) => !b)}
+                        icon={<SandboxIcon title="Åpne testdataverktøy" />}
+                        variant="tertiary-neutral"
+                    />
+                </Tooltip>
+                <Popover
+                    open={showHint}
+                    onClose={() => {
+                        localStorage.setItem('devtools-hint', 'true')
+                        setShowHint(false)
+                    }}
+                    placement="bottom-end"
+                    anchorEl={buttonRef.current}
+                >
+                    <Popover.Content>
+                        <Heading size="small" level="3">
+                            Tips!
+                        </Heading>
+                        <div className="w-[220px]">Her finner du verktøy for å endre mellom forskjellige brukere</div>
+                    </Popover.Content>
+                </Popover>
+            </div>
+            <Modal
                 open={openState}
                 onClose={() => setOpenState(false)}
-                anchorEl={buttonRef.current}
-                className="min-w-[20rem]"
+                className="h-screen max-w-[369px] rounded-none"
+                overlayClassName="p-0 justify-end"
             >
-                <DevToolsContent />
-            </Popover>
-        </div>
+                <Modal.Content>
+                    <DevToolsContent />
+                </Modal.Content>
+            </Modal>
+        </>
     )
 }
 
 function DevToolsContent(): ReactElement {
     return (
-        <Popover.Content>
-            <Heading size="medium" level="3" spacing>
+        <div>
+            <Heading size="medium" level="3" spacing className="m-0">
                 Testdataverktøy
             </Heading>
             <ScenarioPicker />
             <ScenarioOptions />
-        </Popover.Content>
+        </div>
     )
 }
 
@@ -96,16 +99,20 @@ function ScenarioPicker(): ReactElement {
                 Testscenario
             </Heading>
             <ul
-                className={cn('ml-6 list-disc', {
+                className={cn('mt-2 flex flex-col gap-2', {
                     'pointer-events-none': loading,
                 })}
             >
                 {toPairs.strict(scenarios).map(([key, { description }]) => {
                     return (
                         <li key={key}>
-                            <Link role="button" onClick={handleChangeUserScenario(key)}>
+                            <LinkPanel
+                                as="button"
+                                onClick={handleChangeUserScenario(key)}
+                                className="w-full text-start"
+                            >
                                 {description}
-                            </Link>
+                            </LinkPanel>
                         </li>
                     )
                 })}
