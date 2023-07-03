@@ -222,44 +222,61 @@ type BuilderPeriodeVariations =
           }
       }
     | {
-          type: Periodetype.REISETILSKUDD
-      }
-    | {
           type: Periodetype.AVVENTENDE
+          tilrettelegging: string
       }
     | {
           type: Periodetype.BEHANDLINGSDAGER
+          behandlingsdager: number
+      }
+    | {
+          type: Periodetype.REISETILSKUDD
       }
 
 function builderPeriodeToPeriod(periode: BuilderPeriode): Periode {
+    const common = {
+        fom: periode.fom,
+        tom: periode.tom,
+        aktivitetIkkeMulig: null,
+        gradert: null,
+        behandlingsdager: null,
+        innspillTilArbeidsgiver: null,
+        reisetilskudd: false,
+    }
+
     switch (periode.type) {
         case Periodetype.AKTIVITET_IKKE_MULIG:
             return {
+                ...common,
                 type: Periodetype.AKTIVITET_IKKE_MULIG,
-                fom: periode.fom,
-                tom: periode.tom,
                 aktivitetIkkeMulig: {
                     medisinskArsak: periode.medisinskArsak,
                     arbeidsrelatertArsak: periode.arbeidsrelatertArsak,
                 },
-                gradert: null,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: null,
-                reisetilskudd: false,
             }
         case Periodetype.GRADERT:
             return {
+                ...common,
                 type: Periodetype.GRADERT,
-                fom: periode.fom,
-                tom: periode.tom,
-                aktivitetIkkeMulig: null,
                 gradert: periode.gradert,
-                behandlingsdager: null,
-                innspillTilArbeidsgiver: null,
-                reisetilskudd: false,
             }
-        default:
-            throw new Error(`Type not implemented: ${periode.type}`)
+        case Periodetype.BEHANDLINGSDAGER:
+            return {
+                ...common,
+                type: Periodetype.BEHANDLINGSDAGER,
+                behandlingsdager: periode.behandlingsdager,
+            }
+        case Periodetype.AVVENTENDE:
+            return {
+                ...common,
+                type: Periodetype.AVVENTENDE,
+                innspillTilArbeidsgiver: periode.tilrettelegging,
+            }
+        case Periodetype.REISETILSKUDD:
+            return {
+                ...common,
+                type: Periodetype.REISETILSKUDD,
+            }
     }
 }
 

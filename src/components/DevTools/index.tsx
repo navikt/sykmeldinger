@@ -13,7 +13,7 @@ import {
     Dev_ToggleStrengtFortroligAdresseDocument,
 } from '../../fetching/graphql.generated'
 import { cn } from '../../utils/tw-utils'
-import scenarios from '../../server/graphql/mock-db/scenarios'
+import { simpleScenarios, otherScenarios } from '../../server/graphql/mock-db/scenarios'
 
 function Index(): ReactElement {
     const [showHint, setShowHint] = useState(false)
@@ -30,7 +30,7 @@ function Index(): ReactElement {
 
     return (
         <>
-            <div className="fixed right-4 top-24" hidden={openState}>
+            <div className="fixed bottom-4 right-4 sm:right-4 sm:top-24" hidden={openState}>
                 <Tooltip content="Verktøy for testing">
                     <Button
                         ref={buttonRef}
@@ -95,18 +95,40 @@ function ScenarioPicker(): ReactElement {
 
     return (
         <div className={cn({ 'cursor-not-allowed opacity-70': loading })}>
-            <Heading size="small" level="4">
-                Testscenario
-            </Heading>
             <Alert variant="warning" size="small" className="mt-2" inline>
                 Endring av scenario vil slette eventuelle innsendinger og endringer du har gjort.
             </Alert>
+            <Heading size="small" level="4" className="mt-2">
+                Vanlige scenarioer
+            </Heading>
             <ul
                 className={cn('mt-2 flex flex-col gap-2', {
                     'pointer-events-none': loading,
                 })}
             >
-                {toPairs.strict(scenarios).map(([key, { description }]) => {
+                {toPairs.strict(simpleScenarios).map(([key, { description }]) => {
+                    return (
+                        <li key={key}>
+                            <LinkPanel
+                                as="button"
+                                onClick={handleChangeUserScenario(key)}
+                                className="w-full text-start"
+                            >
+                                {description}
+                            </LinkPanel>
+                        </li>
+                    )
+                })}
+            </ul>
+            <Heading size="small" level="4" className="mt-2">
+                Andre scenarioer
+            </Heading>
+            <ul
+                className={cn('mt-2 flex flex-col gap-2', {
+                    'pointer-events-none': loading,
+                })}
+            >
+                {toPairs.strict(otherScenarios).map(([key, { description }]) => {
                     return (
                         <li key={key}>
                             <LinkPanel

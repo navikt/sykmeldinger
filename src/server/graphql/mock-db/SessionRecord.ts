@@ -1,8 +1,11 @@
 import { logger } from '@navikt/next-logger'
 
 import MockDb from './MockDb'
-import scenarios, { Scenarios } from './scenarios'
+import { scenarios, Scenarios } from './scenarios'
 
+/**
+ * Keeps track of the mock database for each session by session id. Should only have a single instance per server.
+ */
 class SessionRecord {
     private _dbs: Record<string, MockDb> = {}
 

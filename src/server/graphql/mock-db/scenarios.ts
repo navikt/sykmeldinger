@@ -110,6 +110,38 @@ const egenmeldt: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).enkelPeriode().status(StatusEvent.APEN).egenmeldt().build()],
 })
 
+const behandlingsdager: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 7 })
+            .relativePeriode({ type: Periodetype.BEHANDLINGSDAGER, behandlingsdager: 1 }, { offset: 0, days: 1 })
+            .status(StatusEvent.APEN)
+            .build(),
+    ],
+})
+
+const avventene: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 7 })
+            .relativePeriode(
+                { type: Periodetype.AVVENTENDE, tilrettelegging: 'Bedre transport til jobb' },
+                { offset: 0, days: 7 },
+            )
+            .status(StatusEvent.APEN)
+            .egenmeldt()
+            .build(),
+    ],
+})
+
+const reisetilskudd: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 7 })
+            .relativePeriode({ type: Periodetype.REISETILSKUDD }, { offset: 0, days: 7 })
+            .status(StatusEvent.APEN)
+            .egenmeldt()
+            .build(),
+    ],
+})
+
 const harUnderBehandling: ScenarioCreator = () => ({
     sykmeldinger: [
         ...normal().sykmeldinger,
@@ -145,8 +177,8 @@ const mangeGamleSykmeldinger: ScenarioCreator = () => {
     }
 }
 
-export type Scenarios = keyof typeof scenariosWithDescriptions
-const scenariosWithDescriptions = {
+export type Scenarios = keyof typeof simpleScenarios | keyof typeof otherScenarios
+export const simpleScenarios = {
     normal: {
         description: 'En ny og et par innsendte (standard)',
         scenario: normal,
@@ -155,10 +187,29 @@ const scenariosWithDescriptions = {
         description: 'En åpen sykmelding med gradert periode',
         scenario: gradertPeriode,
     },
+    behandlingsdager: {
+        description: 'En åpen sykmelding med behandlingsdager',
+        scenario: behandlingsdager,
+    },
+    avventene: {
+        description: 'En åpen sykmelding med avventende periode',
+        scenario: avventene,
+    },
+    reisetilskudd: {
+        description: 'En åpen sykmelding med reisetilskudd',
+        scenario: reisetilskudd,
+    },
     papirsykmelding: {
         description: 'En ny og en gammel papirsykmelding',
         scenario: papirSykmelding,
     },
+    emptyState: {
+        description: 'Ingen sykmeldinger',
+        scenario: () => ({ sykmeldinger: [] }),
+    },
+} satisfies Record<string, { description: string; scenario: ScenarioCreator }>
+
+export const otherScenarios = {
     utenlandsk: {
         description: 'Utenlanske sykmeldinger',
         scenario: utenlandsk,
@@ -167,14 +218,6 @@ const scenariosWithDescriptions = {
         description: 'Egenmeldt sykmelding',
         scenario: egenmeldt,
     },
-    emptyState: {
-        description: 'Ingen sykmeldinger',
-        scenario: () => ({ sykmeldinger: [] }),
-    },
-    harUnderBehandling: {
-        description: 'Har en innsendt under behandling',
-        scenario: harUnderBehandling,
-    },
     mangeGamleSykmeldinger: {
         description: 'Mange gamle sykmeldinger',
         scenario: mangeGamleSykmeldinger,
@@ -182,6 +225,10 @@ const scenariosWithDescriptions = {
     avbrutt: {
         description: 'Èn avbrutt sykmelding',
         scenario: avbrutt,
+    },
+    harUnderBehandling: {
+        description: 'Har en innsendt under behandling',
+        scenario: harUnderBehandling,
     },
     avvist: {
         description: 'Avvist grunnet tilbakedatering (med bekreftet)',
@@ -197,4 +244,4 @@ const scenariosWithDescriptions = {
     },
 } satisfies Record<string, { description: string; scenario: ScenarioCreator }>
 
-export default scenariosWithDescriptions
+export const scenarios = { ...simpleScenarios, ...otherScenarios }
