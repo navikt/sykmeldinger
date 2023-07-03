@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import React, { CSSProperties, ReactElement, useEffect, useRef, useState } from 'react'
 import { Button, Tooltip, Popover, Heading, Alert, Checkbox, Select, LinkPanel, Modal, Link } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
@@ -25,7 +25,7 @@ function Index(): ReactElement {
             if (localStorage.getItem('devtools-hint') !== 'true') {
                 setShowHint(true)
             }
-        }, 500)
+        }, 1000)
     }, [])
 
     return (
@@ -39,22 +39,33 @@ function Index(): ReactElement {
                         variant="tertiary-neutral"
                     />
                 </Tooltip>
-                <Popover
-                    open={showHint}
-                    onClose={() => {
-                        localStorage.setItem('devtools-hint', 'true')
-                        setShowHint(false)
-                    }}
-                    placement="bottom-end"
-                    anchorEl={buttonRef.current}
+                <div
+                    style={
+                        {
+                            '--ac-popover-bg': 'var(--a-surface-info-subtle)',
+                            '--ac-popover-border': 'var(--a-border-info)',
+                        } as CSSProperties
+                    }
                 >
-                    <Popover.Content>
-                        <Heading size="small" level="3">
-                            Tips!
-                        </Heading>
-                        <div className="w-[220px]">Her finner du verktøy for å endre mellom forskjellige brukere</div>
-                    </Popover.Content>
-                </Popover>
+                    <Popover
+                        open={showHint}
+                        onClose={() => {
+                            localStorage.setItem('devtools-hint', 'true')
+                            setShowHint(false)
+                        }}
+                        placement="bottom-end"
+                        anchorEl={buttonRef.current}
+                    >
+                        <Popover.Content>
+                            <Heading size="small" level="3" className="motion-safe:animate-bounce">
+                                Tips!
+                            </Heading>
+                            <div className="w-[220px]">
+                                Her finner du verktøy for å endre mellom forskjellige brukere
+                            </div>
+                        </Popover.Content>
+                    </Popover>
+                </div>
             </div>
             <Modal
                 open={openState}
