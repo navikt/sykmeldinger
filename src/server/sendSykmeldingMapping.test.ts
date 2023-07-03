@@ -15,10 +15,7 @@ describe('sendSykmeldingMapping', () => {
     const erUtenforVentetid = { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' }
 
     const sykmeldingApen = (): Sykmelding =>
-        new SykmeldingBuilder()
-            .status(StatusEvent.APEN)
-            .standardAktivitetIkkeMuligPeriode({ offset: 0, days: 7 })
-            .build()
+        new SykmeldingBuilder().status(StatusEvent.APEN).enkelPeriode({ offset: 0, days: 7 }).build()
 
     it('should map a bare minimum result correctly', () => {
         const sykmelding = sykmeldingApen()

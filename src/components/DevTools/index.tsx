@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
-import { Button, Tooltip, Popover, Heading, Alert, Checkbox, Select, LinkPanel, Modal } from '@navikt/ds-react'
+import { Button, Tooltip, Popover, Heading, Alert, Checkbox, Select, LinkPanel, Modal, Link } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -98,6 +98,9 @@ function ScenarioPicker(): ReactElement {
             <Heading size="small" level="4">
                 Testscenario
             </Heading>
+            <Alert variant="warning" size="small" className="mt-2" inline>
+                Endring av scenario vil slette eventuelle innsendinger og endringer du har gjort.
+            </Alert>
             <ul
                 className={cn('mt-2 flex flex-col gap-2', {
                     'pointer-events-none': loading,
@@ -117,8 +120,12 @@ function ScenarioPicker(): ReactElement {
                     )
                 })}
             </ul>
-            <Alert variant="info" size="small" className="mt-2">
-                Endring av scenario vil slette eventuelle innsendinger og endringer du har gjort.
+            <Alert variant="info" inline className="mt-2">
+                Noen ønsker til scenarioer i demo-versjonen? Ta kontakt på{' '}
+                <Link href="https://nav-it.slack.com/archives/CMA3XV997" target="_blank" rel="noopener noreferrer">
+                    #team-sykmelding
+                </Link>{' '}
+                på Slack!
             </Alert>
             {error && (
                 <Alert variant="error" className="mt-4">

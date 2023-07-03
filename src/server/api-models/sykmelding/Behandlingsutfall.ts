@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { RegelStatus } from '../../graphql/resolver-types.generated'
 
+export type RuleHit = z.infer<typeof RegelInfoSchema>
 const RegelInfoSchema = z.object({
     messageForSender: z.string(),
     messageForUser: z.string(),
