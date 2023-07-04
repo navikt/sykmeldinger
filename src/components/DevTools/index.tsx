@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import React, { CSSProperties, ReactElement, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link, Switch } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
@@ -23,6 +23,10 @@ function Index(): ReactElement {
     const dismissHint = useCallback(() => {
         localStorage.setItem('devtools-hint', 'true')
         setShowHint(false)
+    }, [])
+
+    useLayoutEffect(() => {
+        Modal.setAppElement?.('#__next')
     }, [])
 
     useEffect(() => {
@@ -104,7 +108,9 @@ function ScenarioPicker(): ReactElement {
 
     const handleChangeUserScenario = (scenario: Scenarios) => async () => {
         await changeUserScenario({ variables: { scenario } })
-        await router.push('/')
+        if (router.pathname !== '/') {
+            await router.push('/')
+        }
         await client.cache.reset()
     }
 
