@@ -2,15 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { createChildLogger } from '@navikt/next-logger'
 
 import { generateSykmeldingPdfServerSide } from '../../../server/pdf/pdf'
-import { createRequestContext, withAuthenticatedApi } from '../../../auth/withAuthentication'
-import { getSessionId } from '../../../utils/userSessionId'
+import { createDemoRequestContext, createRequestContext, withAuthenticatedApi } from '../../../auth/withAuthentication'
+import { isLocalOrDemo } from '../../../utils/env'
 
 async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-    const context = createRequestContext(
-        req.headers['x-request-id'] as string | undefined,
-        req.headers['authorization'],
-        getSessionId(req),
-    )
+    const context = !isLocalOrDemo
+        ? createRequestContext(req.headers['x-request-id'] as string | undefined, req.headers['authorization'])
+        : createDemoRequestContext(req)
 
     if (!context) {
         res.status(401).json({ message: 'Access denied' })
