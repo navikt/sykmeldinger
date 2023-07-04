@@ -45,7 +45,7 @@ function YesNoField<
             legend={legend}
             error={fieldState.error?.message}
             onChange={(value: YesOrNo) => {
-                field.onChange(value)
+                field.onChange(value as FieldPathValue<TFieldValues, TName>)
                 onChange?.(value)
             }}
         >
