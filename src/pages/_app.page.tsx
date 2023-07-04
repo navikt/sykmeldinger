@@ -24,7 +24,7 @@ initInstrumentation()
 configureLogger({
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     onLog: (log) =>
-        getFaro().api.pushLog(log.messages, {
+        getFaro()?.api.pushLog(log.messages, {
             level: pinoLevelToFaroLevel(log.level.label),
         }),
 })
