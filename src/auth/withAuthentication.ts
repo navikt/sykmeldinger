@@ -7,6 +7,7 @@ import { v4 } from 'uuid'
 import { browserEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
 import { getFlagsServerSide } from '../toggles/ssr'
+import { getSessionId } from '../utils/userSessionId'
 
 export interface ServerSidePropsResult {
     toggles: IToggle[]
@@ -131,15 +132,7 @@ function getRedirectPath(context: GetServerSidePropsContext): string {
 /**
  * Creates the HTTP context that is passed through the resolvers and services, both for prefetching and HTTP-fetching.
  */
-export function createRequestContext(
-    requestId: string | undefined,
-    token: string | undefined,
-    sessionId: string,
-): RequestContext | null {
-    if (isLocalOrDemo) {
-        return { ...require('./fakeLocalAuthTokenSet.json'), requestId: requestId ?? 'not set', sessionId }
-    }
-
+export function createRequestContext(requestId: string | undefined, token: string | undefined): RequestContext | null {
     if (!token) {
         logger.warn('User is missing authorization bearer token')
         return null
@@ -152,5 +145,20 @@ export function createRequestContext(
         payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
         requestId: requestId ?? 'not set',
         sessionId: 'unused',
+    }
+}
+
+/**
+ * Used locally or in demo environments to create a fake request context.
+ */
+export function createDemoRequestContext(req: GetServerSidePropsContext['req'] | NextApiRequest): RequestContext {
+    if (!isLocalOrDemo) {
+        throw new Error('createDemoRequestContext should only be used in local development or demo environments')
+    }
+
+    return {
+        ...require('./fakeLocalAuthTokenSet.json'),
+        requestId: 'not set',
+        sessionId: getSessionId(req),
     }
 }
