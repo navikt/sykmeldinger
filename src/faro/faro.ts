@@ -10,7 +10,9 @@ export function initInstrumentation(): void {
     getFaro()
 }
 
-export function getFaro(): Faro {
+export function getFaro(): Faro | null {
+    if (browserEnv.NEXT_PUBLIC_TELEMETRY_URL == null) return null
+
     if (faro != null) return faro
     faro = initializeFaro({
         paused: isLocalOrDemo,
