@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useEffect, useRef, useState } from 'react'
+import React, { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link, Switch } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
@@ -19,6 +19,11 @@ function Index(): ReactElement {
     const [showHint, setShowHint] = useState(false)
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [openState, setOpenState] = useState(false)
+
+    const dismissHint = useCallback(() => {
+        localStorage.setItem('devtools-hint', 'true')
+        setShowHint(false)
+    }, [])
 
     useEffect(() => {
         setTimeout(() => {
@@ -47,15 +52,7 @@ function Index(): ReactElement {
                         } as CSSProperties
                     }
                 >
-                    <Popover
-                        open={showHint}
-                        onClose={() => {
-                            localStorage.setItem('devtools-hint', 'true')
-                            setShowHint(false)
-                        }}
-                        placement="bottom-end"
-                        anchorEl={buttonRef.current}
-                    >
+                    <Popover open={showHint} onClose={() => void 0} placement="bottom-end" anchorEl={buttonRef.current}>
                         <Popover.Content>
                             <Heading size="small" level="3" className="motion-safe:animate-bounce">
                                 Tips!
@@ -63,13 +60,20 @@ function Index(): ReactElement {
                             <div className="w-[220px]">
                                 Her finner du verktøy for å endre mellom forskjellige brukere
                             </div>
+                            <Button onClick={dismissHint} className="mt-2" variant="secondary-neutral" size="small">
+                                OK!
+                            </Button>
                         </Popover.Content>
                     </Popover>
                 </div>
             </div>
             <Modal
                 open={openState}
-                onClose={() => setOpenState(false)}
+                onClose={() => {
+                    if (showHint) dismissHint()
+
+                    setOpenState(false)
+                }}
                 className="h-screen max-w-[369px] rounded-none"
                 overlayClassName="p-0 justify-end"
             >
