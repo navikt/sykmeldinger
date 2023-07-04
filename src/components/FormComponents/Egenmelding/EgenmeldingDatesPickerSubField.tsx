@@ -44,7 +44,7 @@ function EgenmeldingDatesPickerSubField({
                         mode="multiple"
                         selected={datoerField.value ?? []}
                         onSelect={(value) => {
-                            datoerField.onChange(value)
+                            datoerField.onChange(value ?? null)
                             resetClickedVidere()
                         }}
                         fromDate={earliestPossibleDate}
@@ -54,7 +54,7 @@ function EgenmeldingDatesPickerSubField({
                         mode="multiple"
                         selected={datoerField.value ?? []}
                         onSelect={(value) => {
-                            datoerField.onChange(value)
+                            datoerField.onChange(value ?? null)
                             resetClickedVidere()
                         }}
                         fromDate={startOfMonth(latestPossibleDate)}
@@ -69,7 +69,7 @@ function EgenmeldingDatesPickerSubField({
                     max={16}
                     selected={datoerField.value ?? []}
                     onSelect={(value) => {
-                        datoerField.onChange(value)
+                        datoerField.onChange(value ?? null)
                         resetClickedVidere()
                     }}
                     fromDate={earliestPossibleDate}
