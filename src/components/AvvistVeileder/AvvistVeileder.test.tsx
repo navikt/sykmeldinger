@@ -42,8 +42,8 @@ describe('AvvistVeileder', () => {
         }
         render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} />)
 
-        expect(screen.getByText('Sykmeldingen kan dessverre ikke brukes')).toBeInTheDocument()
-        expect(screen.getByText(/Du har ikke rett til sykepenger fordi du er over 70 år/)).toBeInTheDocument()
+        expect(screen.getByText('Sykmeldingen kan dessverre ikke behandles automatisk')).toBeInTheDocument()
+        expect(screen.getByText(/Du har ikke rett til sykepenger, fordi du er over 70 år/)).toBeInTheDocument()
     })
 
     it('Renders custom message if z diagnose', () => {
@@ -63,7 +63,7 @@ describe('AvvistVeileder', () => {
         render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} />)
 
         expect(
-            screen.getByText(/Legen har skrevet en diagnose i sykmeldingen som ikke gir deg rett til å få sykepenger./),
+            screen.getByText(/Legen har skrevet en diagnose i sykmeldingen som ikke gir deg rett til sykepenger./),
         ).toBeInTheDocument()
     })
 
@@ -83,7 +83,7 @@ describe('AvvistVeileder', () => {
         }
         render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} />)
 
-        expect(screen.getByText('Sykmeldingen kan dessverre ikke brukes')).toBeInTheDocument()
+        expect(screen.getByText('Sykmeldingen kan dessverre ikke behandles automatisk')).toBeInTheDocument()
         expect(screen.getByText(/Du trenger en ny sykmelding/)).toBeInTheDocument()
     })
 })
