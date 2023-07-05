@@ -4,6 +4,7 @@ import { Behandlingsutfall } from '../../fetching/graphql.generated'
 
 import ForklaringZDiagnose from './ForklaringZDiagnose'
 import ForklaringAndre from './ForklaringAndre'
+import ForklaringOverSytti from './ForklaringOverSytti'
 
 interface AvvistVeilederProps {
     behandlerNavn: string
@@ -28,9 +29,8 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall }: AvvistVeilederProp
     return (
         <GuidePanel poster>
             <Heading size="small" className="my-4 text-center">
-                Sykmeldingen kan dessverre ikke brukes
+                Sykmeldingen kan dessverre ikke behandles automatisk
             </Heading>
-            <BodyShort>Beklager at vi må bry deg mens du er syk.</BodyShort>
             <div className="mt-6">
                 {isNotValidInHPR || isMissingAuthorization || isNotCorrectRole || isSuspended ? (
                     <BodyShort>
@@ -46,10 +46,7 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall }: AvvistVeilederProp
                         <BodyLong>Du må få en lege til å skrive sykmeldingen.</BodyLong>
                     </>
                 ) : isOver70 ? (
-                    <BodyShort>
-                        Du har ikke rett til sykepenger fordi du er over 70 år. I stedet for sykmelding kan du be om en
-                        skriftlig bekreftelse på at du er syk.
-                    </BodyShort>
+                    <ForklaringOverSytti />
                 ) : isZDiagnosis ? (
                     <ForklaringZDiagnose />
                 ) : (
