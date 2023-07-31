@@ -660,7 +660,8 @@ export type AdresseResolvers<
 
 export type AktivitetIkkeMuligPeriodeResolvers<
     ContextType = RequestContext,
-    ParentType extends ResolversParentTypes['AktivitetIkkeMuligPeriode'] = ResolversParentTypes['AktivitetIkkeMuligPeriode'],
+    ParentType extends
+        ResolversParentTypes['AktivitetIkkeMuligPeriode'] = ResolversParentTypes['AktivitetIkkeMuligPeriode'],
 > = ResolversObject<{
     arbeidsrelatertArsak?: Resolver<Maybe<ResolversTypes['ArbeidsrelatertArsak']>, ParentType, ContextType>
     medisinskArsak?: Resolver<Maybe<ResolversTypes['MedisinskArsak']>, ParentType, ContextType>
