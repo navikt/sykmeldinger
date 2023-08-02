@@ -45,7 +45,7 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall, perioder }: AvvistVe
                     <>
                         <BodyLong className="pb-5">
                             Kiropraktorer og manuellterapeuter har ikke lov til å skrive en sykmelding som gjør at det
-                            totale sykefravsæret ditt blir lenger enn 12 uker.
+                            totale sykefraværet ditt blir lenger enn 12 uker.
                         </BodyLong>
                         <BodyLong>Du må få en lege til å skrive sykmeldingen.</BodyLong>
                     </>
