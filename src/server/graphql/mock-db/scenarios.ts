@@ -106,6 +106,33 @@ const avvistData: ScenarioCreator = () => ({
     ],
 })
 
+const avvist20Data: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 7 })
+            .relativePeriode(
+                {
+                    type: Periodetype.GRADERT,
+                    gradert: {
+                        grad: 14,
+                        reisetilskudd: false,
+                    },
+                },
+                { offset: 0, days: 14 },
+            )
+            .status(StatusEvent.APEN)
+            .behandlingsutfall(RegelStatus.INVALID, [
+                {
+                    messageForSender:
+                        'Sykmeldingen kan ikke rettes, det må skrives en ny. Pasienten har fått beskjed om å vente på ny sykmelding fra deg. Grunnet følgende:Hvis sykmeldingsgrad er høyere enn 99% for delvis sykmelding avvises meldingen',
+                    messageForUser: 'Sykmeldingsgraden kan ikke være mer enn 99% fordi det er en gradert sykmelding.',
+                    ruleName: 'GRADERT_UNDER_20_PROSENT',
+                    ruleStatus: RegelStatus.INVALID,
+                },
+            ])
+            .build(),
+    ],
+})
+
 const egenmeldt: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).enkelPeriode().status(StatusEvent.APEN).egenmeldt().build()],
 })
@@ -237,6 +264,10 @@ export const otherScenarios = {
     avvistData: {
         description: 'Avvist grunnet ugyldig data',
         scenario: avvistData,
+    },
+    avvist20Data: {
+        description: 'Avvist grunnet under 20%',
+        scenario: avvist20Data,
     },
     utgatt: {
         description: 'Utgått sykmelding',
