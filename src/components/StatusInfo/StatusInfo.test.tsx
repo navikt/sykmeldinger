@@ -154,7 +154,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -198,7 +198,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
             })
 
             it('Ansatt with reisetilskudd in combination with another period type renders standard info', () => {
@@ -253,7 +253,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -303,7 +303,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
             })
 
@@ -354,7 +354,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
             })
 
@@ -405,7 +405,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
@@ -441,7 +441,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
             })
         })
 
@@ -472,7 +472,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -516,7 +516,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -566,7 +566,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
             })
 
@@ -617,7 +617,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
             })
 
@@ -668,7 +668,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
@@ -725,7 +725,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(screen.getByText(/NAV dekker ikke de/)).toBeInTheDocument()
             })
 
@@ -780,7 +780,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Da har du gjort det du trenger å gjøre for nå/)).toBeInTheDocument()
+                expect(screen.getByText(/Takk, da har vi fått det vi trenger/)).toBeInTheDocument()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()

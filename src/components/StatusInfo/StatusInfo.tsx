@@ -99,8 +99,7 @@ function StatusInfo({
             <GuidePanel poster className="mb-8">
                 <div className="mb-4">
                     <BodyShort>
-                        Da har du gjort det du trenger å gjøre for nå. Du mottar melding fra oss om eller når vi trenger
-                        noe mer fra deg.
+                        Takk, da har vi fått det vi trenger. Du får en melding fra oss hvis vi trenger noe mer fra deg.
                     </BodyShort>
                 </div>
 
