@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/nodejs:18 as runtime
+FROM gcr.io/distroless/nodejs18-debian11
 
 WORKDIR /app
 
