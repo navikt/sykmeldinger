@@ -12,9 +12,7 @@ const serverEnv = getServerEnv()
 export async function getErUtenforVentetid(sykmeldingId: string, context: RequestContext): Promise<ErUtenforVentetid> {
     const childLogger = createChildLogger(context.requestId)
 
-    childLogger.info(
-        `Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}, requestId: ${context.requestId}`,
-    )
+    childLogger.info(`Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}`)
 
     const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE)
     if (isInvalidTokenSet(tokenX)) {
@@ -59,5 +57,46 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
 
     throw new Error(
         `Failed to fetch brukerinformasjon from backend for sykmelding ${sykmeldingId}, flex responded with status ${response.status} ${response.statusText}, requestId: ${context.requestId}`,
+    )
+}
+
+export async function feedback(feedback: unknown, context: RequestContext): Promise<boolean> {
+    const childLogger = createChildLogger(context.requestId)
+
+    childLogger.info(`Submitting feedback to flexjar-backend`)
+
+    const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.FLEXJAR_BACKEND_SCOPE)
+    if (isInvalidTokenSet(tokenX)) {
+        throw new Error(
+            `Unable to exchange token for flex-syketilfelle token, requestId: ${context.requestId},reason: ${tokenX.message}`,
+            {
+                cause: tokenX.error,
+            },
+        )
+    }
+
+    const response = await fetch(`${serverEnv.FLEXJAR}/api/v1/feedback`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${tokenX}`,
+            'Content-Type': 'application/json',
+            'x-request-id': context.requestId,
+        },
+        body: JSON.stringify(feedback),
+    })
+
+    if (response.status === 401) {
+        throw new GraphQLError(`User has been logged out, requestId: ${context.requestId}`, {
+            extensions: { code: 'UNAUTHENTICATED' },
+        })
+    }
+
+    if (response.ok) {
+        childLogger.info('Submitted feedback OK')
+        return true
+    }
+
+    throw new Error(
+        `Unable to submit feedback to flexjar-backend, requestId: ${context.requestId}, status: ${response.status} ${response.statusText}`,
     )
 }

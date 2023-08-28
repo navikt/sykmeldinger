@@ -19,6 +19,10 @@ const Mutation: MutationResolvers = {
         mockDb().get(sessionId).sendSykmelding(sykmeldingId, values),
     updateEgenmeldingsdager: async (_, { sykmeldingId, egenmeldingsdager }, { sessionId }) =>
         mockDb().get(sessionId).updateEgenmeldingsdager(sykmeldingId, egenmeldingsdager),
+    feedback: async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1600))
+        return true
+    },
 
     // DevTools mutations that are only implemented in mockResolvers, not the real resolvers
     dev_changeScenario: async (_, { scenario }, context) => {

@@ -223,6 +223,7 @@ export type Mutation = {
     readonly dev_changeScenario: Scalars['Boolean']['output']
     readonly dev_setAntallArbeidsgivere: Scalars['Boolean']['output']
     readonly dev_toggleStrengtFortroligAdresse: Scalars['Boolean']['output']
+    readonly feedback: Scalars['Boolean']['output']
     readonly sendSykmelding: Sykmelding
     readonly updateEgenmeldingsdager: Sykmelding
 }
@@ -238,6 +239,10 @@ export type MutationDev_ChangeScenarioArgs = {
 
 export type MutationDev_SetAntallArbeidsgivereArgs = {
     antall: Scalars['Int']['input']
+}
+
+export type MutationFeedbackArgs = {
+    feedback: Scalars['JSON']['input']
 }
 
 export type MutationSendSykmeldingArgs = {
@@ -488,6 +493,12 @@ export type Dev_BrukerinformasjonQuery = {
         }>
     }
 }
+
+export type FeedbackMutationVariables = Exact<{
+    feedback: Scalars['JSON']['input']
+}>
+
+export type FeedbackMutation = { readonly __typename: 'Mutation'; readonly feedback: boolean }
 
 export type EndreEgenmeldingsdagerMutationVariables = Exact<{
     sykmeldingId: Scalars['String']['input']
@@ -2682,6 +2693,39 @@ export const Dev_BrukerinformasjonDocument = {
         },
     ],
 } as unknown as DocumentNode<Dev_BrukerinformasjonQuery, Dev_BrukerinformasjonQueryVariables>
+export const FeedbackDocument = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'OperationDefinition',
+            operation: 'mutation',
+            name: { kind: 'Name', value: 'Feedback' },
+            variableDefinitions: [
+                {
+                    kind: 'VariableDefinition',
+                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'feedback' } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'JSON' } } },
+                },
+            ],
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'feedback' },
+                        arguments: [
+                            {
+                                kind: 'Argument',
+                                name: { kind: 'Name', value: 'feedback' },
+                                value: { kind: 'Variable', name: { kind: 'Name', value: 'feedback' } },
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<FeedbackMutation, FeedbackMutationVariables>
 export const EndreEgenmeldingsdagerDocument = {
     kind: 'Document',
     definitions: [

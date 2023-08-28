@@ -227,6 +227,7 @@ export type Mutation = {
     dev_changeScenario: Scalars['Boolean']['output']
     dev_setAntallArbeidsgivere: Scalars['Boolean']['output']
     dev_toggleStrengtFortroligAdresse: Scalars['Boolean']['output']
+    feedback: Scalars['Boolean']['output']
     sendSykmelding: Sykmelding
     updateEgenmeldingsdager: Sykmelding
 }
@@ -242,6 +243,10 @@ export type MutationDev_ChangeScenarioArgs = {
 
 export type MutationDev_SetAntallArbeidsgivereArgs = {
     antall: Scalars['Int']['input']
+}
+
+export type MutationFeedbackArgs = {
+    feedback: Scalars['JSON']['input']
 }
 
 export type MutationSendSykmeldingArgs = {
@@ -904,6 +909,12 @@ export type MutationResolvers<
         RequireFields<MutationDev_SetAntallArbeidsgivereArgs, 'antall'>
     >
     dev_toggleStrengtFortroligAdresse?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+    feedback?: Resolver<
+        ResolversTypes['Boolean'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationFeedbackArgs, 'feedback'>
+    >
     sendSykmelding?: Resolver<
         ResolversTypes['Sykmelding'],
         ParentType,

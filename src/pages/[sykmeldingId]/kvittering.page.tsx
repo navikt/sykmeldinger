@@ -15,7 +15,12 @@ import Header from '../../components/Header/Header'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
-import { RegelStatus, StatusEvent, SykmeldingFragment } from '../../fetching/graphql.generated'
+import {
+    RegelStatus,
+    StatusEvent,
+    SvarUnion_ArbeidssituasjonSvar_Fragment,
+    SykmeldingFragment,
+} from '../../fetching/graphql.generated'
 import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding'
 import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
 import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer'
@@ -24,8 +29,11 @@ import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
+import Feedback from '../../components/Feedback/Feedback'
+import { useFlag } from '../../toggles/context'
 
 function SykmeldingkvitteringPage(): ReactElement {
+    const feedbackToggle = useFlag('SYKMELDINGER_FLEXJAR_KVITTERING')
     const sykmeldingId = useGetSykmeldingIdParam()
     const { data, error, loading } = useSykmeldingById(sykmeldingId)
     const router = useRouter()
@@ -123,6 +131,23 @@ function SykmeldingkvitteringPage(): ReactElement {
             )}
 
             <HintToNextOlderSykmelding />
+
+            {feedbackToggle.enabled && (
+                <div>
+                    <Feedback
+                        feedbackId="sykmelding-kvittering"
+                        metadata={{
+                            arbeidssituasjon:
+                                data.sykmelding.sykmeldingStatus.sporsmalOgSvarListe
+                                    .map((it) => it.svar)
+                                    .find(
+                                        (it): it is SvarUnion_ArbeidssituasjonSvar_Fragment =>
+                                            it.__typename === 'ArbeidssituasjonSvar',
+                                    )?.arbeidsituasjon ?? 'UKJENT',
+                        }}
+                    />
+                </div>
+            )}
         </KvitteringWrapper>
     )
 }

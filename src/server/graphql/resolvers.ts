@@ -28,6 +28,7 @@ const Mutation: MutationResolvers = {
         sykmeldingerService.sendSykmelding(sykmeldingId, values, context),
     updateEgenmeldingsdager: async (_, { sykmeldingId, egenmeldingsdager }, context) =>
         sykmeldingerService.updateEgenmeldingsdager(sykmeldingId, egenmeldingsdager, context),
+    feedback: async (_, { feedback }, context) => flexService.feedback(feedback, context),
 }
 
 const resolvers: Partial<Resolvers> = {
