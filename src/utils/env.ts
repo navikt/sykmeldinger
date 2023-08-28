@@ -23,6 +23,8 @@ export const serverEnvSchema = z.object({
     SYKMELDINGER_BACKEND_SCOPE: z.string(),
     FLEX_SYKETILFELLE: z.string(),
     FLEX_SYKETILFELLE_BACKEND_SCOPE: z.string(),
+    FLEXJAR: z.string(),
+    FLEXJAR_BACKEND_SCOPE: z.string(),
     // Provided my nais
     IDPORTEN_CLIENT_ID: z.string(),
     IDPORTEN_WELL_KNOWN_URL: z.string(),
@@ -49,22 +51,25 @@ export const browserEnv = publicEnvSchema.parse({
     NEXT_PUBLIC_TELEMETRY_URL: process.env.NEXT_PUBLIC_TELEMETRY_URL,
 } satisfies Record<keyof PublicEnv, string | undefined>)
 
-const getRawServerConfig = (): Partial<unknown> => ({
-    // Provided by nais-*.yml
-    SYKMELDINGER_BACKEND: process.env.SYKMELDINGER_BACKEND,
-    FLEX_SYKETILFELLE: process.env.FLEX_SYKETILFELLE,
-    SYKMELDINGER_BACKEND_SCOPE: process.env.SYKMELDINGER_BACKEND_SCOPE,
-    FLEX_SYKETILFELLE_BACKEND_SCOPE: process.env.FLEX_SYKETILFELLE_BACKEND_SCOPE,
-    // Provided by nais
-    IDPORTEN_CLIENT_ID: process.env.IDPORTEN_CLIENT_ID,
-    IDPORTEN_WELL_KNOWN_URL: process.env.IDPORTEN_WELL_KNOWN_URL,
-    TOKEN_X_WELL_KNOWN_URL: process.env.TOKEN_X_WELL_KNOWN_URL,
-    TOKEN_X_PRIVATE_JWK: process.env.TOKEN_X_PRIVATE_JWK,
-    TOKEN_X_CLIENT_ID: process.env.TOKEN_X_CLIENT_ID,
-    // for unleash
-    UNLEASH_SERVER_API_URL: process.env.UNLEASH_SERVER_API_URL,
-    UNLEASH_SERVER_API_TOKEN: process.env.UNLEASH_SERVER_API_TOKEN,
-})
+const getRawServerConfig = (): Partial<unknown> =>
+    ({
+        // Provided by nais-*.yml
+        SYKMELDINGER_BACKEND: process.env.SYKMELDINGER_BACKEND,
+        SYKMELDINGER_BACKEND_SCOPE: process.env.SYKMELDINGER_BACKEND_SCOPE,
+        FLEX_SYKETILFELLE: process.env.FLEX_SYKETILFELLE,
+        FLEX_SYKETILFELLE_BACKEND_SCOPE: process.env.FLEX_SYKETILFELLE_BACKEND_SCOPE,
+        FLEXJAR: process.env.FLEXJAR,
+        FLEXJAR_BACKEND_SCOPE: process.env.FLEXJAR_BACKEND_SCOPE,
+        // Provided by nais
+        IDPORTEN_CLIENT_ID: process.env.IDPORTEN_CLIENT_ID,
+        IDPORTEN_WELL_KNOWN_URL: process.env.IDPORTEN_WELL_KNOWN_URL,
+        TOKEN_X_WELL_KNOWN_URL: process.env.TOKEN_X_WELL_KNOWN_URL,
+        TOKEN_X_PRIVATE_JWK: process.env.TOKEN_X_PRIVATE_JWK,
+        TOKEN_X_CLIENT_ID: process.env.TOKEN_X_CLIENT_ID,
+        // for unleash
+        UNLEASH_SERVER_API_URL: process.env.UNLEASH_SERVER_API_URL,
+        UNLEASH_SERVER_API_TOKEN: process.env.UNLEASH_SERVER_API_TOKEN,
+    }) satisfies Record<keyof ServerEnv, string | undefined>
 
 /**
  * Server envs are lazy loaded and verified using Zod.

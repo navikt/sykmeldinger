@@ -10,6 +10,8 @@ type Mutation {
     sendSykmelding(sykmeldingId: String!, values: SendSykmeldingValues!): Sykmelding!
     updateEgenmeldingsdager(sykmeldingId: String!, egenmeldingsdager: [Date!]!): Sykmelding!
 
+    feedback(feedback: JSON!): Boolean!
+
     # developer tools, not available in production
     dev_changeScenario(scenario: String!): Boolean!
     dev_toggleStrengtFortroligAdresse: Boolean!

@@ -42,6 +42,8 @@ spec:
           namespace: flex
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: flexjar-backend
+          namespace: flex
       external:
         - host: teamsykmelding-unleash-api.nav.cloud.nais.io
         - host: flex-syketilfelle.flex
@@ -50,12 +52,16 @@ spec:
   env:
     - name: SYKMELDINGER_BACKEND
       value: 'http://sykmeldinger-backend'
-    - name: FLEX_SYKETILFELLE
-      value: 'http://flex-syketilfelle.flex'
     - name: SYKMELDINGER_BACKEND_SCOPE
       value: 'prod-gcp:teamsykmelding:sykmeldinger-backend'
+    - name: FLEX_SYKETILFELLE
+      value: 'http://flex-syketilfelle.flex'
     - name: FLEX_SYKETILFELLE_BACKEND_SCOPE
       value: 'prod-gcp:flex:flex-syketilfelle'
+    - name: FLEXJAR
+      value: 'http://flexjar-backend.flex'
+    - name: FLEXJAR_BACKEND_SCOPE
+      value: 'prod-gcp:flex:flexjar-backend'
     - name: UNLEASH_SERVER_API_URL
       value: 'https://teamsykmelding-unleash-api.nav.cloud.nais.io/api'
   envFrom:
