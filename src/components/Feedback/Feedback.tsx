@@ -8,7 +8,16 @@ import { cn } from '../../utils/tw-utils'
 
 import { feedbackReducer, initialState } from './FeedbackReducer'
 
-type Props = { feedbackId: string; metadata: Record<string, string> }
+type Props = {
+    feedbackId: string
+    metadata: Record<string, string>
+}
+
+const responseTypeToLabelMap = {
+    JA: 'Er det noe du vil trekke frem? (valgfritt)',
+    NEI: 'Hva synes du var utfordrene?',
+    FORBEDRING: 'Hva kan forbedres?',
+} as const
 
 function Feedback({ feedbackId, metadata }: Props): ReactElement {
     const [{ activeResponseType, textValue, errorMessage, isComplete }, dispatch] = useReducer(
@@ -18,7 +27,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
     const [mutate, result] = useMutation(FeedbackDocument)
 
     const handleSend = async (): Promise<void> => {
-        if ((activeResponseType === 'improve' || activeResponseType === 'no') && textValue === '') {
+        if ((activeResponseType === 'FORBEDRING' || activeResponseType === 'NEI') && textValue === '') {
             dispatch({ type: 'error', message: 'Tilbakemeldingen kan ikke være tom. Legg til tekst i feltet.' })
             return
         }
@@ -46,22 +55,22 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                         </BodyShort>
                         <div className="flex w-full gap-2">
                             <FeedbackButton
-                                handleClick={() => dispatch({ type: 'feedback-type', value: 'yes' })}
-                                active={activeResponseType === 'yes'}
+                                handleClick={() => dispatch({ type: 'feedback-type', value: 'JA' })}
+                                active={activeResponseType === 'JA'}
                                 disabled={result.loading}
                             >
                                 Ja
                             </FeedbackButton>
                             <FeedbackButton
-                                handleClick={() => dispatch({ type: 'feedback-type', value: 'no' })}
-                                active={activeResponseType === 'no'}
+                                handleClick={() => dispatch({ type: 'feedback-type', value: 'NEI' })}
+                                active={activeResponseType === 'NEI'}
                                 disabled={result.loading}
                             >
                                 Nei
                             </FeedbackButton>
                             <FeedbackButton
-                                handleClick={() => dispatch({ type: 'feedback-type', value: 'improve' })}
-                                active={activeResponseType === 'improve'}
+                                handleClick={() => dispatch({ type: 'feedback-type', value: 'FORBEDRING' })}
+                                active={activeResponseType === 'FORBEDRING'}
                                 disabled={result.loading}
                             >
                                 Foreslå forbedring
@@ -72,13 +81,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                                 <Textarea
                                     data-cy="feedback-textarea"
                                     error={errorMessage}
-                                    label={
-                                        activeResponseType === 'yes'
-                                            ? 'Er det noe du vil trekke frem? (valgfritt)'
-                                            : activeResponseType === 'no'
-                                            ? 'Hva synes du var utfordrene?'
-                                            : 'Hva kan forbedres?'
-                                    }
+                                    label={responseTypeToLabelMap[activeResponseType]}
                                     onKeyDown={async (e) => {
                                         if (e.key === 'Enter' && !e.shiftKey) {
                                             e.preventDefault()
