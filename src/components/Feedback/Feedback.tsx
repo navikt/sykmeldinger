@@ -27,7 +27,10 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
     const [mutate, result] = useMutation(FeedbackDocument)
 
     const handleSend = async (): Promise<void> => {
-        if ((activeResponseType === 'FORBEDRING' || activeResponseType === 'NEI') && textValue === '') {
+        if (
+            (activeResponseType === 'FORBEDRING' || activeResponseType === 'NEI') &&
+            (textValue == null || textValue.trim() === '')
+        ) {
             dispatch({ type: 'error', message: 'Tilbakemeldingen kan ikke være tom. Legg til tekst i feltet.' })
             return
         }
