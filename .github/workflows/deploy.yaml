@@ -1,6 +1,13 @@
 name: Build & Deploy
 on: push
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+  packages: write
+  id-token: write
+
 jobs:
   next-app:
     uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@main
