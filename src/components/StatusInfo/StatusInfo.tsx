@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { BodyShort, GuidePanel, Link, Heading } from '@navikt/ds-react'
 
 import {
@@ -23,7 +24,7 @@ function StatusInfo({
     sykmeldingStatus,
     sykmeldingsperioder,
     sykmeldingMerknader,
-}: StatusInfoProps): JSX.Element | null {
+}: StatusInfoProps): ReactElement | null {
     const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.AVVENTENDE)
 
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some((it) => it.type === Merknadtype.UNDER_BEHANDLING)

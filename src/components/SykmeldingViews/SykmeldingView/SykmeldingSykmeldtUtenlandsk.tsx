@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { UtenlandskSykmelding } from '../../../utils/utenlanskUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
@@ -14,7 +16,7 @@ interface Props {
     editableEgenmelding: boolean
 }
 
-function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props): JSX.Element {
+function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props): ReactElement {
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 
     return (

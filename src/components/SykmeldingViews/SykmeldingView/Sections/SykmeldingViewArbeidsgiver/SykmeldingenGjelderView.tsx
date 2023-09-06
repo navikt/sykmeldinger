@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { People } from '@navikt/ds-icons'
 import { BodyShort } from '@navikt/ds-react'
 
@@ -9,7 +10,7 @@ interface Props {
     pasient?: Pasient | null
 }
 
-function SykmeldingenGjelderView({ pasient }: Props): JSX.Element | null {
+function SykmeldingenGjelderView({ pasient }: Props): ReactElement | null {
     if (!pasient) return null
 
     const name = getPasientName(pasient)

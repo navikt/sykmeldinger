@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { BodyLong, GuidePanel, Heading, Label, Chat } from '@navikt/ds-react'
 
 import { Merknad, Merknadtype } from '../../fetching/graphql.generated'
@@ -8,7 +9,7 @@ interface InformationBannerProps {
     papirsykmelding?: boolean | null
 }
 
-const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProps): JSX.Element => {
+const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProps): ReactElement => {
     if (merknader?.some((merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING)) {
         return (
             <div data-testid="merknad-banner">
@@ -103,7 +104,7 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
     )
 }
 
-export function UnderBehandlingGuidePanel({ isSent }: { isSent: boolean }): JSX.Element {
+export function UnderBehandlingGuidePanel({ isSent }: { isSent: boolean }): ReactElement {
     return (
         <GuidePanel poster>
             <Heading level="2" size="small" className="mb-4">

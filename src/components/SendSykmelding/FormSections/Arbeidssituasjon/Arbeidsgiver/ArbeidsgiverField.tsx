@@ -1,5 +1,5 @@
 import { Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
-import React from 'react'
+import { ReactElement } from 'react'
 import { useController } from 'react-hook-form'
 
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
@@ -12,7 +12,7 @@ interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
 }
 
-function ArbeidsgiverField({ arbeidsgivere }: Props): JSX.Element {
+function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement {
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidsgiverOrgnummer',
         rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },

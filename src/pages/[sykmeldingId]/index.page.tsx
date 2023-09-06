@@ -1,4 +1,4 @@
-import React, { Fragment, PropsWithChildren, ReactElement, useCallback, useEffect, useState } from 'react'
+import { Fragment, PropsWithChildren, ReactElement, useCallback, useEffect, useState } from 'react'
 import { Alert, BodyLong, BodyShort, GuidePanel, Heading, Link, Skeleton } from '@navikt/ds-react'
 import Head from 'next/head'
 import { logger } from '@navikt/next-logger'

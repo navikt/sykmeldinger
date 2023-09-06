@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 
 import {
     BrukerinformasjonFragment,
@@ -27,7 +27,7 @@ function ArbeidssituasjonSection({
     sykmelding,
     sykmeldingUtenforVentetid,
     brukerinformasjon,
-}: Props): JSX.Element | null {
+}: Props): ReactElement | null {
     const shouldArbeidssituasjonShow = useShouldArbeidssituasjonShow()
     const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
     const {

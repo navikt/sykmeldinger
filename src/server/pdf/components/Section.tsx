@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import { ReactElement, PropsWithChildren } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import People from './icons/People'
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     sectionContent: { width: 460 },
 })
 
-export function Section({ title, Icon, children, shouldWrap }: PropsWithChildren<Props>): JSX.Element {
+export function Section({ title, Icon, children, shouldWrap }: PropsWithChildren<Props>): ReactElement {
     return (
         <View style={styles.section} wrap={shouldWrap ? true : false}>
             <View style={styles.sectionHeader}>

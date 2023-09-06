@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement } from 'react'
+import { ReactElement, PropsWithChildren } from 'react'
 import { ExpansionCard } from '@navikt/ds-react'
 import { Findout } from '@navikt/ds-icons'
 

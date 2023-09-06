@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { ReactElement, useMemo, useState } from 'react'
 import { BodyShort, Heading, Select } from '@navikt/ds-react'
 
 import { SykmeldingFragment } from '../../fetching/graphql.generated'
@@ -24,7 +24,7 @@ function SykmeldingLinkPanel({
     type,
     title,
     defaultSortBy = SortBy.DATE,
-}: LenkepanelContainerProps): JSX.Element | null {
+}: LenkepanelContainerProps): ReactElement | null {
     const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy)
     const sykmeldingerSortedByArbeidsgiver = useMemo(() => sortSykmeldingerByArbeidsgiver(sykmeldinger), [sykmeldinger])
 

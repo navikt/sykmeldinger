@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Alert, Detail, Heading } from '@navikt/ds-react'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
@@ -10,7 +10,7 @@ interface OkUtgattSykmeldingProps {
     sykmelding: SykmeldingFragment
 }
 
-function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): JSX.Element {
+function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): ReactElement {
     useHotjarTrigger('SYKMELDING_OK_UTGATT')
 
     return (

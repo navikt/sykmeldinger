@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { Prognose } from '../../api-models/sykmelding/Prognose'
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     view: { marginBottom: 12 },
 })
 
-const Prognose = ({ prognose }: Props): JSX.Element | null => {
+const Prognose = ({ prognose }: Props): ReactElement | null => {
     if (!prognose) return null
     if (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen) return null
 

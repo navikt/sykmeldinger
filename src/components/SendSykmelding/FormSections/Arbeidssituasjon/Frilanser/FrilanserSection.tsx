@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { FormValues } from '../../../SendSykmeldingForm'
@@ -13,7 +13,7 @@ interface Props {
     oppfolgingsdato: string
 }
 
-function FrilanserSection({ oppfolgingsdato }: Props): JSX.Element {
+function FrilanserSection({ oppfolgingsdato }: Props): ReactElement {
     const { watch } = useFormContext<FormValues>()
     const harBruktEgenmelding = watch('harBruktEgenmelding')
 

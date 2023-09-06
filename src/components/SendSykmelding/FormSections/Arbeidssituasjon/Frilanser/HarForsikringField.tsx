@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import YesNoField from '../../../../FormComponents/YesNoField/YesNoField'
@@ -6,7 +6,7 @@ import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import { FormValues } from '../../../SendSykmeldingForm'
 
-function HarForsikringField(): JSX.Element {
+function HarForsikringField(): ReactElement {
     return (
         <QuestionWrapper>
             <YesNoField<FormValues>

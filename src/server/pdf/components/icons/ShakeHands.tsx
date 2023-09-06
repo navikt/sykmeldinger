@@ -1,12 +1,12 @@
+import { ReactElement } from 'react'
 import { Path, Svg } from '@react-pdf/renderer'
-import React from 'react'
 import { Style } from '@react-pdf/types'
 
 interface Props {
     style: Style
 }
 
-const ShakeHands = ({ style }: Props): JSX.Element => (
+const ShakeHands = ({ style }: Props): ReactElement => (
     <Svg width="22" height="22" viewBox="0 0 24 24" style={style}>
         <Path
             fillRule="evenodd"

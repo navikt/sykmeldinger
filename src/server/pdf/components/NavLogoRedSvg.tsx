@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Path, Svg } from '@react-pdf/renderer'
 import { Style } from '@react-pdf/types'
 
@@ -5,7 +6,7 @@ interface Props {
     style: Style
 }
 
-const NavLogoRedSvg = ({ style }: Props): JSX.Element => (
+const NavLogoRedSvg = ({ style }: Props): ReactElement => (
     <Svg width="64" height="20" style={style}>
         <Path
             fillRule="evenodd"

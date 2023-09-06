@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Alert, Button, Detail, Heading } from '@navikt/ds-react'
 import { FillForms } from '@navikt/ds-icons'
 
@@ -16,7 +16,7 @@ interface OkAvbruttSykmeldingProps {
 
 const skjemanavn = 'gjenåpne avbrutt sykmelding'
 
-function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): JSX.Element {
+function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): ReactElement {
     useHotjarTrigger('SYKMELDING_OK_AVBRUTT')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 

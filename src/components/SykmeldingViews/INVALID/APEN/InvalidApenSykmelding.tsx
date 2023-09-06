@@ -1,6 +1,7 @@
 import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react'
 import { useController, useForm } from 'react-hook-form'
 import { ApolloError } from '@apollo/client'
+import { ReactElement } from 'react'
 
 import { SykmeldingChangeStatus, SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
@@ -21,7 +22,7 @@ interface FormData {
 
 const skjemanavn = 'invalid åpen sykmelding'
 
-function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): JSX.Element {
+function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): ReactElement {
     useHotjarTrigger('SYKMELDING_INVALID_APEN')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 

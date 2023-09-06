@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { ShakeHands } from '@navikt/ds-icons'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
@@ -9,7 +10,7 @@ interface Props {
     andreTiltak?: string | null
 }
 
-function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): JSX.Element | null {
+function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): ReactElement | null {
     if (!tiltakArbeidsplassen && !tiltakNAV && !andreTiltak) {
         return null
     }

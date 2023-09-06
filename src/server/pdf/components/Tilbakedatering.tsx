@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { KontaktMedPasient } from '../../api-models/sykmelding/KontaktMedPasient'
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     view: { marginBottom: 12 },
 })
 
-const Tilbakedatering = ({ kontaktMedPasient }: Props): JSX.Element | null => {
+const Tilbakedatering = ({ kontaktMedPasient }: Props): ReactElement | null => {
     if (!kontaktMedPasient.kontaktDato && !kontaktMedPasient.begrunnelseIkkeKontakt) {
         return null
     }

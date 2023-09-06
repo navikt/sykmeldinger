@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 
@@ -12,7 +12,7 @@ interface Props {
     harAvventendePeriode: boolean
 }
 
-function ArbeidssituasjonField({ harAvventendePeriode }: Props): JSX.Element {
+function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
     const { setValue } = useFormContext<FormValues>()
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidssituasjon',

@@ -1,7 +1,7 @@
 import { useController } from 'react-hook-form'
 import { Button, RangeValidationT, DatePicker, useRangeDatepicker } from '@navikt/ds-react'
 import { Close } from '@navikt/ds-icons'
-import React, { useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { Interval, isWithinInterval } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
@@ -20,7 +20,7 @@ function EgenmeldingPeriodSubField({
     remove,
     oppfolgingsdato,
     otherPeriods,
-}: EgenmeldingPeriodSubFieldProps): JSX.Element {
+}: EgenmeldingPeriodSubFieldProps): ReactElement {
     const [rangeError, setRangeError] = useState<RangeValidationT | null>(null)
     const { field: toField, fieldState: toFieldState } = useController<FormValues, `${EgenmeldingField}.tom`>({
         name: `egenmeldingsperioder.${index}.tom`,

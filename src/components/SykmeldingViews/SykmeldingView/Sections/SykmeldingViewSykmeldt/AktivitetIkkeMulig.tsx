@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Office2 } from '@navikt/ds-icons'
 
 import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
@@ -14,7 +15,7 @@ interface Props {
     isV3: boolean
 }
 
-const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): JSX.Element | null => {
+const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): ReactElement | null => {
     if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
         return null
     }

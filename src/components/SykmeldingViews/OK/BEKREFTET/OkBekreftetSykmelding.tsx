@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Button } from '@navikt/ds-react'
 import { FillForms } from '@navikt/ds-icons'
 
@@ -15,7 +15,7 @@ interface OkBekreftetSykmeldingProps {
 
 const skjemanavn = 'ok gjenåpne bekreftet sykmelding'
 
-function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProps): JSX.Element {
+function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProps): ReactElement {
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
     useHotjarTrigger('SYKMELDING_OK_BEKREFTET')
 

@@ -1,7 +1,7 @@
 // This is imported to allow the Output File Tracing feature of Next.js to work correctly with the log patcher
 import 'next-logger'
 
-import React from 'react'
+import { ReactElement } from 'react'
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document'
 import { DecoratorComponents, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 
@@ -55,7 +55,7 @@ class MyDocument extends Document<Props> {
         return { ...initialProps, Decorator, language }
     }
 
-    render(): JSX.Element {
+    render(): ReactElement {
         const { Decorator, language } = this.props
 
         return (

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Office2 } from '@navikt/ds-icons'
 
 import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
@@ -9,7 +10,7 @@ interface AktivitetIkkeMuligViewProps {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
 }
 
-const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewProps): JSX.Element | null => {
+const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewProps): ReactElement | null => {
     if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null
 
     return (

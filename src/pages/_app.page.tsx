@@ -5,7 +5,7 @@ import '../style/global.css'
 
 import { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
-import React, { ReactElement, useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { configureLogger } from '@navikt/next-logger'
 import dynamic from 'next/dynamic'
 

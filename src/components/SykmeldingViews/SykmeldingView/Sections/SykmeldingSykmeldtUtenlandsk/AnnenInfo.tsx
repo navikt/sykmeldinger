@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Information } from '@navikt/ds-icons'
 
 import { toReadableDate } from '../../../../../utils/dateUtils'
@@ -10,7 +10,7 @@ interface Props {
     sykmelding: UtenlandskSykmelding
 }
 
-function AnnenInfo({ sykmelding }: Props): JSX.Element {
+function AnnenInfo({ sykmelding }: Props): ReactElement {
     return (
         <SykmeldingGroup heading="Annen info" Icon={Information}>
             <SykmeldingInfo heading="Dato sykmeldingen ble skrevet" variant="blue">

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Historic } from '@navikt/ds-icons'
 
 import { Prognose } from '../../../../../fetching/graphql.generated'
@@ -14,7 +15,7 @@ interface Props {
     isV3: boolean
 }
 
-function Prognose({ prognose, isV3 }: Props): JSX.Element | null {
+function Prognose({ prognose, isV3 }: Props): ReactElement | null {
     if (!prognose) return null
 
     if (

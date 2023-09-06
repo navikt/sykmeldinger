@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 
 import { RegelStatus } from '../../../fetching/graphql.generated'
 
@@ -6,7 +6,7 @@ interface Icon {
     hover?: boolean
 }
 
-function DeclinedIcon({ hover = false }: Icon): JSX.Element {
+function DeclinedIcon({ hover = false }: Icon): ReactElement {
     if (hover) {
         return (
             <svg
@@ -47,7 +47,7 @@ function DeclinedIcon({ hover = false }: Icon): JSX.Element {
     )
 }
 
-function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
+function PapersykmeldingIcon({ hover = false }: Icon): ReactElement {
     if (hover) {
         return (
             <svg
@@ -100,7 +100,7 @@ function PapersykmeldingIcon({ hover = false }: Icon): JSX.Element {
     )
 }
 
-function StethoscopeIcon({ hover = false }: Icon): JSX.Element {
+function StethoscopeIcon({ hover = false }: Icon): ReactElement {
     if (hover) {
         return (
             <svg
@@ -146,7 +146,7 @@ interface LenkepanelIconProps extends Icon {
     isPaper: boolean
 }
 
-function LenkepanelIcon({ behandlingsutfall, isPaper, hover = false }: LenkepanelIconProps): JSX.Element {
+function LenkepanelIcon({ behandlingsutfall, isPaper, hover = false }: LenkepanelIconProps): ReactElement {
     if (behandlingsutfall === 'INVALID') {
         return <DeclinedIcon hover={hover} />
     }

@@ -1,7 +1,7 @@
 import { Button, ErrorMessage } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
 import { isAfter } from 'date-fns'
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { ReactElement, useEffect, useLayoutEffect, useRef } from 'react'
 import * as R from 'remeda'
 import cn from 'classnames'
 
@@ -45,7 +45,7 @@ function EgenmeldingerField({
     metadata,
     editSentEgenmelding = false,
     amplitudeSkjemanavn,
-}: Props): JSX.Element | null {
+}: Props): ReactElement | null {
     const { watch, setValue, getValues } = useFormContext<EgenmeldingsdagerSubForm>()
     const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
     const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
@@ -157,7 +157,7 @@ function EgenmeldingerField({
     )
 }
 
-function VidereButtonField({ index, missingDates }: { index: number; missingDates: boolean }): JSX.Element {
+function VidereButtonField({ index, missingDates }: { index: number; missingDates: boolean }): ReactElement {
     const { field, fieldState } = useController<
         EgenmeldingsdagerSubForm,
         `egenmeldingsdager.${number}.hasClickedVidere`

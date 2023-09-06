@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from 'react'
+import { ReactElement, PropsWithChildren } from 'react'
 
-const PageWrapper = ({ children }: PropsWithChildren): JSX.Element => {
+const PageWrapper = ({ children }: PropsWithChildren): ReactElement => {
     return <div className="mx-auto max-w-2xl p-4 pb-32">{children}</div>
 }
 

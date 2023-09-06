@@ -1,7 +1,7 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Alert, BodyLong, BodyShort, Label, Link, ReadMore } from '@navikt/ds-react'
 
-export function ArbeidssituasjonInfo(): JSX.Element {
+export function ArbeidssituasjonInfo(): ReactElement {
     return (
         <div>
             <BodyShort spacing>
@@ -14,7 +14,7 @@ export function ArbeidssituasjonInfo(): JSX.Element {
     )
 }
 
-export function ArbeidssituasjonStatusInfo(): JSX.Element {
+export function ArbeidssituasjonStatusInfo(): ReactElement {
     //TODO: fix broken url or remove link
     return (
         <div className="mb-1 mt-4">
@@ -31,7 +31,7 @@ export function ArbeidssituasjonStatusInfo(): JSX.Element {
     )
 }
 
-export function StrengtFortroligInfo(): JSX.Element {
+export function StrengtFortroligInfo(): ReactElement {
     return (
         <Alert variant="warning">
             <BodyLong>

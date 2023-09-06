@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Alert, BodyLong, Button, Label, Radio, RadioGroup } from '@navikt/ds-react'
 
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
@@ -8,7 +8,7 @@ import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
 const skjemanavn = 'avbryt åpen papirsykmelding'
 
-function PapirInfoheader(): JSX.Element {
+function PapirInfoheader(): ReactElement {
     const harIkkeGittVidereId = 'har-ikke-gitt-videre'
     const sykmeldingId = useGetSykmeldingIdParam()
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(

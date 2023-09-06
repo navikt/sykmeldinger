@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import * as R from 'remeda'
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
@@ -19,7 +20,7 @@ interface SykmeldingviewProps {
     chosenEgenmeldingsdager?: string[]
 }
 
-function SykmeldingViewArbeidsgiver({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): JSX.Element {
+function SykmeldingViewArbeidsgiver({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): ReactElement {
     return (
         <div className="p-4 pt-0">
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />

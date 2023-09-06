@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import { Alert, BodyShort, Button, Heading, Panel } from '@navikt/ds-react'
 import { useFormContext } from 'react-hook-form'
 import { MutationResult } from '@apollo/client'
@@ -22,7 +22,7 @@ interface Props {
     sendResult: MutationResult<SendSykmeldingMutation>
 }
 
-function ActionSection({ sykmeldingId, sendResult }: Props): JSX.Element {
+function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
     const avbryteRef = useRef<HTMLButtonElement>(null)
     const [avbrytSykmelding, setAvbrytSykmelding] = useState(false)
     const { watch } = useFormContext<FormValues>()
@@ -74,7 +74,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): JSX.Element {
     )
 }
 
-function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): JSX.Element {
+function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): ReactElement {
     const panelRef = useRef<HTMLDivElement>(null)
     const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId)
 
@@ -104,7 +104,7 @@ function AvbrytSykmeldingen({
 }: {
     sykmeldingId: string
     closeAvbryt: () => void
-}): JSX.Element {
+}): ReactElement {
     const panelRef = useRef<HTMLDivElement>(null)
     const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId)
 

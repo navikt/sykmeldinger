@@ -1,5 +1,5 @@
 import { BodyLong, Link, ReadMore } from '@navikt/ds-react'
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
 
 import { toReadableDatePeriod } from '../../../utils/dateUtils'
 import { YesOrNo } from '../../../fetching/graphql.generated'
@@ -26,7 +26,7 @@ function HarBruktEgenmelding({
     arbeidsgiverNavn,
     onNo,
     amplitudeSkjemanavn,
-}: Props): JSX.Element {
+}: Props): ReactElement {
     return (
         <QuestionWrapper>
             <YesNoField<EgenmeldingsdagerSubForm>
@@ -63,7 +63,7 @@ function HarBruktEgenmelding({
     )
 }
 
-function EgenmeldingReadMore({ index }: { index: number }): JSX.Element {
+function EgenmeldingReadMore({ index }: { index: number }): ReactElement {
     const [open, setOpen] = useState(false)
     const handleOnReadMoreClick = (): void => {
         if (!open) {

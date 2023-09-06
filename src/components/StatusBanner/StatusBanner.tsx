@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Alert, Detail, Heading } from '@navikt/ds-react'
 
 import { Behandlingsutfall, SykmeldingStatusFragment } from '../../fetching/graphql.generated'
@@ -15,7 +16,7 @@ function StatusBanner({
     behandlingsutfall,
     isEgenmeldingsKvittering,
     egenmeldt = false,
-}: StatusBannerProps): JSX.Element | null {
+}: StatusBannerProps): ReactElement | null {
     if (behandlingsutfall.status === 'INVALID') {
         if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
             return (

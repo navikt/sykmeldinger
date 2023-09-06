@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
 import { SykmeldingListInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
@@ -9,7 +11,7 @@ interface EgenmeldingsdagerProps {
     editableEgenmelding: boolean
 }
 
-function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element | null {
+function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): ReactElement | null {
     return (
         <SykmeldingListInfo
             heading="Egenmeldingsdager (lagt til av deg)"

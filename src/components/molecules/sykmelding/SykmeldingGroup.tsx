@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import { ReactElement, PropsWithChildren } from 'react'
 import { Heading } from '@navikt/ds-react'
 import { Calender } from '@navikt/ds-icons'
 
@@ -18,7 +18,7 @@ export function SykmeldingGroup({
     tight = false,
     wrap = false,
     children,
-}: PropsWithChildren<{ heading: string; Icon: typeof Calender; wrap?: boolean; tight?: boolean }>): JSX.Element {
+}: PropsWithChildren<{ heading: string; Icon: typeof Calender; wrap?: boolean; tight?: boolean }>): ReactElement {
     return (
         <div className="pb-4">
             <SykmeldingSectionHeading title={heading} Icon={Icon} />
@@ -37,7 +37,7 @@ export function SykmeldingGroup({
 /**
  * Header to be used with SykmeldingGroup
  */
-function SykmeldingSectionHeading({ title, Icon }: Props): JSX.Element {
+function SykmeldingSectionHeading({ title, Icon }: Props): ReactElement {
     return (
         <div className="flex items-center gap-2 py-4">
             <Icon role="img" aria-hidden className="text-2xl" />

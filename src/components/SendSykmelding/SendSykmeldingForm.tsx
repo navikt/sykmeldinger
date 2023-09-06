@@ -1,4 +1,4 @@
-import React, { ComponentType, useRef } from 'react'
+import { ReactElement, ComponentType, useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
@@ -42,7 +42,7 @@ interface Props {
     sykmelding: SykmeldingFragment
 }
 
-function SendSykmeldingForm({ sykmelding }: Props): JSX.Element {
+function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
     const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding'
     const sykmeldingId = useGetSykmeldingIdParam()
 

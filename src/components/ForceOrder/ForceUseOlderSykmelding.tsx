@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { BodyLong, Button, GuidePanel, Heading, ReadMore } from '@navikt/ds-react'
 import Link from 'next/link'
 
@@ -10,7 +10,7 @@ interface Props {
     olderSykmeldingCount: number
 }
 
-function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Props): JSX.Element {
+function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Props): ReactElement {
     useLogAmplitudeEvent({
         eventName: 'guidepanel vist',
         data: { komponent: 'tvungen videresending til ubrukte sykmeldinger' },

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { PeopleDialogOutline } from '@navikt/ds-icons'
 
 import { MeldingTilNav } from '../../../../../fetching/graphql.generated'
@@ -8,7 +9,7 @@ interface Props {
     meldingTilNav?: MeldingTilNav | null
 }
 
-function MeldingTilNav({ meldingTilNav }: Props): JSX.Element | null {
+function MeldingTilNav({ meldingTilNav }: Props): ReactElement | null {
     if (meldingTilNav == null || (!meldingTilNav.bistandUmiddelbart && meldingTilNav.beskrivBistand == null)) {
         return null
     }

@@ -38,7 +38,7 @@ const errorLoggingLink = onError(({ graphQLErrors, networkError }) => {
     }
 })
 
-function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<ProviderProps>): JSX.Element {
+function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<ProviderProps>): ReactElement {
     const cache = new InMemoryCache({
         possibleTypes: possibleTypesGenerated.possibleTypes,
     })

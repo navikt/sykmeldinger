@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Alert, ReadMore } from '@navikt/ds-react'
 
@@ -13,7 +13,7 @@ interface Props {
     narmesteLeder: NaermesteLederFragment
 }
 
-function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): JSX.Element {
+function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): ReactElement {
     const { watch } = useFormContext<FormValues>()
 
     const riktigNarmesteLeder = watch('riktigNarmesteLeder')

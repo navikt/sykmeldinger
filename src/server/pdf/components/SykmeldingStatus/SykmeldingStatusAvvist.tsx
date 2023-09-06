@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { Sykmelding } from '../../../api-models/sykmelding/Sykmelding'
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     text: { marginBottom: textMarginBottom },
 })
 
-const SykmeldingStatusAvvist = ({ sykmelding }: Props): JSX.Element | null => {
+const SykmeldingStatusAvvist = ({ sykmelding }: Props): ReactElement | null => {
     const behandlingsutfall = sykmelding.behandlingsutfall.status
 
     if (

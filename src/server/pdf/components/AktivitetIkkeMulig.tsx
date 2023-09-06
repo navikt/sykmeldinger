@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { AktivitetIkkeMuligPeriode } from '../../api-models/sykmelding/Periode'
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     view: { marginBottom: 12 },
 })
 
-const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): JSX.Element | null => {
+const AktivitetIkkeMulig = ({ aktivitetIkkeMulig }: Props): ReactElement | null => {
     if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null
 
     return (

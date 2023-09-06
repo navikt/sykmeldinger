@@ -1,5 +1,5 @@
 import { Alert, BodyShort, Button, Heading, Textarea } from '@navikt/ds-react'
-import React, { PropsWithChildren, ReactElement, useReducer } from 'react'
+import { PropsWithChildren, ReactElement, useReducer } from 'react'
 import { FaceSmileIcon } from '@navikt/aksel-icons'
 import { useMutation } from '@apollo/client'
 

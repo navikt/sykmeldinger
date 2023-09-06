@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { BodyShort, Label, ReadMore } from '@navikt/ds-react'
 
 import { sporsmal } from '../../../../../utils/sporsmal'
@@ -11,7 +11,7 @@ interface Props {
     oppfolgingsdato: string
 }
 
-function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
+function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): ReactElement {
     return (
         <QuestionWrapper>
             <YesNoField<FormValues>
@@ -37,7 +37,7 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): JSX.Element {
     )
 }
 
-function HarBruktEgenmeldingReadMore(): JSX.Element {
+function HarBruktEgenmeldingReadMore(): ReactElement {
     const fravaerListId = 'fravaer-list'
     return (
         <ReadMore header="Hva betyr dette?">

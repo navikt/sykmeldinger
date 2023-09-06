@@ -1,12 +1,12 @@
 import { Path, Svg } from '@react-pdf/renderer'
-import React from 'react'
+import { ReactElement } from 'react'
 import { Style } from '@react-pdf/types'
 
 interface Props {
     style: Style
 }
 
-const Warning = ({ style }: Props): JSX.Element => (
+const Warning = ({ style }: Props): ReactElement => (
     <Svg width="22" height="22" viewBox="0 0 24 24" style={style}>
         <Path
             fillRule="evenodd"

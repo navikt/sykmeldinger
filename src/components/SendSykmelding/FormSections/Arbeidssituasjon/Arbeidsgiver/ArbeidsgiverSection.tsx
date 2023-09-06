@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import {
@@ -26,7 +26,7 @@ interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
 }
 
-function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): JSX.Element | null {
+function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement | null {
     const { watch } = useFormContext<FormValues>()
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
 

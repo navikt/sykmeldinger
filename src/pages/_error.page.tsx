@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { logger } from '@navikt/next-logger'
 import { NextPageContext } from 'next'
 import NextErrorComponent, { ErrorProps } from 'next/error'
@@ -7,7 +8,7 @@ interface MyErrorProps extends ErrorProps {
     err?: Error
 }
 
-function MyError({ statusCode, hasGetInitialPropsRun, err }: MyErrorProps): JSX.Element {
+function MyError({ statusCode, hasGetInitialPropsRun, err }: MyErrorProps): ReactElement {
     if (!hasGetInitialPropsRun && err) {
         // getInitialProps is not called in case of
         // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
