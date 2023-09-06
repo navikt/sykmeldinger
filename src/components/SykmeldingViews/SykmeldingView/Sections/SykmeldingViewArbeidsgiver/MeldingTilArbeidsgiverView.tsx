@@ -1,4 +1,4 @@
-import { Employer } from '@navikt/ds-icons'
+import { PersonSuitIcon } from '@navikt/aksel-icons'
 import { ReactElement } from 'react'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
@@ -12,7 +12,7 @@ function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): ReactElement
     if (!meldingTilArbeidsgiver) return null
 
     return (
-        <SykmeldingGroup heading="Melding til arbeidsgiver" Icon={Employer}>
+        <SykmeldingGroup heading="Melding til arbeidsgiver" Icon={PersonSuitIcon}>
             <SykmeldingInfo heading="Andre innspill til arbeidsgiver">{meldingTilArbeidsgiver}</SykmeldingInfo>
         </SykmeldingGroup>
     )

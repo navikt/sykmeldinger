@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Office2 } from '@navikt/ds-icons'
+import { Buldings2Icon } from '@navikt/aksel-icons'
 
 import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
 import { arbeidsrelatertArsakToText, medisinskArsakToText } from '../../../../../utils/periodeUtils'
@@ -21,7 +21,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): ReactElement |
     }
 
     return (
-        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Office2}>
+        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
             {aktivitetIkkeMulig.medisinskArsak != null && (
                 <SykmeldingInfoSubGroup variant="gray">
                     <SykmeldingListInfo

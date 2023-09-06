@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Office2 } from '@navikt/ds-icons'
+import { Buldings2Icon } from '@navikt/aksel-icons'
 
 import { AktivitetIkkeMuligPeriode } from '../../../../../fetching/graphql.generated'
 import { arbeidsrelatertArsakToText } from '../../../../../utils/periodeUtils'
@@ -14,7 +14,7 @@ const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewPr
     if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null
 
     return (
-        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Office2}>
+        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
             <SykmeldingListInfo
                 heading="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
                 texts={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}

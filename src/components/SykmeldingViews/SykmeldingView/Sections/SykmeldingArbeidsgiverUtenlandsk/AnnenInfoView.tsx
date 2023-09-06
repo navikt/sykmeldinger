@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Information } from '@navikt/ds-icons'
+import { InformationIcon } from '@navikt/aksel-icons'
 import * as R from 'remeda'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
@@ -13,7 +13,7 @@ interface Props {
 
 function AnnenInfoView({ sykmelding }: Props): ReactElement {
     return (
-        <SykmeldingGroup heading="Annen info" Icon={Information} tight>
+        <SykmeldingGroup heading="Annen info" Icon={InformationIcon} tight>
             <SykmeldingInfo heading="Dato sykmeldingen ble skrevet">
                 {toReadableDate(sykmelding.behandletTidspunkt)}
             </SykmeldingInfo>

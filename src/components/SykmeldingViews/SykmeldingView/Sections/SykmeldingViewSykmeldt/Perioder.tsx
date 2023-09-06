@@ -1,4 +1,4 @@
-import { Calender } from '@navikt/ds-icons'
+import { CalendarIcon } from '@navikt/aksel-icons'
 import { ReactElement } from 'react'
 
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
@@ -19,7 +19,7 @@ interface Props {
 
 function Perioder({ perioder, isV3 }: Props): ReactElement {
     return (
-        <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={Calender} wrap>
+        <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={CalendarIcon} wrap>
             {perioder.map((periode, index) => (
                 <SykmeldingInfoSubGroup key={index} variant="blue">
                     <SykmeldingMultilineInfo

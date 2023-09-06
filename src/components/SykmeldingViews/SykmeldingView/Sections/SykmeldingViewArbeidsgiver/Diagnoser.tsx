@@ -1,4 +1,4 @@
-import { Bandage } from '@navikt/ds-icons'
+import { BandageIcon } from '@navikt/aksel-icons'
 import { ReactElement } from 'react'
 import * as R from 'remeda'
 
@@ -12,7 +12,7 @@ interface Props {
 
 function Diagnoser({ medisinskVurdering }: Props): ReactElement {
     return (
-        <SykmeldingGroup heading="Medisinsk tilstand" Icon={Bandage} tight>
+        <SykmeldingGroup heading="Medisinsk tilstand" Icon={BandageIcon} tight>
             {medisinskVurdering.hovedDiagnose?.tekst && <SykmeldingSladd heading="Diagnose" />}
             {R.pipe(
                 medisinskVurdering.biDiagnoser,

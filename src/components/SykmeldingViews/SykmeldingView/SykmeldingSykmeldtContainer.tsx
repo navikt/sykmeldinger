@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { BodyShort, Button, Heading } from '@navikt/ds-react'
-import { Print } from '@navikt/ds-icons'
+import { PrinterSmallIcon } from '@navikt/aksel-icons'
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../utils/dateUtils'
@@ -36,7 +36,7 @@ function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }
                             target="_blank"
                             rel="noopener noreferrer"
                             variant="tertiary"
-                            icon={<Print title="Åpne PDF av sykmeldingen" />}
+                            icon={<PrinterSmallIcon title="Åpne PDF av sykmeldingen" />}
                         />
                     </div>
                 </div>

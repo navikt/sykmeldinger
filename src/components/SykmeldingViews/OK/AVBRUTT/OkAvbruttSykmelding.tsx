@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { Alert, Button, Detail, Heading } from '@navikt/ds-react'
-import { FillForms } from '@navikt/ds-icons'
+import { PencilWritingIcon } from '@navikt/aksel-icons'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
@@ -40,7 +40,7 @@ function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): 
                                 logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } })
                                 reopen()
                             }}
-                            icon={<FillForms aria-hidden />}
+                            icon={<PencilWritingIcon aria-hidden />}
                         >
                             GJØR UTFYLLINGEN PÅ NYTT
                         </Button>

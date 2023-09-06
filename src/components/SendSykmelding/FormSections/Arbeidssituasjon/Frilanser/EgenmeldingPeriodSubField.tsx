@@ -1,6 +1,6 @@
 import { useController } from 'react-hook-form'
 import { Button, RangeValidationT, DatePicker, useRangeDatepicker } from '@navikt/ds-react'
-import { Close } from '@navikt/ds-icons'
+import { XMarkIcon } from '@navikt/aksel-icons'
 import { ReactElement, useState } from 'react'
 import { Interval, isWithinInterval } from 'date-fns'
 
@@ -134,7 +134,7 @@ function EgenmeldingPeriodSubField({
                     <Button
                         variant="tertiary"
                         type="button"
-                        icon={<Close role="img" aria-hidden />}
+                        icon={<XMarkIcon role="img" aria-hidden />}
                         onClick={() => remove(index)}
                     >
                         Fjern periode

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { People } from '@navikt/ds-icons'
+import { PersonIcon } from '@navikt/aksel-icons'
 import { BodyShort } from '@navikt/ds-react'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
@@ -17,7 +17,7 @@ function SykmeldingenGjelderView({ pasient }: Props): ReactElement | null {
     if (!name) return null
 
     return (
-        <SykmeldingGroup heading="Sykmeldingen gjelder" Icon={People}>
+        <SykmeldingGroup heading="Sykmeldingen gjelder" Icon={PersonIcon}>
             <div className="pl-4">
                 <BodyShort>{name}</BodyShort>
                 {pasient.fnr && <BodyShort>Fødselsnr: {pasient.fnr}</BodyShort>}

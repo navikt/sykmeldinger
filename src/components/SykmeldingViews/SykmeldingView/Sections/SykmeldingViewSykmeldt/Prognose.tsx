@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Historic } from '@navikt/ds-icons'
+import { ClockDashedIcon } from '@navikt/aksel-icons'
 
 import { Prognose } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
@@ -28,7 +28,7 @@ function Prognose({ prognose, isV3 }: Props): ReactElement | null {
     }
 
     return (
-        <SykmeldingGroup heading="Prognose" Icon={Historic}>
+        <SykmeldingGroup heading="Prognose" Icon={ClockDashedIcon}>
             {prognose.arbeidsforEtterPeriode && (
                 <SykmeldingJaInfo
                     heading={

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { PeopleDialogOutline } from '@navikt/ds-icons'
+import { PersonChatIcon } from '@navikt/aksel-icons'
 
 import { MeldingTilNav } from '../../../../../fetching/graphql.generated'
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
@@ -15,7 +15,7 @@ function MeldingTilNav({ meldingTilNav }: Props): ReactElement | null {
     }
 
     return (
-        <SykmeldingGroup heading="Melding til NAV" Icon={PeopleDialogOutline}>
+        <SykmeldingGroup heading="Melding til NAV" Icon={PersonChatIcon}>
             {meldingTilNav.bistandUmiddelbart && (
                 <SykmeldingJaInfo heading="Ønskes bistand fra NAV nå?" variant="gray" />
             )}
