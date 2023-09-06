@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link, Switch } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
@@ -23,10 +23,6 @@ function Index(): ReactElement {
     const dismissHint = useCallback(() => {
         localStorage.setItem('devtools-hint', 'true')
         setShowHint(false)
-    }, [])
-
-    useLayoutEffect(() => {
-        Modal.setAppElement?.('#__next')
     }, [])
 
     useEffect(() => {
@@ -78,30 +74,27 @@ function Index(): ReactElement {
 
                     setOpenState(false)
                 }}
-                className="h-screen max-w-[369px] rounded-none"
-                overlayClassName="p-0 justify-end"
+                header={{ heading: 'Testdataverktøy' }}
+                className="[&::backdrop]:flex [&::backdrop]:justify-end"
+                // className="h-screen max-w-[369px] rounded-none"
+                // overlayClassName="p-0 justify-end"
             >
-                <Modal.Content>
-                    <DevToolsContent />
-                </Modal.Content>
+                <DevToolsContent closeModal={() => setOpenState(false)} />
             </Modal>
         </>
     )
 }
 
-function DevToolsContent(): ReactElement {
+function DevToolsContent({ closeModal }: { closeModal: () => void }): ReactElement {
     return (
-        <div>
-            <Heading size="medium" level="3" spacing className="m-0">
-                Testdataverktøy
-            </Heading>
-            <ScenarioPicker />
+        <Modal.Body>
+            <ScenarioPicker closeModal={closeModal} />
             <ScenarioOptions />
-        </div>
+        </Modal.Body>
     )
 }
 
-function ScenarioPicker(): ReactElement {
+function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElement {
     const router = useRouter()
     const client = useApolloClient()
     const [changeUserScenario, { loading, error }] = useMutation(Dev_ChangeUserScenarioDocument)
@@ -112,6 +105,8 @@ function ScenarioPicker(): ReactElement {
             await router.push('/')
         }
         await client.cache.reset()
+
+        closeModal()
     }
 
     return (

@@ -139,7 +139,7 @@ describe('Avbryt sykmelding', () => {
         await userEvent.click(screen.getByRole('button', { name: 'Ja, jeg er sikker' }))
 
         expect(await screen.findByText('Sykmeldingen ble avbrutt av deg')).toBeInTheDocument()
-        expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Ferdig' })).toBeInTheDocument()
         expect(
             await axe(container, {
                 // This is a false positive on the print button
