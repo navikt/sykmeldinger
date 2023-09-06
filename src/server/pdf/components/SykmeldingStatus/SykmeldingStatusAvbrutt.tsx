@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { toReadableDate } from '../../../../utils/dateUtils'
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     title: { fontFamily: 'Helvetica-Bold', fontSize: 19 },
 })
 
-const SykmeldingStatusAvbrutt = ({ sykmelding }: Props): JSX.Element => {
+const SykmeldingStatusAvbrutt = ({ sykmelding }: Props): ReactElement => {
     return (
         <View style={styles.sykmeldingStatus}>
             <Warning style={styles.icon} />

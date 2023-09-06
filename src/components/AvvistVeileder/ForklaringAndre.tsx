@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { BodyLong, BodyShort, Label } from '@navikt/ds-react'
 
 import { Behandlingsutfall } from '../../fetching/graphql.generated'
@@ -10,7 +10,7 @@ interface ForklaringAndreProps {
 
 const avvistGrunnId = 'avvist-grunn'
 
-function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): JSX.Element {
+function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): ReactElement {
     return (
         <>
             <BodyLong className="mb-6">

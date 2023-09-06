@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Button, Heading } from '@navikt/ds-react'
 
 import { toDateString, toReadableDate } from '../../../utils/dateUtils'
@@ -10,7 +11,7 @@ interface Props {
     onEditClicked: () => void
 }
 
-function ValgtEgenmeldingsdager({ dates, onEditClicked }: Props): JSX.Element {
+function ValgtEgenmeldingsdager({ dates, onEditClicked }: Props): ReactElement {
     const headingId = `egenmeldingList-${dates.map(toDateString).join('-')}`
 
     return (

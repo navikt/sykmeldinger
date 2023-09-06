@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     view: { marginBottom: 12 },
 })
 
-const AnnenInfo = ({ sykmelding }: Props): JSX.Element | null => {
+const AnnenInfo = ({ sykmelding }: Props): ReactElement | null => {
     return (
         <Section title="Annen info" Icon={Information}>
             <View style={styles.content}>

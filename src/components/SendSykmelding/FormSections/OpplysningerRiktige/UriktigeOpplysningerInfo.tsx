@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Alert, Heading } from '@navikt/ds-react'
 
 import { UriktigeOpplysningerType } from '../../../../fetching/graphql.generated'
@@ -6,7 +7,7 @@ interface UriktigeOpplysningerInfoProps {
     uriktigeOpplysninger: UriktigeOpplysningerType[]
 }
 
-function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysningerInfoProps): JSX.Element | null {
+function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysningerInfoProps): ReactElement | null {
     return (
         <Alert variant="info" role="alert" aria-live="polite" className="my-8">
             <Heading spacing size="small" level="3">

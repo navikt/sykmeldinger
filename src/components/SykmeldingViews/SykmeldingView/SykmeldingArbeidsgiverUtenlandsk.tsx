@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { UtenlandskSykmelding } from '../../../utils/utenlanskUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
 import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
@@ -11,7 +13,7 @@ interface SykmeldingviewProps {
     chosenEgenmeldingsdager?: string[]
 }
 
-function SykmeldingArbeidsgiverUtenlandsk({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): JSX.Element {
+function SykmeldingArbeidsgiverUtenlandsk({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): ReactElement {
     return (
         <div className="px-4">
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />

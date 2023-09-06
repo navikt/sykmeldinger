@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { describe, it, expect } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -9,7 +10,7 @@ import { toDateString } from '../../../../../utils/dateUtils'
 import EgenmeldingerField from './EgenmeldingerField'
 
 describe('EgenmeldingerField', () => {
-    const EgenmeldingerFieldInForm = ({ oppfolgingsdato }: { oppfolgingsdato: string }): JSX.Element => {
+    const EgenmeldingerFieldInForm = ({ oppfolgingsdato }: { oppfolgingsdato: string }): ReactElement => {
         const form = useForm()
         const values = form.watch('egenmeldingsperioder') ?? []
 

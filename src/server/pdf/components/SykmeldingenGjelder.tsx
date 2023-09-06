@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { getPasientName } from '../../../utils/pasientUtils'
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const SykmeldingenGjelder = ({ pasient }: Props): JSX.Element | null => {
+const SykmeldingenGjelder = ({ pasient }: Props): ReactElement | null => {
     if (!pasient) return null
 
     const name = getPasientName(pasient)

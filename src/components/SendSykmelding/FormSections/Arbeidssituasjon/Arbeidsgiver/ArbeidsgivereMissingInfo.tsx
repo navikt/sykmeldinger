@@ -1,7 +1,7 @@
+import { ReactElement } from 'react'
 import { Alert } from '@navikt/ds-react'
-import React from 'react'
 
-function ArbeidsgivereMissingInfo(): JSX.Element {
+function ArbeidsgivereMissingInfo(): ReactElement {
     return (
         <Alert className="mt-4" variant="warning">
             Vi klarer ikke å finne noen arbeidsforhold registrert på deg. Be arbeidsgiveren din om å registrere deg i

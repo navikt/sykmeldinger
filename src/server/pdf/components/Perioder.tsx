@@ -1,5 +1,6 @@
 import * as R from 'remeda'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
+import { ReactElement } from 'react'
 
 import { DagerSvar, Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus'
 import { Periode } from '../../api-models/sykmelding/Periode'
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     list: { marginBottom: 12 },
 })
 
-const Perioder = ({ perioder, sporsmalOgSvarListe }: Props): JSX.Element | null => {
+const Perioder = ({ perioder, sporsmalOgSvarListe }: Props): ReactElement | null => {
     const egenmeldingsdager = sporsmalOgSvarListe ? findEgenmeldingsdager(sporsmalOgSvarListe) : null
     return (
         <Section title="Perioder (f.o.m. - t.o.m.)" Icon={Calender} shouldWrap={perioder.length >= 5}>
@@ -69,7 +70,7 @@ interface EgenmeldingsdagerProps {
     egenmeldingsdager: DagerSvar
 }
 
-function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): JSX.Element {
+function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): ReactElement {
     return (
         <View style={styles.content}>
             <Text style={styles.title}>Egenmeldingsdager (lagt til av deg)</Text>

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { People } from '@navikt/ds-icons'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
@@ -9,7 +10,7 @@ interface Props {
     pasient?: Pasient | null
 }
 
-function SykmeldingenGjelder({ pasient }: Props): JSX.Element | null {
+function SykmeldingenGjelder({ pasient }: Props): ReactElement | null {
     if (!pasient) return null
 
     const name = getPasientName(pasient)

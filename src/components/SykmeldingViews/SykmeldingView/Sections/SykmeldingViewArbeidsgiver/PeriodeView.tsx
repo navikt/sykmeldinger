@@ -22,7 +22,7 @@ interface PeriodeViewProps {
     egenmeldingsdager?: (SvarUnion_DagerSvar_Fragment | string[]) | null
 }
 
-function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): JSX.Element {
+function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): ReactElement {
     return (
         <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={Calender} wrap>
             {perioder.map((periode, index) => (

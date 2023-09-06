@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { BodyShort, Button, Heading } from '@navikt/ds-react'
 import { Print } from '@navikt/ds-icons'
 
@@ -14,7 +15,7 @@ interface Props {
     editableEgenmelding?: boolean
 }
 
-function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }: Props): JSX.Element {
+function SykmeldingSykmeldtContainer({ sykmelding, editableEgenmelding = false }: Props): ReactElement {
     const articleHeadingId = `sykmelding-${sykmelding.id}-header`
 
     return (

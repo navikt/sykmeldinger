@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { Fragment, PropsWithChildren, ReactElement } from 'react'
+import { Fragment, PropsWithChildren, ReactElement } from 'react'
 import { Alert, BodyShort, GuidePanel, Heading, Link as DsLink, Skeleton } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 import { useRouter } from 'next/router'

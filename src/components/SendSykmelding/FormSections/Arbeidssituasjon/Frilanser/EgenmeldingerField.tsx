@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import { ReactElement, useLayoutEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Button } from '@navikt/ds-react'
 import { Add } from '@navikt/ds-icons'
@@ -17,7 +17,7 @@ interface Props {
     oppfolgingsdato: string
 }
 
-function EgenmeldingerField({ oppfolgingsdato }: Props): JSX.Element {
+function EgenmeldingerField({ oppfolgingsdato }: Props): ReactElement {
     const { control } = useFormContext<FormValues>()
     const { fields, update, append, remove } = useFieldArray({
         control,

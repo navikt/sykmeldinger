@@ -1,6 +1,7 @@
+import { ReactElement } from 'react'
 import { BodyShort, Link } from '@navikt/ds-react'
 
-function ForklaringOverSytti(): JSX.Element {
+function ForklaringOverSytti(): ReactElement {
     return (
         <>
             <BodyShort className="pb-5">Du har ikke rett til sykepenger, fordi du er over 70 år.</BodyShort>

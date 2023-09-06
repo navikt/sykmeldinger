@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
@@ -29,7 +29,7 @@ interface Props {
  * This is a server side only component that creates a PDF of the sykmelding.
  * This entire render tree must ONLY use components from @react-pdf/renderer. Normal components will fail to render.
  */
-const SykmeldingPdf = ({ sykmelding, timestamp }: Props): JSX.Element => {
+const SykmeldingPdf = ({ sykmelding, timestamp }: Props): ReactElement => {
     return (
         <Document>
             <Page size="A4" style={styles.page} wrap>

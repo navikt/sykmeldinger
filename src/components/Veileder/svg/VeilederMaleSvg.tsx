@@ -1,6 +1,8 @@
+import { ReactElement } from 'react'
+
 import styles from './VeilederSvg.module.css'
 
-const VeilederMaleSvg = (): JSX.Element => (
+const VeilederMaleSvg = (): ReactElement => (
     <svg
         width="54"
         height="77"

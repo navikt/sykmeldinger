@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Alert, BodyShort, GuidePanel, Heading } from '@navikt/ds-react'
 
 import Perioder from '../../components/SykmeldingViews/SykmeldingView/Sections/SykmeldingViewSykmeldt/Perioder'
@@ -14,7 +14,7 @@ import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import EndreEgenmelding from '../../components/EndreEgenmelding/EndreEgenmelding'
 import { createEndreEgenmeldingsdagerBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 
-function EndreEgenmeldingsdagerPage(): JSX.Element {
+function EndreEgenmeldingsdagerPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
     const { data, loading, error } = useSykmeldingById(sykmeldingId)
     const sykmelding = data?.sykmelding

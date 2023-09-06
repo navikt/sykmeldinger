@@ -1,5 +1,4 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import React from 'react'
 import mockRouter from 'next-router-mock'
 import userEvent from '@testing-library/user-event'
 import { within } from '@testing-library/react'

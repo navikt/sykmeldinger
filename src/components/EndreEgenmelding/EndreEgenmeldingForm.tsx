@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react'
 import Link from 'next/link'
-import { ComponentType } from 'react'
+import { ComponentType, ReactElement } from 'react'
 import dynamic from 'next/dynamic'
 import { logger } from '@navikt/next-logger'
 
@@ -29,7 +29,7 @@ function EndreEgenmeldingForm({
     sykmelding,
     egenmeldingsdager,
     previousSykmeldingTom,
-}: EndreEgenmeldingFormProps): JSX.Element {
+}: EndreEgenmeldingFormProps): ReactElement {
     const skjemanavn = 'Endre egenmeldingsdager'
     const [{ loading, error }, endreEgenmeldingsdager] = useEndreEgenmeldingsdager(
         sykmelding.id,

@@ -1,7 +1,7 @@
 import { BodyShort, ReadMore, GuidePanel, Heading } from '@navikt/ds-react'
-import React from 'react'
+import { ReactElement } from 'react'
 
-function VeilederSenderSykmeldingenInfo(): JSX.Element {
+function VeilederSenderSykmeldingenInfo(): ReactElement {
     const veilederSectionId = 'veilederSenderSykmeldingen'
     return (
         <section className="mb-8" aria-labelledby={veilederSectionId}>

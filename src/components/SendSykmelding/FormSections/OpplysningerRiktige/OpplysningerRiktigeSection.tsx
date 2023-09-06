@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { FormValues } from '../../SendSykmeldingForm'
@@ -10,7 +10,7 @@ import UriktigeOpplysningerField from './UriktigeOpplysningerField'
 import ErOpplysningeneRiktigeField from './ErOpplysningeneRiktigeField'
 import UriktigeOpplysningerInfo from './UriktigeOpplysningerInfo'
 
-function OpplysningerRiktigeSection(): JSX.Element {
+function OpplysningerRiktigeSection(): ReactElement {
     const { watch } = useFormContext<FormValues>()
 
     const [erOpplysningeneRiktige, uriktigeOpplysninger] = watch(['erOpplysningeneRiktige', 'uriktigeOpplysninger'])

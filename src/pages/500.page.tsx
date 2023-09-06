@@ -1,5 +1,5 @@
 import { BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 import PageWrapper from '../components/PageWrapper/PageWrapper'

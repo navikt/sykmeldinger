@@ -1,4 +1,5 @@
 import { Calender } from '@navikt/ds-icons'
+import { ReactElement } from 'react'
 
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode } from '../../../../../fetching/graphql.generated'
@@ -16,7 +17,7 @@ interface Props {
     isV3: boolean
 }
 
-function Perioder({ perioder, isV3 }: Props): JSX.Element {
+function Perioder({ perioder, isV3 }: Props): ReactElement {
     return (
         <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={Calender} wrap>
             {perioder.map((periode, index) => (

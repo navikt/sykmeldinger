@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated'
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
@@ -23,7 +25,7 @@ interface Props {
     editableEgenmelding: boolean
 }
 
-function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): JSX.Element {
+function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): ReactElement {
     const isV3Sykmelding = isV3(sykmelding)
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 

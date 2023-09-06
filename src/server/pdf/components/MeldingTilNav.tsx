@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { MeldingTilNAV } from '../../api-models/sykmelding/MeldingTilNav'
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     view: { marginBottom: 12 },
 })
 
-const MeldingTilNav = ({ meldingTilNav }: Props): JSX.Element | null => {
+const MeldingTilNav = ({ meldingTilNav }: Props): ReactElement | null => {
     if (!meldingTilNav || (meldingTilNav.bistandUmiddelbart === false && !meldingTilNav.beskrivBistand)) {
         return null
     }

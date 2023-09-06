@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Historic } from '@navikt/ds-icons'
 
 import { Prognose } from '../../../../../fetching/graphql.generated'
@@ -8,7 +9,7 @@ interface Props {
     prognose?: Prognose | null
 }
 
-function PrognoseView({ prognose }: Props): JSX.Element | null {
+function PrognoseView({ prognose }: Props): ReactElement | null {
     if (prognose == null || (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen)) {
         return null
     }

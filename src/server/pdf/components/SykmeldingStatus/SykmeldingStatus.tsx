@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { Sykmelding } from '../../../api-models/sykmelding/Sykmelding'
 
 import SykmeldingStatusAvbrutt from './SykmeldingStatusAvbrutt'
@@ -8,7 +10,7 @@ interface Props {
     sykmelding: Sykmelding
 }
 
-const SykmeldingStatus = ({ sykmelding }: Props): JSX.Element | null => {
+const SykmeldingStatus = ({ sykmelding }: Props): ReactElement | null => {
     const behandlingsutfall = sykmelding.behandlingsutfall.status
     const status = sykmelding.sykmeldingStatus.statusEvent
 

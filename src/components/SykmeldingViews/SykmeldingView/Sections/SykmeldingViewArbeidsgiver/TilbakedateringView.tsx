@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Historic } from '@navikt/ds-icons'
 
 import { KontaktMedPasient } from '../../../../../fetching/graphql.generated'
@@ -9,7 +10,7 @@ interface TilbakedateringViewProps {
     kontaktMedPasient: KontaktMedPasient
 }
 
-function TilbakedateringView({ kontaktMedPasient }: TilbakedateringViewProps): JSX.Element | null {
+function TilbakedateringView({ kontaktMedPasient }: TilbakedateringViewProps): ReactElement | null {
     if (!kontaktMedPasient.kontaktDato) {
         return null
     }

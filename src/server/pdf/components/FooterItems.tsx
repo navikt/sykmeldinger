@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
-import React from 'react'
+import { ReactElement } from 'react'
 import { format } from 'date-fns'
 
 import { toDate } from '../../../utils/dateUtils'
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     timestamp: { position: 'absolute', bottom: pageMargin + 8, right: pageMargin + 8, fontSize: 12 },
 })
 
-export function PageNumbers(): JSX.Element {
+export function PageNumbers(): ReactElement {
     return (
         <View fixed style={styles.pageNumbers}>
             <Text render={({ pageNumber, totalPages }) => `Side ${pageNumber} av ${totalPages}`} fixed />
@@ -19,7 +19,7 @@ export function PageNumbers(): JSX.Element {
     )
 }
 
-export function GeneratedTimestamp({ timestamp }: { timestamp: string }): JSX.Element {
+export function GeneratedTimestamp({ timestamp }: { timestamp: string }): ReactElement {
     return (
         <View fixed style={styles.timestamp}>
             <Text fixed>{format(toDate(timestamp), 'dd/MM/yyyy, HH:mm')}</Text>

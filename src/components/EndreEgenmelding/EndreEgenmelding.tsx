@@ -1,6 +1,6 @@
 import { Alert, BodyShort, Heading, Link as DsLink } from '@navikt/ds-react'
 import Link from 'next/link'
-import React from 'react'
+import { ReactElement } from 'react'
 
 import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../fetching/graphql.generated'
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
@@ -14,7 +14,7 @@ type EndreEgenmeldingProps = {
     egenmeldingsdager: SvarUnion_DagerSvar_Fragment | null
 }
 
-function EndreEgenmelding({ sykmelding, egenmeldingsdager }: EndreEgenmeldingProps): JSX.Element {
+function EndreEgenmelding({ sykmelding, egenmeldingsdager }: EndreEgenmeldingProps): ReactElement {
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
         sykmelding,
         sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,

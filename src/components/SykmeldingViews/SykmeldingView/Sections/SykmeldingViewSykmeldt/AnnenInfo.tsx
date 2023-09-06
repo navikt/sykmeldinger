@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Information } from '@navikt/ds-icons'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
@@ -11,7 +11,7 @@ interface Props {
     sykmelding: SykmeldingFragment
 }
 
-function AnnenInfo({ sykmelding }: Props): JSX.Element {
+function AnnenInfo({ sykmelding }: Props): ReactElement {
     return (
         <SykmeldingGroup heading="Annen info" Icon={Information}>
             <SykmeldingInfo heading="Dato sykmeldingen ble skrevet" variant="blue">

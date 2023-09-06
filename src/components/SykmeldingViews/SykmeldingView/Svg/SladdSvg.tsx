@@ -1,6 +1,7 @@
+import { ReactElement } from 'react'
 import { useId } from '@navikt/ds-react'
 
-const SladdSvg = (): JSX.Element => {
+const SladdSvg = (): ReactElement => {
     const patternId = useId()
 
     return (

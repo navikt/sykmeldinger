@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Alert, BodyShort, Heading, Link as DsLink } from '@navikt/ds-react'
 import Link from 'next/link'
 
@@ -17,7 +17,7 @@ interface OkSendtSykmeldingProps {
     sykmelding: SykmeldingFragment
 }
 
-function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element {
+function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): ReactElement {
     useHotjarTrigger('SYKMELDING_OK_SENDT')
 
     return (
@@ -44,7 +44,7 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): JSX.Element 
     )
 }
 
-function OkSendtSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: SykmeldingFragment }): JSX.Element {
+function OkSendtSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: SykmeldingFragment }): ReactElement {
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
         sykmelding,
         sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,

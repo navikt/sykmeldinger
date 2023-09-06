@@ -1,6 +1,7 @@
+import { ReactElement } from 'react'
 import { BodyLong, Link } from '@navikt/ds-react'
 
-function ForklaringZDiagnose(): JSX.Element {
+function ForklaringZDiagnose(): ReactElement {
     return (
         <>
             <BodyLong className="pb-5">

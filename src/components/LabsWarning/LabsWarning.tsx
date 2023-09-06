@@ -1,5 +1,5 @@
 import { Alert } from '@navikt/ds-react'
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 
 import { isLocalOrDemo } from '../../utils/env'
 

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import { ReactElement, PropsWithChildren } from 'react'
 import { BodyShort, Heading } from '@navikt/ds-react'
 import cn from 'classnames'
 
@@ -18,7 +18,7 @@ export function SykmeldingInfo({
     heading,
     children,
     variant = 'transparent',
-}: PropsWithChildren<SykmeldingInfoProps>): JSX.Element {
+}: PropsWithChildren<SykmeldingInfoProps>): ReactElement {
     return (
         <div
             className={cn(className, 'rounded p-4', {
@@ -39,7 +39,7 @@ export function SykmeldingInfo({
 /**
  * A small piece of information with a header and a multiple lines of text
  */
-export function SykmeldingMultilineInfo({ lines, ...props }: SykmeldingInfoProps & { lines: string[] }): JSX.Element {
+export function SykmeldingMultilineInfo({ lines, ...props }: SykmeldingInfoProps & { lines: string[] }): ReactElement {
     return (
         <SykmeldingInfo {...props}>
             {lines.map((it) => (
@@ -57,7 +57,7 @@ export function SykmeldingListInfo({
     ...props
 }: SykmeldingInfoProps & {
     texts: string[]
-}): JSX.Element {
+}): ReactElement {
     return (
         <SykmeldingInfo {...props}>
             <ul>
@@ -74,7 +74,7 @@ export function SykmeldingListInfo({
 /**
  * SykmeldingInfo that are always "Ja"
  */
-export function SykmeldingJaInfo(props: SykmeldingInfoProps): JSX.Element {
+export function SykmeldingJaInfo(props: SykmeldingInfoProps): ReactElement {
     return (
         <SykmeldingInfo {...props}>
             <BodyShort className="ml-4">Ja</BodyShort>
@@ -85,7 +85,7 @@ export function SykmeldingJaInfo(props: SykmeldingInfoProps): JSX.Element {
 /**
  * SykmeldingInfo that are always just a sladd SVG
  */
-export function SykmeldingSladd(props: SykmeldingInfoProps): JSX.Element {
+export function SykmeldingSladd(props: SykmeldingInfoProps): ReactElement {
     return (
         <SykmeldingInfo {...props}>
             <SladdSvg />
@@ -99,7 +99,7 @@ export function SykmeldingSladd(props: SykmeldingInfoProps): JSX.Element {
 export function SykmeldingInfoSubGroup({
     variant,
     children,
-}: PropsWithChildren<Pick<SykmeldingInfoProps, 'variant'>>): JSX.Element {
+}: PropsWithChildren<Pick<SykmeldingInfoProps, 'variant'>>): ReactElement {
     return (
         <div
             className={cn({

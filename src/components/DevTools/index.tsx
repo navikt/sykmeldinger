@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link, Switch } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
@@ -75,9 +75,6 @@ function Index(): ReactElement {
                     setOpenState(false)
                 }}
                 header={{ heading: 'Testdataverktøy' }}
-                className="[&::backdrop]:flex [&::backdrop]:justify-end"
-                // className="h-screen max-w-[369px] rounded-none"
-                // overlayClassName="p-0 justify-end"
             >
                 <DevToolsContent closeModal={() => setOpenState(false)} />
             </Modal>

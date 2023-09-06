@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import { ReactElement, CSSProperties } from 'react'
 import { ExpansionCard } from '@navikt/ds-react'
 import { Findout } from '@navikt/ds-icons'
 
@@ -13,7 +13,7 @@ interface Props {
     chosenEgenmeldingsdager?: string[]
 }
 
-function SykmeldingArbeidsgiverContainer({ sykmelding, chosenEgenmeldingsdager }: Props): JSX.Element {
+function SykmeldingArbeidsgiverContainer({ sykmelding, chosenEgenmeldingsdager }: Props): ReactElement {
     const headerId = `sykmelding-${sykmelding.id}-header-arbeidsgiver`
 
     return (

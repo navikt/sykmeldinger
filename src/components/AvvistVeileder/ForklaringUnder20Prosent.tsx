@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { BodyShort, Link } from '@navikt/ds-react'
 
 import { Periodetype, SykmeldingFragment } from '../../fetching/graphql.generated'
@@ -6,7 +7,7 @@ type Props = {
     perioder: SykmeldingFragment['sykmeldingsperioder']
 }
 
-function ForklaringUnder20Prosent({ perioder }: Props): JSX.Element {
+function ForklaringUnder20Prosent({ perioder }: Props): ReactElement {
     const grad: number | null = perioder.find((periode) => periode.type === Periodetype.GRADERT)?.gradert?.grad ?? null
 
     return (

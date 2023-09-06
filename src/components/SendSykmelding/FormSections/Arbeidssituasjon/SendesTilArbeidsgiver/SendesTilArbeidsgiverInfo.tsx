@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import SykmeldingArbeidsgiverContainer from '../../../../SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
@@ -13,7 +13,7 @@ interface Props {
     sykmelding: SykmeldingFragment
 }
 
-function SendesTilArbeidsgiverInfo({ sykmelding }: Props): JSX.Element {
+function SendesTilArbeidsgiverInfo({ sykmelding }: Props): ReactElement {
     const { watch } = useFormContext<FormValues>()
 
     const chosenEgenmeldingsdager: string[] | undefined =

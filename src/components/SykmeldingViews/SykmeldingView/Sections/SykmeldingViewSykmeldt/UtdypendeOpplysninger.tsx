@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { FileContent } from '@navikt/ds-icons'
 import * as R from 'remeda'
 
@@ -11,7 +12,7 @@ interface Props {
 
 type SporsmalSvarTuple = [sporsmal: string, svar: string]
 
-function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): JSX.Element | null {
+function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): ReactElement | null {
     if (Object.keys(utdypendeOpplysninger).length === 0) return null
 
     const sporsmalsToShow: SporsmalSvarTuple[] = R.pipe(

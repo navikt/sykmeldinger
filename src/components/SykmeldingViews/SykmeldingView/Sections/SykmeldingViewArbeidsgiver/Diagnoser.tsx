@@ -1,5 +1,5 @@
 import { Bandage } from '@navikt/ds-icons'
-import React from 'react'
+import { ReactElement } from 'react'
 import * as R from 'remeda'
 
 import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
@@ -10,7 +10,7 @@ interface Props {
     medisinskVurdering: MedisinskVurdering
 }
 
-function Diagnoser({ medisinskVurdering }: Props): JSX.Element {
+function Diagnoser({ medisinskVurdering }: Props): ReactElement {
     return (
         <SykmeldingGroup heading="Medisinsk tilstand" Icon={Bandage} tight>
             {medisinskVurdering.hovedDiagnose?.tekst && <SykmeldingSladd heading="Diagnose" />}

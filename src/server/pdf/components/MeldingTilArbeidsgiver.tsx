@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
+import { ReactElement } from 'react'
 
 import { Section } from './Section'
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const MeldingTilArbeidsgiver = ({ meldingTilArbeidsgiver }: Props): JSX.Element | null => {
+const MeldingTilArbeidsgiver = ({ meldingTilArbeidsgiver }: Props): ReactElement | null => {
     if (!meldingTilArbeidsgiver) return null
 
     return (

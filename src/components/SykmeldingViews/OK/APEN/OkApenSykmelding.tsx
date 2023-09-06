@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { GuidePanel } from '@navikt/ds-react'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
@@ -15,7 +16,11 @@ interface OkApenSykmeldingProps {
     olderSykmeldingCount: number
 }
 
-function OkApenSykmelding({ sykmelding, olderSykmeldingId, olderSykmeldingCount }: OkApenSykmeldingProps): JSX.Element {
+function OkApenSykmelding({
+    sykmelding,
+    olderSykmeldingId,
+    olderSykmeldingCount,
+}: OkApenSykmeldingProps): ReactElement {
     useHotjarTrigger('SYKMELDING_OK_APEN')
 
     if (olderSykmeldingId) {

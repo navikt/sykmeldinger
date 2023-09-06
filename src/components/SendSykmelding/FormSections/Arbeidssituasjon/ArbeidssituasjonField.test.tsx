@@ -1,13 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { FormProvider, useForm } from 'react-hook-form'
+import { ReactElement } from 'react'
 
 import { render, screen } from '../../../../utils/test/testUtils'
 
 import ArbeidssituasjonField from './ArbeidssituasjonField'
 
 describe('ArbeidssituasjonField', () => {
-    const ArbeidssituasjonFieldInForm = ({ harAvventendePeriode }: { harAvventendePeriode: boolean }): JSX.Element => {
+    const ArbeidssituasjonFieldInForm = ({ harAvventendePeriode }: { harAvventendePeriode: boolean }): ReactElement => {
         const form = useForm()
 
         return (

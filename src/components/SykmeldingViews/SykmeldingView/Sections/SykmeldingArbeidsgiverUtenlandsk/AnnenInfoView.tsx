@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Information } from '@navikt/ds-icons'
 import * as R from 'remeda'
 
@@ -10,7 +11,7 @@ interface Props {
     sykmelding: UtenlandskSykmelding
 }
 
-function AnnenInfoView({ sykmelding }: Props): JSX.Element {
+function AnnenInfoView({ sykmelding }: Props): ReactElement {
     return (
         <SykmeldingGroup heading="Annen info" Icon={Information} tight>
             <SykmeldingInfo heading="Dato sykmeldingen ble skrevet">

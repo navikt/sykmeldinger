@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import Link from 'next/link'
 import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react'
 
@@ -15,7 +15,7 @@ interface LenkepanelProps {
     notifying: boolean
 }
 
-export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): JSX.Element {
+export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactElement {
     const status = sykmelding.sykmeldingStatus.statusEvent
     const behandlingsutfallStatus = sykmelding.behandlingsutfall.status
     const arbeidsgiverNavn = sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn

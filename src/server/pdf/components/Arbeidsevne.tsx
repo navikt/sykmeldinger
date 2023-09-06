@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
 import { Section } from './Section'
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const Arbeidsevne = ({ tiltakArbeidsplassen }: Props): JSX.Element | null => {
+const Arbeidsevne = ({ tiltakArbeidsplassen }: Props): ReactElement | null => {
     if (!tiltakArbeidsplassen) return null
 
     return (

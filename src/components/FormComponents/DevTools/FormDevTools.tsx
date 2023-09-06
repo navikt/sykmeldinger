@@ -1,8 +1,8 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { DevTool } from '@hookform/devtools'
 import { useFormContext } from 'react-hook-form'
 
-function FormDevTools(): JSX.Element {
+function FormDevTools(): ReactElement {
     const { control } = useFormContext()
 
     return (

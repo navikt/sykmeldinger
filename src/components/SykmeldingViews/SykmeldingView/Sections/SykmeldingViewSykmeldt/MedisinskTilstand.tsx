@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { Bandage } from '@navikt/ds-icons'
 import * as R from 'remeda'
 
@@ -13,7 +13,7 @@ interface Props {
     isV3: boolean
 }
 
-function MedisinskTilstand({ isV3, medisinskVurdering }: Props): JSX.Element | null {
+function MedisinskTilstand({ isV3, medisinskVurdering }: Props): ReactElement | null {
     if (!medisinskVurdering) return null
 
     return (

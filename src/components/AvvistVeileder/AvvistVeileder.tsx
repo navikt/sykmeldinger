@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { BodyLong, BodyShort, GuidePanel, Heading } from '@navikt/ds-react'
 
 import { Behandlingsutfall, SykmeldingFragment } from '../../fetching/graphql.generated'
@@ -13,7 +14,7 @@ interface AvvistVeilederProps {
     perioder: SykmeldingFragment['sykmeldingsperioder']
 }
 
-function AvvistVeileder({ behandlerNavn, behandlingsutfall, perioder }: AvvistVeilederProps): JSX.Element {
+function AvvistVeileder({ behandlerNavn, behandlingsutfall, perioder }: AvvistVeilederProps): ReactElement {
     const isNotValidInHPR = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'BEHANDLER_IKKE_GYLDIG_I_HPR')
     const isMissingAuthorization = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_MANGLER_AUTORISASJON_I_HPR',

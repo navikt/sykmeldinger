@@ -1,6 +1,7 @@
+import { ReactElement } from 'react'
 import { GuidePanel } from '@navikt/ds-react'
 
-const ErrorFallback = (): JSX.Element => {
+const ErrorFallback = (): ReactElement => {
     return (
         <div style={{ maxWidth: '40rem', margin: 'auto', marginTop: '2rem' }}>
             <GuidePanel>

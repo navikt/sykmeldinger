@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { useController } from 'react-hook-form'
 import { ErrorMessage, Label, DatePicker } from '@navikt/ds-react'
 import { endOfMonth, isSameMonth, startOfMonth } from 'date-fns'
@@ -18,7 +19,7 @@ function EgenmeldingDatesPickerSubField({
     earliestPossibleDate,
     latestPossibleDate,
     resetClickedVidere,
-}: Props): JSX.Element {
+}: Props): ReactElement {
     const { field: datoerField, fieldState: datoerFieldState } = useController<
         EgenmeldingsdagerSubForm,
         `egenmeldingsdager.${number}.datoer`

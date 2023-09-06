@@ -1,5 +1,5 @@
 import { ErrorSummary } from '@navikt/ds-react'
-import { ForwardedRef, forwardRef } from 'react'
+import { ForwardedRef, ReactElement, forwardRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { FormValues } from '../SendSykmeldingForm'
@@ -7,7 +7,7 @@ import { QuestionWrapper } from '../../FormComponents/FormStructure'
 
 import { extractAllErrors } from './ErrorSectionUtils'
 
-function ErrorSection(_: unknown, ref: ForwardedRef<HTMLDivElement>): JSX.Element | null {
+function ErrorSection(_: unknown, ref: ForwardedRef<HTMLDivElement>): ReactElement | null {
     const {
         formState: { errors },
     } = useFormContext<FormValues>()
