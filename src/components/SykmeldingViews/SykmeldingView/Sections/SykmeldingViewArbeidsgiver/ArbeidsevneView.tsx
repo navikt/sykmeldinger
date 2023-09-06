@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { ShakeHands } from '@navikt/ds-icons'
+import { HandshakeIcon } from '@navikt/aksel-icons'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
@@ -12,7 +12,7 @@ function ArbeidsevneView({ tiltakArbeidsplassen }: ArbeidsevneViewProps): ReactE
     if (!tiltakArbeidsplassen) return null
 
     return (
-        <SykmeldingGroup heading="Hva skal til for å bedre arbeidsevnen?" Icon={ShakeHands}>
+        <SykmeldingGroup heading="Hva skal til for å bedre arbeidsevnen?" Icon={HandshakeIcon}>
             <SykmeldingInfo heading="Tilrettelegging/hensyn som bør tas på arbeidsplassen">
                 {tiltakArbeidsplassen}
             </SykmeldingInfo>

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Calender } from '@navikt/ds-icons'
+import { CalendarIcon } from '@navikt/aksel-icons'
 import * as R from 'remeda'
 
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
@@ -24,7 +24,7 @@ interface PeriodeViewProps {
 
 function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): ReactElement {
     return (
-        <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={Calender} wrap>
+        <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={CalendarIcon} wrap>
             {perioder.map((periode, index) => (
                 <SykmeldingInfoSubGroup key={index}>
                     <SykmeldingMultilineInfo

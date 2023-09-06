@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { People } from '@navikt/ds-icons'
+import { PersonIcon } from '@navikt/aksel-icons'
 
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
 import { Pasient } from '../../../../../fetching/graphql.generated'
@@ -17,7 +17,7 @@ function SykmeldingenGjelder({ pasient }: Props): ReactElement | null {
     if (!name) return null
 
     return (
-        <SykmeldingGroup heading="Sykmeldingen gjelder" Icon={People}>
+        <SykmeldingGroup heading="Sykmeldingen gjelder" Icon={PersonIcon}>
             <SykmeldingMultilineInfo lines={[name, `Fødselsnr: ${pasient.fnr}`]} variant="gray" />
         </SykmeldingGroup>
     )

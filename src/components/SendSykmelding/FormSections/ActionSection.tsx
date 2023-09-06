@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useRef, useState } from 'react'
 import { Alert, BodyShort, Button, Heading, Panel } from '@navikt/ds-react'
 import { useFormContext } from 'react-hook-form'
 import { MutationResult } from '@apollo/client'
-import { Close } from '@navikt/ds-icons'
+import { XMarkIcon } from '@navikt/aksel-icons'
 
 import { FormValues } from '../SendSykmeldingForm'
 import {
@@ -135,7 +135,7 @@ function AvbrytSykmeldingen({
                 className="absolute right-1 top-1"
                 variant="tertiary"
                 type="button"
-                icon={<Close title="Lukk avbryt panel" />}
+                icon={<XMarkIcon title="Lukk avbryt panel" />}
                 onClick={closeAvbryt}
             />
             {error && (

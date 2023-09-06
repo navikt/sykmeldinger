@@ -1,7 +1,7 @@
 import { ReactElement, useLayoutEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Button } from '@navikt/ds-react'
-import { Add } from '@navikt/ds-icons'
+import { PlusIcon } from '@navikt/aksel-icons'
 import { sub } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
@@ -47,7 +47,7 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): ReactElement {
             <Button
                 className="mt-4"
                 variant="tertiary"
-                icon={<Add role="img" aria-hidden />}
+                icon={<PlusIcon role="img" aria-hidden />}
                 type="button"
                 onClick={() =>
                     append(

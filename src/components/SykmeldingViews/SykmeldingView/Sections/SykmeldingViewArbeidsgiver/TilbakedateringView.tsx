@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Historic } from '@navikt/ds-icons'
+import { ClockDashedIcon } from '@navikt/aksel-icons'
 
 import { KontaktMedPasient } from '../../../../../fetching/graphql.generated'
 import { toReadableDate } from '../../../../../utils/dateUtils'
@@ -16,7 +16,7 @@ function TilbakedateringView({ kontaktMedPasient }: TilbakedateringViewProps): R
     }
 
     return (
-        <SykmeldingGroup heading="Tilbakedatering" Icon={Historic}>
+        <SykmeldingGroup heading="Tilbakedatering" Icon={ClockDashedIcon}>
             <SykmeldingInfo heading="Dato for dokumenterbar kontakt med pasienten">
                 {toReadableDate(kontaktMedPasient.kontaktDato)}
             </SykmeldingInfo>

@@ -1,6 +1,6 @@
 import { ReactElement, CSSProperties } from 'react'
 import { ExpansionCard } from '@navikt/ds-react'
-import { Findout } from '@navikt/ds-icons'
+import { FileSearchIcon } from '@navikt/aksel-icons'
 
 import { SykmeldingFragment } from '../../../fetching/graphql.generated'
 import { isUtenlandsk } from '../../../utils/utenlanskUtils'
@@ -24,7 +24,7 @@ function SykmeldingArbeidsgiverContainer({ sykmelding, chosenEgenmeldingsdager }
             <ExpansionCard.Header>
                 <div className="flex items-center gap-4">
                     <div className="mt-1.5 grid shrink-0 place-content-center text-4xl">
-                        <Findout role="img" aria-hidden />
+                        <FileSearchIcon role="img" aria-hidden />
                     </div>
                     <ExpansionCard.Title id={headerId}>Se hva som sendes til jobben din</ExpansionCard.Title>
                 </div>

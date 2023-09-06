@@ -1,12 +1,12 @@
 import { ReactElement, PropsWithChildren } from 'react'
 import { Heading } from '@navikt/ds-react'
-import { Calender } from '@navikt/ds-icons'
+import { CalendarIcon } from '@navikt/aksel-icons'
 
 import { cn } from '../../../utils/tw-utils'
 
 interface Props {
     title: string
-    Icon: typeof Calender
+    Icon: typeof CalendarIcon
 }
 
 /**
@@ -18,7 +18,7 @@ export function SykmeldingGroup({
     tight = false,
     wrap = false,
     children,
-}: PropsWithChildren<{ heading: string; Icon: typeof Calender; wrap?: boolean; tight?: boolean }>): ReactElement {
+}: PropsWithChildren<{ heading: string; Icon: typeof CalendarIcon; wrap?: boolean; tight?: boolean }>): ReactElement {
     return (
         <div className="pb-4">
             <SykmeldingSectionHeading title={heading} Icon={Icon} />

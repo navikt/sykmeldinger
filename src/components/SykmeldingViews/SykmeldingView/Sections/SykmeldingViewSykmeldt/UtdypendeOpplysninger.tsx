@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { FileContent } from '@navikt/ds-icons'
+import { FileTextIcon } from '@navikt/aksel-icons'
 import * as R from 'remeda'
 
 import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated'
@@ -24,7 +24,7 @@ function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): ReactElement |
     )
 
     return (
-        <SykmeldingGroup heading="Utdypende opplysninger" Icon={FileContent}>
+        <SykmeldingGroup heading="Utdypende opplysninger" Icon={FileTextIcon}>
             {sporsmalsToShow.map(([sporsmal, svar]) => (
                 <SykmeldingInfo key={sporsmal} heading={sporsmal} variant="gray">
                     {svar}

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Bandage } from '@navikt/ds-icons'
+import { BandageIcon } from '@navikt/aksel-icons'
 import * as R from 'remeda'
 
 import { toReadableDate } from '../../../../../utils/dateUtils'
@@ -17,7 +17,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering }: Props): ReactElement | 
     if (!medisinskVurdering) return null
 
     return (
-        <SykmeldingGroup heading="Medisinsk tilstand" Icon={Bandage}>
+        <SykmeldingGroup heading="Medisinsk tilstand" Icon={BandageIcon}>
             {medisinskVurdering.hovedDiagnose?.tekst && (
                 <SykmeldingInfo heading="Diagnose" variant="gray">
                     {medisinskVurdering.hovedDiagnose.tekst}
