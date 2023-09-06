@@ -82,7 +82,7 @@ describe('kvittering page', () => {
             await waitForQueriesLoaded()
 
             // Should not have the link
-            expect(screen.queryByRole('link', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()
+            expect(screen.queryByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()
         })
 
         it('should show "Legg til egenmeldingsdager"-button when there is "space" behind the sykmelding', async () => {
@@ -105,7 +105,7 @@ describe('kvittering page', () => {
             await waitForQueriesLoaded()
 
             // Should have the link
-            expect(await screen.findByRole('link', { name: /Legg til egenmeldingsdager/ })).toBeInTheDocument()
+            expect(await screen.findByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeInTheDocument()
         })
     })
 })

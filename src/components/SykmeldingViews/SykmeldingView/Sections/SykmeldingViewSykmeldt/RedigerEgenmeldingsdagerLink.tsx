@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { Button } from '@navikt/ds-react'
 
@@ -10,7 +10,7 @@ function RedigerEgenmeldingsdagerLink({
 }: {
     sykmeldingId: string
     hasEgenmeldingsdager: boolean
-}): JSX.Element | null {
+}): ReactElement | null {
     const typeOfEditEgenmeldingsdager: string = hasEgenmeldingsdager ? 'Endre' : 'Legg til'
 
     return (

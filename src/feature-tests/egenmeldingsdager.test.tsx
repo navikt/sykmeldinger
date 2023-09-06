@@ -617,7 +617,7 @@ describe('Egenmeldingsdager', () => {
             await waitForQueriesLoaded()
 
             // Should not have the link
-            expect(screen.queryByRole('link', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()
+            expect(screen.queryByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()
         })
 
         it('should show "Legg til egenmeldingsdager"-button when there is "space" behind the sykmelding', async () => {
@@ -640,7 +640,7 @@ describe('Egenmeldingsdager', () => {
             await waitForQueriesLoaded()
 
             // Should have the link
-            expect(screen.getByRole('link', { name: /Legg til egenmeldingsdager/ })).toBeInTheDocument()
+            expect(screen.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeInTheDocument()
         })
     })
 })

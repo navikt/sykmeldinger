@@ -140,7 +140,7 @@ describe('Bekreft avvist sykmelding som lest', () => {
         ).toBeInTheDocument()
 
         // There are no more unsent sykmeldinger, should show Ferdig link to ditt sykefravær
-        expect(screen.getByRole('link', { name: 'Ferdig' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Ferdig' })).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
     })
 })
