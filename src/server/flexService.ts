@@ -6,6 +6,7 @@ import { getServerEnv } from '../utils/env'
 
 import { ErUtenforVentetid, ErUtenforVentetidSchema } from './api-models/ErUtenforVentetid'
 import { RequestContext } from './graphql/resolvers'
+import metrics from './metrics'
 
 export async function getErUtenforVentetid(sykmeldingId: string, context: RequestContext): Promise<ErUtenforVentetid> {
     const serverEnv = getServerEnv()
@@ -24,6 +25,9 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
         )
     }
 
+    const stopApiResponsetimer = metrics.flexApiDurationHistogram.startTimer({
+        path: 'api/bruker/v2/ventetid/<sykmeldingId>/erUtenforVentetid',
+    })
     const response = await fetch(
         `${getServerEnv().FLEX_SYKETILFELLE}/api/bruker/v2/ventetid/${sykmeldingId}/erUtenforVentetid`,
         {
@@ -34,6 +38,7 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
             },
         },
     )
+    stopApiResponsetimer()
 
     if (response.ok) {
         const parsed = ErUtenforVentetidSchema.parse(await response.json())

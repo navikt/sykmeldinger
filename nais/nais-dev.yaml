@@ -16,6 +16,9 @@ spec:
       enabled: true
   tokenx:
     enabled: true
+  prometheus:
+    enabled: true
+    path: /syk/sykmeldinger/api/internal/prometheus
   replicas:
     min: 2
     max: 2
