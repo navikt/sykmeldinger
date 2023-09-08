@@ -13,6 +13,7 @@ import { RequestContext } from './graphql/resolvers'
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 import { getErUtenforVentetid } from './flexService'
 import { ArbeidssituasjonV3 } from './api-models/SendSykmelding'
+import metrics from './metrics'
 
 const serverEnv = getServerEnv()
 
@@ -21,7 +22,13 @@ export async function getSykmeldinger(context: RequestContext): Promise<Sykmeldi
 
     childLogger.info(`Fetching sykmeldinger from backend, requestId: ${context.requestId}`)
 
-    return fetchApi({ type: 'GET' }, 'v2/sykmeldinger', (it) => z.array(SykmeldingSchema).parse(it), context)
+    return fetchApi(
+        { type: 'GET' },
+        'v2/sykmeldinger',
+        (it) => z.array(SykmeldingSchema).parse(it),
+        context,
+        'GET: sykmeldinger',
+    )
 }
 
 export async function getSykmelding(sykmeldingId: string, context: RequestContext): Promise<Sykmelding> {
@@ -29,7 +36,13 @@ export async function getSykmelding(sykmeldingId: string, context: RequestContex
 
     childLogger.info(`Fetching sykmelding with ID ${sykmeldingId} from backend, requestId: ${context.requestId}`)
 
-    return fetchApi({ type: 'GET' }, `v2/sykmeldinger/${sykmeldingId}`, (it) => SykmeldingSchema.parse(it), context)
+    return fetchApi(
+        { type: 'GET' },
+        `v2/sykmeldinger/${sykmeldingId}`,
+        (it) => SykmeldingSchema.parse(it),
+        context,
+        'GET: sykmelding',
+    )
 }
 
 export async function getBrukerinformasjon(context: RequestContext): Promise<Brukerinformasjon> {
@@ -37,7 +50,13 @@ export async function getBrukerinformasjon(context: RequestContext): Promise<Bru
 
     childLogger.info(`Fetching brukerinformasjon from backend, requestId: ${context.requestId}`)
 
-    return fetchApi({ type: 'GET' }, 'v2/brukerinformasjon', (it) => BrukerinformasjonSchema.parse(it), context)
+    return fetchApi(
+        { type: 'GET' },
+        'v2/brukerinformasjon',
+        (it) => BrukerinformasjonSchema.parse(it),
+        context,
+        'GET: brukerinformasjon',
+    )
 }
 
 export async function changeSykmeldingStatus(
@@ -54,6 +73,7 @@ export async function changeSykmeldingStatus(
             `v2/sykmeldinger/${sykmeldingId}/${statusToEndpoint(status)}`,
             () => null,
             context,
+            'POST: changeSykmeldingStatus',
         )
         return getSykmelding(sykmeldingId, context)
     } catch (e) {
@@ -93,6 +113,7 @@ export async function sendSykmelding(
             `v3/sykmeldinger/${sykmeldingId}/send`,
             () => null,
             context,
+            'POST: sendSykmelding',
         )
 
         if (mappedValues.arbeidssituasjon.svar === ArbeidssituasjonV3.ARBEIDSTAKER) {
@@ -130,6 +151,7 @@ export async function updateEgenmeldingsdager(
             `v3/sykmeldinger/${sykmeldingId}/endre-egenmeldingsdager`,
             () => null,
             context,
+            'POST: endre-egenmeldingsdager',
         )
         return getSykmelding(sykmeldingId, context)
     } catch (e) {
@@ -156,6 +178,7 @@ async function fetchApi<ResponseObject>(
     path: string,
     parse: (json?: unknown) => ResponseObject,
     context: RequestContext,
+    what: string,
 ): Promise<ResponseObject> {
     const childLogger = createChildLogger(context.requestId)
 
@@ -169,6 +192,7 @@ async function fetchApi<ResponseObject>(
         )
     }
 
+    const stopApiResponsetimer = metrics.backendApiDurationHistogram.startTimer({ path: what })
     const response = await fetch(`${getServerEnv().SYKMELDINGER_BACKEND}/api/${path}`, {
         method: method.type,
         body: method.type === 'POST' ? method.body : undefined,
@@ -178,6 +202,7 @@ async function fetchApi<ResponseObject>(
             'x-request-id': context.requestId,
         },
     })
+    stopApiResponsetimer()
 
     if (response.ok) {
         try {
