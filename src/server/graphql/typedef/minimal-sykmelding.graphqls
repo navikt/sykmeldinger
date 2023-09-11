@@ -1,7 +1,6 @@
 type ArbeidsgiverMinimal {
     orgNavn: String!
     orgnummer: String!
-    juridiskOrgnummer: String!
 }
 
 type RuleHitsMinimal {

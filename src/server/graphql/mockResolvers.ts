@@ -1,12 +1,14 @@
 import { GraphQLJSON } from 'graphql-scalars'
 
-import { MutationResolvers, QueryResolvers, Resolvers, Sykmelding } from './resolver-types.generated'
+import { MinimalSykmelding, MutationResolvers, QueryResolvers, Resolvers, Sykmelding } from './resolver-types.generated'
 import objectResolvers from './objectResolvers'
 import { Scenarios } from './mock-db/scenarios'
 import mockDb from './mock-db'
 
 const Query: QueryResolvers = {
     sykmeldinger: async (_, args, { sessionId }): Promise<Sykmelding[]> => mockDb().get(sessionId).sykmeldinger(),
+    minimalSykmeldinger: async (_, { category }, { sessionId }): Promise<MinimalSykmelding[]> =>
+        mockDb().get(sessionId).minimalSykmeldinger(category),
     sykmelding: async (_, { id }, { sessionId }): Promise<Sykmelding> => mockDb().get(sessionId).sykmelding(id),
     brukerinformasjon: async (_, args, { sessionId }) => mockDb().get(sessionId).brukerinformasjon(),
     sykmeldingUtenforVentetid: async (_, args, { sessionId }) => mockDb().get(sessionId).sykeldingErUtenforVentetid(),

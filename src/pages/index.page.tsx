@@ -18,16 +18,18 @@ function SykmeldingerPage({}: ServerSidePropsResult): ReactElement {
     const newListView = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
 
     return (
-        <PageWrapper>
+        <>
             <Head>
                 <title>Sykmeldinger - www.nav.no</title>
             </Head>
             <Header title="Dine sykmeldinger" />
-            {newListView.enabled ? <SykmeldingerListDynamic /> : <SykmeldingerListAll />}
-            <div className="mt-16">
-                <TilHovedsiden />
-            </div>
-        </PageWrapper>
+            <PageWrapper>
+                {newListView.enabled ? <SykmeldingerListDynamic /> : <SykmeldingerListAll />}
+                <div className="mt-16">
+                    <TilHovedsiden />
+                </div>
+            </PageWrapper>
+        </>
     )
 }
 

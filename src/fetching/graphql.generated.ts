@@ -62,7 +62,6 @@ export type Arbeidsgiver = {
 
 export type ArbeidsgiverMinimal = {
     readonly __typename: 'ArbeidsgiverMinimal'
-    readonly juridiskOrgnummer: Scalars['String']['output']
     readonly orgNavn: Scalars['String']['output']
     readonly orgnummer: Scalars['String']['output']
 }
@@ -790,7 +789,6 @@ export type MinimalSykmeldingFragment = {
         readonly __typename: 'ArbeidsgiverMinimal'
         readonly orgNavn: string
         readonly orgnummer: string
-        readonly juridiskOrgnummer: string
     } | null
     readonly rule_hits: ReadonlyArray<{
         readonly __typename: 'RuleHitsMinimal'
@@ -831,7 +829,6 @@ export type MinimalSykmeldingerQuery = {
             readonly __typename: 'ArbeidsgiverMinimal'
             readonly orgNavn: string
             readonly orgnummer: string
-            readonly juridiskOrgnummer: string
         } | null
         readonly rule_hits: ReadonlyArray<{
             readonly __typename: 'RuleHitsMinimal'
@@ -1946,7 +1943,6 @@ export const MinimalSykmeldingFragmentDoc = {
                             selections: [
                                 { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'juridiskOrgnummer' } },
                             ],
                         },
                     },
@@ -3591,7 +3587,6 @@ export const MinimalSykmeldingerDocument = {
                             selections: [
                                 { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'juridiskOrgnummer' } },
                             ],
                         },
                     },

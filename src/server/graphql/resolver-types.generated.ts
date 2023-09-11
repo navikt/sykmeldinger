@@ -66,7 +66,6 @@ export type Arbeidsgiver = {
 
 export type ArbeidsgiverMinimal = {
     __typename?: 'ArbeidsgiverMinimal'
-    juridiskOrgnummer: Scalars['String']['output']
     orgNavn: Scalars['String']['output']
     orgnummer: Scalars['String']['output']
 }
@@ -769,7 +768,6 @@ export type ArbeidsgiverMinimalResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsgiverMinimal'] = ResolversParentTypes['ArbeidsgiverMinimal'],
 > = ResolversObject<{
-    juridiskOrgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     orgNavn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>

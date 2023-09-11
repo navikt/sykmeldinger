@@ -4,7 +4,15 @@ import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
 import { Brukerinformasjon } from '../../api-models/Brukerinformasjon'
 import { ErUtenforVentetid } from '../../api-models/ErUtenforVentetid'
 import { SykmeldingChangeStatus } from '../../../fetching/graphql.generated'
-import { ArbeidssituasjonType, SendSykmeldingValues, ShortName, StatusEvent } from '../resolver-types.generated'
+import {
+    ArbeidssituasjonType,
+    Merknadtype,
+    MinimalSykmelding,
+    SendSykmeldingValues,
+    ShortName,
+    StatusEvent,
+    SykmeldingCategory,
+} from '../resolver-types.generated'
 import { Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus'
 import { sporsmal } from '../../../utils/sporsmal'
 import { toDateString } from '../../../utils/dateUtils'
@@ -45,6 +53,10 @@ class MockDb {
             throw new Error(`Unable to find sykmelding by sykmeldingId: ${id}`)
         }
         return sykmelding
+    }
+
+    minimalSykmeldinger(category: SykmeldingCategory): MinimalSykmelding[] {
+        return this.sykmeldinger().filter(byCategory(category)).map(toMinimalSykmelding)
     }
 
     changeSykmeldingStatus(id: string, status: SykmeldingChangeStatus): Sykmelding {
@@ -131,6 +143,46 @@ class MockDb {
 
     private arbeidsgivere(): Arbeidsgiver[] {
         return defaultArbeidsgivere.slice(0, this._antallArbeidsgivere)
+    }
+}
+
+function byCategory(category: SykmeldingCategory) {
+    return (sykmelding: Sykmelding): boolean => {
+        switch (category) {
+            case SykmeldingCategory.UNSENT:
+                return sykmelding.sykmeldingStatus.statusEvent === StatusEvent.APEN
+            case SykmeldingCategory.PROCESSING:
+                return sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT && isUnderBehandling(sykmelding)
+            case SykmeldingCategory.OLDER:
+                return sykmelding.sykmeldingStatus.statusEvent !== StatusEvent.APEN && !isUnderBehandling(sykmelding)
+        }
+    }
+}
+
+function isUnderBehandling(sykmelding: Sykmelding): boolean {
+    return sykmelding.merknader?.find((it) => it.type === Merknadtype.UNDER_BEHANDLING) != null
+}
+
+function toMinimalSykmelding(sykmelding: Sykmelding): MinimalSykmelding {
+    return {
+        __typename: 'MinimalSykmelding',
+        sykmelding_id: sykmelding.id,
+        event: sykmelding.sykmeldingStatus.statusEvent,
+        timestamp: sykmelding.sykmeldingStatus.timestamp,
+        arbeidsgiver: sykmelding.sykmeldingStatus.arbeidsgiver
+            ? {
+                  orgNavn: sykmelding.sykmeldingStatus.arbeidsgiver.orgNavn,
+                  orgnummer: sykmelding.sykmeldingStatus.arbeidsgiver.orgnummer,
+              }
+            : null,
+        behandlingsutfall: sykmelding.behandlingsutfall.status,
+        rule_hits: sykmelding.behandlingsutfall.ruleHits,
+        sykmelding: {
+            utenlandskSykmelding: sykmelding.utenlandskSykmelding,
+            egenmeldt: sykmelding.egenmeldt,
+            papirsykmelding: sykmelding.papirsykmelding,
+            sykmeldingsperioder: sykmelding.sykmeldingsperioder,
+        },
     }
 }
 

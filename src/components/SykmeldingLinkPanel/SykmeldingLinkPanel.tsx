@@ -1,4 +1,4 @@
-import { ReactElement, useMemo, useState } from 'react'
+import { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 import { BodyShort, Heading, Select } from '@navikt/ds-react'
 
 import { MinimalSykmeldingFragment, SykmeldingFragment } from '../../fetching/graphql.generated'
@@ -12,7 +12,8 @@ export enum SortBy {
     ARBEIDSGIVER = 'ARBEIDSGIVER',
 }
 
-interface LenkepanelContainerProps<Sykmelding extends SykmeldingFragment | MinimalSykmeldingFragment> {
+interface LenkepanelContainerProps<Sykmelding extends SykmeldingFragment | MinimalSykmeldingFragment>
+    extends PropsWithChildren {
     sykmeldinger: Sykmelding[]
     type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER' | 'UNDER_BEHANDLING'
     title: string
@@ -40,7 +41,7 @@ function SykmeldingLinkPanel<Sykmelding extends SykmeldingFragment | MinimalSykm
         }
 
         if (type === 'NYE_SYKMELDINGER') {
-            return <BodyShort style={{ marginBottom: '2rem' }}>Du har ingen nye sykmeldinger</BodyShort>
+            return <BodyShort className="my-8">Du har ingen nye sykmeldinger</BodyShort>
         }
     }
 
