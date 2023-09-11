@@ -8,12 +8,30 @@ import { sporsmal } from '../utils/sporsmal'
 
 import { Sykmelding, SykmeldingSchema } from './api-models/sykmelding/Sykmelding'
 import { Brukerinformasjon, BrukerinformasjonSchema } from './api-models/Brukerinformasjon'
-import { SendSykmeldingValues, SykmeldingChangeStatus } from './graphql/resolver-types.generated'
+import { SendSykmeldingValues, SykmeldingCategory, SykmeldingChangeStatus } from './graphql/resolver-types.generated'
 import { RequestContext } from './graphql/resolvers'
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 import { getErUtenforVentetid } from './flexService'
 import { ArbeidssituasjonV3 } from './api-models/SendSykmelding'
 import metrics from './metrics'
+import { MinimalSykmelding, MinimalSykmeldingSchema } from './api-models/sykmelding/MinimalSykmelding'
+
+export function getMinimalSykmeldinger(
+    category: SykmeldingCategory,
+    context: RequestContext,
+): Promise<MinimalSykmelding[]> {
+    const childLogger = createChildLogger(context.requestId)
+
+    childLogger.info(`Fetching sykmeldinger by category (${category}) from backend, requestId: ${context.requestId}`)
+
+    return fetchApi(
+        { type: 'GET' },
+        `v2/sykmeldinger/minimal/${category}`,
+        (it) => z.array(MinimalSykmeldingSchema).parse(it),
+        context,
+        `GET: sykmeldinger (${category})`,
+    )
+}
 
 const serverEnv = getServerEnv()
 
