@@ -70,7 +70,9 @@ export function getSykmeldingEndDate(perioder: readonly { readonly fom: string; 
  */
 export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment | MinimalSykmeldingFragment): string {
     const perioder =
-        'sykmeldingsperioder' in sykmelding ? sykmelding.sykmeldingsperioder : sykmelding.sykmelding.sykmeldingsperioder
+        sykmelding.__typename === 'Sykmelding'
+            ? sykmelding.sykmeldingsperioder
+            : sykmelding.sykmelding.sykmeldingsperioder
 
     const startDate = getSykmeldingStartDate(perioder)
     const endDate = getSykmeldingEndDate(perioder)

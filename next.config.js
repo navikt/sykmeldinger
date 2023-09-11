@@ -5,10 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 const { buildCspHeader } = require('@navikt/nav-dekoratoren-moduler/ssr')
 
-/**
- * @type {import('next').NextConfig}
- */
-
 const appDirectives = {
     'default-src': ["'self'"],
     'script-src': [
@@ -39,6 +35,9 @@ const appDirectives = {
     'frame-src': ['*.hotjar.com'],
 }
 
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
     output: 'standalone',
     reactStrictMode: true,
