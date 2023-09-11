@@ -67,7 +67,7 @@ function SykmeldingSection({
     )
 }
 
-function OLderSectionPlaceholderHeader(): ReactElement {
+function OlderSectionPlaceholderHeader(): ReactElement {
     return (
         <div className="flex justify-between items-end mb-2">
             <Heading size="medium" level="2" id={categoryToType[SykmeldingCategory.OLDER]}>
@@ -93,7 +93,7 @@ function OlderSykmeldingerSection(): ReactElement {
     if (!shouldLoadOlder) {
         return (
             <div className="mt-16 relative">
-                <OLderSectionPlaceholderHeader />
+                <OlderSectionPlaceholderHeader />
                 <div className="flex flex-col gap-4">
                     <SingleSykmeldingSkeleton className="[&>*>*]:animate-none opacity-50" />
                     <SingleSykmeldingSkeleton className="[&>*>*]:animate-none opacity-50" />
@@ -113,7 +113,7 @@ function OlderSykmeldingerSection(): ReactElement {
     if (loading || networkStatus === NetworkStatus.refetch) {
         return (
             <div className="flex flex-col gap-4 mb-8 mt-16">
-                <OLderSectionPlaceholderHeader />
+                <OlderSectionPlaceholderHeader />
                 <SingleSykmeldingSkeleton />
                 <SingleSykmeldingSkeleton />
             </div>
@@ -138,7 +138,7 @@ function OlderSykmeldingerSection(): ReactElement {
     if (data?.minimalSykmeldinger.length === 0) {
         return (
             <div className="mb-8 mt-16">
-                <OLderSectionPlaceholderHeader />
+                <OlderSectionPlaceholderHeader />
                 <BodyShort className="mt-8">Du har ingen tidligere sykmeldinger</BodyShort>
             </div>
         )
