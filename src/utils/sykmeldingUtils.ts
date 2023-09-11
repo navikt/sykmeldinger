@@ -1,6 +1,6 @@
 import { differenceInDays, isAfter, isBefore, parseISO } from 'date-fns'
 
-import { RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
+import { MinimalSykmeldingFragment, RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { toDate, toReadableDatePeriod } from './dateUtils'
 import { isUtenlandsk } from './utenlanskUtils'
@@ -34,13 +34,15 @@ export function isSendtSykmelding(sykmelding: SykmeldingFragment): boolean {
  * @return {string}
  */
 export function getSykmeldingTitle(
-    sykmelding: SykmeldingFragment | undefined,
+    sykmelding: SykmeldingFragment | MinimalSykmeldingFragment | undefined,
 ): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' | 'Utenlandsk sykmelding' {
     if (sykmelding && isUtenlandsk(sykmelding)) {
         return 'Utenlandsk sykmelding'
-    } else if (sykmelding?.papirsykmelding) {
+    } else if (
+        sykmelding?.__typename === 'Sykmelding' ? sykmelding.papirsykmelding : sykmelding?.sykmelding.papirsykmelding
+    ) {
         return 'Papirsykmelding'
-    } else if (sykmelding?.egenmeldt) {
+    } else if (sykmelding?.__typename === 'Sykmelding' ? sykmelding.egenmeldt : sykmelding?.sykmelding.egenmeldt) {
         return 'Egenmelding'
     }
     return 'Sykmelding'
@@ -50,31 +52,28 @@ export function getSykmeldingTitle(
  * Get the first fom date of the earliest sykmelding period
  * @return {Date} The start date
  */
-export function getSykmeldingStartDate(sykmelding: {
-    sykmeldingsperioder: readonly { readonly fom: string }[]
-}): string {
-    return sykmelding.sykmeldingsperioder.reduce((acc, value) =>
-        isBefore(toDate(value.fom), toDate(acc.fom)) ? value : acc,
-    ).fom
+export function getSykmeldingStartDate(perioder: readonly { readonly fom: string }[]): string {
+    return perioder.reduce((acc, value) => (isBefore(toDate(value.fom), toDate(acc.fom)) ? value : acc)).fom
 }
 
 /**
  * Get the last tom date of the last sykmelding period
  * @return {Date} The end date
  */
-export function getSykmeldingEndDate(sykmelding: SykmeldingFragment): string {
-    return sykmelding.sykmeldingsperioder.reduce((acc, value) =>
-        isAfter(toDate(value.fom), toDate(acc.fom)) ? value : acc,
-    ).tom
+export function getSykmeldingEndDate(perioder: readonly { readonly fom: string; readonly tom: string }[]): string {
+    return perioder.reduce((acc, value) => (isAfter(toDate(value.fom), toDate(acc.fom)) ? value : acc)).tom
 }
 
 /**
  * Get the text representation of the sykmelding length from start date to end date
  * @return {string} The sykmelding length
  */
-export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment): string {
-    const startDate = getSykmeldingStartDate(sykmelding)
-    const endDate = getSykmeldingEndDate(sykmelding)
+export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment | MinimalSykmeldingFragment): string {
+    const perioder =
+        'sykmeldingsperioder' in sykmelding ? sykmelding.sykmeldingsperioder : sykmelding.sykmelding.sykmeldingsperioder
+
+    const startDate = getSykmeldingStartDate(perioder)
+    const endDate = getSykmeldingEndDate(perioder)
 
     return toReadableDatePeriod(startDate, endDate)
 }

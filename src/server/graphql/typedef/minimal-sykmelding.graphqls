@@ -1,0 +1,41 @@
+type ArbeidsgiverMinimal {
+    orgNavn: String!
+    orgnummer: String!
+    juridiskOrgnummer: String!
+}
+
+type RuleHitsMinimal {
+    ruleName: String!
+    ruleStatus: String!
+    messageForUser: String!
+    messageForSender: String!
+}
+
+type GradertMinimal {
+    grad: Int!
+}
+
+type MinimalPeriod {
+    type: Periodetype!
+    fom: String!
+    tom: String!
+    gradert: GradertMinimal
+    behandlingsdager: Int
+}
+
+type SykmeldingMinimal {
+    egenmeldt: Boolean
+    papirsykmelding: Boolean
+    utenlandskSykmelding: UtenlandskSykmelding
+    sykmeldingsperioder: [MinimalPeriod!]!
+}
+
+type MinimalSykmelding {
+    sykmelding_id: String!
+    event: StatusEvent!
+    arbeidsgiver: ArbeidsgiverMinimal
+    rule_hits: [RuleHitsMinimal!]!
+    timestamp: DateTime!
+    behandlingsutfall: RegelStatus!
+    sykmelding: SykmeldingMinimal!
+}

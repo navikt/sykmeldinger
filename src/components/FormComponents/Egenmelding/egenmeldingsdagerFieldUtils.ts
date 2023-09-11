@@ -30,7 +30,7 @@ export function hasHitPreviousSykmeldingTom(
 ): boolean {
     const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(
         {
-            earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
+            earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding.sykmeldingsperioder)),
             earliestSelectedDate: null,
         },
         previousSykmeldingTom,

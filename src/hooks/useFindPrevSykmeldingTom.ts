@@ -32,9 +32,9 @@ export function useFindPrevSykmeldingTom(
         .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer == valgtArbeidsgiverOrgnummer)
         .filter(removeIgnored(ignore))
 
-    const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding))
+    const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding.sykmeldingsperioder))
     const latestTomList: Date[] = sendtSykmeldinger
-        .flatMap((it) => toDate(getSykmeldingEndDate(it)))
+        .flatMap((it) => toDate(getSykmeldingEndDate(it.sykmeldingsperioder)))
         .filter((date) => isBefore(date, latestTomForGivenSykmelding) || isSameDay(date, latestTomForGivenSykmelding))
 
     const nearestTom: Date | undefined = closestTo(latestTomForGivenSykmelding, latestTomList)

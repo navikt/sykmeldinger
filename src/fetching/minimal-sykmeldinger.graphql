@@ -1,0 +1,39 @@
+fragment MinimalSykmelding on MinimalSykmelding {
+    sykmelding_id
+    event
+    arbeidsgiver {
+        orgNavn
+        orgnummer
+        juridiskOrgnummer
+    }
+    rule_hits {
+        ruleName
+        ruleStatus
+        messageForUser
+        messageForSender
+    }
+    timestamp
+    behandlingsutfall
+    sykmelding {
+        egenmeldt
+        papirsykmelding
+        sykmeldingsperioder {
+            fom
+            tom
+            type
+            gradert {
+                grad
+            }
+            behandlingsdager
+        }
+        utenlandskSykmelding {
+            land
+        }
+    }
+}
+
+query MinimalSykmeldinger($category: SykmeldingCategory!) {
+    minimalSykmeldinger(category: $category) {
+        ...MinimalSykmelding
+    }
+}

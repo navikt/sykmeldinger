@@ -1,5 +1,8 @@
 type Query {
+    # Used for old view (SykmeldingerListAll.tsx), if the new view works nicely, this will be deprecated
     sykmeldinger: [Sykmelding!]!
+    # Used for new view (SykmeldingerListDynamic.tsx)
+    minimalSykmeldinger(category: SykmeldingCategory!): [MinimalSykmelding!]!
     sykmelding(id: String!): Sykmelding!
     brukerinformasjon: Brukerinformasjon!
     sykmeldingUtenforVentetid(id: String!): UtenforVentetid!
@@ -21,4 +24,10 @@ type Mutation {
 enum SykmeldingChangeStatus {
     AVBRYT
     BEKREFT_AVVIST
+}
+
+enum SykmeldingCategory {
+    UNSENT
+    OLDER
+    PROCESSING
 }
