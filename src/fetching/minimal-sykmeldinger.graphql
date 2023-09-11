@@ -4,7 +4,6 @@ fragment MinimalSykmelding on MinimalSykmelding {
     arbeidsgiver {
         orgNavn
         orgnummer
-        juridiskOrgnummer
     }
     rule_hits {
         ruleName
