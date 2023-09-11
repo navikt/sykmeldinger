@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { GraphQLError } from 'graphql'
+import { IToggle } from '@unleash/nextjs'
 
 import { render, screen, waitForElementToBeRemoved, within } from '../utils/test/testUtils'
 import { StatusEvent, SykmeldingerDocument } from '../fetching/graphql.generated'
@@ -14,8 +15,17 @@ import { dateSub } from '../utils/dateUtils'
 import SykmeldingerPage from './index.page'
 
 describe('SykmeldingerPage: /syk/sykmeldinger', () => {
+    const mockTogglesWithOldView: IToggle[] = [
+        {
+            name: 'SYKMELDINGER_LIST_VIEW_DATA_FETCHING',
+            enabled: false,
+            impressionData: false,
+            variant: { name: 'disabled', enabled: false },
+        },
+    ]
+
     it('should fail with error message on API error', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -32,7 +42,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     })
 
     it('should not display any sykmeldinger', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -45,7 +55,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     })
 
     it('should only display new sykmeldinger', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -81,7 +91,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     })
 
     it('should display only new sykmeldinger, sorted by ascending date ', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -127,7 +137,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     })
 
     it('should display under behandling in seperate section ', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -154,7 +164,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     })
 
     it('should display new and earlier sykmeldinger', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -182,7 +192,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     })
 
     it('should display APEN but older than 12 months sykemelding in tidligere section', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
@@ -210,7 +220,7 @@ describe('SykmeldingerPage: /syk/sykmeldinger', () => {
     })
 
     it('should not throw error when receiving a AVVIST sykmelding with invalid data', async () => {
-        render(<SykmeldingerPage />, {
+        render(<SykmeldingerPage toggles={mockTogglesWithOldView} />, {
             mocks: [
                 createMock({
                     request: { query: SykmeldingerDocument },
