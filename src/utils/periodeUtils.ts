@@ -4,7 +4,6 @@ import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
     MedisinskArsakType,
-    Periode,
     Periodetype,
 } from '../fetching/graphql.generated'
 
@@ -100,7 +99,16 @@ export function getReadableLength<
  * Get a text representation of the period based on the type of the period
  * @return {string} The period discription
  */
-export function getDescription(period: Periode, arbeidsgiverNavn?: string): string {
+export function getDescription(
+    period: {
+        type: Periodetype
+        fom: string
+        tom: string
+        behandlingsdager?: number | null
+        gradert?: { grad: number } | null
+    },
+    arbeidsgiverNavn?: string,
+): string {
     const periodLength = diffInDays(period.fom, period.tom)
 
     switch (period.type) {

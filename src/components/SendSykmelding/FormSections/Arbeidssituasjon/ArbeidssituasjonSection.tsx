@@ -51,7 +51,10 @@ function ArbeidssituasjonSection({
             )}
             {shouldShowEgenmeldingsperioderSporsmal && (
                 <FrilanserSection
-                    oppfolgingsdato={sykmeldingUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding)}
+                    oppfolgingsdato={
+                        sykmeldingUtenforVentetid.oppfolgingsdato ||
+                        getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
+                    }
                 />
             )}
             {shouldShowSendesTilArbeidsgiverInfo && <SendesTilArbeidsgiverInfo sykmelding={sykmelding} />}

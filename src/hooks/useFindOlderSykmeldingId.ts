@@ -9,7 +9,12 @@ import useSykmeldinger from './useSykmeldinger'
  * Used by reduce to find the earliest sykmelding
  */
 export function toEarliestSykmelding(acc: SykmeldingFragment, value: SykmeldingFragment): SykmeldingFragment {
-    return isBefore(parseISO(getSykmeldingStartDate(value)), parseISO(getSykmeldingStartDate(acc))) ? value : acc
+    return isBefore(
+        parseISO(getSykmeldingStartDate(value.sykmeldingsperioder)),
+        parseISO(getSykmeldingStartDate(acc.sykmeldingsperioder)),
+    )
+        ? value
+        : acc
 }
 
 export function useUnsentSykmeldinger(): {
@@ -53,8 +58,10 @@ function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
         }
     }
 
-    const startDate: string = getSykmeldingStartDate(sykmelding)
-    const unsentExceptOverlappingDates = unsentSykmeldinger.filter((it) => getSykmeldingStartDate(it) !== startDate)
+    const startDate: string = getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
+    const unsentExceptOverlappingDates = unsentSykmeldinger.filter(
+        (it) => getSykmeldingStartDate(it.sykmeldingsperioder) !== startDate,
+    )
     const earliestSykmelding: SykmeldingFragment = unsentExceptOverlappingDates.reduce(toEarliestSykmelding, sykmelding)
 
     return {

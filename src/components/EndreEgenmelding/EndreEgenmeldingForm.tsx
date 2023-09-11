@@ -68,7 +68,7 @@ function EndreEgenmeldingForm({
                 <EgenmeldingerField
                     index={0}
                     previous={{
-                        earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
+                        earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding.sykmeldingsperioder)),
                         earliestSelectedDate: null,
                     }}
                     metadata={{

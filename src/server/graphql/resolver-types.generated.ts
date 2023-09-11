@@ -64,6 +64,13 @@ export type Arbeidsgiver = {
     orgnummer: Scalars['String']['output']
 }
 
+export type ArbeidsgiverMinimal = {
+    __typename?: 'ArbeidsgiverMinimal'
+    juridiskOrgnummer: Scalars['String']['output']
+    orgNavn: Scalars['String']['output']
+    orgnummer: Scalars['String']['output']
+}
+
 export type ArbeidsgiverStatus = {
     __typename?: 'ArbeidsgiverStatus'
     orgNavn: Scalars['String']['output']
@@ -161,6 +168,11 @@ export type FomTom = {
     tom: Scalars['Date']['output']
 }
 
+export type GradertMinimal = {
+    __typename?: 'GradertMinimal'
+    grad: Scalars['Int']['output']
+}
+
 export type GradertPeriode = {
     __typename?: 'GradertPeriode'
     grad: Scalars['Int']['output']
@@ -219,6 +231,26 @@ export enum Merknadtype {
     TILBAKEDATERT_PAPIRSYKMELDING = 'TILBAKEDATERT_PAPIRSYKMELDING',
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
     UNDER_BEHANDLING = 'UNDER_BEHANDLING',
+}
+
+export type MinimalPeriod = {
+    __typename?: 'MinimalPeriod'
+    behandlingsdager: Maybe<Scalars['Int']['output']>
+    fom: Scalars['String']['output']
+    gradert: Maybe<GradertMinimal>
+    tom: Scalars['String']['output']
+    type: Periodetype
+}
+
+export type MinimalSykmelding = {
+    __typename?: 'MinimalSykmelding'
+    arbeidsgiver: Maybe<ArbeidsgiverMinimal>
+    behandlingsutfall: RegelStatus
+    event: StatusEvent
+    rule_hits: Array<RuleHitsMinimal>
+    sykmelding: SykmeldingMinimal
+    sykmelding_id: Scalars['String']['output']
+    timestamp: Scalars['DateTime']['output']
 }
 
 export type Mutation = {
@@ -309,9 +341,14 @@ export type Prognose = {
 export type Query = {
     __typename?: 'Query'
     brukerinformasjon: Brukerinformasjon
+    minimalSykmeldinger: Array<MinimalSykmelding>
     sykmelding: Sykmelding
     sykmeldingUtenforVentetid: UtenforVentetid
     sykmeldinger: Array<Sykmelding>
+}
+
+export type QueryMinimalSykmeldingerArgs = {
+    category: SykmeldingCategory
 }
 
 export type QuerySykmeldingArgs = {
@@ -334,6 +371,14 @@ export enum RegelStatus {
     INVALID = 'INVALID',
     MANUAL_PROCESSING = 'MANUAL_PROCESSING',
     OK = 'OK',
+}
+
+export type RuleHitsMinimal = {
+    __typename?: 'RuleHitsMinimal'
+    messageForSender: Scalars['String']['output']
+    messageForUser: Scalars['String']['output']
+    ruleName: Scalars['String']['output']
+    ruleStatus: Scalars['String']['output']
 }
 
 export type SendSykmeldingValues = {
@@ -414,9 +459,23 @@ export type Sykmelding = {
     utenlandskSykmelding: Maybe<UtenlandskSykmelding>
 }
 
+export enum SykmeldingCategory {
+    OLDER = 'OLDER',
+    PROCESSING = 'PROCESSING',
+    UNSENT = 'UNSENT',
+}
+
 export enum SykmeldingChangeStatus {
     AVBRYT = 'AVBRYT',
     BEKREFT_AVVIST = 'BEKREFT_AVVIST',
+}
+
+export type SykmeldingMinimal = {
+    __typename?: 'SykmeldingMinimal'
+    egenmeldt: Maybe<Scalars['Boolean']['output']>
+    papirsykmelding: Maybe<Scalars['Boolean']['output']>
+    sykmeldingsperioder: Array<MinimalPeriod>
+    utenlandskSykmelding: Maybe<UtenlandskSykmelding>
 }
 
 export type SykmeldingStatus = {
@@ -544,6 +603,7 @@ export type ResolversTypes = ResolversObject<{
     AnnenFraverGrunn: AnnenFraverGrunn
     AnnenFraversArsak: ResolverTypeWrapper<AnnenFraversArsak>
     Arbeidsgiver: ResolverTypeWrapper<Arbeidsgiver>
+    ArbeidsgiverMinimal: ResolverTypeWrapper<ArbeidsgiverMinimal>
     ArbeidsgiverStatus: ResolverTypeWrapper<ArbeidsgiverStatus>
     ArbeidsgiverSykmelding: ResolverTypeWrapper<ArbeidsgiverSykmelding>
     ArbeidsrelatertArsak: ResolverTypeWrapper<ArbeidsrelatertArsak>
@@ -562,6 +622,7 @@ export type ResolversTypes = ResolversObject<{
     ErIArbeid: ResolverTypeWrapper<ErIArbeid>
     ErIkkeIArbeid: ResolverTypeWrapper<ErIkkeIArbeid>
     FomTom: ResolverTypeWrapper<FomTom>
+    GradertMinimal: ResolverTypeWrapper<GradertMinimal>
     GradertPeriode: ResolverTypeWrapper<GradertPeriode>
     Int: ResolverTypeWrapper<Scalars['Int']['output']>
     JSON: ResolverTypeWrapper<Scalars['JSON']['output']>
@@ -573,6 +634,8 @@ export type ResolversTypes = ResolversObject<{
     MeldingTilNAV: ResolverTypeWrapper<MeldingTilNav>
     Merknad: ResolverTypeWrapper<Merknad>
     Merknadtype: Merknadtype
+    MinimalPeriod: ResolverTypeWrapper<MinimalPeriod>
+    MinimalSykmelding: ResolverTypeWrapper<MinimalSykmelding>
     Mutation: ResolverTypeWrapper<{}>
     NaermesteLeder: ResolverTypeWrapper<NaermesteLeder>
     Pasient: ResolverTypeWrapper<Pasient>
@@ -583,6 +646,7 @@ export type ResolversTypes = ResolversObject<{
     Query: ResolverTypeWrapper<{}>
     RegelInfo: ResolverTypeWrapper<RegelInfo>
     RegelStatus: RegelStatus
+    RuleHitsMinimal: ResolverTypeWrapper<RuleHitsMinimal>
     SendSykmeldingValues: SendSykmeldingValues
     ShortName: ShortName
     Sporsmal: ResolverTypeWrapper<Omit<Sporsmal, 'svar'> & { svar: ResolversTypes['SvarTypeUnion'] }>
@@ -592,7 +656,9 @@ export type ResolversTypes = ResolversObject<{
     SvarTypeUnion: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SvarTypeUnion']>
     Svartype: Svartype
     Sykmelding: ResolverTypeWrapper<Sykmelding>
+    SykmeldingCategory: SykmeldingCategory
     SykmeldingChangeStatus: SykmeldingChangeStatus
+    SykmeldingMinimal: ResolverTypeWrapper<SykmeldingMinimal>
     SykmeldingStatus: ResolverTypeWrapper<SykmeldingStatus>
     UriktigeOpplysningerType: UriktigeOpplysningerType
     UtdypendeOpplysning: ResolverTypeWrapper<UtdypendeOpplysning>
@@ -607,6 +673,7 @@ export type ResolversParentTypes = ResolversObject<{
     AktivitetIkkeMuligPeriode: AktivitetIkkeMuligPeriode
     AnnenFraversArsak: AnnenFraversArsak
     Arbeidsgiver: Arbeidsgiver
+    ArbeidsgiverMinimal: ArbeidsgiverMinimal
     ArbeidsgiverStatus: ArbeidsgiverStatus
     ArbeidsgiverSykmelding: ArbeidsgiverSykmelding
     ArbeidsrelatertArsak: ArbeidsrelatertArsak
@@ -623,6 +690,7 @@ export type ResolversParentTypes = ResolversObject<{
     ErIArbeid: ErIArbeid
     ErIkkeIArbeid: ErIkkeIArbeid
     FomTom: FomTom
+    GradertMinimal: GradertMinimal
     GradertPeriode: GradertPeriode
     Int: Scalars['Int']['output']
     JSON: Scalars['JSON']['output']
@@ -632,6 +700,8 @@ export type ResolversParentTypes = ResolversObject<{
     MedisinskVurdering: MedisinskVurdering
     MeldingTilNAV: MeldingTilNav
     Merknad: Merknad
+    MinimalPeriod: MinimalPeriod
+    MinimalSykmelding: MinimalSykmelding
     Mutation: {}
     NaermesteLeder: NaermesteLeder
     Pasient: Pasient
@@ -640,11 +710,13 @@ export type ResolversParentTypes = ResolversObject<{
     Prognose: Prognose
     Query: {}
     RegelInfo: RegelInfo
+    RuleHitsMinimal: RuleHitsMinimal
     SendSykmeldingValues: SendSykmeldingValues
     Sporsmal: Omit<Sporsmal, 'svar'> & { svar: ResolversParentTypes['SvarTypeUnion'] }
     String: Scalars['String']['output']
     SvarTypeUnion: ResolversUnionTypes<ResolversParentTypes>['SvarTypeUnion']
     Sykmelding: Sykmelding
+    SykmeldingMinimal: SykmeldingMinimal
     SykmeldingStatus: SykmeldingStatus
     UtdypendeOpplysning: UtdypendeOpplysning
     UtenforVentetid: UtenforVentetid
@@ -689,6 +761,16 @@ export type ArbeidsgiverResolvers<
     aktivtArbeidsforhold?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
     naermesteLeder?: Resolver<Maybe<ResolversTypes['NaermesteLeder']>, ParentType, ContextType>
     navn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type ArbeidsgiverMinimalResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['ArbeidsgiverMinimal'] = ResolversParentTypes['ArbeidsgiverMinimal'],
+> = ResolversObject<{
+    juridiskOrgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    orgNavn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
@@ -815,6 +897,14 @@ export type FomTomResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type GradertMinimalResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['GradertMinimal'] = ResolversParentTypes['GradertMinimal'],
+> = ResolversObject<{
+    grad?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type GradertPeriodeResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['GradertPeriode'] = ResolversParentTypes['GradertPeriode'],
@@ -883,6 +973,32 @@ export type MerknadResolvers<
 > = ResolversObject<{
     beskrivelse?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     type?: Resolver<ResolversTypes['Merknadtype'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type MinimalPeriodResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['MinimalPeriod'] = ResolversParentTypes['MinimalPeriod'],
+> = ResolversObject<{
+    behandlingsdager?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+    fom?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    gradert?: Resolver<Maybe<ResolversTypes['GradertMinimal']>, ParentType, ContextType>
+    tom?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    type?: Resolver<ResolversTypes['Periodetype'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type MinimalSykmeldingResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['MinimalSykmelding'] = ResolversParentTypes['MinimalSykmelding'],
+> = ResolversObject<{
+    arbeidsgiver?: Resolver<Maybe<ResolversTypes['ArbeidsgiverMinimal']>, ParentType, ContextType>
+    behandlingsutfall?: Resolver<ResolversTypes['RegelStatus'], ParentType, ContextType>
+    event?: Resolver<ResolversTypes['StatusEvent'], ParentType, ContextType>
+    rule_hits?: Resolver<Array<ResolversTypes['RuleHitsMinimal']>, ParentType, ContextType>
+    sykmelding?: Resolver<ResolversTypes['SykmeldingMinimal'], ParentType, ContextType>
+    sykmelding_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -988,6 +1104,12 @@ export type QueryResolvers<
     ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = ResolversObject<{
     brukerinformasjon?: Resolver<ResolversTypes['Brukerinformasjon'], ParentType, ContextType>
+    minimalSykmeldinger?: Resolver<
+        Array<ResolversTypes['MinimalSykmelding']>,
+        ParentType,
+        ContextType,
+        RequireFields<QueryMinimalSykmeldingerArgs, 'category'>
+    >
     sykmelding?: Resolver<
         ResolversTypes['Sykmelding'],
         ParentType,
@@ -1011,6 +1133,17 @@ export type RegelInfoResolvers<
     messageForUser?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     ruleName?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     ruleStatus?: Resolver<ResolversTypes['RegelStatus'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type RuleHitsMinimalResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['RuleHitsMinimal'] = ResolversParentTypes['RuleHitsMinimal'],
+> = ResolversObject<{
+    messageForSender?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    messageForUser?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    ruleName?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    ruleStatus?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -1065,6 +1198,17 @@ export type SykmeldingResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type SykmeldingMinimalResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['SykmeldingMinimal'] = ResolversParentTypes['SykmeldingMinimal'],
+> = ResolversObject<{
+    egenmeldt?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
+    papirsykmelding?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
+    sykmeldingsperioder?: Resolver<Array<ResolversTypes['MinimalPeriod']>, ParentType, ContextType>
+    utenlandskSykmelding?: Resolver<Maybe<ResolversTypes['UtenlandskSykmelding']>, ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type SykmeldingStatusResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['SykmeldingStatus'] = ResolversParentTypes['SykmeldingStatus'],
@@ -1108,6 +1252,7 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     AktivitetIkkeMuligPeriode?: AktivitetIkkeMuligPeriodeResolvers<ContextType>
     AnnenFraversArsak?: AnnenFraversArsakResolvers<ContextType>
     Arbeidsgiver?: ArbeidsgiverResolvers<ContextType>
+    ArbeidsgiverMinimal?: ArbeidsgiverMinimalResolvers<ContextType>
     ArbeidsgiverStatus?: ArbeidsgiverStatusResolvers<ContextType>
     ArbeidsgiverSykmelding?: ArbeidsgiverSykmeldingResolvers<ContextType>
     ArbeidsrelatertArsak?: ArbeidsrelatertArsakResolvers<ContextType>
@@ -1122,6 +1267,7 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     ErIArbeid?: ErIArbeidResolvers<ContextType>
     ErIkkeIArbeid?: ErIkkeIArbeidResolvers<ContextType>
     FomTom?: FomTomResolvers<ContextType>
+    GradertMinimal?: GradertMinimalResolvers<ContextType>
     GradertPeriode?: GradertPeriodeResolvers<ContextType>
     JSON?: GraphQLScalarType
     JaNeiSvar?: JaNeiSvarResolvers<ContextType>
@@ -1130,6 +1276,8 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     MedisinskVurdering?: MedisinskVurderingResolvers<ContextType>
     MeldingTilNAV?: MeldingTilNavResolvers<ContextType>
     Merknad?: MerknadResolvers<ContextType>
+    MinimalPeriod?: MinimalPeriodResolvers<ContextType>
+    MinimalSykmelding?: MinimalSykmeldingResolvers<ContextType>
     Mutation?: MutationResolvers<ContextType>
     NaermesteLeder?: NaermesteLederResolvers<ContextType>
     Pasient?: PasientResolvers<ContextType>
@@ -1138,9 +1286,11 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     Prognose?: PrognoseResolvers<ContextType>
     Query?: QueryResolvers<ContextType>
     RegelInfo?: RegelInfoResolvers<ContextType>
+    RuleHitsMinimal?: RuleHitsMinimalResolvers<ContextType>
     Sporsmal?: SporsmalResolvers<ContextType>
     SvarTypeUnion?: SvarTypeUnionResolvers<ContextType>
     Sykmelding?: SykmeldingResolvers<ContextType>
+    SykmeldingMinimal?: SykmeldingMinimalResolvers<ContextType>
     SykmeldingStatus?: SykmeldingStatusResolvers<ContextType>
     UtdypendeOpplysning?: UtdypendeOpplysningResolvers<ContextType>
     UtenforVentetid?: UtenforVentetidResolvers<ContextType>

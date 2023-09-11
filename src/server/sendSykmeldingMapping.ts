@@ -40,7 +40,7 @@ export function mapSendSykmeldingValuesToV3Api(
         )
     }
 
-    const oppfolgingsdato = erUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding)
+    const oppfolgingsdato = erUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
 
     return {
         erOpplysningeneRiktige: {

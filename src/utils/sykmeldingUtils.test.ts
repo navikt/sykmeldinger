@@ -179,7 +179,7 @@ describe('getSykmeldingStartDate', () => {
                 createSykmeldingPeriode({ fom: '2021-06-01', tom: '2021-06-03' }),
             ],
         }
-        expect(getSykmeldingStartDate(sykmelding)).toEqual('2021-04-01')
+        expect(getSykmeldingStartDate(sykmelding.sykmeldingsperioder)).toEqual('2021-04-01')
     })
 })
 
@@ -193,7 +193,7 @@ describe('getSykmeldingEndDate', () => {
                 createSykmeldingPeriode({ fom: '2021-04-01', tom: '2021-04-03' }),
             ],
         }
-        expect(getSykmeldingEndDate(sykmelding)).toEqual('2021-06-03')
+        expect(getSykmeldingEndDate(sykmelding.sykmeldingsperioder)).toEqual('2021-06-03')
     })
 })
 

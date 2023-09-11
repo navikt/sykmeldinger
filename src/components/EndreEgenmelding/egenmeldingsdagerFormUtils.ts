@@ -14,7 +14,7 @@ export function createEgenmeldingsdagerDefaultValues(
     egenmeldingsdager: SvarUnion_DagerSvar_Fragment['dager'],
 ): DefaultValues<EgenmeldingsdagerSubForm>['egenmeldingsdager'] {
     const initialDates = {
-        earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding)),
+        earliestPossibleDate: toDate(getSykmeldingStartDate(sykmelding.sykmeldingsperioder)),
         earliestSelectedDate: null,
     }
     const metadata = {
