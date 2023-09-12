@@ -2,13 +2,21 @@ import { BodyLong, Button, GuidePanel } from '@navikt/ds-react'
 import Link from 'next/link'
 import { ReactElement, useEffect } from 'react'
 
-import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId'
+import {
+    toEarliestSykmelding,
+    useUnsentSykmeldinger,
+    useUnsentSykmeldingerNew,
+} from '../../hooks/useFindOlderSykmeldingId'
 import { pluralize } from '../../utils/stringUtils'
 import { browserEnv } from '../../utils/env'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
+import { useFlag } from '../../toggles/context'
 
 function HintToNextOlderSykmelding(): ReactElement | null {
-    const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
+    const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
+    const { unsentSykmeldinger, error, isLoading } = (
+        newDataFetching ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
+    )()
     const dontShowYet = isLoading || error || unsentSykmeldinger == null
     const isDone = unsentSykmeldinger?.length === 0 ?? false
 
@@ -46,13 +54,14 @@ function HintToNextOlderSykmelding(): ReactElement | null {
     }
 
     const earliest = unsentSykmeldinger.reduce(toEarliestSykmelding)
+    const earliestId = earliest.__typename === 'Sykmelding' ? earliest.id : earliest.sykmelding_id
 
     return (
         <GuidePanel poster className="mt-8">
             <BodyLong spacing>
                 Du har {pluralize('sykmelding', unsentSykmeldinger.length)} du må velge om du skal bruke
             </BodyLong>
-            <Link passHref href={`/${earliest.id}`} legacyBehavior>
+            <Link passHref href={`/${earliestId}`} legacyBehavior>
                 <Button
                     as="a"
                     variant="primary"

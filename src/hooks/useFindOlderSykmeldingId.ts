@@ -1,18 +1,29 @@
 import { isBefore, parseISO } from 'date-fns'
+import { useQuery } from '@apollo/client'
 
-import { SykmeldingFragment } from '../fetching/graphql.generated'
+import {
+    MinimalSykmeldingerDocument,
+    MinimalSykmeldingFragment,
+    SykmeldingCategory,
+    SykmeldingFragment,
+} from '../fetching/graphql.generated'
 import { getSykmeldingStartDate, isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
+import { useFlag } from '../toggles/context'
 
 import useSykmeldinger from './useSykmeldinger'
 
 /**
  * Used by reduce to find the earliest sykmelding
  */
-export function toEarliestSykmelding(acc: SykmeldingFragment, value: SykmeldingFragment): SykmeldingFragment {
-    return isBefore(
-        parseISO(getSykmeldingStartDate(value.sykmeldingsperioder)),
-        parseISO(getSykmeldingStartDate(acc.sykmeldingsperioder)),
-    )
+export function toEarliestSykmelding<Sykmelding extends SykmeldingFragment | MinimalSykmeldingFragment>(
+    acc: Sykmelding,
+    value: Sykmelding,
+): Sykmelding {
+    const valuePerioder =
+        value.__typename === 'Sykmelding' ? value.sykmeldingsperioder : value.sykmelding.sykmeldingsperioder
+    const accPerioder = acc.__typename === 'Sykmelding' ? acc.sykmeldingsperioder : acc.sykmelding.sykmeldingsperioder
+
+    return isBefore(parseISO(getSykmeldingStartDate(valuePerioder)), parseISO(getSykmeldingStartDate(accPerioder)))
         ? value
         : acc
 }
@@ -41,13 +52,40 @@ export function useUnsentSykmeldinger(): {
     }
 }
 
+export function useUnsentSykmeldingerNew(): {
+    unsentSykmeldinger: MinimalSykmeldingFragment[] | null
+    isLoading: boolean
+    error: Error | undefined
+} {
+    const { data, error, loading } = useQuery(MinimalSykmeldingerDocument, {
+        variables: { category: SykmeldingCategory.UNSENT },
+    })
+
+    if (loading || error || data?.minimalSykmeldinger == null) {
+        return {
+            unsentSykmeldinger: null,
+            isLoading: loading,
+            error,
+        }
+    }
+
+    return {
+        unsentSykmeldinger: [...data.minimalSykmeldinger],
+        isLoading: false,
+        error: undefined,
+    }
+}
+
 function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
     earliestSykmeldingId: string | null
     olderSykmeldingCount: number
     isLoading: boolean
     error: Error | undefined
 } {
-    const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
+    const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
+    const { unsentSykmeldinger, error, isLoading } = (
+        newDataFetching ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
+    )()
 
     if (sykmelding == null || isLoading || error || unsentSykmeldinger == null) {
         return {
@@ -60,13 +98,19 @@ function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
 
     const startDate: string = getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
     const unsentExceptOverlappingDates = unsentSykmeldinger.filter(
-        (it) => getSykmeldingStartDate(it.sykmeldingsperioder) !== startDate,
+        (it) =>
+            getSykmeldingStartDate(
+                it.__typename === 'Sykmelding' ? it.sykmeldingsperioder : it.sykmelding.sykmeldingsperioder,
+            ) !== startDate,
     )
-    const earliestSykmelding: SykmeldingFragment = unsentExceptOverlappingDates.reduce(toEarliestSykmelding, sykmelding)
+
+    const earliestSykmelding = unsentExceptOverlappingDates.reduce(toEarliestSykmelding, sykmelding)
+    const earliestId =
+        earliestSykmelding.__typename === 'Sykmelding' ? earliestSykmelding.id : earliestSykmelding.sykmelding_id
 
     return {
         // When the earliest sykmelding is the provided sykmelding, it's the very first
-        earliestSykmeldingId: earliestSykmelding.id === sykmelding.id ? null : earliestSykmelding.id,
+        earliestSykmeldingId: earliestId === sykmelding.id ? null : earliestId,
         olderSykmeldingCount: unsentExceptOverlappingDates.length,
         isLoading: false,
         error: undefined,
