@@ -3,6 +3,7 @@ import mockRouter from 'next-router-mock'
 import userEvent from '@testing-library/user-event'
 import { within } from '@testing-library/react'
 import { MockedResponse } from '@apollo/client/testing'
+import * as dekoratoren from '@navikt/nav-dekoratoren-moduler'
 
 import { render, screen, Screen, waitFor } from '../../utils/test/testUtils'
 import {
@@ -29,6 +30,12 @@ const arbeidsgiver: ArbeidsgiverStatus = {
     orgNavn: 'Arbeidsgiver AS',
     orgnummer: '69',
 }
+
+vi.mock('@navikt/nav-dekoratoren-moduler', async (importOriginal) => {
+    const actual: { default: typeof dekoratoren } = await importOriginal()
+
+    return actual.default
+})
 
 describe('endre egenmeldingsdager page', () => {
     beforeEach(() => {
