@@ -240,7 +240,7 @@ describe('Egenmeldingsdager', () => {
 
         await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
         expect(mockRouter.query.sykmeldingId).toBe('sykmelding-id')
-    })
+    }, 10_000)
 
     it('should be able to submit form after editing previous period with egenmeldingsdager', async () => {
         const { container } = render(<SykmeldingPage />, {

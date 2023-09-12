@@ -14,8 +14,10 @@ import open from 'open'
 import { onError } from '@apollo/client/link/error'
 import { logger } from '@navikt/next-logger'
 import { configureAxe } from 'vitest-axe'
+import { IToggle } from '@unleash/nextjs'
 
 import possibleTypesGenerated from '../../fetching/possible-types.generated'
+import { FlagProvider } from '../../toggles/context'
 
 import * as customQueries from './customQueries'
 
@@ -38,6 +40,21 @@ const errorLoggingLink = onError(({ graphQLErrors, networkError }) => {
     }
 })
 
+const testToggles: IToggle[] = [
+    {
+        name: 'SYKMELDINGER_LIST_VIEW_DATA_FETCHING',
+        variant: { name: 'default', enabled: false },
+        impressionData: false,
+        enabled: false,
+    },
+    {
+        name: 'SYKMELDINGER_FLEXJAR_KVITTERING',
+        variant: { name: 'default', enabled: false },
+        impressionData: false,
+        enabled: false,
+    },
+]
+
 function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<ProviderProps>): ReactElement {
     const cache = new InMemoryCache({
         possibleTypes: possibleTypesGenerated.possibleTypes,
@@ -48,9 +65,11 @@ function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<Pr
     const link = ApolloLink.from([errorLoggingLink, mockLink])
 
     return (
-        <MockedProvider link={link} mocks={mocks} cache={cache}>
-            {children}
-        </MockedProvider>
+        <FlagProvider toggles={testToggles}>
+            <MockedProvider link={link} mocks={mocks} cache={cache}>
+                {children}
+            </MockedProvider>
+        </FlagProvider>
     )
 }
 

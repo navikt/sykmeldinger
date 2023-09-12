@@ -84,7 +84,7 @@ function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
 } {
     const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
     const { unsentSykmeldinger, error, isLoading } = (
-        newDataFetching ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
+        newDataFetching.enabled ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
     )()
 
     if (sykmelding == null || isLoading || error || unsentSykmeldinger == null) {

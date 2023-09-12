@@ -15,7 +15,7 @@ import { useFlag } from '../../toggles/context'
 function HintToNextOlderSykmelding(): ReactElement | null {
     const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
     const { unsentSykmeldinger, error, isLoading } = (
-        newDataFetching ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
+        newDataFetching.enabled ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
     )()
     const dontShowYet = isLoading || error || unsentSykmeldinger == null
     const isDone = unsentSykmeldinger?.length === 0 ?? false
