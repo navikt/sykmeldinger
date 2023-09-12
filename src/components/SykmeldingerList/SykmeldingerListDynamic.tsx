@@ -1,5 +1,5 @@
-import React, { ReactElement, useState } from 'react'
-import { Accordion, Alert, BodyShort, Button, Heading, Link, Select, Skeleton } from '@navikt/ds-react'
+import React, { ReactElement } from 'react'
+import { Accordion, Alert, BodyShort, Heading, Link, Select, Skeleton } from '@navikt/ds-react'
 import { NetworkStatus, useQuery } from '@apollo/client'
 
 import { InfoOmDigitalSykmelding, SerIkkeSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
@@ -37,8 +37,8 @@ function SykmeldingSection({
     if ((loading && category === SykmeldingCategory.UNSENT) || networkStatus === NetworkStatus.refetch) {
         return (
             <div className="flex flex-col gap-4 mb-8">
-                <Skeleton variant="text" height="var(--a-font-size-heading-xlarge)" width="40%" />
-                <SingleSykmeldingSkeleton />
+                <Skeleton variant="text" height="var(--a-font-size-heading-medium)" width="40%" />
+                <SingleSykmeldingSkeleton noTag />
             </div>
         )
     }
@@ -69,7 +69,7 @@ function SykmeldingSection({
 
 function OlderSectionPlaceholderHeader(): ReactElement {
     return (
-        <div className="flex justify-between items-end mb-2">
+        <div className="flex justify-between items-end">
             <Heading size="medium" level="2" id={categoryToType[SykmeldingCategory.OLDER]}>
                 {categoryToTitle[SykmeldingCategory.OLDER]}
             </Heading>
@@ -82,33 +82,10 @@ function OlderSectionPlaceholderHeader(): ReactElement {
 }
 
 function OlderSykmeldingerSection(): ReactElement {
-    const [shouldLoadOlder, setShouldLoadOlder] = useState(false)
-
     const { loading, data, error, refetch, networkStatus } = useQuery(MinimalSykmeldingerDocument, {
         variables: { category: SykmeldingCategory.OLDER },
         notifyOnNetworkStatusChange: true,
-        skip: !shouldLoadOlder,
     })
-
-    if (!shouldLoadOlder) {
-        return (
-            <div className="mt-16 relative">
-                <OlderSectionPlaceholderHeader />
-                <div className="flex flex-col gap-4">
-                    <SingleSykmeldingSkeleton className="[&>*>*]:animate-none opacity-50" />
-                    <SingleSykmeldingSkeleton className="[&>*>*]:animate-none opacity-50" />
-                </div>
-                <div className="bg-gradient-to-t from-white absolute top-0 left-0 right-0 bottom-0" />
-                <Button
-                    variant="secondary-neutral"
-                    className="bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    onClick={() => setShouldLoadOlder(true)}
-                >
-                    Vis tidligere sykmeldinger
-                </Button>
-            </div>
-        )
-    }
 
     if (loading || networkStatus === NetworkStatus.refetch) {
         return (
