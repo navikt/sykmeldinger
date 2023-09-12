@@ -14,6 +14,11 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
         connectToDevTools: process.env.NODE_ENV === 'development',
         cache: new InMemoryCache({
+            dataIdFromObject: () => false,
+            typePolicies: {
+                Sykmelding: { keyFields: ['id'] },
+                MinimalSykmelding: { keyFields: ['sykmelding_id'] },
+            },
             possibleTypes: possibleTypesGenerated.possibleTypes,
         }),
         link: from([
