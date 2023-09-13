@@ -15,7 +15,8 @@ import possibleTypesGenerated from './possible-types.generated'
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
-        connectToDevTools: process.env.NODE_ENV === 'development',
+        connectToDevTools:
+            process.env.NODE_ENV === 'development' || browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev',
         cache: new InMemoryCache({
             dataIdFromObject: () => false,
             typePolicies: {
