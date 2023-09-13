@@ -97,7 +97,17 @@ class MockDb {
         ])
 
         if (values.arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER) {
+            const selectedArbeidsgiver = this.arbeidsgivere().find(
+                (it) => it.orgnummer === values.arbeidsgiverOrgnummer,
+            )
+
             sykmelding.sykmeldingStatus.statusEvent = StatusEvent.SENDT
+            sykmelding.sykmeldingStatus.arbeidsgiver = selectedArbeidsgiver
+                ? {
+                      orgnummer: selectedArbeidsgiver.orgnummer,
+                      orgNavn: selectedArbeidsgiver.navn,
+                  }
+                : null
         } else {
             sykmelding.sykmeldingStatus.statusEvent = StatusEvent.BEKREFTET
         }
