@@ -52,7 +52,7 @@ export function useUnsentSykmeldinger(): {
     }
 }
 
-export function useUnsentSykmeldingerNew(): {
+export function useUnsentSykmeldingerMinimal(): {
     unsentSykmeldinger: MinimalSykmeldingFragment[] | null
     isLoading: boolean
     error: Error | undefined
@@ -84,7 +84,7 @@ function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
 } {
     const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
     const { unsentSykmeldinger, error, isLoading } = (
-        newDataFetching.enabled ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
+        newDataFetching.enabled ? useUnsentSykmeldingerMinimal : useUnsentSykmeldinger
     )()
 
     if (sykmelding == null || isLoading || error || unsentSykmeldinger == null) {
