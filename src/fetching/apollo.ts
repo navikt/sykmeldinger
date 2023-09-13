@@ -4,6 +4,9 @@ import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } fr
 import { RetryLink } from '@apollo/client/link/retry'
 import { logger } from '@navikt/next-logger'
 import { sha256 } from 'crypto-hash'
+import { QueryOptions } from '@apollo/client/core/watchQueryOptions'
+import { OperationVariables } from '@apollo/client/core/types'
+import { TypedDocumentNode } from '@graphql-typed-document-node/core'
 
 import { browserEnv } from '../utils/env'
 import { getUserRequestId } from '../utils/userRequestId'
@@ -81,3 +84,9 @@ const httpLink = new HttpLink({
         'x-request-id': getUserRequestId(),
     },
 })
+
+export const typedRefetchQuery = <TVariables = OperationVariables>(
+    queryOptions: QueryOptions<TVariables> & {
+        query: TypedDocumentNode<unknown, TVariables>
+    },
+): QueryOptions<TVariables> => queryOptions
