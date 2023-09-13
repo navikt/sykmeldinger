@@ -5,7 +5,7 @@ import { ReactElement, useEffect } from 'react'
 import {
     toEarliestSykmelding,
     useUnsentSykmeldinger,
-    useUnsentSykmeldingerNew,
+    useUnsentSykmeldingerMinimal,
 } from '../../hooks/useFindOlderSykmeldingId'
 import { pluralize } from '../../utils/stringUtils'
 import { browserEnv } from '../../utils/env'
@@ -15,7 +15,7 @@ import { useFlag } from '../../toggles/context'
 function HintToNextOlderSykmelding(): ReactElement | null {
     const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
     const { unsentSykmeldinger, error, isLoading } = (
-        newDataFetching.enabled ? useUnsentSykmeldingerNew : useUnsentSykmeldinger
+        newDataFetching.enabled ? useUnsentSykmeldingerMinimal : useUnsentSykmeldinger
     )()
     const dontShowYet = isLoading || error || unsentSykmeldinger == null
     const isDone = unsentSykmeldinger?.length === 0 ?? false
