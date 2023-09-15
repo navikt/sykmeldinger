@@ -32,11 +32,7 @@ const MinimalPeriodSchema = z.object({
 
 const MinimalSykmeldingDetailsSchema = z.object({
     papirsykmelding: z.boolean(),
-    egenmeldt: z
-        .boolean()
-        .nullable()
-        .optional()
-        .transform((it) => it ?? false),
+    egenmeldt: z.boolean().nullable(),
     utenlandskSykmelding: UtenlandskSykmeldingSchema.nullable(),
     sykmeldingsperioder: z.array(MinimalPeriodSchema),
 })

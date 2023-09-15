@@ -6,6 +6,7 @@ import { GetServerSidePropsContext } from 'next/types'
 import * as R from 'remeda'
 
 import { isLocalOrDemo } from '../utils/env'
+import { parseAuthHeader } from '../auth/withAuthentication'
 
 import { getUnleashEnvironment, localDevelopmentToggles } from './utils'
 import { EXPECTED_TOGGLES } from './toggles'
@@ -14,15 +15,7 @@ export async function getFlagsServerSide(
     req: GetServerSidePropsContext['req'],
     res: GetServerSidePropsContext['res'],
 ): Promise<{ toggles: IToggle[] }> {
-    const existingHeader = safeCoerceHeader(res.getHeader('set-cookie'))
-    const existingUnleashId = req.cookies['unleash-session-id']
-
-    let sessionId
-    if (existingUnleashId == null) {
-        const newId = `${getRandomValues(new Uint32Array(16)).join('')}}`
-        res.setHeader('set-cookie', [...existingHeader, `unleash-session-id=${newId}; path=/;`])
-        sessionId = newId
-    }
+    const sessionId = handleSessionId(req, res)
 
     if (isLocalOrDemo) {
         logger.warn('Running in local or demo mode, falling back to development toggles.')
@@ -76,6 +69,24 @@ async function getAndValidateDefinitions(): Promise<ReturnType<typeof getDefinit
     )
 
     return definitions
+}
+
+export function handleSessionId(req: GetServerSidePropsContext['req'], res: GetServerSidePropsContext['res']): string {
+    const pid: string | null = parseAuthHeader(req.headers)?.pid ?? null
+
+    if (pid) return pid
+
+    const existingUnleashId = req.cookies['unleash-session-id']
+    if (existingUnleashId != null) {
+        // Not logged in user, but user has already the unleash cookie
+        return existingUnleashId
+    } else {
+        // Not logged in user, and no unleash cookie, generate new and set header, but don't overwrite existing set-cookies
+        const existingHeader = safeCoerceHeader(res.getHeader('set-cookie'))
+        const newId = `${getRandomValues(new Uint32Array(2)).join('')}`
+        res.setHeader('set-cookie', [...existingHeader, `unleash-session-id=${newId}; path=/;`])
+        return newId
+    }
 }
 
 function safeCoerceHeader(header: string | string[] | number | undefined | null): string[] {
