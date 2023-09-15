@@ -1,3 +1,5 @@
+import { IncomingHttpHeaders } from 'http'
+
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next'
 import { logger } from '@navikt/next-logger'
 import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
@@ -146,6 +148,15 @@ export function createRequestContext(requestId: string | undefined, token: strin
         requestId: requestId ?? 'not set',
         sessionId: 'unused',
     }
+}
+
+export function parseAuthHeader(headers: IncomingHttpHeaders): TokenPayload | null {
+    if (!headers.authorization) return null
+
+    const accessToken = headers.authorization.replace('Bearer ', '')
+    const jwtPayload = accessToken.split('.')[1]
+
+    return JSON.parse(Buffer.from(jwtPayload, 'base64').toString())
 }
 
 /**
