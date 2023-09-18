@@ -15,16 +15,19 @@ export async function getFlagsServerSide(
     req: GetServerSidePropsContext['req'],
     res: GetServerSidePropsContext['res'],
 ): Promise<{ toggles: IToggle[] }> {
-    const sessionId = handleSessionId(req, res)
-
     if (isLocalOrDemo) {
         logger.warn('Running in local or demo mode, falling back to development toggles.')
         return { toggles: localDevelopmentToggles() }
     }
 
     try {
+        const { sessionId, userId } = handleUnleashIds(req, res)
         const definitions = await getAndValidateDefinitions()
-        return evaluateFlags(definitions, { sessionId, environment: getUnleashEnvironment() })
+        return evaluateFlags(definitions, {
+            sessionId,
+            userId,
+            environment: getUnleashEnvironment(),
+        })
     } catch (e) {
         logger.error(new Error('Failed to get flags from Unleash. Falling back to default flags.', { cause: e }))
         return {
@@ -71,21 +74,33 @@ async function getAndValidateDefinitions(): Promise<ReturnType<typeof getDefinit
     return definitions
 }
 
-export function handleSessionId(req: GetServerSidePropsContext['req'], res: GetServerSidePropsContext['res']): string {
-    const pid: string | null = parseAuthHeader(req.headers)?.pid ?? null
+const unleashCookieName = 'sykmeldinger-unleash-session-id'
 
-    if (pid) return pid
+export function handleUnleashIds(
+    req: GetServerSidePropsContext['req'],
+    res: GetServerSidePropsContext['res'],
+): {
+    userId: string | undefined
+    sessionId: string
+} {
+    const pid = parseAuthHeader(req.headers)?.pid ?? undefined
 
-    const existingUnleashId = req.cookies['unleash-session-id']
+    const existingUnleashId = req.cookies[unleashCookieName]
     if (existingUnleashId != null) {
         // Not logged in user, but user has already the unleash cookie
-        return existingUnleashId
+        return {
+            userId: pid,
+            sessionId: existingUnleashId,
+        }
     } else {
         // Not logged in user, and no unleash cookie, generate new and set header, but don't overwrite existing set-cookies
         const existingHeader = safeCoerceHeader(res.getHeader('set-cookie'))
         const newId = `${getRandomValues(new Uint32Array(2)).join('')}`
-        res.setHeader('set-cookie', [...existingHeader, `unleash-session-id=${newId}; path=/;`])
-        return newId
+        res.setHeader('set-cookie', [...existingHeader, `${unleashCookieName}=${newId}; path=/;`])
+        return {
+            userId: pid,
+            sessionId: newId,
+        }
     }
 }
 
