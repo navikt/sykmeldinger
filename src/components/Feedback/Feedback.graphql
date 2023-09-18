@@ -1,3 +1,0 @@
-mutation Feedback($feedback: JSON!) {
-    feedback(feedback: $feedback)
-}

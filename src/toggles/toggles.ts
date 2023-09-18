@@ -1,2 +1,0 @@
-export type ExpectedToggles = (typeof EXPECTED_TOGGLES)[number]
-export const EXPECTED_TOGGLES = ['SYKMELDINGER_FLEXJAR_KVITTERING', 'SYKMELDINGER_LIST_VIEW_DATA_FETCHING'] as const
