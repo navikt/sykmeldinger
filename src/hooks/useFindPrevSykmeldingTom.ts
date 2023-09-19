@@ -97,7 +97,7 @@ export function useFindPrevMinimalSykmeldingTom(
         variables: { category: SykmeldingCategory.OLDER },
     })
     const processing = useQuery(MinimalSykmeldingerDocument, {
-        variables: { category: SykmeldingCategory.OLDER },
+        variables: { category: SykmeldingCategory.PROCESSING },
     })
 
     if (older.loading || processing.loading || older.error == null || processing.error) {
