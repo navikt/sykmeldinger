@@ -45,6 +45,9 @@ const nextConfig = {
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX,
     transpilePackages: ['tailwind-merge'],
+    experimental: {
+        optimizePackageImports: ['@navikt/aksel-icons', '@navikt/ds-react'],
+    },
     eslint: {
         dirs: ['src'],
         ignoreDuringBuilds: true,
