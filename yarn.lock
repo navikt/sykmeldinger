@@ -1403,6 +1403,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@grafana/faro-core@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@grafana/faro-core@npm:1.2.1"
+  dependencies:
+    "@opentelemetry/api": ^1.4.1
+    "@opentelemetry/api-metrics": ^0.33.0
+    "@opentelemetry/otlp-transformer": ^0.41.2
+    murmurhash-js: ^1.0.0
+  checksum: 3a298c49336c99cf782b0459bdf848c2bac83a0230bceebfe3e7818a310e03fb1001d55cc756fc5fce093869bceb5df59378a3db80cb9693c6c80205492f666d
+  languageName: node
+  linkType: hard
+
 "@grafana/faro-web-sdk@npm:^1.1.4":
   version: 1.1.4
   resolution: "@grafana/faro-web-sdk@npm:1.1.4"
@@ -1414,11 +1426,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/faro-web-tracing@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@grafana/faro-web-tracing@npm:1.1.4"
+"@grafana/faro-web-sdk@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@grafana/faro-web-sdk@npm:1.2.1"
   dependencies:
-    "@grafana/faro-web-sdk": ^1.1.4
+    "@grafana/faro-core": ^1.2.1
+    ua-parser-js: ^1.0.32
+    web-vitals: ^3.1.1
+  checksum: bc91b2a282dbcb66c5530c5b915de4166a9bd51d58914cbfadd64201f95c757d71a36ebf65f4a73dedde506d68201baa522e3fbe63af2fbc8beb5305da68dcbd
+  languageName: node
+  linkType: hard
+
+"@grafana/faro-web-tracing@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@grafana/faro-web-tracing@npm:1.2.1"
+  dependencies:
+    "@grafana/faro-web-sdk": ^1.2.1
     "@opentelemetry/api": ^1.4.1
     "@opentelemetry/context-zone": ^1.15.2
     "@opentelemetry/core": ^1.15.2
@@ -1432,7 +1455,7 @@ __metadata:
     "@opentelemetry/sdk-trace-base": ^1.15.2
     "@opentelemetry/sdk-trace-web": ^1.15.2
     "@opentelemetry/semantic-conventions": ^1.15.2
-  checksum: ea1b6d48e81b87dda9105895259fff325867e85181ea4202bfb14492357f3ea394764d66776814a06d7d281f01865f6606927bf04b3be41d8a87e564d839cfee
+  checksum: de74c0ff7c98aed56d796bf9bfacf123918168982b9d0bc26d4bede235e837d4988ceaaa3623be6126a59281e9e2d796f0a8c261b8f39ecd6b59434c6cb4b3cc
   languageName: node
   linkType: hard
 
@@ -11597,7 +11620,7 @@ __metadata:
     "@apollo/server": ^4.9.3
     "@as-integrations/next": ^2.0.2
     "@grafana/faro-web-sdk": ^1.1.4
-    "@grafana/faro-web-tracing": ^1.1.4
+    "@grafana/faro-web-tracing": ^1.2.1
     "@graphql-codegen/add": 5.0.0
     "@graphql-codegen/cli": 5.0.0
     "@graphql-codegen/fragment-matcher": ^5.0.0
