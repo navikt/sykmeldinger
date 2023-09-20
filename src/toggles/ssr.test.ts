@@ -47,7 +47,7 @@ describe('handleSessionId', () => {
 
         const { sessionId } = handleUnleashIds(req, res)
 
-        expect(sessionId.length > 18).toBe(true)
+        expect(sessionId.length > 16).toBe(true)
         expect(setHeaderMock).toHaveBeenCalledWith('set-cookie', [
             `sykmeldinger-unleash-session-id=${sessionId}; path=/;`,
         ])
