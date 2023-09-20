@@ -21,7 +21,7 @@
         "postinstall": "node ./scripts/postinstall.js"
     },
     "dependencies": {
-        "@apollo/client": "^3.8.3",
+        "@apollo/client": "^3.8.4",
         "@apollo/server": "^4.9.3",
         "@as-integrations/next": "^2.0.2",
         "@grafana/faro-web-sdk": "^1.1.4",
@@ -43,7 +43,7 @@
         "crypto-hash": "^2.0.1",
         "date-fns": "^2.30.0",
         "globalthis-polyfill": "^1.0.0",
-        "graphql": "^16.8.0",
+        "graphql": "^16.8.1",
         "graphql-scalars": "^1.22.2",
         "next": "13.4.19",
         "next-logger": "^3.0.2",
