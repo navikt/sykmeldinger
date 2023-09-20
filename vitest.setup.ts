@@ -37,7 +37,9 @@ mockRouter.useParser(
     ]),
 )
 
-vi.mock('@navikt/nav-dekoratoren-moduler')
+vi.mock('@navikt/nav-dekoratoren-moduler', () => ({
+    setBreadcrumbs: vi.fn(),
+}))
 vi.mock('next/router', () => vi.importActual('next-router-mock'))
 vi.mock('next/dist/client/router', () => vi.importActual('next-router-mock'))
 
