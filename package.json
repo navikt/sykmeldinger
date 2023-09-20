@@ -55,7 +55,7 @@
         "react-hook-form": "7.46.1",
         "remeda": "^1.26.0",
         "tailwind-merge": "^1.14.0",
-        "uuid": "^9.0.0",
+        "uuid": "^9.0.1",
         "zod": "^3.22.2"
     },
     "devDependencies": {
