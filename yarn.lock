@@ -3781,9 +3781,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-v8@npm:^0.34.4":
-  version: 0.34.4
-  resolution: "@vitest/coverage-v8@npm:0.34.4"
+"@vitest/coverage-v8@npm:^0.34.5":
+  version: 0.34.5
+  resolution: "@vitest/coverage-v8@npm:0.34.5"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@bcoe/v8-coverage": ^0.2.3
@@ -3798,7 +3798,7 @@ __metadata:
     v8-to-istanbul: ^9.1.0
   peerDependencies:
     vitest: ">=0.32.0 <1"
-  checksum: ddda0d708d65e63b74a472d7b22360b5c1250042c0230605201d38179f7909f2d632f7778513aa6eb65de1759276f43998029d6b9db958f8f8949b41d7b4a011
+  checksum: 6ffbcbd0d992b535c7fbc5d8ad82f8939e11786e28a899d1b2ef60f51c192063738d60b0037f7c5fec5545130f671b408bc5f20432abb280bf9788214467c475
   languageName: node
   linkType: hard
 
@@ -11459,7 +11459,7 @@ __metadata:
     "@types/uuid": ^9.0.4
     "@unleash/nextjs": ^1.2.0
     "@vitejs/plugin-react": ^4.0.4
-    "@vitest/coverage-v8": ^0.34.4
+    "@vitest/coverage-v8": ^0.34.5
     autoprefixer: ^10.4.15
     classnames: ^2.3.2
     concurrently: ^8.2.1
