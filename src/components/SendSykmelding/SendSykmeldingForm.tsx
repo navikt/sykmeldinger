@@ -1,4 +1,4 @@
-import { ReactElement, ComponentType, useRef } from 'react'
+import { ReactElement, useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
@@ -17,13 +17,17 @@ import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitu
 import Spinner from '../Spinner/Spinner'
 import { EgenmeldingsdagerSubForm } from '../FormComponents/Egenmelding/EgenmeldingerField'
 import useWarnUnsavedPopup from '../../hooks/useWarnUnsaved'
+import { browserEnv } from '../../utils/env'
 
 import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/OpplysningerRiktigeSection'
 import ActionSection from './FormSections/ActionSection'
 import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/ArbeidssituasjonSection'
 import ErrorSection from './FormSections/ErrorSection'
 
-const FormDevTools: ComponentType = dynamic(() => import('../FormComponents/DevTools/FormDevTools'), {
+const FormDevTools = dynamic(() => import('../FormComponents/DevTools/FormDevTools'), {
+    ssr: false,
+})
+const AutoFillerDevTools = dynamic(() => import('../FormComponents/DevTools/AutoFillerDevTools'), {
     ssr: false,
 })
 
@@ -78,6 +82,10 @@ function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
 
     return (
         <FormProvider {...form}>
+            {(browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev' ||
+                browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') && (
+                <AutoFillerDevTools sykmeldingId={sykmeldingId} />
+            )}
             <form
                 onSubmit={form.handleSubmit(sendSykmelding, (errors) => {
                     logAmplitudeEvent(

@@ -37,7 +37,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
     return (
         <QuestionWrapper>
             <div className="flex flex-col items-center justify-center gap-4">
-                <Button variant="primary" type="submit" loading={sendResult.loading}>
+                <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading}>
                     {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
                 </Button>
                 <Button
