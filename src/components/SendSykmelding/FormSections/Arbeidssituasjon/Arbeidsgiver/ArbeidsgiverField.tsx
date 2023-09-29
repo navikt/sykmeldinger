@@ -46,7 +46,7 @@ function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement {
                     </ReadMore>
                 )}
                 {arbeidsgivere.map((arbeidsgiver) => (
-                    <Radio key={arbeidsgiver.orgnummer} value={arbeidsgiver.orgnummer}>
+                    <Radio key={arbeidsgiver.orgnummer} value={arbeidsgiver.orgnummer} className="overflow-anywhere">
                         {arbeidsgiver.navn} (org.nr: {arbeidsgiver.orgnummer})
                     </Radio>
                 ))}

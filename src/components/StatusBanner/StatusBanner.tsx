@@ -31,7 +31,7 @@ function StatusBanner({
     if (sykmeldingStatus.statusEvent === 'SENDT') {
         return (
             <Alert variant="success">
-                <Heading size="small" level="2">
+                <Heading size="small" level="2" className="overflow-anywhere">
                     {isEgenmeldingsKvittering ? 'Egenmeldingsdagene' : 'Sykmeldingen'} ble sendt til{' '}
                     {sykmeldingStatus.arbeidsgiver?.orgNavn}
                 </Heading>

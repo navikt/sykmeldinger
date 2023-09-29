@@ -305,4 +305,12 @@ export const defaultArbeidsgivere: readonly Arbeidsgiver[] = [
         orgnummer: '110110113',
         aktivtArbeidsforhold: true,
     },
+    {
+        naermesteLeder: {
+            navn: 'Mr. Andersen',
+        },
+        navn: 'MT.FRANK STORBYUNIVERSITET,STUDIESTEDETTILNOENVELDIGVIKTIGE Pekepinnstredet',
+        orgnummer: '120120124',
+        aktivtArbeidsforhold: true,
+    },
 ]

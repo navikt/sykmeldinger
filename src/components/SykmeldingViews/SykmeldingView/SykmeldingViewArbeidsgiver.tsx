@@ -22,7 +22,7 @@ interface SykmeldingviewProps {
 
 function SykmeldingViewArbeidsgiver({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): ReactElement {
     return (
-        <div className="p-4 pt-0">
+        <div className="md:p-4 pt-0">
             <SykmeldingenGjelderView pasient={sykmelding.pasient} />
             <PeriodeView
                 perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}

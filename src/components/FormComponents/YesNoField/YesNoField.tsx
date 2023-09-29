@@ -43,6 +43,7 @@ function YesNoField<
             {...field}
             id={field.name}
             legend={legend}
+            className="overflow-anywhere"
             error={fieldState.error?.message}
             onChange={(value: YesOrNo) => {
                 field.onChange(value as FieldPathValue<TFieldValues, TName>)

@@ -18,3 +18,9 @@ html {
         display: none;
     }
 }
+
+@layer utilities {
+    .overflow-anywhere {
+        overflow-wrap: anywhere;
+    }
+}

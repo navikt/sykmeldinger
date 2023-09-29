@@ -49,7 +49,9 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactEle
                                 : sykmelding.sykmelding.sykmeldingsperioder
                             ).map((periode, index) => (
                                 <li key={index}>
-                                    <BodyShort>{getDescription(periode, arbeidsgiverNavn)}</BodyShort>
+                                    <BodyShort className="overflow-anywhere">
+                                        {getDescription(periode, arbeidsgiverNavn)}
+                                    </BodyShort>
                                 </li>
                             ))}
                         </ul>
