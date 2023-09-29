@@ -1,6 +1,14 @@
+import { prettifyOrgName } from '../../utils/orgUtils'
+
 import { Resolvers, Svartype } from './resolver-types.generated'
 
 const objectResolvers: Partial<Resolvers> = {
+    ArbeidsgiverStatus: {
+        orgNavn: (parent) => prettifyOrgName(parent.orgNavn),
+    },
+    Arbeidsgiver: {
+        navn: (parent) => prettifyOrgName(parent.navn),
+    },
     SvarTypeUnion: {
         __resolveType: (parent) => {
             switch (parent.svarType) {

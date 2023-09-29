@@ -115,7 +115,7 @@ describe('Arbeidsledig', () => {
         await userEvent.click(
             screen.getRadioInGroup(
                 { name: /Velg arbeidsgiver/i },
-                { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})` },
+                { name: `${arbeidsgivereMock[0].navn} org.nr: ${arbeidsgivereMock[0].orgnummer}` },
             ),
         )
         await userEvent.click(

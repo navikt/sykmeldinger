@@ -74,7 +74,7 @@ describe('Arbeidstaker', () => {
         await userEvent.click(
             screen.getRadioInGroup(
                 { name: /Velg arbeidsgiver/i },
-                { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})` },
+                { name: `${arbeidsgivereMock[0].navn} org.nr: ${arbeidsgivereMock[0].orgnummer}` },
             ),
         )
         await userEvent.click(
@@ -138,7 +138,7 @@ describe('Arbeidstaker', () => {
         await userEvent.click(
             screen.getRadioInGroup(
                 { name: /Velg arbeidsgiver/i },
-                { name: `${arbeidsgivereMock[0].navn} (org.nr: ${arbeidsgivereMock[0].orgnummer})` },
+                { name: `${arbeidsgivereMock[0].navn} org.nr: ${arbeidsgivereMock[0].orgnummer}` },
             ),
         )
         await userEvent.click(
@@ -204,7 +204,7 @@ describe('Arbeidstaker', () => {
         await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
         await userEvent.click(
             await screen.findByRole('radio', {
-                name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
+                name: `${arbeidsgivereMock[1].navn} org.nr: ${arbeidsgivereMock[1].orgnummer}`,
             }),
         )
         // Should ask about egenmeldingsdager even though arbeidsgiver is inactive
@@ -265,7 +265,7 @@ describe('Arbeidstaker', () => {
         await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }))
         await userEvent.click(
             await screen.findByRole('radio', {
-                name: `${arbeidsgivereMock[1].navn} (org.nr: ${arbeidsgivereMock[1].orgnummer})`,
+                name: `${arbeidsgivereMock[1].navn} org.nr: ${arbeidsgivereMock[1].orgnummer}`,
             }),
         )
 
