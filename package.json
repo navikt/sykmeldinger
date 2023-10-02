@@ -47,7 +47,7 @@
         "next": "13.5.2",
         "next-logger": "^3.0.2",
         "nextleton": "^0.6.1",
-        "pino": "^8.15.1",
+        "pino": "^8.15.3",
         "prom-client": "^14.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
