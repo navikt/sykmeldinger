@@ -10,8 +10,31 @@ permissions:
 
 jobs:
   next-app:
+    # TODO: remove
+    if: false
     uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@main
     secrets: inherit
     with:
       app: sykmeldinger
       base-path: /syk/sykmeldinger
+  playwright:
+    name: 'Playwright Tests'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.0-jammy
+    steps:
+      - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@main
+        with:
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Build e2e version of app
+        run: |
+          cp nais/envs/.env.demo .env.production
+          yarn build:e2e
+      - name: Run Playwright
+        run: yarn e2e
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

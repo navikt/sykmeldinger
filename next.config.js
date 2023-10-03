@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+const isE2E = process.env.NEXT_PUBLIC_IS_E2E === 'true'
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 })
@@ -39,7 +41,7 @@ const appDirectives = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-    output: 'standalone',
+    output: !isE2E ? 'standalone' : undefined,
     reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
@@ -47,6 +49,9 @@ const nextConfig = {
     transpilePackages: ['tailwind-merge'],
     experimental: {
         optimizePackageImports: ['@navikt/aksel-icons', '@navikt/ds-react'],
+    },
+    typescript: {
+        ignoreBuildErrors: isE2E,
     },
     eslint: {
         dirs: ['src'],
@@ -61,6 +66,8 @@ const nextConfig = {
         ]
     },
     async headers() {
+        if (isE2E) return []
+
         const environment = process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'production' ? 'prod' : 'dev'
         const cspValue = await buildCspHeader(appDirectives, { env: environment })
 
