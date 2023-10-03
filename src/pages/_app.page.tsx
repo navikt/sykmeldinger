@@ -16,7 +16,7 @@ import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
 import { getFaro, initInstrumentation, pinoLevelToFaroLevel } from '../faro/faro'
 import { ServerSidePropsResult } from '../auth/withAuthentication'
 import { FlagProvider } from '../toggles/context'
-import { isLocalOrDemo } from '../utils/env'
+import { isE2E, isLocalOrDemo } from '../utils/env'
 
 const DevTools = dynamic(() => import('../components/DevTools'), { ssr: false })
 
@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): React
         <ErrorBoundary>
             <FlagProvider toggles={pageProps.toggles}>
                 <ApolloProvider client={apolloClient}>
-                    {isLocalOrDemo && <DevTools />}
+                    {isLocalOrDemo && !isE2E && <DevTools />}
                     <LabsWarning />
                     <main id="maincontent" role="main" tabIndex={-1}>
                         <Component {...pageProps} />
