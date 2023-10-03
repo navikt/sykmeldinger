@@ -48,7 +48,7 @@ function SykmeldingLinkPanel<Sykmelding extends SykmeldingFragment | MinimalSykm
     return (
         <section aria-labelledby={type} className={styles.lenkepanelContainer}>
             <header className={styles.lenkepanelContainerHeader}>
-                <Heading size="medium" level="2" id={type}>
+                <Heading size="small" level="2" id={type}>
                     {title}
                 </Heading>
                 {type === 'TIDLIGERE_SYKMELDINGER' && (

@@ -44,16 +44,16 @@ function SykmeldingerListAll(): ReactElement {
             <SykmeldingLinkPanel title="Under behandling" type="UNDER_BEHANDLING" sykmeldinger={underBehandling} />
             <SykmeldingLinkPanel title="Nye sykmeldinger" type="NYE_SYKMELDINGER" sykmeldinger={apenSykmeldinger} />
 
-            <Accordion>
-                <InfoOmDigitalSykmelding />
-                <SerIkkeSykmelding />
-            </Accordion>
-
             <SykmeldingLinkPanel
                 title="Tidligere sykmeldinger"
                 type="TIDLIGERE_SYKMELDINGER"
                 sykmeldinger={pastSykmeldinger}
             />
+
+            <Accordion>
+                <InfoOmDigitalSykmelding />
+                <SerIkkeSykmelding />
+            </Accordion>
         </div>
     )
 }
