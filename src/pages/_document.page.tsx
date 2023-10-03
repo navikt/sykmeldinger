@@ -33,13 +33,21 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
 }
 
 interface Props {
-    Decorator: DecoratorComponents
-    language: string
+    Decorator: DecoratorComponents | null
+    language: string | null
 }
 
 class MyDocument extends Document<Props> {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & Props> {
         const initialProps = await Document.getInitialProps(ctx)
+
+        if (process.env.NEXT_PUBLIC_IS_E2E === 'true') {
+            return {
+                ...initialProps,
+                Decorator: null,
+                language: null,
+            }
+        }
 
         const Decorator = await fetchDecoratorReact({
             env: createDecoratorEnv(ctx),
@@ -57,6 +65,19 @@ class MyDocument extends Document<Props> {
 
     render(): ReactElement {
         const { Decorator, language } = this.props
+
+        if (!Decorator) {
+            // Used for e2e tests
+            return (
+                <Html lang={language || 'no'}>
+                    <Head />
+                    <body>
+                        <Main />
+                        <NextScript />
+                    </body>
+                </Html>
+            )
+        }
 
         return (
             <Html lang={language || 'no'}>

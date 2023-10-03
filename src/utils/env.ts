@@ -96,3 +96,5 @@ export function getServerEnv(): ServerEnv & PublicEnv {
 
 export const isLocalOrDemo =
     process.env.NODE_ENV !== 'production' || browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'demo'
+
+export const isE2E = process.env.NEXT_PUBLIC_IS_E2E === 'true'
