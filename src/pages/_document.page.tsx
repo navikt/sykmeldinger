@@ -1,11 +1,11 @@
 // This is imported to allow the Output File Tracing feature of Next.js to work correctly with the log patcher
 import 'next-logger'
 
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document'
 import { DecoratorComponents, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 
-import { browserEnv } from '../utils/env'
+import { browserEnv, isE2E } from '../utils/env'
 import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs'
 
 // The 'head'-field of the document initialProps contains data from <head> (meta-tags etc)
@@ -33,22 +33,13 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
 }
 
 interface Props {
-    Decorator: DecoratorComponents | null
-    language: string | null
+    Decorator: DecoratorComponents
+    language: string
 }
 
 class MyDocument extends Document<Props> {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & Props> {
         const initialProps = await Document.getInitialProps(ctx)
-
-        if (process.env.NEXT_PUBLIC_IS_E2E === 'true') {
-            return {
-                ...initialProps,
-                Decorator: null,
-                language: null,
-            }
-        }
-
         const Decorator = await fetchDecoratorReact({
             env: createDecoratorEnv(ctx),
             params: {
@@ -65,19 +56,6 @@ class MyDocument extends Document<Props> {
 
     render(): ReactElement {
         const { Decorator, language } = this.props
-
-        if (!Decorator) {
-            // Used for e2e tests
-            return (
-                <Html lang={language || 'no'}>
-                    <Head />
-                    <body>
-                        <Main />
-                        <NextScript />
-                    </body>
-                </Html>
-            )
-        }
 
         return (
             <Html lang={language || 'no'}>
@@ -103,4 +81,18 @@ class MyDocument extends Document<Props> {
     }
 }
 
-export default MyDocument
+class E2EDocument extends Document<Props> {
+    render(): React.JSX.Element {
+        return (
+            <Html lang="no">
+                <Head />
+                <body>
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        )
+    }
+}
+
+export default isE2E ? E2EDocument : MyDocument
