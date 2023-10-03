@@ -1,8 +1,6 @@
 import { Heading, Skeleton } from '@navikt/ds-react'
 import { ReactElement } from 'react'
 
-import SykmeldingIcon from './SykmeldingIcon'
-
 type HeaderNormalProps = {
     title: string
     subTitle?: string
@@ -17,7 +15,6 @@ export type HeaderProps = HeaderNormalProps | HeaderSkeletonProps
 function Header(props: HeaderProps): ReactElement | null {
     return (
         <div className="mx-auto flex max-w-2xl items-center p-4">
-            <SykmeldingIcon className="mr-8 h-16 w-16" />
             <div>
                 {!('skeleton' in props) ? (
                     <Heading size="xlarge">{props.title ?? 'Sykmelding'}</Heading>

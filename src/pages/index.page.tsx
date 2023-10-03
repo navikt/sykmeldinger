@@ -22,7 +22,7 @@ function SykmeldingerPage(): ReactElement {
             <Head>
                 <title>Sykmeldinger - www.nav.no</title>
             </Head>
-            <Header title="Dine sykmeldinger" />
+            <Header title="Sykmeldinger" />
             <PageWrapper>
                 {newListView.enabled ? <SykmeldingerListDynamic /> : <SykmeldingerListAll />}
                 <div className="mt-16">
