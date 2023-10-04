@@ -195,7 +195,12 @@ function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Syk
         )
     }
 
-    return <SykmeldingSykmeldtContainer sykmelding={sykmelding} editableEgenmelding={!hasHitPrevious} />
+    return (
+        <SykmeldingSykmeldtContainer
+            sykmelding={sykmelding}
+            editableEgenmelding={!hasHitPrevious && sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT}
+        />
+    )
 }
 
 function getHotjarType(
