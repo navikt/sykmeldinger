@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
-import { Accordion, Alert, BodyShort, Heading, Link, Select, Skeleton } from '@navikt/ds-react'
+import { Alert, BodyShort, Heading, Link, Select, Skeleton, ExpansionCard } from '@navikt/ds-react'
 import { NetworkStatus, useQuery } from '@apollo/client'
 
-import { InfoOmDigitalSykmelding, SerIkkeSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
+import { SerIkkeSykmelding, InfoOmDigitalSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
 import SykmeldingLinkPanel, { SortBy } from '../SykmeldingLinkPanel/SykmeldingLinkPanel'
 import { MinimalSykmeldingerDocument, SykmeldingCategory } from '../../fetching/graphql.generated'
 
@@ -14,10 +14,10 @@ function SykmeldingerListDynamic(): ReactElement {
             <SykmeldingSection category={SykmeldingCategory.PROCESSING} />
             <SykmeldingSection category={SykmeldingCategory.UNSENT} />
 
-            <Accordion>
+            <ExpansionCard>
                 <InfoOmDigitalSykmelding />
                 <SerIkkeSykmelding />
-            </Accordion>
+            </ExpansionCard>
 
             <OlderSykmeldingerSection />
         </div>

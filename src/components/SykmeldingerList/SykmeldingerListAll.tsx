@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react'
-import { Accordion, Alert } from '@navikt/ds-react'
+import { Alert, ExpansionCard } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 import { groupBy } from 'remeda'
 
 import useSykmeldinger from '../../hooks/useSykmeldinger'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import SykmeldingLinkPanel from '../SykmeldingLinkPanel/SykmeldingLinkPanel'
-import { InfoOmDigitalSykmelding, SerIkkeSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
+import { SerIkkeSykmelding, InfoOmDigitalSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
 import { SykmeldingFragment } from '../../fetching/graphql.generated'
 import { isActiveSykmelding, isUnderbehandling } from '../../utils/sykmeldingUtils'
 
@@ -50,10 +50,10 @@ function SykmeldingerListAll(): ReactElement {
                 sykmeldinger={pastSykmeldinger}
             />
 
-            <Accordion>
+            <ExpansionCard>
                 <InfoOmDigitalSykmelding />
                 <SerIkkeSykmelding />
-            </Accordion>
+            </ExpansionCard>
         </div>
     )
 }
