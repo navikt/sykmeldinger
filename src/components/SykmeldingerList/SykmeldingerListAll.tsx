@@ -50,7 +50,7 @@ function SykmeldingerListAll(): ReactElement {
                 sykmeldinger={pastSykmeldinger}
             />
 
-            <ExpansionCard>
+            <ExpansionCard size="small" aria-label="Small-variant">
                 <InfoOmDigitalSykmelding />
                 <SerIkkeSykmelding />
             </ExpansionCard>
