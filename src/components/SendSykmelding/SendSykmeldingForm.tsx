@@ -107,7 +107,11 @@ function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
                     brukerinformasjon={extraFormData.data.brukerinformasjon}
                 />
                 <ErrorSection ref={errorSectionRef} />
-                <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
+                <ActionSection
+                    sykmeldingId={sykmeldingId}
+                    isStrengtFortroligAdresse={extraFormData.data.brukerinformasjon.strengtFortroligAdresse}
+                    sendResult={sendSykmeldingResult}
+                />
                 {process.env.NODE_ENV !== 'production' && <FormDevTools />}
             </form>
         </FormProvider>

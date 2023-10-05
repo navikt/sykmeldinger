@@ -310,6 +310,7 @@ describe('Arbeidstaker', () => {
         expect(await screen.findByText(/Du er registrert med adressesperre/)).toBeInTheDocument()
         expect(await axe(container)).toHaveNoViolations()
         expect(screen.queryByRole('button', { name: 'Bekreft sykmelding' })).not.toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: 'Send sykmelding' })).not.toBeInTheDocument()
     })
 
     describe('given previous sykmeldinger', () => {
