@@ -19,6 +19,7 @@ import { FlagProvider } from '../toggles/context'
 import { isE2E, isLocalOrDemo } from '../utils/env'
 
 const DevTools = dynamic(() => import('../components/DevTools'), { ssr: false })
+const PlaywrightDevtools = dynamic(() => import('../components/DevTools/playwright-devtools'), { ssr: false })
 
 initInstrumentation()
 configureLogger({
@@ -41,6 +42,7 @@ function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): React
             <FlagProvider toggles={pageProps.toggles}>
                 <ApolloProvider client={apolloClient}>
                     {isLocalOrDemo && !isE2E && <DevTools />}
+                    {isE2E && <PlaywrightDevtools />}
                     <LabsWarning />
                     <main id="maincontent" role="main" tabIndex={-1}>
                         <Component {...pageProps} />

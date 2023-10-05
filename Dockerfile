@@ -8,8 +8,6 @@ COPY src/**/**/**/*.graphqls /app/
 COPY .next/standalone /app/
 COPY public /app/public/
 
-COPY .next/static ./.next/static
-
 EXPOSE 3000
 
 ENV NODE_ENV=production
