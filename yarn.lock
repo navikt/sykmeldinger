@@ -325,6 +325,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@axe-core/playwright@npm:^4.7.3":
+  version: 4.7.3
+  resolution: "@axe-core/playwright@npm:4.7.3"
+  dependencies:
+    axe-core: ^4.7.0
+  peerDependencies:
+    playwright-core: ">= 1.0.0"
+  checksum: c913cf6a816af283fc733411013460656213cf6c0efffcc36db1fd2984ffac3d780efd0a9aabd3b41ce78e2a536fee9ba5436d19311f660067e4c3560677b115
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.22.13":
   version: 7.22.13
   resolution: "@babel/code-frame@npm:7.22.13"
@@ -4586,6 +4597,13 @@ __metadata:
   version: 4.7.2
   resolution: "axe-core@npm:4.7.2"
   checksum: 5d86fa0f45213b0e54cbb5d713ce885c4a8fe3a72b92dd915a47aa396d6fd149c4a87fec53aa978511f6d941402256cfeb26f2db35129e370f25a453c688655a
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:^4.7.0":
+  version: 4.8.2
+  resolution: "axe-core@npm:4.8.2"
+  checksum: 8c19f507dabfcb8514e4280c7fc66e85143be303ddb57ec9f119338021228dc9b80560993938003837bda415fde7c07bba3a96560008ffa5f4145a248ed8f5fe
   languageName: node
   linkType: hard
 
@@ -11672,6 +11690,7 @@ __metadata:
     "@apollo/client": ^3.8.4
     "@apollo/server": ^4.9.3
     "@as-integrations/next": ^2.0.2
+    "@axe-core/playwright": ^4.7.3
     "@grafana/faro-web-sdk": ^1.2.1
     "@graphql-codegen/add": 5.0.0
     "@graphql-codegen/cli": 5.0.0

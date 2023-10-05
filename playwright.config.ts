@@ -20,7 +20,7 @@ const opts: OptionsType =
           {
               baseURL: `http://localhost:${PORT}`,
               server: {
-                  command: 'yarn dev',
+                  command: 'NEXT_PUBLIC_IS_E2E=true yarn dev',
                   url: `http://localhost:${PORT}`,
                   timeout: 120 * 1000,
                   reuseExistingServer: !process.env.CI,

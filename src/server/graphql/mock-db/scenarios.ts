@@ -204,7 +204,7 @@ const mangeGamleSykmeldinger: ScenarioCreator = () => {
     }
 }
 
-export type Scenarios = keyof typeof simpleScenarios | keyof typeof otherScenarios
+export type Scenarios = keyof typeof simpleScenarios | keyof typeof otherScenarios | keyof typeof e2eScenarios
 export const simpleScenarios = {
     normal: {
         description: 'En ny og et par innsendte (standard)',
@@ -275,4 +275,49 @@ export const otherScenarios = {
     },
 } satisfies Record<string, { description: string; scenario: ScenarioCreator }>
 
-export const scenarios = { ...simpleScenarios, ...otherScenarios }
+export const e2eScenarios = {
+    buttAgainstAvventende: {
+        description: 'En sendte sykmelding kant i kant med en tidligere sykmelding med AVVENTENDE periode',
+        scenario: () => ({
+            sykmeldinger: [
+                new SykmeldingBuilder({ offset: -14 })
+                    .relativePeriode(
+                        {
+                            type: Periodetype.AVVENTENDE,
+                            tilrettelegging: 'Eksempel på tilrettelegging',
+                        },
+                        { offset: 0, days: 7 },
+                    )
+                    .status(StatusEvent.SENDT)
+                    .build(),
+                new SykmeldingBuilder({ offset: -7 })
+                    .enkelPeriode({ offset: 1, days: 7 })
+                    .status(StatusEvent.SENDT)
+                    .build(),
+            ],
+        }),
+    },
+    buttAgainstGradert: {
+        description: 'En sendte sykmelding kant i kant med en tidligere sykmelding med gradert periode',
+        scenario: () => ({
+            sykmeldinger: [
+                new SykmeldingBuilder({ offset: -14 })
+                    .relativePeriode(
+                        {
+                            type: Periodetype.GRADERT,
+                            gradert: { grad: 60, reisetilskudd: false },
+                        },
+                        { offset: 0, days: 7 },
+                    )
+                    .status(StatusEvent.SENDT)
+                    .build(),
+                new SykmeldingBuilder({ offset: -7 })
+                    .enkelPeriode({ offset: 1, days: 7 })
+                    .status(StatusEvent.SENDT)
+                    .build(),
+            ],
+        }),
+    },
+} satisfies Record<string, { description: string; scenario: ScenarioCreator }>
+
+export const scenarios = { ...simpleScenarios, ...otherScenarios, ...e2eScenarios }

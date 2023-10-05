@@ -1,10 +1,10 @@
 import { Alert } from '@navikt/ds-react'
 import { ReactElement } from 'react'
 
-import { isLocalOrDemo } from '../../utils/env'
+import { isE2E, isLocalOrDemo } from '../../utils/env'
 
 export function LabsWarning(): ReactElement | null {
-    if (!isLocalOrDemo) {
+    if (!isLocalOrDemo || isE2E) {
         return null
     }
 

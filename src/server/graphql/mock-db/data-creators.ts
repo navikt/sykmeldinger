@@ -298,10 +298,8 @@ export const defaultArbeidsgivere: readonly Arbeidsgiver[] = [
         aktivtArbeidsforhold: false,
     },
     {
-        naermesteLeder: {
-            navn: 'Steve Cook',
-        },
-        navn: 'Nottinghamshire Fire and Rescue Service',
+        naermesteLeder: null,
+        navn: 'Nottinghamshire Missing Narmesteleder',
         orgnummer: '110110113',
         aktivtArbeidsforhold: true,
     },

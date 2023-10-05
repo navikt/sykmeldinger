@@ -10,8 +10,6 @@ permissions:
 
 jobs:
   next-app:
-    # TODO: remove
-    if: false
     uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@main
     secrets: inherit
     with:
