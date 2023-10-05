@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Alert, BodyShort, Heading, Link, Select, Skeleton, ExpansionCard } from '@navikt/ds-react'
+import { Alert, BodyShort, Heading, Link, Select, Skeleton } from '@navikt/ds-react'
 import { NetworkStatus, useQuery } from '@apollo/client'
 
 import { SerIkkeSykmelding, InfoOmDigitalSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
@@ -14,10 +14,8 @@ function SykmeldingerListDynamic(): ReactElement {
             <SykmeldingSection category={SykmeldingCategory.PROCESSING} />
             <SykmeldingSection category={SykmeldingCategory.UNSENT} />
 
-            <ExpansionCard>
-                <InfoOmDigitalSykmelding />
-                <SerIkkeSykmelding />
-            </ExpansionCard>
+            <InfoOmDigitalSykmelding />
+            <SerIkkeSykmelding />
 
             <OlderSykmeldingerSection />
         </div>

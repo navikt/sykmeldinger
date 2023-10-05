@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Alert, ExpansionCard } from '@navikt/ds-react'
+import { Alert } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 import { groupBy } from 'remeda'
 
@@ -50,10 +50,8 @@ function SykmeldingerListAll(): ReactElement {
                 sykmeldinger={pastSykmeldinger}
             />
 
-            <ExpansionCard size="small" aria-label="Small-variant">
-                <InfoOmDigitalSykmelding />
-                <SerIkkeSykmelding />
-            </ExpansionCard>
+            <InfoOmDigitalSykmelding />
+            <SerIkkeSykmelding />
         </div>
     )
 }
