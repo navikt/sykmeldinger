@@ -29,7 +29,9 @@ export const InfoOmDigitalSykmelding = (): ReactElement => (
                         Formålet med sykmeldingen
                     </Heading>
                     <BodyLong>Ifølge folketrygdloven har den to formål:</BodyLong>
+                </div>
 
+                <ul className="list-disc list-inside">
                     <BodyLong as="li">
                         melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i
                         jobb
@@ -37,7 +39,7 @@ export const InfoOmDigitalSykmelding = (): ReactElement => (
                     <BodyLong as="li" spacing>
                         legge til rette for at du kan søke om sykepenger
                     </BodyLong>
-                </div>
+                </ul>
 
                 <div className="pb-2">
                     <Heading size="small" level="3" spacing>
