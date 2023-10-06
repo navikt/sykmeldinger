@@ -320,4 +320,10 @@ export const e2eScenarios = {
     },
 } satisfies Record<string, { description: string; scenario: ScenarioCreator }>
 
+export function isValidScenario(scenario: string | null | undefined): scenario is Scenarios {
+    if (scenario == null) return false
+
+    return Object.keys(scenarios).includes(scenario)
+}
+
 export const scenarios = { ...simpleScenarios, ...otherScenarios, ...e2eScenarios }

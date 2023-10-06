@@ -7,12 +7,10 @@ import {
     Dev_SetAntallArbeidsgivereDocument,
     Dev_ToggleStrengtFortroligAdresseDocument,
 } from '../../fetching/graphql.generated'
-import { Scenarios } from '../../server/graphql/mock-db/scenarios'
 
 type PlaywrightDevtoolFunctions = {
     setArbeidsgivereCount: (count: number) => void
     setStrengtFortroligAdresse: () => void
-    setScenario: (scenario: Scenarios) => void
 }
 
 declare global {
@@ -40,12 +38,6 @@ function PlaywrightDevtools(): ReactElement {
             setStrengtFortroligAdresse: (): void => {
                 logger.info('Toggling strengt fortrolig adresse')
                 toggleMutation()
-            },
-            setScenario: (scenario: Scenarios): void => {
-                logger.info(`Setting scenario to ${scenario}`)
-                scenarioMutation({
-                    variables: { scenario },
-                }).then(() => client.cache.reset())
             },
         }
 

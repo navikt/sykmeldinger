@@ -1,8 +1,6 @@
 import { expect, type Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
-import { Scenarios } from '../src/server/graphql/mock-db/scenarios' // 1
-
 type ByRoleOptions = Parameters<Page['getByRole']>['1']
 
 export function getRadioInGroup(page: Page) {
@@ -37,15 +35,4 @@ export async function setStrengtFortroligAdresse(page: Page): Promise<void> {
     await expect(page.getByTestId('playwright-devtools')).toHaveAttribute('data-is-loading', 'false', {
         timeout: 5000,
     })
-}
-
-export function changeScenario(page: Page) {
-    return async (scenario: Scenarios): Promise<void> => {
-        await page.evaluate((value) => {
-            return window.playwrightDevtools?.setScenario(value)
-        }, scenario)
-        await expect(page.getByTestId('playwright-devtools')).toHaveAttribute('data-is-loading', 'false', {
-            timeout: 5000,
-        })
-    }
 }

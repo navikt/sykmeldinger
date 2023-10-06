@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { logger } from '@navikt/next-logger'
 
-import { browserEnv } from '../utils/env'
+import { browserEnv, isE2E } from '../utils/env'
 
 type TriggerType =
     | 'SYKMELDING_LISTEVISNING'
@@ -40,7 +40,7 @@ const useHotjarTrigger = (triggerType: TriggerType | null): void => {
                 }
             }, 500)
         } else {
-            if (process.env.NODE_ENV !== 'test') {
+            if (process.env.NODE_ENV !== 'test' && !isE2E) {
                 logger.info(`Not loading Hotjar ${triggerType} because the application is not in production`)
             }
         }
