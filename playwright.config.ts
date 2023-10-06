@@ -3,12 +3,13 @@ import { PlaywrightTestConfig } from 'playwright/types/test'
 
 const PORT = process.env.PORT || 3000
 
-type OptionsType = { baseURL: string; server: PlaywrightTestConfig['webServer'] }
+type OptionsType = { baseURL: string; timeout: number; server: PlaywrightTestConfig['webServer'] }
 const opts: OptionsType =
     process.env.CI || process.env.FAST
         ? // Github Actions runs server in a services image
           {
               baseURL: `http://localhost:${PORT}`,
+              timeout: 30 * 1000,
               server: {
                   command: 'yarn start:e2e',
                   url: `http://localhost:${PORT}`,
@@ -19,6 +20,7 @@ const opts: OptionsType =
         : // Local dev server
           {
               baseURL: `http://localhost:${PORT}`,
+              timeout: 60 * 1000,
               server: {
                   command: 'NEXT_PUBLIC_IS_E2E=true yarn dev',
                   url: `http://localhost:${PORT}`,
@@ -35,6 +37,7 @@ export default defineConfig({
     expect: {
         timeout: 10 * 1000,
     },
+    timeout: opts.timeout,
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,

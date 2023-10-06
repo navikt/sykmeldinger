@@ -10,6 +10,8 @@ import { browserEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
 import { getFlagsServerSide } from '../toggles/ssr'
 import { getSessionId } from '../utils/userSessionId'
+import { isValidScenario } from '../server/graphql/mock-db/scenarios'
+import mockDb from '../server/graphql/mock-db'
 
 export interface ServerSidePropsResult {
     toggles: IToggle[]
@@ -37,7 +39,7 @@ export interface TokenPayload {
     }
 }
 
-const defaultPageHandler: PageHandler = async (context) => {
+export const defaultPageHandler: PageHandler = async (context) => {
     const flags = await getFlagsServerSide(context.req, context.res)
 
     return {
@@ -56,9 +58,14 @@ export function withAuthenticatedPage(handler: PageHandler = defaultPageHandler)
         context: GetServerSidePropsContext,
     ): Promise<ReturnType<NonNullable<typeof handler>>> {
         if (isLocalOrDemo) {
-            if (!context.req.cookies['next-session-id']) {
+            const scenario = context.query.scenario as string | undefined
+            if (isValidScenario(scenario)) {
                 const newId = v4()
+                context.res.setHeader('set-cookie', `next-session-id=${newId}; Path=/`)
 
+                mockDb().set(newId, scenario)
+            } else if (!context.req.cookies['next-session-id']) {
+                const newId = v4()
                 context.res.setHeader('set-cookie', `next-session-id=${newId}; Path=/`)
             }
 
