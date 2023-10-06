@@ -55,6 +55,10 @@ const avbrutt: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).enkelPeriode().status(StatusEvent.AVBRUTT).build()],
 })
 
+const avbruttEgenmelding: ScenarioCreator = () => ({
+    sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).egenmeldt().enkelPeriode().status(StatusEvent.AVBRUTT).build()],
+})
+
 const avvist: ScenarioCreator = () => ({
     sykmeldinger: [
         new SykmeldingBuilder({ offset: 7 })
@@ -252,6 +256,10 @@ export const otherScenarios = {
     avbrutt: {
         description: 'Èn avbrutt sykmelding',
         scenario: avbrutt,
+    },
+    avbruttEgenmelding: {
+        description: 'Èn avbrutt egenmelding',
+        scenario: avbruttEgenmelding,
     },
     harUnderBehandling: {
         description: 'Har en innsendt under behandling',
