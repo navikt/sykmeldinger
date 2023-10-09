@@ -3,7 +3,7 @@ import { subDays } from 'date-fns'
 
 import { toReadableDate } from '../src/utils/dateUtils'
 
-import { expectNoAxeViolations, expectToHaveDescriptiveText, expectNotToHaveDescriptiveText } from './test-utils'
+import { expectNoAxeViolations } from './test-utils'
 
 test.describe('Bekreft avvist sykmelding som lest', () => {
     test('should display reason for rejection', async ({ page }) => {
@@ -29,12 +29,11 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
         await expect(page.getByText(/Du trenger en ny sykmelding/)).toBeVisible()
         await page.getByRole('button', { name: 'Bekreft' }).click()
 
-        await expectToHaveDescriptiveText(page)(
+        await expect(
             page.getByRole('checkbox', {
                 name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist',
             }),
-            'Du må bekrefte at du har lest at sykmeldingen er avvist.',
-        )
+        ).toHaveDescriptiveText('Du må bekrefte at du har lest at sykmeldingen er avvist.')
 
         await expectNoAxeViolations(page)
     })
@@ -52,12 +51,11 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
             page.getByRole('checkbox', { name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist' }),
         ).toBeVisible()
 
-        await expectToHaveDescriptiveText(page)(
+        await expect(
             page.getByRole('checkbox', {
                 name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist',
             }),
-            'Du må bekrefte at du har lest at sykmeldingen er avvist.',
-        )
+        ).toHaveDescriptiveText('Du må bekrefte at du har lest at sykmeldingen er avvist.')
 
         await expectNoAxeViolations(page)
 
@@ -67,11 +65,11 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
             })
             .click()
 
-        await expectNotToHaveDescriptiveText()(
+        await expect(
             page.getByRole('checkbox', {
                 name: 'Jeg bekrefter at jeg har lest at sykmeldingen er avvist',
             }),
-        )
+        ).not.toHaveDescriptiveText()
 
         await expectNoAxeViolations(page)
     })
