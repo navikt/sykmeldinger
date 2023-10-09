@@ -10019,9 +10019,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:^8.15.3":
-  version: 8.15.3
-  resolution: "pino@npm:8.15.3"
+"pino@npm:^8.15.6":
+  version: 8.15.6
+  resolution: "pino@npm:8.15.6"
   dependencies:
     atomic-sleep: ^1.0.0
     fast-redact: ^3.1.1
@@ -10036,7 +10036,7 @@ __metadata:
     thread-stream: ^2.0.0
   bin:
     pino: bin.js
-  checksum: 69a76be26842f4e97d8553f1f907950ffcc32f353e25888399d58d1515037d8ecf284f8d1895358d662925cc5f2afb88aefee5c08f7ff711eca6b914f5074c9c
+  checksum: d5636b10ade597d63279b7eaf4484202ba3b4705903cb9138088ca43280b3b8d4265d62bd9cf860793601ac27869d976f07b5cbb20920ef999887fb1897cc9c9
   languageName: node
   linkType: hard
 
@@ -11671,7 +11671,7 @@ __metadata:
     nextleton: ^0.6.1
     node-gyp: ^9.4.0
     open: ^9.1.0
-    pino: ^8.15.3
+    pino: ^8.15.6
     pino-pretty: ^10.2.0
     postcss: ^8.4.31
     postcss-import: ^15.1.0
