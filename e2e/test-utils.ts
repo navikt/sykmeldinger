@@ -1,4 +1,6 @@
-import { expect, type Page, type Locator } from '@playwright/test'
+import './custom-matchers'
+
+import { expect, type Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
 type ByRoleOptions = Parameters<Page['getByRole']>['1']
@@ -15,21 +17,6 @@ export async function expectNoAxeViolations(page: Page): Promise<void> {
     const results = await new AxeBuilder({ page }).analyze()
 
     expect(results.violations).toEqual([])
-}
-
-export function expectNotToHaveDescriptiveText() {
-    return async (locator: Locator): Promise<void> => {
-        const describedId = await locator.getAttribute('aria-describedby')
-        expect(describedId).toBeNull()
-    }
-}
-
-export function expectToHaveDescriptiveText(page: Page) {
-    return async (locator: Locator, expectedText: string): Promise<void> => {
-        const describedId = await locator.getAttribute('aria-describedby')
-        expect(describedId).not.toBeNull()
-        await expect(page.locator(`#${describedId}`)).toHaveText(expectedText)
-    }
 }
 
 export function setArbeidsgivereCount(page: Page) {
