@@ -61,7 +61,7 @@ const avbruttEgenmelding: ScenarioCreator = () => ({
 
 const avvist: ScenarioCreator = () => ({
     sykmeldinger: [
-        new SykmeldingBuilder({ offset: 7 })
+        new SykmeldingBuilder({ offset: -7 })
             .enkelPeriode()
             .status(StatusEvent.APEN)
             .behandlingsutfall(RegelStatus.INVALID, [
