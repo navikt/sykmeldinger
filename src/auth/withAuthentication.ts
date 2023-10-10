@@ -4,14 +4,13 @@ import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSi
 import { logger } from '@navikt/next-logger'
 import { validateIdportenToken } from '@navikt/next-auth-wonderwall'
 import { IToggle } from '@unleash/nextjs'
-import { v4 } from 'uuid'
 
 import { browserEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
 import { getFlagsServerSide } from '../toggles/ssr'
 import { getSessionId } from '../utils/userSessionId'
-import { isValidScenario } from '../server/graphql/mock-db/scenarios'
-import mockDb from '../server/graphql/mock-db'
+
+import { handleMockContext } from './mock-context'
 
 export interface ServerSidePropsResult {
     toggles: IToggle[]
@@ -58,18 +57,7 @@ export function withAuthenticatedPage(handler: PageHandler = defaultPageHandler)
         context: GetServerSidePropsContext,
     ): Promise<ReturnType<NonNullable<typeof handler>>> {
         if (isLocalOrDemo) {
-            const scenario = context.query.scenario as string | undefined
-            if (isValidScenario(scenario)) {
-                const newId = v4()
-                context.res.setHeader('set-cookie', `next-session-id=${newId}; Path=/`)
-
-                mockDb().set(newId, scenario)
-            } else if (!context.req.cookies['next-session-id']) {
-                const newId = v4()
-                context.res.setHeader('set-cookie', `next-session-id=${newId}; Path=/`)
-            }
-
-            return handler(context)
+            return handleMockContext(context, handler)
         }
 
         const request = context.req

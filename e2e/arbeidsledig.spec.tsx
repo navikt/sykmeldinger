@@ -2,26 +2,21 @@ import { test, expect } from '@playwright/test'
 import { format, getDate, sub } from 'date-fns'
 import { nb } from 'date-fns/locale'
 
-test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-})
+import {
+    bekreftNarmesteleder,
+    filloutArbeidstaker,
+    gotoScenario,
+    navigateToFirstSykmelding,
+    opplysingeneStemmer,
+    velgArbeidssituasjon,
+} from './user-actions'
 
 test.describe('Arbeidssituasjon - Arbeidsledig', () => {
     test('should be able to submit form with work situation arbeidsledig', async ({ page }) => {
-        await page
-            .getByRole('region', { name: /Nye sykmeldinger/i })
-            .getByRole('link', { name: /Sykmelding 100%/ })
-            .click()
-
-        await page
-            .getByRole('group', { name: /Stemmer opplysningene?/ })
-            .getByRole('radio', { name: /Ja/ })
-            .click()
-
-        await page
-            .getByRole('group', { name: /Jeg er sykmeldt som/i })
-            .getByRole('radio', { name: /arbeidsledig/ })
-            .click()
+        await gotoScenario('normal')(page)
+        await navigateToFirstSykmelding('nye', '100%')(page)
+        await opplysingeneStemmer(page)
+        await velgArbeidssituasjon('arbeidsledig')(page)
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
 
@@ -35,32 +30,9 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
     test('should not send egenmeldingsdager and stuff when first filled out as arbeidsgiver, then changes back to arbeidsledig', async ({
         page,
     }) => {
-        await page
-            .getByRole('region', { name: /Nye sykmeldinger/i })
-            .getByRole('link', { name: /Sykmelding 100%/ })
-            .click()
-
-        await page
-            .getByRole('group', { name: /Stemmer opplysningene?/ })
-            .getByRole('radio', { name: /Ja/ })
-            .click()
-
-        await page
-            .getByRole('group', { name: /Jeg er sykmeldt som/i })
-            .getByRole('radio', { name: /ansatt/ })
-            .click()
-
-        await page
-            .getByRole('group', { name: /Velg arbeidsgiver/i })
-            .getByRole('radio', { name: /Pontypandy Fire Service org.nr: 110110110/i })
-            .click()
-
-        await page
-            .getByRole('group', {
-                name: /Er det station officer steele som skal følge deg opp på jobben mens du er syk/i,
-            })
-            .getByRole('radio', { name: /Nei/ })
-            .click()
+        await gotoScenario('normal')(page)
+        await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
+        await bekreftNarmesteleder('Station Officer Steele', 'Nei')(page)
 
         await expect(
             page.getByText('Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.'),
