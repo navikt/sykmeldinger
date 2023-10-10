@@ -29,6 +29,8 @@ const opts: OptionsType =
                   env: {
                       NEXT_PUBLIC_IS_E2E: 'true',
                   },
+                  stderr: 'pipe',
+                  stdout: 'pipe',
               },
           }
 

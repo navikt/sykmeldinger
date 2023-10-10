@@ -18,23 +18,3 @@ export async function expectNoAxeViolations(page: Page): Promise<void> {
 
     expect(results.violations).toEqual([])
 }
-
-export function setArbeidsgivereCount(page: Page) {
-    return async (count: number): Promise<void> => {
-        await page.evaluate((value) => {
-            return window.playwrightDevtools?.setArbeidsgivereCount(value)
-        }, count)
-        await expect(page.getByTestId('playwright-devtools')).toHaveAttribute('data-is-loading', 'false', {
-            timeout: 5000,
-        })
-    }
-}
-
-export async function setStrengtFortroligAdresse(page: Page): Promise<void> {
-    await page.evaluate(() => {
-        return window.playwrightDevtools?.setStrengtFortroligAdresse()
-    })
-    await expect(page.getByTestId('playwright-devtools')).toHaveAttribute('data-is-loading', 'false', {
-        timeout: 5000,
-    })
-}

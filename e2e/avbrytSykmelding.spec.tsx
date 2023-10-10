@@ -1,15 +1,12 @@
 import { test, expect } from '@playwright/test'
 
 import { expectNoAxeViolations } from './test-utils'
+import { gotoScenario, navigateToFirstSykmelding } from './user-actions'
 
 test.describe('Avbryt sykmelding', () => {
     test('should show sykmelding as avbrutt', async ({ page }) => {
-        await page.goto('/?scenario=avbrutt')
-
-        await page
-            .getByRole('region', { name: /Tidligere sykmeldinger/i })
-            .getByRole('link', { name: /Sykmelding 100%/ })
-            .click()
+        await gotoScenario('avbrutt')(page)
+        await navigateToFirstSykmelding('tidligere', '100%')(page)
 
         await expect(page.getByText(/Sykmeldingen ble avbrutt av deg/)).toBeVisible()
         await expect(page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ })).not.toBeVisible()
@@ -19,12 +16,8 @@ test.describe('Avbryt sykmelding', () => {
     })
 
     test('should reopen avbrutt sykmelding', async ({ page }) => {
-        await page.goto('/?scenario=avbrutt')
-
-        await page
-            .getByRole('region', { name: /Tidligere sykmeldinger/i })
-            .getByRole('link', { name: /Sykmelding 100%/ })
-            .click()
+        await gotoScenario('avbrutt')(page)
+        await navigateToFirstSykmelding('tidligere', '100%')(page)
 
         await expect(page.getByText(/Sykmeldingen ble avbrutt av deg/)).toBeVisible()
         await expect(page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ })).not.toBeVisible()
@@ -37,11 +30,7 @@ test.describe('Avbryt sykmelding', () => {
 
     test('should avbryte open sykmelding', async ({ page }) => {
         await page.goto('/')
-
-        await page
-            .getByRole('region', { name: /Nye sykmeldinger/i })
-            .getByRole('link', { name: /Sykmelding 100%/ })
-            .click()
+        await navigateToFirstSykmelding('nye', '100%')(page)
 
         await page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ }).click()
         await expect(page.getByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeVisible()
@@ -54,12 +43,8 @@ test.describe('Avbryt sykmelding', () => {
     })
 
     test('should show details for avbrutt egenmelding sykmelding', async ({ page }) => {
-        await page.goto('/?scenario=avbruttEgenmelding')
-
-        await page
-            .getByRole('region', { name: /Tidligere sykmeldinger/i })
-            .getByRole('link', { name: /Egenmelding/ })
-            .click()
+        await gotoScenario('avbruttEgenmelding')(page)
+        await navigateToFirstSykmelding('tidligere', 'egenmelding')(page)
 
         await expect(page.getByRole('heading', { name: 'Egenmeldingen ble avbrutt av deg' })).toBeVisible()
 

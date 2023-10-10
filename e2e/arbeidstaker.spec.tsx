@@ -1,37 +1,27 @@
 import { test, expect } from '@playwright/test'
 
-import { expectNoAxeViolations, getRadioInGroup, setArbeidsgivereCount, setStrengtFortroligAdresse } from './test-utils'
+import { expectNoAxeViolations, getRadioInGroup } from './test-utils'
+import {
+    bekreftNarmesteleder,
+    filloutArbeidstaker,
+    gotoScenario,
+    navigateToFirstSykmelding,
+    sendSykmelding,
+} from './user-actions'
 
 test.describe('Arbeidssituasjon - Arbeidstaker', () => {
     test.describe('normal situation', () => {
-        test.beforeEach(async ({ page }) => {
-            await page.goto('/')
-        })
-
         test('should be able to submit form with active arbeidsgiver and nærmeste leder', async ({ page }) => {
-            await page
-                .getByRole('region', { name: /Nye sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
+            await gotoScenario('normal')(page)
+            await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
+            await bekreftNarmesteleder('Station Officer Steele')(page)
 
-            await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
-            await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
-            await getRadioInGroup(page)(
-                { name: /Velg arbeidsgiver/i },
-                { name: 'Pontypandy Fire Service org.nr: 110110110' },
-            ).click()
-            await getRadioInGroup(page)(
-                { name: /Er det station officer steele som skal følge deg opp på jobben mens du er syk/i },
-                { name: 'Ja' },
-            ).click()
             await getRadioInGroup(page)(
                 { name: /Brukte du egenmelding hos Pontypandy Fire Service i perioden/ },
                 { name: 'Nei' },
             ).click()
 
-            await expectNoAxeViolations(page)
-            await page.getByRole('button', { name: /Send sykmelding/ }).click()
-            await page.waitForURL('**/kvittering')
+            await sendSykmelding(page)
 
             await expect(
                 page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
@@ -43,22 +33,9 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
         test('should be able to submit form with active arbeidsgiver and chosing "No" on correct narmeste leder', async ({
             page,
         }) => {
-            await page
-                .getByRole('region', { name: /Nye sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
-
-            await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
-            await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
-            await getRadioInGroup(page)(
-                { name: /Velg arbeidsgiver/i },
-                { name: 'Pontypandy Fire Service org.nr: 110110110' },
-            ).click()
-
-            await getRadioInGroup(page)(
-                { name: /Er det station officer steele som skal følge deg opp på jobben mens du er syk/i },
-                { name: 'Nei' },
-            ).click()
+            await gotoScenario('normal')(page)
+            await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
+            await bekreftNarmesteleder('Station Officer Steele', 'Nei')(page)
 
             await expect(
                 page.getByText('Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.'),
@@ -70,9 +47,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             ).click()
 
             await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
-            await expectNoAxeViolations(page)
-            await page.getByRole('button', { name: /Send sykmelding/ }).click()
-            await page.waitForURL('**/kvittering')
+            await sendSykmelding(page)
 
             await expect(
                 page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
@@ -82,20 +57,11 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
         })
 
         test('should be able to submit form with inactive arbeidsgiver', async ({ page }) => {
-            await page
-                .getByRole('region', { name: /Nye sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 2,
+            })(page)
 
-            await setArbeidsgivereCount(page)(2)
-
-            await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
-            await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
-
-            await getRadioInGroup(page)(
-                { name: /Velg arbeidsgiver/i },
-                { name: 'Andeby Brannstation org.nr: 110110112' },
-            ).click()
+            await filloutArbeidstaker(/Andeby Brannstation/)(page)
 
             // Should ask about egenmeldingsdager even though arbeidsgiver is inactive
             await getRadioInGroup(page)(
@@ -104,9 +70,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             ).click()
 
             await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
-            await expectNoAxeViolations(page)
-            await page.getByRole('button', { name: /Send sykmelding/ }).click()
-            await page.waitForURL('**/kvittering')
+            await sendSykmelding(page)
 
             await expect(
                 page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Andeby Brannstation' }),
@@ -116,20 +80,11 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
         })
 
         test('should be able to submit form with missing NL but active arbeidsgiver', async ({ page }) => {
-            await page
-                .getByRole('region', { name: /Nye sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 3,
+            })(page)
 
-            await setArbeidsgivereCount(page)(3)
-
-            await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
-            await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
-
-            await getRadioInGroup(page)(
-                { name: /Velg arbeidsgiver/i },
-                { name: 'Nottinghamshire Missing Narmesteleder org.nr: 110110113' },
-            ).click()
+            await filloutArbeidstaker(/Nottinghamshire Missing Narmesteleder/)(page)
 
             // Should ask about egenmeldingsdager even though NL is null, but arbeidsforhold is active
             await getRadioInGroup(page)(
@@ -138,9 +93,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             ).click()
 
             await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
-            await expectNoAxeViolations(page)
-            await page.getByRole('button', { name: /Send sykmelding/ }).click()
-            await page.waitForURL('**/kvittering')
+            await sendSykmelding(page)
 
             await expect(
                 page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Nottinghamshire Missing Narmesteleder' }),
@@ -150,12 +103,10 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
         })
 
         test('should show warning if user does not have any arbeidsforhold', async ({ page }) => {
-            await page
-                .getByRole('region', { name: /Nye sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
-
-            await setArbeidsgivereCount(page)(0)
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 0,
+            })(page)
+            await navigateToFirstSykmelding('nye', '100%')(page)
 
             await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
             await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
@@ -165,12 +116,10 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
         })
 
         test('should show information for people with diskresjonskode strengt fortrilig adresse', async ({ page }) => {
-            await page
-                .getByRole('region', { name: /Nye sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
-
-            await setStrengtFortroligAdresse(page)
+            await gotoScenario('normal', {
+                strengtFortroligAdresse: true,
+            })(page)
+            await navigateToFirstSykmelding('nye', '100%')(page)
 
             await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
             await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
@@ -184,12 +133,9 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
     test.describe('given previous sykmeldinger', () => {
         test('should collide with 100% sykmelding and show "Legg til egenmeldingsdager"', async ({ page }) => {
-            await page.goto('/?scenario=buttAgainstGradert')
+            await gotoScenario('buttAgainstGradert')(page)
 
-            await page
-                .getByRole('region', { name: /Tidligere sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
+            await navigateToFirstSykmelding('tidligere', '100%')(page)
 
             await expect(page.getByRole('heading', { name: /Sykmeldingen ble sendt til/ })).toBeVisible()
             await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
@@ -200,12 +146,9 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
         test('should not collide with AVVENTENDE sykmeldinger and still show "Legg til egenmeldingsdager"', async ({
             page,
         }) => {
-            await page.goto('/?scenario=buttAgainstAvventende')
+            await gotoScenario('buttAgainstAvventende')(page)
 
-            await page
-                .getByRole('region', { name: /Tidligere sykmeldinger/i })
-                .getByRole('link', { name: /Sykmelding 100%/ })
-                .click()
+            await navigateToFirstSykmelding('tidligere', '100%')(page)
 
             await expect(page.getByRole('heading', { name: /Sykmeldingen ble sendt til/ })).toBeVisible()
             await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()

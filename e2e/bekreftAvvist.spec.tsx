@@ -4,10 +4,11 @@ import { subDays } from 'date-fns'
 import { toReadableDate } from '../src/utils/dateUtils'
 
 import { expectNoAxeViolations } from './test-utils'
+import { gotoScenario, navigateToFirstSykmelding } from './user-actions'
 
 test.describe('Bekreft avvist sykmelding som lest', () => {
     test('should display reason for rejection', async ({ page }) => {
-        await page.goto('/?scenario=avvist')
+        await gotoScenario('avvist')(page)
 
         await page
             .getByRole('region', { name: /Nye sykmeldinger/i })
@@ -19,7 +20,7 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
     })
 
     test('should get error message when trying to submit without checking checkbox', async ({ page }) => {
-        await page.goto('/?scenario=avvist')
+        await gotoScenario('avvist')(page)
 
         await page
             .getByRole('region', { name: /Nye sykmeldinger/i })
@@ -39,7 +40,7 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
     })
 
     test('should remove error message after clicking checkbox', async ({ page }) => {
-        await page.goto('/?scenario=avvist')
+        await gotoScenario('avvist')(page)
 
         await page
             .getByRole('region', { name: /Nye sykmeldinger/i })
@@ -75,12 +76,8 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
     })
 
     test('should show confirmation after submitting', async ({ page }) => {
-        await page.goto('/?scenario=avvist')
-
-        await page
-            .getByRole('region', { name: /Nye sykmeldinger/i })
-            .getByRole('link', { name: /Sykmelding 100%/ })
-            .click()
+        await gotoScenario('avvist')(page)
+        await navigateToFirstSykmelding('nye', '100%')(page)
 
         await page
             .getByRole('checkbox', {
