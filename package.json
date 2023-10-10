@@ -94,7 +94,7 @@
         "next-router-mock": "^0.9.10",
         "node-gyp": "^9.4.0",
         "open": "^9.1.0",
-        "pino-pretty": "^10.2.0",
+        "pino-pretty": "^10.2.3",
         "postcss": "^8.4.31",
         "postcss-import": "^15.1.0",
         "prettier": "^3.0.3",
