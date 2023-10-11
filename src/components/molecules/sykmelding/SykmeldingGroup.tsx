@@ -3,6 +3,7 @@ import { Heading } from '@navikt/ds-react'
 import { CalendarIcon } from '@navikt/aksel-icons'
 
 import { cn } from '../../../utils/tw-utils'
+import { cleanId } from '../../../utils/stringUtils'
 
 interface Props {
     title: string
@@ -20,7 +21,7 @@ export function SykmeldingGroup({
     children,
 }: PropsWithChildren<{ heading: string; Icon: typeof CalendarIcon; wrap?: boolean; tight?: boolean }>): ReactElement {
     return (
-        <div className="pb-4">
+        <section className="pb-4" aria-labelledby={cleanId(heading)}>
             <SykmeldingSectionHeading title={heading} Icon={Icon} />
             <div
                 className={cn('flex flex-col', {
@@ -30,7 +31,7 @@ export function SykmeldingGroup({
             >
                 {children}
             </div>
-        </div>
+        </section>
     )
 }
 
@@ -41,7 +42,7 @@ function SykmeldingSectionHeading({ title, Icon }: Props): ReactElement {
     return (
         <div className="flex items-center gap-2 py-4">
             <Icon role="img" aria-hidden className="text-2xl" />
-            <Heading size="small" level="3">
+            <Heading size="small" level="3" id={cleanId(title)}>
                 {title}
             </Heading>
         </div>
