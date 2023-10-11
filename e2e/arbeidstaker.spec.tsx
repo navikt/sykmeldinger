@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-import { expectNoAxeViolations, getRadioInGroup } from './test-utils'
+import { getRadioInGroup } from './test-utils'
 import {
     bekreftNarmesteleder,
     filloutArbeidstaker,
@@ -112,7 +112,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
 
             await expect(page.getByText(/Vi klarer ikke å finne noen arbeidsforhold registrert på deg/)).toBeVisible()
-            await expectNoAxeViolations(page)
+            await expect(page).toHaveNoViolations()
         })
 
         test('should show information for people with diskresjonskode strengt fortrilig adresse', async ({ page }) => {
@@ -125,7 +125,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
 
             await expect(page.getByText(/Du er registrert med adressesperre/)).toBeVisible()
-            await expectNoAxeViolations(page)
+            await expect(page).toHaveNoViolations()
             await expect(page.getByRole('button', { name: 'Send sykmelding' })).not.toBeVisible()
             await expect(page.getByRole('button', { name: 'Bekreft sykmelding' })).not.toBeVisible()
         })
@@ -140,7 +140,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await expect(page.getByRole('heading', { name: /Sykmeldingen ble sendt til/ })).toBeVisible()
             await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
 
-            await expectNoAxeViolations(page)
+            await expect(page).toHaveNoViolations()
         })
 
         test('should not collide with AVVENTENDE sykmeldinger and still show "Legg til egenmeldingsdager"', async ({
@@ -153,7 +153,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await expect(page.getByRole('heading', { name: /Sykmeldingen ble sendt til/ })).toBeVisible()
             await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
 
-            await expectNoAxeViolations(page)
+            await expect(page).toHaveNoViolations()
         })
     })
 })

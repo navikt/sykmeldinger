@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test'
 
-import { expectNoAxeViolations } from './test-utils'
 import { gotoScenario, navigateToFirstSykmelding } from './user-actions'
 
 test.describe('Avbryt sykmelding', () => {
@@ -12,7 +11,7 @@ test.describe('Avbryt sykmelding', () => {
         await expect(page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ })).not.toBeVisible()
         await expect(page.getByRole('button', { name: /GJØR UTFYLLINGEN PÅ NYTT/ })).toBeVisible()
 
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
     })
 
     test('should reopen avbrutt sykmelding', async ({ page }) => {
@@ -39,7 +38,7 @@ test.describe('Avbryt sykmelding', () => {
         await expect(page.getByText(/Sykmeldingen ble avbrutt av deg/)).toBeVisible()
         await expect(page.getByRole('button', { name: 'Ferdig' })).toBeVisible()
 
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
     })
 
     test('should show details for avbrutt egenmelding sykmelding', async ({ page }) => {
@@ -48,6 +47,6 @@ test.describe('Avbryt sykmelding', () => {
 
         await expect(page.getByRole('heading', { name: 'Egenmeldingen ble avbrutt av deg' })).toBeVisible()
 
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
     })
 })

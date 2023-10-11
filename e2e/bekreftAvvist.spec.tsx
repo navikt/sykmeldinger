@@ -3,7 +3,6 @@ import { subDays } from 'date-fns'
 
 import { toReadableDate } from '../src/utils/dateUtils'
 
-import { expectNoAxeViolations } from './test-utils'
 import { gotoScenario, navigateToFirstSykmelding } from './user-actions'
 
 test.describe('Bekreft avvist sykmelding som lest', () => {
@@ -16,7 +15,7 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
             .click()
 
         await expect(page.getByText(/Du trenger en ny sykmelding/)).toBeVisible()
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
     })
 
     test('should get error message when trying to submit without checking checkbox', async ({ page }) => {
@@ -36,7 +35,7 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
             }),
         ).toHaveDescriptiveText('Du må bekrefte at du har lest at sykmeldingen er avvist.')
 
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
     })
 
     test('should remove error message after clicking checkbox', async ({ page }) => {
@@ -58,7 +57,7 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
             }),
         ).toHaveDescriptiveText('Du må bekrefte at du har lest at sykmeldingen er avvist.')
 
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
 
         await page
             .getByRole('checkbox', {
@@ -72,7 +71,7 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
             }),
         ).not.toHaveDescriptiveText()
 
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
     })
 
     test('should show confirmation after submitting', async ({ page }) => {
@@ -85,7 +84,7 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
             })
             .click()
 
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
 
         await page.getByRole('button', { name: 'Bekreft' }).click()
 
@@ -96,6 +95,6 @@ test.describe('Bekreft avvist sykmelding som lest', () => {
         ).toBeVisible()
 
         await expect(page.getByRole('button', { name: 'Ferdig' })).toBeVisible()
-        await expectNoAxeViolations(page)
+        await expect(page).toHaveNoViolations()
     })
 })

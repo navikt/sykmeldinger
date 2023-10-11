@@ -1,8 +1,8 @@
-import { Page } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 
 import type { Scenarios } from '../src/server/graphql/mock-db/scenarios'
 
-import { expectNoAxeViolations, getRadioInGroup } from './test-utils'
+import { getRadioInGroup } from './test-utils'
 
 export function gotoScenario(
     scenario: Scenarios = 'normal',
@@ -37,7 +37,7 @@ export function navigateToFirstSykmelding(type: 'nye' | 'tidligere', variant: '1
         let linkRegexp: RegExp
         switch (variant) {
             case '100%':
-                linkRegexp = /Sykmelding 100%/i
+                linkRegexp = type === 'nye' ? /Sykmelding 100%/i : /100% sykmeldt/i
                 break
             case 'egenmelding':
                 linkRegexp = /Egenmelding/i
@@ -47,6 +47,7 @@ export function navigateToFirstSykmelding(type: 'nye' | 'tidligere', variant: '1
         await page
             .getByRole('region', { name: sectionRegex })
             .getByRole('link', { name: new RegExp(linkRegexp) })
+            .first()
             .click()
     }
 }
@@ -77,13 +78,13 @@ export function bekreftNarmesteleder(narmesteleder: string, svar: 'Ja' | 'Nei' =
 }
 
 export async function sendSykmelding(page: Page): Promise<void> {
-    await expectNoAxeViolations(page)
+    await expect(page).toHaveNoViolations()
     await page.getByRole('button', { name: /Send sykmelding/ }).click()
     await page.waitForURL('**/kvittering')
 }
 
 export async function bekreftSykmelding(page: Page): Promise<void> {
-    await expectNoAxeViolations(page)
+    await expect(page).toHaveNoViolations()
     await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
     await page.waitForURL('**/kvittering')
 }

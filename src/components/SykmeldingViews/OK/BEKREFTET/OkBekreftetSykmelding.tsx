@@ -29,7 +29,7 @@ function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProp
                 />
             </div>
 
-            {!Boolean(sykmelding.egenmeldt) && (
+            {!(sykmelding.egenmeldt != null && sykmelding.egenmeldt) && (
                 <div className="mb-8">
                     <div className="mb-4">
                         <Button
