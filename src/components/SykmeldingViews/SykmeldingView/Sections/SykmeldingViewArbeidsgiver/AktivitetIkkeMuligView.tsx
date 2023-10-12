@@ -8,13 +8,14 @@ import { SykmeldingInfo, SykmeldingListInfo } from '../../../../molecules/sykmel
 
 interface AktivitetIkkeMuligViewProps {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
+    parentId: string
 }
 
-const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig }: AktivitetIkkeMuligViewProps): ReactElement | null => {
+const AktivitetIkkeMuligView = ({ aktivitetIkkeMulig, parentId }: AktivitetIkkeMuligViewProps): ReactElement | null => {
     if (!aktivitetIkkeMulig.arbeidsrelatertArsak) return null
 
     return (
-        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
+        <SykmeldingGroup parentId={parentId} heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
             <SykmeldingListInfo
                 heading="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
                 texts={aktivitetIkkeMulig.arbeidsrelatertArsak.arsak.map(arbeidsrelatertArsakToText)}

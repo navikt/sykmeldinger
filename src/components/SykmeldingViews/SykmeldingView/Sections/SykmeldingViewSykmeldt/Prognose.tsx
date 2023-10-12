@@ -13,9 +13,10 @@ import {
 interface Props {
     prognose?: Prognose | null
     isV3: boolean
+    parentId: string
 }
 
-function Prognose({ prognose, isV3 }: Props): ReactElement | null {
+function Prognose({ prognose, isV3, parentId }: Props): ReactElement | null {
     if (!prognose) return null
 
     if (
@@ -28,7 +29,7 @@ function Prognose({ prognose, isV3 }: Props): ReactElement | null {
     }
 
     return (
-        <SykmeldingGroup heading="Prognose" Icon={ClockDashedIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Prognose" Icon={ClockDashedIcon}>
             {prognose.arbeidsforEtterPeriode && (
                 <SykmeldingJaInfo
                     heading={

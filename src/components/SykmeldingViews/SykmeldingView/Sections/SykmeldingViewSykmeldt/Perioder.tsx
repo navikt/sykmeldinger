@@ -1,5 +1,5 @@
 import { CalendarIcon } from '@navikt/aksel-icons'
-import { ReactElement } from 'react'
+import { PropsWithChildren, ReactElement } from 'react'
 
 import { getPeriodTitle, getReadableLength } from '../../../../../utils/periodeUtils'
 import { Periode } from '../../../../../fetching/graphql.generated'
@@ -15,11 +15,12 @@ import {
 interface Props {
     perioder: Periode[]
     isV3: boolean
+    parentId: string
 }
 
-function Perioder({ perioder, isV3 }: Props): ReactElement {
+function Perioder({ perioder, isV3, children, parentId }: PropsWithChildren<Props>): ReactElement {
     return (
-        <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={CalendarIcon} wrap>
+        <SykmeldingGroup parentId={parentId} heading="Perioder (f.o.m. - t.o.m.)" Icon={CalendarIcon} wrap>
             {perioder.map((periode, index) => (
                 <SykmeldingInfoSubGroup key={index} variant="blue">
                     <SykmeldingMultilineInfo
@@ -42,6 +43,7 @@ function Perioder({ perioder, isV3 }: Props): ReactElement {
                     )}
                 </SykmeldingInfoSubGroup>
             ))}
+            {children}
         </SykmeldingGroup>
     )
 }

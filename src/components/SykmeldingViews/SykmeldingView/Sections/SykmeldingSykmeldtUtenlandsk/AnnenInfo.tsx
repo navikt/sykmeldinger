@@ -8,11 +8,12 @@ import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGrou
 
 interface Props {
     sykmelding: UtenlandskSykmelding
+    parentId: string
 }
 
-function AnnenInfo({ sykmelding }: Props): ReactElement {
+function AnnenInfo({ sykmelding, parentId }: Props): ReactElement {
     return (
-        <SykmeldingGroup heading="Annen info" Icon={InformationIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Annen info" Icon={InformationIcon}>
             <SykmeldingInfo heading="Dato sykmeldingen ble skrevet" variant="blue">
                 {toReadableDate(sykmelding.behandletTidspunkt)}
             </SykmeldingInfo>

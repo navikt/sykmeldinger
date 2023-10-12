@@ -6,13 +6,14 @@ import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface ArbeidsevneViewProps {
     tiltakArbeidsplassen?: string | null
+    parentId: string
 }
 
-function ArbeidsevneView({ tiltakArbeidsplassen }: ArbeidsevneViewProps): ReactElement | null {
+function ArbeidsevneView({ tiltakArbeidsplassen, parentId }: ArbeidsevneViewProps): ReactElement | null {
     if (!tiltakArbeidsplassen) return null
 
     return (
-        <SykmeldingGroup heading="Hva skal til for å bedre arbeidsevnen?" Icon={HandshakeIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Hva skal til for å bedre arbeidsevnen?" Icon={HandshakeIcon}>
             <SykmeldingInfo heading="Tilrettelegging/hensyn som bør tas på arbeidsplassen">
                 {tiltakArbeidsplassen}
             </SykmeldingInfo>

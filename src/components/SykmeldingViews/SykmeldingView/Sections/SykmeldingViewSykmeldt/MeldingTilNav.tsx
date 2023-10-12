@@ -7,15 +7,16 @@ import { SykmeldingInfo, SykmeldingJaInfo } from '../../../../molecules/sykmeldi
 
 interface Props {
     meldingTilNav?: MeldingTilNav | null
+    parentId: string
 }
 
-function MeldingTilNav({ meldingTilNav }: Props): ReactElement | null {
+function MeldingTilNav({ meldingTilNav, parentId }: Props): ReactElement | null {
     if (meldingTilNav == null || (!meldingTilNav.bistandUmiddelbart && meldingTilNav.beskrivBistand == null)) {
         return null
     }
 
     return (
-        <SykmeldingGroup heading="Melding til NAV" Icon={PersonChatIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Melding til NAV" Icon={PersonChatIcon}>
             {meldingTilNav.bistandUmiddelbart && (
                 <SykmeldingJaInfo heading="Ønskes bistand fra NAV nå?" variant="gray" />
             )}

@@ -8,16 +8,17 @@ import { SykmeldingMultilineInfo } from '../../../../molecules/sykmelding/Sykmel
 
 interface Props {
     pasient?: Pasient | null
+    parentId: string
 }
 
-function SykmeldingenGjelder({ pasient }: Props): ReactElement | null {
+function SykmeldingenGjelder({ pasient, parentId }: Props): ReactElement | null {
     if (!pasient) return null
 
     const name = getPasientName(pasient)
     if (!name) return null
 
     return (
-        <SykmeldingGroup heading="Sykmeldingen gjelder" Icon={PersonIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Sykmeldingen gjelder" Icon={PersonIcon}>
             <SykmeldingMultilineInfo lines={[name, `Fødselsnr: ${pasient.fnr}`]} variant="gray" />
         </SykmeldingGroup>
     )

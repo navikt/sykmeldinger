@@ -9,11 +9,12 @@ import { SykmeldingInfo, SykmeldingSladd } from '../../../../molecules/sykmeldin
 
 interface Props {
     sykmelding: UtenlandskSykmelding
+    parentId: string
 }
 
-function AnnenInfoView({ sykmelding }: Props): ReactElement {
+function AnnenInfoView({ sykmelding, parentId }: Props): ReactElement {
     return (
-        <SykmeldingGroup heading="Annen info" Icon={InformationIcon} tight>
+        <SykmeldingGroup parentId={parentId} heading="Annen info" Icon={InformationIcon} tight>
             <SykmeldingInfo heading="Dato sykmeldingen ble skrevet">
                 {toReadableDate(sykmelding.behandletTidspunkt)}
             </SykmeldingInfo>

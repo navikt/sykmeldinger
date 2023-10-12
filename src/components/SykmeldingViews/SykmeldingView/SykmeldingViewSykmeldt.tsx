@@ -25,32 +25,44 @@ interface Props {
     editableEgenmelding: boolean
 }
 
+const sectionId = 'sykmelding-sykmeldt'
+
 function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): ReactElement {
     const isV3Sykmelding = isV3(sykmelding)
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 
     return (
         <div>
-            <SykmeldingenGjelder pasient={sykmelding.pasient} />
-            <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3Sykmelding} />
-            {egenmeldingsdager && egenmeldingsdager.dager.length > 0 && (
-                <Egenmeldingsdager
-                    sykmeldingId={sykmelding.id}
-                    egenmeldingsdager={egenmeldingsdager}
-                    sykmelding={sykmelding}
-                    editableEgenmelding={editableEgenmelding}
-                />
-            )}
-            {editableEgenmelding && (
-                <RedigerEgenmeldingsdagerLink
-                    sykmeldingId={sykmelding.id}
-                    hasEgenmeldingsdager={egenmeldingsdager != null}
-                />
-            )}
-            <AnnenInfo sykmelding={sykmelding} />
+            <SykmeldingenGjelder pasient={sykmelding.pasient} parentId={sectionId} />
+            <Perioder
+                perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
+                isV3={isV3Sykmelding}
+                parentId={sectionId}
+            >
+                {egenmeldingsdager && egenmeldingsdager.dager.length > 0 && (
+                    <Egenmeldingsdager
+                        sykmeldingId={sykmelding.id}
+                        egenmeldingsdager={egenmeldingsdager}
+                        sykmelding={sykmelding}
+                        editableEgenmelding={editableEgenmelding}
+                    />
+                )}
+                {editableEgenmelding && (
+                    <RedigerEgenmeldingsdagerLink
+                        sykmeldingId={sykmelding.id}
+                        hasEgenmeldingsdager={egenmeldingsdager != null}
+                    />
+                )}
+            </Perioder>
+
+            <AnnenInfo sykmelding={sykmelding} parentId={sectionId} />
 
             <FlereOpplysninger>
-                <MedisinskTilstand medisinskVurdering={sykmelding.medisinskVurdering} isV3={isV3Sykmelding} />
+                <MedisinskTilstand
+                    medisinskVurdering={sykmelding.medisinskVurdering}
+                    isV3={isV3Sykmelding}
+                    parentId={`${sectionId}flere-opplysninger`}
+                />
                 {sykmelding.sykmeldingsperioder?.map(
                     (periode: Periode, index: number) =>
                         periode.aktivitetIkkeMulig && (
@@ -58,23 +70,36 @@ function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): Rea
                                 key={index}
                                 aktivitetIkkeMulig={periode.aktivitetIkkeMulig}
                                 isV3={isV3Sykmelding}
+                                parentId={`${sectionId}flere-opplysninger-${index}`}
                             />
                         ),
                 )}
-                <Prognose prognose={sykmelding.prognose} isV3={isV3Sykmelding} />
+                <Prognose
+                    prognose={sykmelding.prognose}
+                    isV3={isV3Sykmelding}
+                    parentId={`${sectionId}flere-opplysninger`}
+                />
                 <UtdypendeOpplysninger
                     utdypendeOpplysninger={
                         sykmelding.utdypendeOpplysninger as Record<string, Record<string, UtdypendeOpplysning>>
                     }
+                    parentId={`${sectionId}flere-opplysninger`}
                 />
                 <Arbeidsevne
                     tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen}
                     tiltakNAV={sykmelding.tiltakNAV}
                     andreTiltak={sykmelding.andreTiltak}
+                    parentId={`${sectionId}flere-opplysninger`}
                 />
-                <MeldingTilNav meldingTilNav={sykmelding.meldingTilNAV} />
-                <MeldingTilArbeidsgiver meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver} />
-                <Tilbakedatering kontaktMedPasient={sykmelding.kontaktMedPasient} />
+                <MeldingTilNav meldingTilNav={sykmelding.meldingTilNAV} parentId={`${sectionId}flere-opplysninger`} />
+                <MeldingTilArbeidsgiver
+                    meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver}
+                    parentId={`${sectionId}flere-opplysninger`}
+                />
+                <Tilbakedatering
+                    kontaktMedPasient={sykmelding.kontaktMedPasient}
+                    parentId={`${sectionId}flere-opplysninger`}
+                />
             </FlereOpplysninger>
         </div>
     )

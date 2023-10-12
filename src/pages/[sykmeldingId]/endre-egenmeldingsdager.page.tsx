@@ -47,10 +47,11 @@ function EndreEgenmeldingsdagerPage(): ReactElement {
                             Sykmeldingen er ikke sendt, og kan derfor ikke redigeres.
                         </Alert>
                     )}
-                    <SykmeldingenGjelder pasient={sykmelding.pasient} />
+                    <SykmeldingenGjelder pasient={sykmelding.pasient} parentId="edit-egenmeldingsdager" />
                     <Perioder
                         perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
                         isV3={isV3(sykmelding)}
+                        parentId="edit-egenmeldingsdager"
                     />
                     <EndreEgenmelding sykmelding={sykmelding} egenmeldingsdager={egenmeldingsdager} />
                 </>

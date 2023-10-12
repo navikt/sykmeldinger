@@ -8,16 +8,17 @@ import { getPasientName } from '../../../../../utils/pasientUtils'
 
 interface Props {
     pasient?: Pasient | null
+    parentId: string
 }
 
-function SykmeldingenGjelderView({ pasient }: Props): ReactElement | null {
+function SykmeldingenGjelderView({ pasient, parentId }: Props): ReactElement | null {
     if (!pasient) return null
 
     const name = getPasientName(pasient)
     if (!name) return null
 
     return (
-        <SykmeldingGroup heading="Sykmeldingen gjelder" Icon={PersonIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Sykmeldingen gjelder" Icon={PersonIcon}>
             <div className="pl-4">
                 <BodyShort>{name}</BodyShort>
                 {pasient.fnr && <BodyShort>Fødselsnr: {pasient.fnr}</BodyShort>}

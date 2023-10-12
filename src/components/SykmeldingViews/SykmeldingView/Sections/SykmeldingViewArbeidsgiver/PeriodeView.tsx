@@ -20,11 +20,12 @@ interface PeriodeViewProps {
      * Egenmeldingsdager can either be the answer from a sykmelding, or the current values in the form.
      */
     egenmeldingsdager?: (SvarUnion_DagerSvar_Fragment | string[]) | null
+    parentId: string
 }
 
-function PeriodeView({ perioder, egenmeldingsdager }: PeriodeViewProps): ReactElement {
+function PeriodeView({ perioder, egenmeldingsdager, parentId }: PeriodeViewProps): ReactElement {
     return (
-        <SykmeldingGroup heading="Perioder (f.o.m. - t.o.m.)" Icon={CalendarIcon} wrap>
+        <SykmeldingGroup parentId={parentId} heading="Perioder (f.o.m. - t.o.m.)" Icon={CalendarIcon} wrap>
             {perioder.map((periode, index) => (
                 <SykmeldingInfoSubGroup key={index}>
                     <SykmeldingMultilineInfo

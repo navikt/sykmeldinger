@@ -8,15 +8,16 @@ import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     kontaktMedPasient: KontaktMedPasient
+    parentId: string
 }
 
-function Tilbakedatering({ kontaktMedPasient }: Props): ReactElement | null {
+function Tilbakedatering({ kontaktMedPasient, parentId }: Props): ReactElement | null {
     if (!kontaktMedPasient.kontaktDato && !kontaktMedPasient.begrunnelseIkkeKontakt) {
         return null
     }
 
     return (
-        <SykmeldingGroup heading="Tilbakedatering" Icon={ClockDashedIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Tilbakedatering" Icon={ClockDashedIcon}>
             {kontaktMedPasient.kontaktDato != null && (
                 <SykmeldingInfo heading="Dato for dokumenterbar kontakt med pasienten" variant="gray">
                     {toReadableDate(kontaktMedPasient.kontaktDato)}

@@ -25,7 +25,7 @@ describe('AktivitetIkkeMulig', () => {
             },
         }
 
-        const { container } = render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} isV3={false} />)
+        const { container } = render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} isV3={false} parentId="test" />)
 
         expect(screen.getByText('Medisinske årsaker hindrer arbeidsrelatert aktivitet')).toBeInTheDocument()
         expect(screen.getByText('Helsetilstanden hindrer pasienten i å være i aktivitet')).toBeInTheDocument()
@@ -47,7 +47,7 @@ describe('AktivitetIkkeMulig', () => {
             arbeidsrelatertArsak: null,
         }
 
-        render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} isV3={false} />)
+        render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} isV3={false} parentId="test" />)
         expect(screen.queryByText('Aktivitet på arbeidsplassen')).not.toBeInTheDocument()
     })
 })

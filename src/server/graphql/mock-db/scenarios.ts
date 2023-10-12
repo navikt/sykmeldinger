@@ -208,6 +208,16 @@ const mangeGamleSykmeldinger: ScenarioCreator = () => {
     }
 }
 
+const flerePerioder: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 0 })
+            .status(StatusEvent.APEN)
+            .enkelPeriode({ offset: 0, days: 7 })
+            .enkelPeriode({ offset: -7, days: 7 })
+            .build(),
+    ],
+})
+
 export type Scenarios = keyof typeof simpleScenarios | keyof typeof otherScenarios | keyof typeof e2eScenarios
 export const simpleScenarios = {
     normal: {
@@ -252,6 +262,10 @@ export const otherScenarios = {
     mangeGamleSykmeldinger: {
         description: 'Mange gamle sykmeldinger',
         scenario: mangeGamleSykmeldinger,
+    },
+    flerePerioder: {
+        description: 'En sykmelding med flere perioder',
+        scenario: flerePerioder,
     },
     avbrutt: {
         description: 'Èn avbrutt sykmelding',

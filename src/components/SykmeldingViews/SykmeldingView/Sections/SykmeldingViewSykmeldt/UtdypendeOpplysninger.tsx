@@ -8,11 +8,12 @@ import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     utdypendeOpplysninger: Record<string, Record<string, UtdypendeOpplysning>>
+    parentId: string
 }
 
 type SporsmalSvarTuple = [sporsmal: string, svar: string]
 
-function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): ReactElement | null {
+function UtdypendeOpplysninger({ utdypendeOpplysninger, parentId }: Props): ReactElement | null {
     if (Object.keys(utdypendeOpplysninger).length === 0) return null
 
     const sporsmalsToShow: SporsmalSvarTuple[] = R.pipe(
@@ -24,7 +25,7 @@ function UtdypendeOpplysninger({ utdypendeOpplysninger }: Props): ReactElement |
     )
 
     return (
-        <SykmeldingGroup heading="Utdypende opplysninger" Icon={FileTextIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Utdypende opplysninger" Icon={FileTextIcon}>
             {sporsmalsToShow.map(([sporsmal, svar]) => (
                 <SykmeldingInfo key={sporsmal} heading={sporsmal} variant="gray">
                     {svar}

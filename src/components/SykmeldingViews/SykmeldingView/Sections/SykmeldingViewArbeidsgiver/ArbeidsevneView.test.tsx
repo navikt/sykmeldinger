@@ -5,12 +5,12 @@ import ArbeidsevneView from './ArbeidsevneView'
 
 describe('ArbeidsevneView', () => {
     it('Renders only tiltakArbeidsplassen for arbeidsgiver', () => {
-        render(<ArbeidsevneView tiltakArbeidsplassen="tiltak på arbeidsplassen" />)
+        render(<ArbeidsevneView tiltakArbeidsplassen="tiltak på arbeidsplassen" parentId="test" />)
         expect(screen.getByText('tiltak på arbeidsplassen')).toBeInTheDocument()
     })
 
     it('Does not render tiltak if then dont exist', () => {
-        render(<ArbeidsevneView />)
+        render(<ArbeidsevneView parentId="test" />)
         expect(screen.queryByText('tiltak på arbeidsplassen')).not.toBeInTheDocument()
     })
 })

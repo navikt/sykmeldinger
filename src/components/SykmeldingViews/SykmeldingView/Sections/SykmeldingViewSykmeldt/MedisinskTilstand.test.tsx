@@ -20,7 +20,7 @@ describe('MedisinskTilstand', () => {
             yrkesskade: false,
             yrkesskadeDato: null,
         }
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} />)
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} parentId="test" />)
 
         expect(screen.getByText('Annen lovfestet fraværsgrunn')).toBeInTheDocument()
         expect(screen.getByText('Når vedkommende er donor eller er under vurdering som donor')).toBeInTheDocument()
@@ -39,7 +39,7 @@ describe('MedisinskTilstand', () => {
             yrkesskadeDato: null,
             annenFraversArsak: null,
         }
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} />)
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} parentId="test" />)
 
         expect(screen.getByText('Er sykdommen svangerskapsrelatert?')).toBeInTheDocument()
     })
@@ -54,7 +54,7 @@ describe('MedisinskTilstand', () => {
             yrkesskadeDato: '2020-04-01',
             annenFraversArsak: null,
         }
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} />)
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} parentId="test" />)
 
         expect(screen.getByText('Kan sykdommen skyldes en yrkesskade/yrkessykdom?')).toBeInTheDocument()
 
@@ -83,7 +83,7 @@ describe('MedisinskTilstand', () => {
             yrkesskade: false,
             yrkesskadeDato: null,
         }
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} />)
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} parentId="test" />)
         expect(screen.getByText('Bidiagnose')).toBeInTheDocument()
         expect(screen.getByText('Vondt i foten')).toBeInTheDocument()
     })
@@ -102,7 +102,7 @@ describe('MedisinskTilstand', () => {
             yrkesskade: false,
             yrkesskadeDato: null,
         }
-        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} />)
+        render(<MedisinskTilstand medisinskVurdering={medisinskVurdering} isV3={false} parentId="test" />)
         expect(screen.queryByText('Bidiagnose')).not.toBeInTheDocument()
     })
 })

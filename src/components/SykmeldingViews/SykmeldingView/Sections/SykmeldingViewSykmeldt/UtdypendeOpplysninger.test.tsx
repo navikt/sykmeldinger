@@ -36,7 +36,7 @@ describe('UtdypendeOpplysninger', () => {
             },
         }
 
-        render(<UtdypendeOpplysninger utdypendeOpplysninger={utdypendeOpplysninger} />)
+        render(<UtdypendeOpplysninger utdypendeOpplysninger={utdypendeOpplysninger} parentId="test" />)
 
         expect(screen.getByText('Utdypende opplysninger')).toBeInTheDocument()
         expect(screen.getByText('dette er det første spørsmålet')).toBeInTheDocument()

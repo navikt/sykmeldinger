@@ -13,15 +13,16 @@ import {
 interface Props {
     aktivitetIkkeMulig: AktivitetIkkeMuligPeriode
     isV3: boolean
+    parentId: string
 }
 
-const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3 }: Props): ReactElement | null => {
+const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3, parentId }: Props): ReactElement | null => {
     if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
         return null
     }
 
     return (
-        <SykmeldingGroup heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
+        <SykmeldingGroup parentId={parentId} heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
             {aktivitetIkkeMulig.medisinskArsak != null && (
                 <SykmeldingInfoSubGroup variant="gray">
                     <SykmeldingListInfo

@@ -12,7 +12,7 @@ describe('Tilbakedatering', () => {
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: null,
         }
-        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />)
+        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} parentId="test" />)
 
         expect(screen.getByText('Tilbakedatering')).toBeInTheDocument()
         expect(screen.getByText('Dato for dokumenterbar kontakt med pasienten')).toBeInTheDocument()
@@ -25,7 +25,7 @@ describe('Tilbakedatering', () => {
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: 'han var kjempesyk',
         }
-        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />)
+        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} parentId="test" />)
 
         expect(screen.getByText('Begrunnelse for tilbakedatering')).toBeInTheDocument()
         expect(screen.getByText('han var kjempesyk')).toBeInTheDocument()
@@ -37,7 +37,7 @@ describe('Tilbakedatering', () => {
             kontaktDato: null,
             begrunnelseIkkeKontakt: null,
         }
-        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} />)
+        render(<Tilbakedatering kontaktMedPasient={kontaktMedPasient} parentId="test" />)
 
         expect(screen.queryByText('Begrunnelse for tilbakedatering')).not.toBeInTheDocument()
     })

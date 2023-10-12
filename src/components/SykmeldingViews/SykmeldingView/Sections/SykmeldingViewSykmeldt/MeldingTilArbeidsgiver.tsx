@@ -6,13 +6,14 @@ import { SykmeldingInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 
 interface Props {
     meldingTilArbeidsgiver?: string | null
+    parentId: string
 }
 
-function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver }: Props): ReactElement | null {
+function MeldingTilArbeidsgiver({ meldingTilArbeidsgiver, parentId }: Props): ReactElement | null {
     if (!meldingTilArbeidsgiver) return null
 
     return (
-        <SykmeldingGroup heading="Melding til arbeidsgiver" Icon={PersonSuitIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Melding til arbeidsgiver" Icon={PersonSuitIcon}>
             <SykmeldingInfo heading="Andre innspill til arbeidsgiver" variant="gray">
                 {meldingTilArbeidsgiver}
             </SykmeldingInfo>

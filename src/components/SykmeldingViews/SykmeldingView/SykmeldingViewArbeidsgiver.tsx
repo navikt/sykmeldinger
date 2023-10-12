@@ -20,37 +20,44 @@ interface SykmeldingviewProps {
     chosenEgenmeldingsdager?: string[]
 }
 
+const sectionId = 'sykmelding-arbeidsgiver'
+
 function SykmeldingViewArbeidsgiver({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): ReactElement {
     return (
         <div className="md:p-4 pt-0">
-            <SykmeldingenGjelderView pasient={sykmelding.pasient} />
+            <SykmeldingenGjelderView pasient={sykmelding.pasient} parentId={sectionId} />
             <PeriodeView
                 perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
                 egenmeldingsdager={
                     chosenEgenmeldingsdager ?? findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
                 }
+                parentId={sectionId}
             />
-            <AnnenInfoView sykmelding={sykmelding} />
+            <AnnenInfoView sykmelding={sykmelding} parentId={sectionId} />
             {sykmelding.medisinskVurdering?.hovedDiagnose && sykmelding.medisinskVurdering.biDiagnoser.length > 0 && (
-                <Diagnoser medisinskVurdering={sykmelding.medisinskVurdering} />
+                <Diagnoser medisinskVurdering={sykmelding.medisinskVurdering} parentId={sectionId} />
             )}
             {R.pipe(
                 sykmelding.sykmeldingsperioder,
                 R.map(R.prop('aktivitetIkkeMulig')),
                 R.compact,
-                R.map((it) => (
+                R.map.indexed((it, index) => (
                     <AktivitetIkkeMuligView
                         key={
                             it.arbeidsrelatertArsak?.arsak.join('-') ?? it.medisinskArsak?.arsak.join('-') ?? 'unknown'
                         }
                         aktivitetIkkeMulig={it}
+                        parentId={`${sectionId}-${index}`}
                     />
                 )),
             )}
-            <PrognoseView prognose={sykmelding.prognose} />
-            <ArbeidsevneView tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} />
-            <MeldingTilArbeidsgiverView meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver} />
-            <TilbakedateringView kontaktMedPasient={sykmelding.kontaktMedPasient} />
+            <PrognoseView prognose={sykmelding.prognose} parentId={sectionId} />
+            <ArbeidsevneView tiltakArbeidsplassen={sykmelding.tiltakArbeidsplassen} parentId={sectionId} />
+            <MeldingTilArbeidsgiverView
+                meldingTilArbeidsgiver={sykmelding.meldingTilArbeidsgiver}
+                parentId={sectionId}
+            />
+            <TilbakedateringView kontaktMedPasient={sykmelding.kontaktMedPasient} parentId={sectionId} />
         </div>
     )
 }
