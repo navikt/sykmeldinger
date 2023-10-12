@@ -8,11 +8,12 @@ import { SykmeldingSladd } from '../../../../molecules/sykmelding/SykmeldingInfo
 
 interface Props {
     medisinskVurdering: MedisinskVurdering
+    parentId: string
 }
 
-function Diagnoser({ medisinskVurdering }: Props): ReactElement {
+function Diagnoser({ medisinskVurdering, parentId }: Props): ReactElement {
     return (
-        <SykmeldingGroup heading="Medisinsk tilstand" Icon={BandageIcon} tight>
+        <SykmeldingGroup parentId={parentId} heading="Medisinsk tilstand" Icon={BandageIcon} tight>
             {medisinskVurdering.hovedDiagnose?.tekst && <SykmeldingSladd heading="Diagnose" />}
             {R.pipe(
                 medisinskVurdering.biDiagnoser,

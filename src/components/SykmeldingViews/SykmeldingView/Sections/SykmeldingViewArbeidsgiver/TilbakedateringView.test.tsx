@@ -12,7 +12,7 @@ describe('TilbakedateringView', () => {
             kontaktDato: '2021-04-01',
             begrunnelseIkkeKontakt: null,
         }
-        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />)
+        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} parentId="test" />)
 
         expect(screen.getByText('Tilbakedatering')).toBeInTheDocument()
         expect(screen.getByText('Dato for dokumenterbar kontakt med pasienten')).toBeInTheDocument()
@@ -25,7 +25,7 @@ describe('TilbakedateringView', () => {
             kontaktDato: null,
             begrunnelseIkkeKontakt: null,
         }
-        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} />)
+        render(<TilbakedateringView kontaktMedPasient={kontaktMedPasient} parentId="test" />)
 
         expect(screen.queryByText('Tilbakedatering')).not.toBeInTheDocument()
     })

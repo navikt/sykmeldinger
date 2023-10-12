@@ -10,6 +10,7 @@ describe('Arbeidsevne', () => {
                 tiltakArbeidsplassen="tiltak på arbeidsplassen"
                 tiltakNAV="tiltak nav"
                 andreTiltak="andre tiltak"
+                parentId="test"
             />,
         )
         expect(screen.getByText('tiltak på arbeidsplassen')).toBeInTheDocument()
@@ -18,12 +19,12 @@ describe('Arbeidsevne', () => {
     })
 
     it('Renders tiltakArbeidsplassen even if other tiltaks are null', () => {
-        render(<Arbeidsevne tiltakArbeidsplassen="tiltak på arbeidsplassen" />)
+        render(<Arbeidsevne tiltakArbeidsplassen="tiltak på arbeidsplassen" parentId="test" />)
         expect(screen.getByText('tiltak på arbeidsplassen')).toBeInTheDocument()
     })
 
     it('Does not render tiltak if then dont exist', () => {
-        render(<Arbeidsevne />)
+        render(<Arbeidsevne parentId="test" />)
         expect(screen.queryByText('tiltak på arbeidsplassen')).not.toBeInTheDocument()
         expect(screen.queryByText('tiltak nav')).not.toBeInTheDocument()
         expect(screen.queryByText('andre tiltak')).not.toBeInTheDocument()

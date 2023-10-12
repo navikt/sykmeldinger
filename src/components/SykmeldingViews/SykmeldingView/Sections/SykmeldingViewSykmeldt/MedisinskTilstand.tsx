@@ -11,13 +11,14 @@ import { SykmeldingInfo, SykmeldingJaInfo } from '../../../../molecules/sykmeldi
 interface Props {
     medisinskVurdering: MedisinskVurdering | null | undefined
     isV3: boolean
+    parentId: string
 }
 
-function MedisinskTilstand({ isV3, medisinskVurdering }: Props): ReactElement | null {
+function MedisinskTilstand({ isV3, medisinskVurdering, parentId }: Props): ReactElement | null {
     if (!medisinskVurdering) return null
 
     return (
-        <SykmeldingGroup heading="Medisinsk tilstand" Icon={BandageIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Medisinsk tilstand" Icon={BandageIcon}>
             {medisinskVurdering.hovedDiagnose?.tekst && (
                 <SykmeldingInfo heading="Diagnose" variant="gray">
                     {medisinskVurdering.hovedDiagnose.tekst}

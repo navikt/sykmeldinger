@@ -16,14 +16,15 @@ interface SykmeldingviewProps {
 function SykmeldingArbeidsgiverUtenlandsk({ sykmelding, chosenEgenmeldingsdager }: SykmeldingviewProps): ReactElement {
     return (
         <div className="px-4">
-            <SykmeldingenGjelderView pasient={sykmelding.pasient} />
+            <SykmeldingenGjelderView pasient={sykmelding.pasient} parentId="sykmelding-arbeidsgiver-utenlandsk" />
             <PeriodeView
                 perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
                 egenmeldingsdager={
                     chosenEgenmeldingsdager ?? findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
                 }
+                parentId="sykmelding-arbeidsgiver-utenlandsk"
             />
-            <AnnenInfoView sykmelding={sykmelding} />
+            <AnnenInfoView sykmelding={sykmelding} parentId="sykmelding-arbeidsgiver-utenlandsk" />
         </div>
     )
 }

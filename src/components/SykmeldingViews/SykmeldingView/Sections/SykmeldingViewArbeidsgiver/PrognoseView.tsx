@@ -7,15 +7,16 @@ import { SykmeldingInfo, SykmeldingJaInfo } from '../../../../molecules/sykmeldi
 
 interface Props {
     prognose?: Prognose | null
+    parentId: string
 }
 
-function PrognoseView({ prognose }: Props): ReactElement | null {
+function PrognoseView({ prognose, parentId }: Props): ReactElement | null {
     if (prognose == null || (!prognose.arbeidsforEtterPeriode && !prognose.hensynArbeidsplassen)) {
         return null
     }
 
     return (
-        <SykmeldingGroup heading="Prognose" Icon={ClockDashedIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Prognose" Icon={ClockDashedIcon}>
             {prognose.arbeidsforEtterPeriode && (
                 <SykmeldingJaInfo heading="Er pasienten 100% arbeidsfør etter denne perioden?" />
             )}

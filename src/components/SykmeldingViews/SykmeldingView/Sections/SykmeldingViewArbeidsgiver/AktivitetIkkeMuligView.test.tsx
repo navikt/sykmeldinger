@@ -25,7 +25,7 @@ describe('AktivitetIkkeMuligView', () => {
             },
         }
 
-        render(<AktivitetIkkeMuligView aktivitetIkkeMulig={periode} />)
+        render(<AktivitetIkkeMuligView aktivitetIkkeMulig={periode} parentId="test" />)
 
         expect(
             screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),

@@ -21,23 +21,28 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props
 
     return (
         <div>
-            <SykmeldingenGjelder pasient={sykmelding.pasient} />
-            <Perioder perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)} isV3={isV3(sykmelding)} />
-            {egenmeldingsdager && egenmeldingsdager.dager.length > 0 && (
-                <Egenmeldingsdager
-                    sykmeldingId={sykmelding.id}
-                    egenmeldingsdager={egenmeldingsdager}
-                    sykmelding={sykmelding}
-                    editableEgenmelding={editableEgenmelding}
-                />
-            )}
-            {editableEgenmelding && (
-                <RedigerEgenmeldingsdagerLink
-                    sykmeldingId={sykmelding.id}
-                    hasEgenmeldingsdager={egenmeldingsdager != null}
-                />
-            )}
-            <AnnenInfo sykmelding={sykmelding} />
+            <SykmeldingenGjelder pasient={sykmelding.pasient} parentId="sykmelding-sykmeldt-utenlandsk" />
+            <Perioder
+                perioder={getSykmeldingperioderSorted(sykmelding.sykmeldingsperioder)}
+                isV3={isV3(sykmelding)}
+                parentId="sykmelding-sykmeldt-utenlandsk"
+            >
+                {egenmeldingsdager && egenmeldingsdager.dager.length > 0 && (
+                    <Egenmeldingsdager
+                        sykmeldingId={sykmelding.id}
+                        egenmeldingsdager={egenmeldingsdager}
+                        sykmelding={sykmelding}
+                        editableEgenmelding={editableEgenmelding}
+                    />
+                )}
+                {editableEgenmelding && (
+                    <RedigerEgenmeldingsdagerLink
+                        sykmeldingId={sykmelding.id}
+                        hasEgenmeldingsdager={egenmeldingsdager != null}
+                    />
+                )}
+            </Perioder>
+            <AnnenInfo sykmelding={sykmelding} parentId="sykmelding-sykmeldt-utenlandsk" />
         </div>
     )
 }

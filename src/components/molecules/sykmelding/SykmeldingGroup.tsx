@@ -5,9 +5,12 @@ import { CalendarIcon } from '@navikt/aksel-icons'
 import { cn } from '../../../utils/tw-utils'
 import { cleanId } from '../../../utils/stringUtils'
 
-interface Props {
-    title: string
+type Props = {
+    heading: string
+    parentId: string
     Icon: typeof CalendarIcon
+    wrap?: boolean
+    tight?: boolean
 }
 
 /**
@@ -16,13 +19,15 @@ interface Props {
 export function SykmeldingGroup({
     heading,
     Icon,
+    parentId,
     tight = false,
     wrap = false,
     children,
-}: PropsWithChildren<{ heading: string; Icon: typeof CalendarIcon; wrap?: boolean; tight?: boolean }>): ReactElement {
+}: PropsWithChildren<Props>): ReactElement {
+    const labelId = parentId + cleanId(heading)
     return (
-        <section className="pb-4" aria-labelledby={cleanId(heading)}>
-            <SykmeldingSectionHeading title={heading} Icon={Icon} />
+        <section className="pb-4" aria-labelledby={labelId}>
+            <SykmeldingSectionHeading id={labelId} title={heading} Icon={Icon} />
             <div
                 className={cn('flex flex-col', {
                     'flex-row flex-wrap [&>div]:flex-grow': wrap,
@@ -35,14 +40,20 @@ export function SykmeldingGroup({
     )
 }
 
+interface SectionHeadingProps {
+    id: string
+    title: string
+    Icon: typeof CalendarIcon
+}
+
 /**
  * Header to be used with SykmeldingGroup
  */
-function SykmeldingSectionHeading({ title, Icon }: Props): ReactElement {
+function SykmeldingSectionHeading({ id, title, Icon }: SectionHeadingProps): ReactElement {
     return (
         <div className="flex items-center gap-2 py-4">
             <Icon role="img" aria-hidden className="text-2xl" />
-            <Heading size="small" level="3" id={cleanId(title)}>
+            <Heading size="small" level="3" id={id}>
                 {title}
             </Heading>
         </div>

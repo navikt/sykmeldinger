@@ -19,7 +19,7 @@ describe('PeriodeView', () => {
             aktivitetIkkeMulig: null,
         }
 
-        render(<PeriodeView perioder={[periode]} />)
+        render(<PeriodeView perioder={[periode]} parentId="test" />)
 
         expect(screen.getByText('Avventende sykmelding')).toBeInTheDocument()
         expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
@@ -45,7 +45,7 @@ describe('PeriodeView', () => {
             aktivitetIkkeMulig: null,
         }
 
-        render(<PeriodeView perioder={[periode]} />)
+        render(<PeriodeView perioder={[periode]} parentId="test" />)
 
         expect(screen.getByText('20% sykmelding')).toBeInTheDocument()
         expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
@@ -66,7 +66,7 @@ describe('PeriodeView', () => {
             aktivitetIkkeMulig: null,
         }
 
-        render(<PeriodeView perioder={[periode]} />)
+        render(<PeriodeView perioder={[periode]} parentId="test" />)
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument()
         expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
@@ -86,7 +86,7 @@ describe('PeriodeView', () => {
             aktivitetIkkeMulig: null,
         }
 
-        render(<PeriodeView perioder={[periode]} />)
+        render(<PeriodeView perioder={[periode]} parentId="test" />)
 
         expect(screen.getByText('Behandlingsdager')).toBeInTheDocument()
         expect(screen.getByText('1. - 5. april 2021')).toBeInTheDocument()
@@ -117,7 +117,7 @@ describe('PeriodeView', () => {
             aktivitetIkkeMulig: null,
         }
 
-        render(<PeriodeView perioder={[reisetilskudd, behandlingsdager]} />)
+        render(<PeriodeView perioder={[reisetilskudd, behandlingsdager]} parentId="test" />)
 
         expect(screen.getByText('Reisetilskudd')).toBeInTheDocument()
         expect(screen.getByText('Behandlingsdager')).toBeInTheDocument()

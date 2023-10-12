@@ -79,7 +79,7 @@ describe('AnnenInfoView', () => {
             rulesetVersion: 2,
         }
 
-        render(<AnnenInfoView sykmelding={sykmelding} />)
+        render(<AnnenInfoView sykmelding={sykmelding} parentId="test" />)
         expect(screen.getByText('Tlf: 12345678')).toBeInTheDocument()
     })
 
@@ -156,7 +156,7 @@ describe('AnnenInfoView', () => {
             rulesetVersion: 2,
         }
 
-        render(<AnnenInfoView sykmelding={sykmelding} />)
+        render(<AnnenInfoView sykmelding={sykmelding} parentId="test" />)
         expect(screen.getByText('Tlf: —')).toBeInTheDocument()
     })
 })

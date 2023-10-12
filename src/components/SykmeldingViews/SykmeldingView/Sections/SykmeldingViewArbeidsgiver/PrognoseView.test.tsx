@@ -14,7 +14,7 @@ describe('PrognoseView', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseView prognose={prognose} />)
+        render(<PrognoseView prognose={prognose} parentId="test" />)
         expect(screen.getByText('Prognose')).toBeInTheDocument()
     })
 
@@ -26,7 +26,7 @@ describe('PrognoseView', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseView prognose={prognose} />)
+        render(<PrognoseView prognose={prognose} parentId="test" />)
         expect(screen.getByText('Er pasienten 100% arbeidsfør etter denne perioden?')).toBeInTheDocument()
     })
 
@@ -38,7 +38,7 @@ describe('PrognoseView', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseView prognose={prognose} />)
+        render(<PrognoseView prognose={prognose} parentId="test" />)
         expect(screen.queryByText('Er pasienten 100% arbeidsfør etter denne perioden?')).not.toBeInTheDocument()
     })
 
@@ -50,7 +50,7 @@ describe('PrognoseView', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseView prognose={prognose} />)
+        render(<PrognoseView prognose={prognose} parentId="test" />)
         expect(screen.getByText('Hensyn som må tas på arbeidsplassen')).toBeInTheDocument()
         expect(screen.getByText('hensyn på arbeidsplassen')).toBeInTheDocument()
     })
@@ -63,7 +63,7 @@ describe('PrognoseView', () => {
             erIArbeid: null,
             erIkkeIArbeid: null,
         }
-        render(<PrognoseView prognose={prognose} />)
+        render(<PrognoseView prognose={prognose} parentId="test" />)
         expect(screen.queryByText('Hensyn som må tas på arbeidsplassen')).not.toBeInTheDocument()
     })
 })

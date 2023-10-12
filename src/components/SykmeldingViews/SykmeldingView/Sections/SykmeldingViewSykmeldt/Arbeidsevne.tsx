@@ -8,15 +8,16 @@ interface Props {
     tiltakArbeidsplassen?: string | null
     tiltakNAV?: string | null
     andreTiltak?: string | null
+    parentId: string
 }
 
-function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak }: Props): ReactElement | null {
+function Arbeidsevne({ tiltakArbeidsplassen, tiltakNAV, andreTiltak, parentId }: Props): ReactElement | null {
     if (!tiltakArbeidsplassen && !tiltakNAV && !andreTiltak) {
         return null
     }
 
     return (
-        <SykmeldingGroup heading="Hva skal til for å bedre arbeidsevnen?" Icon={HandshakeIcon}>
+        <SykmeldingGroup parentId={parentId} heading="Hva skal til for å bedre arbeidsevnen?" Icon={HandshakeIcon}>
             {tiltakArbeidsplassen != null && (
                 <SykmeldingInfo heading="Tilrettelegging/hensyn som bør tas på arbeidsplassen" variant="gray">
                     {tiltakArbeidsplassen}
