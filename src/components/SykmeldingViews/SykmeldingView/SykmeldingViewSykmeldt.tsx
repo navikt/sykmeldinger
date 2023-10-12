@@ -50,7 +50,7 @@ function SykmeldingViewSykmeldt({ sykmelding, editableEgenmelding }: Props): Rea
                 {editableEgenmelding && (
                     <RedigerEgenmeldingsdagerLink
                         sykmeldingId={sykmelding.id}
-                        hasEgenmeldingsdager={egenmeldingsdager != null}
+                        hasEgenmeldingsdager={egenmeldingsdager != null && egenmeldingsdager.dager.length > 0}
                     />
                 )}
             </Perioder>
