@@ -8,7 +8,7 @@ test.describe('Papir sykmelding', () => {
         await gotoScenario('papirsykmelding')(page)
         await navigateToFirstSykmelding('nye', '100%')(page)
 
-        await expect(page.getByRole('heading', { name: 'Papirsykmelding' })).toBeVisible()
+        await expect(page.getByRole('heading', { name: 'Papirsykmelding', level: 1 })).toBeVisible()
         await getRadioInGroup(page)({ name: /Har du allerede gitt papirsykmeldingen videre?/i }, { name: 'Ja' }).click()
         await expect(
             page.getByText(
@@ -22,7 +22,7 @@ test.describe('Papir sykmelding', () => {
         await gotoScenario('papirsykmelding')(page)
         await navigateToFirstSykmelding('nye', '100%')(page)
 
-        await expect(page.getByRole('heading', { name: 'Papirsykmelding' })).toBeVisible()
+        await expect(page.getByRole('heading', { name: 'Papirsykmelding', level: 1 })).toBeVisible()
         await getRadioInGroup(page)(
             { name: /Har du allerede gitt papirsykmeldingen videre?/i },
             { name: 'Nei' },
@@ -36,7 +36,7 @@ test.describe('Papir sykmelding', () => {
         await gotoScenario('papirsykmelding')(page)
         await navigateToFirstSykmelding('nye', '100%')(page)
 
-        await expect(page.getByRole('heading', { name: 'Papirsykmelding' })).toBeVisible()
+        await expect(page.getByRole('heading', { name: 'Papirsykmelding', level: 1 })).toBeVisible()
         await getRadioInGroup(page)({ name: /Har du allerede gitt papirsykmeldingen videre?/i }, { name: 'Ja' }).click()
         await page.getByRole('button', { name: 'Avbryt sykmeldingen' }).click()
 
