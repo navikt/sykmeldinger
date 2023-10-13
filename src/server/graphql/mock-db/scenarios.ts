@@ -42,6 +42,10 @@ const papirSykmelding: ScenarioCreator = () => ({
     ],
 })
 
+const frilanserAlleSvar: ScenarioCreator = () => ({
+    sykmeldinger: [new SykmeldingBuilder({ offset: -14 }).enkelPeriode().frilanserBekreftet().build()],
+})
+
 const utenlandsk: ScenarioCreator = () => ({
     sykmeldinger: [
         new SykmeldingBuilder({ offset: 7 }).enkelPeriode().utenlandsk().status(StatusEvent.APEN).build(),
@@ -243,6 +247,10 @@ export const simpleScenarios = {
     papirsykmelding: {
         description: 'En ny og en gammel papirsykmelding',
         scenario: papirSykmelding,
+    },
+    frilanserAlleSvar: {
+        description: 'En innsendt sykmelding fra en frilanser med alle svar',
+        scenario: frilanserAlleSvar,
     },
     emptyState: {
         description: 'Ingen sykmeldinger',

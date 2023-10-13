@@ -12,11 +12,14 @@ import {
     ShortName,
     StatusEvent,
     SykmeldingCategory,
+    YesOrNo,
 } from '../resolver-types.generated'
 import { Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus'
 import { sporsmal } from '../../../utils/sporsmal'
 import { toDateString } from '../../../utils/dateUtils'
 import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
+import { getSykmeldingStartDate } from '../../../utils/sykmeldingUtils'
+import { raise } from '../../../utils/ts-utils'
 
 import { defaultArbeidsgivere } from './data-creators'
 
@@ -83,16 +86,49 @@ class MockDb {
                     svar: values.arbeidssituasjon as ArbeidssituasjonType,
                 },
                 tekst: 'Hva er din arbeidssituasjon?',
-            },
+            } satisfies Sporsmal,
+            values.harForsikring != null
+                ? ({
+                      shortName: ShortName.FORSIKRING,
+                      tekst: sporsmal.harForsikring,
+                      svar: {
+                          svarType: Svartype.JA_NEI,
+                          svar: YesOrNo.YES,
+                      },
+                  } satisfies Sporsmal)
+                : null,
+            values.riktigNarmesteLeder != null
+                ? ({
+                      shortName: ShortName.NY_NARMESTE_LEDER,
+                      tekst: sporsmal.riktigNarmesteLeder('Dummy Mock Name (er rett i ikke-mocket data)'),
+                      svar: {
+                          svarType: Svartype.JA_NEI,
+                          svar: YesOrNo.YES,
+                      },
+                  } satisfies Sporsmal)
+                : null,
+            values.egenmeldingsperioder != null && values.egenmeldingsperioder.length > 0
+                ? ({
+                      shortName: ShortName.PERIODE,
+                      tekst: sporsmal.harBruktEgenmelding(getSykmeldingStartDate(sykmelding.sykmeldingsperioder)),
+                      svar: {
+                          svarType: Svartype.PERIODER,
+                          svar: values.egenmeldingsperioder.map((it) => ({
+                              fom: it.fom ?? raise("Fom can't be null at this point"),
+                              tom: it.tom ?? raise("Tom can't be null at this point"),
+                          })),
+                      },
+                  } satisfies Sporsmal)
+                : null,
             values.egenmeldingsdager != null && values.egenmeldingsdager.length > 0
-                ? {
+                ? ({
                       shortName: ShortName.EGENMELDINGSDAGER,
                       tekst: 'Brukte du egenmeldingsdager?',
                       svar: {
                           svarType: Svartype.DAGER,
                           svar: values.egenmeldingsdager as string[],
                       },
-                  }
+                  } satisfies Sporsmal)
                 : null,
         ])
 

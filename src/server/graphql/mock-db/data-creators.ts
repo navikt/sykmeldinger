@@ -6,14 +6,24 @@ import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
 import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
+    ArbeidssituasjonSvar,
+    ArbeidssituasjonType,
+    DagerSvar,
+    JaNeiSvar,
     MedisinskArsakType,
+    PerioderSvar,
     Periodetype,
     RegelStatus,
+    ShortName,
+    Sporsmal,
     StatusEvent,
+    Svartype,
+    YesOrNo,
 } from '../resolver-types.generated'
 import { AktivitetIkkeMuligPeriode, Periode } from '../../api-models/sykmelding/Periode'
-import { dateAdd } from '../../../utils/dateUtils'
+import { dateAdd, dateSub } from '../../../utils/dateUtils'
 import { RuleHit } from '../../api-models/sykmelding/Behandlingsutfall'
+import { sporsmal } from '../../../utils/sporsmal'
 
 export class SykmeldingBuilder {
     private readonly mottatt: string = '2020-02-01'
@@ -158,7 +168,44 @@ export class SykmeldingBuilder {
                 orgNavn: defaultArbeidsgivere[0].navn,
                 orgnummer: defaultArbeidsgivere[0].orgnummer,
             }
+            this.svar({
+                type: ShortName.ARBEIDSSITUASJON,
+                svar: ArbeidssituasjonType.ARBEIDSTAKER,
+            })
+            this.svar({
+                type: ShortName.NY_NARMESTE_LEDER,
+                svar: YesOrNo.YES,
+            })
         }
+
+        if (status === StatusEvent.BEKREFTET) {
+            this.svar({
+                type: ShortName.ARBEIDSSITUASJON,
+                svar: ArbeidssituasjonType.ARBEIDSLEDIG,
+            })
+        }
+
+        return this
+    }
+
+    frilanserBekreftet(timestamp = this.mottatt): SykmeldingBuilder {
+        this._sykmelding.sykmeldingStatus.statusEvent = StatusEvent.BEKREFTET
+        this._sykmelding.sykmeldingStatus.timestamp = timestamp
+        this.svar({
+            type: ShortName.ARBEIDSSITUASJON,
+            svar: ArbeidssituasjonType.FRILANSER,
+        })
+        this.svar({
+            type: ShortName.PERIODE,
+            svar: [
+                { fom: dateSub(timestamp, { days: -7 }), tom: dateSub(timestamp, { days: 5 }) },
+                { fom: dateSub(timestamp, { days: -14 }), tom: dateSub(timestamp, { days: 14 }) },
+            ],
+        })
+        this.svar({
+            type: ShortName.FORSIKRING,
+            svar: YesOrNo.YES,
+        })
 
         return this
     }
@@ -204,6 +251,84 @@ export class SykmeldingBuilder {
         }
 
         return this._sykmelding
+    }
+
+    private svar({
+        type,
+        svar,
+    }:
+        | {
+              type: ShortName.ARBEIDSSITUASJON
+              svar: ArbeidssituasjonSvar['svar']
+          }
+        | {
+              type: ShortName.NY_NARMESTE_LEDER | ShortName.FORSIKRING
+              svar: JaNeiSvar['svar']
+          }
+        | {
+              type: ShortName.EGENMELDINGSDAGER
+              svar: DagerSvar['svar']
+          }
+        | {
+              type: ShortName.PERIODE
+              svar: PerioderSvar['svar']
+          }): SykmeldingBuilder {
+        switch (type) {
+            case ShortName.ARBEIDSSITUASJON:
+                this._sykmelding.sykmeldingStatus.sporsmalOgSvarListe.push({
+                    shortName: type,
+                    tekst: sporsmal.arbeidssituasjon,
+                    svar: {
+                        svar,
+                        svarType: Svartype.ARBEIDSSITUASJON,
+                    },
+                } satisfies Sporsmal)
+                break
+            case ShortName.NY_NARMESTE_LEDER:
+                this._sykmelding.sykmeldingStatus.sporsmalOgSvarListe.push({
+                    shortName: type,
+                    tekst: sporsmal.riktigNarmesteLeder('Dummy Mock Name (er rett i ikke-mocket data)'),
+                    svar: {
+                        svar,
+                        svarType: Svartype.JA_NEI,
+                    },
+                } satisfies Sporsmal)
+                break
+            case ShortName.FORSIKRING:
+                this._sykmelding.sykmeldingStatus.sporsmalOgSvarListe.push({
+                    shortName: type,
+                    tekst: sporsmal.harForsikring,
+                    svar: {
+                        svar,
+                        svarType: Svartype.JA_NEI,
+                    },
+                } satisfies Sporsmal)
+                break
+            case ShortName.EGENMELDINGSDAGER:
+                this._sykmelding.sykmeldingStatus.sporsmalOgSvarListe.push({
+                    shortName: type,
+                    tekst: sporsmal.egenmeldingsdager,
+                    svar: {
+                        svar,
+                        svarType: Svartype.DAGER,
+                    },
+                } satisfies Sporsmal)
+                break
+            case ShortName.PERIODE:
+                this._sykmelding.sykmeldingStatus.sporsmalOgSvarListe.push({
+                    shortName: type,
+                    tekst: sporsmal.egenmeldingsperioder(this.mottatt),
+                    svar: {
+                        svar,
+                        svarType: Svartype.PERIODER,
+                    },
+                } satisfies Sporsmal)
+                break
+            default:
+                throw new Error(`Type ${type} is not implemented in SykmeldingBuilder`)
+        }
+
+        return this
     }
 }
 

@@ -31,6 +31,7 @@ import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 import Feedback from '../../components/Feedback/Feedback'
 import { useFlag } from '../../toggles/context'
+import SykmeldingDineSvar from '../../components/SykmeldingViews/SykmeldingView/SykmeldingDineSvar'
 
 function SykmeldingkvitteringPage(): ReactElement {
     const feedbackToggle = useFlag('SYKMELDINGER_FLEXJAR_KVITTERING')
@@ -133,6 +134,8 @@ function SykmeldingkvitteringPage(): ReactElement {
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
                 <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} />
             )}
+
+            <SykmeldingDineSvar sykmelding={data.sykmelding} />
 
             <HintToNextOlderSykmelding />
 

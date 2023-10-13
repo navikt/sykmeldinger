@@ -7,6 +7,7 @@ import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingDineSvar from '../../SykmeldingView/SykmeldingDineSvar'
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -48,6 +49,8 @@ function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProp
             )}
 
             <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+
+            <SykmeldingDineSvar sykmelding={sykmelding} />
         </div>
     )
 }

@@ -12,6 +12,7 @@ import { useFindPrevSykmeldingTom } from '../../../../hooks/useFindPrevSykmeldin
 import Spinner from '../../../Spinner/Spinner'
 import { hasHitPreviousSykmeldingTom } from '../../../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 import SykmeldingArbeidsgiverContainer from '../../SykmeldingView/SykmeldingArbeidsgiverContainer'
+import SykmeldingDineSvar from '../../SykmeldingView/SykmeldingDineSvar'
 
 interface OkSendtSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -40,6 +41,8 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): ReactElement
             </div>
 
             <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
+
+            <SykmeldingDineSvar sykmelding={sykmelding} />
         </div>
     )
 }

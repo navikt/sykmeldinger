@@ -21,8 +21,6 @@ export function dateSub(date: string | Date, duration: Duration): string {
     return toDateString(sub(toDate(date), duration))
 }
 
-export const subMonths = (date: string, months: number): string => formatISO(sub(parseISO(date), { months }))
-
 export function toDate(date: string | Date): Date {
     return typeof date === 'string' ? parseISO(date) : date
 }
