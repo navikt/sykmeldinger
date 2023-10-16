@@ -25,8 +25,8 @@
         "postinstall": "node ./scripts/postinstall.js"
     },
     "dependencies": {
-        "@apollo/client": "^3.8.4",
-        "@apollo/server": "^4.9.3",
+        "@apollo/client": "^3.8.5",
+        "@apollo/server": "^4.9.4",
         "@as-integrations/next": "^2.0.2",
         "@grafana/faro-web-sdk": "^1.2.1",
         "@graphql-tools/graphql-file-loader": "^8.0.0",
