@@ -3294,9 +3294,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-pdf/renderer@npm:^3.1.12":
-  version: 3.1.12
-  resolution: "@react-pdf/renderer@npm:3.1.12"
+"@react-pdf/renderer@npm:^3.1.13":
+  version: 3.1.13
+  resolution: "@react-pdf/renderer@npm:3.1.13"
   dependencies:
     "@babel/runtime": ^7.20.13
     "@react-pdf/font": ^2.3.6
@@ -3312,7 +3312,7 @@ __metadata:
     scheduler: ^0.17.0
   peerDependencies:
     react: ^16.8.6 || ^17.0.0 || ^18.0.0
-  checksum: 7fa9779c8594e8e650fc121de5b89a40268ccab62b89a87c32f110bb4ea97adacd1d0fb2893533e3834613478bed71de2c1161e88e42916862b1523d7f10367e
+  checksum: 482aa2705c1eb0d980da7b8ea33f9701a58059c63c7a6cd5c664ecb8c1fe13b3c8f04d0ee1aee146d51a66f528827b227bd59c16e267e946159f9769bc7499ef
   languageName: node
   linkType: hard
 
@@ -11714,7 +11714,7 @@ __metadata:
     "@next/bundle-analyzer": 13.5.3
     "@parcel/watcher": ^2.3.0
     "@playwright/test": ^1.38.1
-    "@react-pdf/renderer": ^3.1.12
+    "@react-pdf/renderer": ^3.1.13
     "@testing-library/react": ^14.0.0
     "@testing-library/user-event": ^14.5.1
     "@types/jsdom": ^21.1.3
