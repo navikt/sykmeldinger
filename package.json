@@ -47,7 +47,7 @@
         "date-fns": "^2.30.0",
         "globalthis-polyfill": "^1.0.0",
         "graphql": "^16.8.1",
-        "graphql-scalars": "^1.22.2",
+        "graphql-scalars": "^1.22.4",
         "next": "13.5.3",
         "next-logger": "^3.0.2",
         "nextleton": "^0.6.1",
