@@ -49,7 +49,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
     }
 
     return (
-        <section aria-label="Tilbakemelding på søknaden">
+        <section aria-label="Tilbakemelding på sykmeldingen">
             <div className="w:full mt-16 md:w-3/4" data-cy="feedback-wrapper">
                 {!isComplete && (
                     <div className="mt-1 rounded-medium bg-surface-subtle p-6">
@@ -98,7 +98,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                                     }}
                                     maxLength={600}
                                     minRows={3}
-                                    description="Ikke skriv inn navn eller andre personopplysninger. Svaret ditt blir brukt til å forbedre søknaden og vil ikke påvirke søknaden din."
+                                    description="Ikke skriv inn navn eller andre personopplysninger. Svaret ditt blir brukt til å forbedre innsendingen av sykmeldingen og vil ikke påvirke saken din."
                                 />
                                 <Button
                                     data-cy="send-feedback"

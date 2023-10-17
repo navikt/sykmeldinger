@@ -136,7 +136,7 @@ function SykmeldingkvitteringPage(): ReactElement {
 
             <HintToNextOlderSykmelding />
 
-            {feedbackToggle.enabled && (
+            {feedbackToggle && (
                 <div>
                     <Feedback
                         feedbackId="sykmelding-kvittering"
