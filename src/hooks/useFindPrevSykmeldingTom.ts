@@ -1,4 +1,4 @@
-import { closestTo, isBefore, isSameDay } from 'date-fns'
+import { closestTo, isBefore, isSameDay, isWithinInterval } from 'date-fns'
 import { intersection } from 'remeda'
 import { useQuery } from '@apollo/client'
 
@@ -10,7 +10,7 @@ import {
     SykmeldingFragment,
 } from '../fetching/graphql.generated'
 import { toDate } from '../utils/dateUtils'
-import { getSykmeldingEndDate, isSendtSykmelding } from '../utils/sykmeldingUtils'
+import { getSykmeldingEndDate, getSykmeldingStartDate, isSendtSykmelding } from '../utils/sykmeldingUtils'
 import { useFlag } from '../toggles/context'
 
 import useSykmeldinger from './useSykmeldinger'
@@ -30,6 +30,24 @@ export function useFindPrevSykmeldingTom(
         valgtArbeidsgiverOrgnummer,
         ignore,
     )
+}
+
+function removeInsideSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]) {
+    return (sykmelding: SykmeldingFragment): boolean => {
+        const others = sykmeldinger.filter((it) => it.id !== sykmelding.id)
+
+        return !others.some((other) => {
+            const otherInterval = {
+                start: toDate(getSykmeldingStartDate(other.sykmeldingsperioder)),
+                end: toDate(getSykmeldingEndDate(other.sykmeldingsperioder)),
+            }
+
+            return (
+                isWithinInterval(toDate(getSykmeldingStartDate(sykmelding.sykmeldingsperioder)), otherInterval) &&
+                isWithinInterval(toDate(getSykmeldingEndDate(sykmelding.sykmeldingsperioder)), otherInterval)
+            )
+        })
+    }
 }
 
 export function useFindPrevSykmeldingTomOld(
@@ -52,6 +70,7 @@ export function useFindPrevSykmeldingTomOld(
     }
 
     const sendtSykmeldinger = data.sykmeldinger
+        .filter(removeInsideSykmeldinger(data.sykmeldinger))
         .filter(isSendtSykmelding)
         .filter((it) => it.id !== sykmelding.id)
         .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer == valgtArbeidsgiverOrgnummer)
@@ -108,10 +127,13 @@ export function useFindPrevMinimalSykmeldingTom(
         }
     }
 
-    const sykmeldinger: MinimalSykmeldingFragment[] = [
+    const relevantSykmeldinger = [
         ...(older.data?.minimalSykmeldinger ?? []),
         ...(processing.data?.minimalSykmeldinger ?? []),
     ]
+
+    const sykmeldinger: MinimalSykmeldingFragment[] = relevantSykmeldinger
+        // TODO: implement logic in "old" impl.
         .filter((it) => it.arbeidsgiver?.orgnummer == valgtArbeidsgiverOrgnummer)
         .filter(removeIgnored(ignore))
 

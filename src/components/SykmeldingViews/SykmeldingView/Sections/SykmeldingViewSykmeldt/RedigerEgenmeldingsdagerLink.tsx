@@ -10,7 +10,7 @@ function RedigerEgenmeldingsdagerLink({
 }: {
     sykmeldingId: string
     hasEgenmeldingsdager: boolean
-}): ReactElement | null {
+}): ReactElement {
     const typeOfEditEgenmeldingsdager: string = hasEgenmeldingsdager ? 'Endre' : 'Legg til'
 
     return (
