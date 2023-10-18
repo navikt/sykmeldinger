@@ -70,7 +70,7 @@ describe('useFindPrevSykmeldingTom', () => {
         expect(result.current.previousSykmeldingTom).toEqual(toDate('2022-10-29'))
     })
 
-    it('should find previous sykmelding tom if the same day as given sykmelding tom', async () => {
+    it('should not find previous sykmelding tom if the same day as given sykmelding tom', async () => {
         const sykmeldinger = [
             createSykmelding({
                 id: 'id-1',
@@ -106,7 +106,7 @@ describe('useFindPrevSykmeldingTom', () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false))
 
-        expect(result.current.previousSykmeldingTom).toEqual(toDate('2022-10-18'))
+        expect(result.current.previousSykmeldingTom).toEqual(null)
     })
 
     it('should only look back to non-INVALID "BEKREFTET" sykmeldinger', async () => {
@@ -236,6 +236,45 @@ describe('useFindPrevSykmeldingTom', () => {
                     createSykmeldingPeriode({
                         fom: '2023-01-16',
                         tom: '2023-01-20',
+                    }),
+                ],
+            }),
+        ]
+
+        const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[0], 'default-arbeidsgiver'), {
+            mocks: [sykmeldingerMock(sykmeldinger)],
+        })
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+        expect(result.current.previousSykmeldingTom).toEqual(null)
+    })
+
+    it('should ignore sykmelding inside given sykmelding', async () => {
+        const sykmeldinger = [
+            createSykmelding({
+                id: 'id-1',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.SENDT,
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-09-10',
+                        tom: '2022-09-15',
+                    }),
+                ],
+            }),
+            createSykmelding({
+                id: 'id-2',
+                sykmeldingStatus: {
+                    ...createSykmelding().sykmeldingStatus,
+                    statusEvent: StatusEvent.SENDT,
+                },
+                sykmeldingsperioder: [
+                    createSykmeldingPeriode({
+                        fom: '2022-09-12',
+                        tom: '2022-09-12',
                     }),
                 ],
             }),
