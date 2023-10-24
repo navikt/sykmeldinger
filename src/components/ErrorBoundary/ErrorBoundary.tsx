@@ -1,6 +1,8 @@
 import { Component, ErrorInfo, PropsWithChildren, ReactNode } from 'react'
 import { ContentContainer } from '@navikt/ds-react'
-import { logger } from '@navikt/next-logger'
+import { createChildLogger } from '@navikt/next-logger'
+
+import { getUserRequestId } from '../../utils/userRequestId'
 
 import ErrorFallback from './ErrorFallback'
 
@@ -8,7 +10,9 @@ interface State {
     hasError: boolean
 }
 
-class ErrorBoundary extends Component<PropsWithChildren<unknown>, State> {
+class ErrorBoundary extends Component<PropsWithChildren, State> {
+    private childLogger = createChildLogger(getUserRequestId())
+
     constructor(props: PropsWithChildren<unknown>) {
         super(props)
         this.state = { hasError: false }
@@ -19,7 +23,8 @@ class ErrorBoundary extends Component<PropsWithChildren<unknown>, State> {
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-        logger.error({ error, errorInfo })
+        this.childLogger.error(new Error("Caught error in ErrorBoundary's componentDidCatch", { cause: error }))
+        this.childLogger.error({ error, errorInfo })
     }
 
     render(): ReactNode {
