@@ -34,7 +34,7 @@ export function useFindPrevSykmeldingTom(
 
 function removeInsideSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]) {
     return (sykmelding: SykmeldingFragment): boolean => {
-        const others = sykmeldinger.filter((it) => it.id !== sykmelding.id)
+        const others = sykmeldinger.filter(isSendtSykmelding).filter((it) => it.id !== sykmelding.id)
 
         return !others.some((other) => {
             const otherInterval = {
