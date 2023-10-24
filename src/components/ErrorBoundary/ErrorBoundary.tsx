@@ -23,8 +23,15 @@ class ErrorBoundary extends Component<PropsWithChildren, State> {
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-        this.childLogger.error(new Error("Caught error in ErrorBoundary's componentDidCatch", { cause: error }))
-        this.childLogger.error({ error, errorInfo })
+        this.childLogger.error(
+            new Error(
+                `Caught error in ErrorBoundary's componentDidCatch hasError: ${error != null}, hasErrorInfo:${
+                    errorInfo != null
+                }`,
+                { cause: error },
+            ),
+        )
+        this.childLogger.error(JSON.stringify({ error, errorInfo, requestId: getUserRequestId() }))
     }
 
     render(): ReactNode {
