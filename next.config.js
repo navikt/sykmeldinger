@@ -9,32 +9,10 @@ const { buildCspHeader } = require('@navikt/nav-dekoratoren-moduler/ssr')
 
 const appDirectives = {
     'default-src': ["'self'"],
-    'script-src': [
-        "'self'",
-        "'unsafe-eval'",
-        "'unsafe-inline'",
-        'https://uxsignals-frontend.uxsignals.app.iterate.no',
-        'https://*.hotjar.com',
-    ],
-    'script-src-elem': [
-        "'self'",
-        "'unsafe-inline'",
-        'https://uxsignals-frontend.uxsignals.app.iterate.no',
-        'https://*.hotjar.com',
-    ],
-    'style-src': ["'self'", "'unsafe-inline'", 'https://*.hotjar.com'],
-    'img-src': ["'self'", 'data:', 'https://*.hotjar.com'],
-    'font-src': ["'self'", 'https://cdn.nav.no', 'https://*.hotjar.com'],
+    'script-src': ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'https://uxsignals-frontend.uxsignals.app.iterate.no'],
+    'script-src-elem': ["'self'", "'unsafe-inline'", 'https://uxsignals-frontend.uxsignals.app.iterate.no'],
     'worker-src': ["'self'"],
-    'connect-src': [
-        "'self'",
-        'https://*.nav.no',
-        'https://*.uxsignals.com',
-        'https://*.hotjar.com',
-        'https://*.hotjar.io',
-        'wss://*.hotjar.com',
-    ],
-    'frame-src': ['*.hotjar.com'],
+    'connect-src': ["'self'", 'https://*.nav.no', 'https://*.uxsignals.com'],
 }
 
 /**

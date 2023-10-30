@@ -9,7 +9,6 @@ import { range } from 'remeda'
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'
 import StatusInfo from '../../components/StatusInfo/StatusInfo'
-import useHotjarTrigger from '../../hooks/useHotjarTrigger'
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import Header from '../../components/Header/Header'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
@@ -26,7 +25,6 @@ import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/Sy
 import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer'
 import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
-import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 import Feedback from '../../components/Feedback/Feedback'
@@ -37,8 +35,6 @@ function SykmeldingkvitteringPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
     const { data, error, loading } = useSykmeldingById(sykmeldingId)
     const router = useRouter()
-
-    useHotjarTrigger(getHotjarType(data?.sykmelding))
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -201,16 +197,6 @@ function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Syk
             editableEgenmelding={!hasHitPrevious && sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT}
         />
     )
-}
-
-function getHotjarType(
-    sykmelding: SykmeldingFragment | null | undefined,
-): 'SYKMELDING_KVITTERING' | 'UTENLANDSK_KVITTERING' | null {
-    if (sykmelding == null) {
-        return null
-    }
-
-    return isUtenlandsk(sykmelding) ? 'UTENLANDSK_KVITTERING' : 'SYKMELDING_KVITTERING'
 }
 
 function KvitteringWrapper({

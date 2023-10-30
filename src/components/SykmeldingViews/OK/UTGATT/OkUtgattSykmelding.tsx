@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 import { Alert, Detail, Heading } from '@navikt/ds-react'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import { toReadableDate } from '../../../../utils/dateUtils'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
@@ -11,8 +10,6 @@ interface OkUtgattSykmeldingProps {
 }
 
 function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): ReactElement {
-    useHotjarTrigger('SYKMELDING_OK_UTGATT')
-
     return (
         <div className="sykmelding-container">
             <div className="mb-8">
