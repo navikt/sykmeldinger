@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 import { GuidePanel } from '@navikt/ds-react'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import InformationBanner from '../../../InformationBanner/InformationBanner'
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
@@ -21,8 +20,6 @@ function OkApenSykmelding({
     olderSykmeldingId,
     olderSykmeldingCount,
 }: OkApenSykmeldingProps): ReactElement {
-    useHotjarTrigger('SYKMELDING_OK_APEN')
-
     if (olderSykmeldingId) {
         return (
             <ForceUseOlderSykmelding

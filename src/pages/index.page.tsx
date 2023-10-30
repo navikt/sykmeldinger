@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
 import Head from 'next/head'
 
-import useHotjarTrigger from '../hooks/useHotjarTrigger'
 import { withAuthenticatedPage } from '../auth/withAuthentication'
 import Header from '../components/Header/Header'
 import SykmeldingerListAll from '../components/SykmeldingerList/SykmeldingerListAll'
@@ -12,7 +11,6 @@ import PageWrapper from '../components/PageWrapper/PageWrapper'
 import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
 
 function SykmeldingerPage(): ReactElement {
-    useHotjarTrigger('SYKMELDING_LISTEVISNING')
     useUpdateBreadcrumbs(() => [])
 
     const newListView = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')

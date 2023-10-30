@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
@@ -13,8 +12,6 @@ interface InvalidBekreftetSykmeldingProps {
 }
 
 function InvalidBekreftetSykmelding({ sykmelding }: InvalidBekreftetSykmeldingProps): ReactElement {
-    useHotjarTrigger('SYKMELDING_INVALID_BEKREFTET')
-
     return (
         <div className="sykmelding-container">
             <div className="mb-16">

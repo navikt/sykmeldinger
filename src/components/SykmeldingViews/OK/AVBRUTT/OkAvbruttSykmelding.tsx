@@ -3,7 +3,6 @@ import { Alert, Button, Detail, Heading } from '@navikt/ds-react'
 import { PencilWritingIcon } from '@navikt/aksel-icons'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import { toReadableDate } from '../../../../utils/dateUtils'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
@@ -17,7 +16,6 @@ interface OkAvbruttSykmeldingProps {
 const skjemanavn = 'gjenåpne avbrutt sykmelding'
 
 function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): ReactElement {
-    useHotjarTrigger('SYKMELDING_OK_AVBRUTT')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
     return (

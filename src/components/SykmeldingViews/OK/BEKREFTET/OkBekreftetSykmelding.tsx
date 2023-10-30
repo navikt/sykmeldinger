@@ -3,7 +3,6 @@ import { Button } from '@navikt/ds-react'
 import { PencilWritingIcon } from '@navikt/aksel-icons'
 
 import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
@@ -17,7 +16,6 @@ const skjemanavn = 'ok gjenåpne bekreftet sykmelding'
 
 function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProps): ReactElement {
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
-    useHotjarTrigger('SYKMELDING_OK_BEKREFTET')
 
     return (
         <div className="sykmelding-container">

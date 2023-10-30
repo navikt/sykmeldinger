@@ -5,7 +5,6 @@ import { ReactElement } from 'react'
 
 import { SykmeldingChangeStatus, SykmeldingFragment } from '../../../../fetching/graphql.generated'
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
-import useHotjarTrigger from '../../../../hooks/useHotjarTrigger'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
@@ -23,7 +22,6 @@ interface FormData {
 const skjemanavn = 'invalid åpen sykmelding'
 
 function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): ReactElement {
-    useHotjarTrigger('SYKMELDING_INVALID_APEN')
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
     const { bekreftInvalid, mutationLoading, mutationError } = useBekreftInvalid()
