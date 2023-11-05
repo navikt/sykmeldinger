@@ -10809,10 +10809,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^1.28.0":
-  version: 1.28.0
-  resolution: "remeda@npm:1.28.0"
-  checksum: b29630428a91aee655c92de35ddae9db37eb7ee0600e300705dbcea4d58c16f47c29605e7622177e634cdf4a09a26131dda92577e31e5e7e707a8f8efa3e1408
+"remeda@npm:^1.29.0":
+  version: 1.29.0
+  resolution: "remeda@npm:1.29.0"
+  checksum: 57d58825bc29c7eccdafba7e0163f13f627bfc0bf5c7cd2fce398f2349ebcc9eb85b7eabc6eeb91a0a9421ba12a2212eb2734f719dc4c82c4cc1b26dbd59b502
   languageName: node
   linkType: hard
 
@@ -11857,7 +11857,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-hook-form: 7.47.0
-    remeda: ^1.28.0
+    remeda: ^1.29.0
     tailwind-merge: ^1.14.0
     tailwindcss: ^3.3.5
     typescript: ^5.2.2
