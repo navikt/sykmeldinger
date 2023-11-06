@@ -12,7 +12,7 @@ import {
     Periodetype,
     SvarUnion_ArbeidssituasjonSvar_Fragment,
     SykmeldingStatusFragment,
-} from '../../fetching/graphql.generated'
+} from 'queries'
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatusFragment

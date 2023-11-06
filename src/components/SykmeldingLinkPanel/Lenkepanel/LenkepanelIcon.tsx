@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 
-import { RegelStatus } from '../../../fetching/graphql.generated'
+import { RegelStatus } from 'queries'
 
 interface Icon {
     hover?: boolean

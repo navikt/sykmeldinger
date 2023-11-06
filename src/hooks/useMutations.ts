@@ -16,7 +16,8 @@ import {
     SykmeldingCategory,
     SykmeldingChangeStatus,
     YesOrNo,
-} from '../fetching/graphql.generated'
+} from 'queries'
+
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { toDateString } from '../utils/dateUtils'
 import {

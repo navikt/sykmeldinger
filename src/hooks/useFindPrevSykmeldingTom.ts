@@ -8,7 +8,8 @@ import {
     Periodetype,
     SykmeldingCategory,
     SykmeldingFragment,
-} from '../fetching/graphql.generated'
+} from 'queries'
+
 import { toDate } from '../utils/dateUtils'
 import { getSykmeldingEndDate, getSykmeldingStartDate, isSendtSykmelding } from '../utils/sykmeldingUtils'
 import { useFlag } from '../toggles/context'

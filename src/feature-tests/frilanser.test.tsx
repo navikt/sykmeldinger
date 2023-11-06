@@ -2,9 +2,6 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
-import { render, waitFor, screen, waitForElementToBeRemoved, within, axe } from '../utils/test/testUtils'
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
-import { createInitialQuery, createMock, createSykmelding } from '../utils/test/dataUtils'
 import {
     ArbeidssituasjonType,
     StatusEvent,
@@ -12,7 +9,11 @@ import {
     SykmeldingByIdDocument,
     SykmeldingerDocument,
     YesOrNo,
-} from '../fetching/graphql.generated'
+} from 'queries'
+
+import { render, waitFor, screen, waitForElementToBeRemoved, within, axe } from '../utils/test/testUtils'
+import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import { createInitialQuery, createMock, createSykmelding } from '../utils/test/dataUtils'
 
 import { createExtraFormDataMock } from './mockUtils'
 

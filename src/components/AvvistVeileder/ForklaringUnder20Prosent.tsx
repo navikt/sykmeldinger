@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { BodyShort, Link } from '@navikt/ds-react'
 
-import { Periodetype, SykmeldingFragment } from '../../fetching/graphql.generated'
+import { Periodetype, SykmeldingFragment } from 'queries'
 
 type Props = {
     perioder: SykmeldingFragment['sykmeldingsperioder']

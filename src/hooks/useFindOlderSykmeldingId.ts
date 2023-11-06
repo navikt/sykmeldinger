@@ -1,12 +1,8 @@
 import { isBefore, parseISO } from 'date-fns'
 import { useQuery } from '@apollo/client'
 
-import {
-    MinimalSykmeldingerDocument,
-    MinimalSykmeldingFragment,
-    SykmeldingCategory,
-    SykmeldingFragment,
-} from '../fetching/graphql.generated'
+import { MinimalSykmeldingerDocument, MinimalSykmeldingFragment, SykmeldingCategory, SykmeldingFragment } from 'queries'
+
 import { getSykmeldingStartDate, isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
 import { useFlag } from '../toggles/context'
 

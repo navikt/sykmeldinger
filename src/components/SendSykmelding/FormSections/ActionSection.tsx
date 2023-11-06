@@ -4,13 +4,14 @@ import { useFormContext } from 'react-hook-form'
 import { MutationResult } from '@apollo/client'
 import { XMarkIcon } from '@navikt/aksel-icons'
 
-import { FormValues } from '../SendSykmeldingForm'
 import {
     ArbeidssituasjonType,
     ChangeSykmeldingStatusMutation,
     SendSykmeldingMutation,
     SykmeldingChangeStatus,
-} from '../../../fetching/graphql.generated'
+} from 'queries'
+
+import { FormValues } from '../SendSykmeldingForm'
 import { useChangeSykmeldingStatus } from '../../../hooks/useMutations'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import { QuestionWrapper } from '../../FormComponents/FormStructure'

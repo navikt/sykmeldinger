@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 
-import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../../../../fetching/graphql.generated'
+import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from 'queries'
+
 import { toReadableDate } from '../../../../../utils/dateUtils'
 import { SykmeldingListInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 

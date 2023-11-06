@@ -1,11 +1,7 @@
 import { ReactElement } from 'react'
 
-import {
-    BrukerinformasjonFragment,
-    Periodetype,
-    SykmeldingFragment,
-    SykmeldingUtenforVentetidFragment,
-} from '../../../../fetching/graphql.generated'
+import { BrukerinformasjonFragment, Periodetype, SykmeldingFragment, SykmeldingUtenforVentetidFragment } from 'queries'
+
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'

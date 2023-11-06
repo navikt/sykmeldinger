@@ -1,5 +1,6 @@
+import { SvarUnion_DagerSvar_Fragment, SykmeldingStatusFragment, YesOrNo } from 'queries'
+
 import { EgenmeldingsdagerFormValue } from '../components/FormComponents/Egenmelding/EgenmeldingerField'
-import { SvarUnion_DagerSvar_Fragment, SykmeldingStatusFragment, YesOrNo } from '../fetching/graphql.generated'
 
 export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerFormValue[] | null): boolean => {
     if (egenmeldingsperioder == null) return false

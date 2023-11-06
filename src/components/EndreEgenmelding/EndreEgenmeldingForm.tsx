@@ -5,10 +5,11 @@ import { ComponentType, ReactElement } from 'react'
 import dynamic from 'next/dynamic'
 import { logger } from '@navikt/next-logger'
 
+import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from 'queries'
+
 import EgenmeldingerField, { EgenmeldingsdagerSubForm } from '../FormComponents/Egenmelding/EgenmeldingerField'
 import { toDate } from '../../utils/dateUtils'
 import { getSykmeldingStartDate } from '../../utils/sykmeldingUtils'
-import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../fetching/graphql.generated'
 import { useEndreEgenmeldingsdager } from '../../hooks/useMutations'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
 import useWarnUnsavedPopup from '../../hooks/useWarnUnsaved'

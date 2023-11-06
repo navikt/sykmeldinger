@@ -2,8 +2,9 @@ import { ReactElement } from 'react'
 import { PersonIcon } from '@navikt/aksel-icons'
 import { BodyShort } from '@navikt/ds-react'
 
+import { Pasient } from 'queries'
+
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
-import { Pasient } from '../../../../../fetching/graphql.generated'
 import { getPasientName } from '../../../../../utils/pasientUtils'
 
 interface Props {

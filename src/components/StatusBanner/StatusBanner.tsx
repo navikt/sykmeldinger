@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 import { Alert, Detail, Heading } from '@navikt/ds-react'
 
-import { Behandlingsutfall, SykmeldingStatusFragment } from '../../fetching/graphql.generated'
+import { Behandlingsutfall, SykmeldingStatusFragment } from 'queries'
+
 import { toReadableDate } from '../../utils/dateUtils'
 
 interface StatusBannerProps {

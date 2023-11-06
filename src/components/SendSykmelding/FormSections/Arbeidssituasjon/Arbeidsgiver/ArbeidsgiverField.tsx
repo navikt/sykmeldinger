@@ -2,8 +2,9 @@ import { Radio, RadioGroup, ReadMore } from '@navikt/ds-react'
 import { ReactElement } from 'react'
 import { useController } from 'react-hook-form'
 
+import { ArbeidssituasjonType, BrukerinformasjonFragment } from 'queries'
+
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
-import { ArbeidssituasjonType, BrukerinformasjonFragment } from '../../../../../fetching/graphql.generated'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { UtdypendeOpplysning } from '../../../../../fetching/graphql.generated'
+import { UtdypendeOpplysning } from 'queries'
 
 import UtdypendeOpplysninger from './UtdypendeOpplysninger'
 

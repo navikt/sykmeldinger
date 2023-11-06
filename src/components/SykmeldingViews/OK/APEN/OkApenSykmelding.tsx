@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 import { GuidePanel } from '@navikt/ds-react'
 
-import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from 'queries'
+
 import InformationBanner from '../../../InformationBanner/InformationBanner'
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'

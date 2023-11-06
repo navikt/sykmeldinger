@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { Tag } from '@navikt/ds-react'
 
-import { RegelStatus, StatusEvent } from '../../../fetching/graphql.generated'
+import { RegelStatus, StatusEvent } from 'queries'
 
 interface LenkepanelEtikettProps {
     status: StatusEvent

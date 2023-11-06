@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { ArbeidssituasjonType } from '../fetching/graphql.generated'
+import { ArbeidssituasjonType } from 'queries'
 
 import { isArbeidstaker, isFrilanserOrNaeringsdrivende } from './arbeidssituasjonUtils'
 

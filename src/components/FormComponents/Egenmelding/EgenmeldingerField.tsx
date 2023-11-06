@@ -5,8 +5,9 @@ import { ReactElement, useEffect, useLayoutEffect, useRef } from 'react'
 import * as R from 'remeda'
 import cn from 'classnames'
 
+import { YesOrNo } from 'queries'
+
 import { sortDatesASC } from '../../../utils/dateUtils'
-import { YesOrNo } from '../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 
 import HarBruktEgenmelding from './HarBruktEgenmelding'

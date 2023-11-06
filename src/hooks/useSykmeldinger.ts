@@ -1,11 +1,6 @@
 import { QueryResult, useApolloClient, useQuery } from '@apollo/client'
 
-import {
-    SykmeldingByIdDocument,
-    SykmeldingerDocument,
-    SykmeldingerQuery,
-    SykmeldingerQueryVariables,
-} from '../fetching/graphql.generated'
+import { SykmeldingByIdDocument, SykmeldingerDocument, SykmeldingerQuery, SykmeldingerQueryVariables } from 'queries'
 
 export function useSykmeldinger(): QueryResult<SykmeldingerQuery, SykmeldingerQueryVariables> {
     const client = useApolloClient()

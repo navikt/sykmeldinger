@@ -1,8 +1,9 @@
 import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import { SykmeldingFragment } from 'queries'
+
 import SykmeldingArbeidsgiverContainer from '../../../../SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
-import { SykmeldingFragment } from '../../../../../fetching/graphql.generated'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { toDateString } from '../../../../../utils/dateUtils'
 import { notNull } from '../../../../../utils/ts-utils'

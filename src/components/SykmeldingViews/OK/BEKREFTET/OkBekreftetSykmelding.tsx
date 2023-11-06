@@ -2,7 +2,8 @@ import { ReactElement } from 'react'
 import { Button } from '@navikt/ds-react'
 import { PencilWritingIcon } from '@navikt/aksel-icons'
 
-import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from 'queries'
+
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'

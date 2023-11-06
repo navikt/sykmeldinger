@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { Periode, PeriodeFragment, Periodetype } from '../fetching/graphql.generated'
+import { Periode, PeriodeFragment, Periodetype } from 'queries'
 
 import { getDescription, getPeriodTitle, getReadableLength, getSykmeldingperioderSorted } from './periodeUtils'
 import { createSykmeldingPeriode } from './test/dataUtils'

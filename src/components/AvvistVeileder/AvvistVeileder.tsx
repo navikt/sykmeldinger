@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { BodyLong, BodyShort, GuidePanel, Heading } from '@navikt/ds-react'
 
-import { Behandlingsutfall, SykmeldingFragment } from '../../fetching/graphql.generated'
+import { Behandlingsutfall, SykmeldingFragment } from 'queries'
 
 import ForklaringZDiagnose from './ForklaringZDiagnose'
 import ForklaringAndre from './ForklaringAndre'

@@ -1,4 +1,4 @@
-import { ArbeidssituasjonType } from '../fetching/graphql.generated'
+import { ArbeidssituasjonType } from 'queries'
 
 export const isArbeidstaker = (arbeidssituasjon?: ArbeidssituasjonType | null): boolean =>
     arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER

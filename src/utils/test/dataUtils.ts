@@ -17,7 +17,8 @@ import {
     Sykmelding,
     SykmeldingFragment,
     SykmeldingStatusFragment,
-} from '../../fetching/graphql.generated'
+} from 'queries'
+
 import { dateAdd, dateSub } from '../dateUtils'
 
 export function createSykmelding(

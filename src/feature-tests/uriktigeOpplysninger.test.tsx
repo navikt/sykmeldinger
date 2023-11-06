@@ -2,10 +2,11 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 
+import { SykmeldingByIdDocument, SykmeldingerDocument } from 'queries'
+
 import { render, screen } from '../utils/test/testUtils'
 import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
 import { createMock, createSykmelding } from '../utils/test/dataUtils'
-import { SykmeldingByIdDocument, SykmeldingerDocument } from '../fetching/graphql.generated'
 
 import { createExtraFormDataMock } from './mockUtils'
 

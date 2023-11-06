@@ -1,8 +1,9 @@
 import { BodyLong, Link, ReadMore } from '@navikt/ds-react'
 import { ReactElement, useState } from 'react'
 
+import { YesOrNo } from 'queries'
+
 import { toReadableDatePeriod } from '../../../utils/dateUtils'
-import { YesOrNo } from '../../../fetching/graphql.generated'
 import { sporsmal } from '../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import YesNoField from '../YesNoField/YesNoField'

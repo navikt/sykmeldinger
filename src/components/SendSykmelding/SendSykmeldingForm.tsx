@@ -4,13 +4,9 @@ import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
 import * as R from 'remeda'
 
+import { YesOrNo, UriktigeOpplysningerType, ArbeidssituasjonType, SykmeldingFragment } from 'queries'
+
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
-import {
-    YesOrNo,
-    UriktigeOpplysningerType,
-    ArbeidssituasjonType,
-    SykmeldingFragment,
-} from '../../fetching/graphql.generated'
 import useExtraFormData from '../../hooks/useExtraFormData'
 import { useSendSykmelding } from '../../hooks/useMutations'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitude'

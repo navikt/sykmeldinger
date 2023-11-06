@@ -2,7 +2,8 @@ import { Alert, BodyShort, Heading, Link as DsLink } from '@navikt/ds-react'
 import Link from 'next/link'
 import { ReactElement } from 'react'
 
-import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from '../../fetching/graphql.generated'
+import { SvarUnion_DagerSvar_Fragment, SykmeldingFragment } from 'queries'
+
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import Spinner from '../Spinner/Spinner'
 import { hasHitPreviousSykmeldingTom } from '../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'

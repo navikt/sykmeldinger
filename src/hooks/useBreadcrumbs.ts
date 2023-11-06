@@ -5,7 +5,8 @@ import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-modul
 import { useRouter } from 'next/router'
 import { logger } from '@navikt/next-logger'
 
-import { SykmeldingFragment } from '../fetching/graphql.generated'
+import { SykmeldingFragment } from 'queries'
+
 import { getSykmeldingTitle } from '../utils/sykmeldingUtils'
 import { browserEnv } from '../utils/env'
 
