@@ -3,9 +3,9 @@
     "version": "2.0.0",
     "private": true,
     "engines": {
-        "node": "18"
+        "node": "20"
     },
-    "packageManager": "yarn@3.6.1",
+    "packageManager": "yarn@4.0.1",
     "scripts": {
         "dev": "yarn start",
         "start": "concurrently -n next,codegen \"yarn start:watch\" \"yarn gen:watch\"",

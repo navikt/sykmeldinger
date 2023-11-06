@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   next-app:
-    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@main
+    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@node-20
     secrets: inherit
     with:
       app: sykmeldinger
@@ -21,7 +21,7 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.39.0-jammy
     steps:
-      - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@main
+      - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@node-20
         with:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Build e2e version of app
