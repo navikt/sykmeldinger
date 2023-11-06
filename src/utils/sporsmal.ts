@@ -1,5 +1,6 @@
+import { ArbeidssituasjonType } from 'queries'
+
 import { UriktigeOpplysningerType } from '../server/graphql/resolver-types.generated'
-import { ArbeidssituasjonType } from '../fetching/graphql.generated'
 
 import { toReadableDate } from './dateUtils'
 

@@ -2,9 +2,10 @@ import { ReactElement } from 'react'
 import { BandageIcon } from '@navikt/aksel-icons'
 import * as R from 'remeda'
 
+import { MedisinskVurdering } from 'queries'
+
 import { toReadableDate } from '../../../../../utils/dateUtils'
 import { SykmeldingGroup } from '../../../../molecules/sykmelding/SykmeldingGroup'
-import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
 import { annenFraverGrunnToText } from '../../../../../utils/periodeUtils'
 import { SykmeldingInfo, SykmeldingJaInfo } from '../../../../molecules/sykmelding/SykmeldingInfo'
 

@@ -2,10 +2,11 @@ import { describe, it, expect } from 'vitest'
 import { formatISO, sub } from 'date-fns'
 import { MockedResponse } from '@apollo/client/testing'
 
+import { Periodetype, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from 'queries'
+
 import { renderHook, waitFor } from '../utils/test/testUtils'
 import { dateAdd, dateSub } from '../utils/dateUtils'
 import { createMock, createSykmelding, createUnderBehandlingMerknad } from '../utils/test/dataUtils'
-import { Periodetype, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import useFindOlderSykmeldingId from './useFindOlderSykmeldingId'
 

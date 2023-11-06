@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { range } from 'remeda'
 
+import { RegelStatus, StatusEvent, SvarUnion_ArbeidssituasjonSvar_Fragment, SykmeldingFragment } from 'queries'
+
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'
 import StatusInfo from '../../components/StatusInfo/StatusInfo'
@@ -14,12 +16,6 @@ import Header from '../../components/Header/Header'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
-import {
-    RegelStatus,
-    StatusEvent,
-    SvarUnion_ArbeidssituasjonSvar_Fragment,
-    SykmeldingFragment,
-} from '../../fetching/graphql.generated'
 import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding'
 import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
 import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer'

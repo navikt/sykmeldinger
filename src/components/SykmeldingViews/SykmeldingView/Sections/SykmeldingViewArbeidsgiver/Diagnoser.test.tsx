@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { MedisinskVurdering } from '../../../../../fetching/graphql.generated'
+import { MedisinskVurdering } from 'queries'
 
 import Diagnoser from './Diagnoser'
 

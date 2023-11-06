@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { YesOrNo } from '../fetching/graphql.generated'
+import { YesOrNo } from 'queries'
 
 import { hasCompletedEgenmeldingsdager } from './egenmeldingsdagerUtils'
 

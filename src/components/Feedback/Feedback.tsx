@@ -3,7 +3,8 @@ import { PropsWithChildren, ReactElement, useReducer } from 'react'
 import { FaceSmileIcon } from '@navikt/aksel-icons'
 import { useMutation } from '@apollo/client'
 
-import { FeedbackDocument } from '../../fetching/graphql.generated'
+import { FeedbackDocument } from 'queries'
+
 import { cn } from '../../utils/tw-utils'
 
 import { feedbackReducer, initialState } from './FeedbackReducer'

@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 import { BodyLong, GuidePanel, Heading, Label, Chat } from '@navikt/ds-react'
 
-import { Merknad, Merknadtype } from '../../fetching/graphql.generated'
+import { Merknad, Merknadtype } from 'queries'
+
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg'
 
 interface InformationBannerProps {

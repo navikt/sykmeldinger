@@ -5,13 +5,14 @@ import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { toPairs } from 'remeda'
 
-import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
 import {
     Dev_BrukerinformasjonDocument,
     Dev_ChangeUserScenarioDocument,
     Dev_SetAntallArbeidsgivereDocument,
     Dev_ToggleStrengtFortroligAdresseDocument,
-} from '../../fetching/graphql.generated'
+} from 'queries'
+
+import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
 import { cn } from '../../utils/tw-utils'
 import { simpleScenarios, otherScenarios } from '../../server/graphql/mock-db/scenarios'
 

@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form'
 
-import { BrukerinformasjonFragment, SykmeldingUtenforVentetidFragment } from '../../../../fetching/graphql.generated'
+import { BrukerinformasjonFragment, SykmeldingUtenforVentetidFragment } from 'queries'
+
 import { isActiveArbeidsgiver } from '../../../../utils/arbeidsgiverUtils'
 import { isArbeidstaker, isFrilanserOrNaeringsdrivende } from '../../../../utils/arbeidssituasjonUtils'
 import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdagerUtils'

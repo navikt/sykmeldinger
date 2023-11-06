@@ -8,7 +8,8 @@ import {
     Periodetype,
     SykmeldingFragment,
     YesOrNo,
-} from '../../../../../fetching/graphql.generated'
+} from 'queries'
+
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../../../FormComponents/FormStructure'
 import { findValgtArbeidsgiver } from '../../../../../utils/arbeidsgiverUtils'

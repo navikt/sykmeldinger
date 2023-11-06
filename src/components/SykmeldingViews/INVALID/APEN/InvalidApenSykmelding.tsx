@@ -3,7 +3,8 @@ import { useController, useForm } from 'react-hook-form'
 import { ApolloError } from '@apollo/client'
 import { ReactElement } from 'react'
 
-import { SykmeldingChangeStatus, SykmeldingFragment } from '../../../../fetching/graphql.generated'
+import { SykmeldingChangeStatus, SykmeldingFragment } from 'queries'
+
 import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'

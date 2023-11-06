@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 
-import { Periode, SykmeldingFragment, UtdypendeOpplysning } from '../../../fetching/graphql.generated'
+import { Periode, SykmeldingFragment, UtdypendeOpplysning } from 'queries'
+
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
 import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { Arbeidsgiver } from '../fetching/graphql.generated'
+import { Arbeidsgiver } from 'queries'
 
 import { findValgtArbeidsgiver, isActiveArbeidsgiver } from './arbeidsgiverUtils'
 

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { Alert, Heading } from '@navikt/ds-react'
 
-import { UriktigeOpplysningerType } from '../../../../fetching/graphql.generated'
+import { UriktigeOpplysningerType } from 'queries'
 
 interface UriktigeOpplysningerInfoProps {
     uriktigeOpplysninger: UriktigeOpplysningerType[]

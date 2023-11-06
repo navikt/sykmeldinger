@@ -1,9 +1,10 @@
 import * as R from 'remeda'
 
+import { SykmeldingChangeStatus } from 'queries'
+
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
 import { Brukerinformasjon } from '../../api-models/Brukerinformasjon'
 import { ErUtenforVentetid } from '../../api-models/ErUtenforVentetid'
-import { SykmeldingChangeStatus } from '../../../fetching/graphql.generated'
 import {
     ArbeidssituasjonType,
     Merknadtype,

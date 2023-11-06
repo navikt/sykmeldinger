@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
+import { ArbeidssituasjonType, YesOrNo } from 'queries'
+
 import { LocalDateSchema } from '../date'
 import { ShortName, StatusEvent } from '../../graphql/resolver-types.generated'
-import { ArbeidssituasjonType, YesOrNo } from '../../../fetching/graphql.generated'
 
 export enum Svartype {
     ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',

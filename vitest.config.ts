@@ -1,3 +1,5 @@
+import path from 'node:path'
+
 import dotenv from 'dotenv'
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
@@ -12,5 +14,10 @@ export default defineConfig({
         environment: 'jsdom',
         include: ['src/**/*.test.{ts,tsx}'],
         setupFiles: ['vitest.setup.ts'],
+    },
+    resolve: {
+        alias: {
+            queries: path.resolve(__dirname, './src/fetching/graphql.generated.ts'),
+        },
     },
 })

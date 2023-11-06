@@ -2,8 +2,9 @@ import { ReactElement } from 'react'
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
 
+import { UriktigeOpplysningerType } from 'queries'
+
 import { FormValues } from '../../SendSykmeldingForm'
-import { UriktigeOpplysningerType } from '../../../../fetching/graphql.generated'
 import { QuestionWrapper } from '../../../FormComponents/FormStructure'
 import { sporsmal, uriktigeOpplysningerEnumToText } from '../../../../utils/sporsmal'
 

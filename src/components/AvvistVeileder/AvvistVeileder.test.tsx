@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { Behandlingsutfall, RegelStatus } from '../../fetching/graphql.generated'
+import { Behandlingsutfall, RegelStatus } from 'queries'
 
 import AvvistVeileder from './AvvistVeileder'
 

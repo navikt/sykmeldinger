@@ -1,6 +1,6 @@
 import { differenceInDays, isAfter, isBefore, parseISO } from 'date-fns'
 
-import { MinimalSykmeldingFragment, RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
+import { MinimalSykmeldingFragment, RegelStatus, StatusEvent, SykmeldingFragment } from 'queries'
 
 import { toDate, toReadableDatePeriod } from './dateUtils'
 import { isUtenlandsk } from './utenlanskUtils'

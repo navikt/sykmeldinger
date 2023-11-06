@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 import { Alert, Detail, Heading } from '@navikt/ds-react'
 
-import { SykmeldingFragment } from '../../../../fetching/graphql.generated'
+import { SykmeldingFragment } from 'queries'
+
 import { toReadableDate } from '../../../../utils/dateUtils'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 

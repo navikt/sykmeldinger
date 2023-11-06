@@ -4,7 +4,7 @@ import { useController } from 'react-hook-form'
 import { UseControllerProps } from 'react-hook-form/dist/types/controller'
 import { FieldPath, FieldPathValue, FieldValues } from 'react-hook-form/dist/types'
 
-import { YesOrNo } from '../../../fetching/graphql.generated'
+import { YesOrNo } from 'queries'
 
 interface Props<
     TFieldValues extends FieldValues = FieldValues,

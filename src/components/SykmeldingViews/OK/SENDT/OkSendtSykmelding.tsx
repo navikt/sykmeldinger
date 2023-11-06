@@ -2,7 +2,8 @@ import { ReactElement } from 'react'
 import { Alert, BodyShort, Heading, Link as DsLink } from '@navikt/ds-react'
 import Link from 'next/link'
 
-import { Periodetype, SykmeldingFragment } from '../../../../fetching/graphql.generated'
+import { Periodetype, SykmeldingFragment } from 'queries'
+
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 import { isUnderbehandling } from '../../../../utils/sykmeldingUtils'

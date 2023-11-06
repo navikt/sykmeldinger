@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { Periode, Periodetype } from '../../../../../fetching/graphql.generated'
+import { Periode, Periodetype } from 'queries'
 
 import PeriodeView from './PeriodeView'
 

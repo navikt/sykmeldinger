@@ -1,9 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { Alert, BodyLong, Button, Label, Radio, RadioGroup } from '@navikt/ds-react'
 
+import { SykmeldingChangeStatus } from 'queries'
+
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
-import { SykmeldingChangeStatus } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
 const skjemanavn = 'avbryt åpen papirsykmelding'

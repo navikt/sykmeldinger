@@ -3,15 +3,6 @@ import userEvent from '@testing-library/user-event'
 import mockRouter from 'next-router-mock'
 import { within } from '@testing-library/react'
 
-import { axe, render, screen, waitFor } from '../utils/test/testUtils'
-import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
-import {
-    createEgenmeldingsdagerSporsmal,
-    createMock,
-    createSykmelding,
-    createSykmeldingPeriode,
-    createSykmeldingStatus,
-} from '../utils/test/dataUtils'
 import {
     Arbeidsgiver,
     ArbeidssituasjonType,
@@ -22,7 +13,17 @@ import {
     SykmeldingerDocument,
     SykmeldingFragment,
     YesOrNo,
-} from '../fetching/graphql.generated'
+} from 'queries'
+
+import { axe, render, screen, waitFor } from '../utils/test/testUtils'
+import SykmeldingPage from '../pages/[sykmeldingId]/index.page'
+import {
+    createEgenmeldingsdagerSporsmal,
+    createMock,
+    createSykmelding,
+    createSykmeldingPeriode,
+    createSykmeldingStatus,
+} from '../utils/test/dataUtils'
 import { clickDays } from '../pages/[sykmeldingId]/endre-egenmeldingsdager.test'
 
 import { createExtraFormDataMock } from './mockUtils'

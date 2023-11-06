@@ -5,14 +5,6 @@ import { within } from '@testing-library/react'
 import { MockedResponse } from '@apollo/client/testing'
 import * as dekoratoren from '@navikt/nav-dekoratoren-moduler'
 
-import { render, screen, Screen, waitFor } from '../../utils/test/testUtils'
-import {
-    createEgenmeldingsdagerSporsmal,
-    createMock,
-    createSykmelding,
-    createSykmeldingPeriode,
-    createSykmeldingStatus,
-} from '../../utils/test/dataUtils'
 import {
     ArbeidsgiverStatus,
     EndreEgenmeldingsdagerDocument,
@@ -21,7 +13,16 @@ import {
     SykmeldingByIdDocument,
     SykmeldingerDocument,
     SykmeldingFragment,
-} from '../../fetching/graphql.generated'
+} from 'queries'
+
+import { render, screen, Screen, waitFor } from '../../utils/test/testUtils'
+import {
+    createEgenmeldingsdagerSporsmal,
+    createMock,
+    createSykmelding,
+    createSykmeldingPeriode,
+    createSykmeldingStatus,
+} from '../../utils/test/dataUtils'
 
 import EndreEgenmeldingsdagerPage from './endre-egenmeldingsdager.page'
 

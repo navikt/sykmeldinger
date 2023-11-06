@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import mockRouter from 'next-router-mock'
 
-import { createMock, createSykmelding, createSykmeldingPeriode } from '../../utils/test/dataUtils'
 import {
     Arbeidsgiver,
     Periodetype,
@@ -9,7 +8,9 @@ import {
     SykmeldingByIdDocument,
     SykmeldingerDocument,
     SykmeldingFragment,
-} from '../../fetching/graphql.generated'
+} from 'queries'
+
+import { createMock, createSykmelding, createSykmeldingPeriode } from '../../utils/test/dataUtils'
 import { render, screen } from '../../utils/test/testUtils'
 import { createExtraFormDataMock } from '../../feature-tests/mockUtils'
 

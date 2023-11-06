@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { MeldingTilNav } from '../../../../../fetching/graphql.generated'
+import { MeldingTilNav } from 'queries'
 
 import MeldingTilNavView from './MeldingTilNav'
 

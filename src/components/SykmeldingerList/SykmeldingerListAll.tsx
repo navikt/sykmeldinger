@@ -3,11 +3,12 @@ import { Accordion, Alert } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 import { groupBy } from 'remeda'
 
+import { SykmeldingFragment } from 'queries'
+
 import useSykmeldinger from '../../hooks/useSykmeldinger'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import SykmeldingLinkPanel from '../SykmeldingLinkPanel/SykmeldingLinkPanel'
 import { InfoOmDigitalSykmelding, SerIkkeSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
-import { SykmeldingFragment } from '../../fetching/graphql.generated'
 import { isActiveSykmelding, isUnderbehandling } from '../../utils/sykmeldingUtils'
 
 import { SykmeldingerListSkeleton } from './SykmeldingerSkeletons'

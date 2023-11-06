@@ -2,9 +2,10 @@ import React, { ReactElement } from 'react'
 import { Accordion, Alert, BodyShort, Heading, Link, Select, Skeleton } from '@navikt/ds-react'
 import { NetworkStatus, useQuery } from '@apollo/client'
 
+import { MinimalSykmeldingerDocument, SykmeldingCategory } from 'queries'
+
 import { InfoOmDigitalSykmelding, SerIkkeSykmelding } from '../InfoOmDigitalSykmelding/InfoOmDigitalSykmelding'
 import SykmeldingLinkPanel, { SortBy } from '../SykmeldingLinkPanel/SykmeldingLinkPanel'
-import { MinimalSykmeldingerDocument, SykmeldingCategory } from '../../fetching/graphql.generated'
 
 import { SingleSykmeldingSkeleton } from './SykmeldingerSkeletons'
 

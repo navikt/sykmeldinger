@@ -2,10 +2,11 @@ import { ReactElement } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 
+import { ArbeidssituasjonType } from 'queries'
+
 import { FormValues } from '../../SendSykmeldingForm'
 import { QuestionWrapper } from '../../../FormComponents/FormStructure'
 import { arbeidsSituasjonEnumToText, sporsmal } from '../../../../utils/sporsmal'
-import { ArbeidssituasjonType } from '../../../../fetching/graphql.generated'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
 interface Props {

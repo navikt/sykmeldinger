@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { Merknadtype, RegelStatus, StatusEvent, SykmeldingFragment } from '../fetching/graphql.generated'
+import { Merknadtype, RegelStatus, StatusEvent, SykmeldingFragment } from 'queries'
 
 import {
     getReadableSykmeldingLength,

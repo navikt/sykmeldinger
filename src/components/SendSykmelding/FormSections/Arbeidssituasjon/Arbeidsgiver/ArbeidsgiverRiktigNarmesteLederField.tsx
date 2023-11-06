@@ -2,8 +2,9 @@ import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Alert, ReadMore } from '@navikt/ds-react'
 
+import { NaermesteLederFragment, YesOrNo } from 'queries'
+
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
-import { NaermesteLederFragment, YesOrNo } from '../../../../../fetching/graphql.generated'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import YesNoField from '../../../../FormComponents/YesNoField/YesNoField'

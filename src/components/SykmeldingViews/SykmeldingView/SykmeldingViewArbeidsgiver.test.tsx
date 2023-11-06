@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { Periodetype, RegelStatus, StatusEvent, SykmeldingFragment } from '../../../fetching/graphql.generated'
+import { Periodetype, RegelStatus, StatusEvent, SykmeldingFragment } from 'queries'
 
 import SykmeldingViewArbeidsgiver from './SykmeldingViewArbeidsgiver'
 
