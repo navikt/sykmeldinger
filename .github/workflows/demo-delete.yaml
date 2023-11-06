@@ -6,7 +6,7 @@ on:
 
 jobs:
   branch-delete:
-    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app-demo-delete.yaml@main
+    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app-demo-delete.yaml@node-20
     secrets: inherit
     with:
       app: sykmeldinger
