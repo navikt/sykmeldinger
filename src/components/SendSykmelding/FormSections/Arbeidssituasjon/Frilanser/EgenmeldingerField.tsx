@@ -22,7 +22,6 @@ function EgenmeldingerField({ oppfolgingsdato }: Props): ReactElement {
     const { fields, update, append, remove } = useFieldArray({
         control,
         name: 'egenmeldingsperioder',
-        shouldUnregister: true,
     })
 
     // useFieldArray doesn't allow us to set an initial value, so we have to do it manually on mount

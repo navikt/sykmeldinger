@@ -31,7 +31,6 @@ function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): ReactElement {
                         },
                     })
                 }}
-                defaultValue={null}
             />
         </QuestionWrapper>
     )

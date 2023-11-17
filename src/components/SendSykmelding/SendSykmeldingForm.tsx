@@ -49,7 +49,20 @@ function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
     useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
 
     const errorSectionRef = useRef<HTMLDivElement>(null)
-    const form = useForm<FormValues>({ shouldFocusError: false, defaultValues: { erOpplysningeneRiktige: null } })
+    const form = useForm<FormValues>({
+        shouldFocusError: false,
+        defaultValues: {
+            erOpplysningeneRiktige: null,
+            uriktigeOpplysninger: null,
+            arbeidssituasjon: null,
+            arbeidsgiverOrgnummer: null,
+            riktigNarmesteLeder: null,
+            harBruktEgenmelding: null,
+            egenmeldingsperioder: null,
+            harForsikring: null,
+            egenmeldingsdager: null,
+        },
+    })
     const extraFormData = useExtraFormData(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,

@@ -1,7 +1,7 @@
 import { Button, ErrorMessage } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
 import { isAfter } from 'date-fns'
-import { ReactElement, useEffect, useLayoutEffect, useRef } from 'react'
+import { ReactElement, useEffect, useLayoutEffect } from 'react'
 import * as R from 'remeda'
 import cn from 'classnames'
 
@@ -55,14 +55,6 @@ function EgenmeldingerField({
 
     const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(previous, metadata.previousSykmeldingTom)
     const hasHitPreviousSykmeldingTom = isAfter(earliestPossibleDate, latestPossibleDate)
-
-    const harPerioderRef = useRef(harPerioder)
-    useLayoutEffect(() => {
-        if (hasHitPreviousSykmeldingTom) return
-
-        // TODO: This is a hack to fix weird RHF-watch issue. Keep an eye on if it's fixed so we can remove this useEffect.
-        setValue(`egenmeldingsdager.${index}.harPerioder`, harPerioderRef.current ?? null)
-    }, [hasHitPreviousSykmeldingTom, index, setValue])
 
     useLayoutEffect(() => {
         if (hasHitPreviousSykmeldingTom && egenmeldingsdagerHitPrevious == null) {
@@ -167,7 +159,6 @@ function VidereButtonField({ index, missingDates }: { index: number; missingDate
         rules: {
             required: 'Du må klikke deg videre når du har valgt datoene du har brukt egenmelding på',
         },
-        defaultValue: null,
     })
 
     return (
@@ -201,13 +192,13 @@ export function laterPeriodsRemoved(
         return R.pipe(
             list,
             R.take(index + 1),
-            R.concat([
-                {
+            R.concat(
+                R.range(0, list.length - index - 1).map(() => ({
                     harPerioder: null,
                     datoer: null,
                     hasClickedVidere: null,
-                },
-            ]),
+                })),
+            ),
         )
     }
 

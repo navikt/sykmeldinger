@@ -26,7 +26,6 @@ function HarForsikringField(): ReactElement {
                         },
                     })
                 }}
-                defaultValue={null}
             />
         </QuestionWrapper>
     )

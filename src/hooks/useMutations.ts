@@ -12,20 +12,15 @@ import {
     MinimalSykmeldingerDocument,
     SendSykmeldingDocument,
     SendSykmeldingMutation,
-    SendSykmeldingValues,
     SykmeldingCategory,
     SykmeldingChangeStatus,
-    YesOrNo,
 } from 'queries'
 
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
-import { toDateString } from '../utils/dateUtils'
-import {
-    EgenmeldingsdagerFormValue,
-    EgenmeldingsdagerSubForm,
-} from '../components/FormComponents/Egenmelding/EgenmeldingerField'
+import { EgenmeldingsdagerSubForm } from '../components/FormComponents/Egenmelding/EgenmeldingerField'
 import { typedRefetchQuery } from '../fetching/apollo'
 import { useFlag } from '../toggles/context'
+import { mapEgenmeldingsdager, mapToSendSykmeldingValues } from '../utils/toSendSykmeldingUtils'
 
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,
@@ -132,41 +127,6 @@ export function useEndreEgenmeldingsdager(
             onCompleted(values)
         },
     ]
-}
-
-function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingValues {
-    return {
-        ...R.omit(values, ['egenmeldingsdagerHitPrevious']),
-        egenmeldingsperioder: values.egenmeldingsperioder?.map((periode) => ({
-            fom: periode.fom ? toDateString(periode.fom) : null,
-            tom: periode.tom ? toDateString(periode.tom) : null,
-        })),
-        harEgenmeldingsdager: getEgenmeldingsdager(values.egenmeldingsdager),
-        egenmeldingsdager:
-            values.egenmeldingsdager != null &&
-            values.egenmeldingsdager.length > 0 &&
-            values.egenmeldingsdager[0].harPerioder !== YesOrNo.NO
-                ? mapEgenmeldingsdager(values.egenmeldingsdager)
-                : undefined,
-    }
-}
-
-function getEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['harEgenmeldingsdager'] {
-    if (value == null || value.length === 0) {
-        return undefined
-    }
-
-    return value[0].harPerioder
-}
-
-function mapEgenmeldingsdager(value: EgenmeldingsdagerFormValue[]): readonly string[] {
-    const dates = value.flatMap((dager) => dager.datoer).filter((it): it is Date => it != null)
-
-    if (dates.length === 0) {
-        return []
-    }
-
-    return dates.map(toDateString)
 }
 
 const refetchListQueries = R.pipe(

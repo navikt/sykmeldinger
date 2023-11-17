@@ -43,8 +43,6 @@ function EgenmeldingPeriodSubField({
                 return undefined
             },
         },
-        shouldUnregister: true,
-        defaultValue: null,
     })
     const { field: fromField, fieldState: fromFieldState } = useController<FormValues, `${EgenmeldingField}.fom`>({
         name: `egenmeldingsperioder.${index}.fom`,
@@ -76,8 +74,6 @@ function EgenmeldingPeriodSubField({
                 return undefined
             },
         },
-        shouldUnregister: true,
-        defaultValue: null,
     })
 
     const { datepickerProps, toInputProps, fromInputProps, setSelected } = useRangeDatepicker({

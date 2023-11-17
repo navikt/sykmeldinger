@@ -43,7 +43,6 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): ReactEl
                         },
                     })
                 }}
-                defaultValue={null}
             />
             {riktigNarmesteLeder != null && (
                 <Alert className="my-8" variant="info" role="alert" aria-live="polite">

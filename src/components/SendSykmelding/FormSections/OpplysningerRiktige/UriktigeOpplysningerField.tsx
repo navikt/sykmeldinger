@@ -15,8 +15,6 @@ function UriktigeOpplysningerField(): ReactElement {
             validate: (value) =>
                 value == null || value.length <= 0 ? 'Du må svare på hvilke opplysninger som ikke stemmer.' : undefined,
         },
-        shouldUnregister: true,
-        defaultValue: null,
     })
 
     return (

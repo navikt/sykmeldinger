@@ -57,8 +57,6 @@ function HarBruktEgenmelding({
                         onNo()
                     }
                 }}
-                defaultValue={null}
-                shouldUnregister={false}
             />
         </QuestionWrapper>
     )

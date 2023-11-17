@@ -21,7 +21,6 @@ function ErOpplysningeneRiktigeField(): ReactElement {
                         { 'stemmer opplysningene': value },
                     )
                 }}
-                defaultValue={null}
             />
         </QuestionWrapper>
     )
