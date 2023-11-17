@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { useController, useFormContext } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 
 import { ArbeidssituasjonType } from 'queries'
@@ -14,12 +14,9 @@ interface Props {
 }
 
 function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
-    const { setValue } = useFormContext<FormValues>()
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidssituasjon',
         rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
-        shouldUnregister: true,
-        defaultValue: null,
     })
 
     return (
@@ -34,10 +31,6 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
                         data: { skjemanavn: 'arbeidssituasjon', spørsmål: 'Jeg er sykmeldt som', svar: value },
                     })
                     field.onChange(value)
-
-                    if (value !== ArbeidssituasjonType.ARBEIDSTAKER) {
-                        setValue('egenmeldingsdager', null)
-                    }
                 }}
                 error={fieldState.error?.message}
             >

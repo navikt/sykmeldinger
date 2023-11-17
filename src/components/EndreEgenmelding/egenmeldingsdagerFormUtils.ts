@@ -63,6 +63,6 @@ function traverseEgenmeldingsdager(
             ),
         ]
     } else {
-        return [{ harPerioder: YesOrNo.NO, datoer: null, hasClickedVidere: false }]
+        return [{ harPerioder: YesOrNo.NO, datoer: null, hasClickedVidere: null }]
     }
 }

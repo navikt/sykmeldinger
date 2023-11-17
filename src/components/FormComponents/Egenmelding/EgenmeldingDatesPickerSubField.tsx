@@ -25,7 +25,6 @@ function EgenmeldingDatesPickerSubField({
         `egenmeldingsdager.${number}.datoer`
     >({
         name: `egenmeldingsdager.${index}.datoer`,
-        defaultValue: [],
         rules: {
             validate: (value) => {
                 if (!value || value.length === 0) {

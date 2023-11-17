@@ -5,17 +5,8 @@ import { EgenmeldingsdagerFormValue } from '../components/FormComponents/Egenmel
 export const hasCompletedEgenmeldingsdager = (egenmeldingsperioder?: EgenmeldingsdagerFormValue[] | null): boolean => {
     if (egenmeldingsperioder == null) return false
 
-    const lastElement = egenmeldingsperioder[egenmeldingsperioder.length - 1]
-    if (lastElement.harPerioder === YesOrNo.NO) return true
-
-    if (
-        lastElement.harPerioder === YesOrNo.YES &&
-        !(lastElement.datoer == null || lastElement.datoer.length === 0 || lastElement.hasClickedVidere == null)
-    ) {
-        return true
-    }
-
-    return false
+    const lastElement: EgenmeldingsdagerFormValue = egenmeldingsperioder[egenmeldingsperioder.length - 1]
+    return lastElement.harPerioder === YesOrNo.NO
 }
 
 export function findEgenmeldingsdager(

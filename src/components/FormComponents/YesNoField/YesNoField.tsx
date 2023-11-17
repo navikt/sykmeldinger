@@ -14,28 +14,16 @@ interface Props<
     legend: string
     subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void
-    defaultValue?: FieldPathValue<TFieldValues, TName>
     rules?: UseControllerProps['rules']
-    shouldUnregister?: boolean
 }
 
 function YesNoField<
     TFieldValues extends FieldValues = FieldValues,
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
-    name,
-    legend,
-    subtext,
-    onChange,
-    defaultValue,
-    rules,
-    shouldUnregister = true,
-}: Props<TFieldValues, TName>): ReactElement {
+>({ name, legend, subtext, onChange, rules }: Props<TFieldValues, TName>): ReactElement {
     const { field, fieldState } = useController<TFieldValues, TName>({
         name,
         rules,
-        shouldUnregister,
-        defaultValue,
     })
 
     return (
