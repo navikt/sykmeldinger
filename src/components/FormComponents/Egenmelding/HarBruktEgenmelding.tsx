@@ -1,9 +1,10 @@
 import { BodyLong, Link, ReadMore } from '@navikt/ds-react'
 import { ReactElement, useState } from 'react'
+import { differenceInDays } from 'date-fns'
 
 import { YesOrNo } from 'queries'
 
-import { toReadableDatePeriod } from '../../../utils/dateUtils'
+import { toDate, toReadableDatePeriod } from '../../../utils/dateUtils'
 import { sporsmal } from '../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import YesNoField from '../YesNoField/YesNoField'
@@ -28,14 +29,16 @@ function HarBruktEgenmelding({
     onNo,
     amplitudeSkjemanavn,
 }: Props): ReactElement {
+    const period: string = toReadableDatePeriod(lastPossibleDate, firstPossibleDate)
+    const periodLength: number = differenceInDays(toDate(firstPossibleDate), toDate(lastPossibleDate)) + 1
+
     return (
         <QuestionWrapper>
             <YesNoField<EgenmeldingsdagerSubForm>
                 name={`egenmeldingsdager.${index}.harPerioder`}
-                legend={`${sporsmal.harBruktEgenmeldingsdager(arbeidsgiverNavn)} i perioden ${toReadableDatePeriod(
-                    lastPossibleDate,
-                    firstPossibleDate,
-                )}?`}
+                legend={`${sporsmal.harBruktEgenmeldingsdager(arbeidsgiverNavn)} ${
+                    periodLength > 1 ? `i perioden` : ''
+                } ${period}?`}
                 subtext={<EgenmeldingReadMore index={index} />}
                 rules={{
                     required: 'Du må svare på om du har brukt egenmelding før du ble syk.',
