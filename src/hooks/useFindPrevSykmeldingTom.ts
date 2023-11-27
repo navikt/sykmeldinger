@@ -33,9 +33,19 @@ export function useFindPrevSykmeldingTom(
     )
 }
 
+function isValidRange(sykmelding: SykmeldingFragment): boolean {
+    const start = getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
+    const end = getSykmeldingEndDate(sykmelding.sykmeldingsperioder)
+
+    return isBefore(toDate(start), toDate(end))
+}
+
 function removeInsideSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]) {
     return (sykmelding: SykmeldingFragment): boolean => {
-        const others = sykmeldinger.filter(isSendtSykmelding).filter((it) => it.id !== sykmelding.id)
+        const others = sykmeldinger
+            .filter(isSendtSykmelding)
+            .filter(isValidRange)
+            .filter((it) => it.id !== sykmelding.id)
 
         return !others.some((other) => {
             const otherInterval = {
