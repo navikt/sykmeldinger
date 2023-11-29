@@ -7,17 +7,21 @@ import * as R from 'remeda'
 import { screen, render } from '../../../../../utils/test/testUtils'
 import { toDateString } from '../../../../../utils/dateUtils'
 
-import EgenmeldingerField from './EgenmeldingerField'
+import FrilanserEgenmeldingPerioderField from './FrilanserEgenmeldingPerioderField'
 
-describe('EgenmeldingerField', () => {
+describe('FrilanserEgenmeldingPerioderField', () => {
     const EgenmeldingerFieldInForm = ({ oppfolgingsdato }: { oppfolgingsdato: string }): ReactElement => {
-        const form = useForm()
+        const form = useForm({
+            defaultValues: {
+                egenmeldingsperioder: [{ fom: null, tom: null }],
+            },
+        })
         const values = form.watch('egenmeldingsperioder') ?? []
 
         return (
             <FormProvider {...form}>
                 <form onSubmit={form.handleSubmit(() => void 0)}>
-                    <EgenmeldingerField oppfolgingsdato={oppfolgingsdato} />
+                    <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato} />
                     <button type="submit">submit for test</button>
                     <div data-testid="value">
                         {JSON.stringify(

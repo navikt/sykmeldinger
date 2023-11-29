@@ -54,7 +54,9 @@ function EndreEgenmeldingForm({
                       egenmeldingsdager.dager,
                   ),
               }
-            : undefined,
+            : {
+                  egenmeldingsdager: null,
+              },
     })
 
     useWarnUnsavedPopup(form.formState.isDirty && !form.formState.isSubmitSuccessful)

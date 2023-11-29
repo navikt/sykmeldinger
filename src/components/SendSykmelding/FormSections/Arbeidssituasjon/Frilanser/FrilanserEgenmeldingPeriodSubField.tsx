@@ -6,7 +6,7 @@ import { Interval, isWithinInterval } from 'date-fns'
 
 import { FormValues } from '../../../SendSykmeldingForm'
 
-import { EgenmeldingField } from './EgenmeldingerField'
+type FrilanserEgenmeldingPerioderFieldName = `egenmeldingsperioder.${number}`
 
 interface EgenmeldingPeriodSubFieldProps {
     index: number
@@ -15,14 +15,17 @@ interface EgenmeldingPeriodSubFieldProps {
     otherPeriods: FormValues['egenmeldingsperioder']
 }
 
-function EgenmeldingPeriodSubField({
+function FrilanserEgenmeldingPeriodSubField({
     index,
     remove,
     oppfolgingsdato,
     otherPeriods,
 }: EgenmeldingPeriodSubFieldProps): ReactElement {
     const [rangeError, setRangeError] = useState<RangeValidationT | null>(null)
-    const { field: toField, fieldState: toFieldState } = useController<FormValues, `${EgenmeldingField}.tom`>({
+    const { field: toField, fieldState: toFieldState } = useController<
+        FormValues,
+        `${FrilanserEgenmeldingPerioderFieldName}.tom`
+    >({
         name: `egenmeldingsperioder.${index}.tom`,
         rules: {
             validate: (tomValue) => {
@@ -44,7 +47,10 @@ function EgenmeldingPeriodSubField({
             },
         },
     })
-    const { field: fromField, fieldState: fromFieldState } = useController<FormValues, `${EgenmeldingField}.fom`>({
+    const { field: fromField, fieldState: fromFieldState } = useController<
+        FormValues,
+        `${FrilanserEgenmeldingPerioderFieldName}.fom`
+    >({
         name: `egenmeldingsperioder.${index}.fom`,
         rules: {
             validate: (fomValue) => {
@@ -141,4 +147,4 @@ function EgenmeldingPeriodSubField({
     )
 }
 
-export default EgenmeldingPeriodSubField
+export default FrilanserEgenmeldingPeriodSubField

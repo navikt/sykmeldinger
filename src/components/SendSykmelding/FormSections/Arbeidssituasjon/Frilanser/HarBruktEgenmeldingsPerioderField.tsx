@@ -11,7 +11,7 @@ interface Props {
     oppfolgingsdato: string
 }
 
-function HarBruktEgenmeldingField({ oppfolgingsdato }: Props): ReactElement {
+function HarBruktEgenmeldingsPerioderField({ oppfolgingsdato }: Props): ReactElement {
     return (
         <QuestionWrapper>
             <YesNoField<FormValues>
@@ -68,4 +68,4 @@ function HarBruktEgenmeldingReadMore(): ReactElement {
     )
 }
 
-export default HarBruktEgenmeldingField
+export default HarBruktEgenmeldingsPerioderField

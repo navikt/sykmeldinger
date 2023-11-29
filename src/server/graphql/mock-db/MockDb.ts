@@ -18,6 +18,7 @@ import { Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus
 import { sporsmal } from '../../../utils/sporsmal'
 import { toDateString } from '../../../utils/dateUtils'
 import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
+import { mapSendSykmeldingValuesToV3Api } from '../../sendSykmeldingMapping'
 
 import { defaultArbeidsgivere } from './data-creators'
 
@@ -65,8 +66,8 @@ class MockDb {
             status === SykmeldingChangeStatus.AVBRYT
                 ? StatusEvent.AVBRUTT
                 : status === SykmeldingChangeStatus.BEKREFT_AVVIST
-                ? StatusEvent.BEKREFTET
-                : StatusEvent.APEN
+                  ? StatusEvent.BEKREFTET
+                  : StatusEvent.APEN
 
         const sykmelding = this.sykmelding(id)
         sykmelding.sykmeldingStatus.statusEvent = zodStatus
@@ -75,6 +76,9 @@ class MockDb {
 
     sendSykmelding(id: string, values: SendSykmeldingValues): Sykmelding {
         const sykmelding = this.sykmelding(id)
+
+        // Validate that real mapping would have worked
+        mapSendSykmeldingValuesToV3Api(values, sykmelding, this.brukerinformasjon(), this.sykeldingErUtenforVentetid())
 
         const sporsmalOgSvarListe: Sporsmal[] = R.compact([
             {

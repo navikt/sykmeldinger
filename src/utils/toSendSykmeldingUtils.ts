@@ -23,33 +23,37 @@ export function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingVal
 }
 
 function mapSykmeldingArbeidstaker(values: FormValues): SendSykmeldingValues {
+    const hasEgenmeldingsdager = getHasEgenmeldingsdager(values.egenmeldingsdager)
+
     return {
         erOpplysningeneRiktige: values.erOpplysningeneRiktige,
-        uriktigeOpplysninger: values.uriktigeOpplysninger ?? undefined,
-        arbeidssituasjon: values.arbeidssituasjon,
+        uriktigeOpplysninger: values.erOpplysningeneRiktige === YesOrNo.NO ? values.uriktigeOpplysninger : undefined,
+        arbeidssituasjon: ArbeidssituasjonType.ARBEIDSTAKER,
         arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer,
         riktigNarmesteLeder: values.riktigNarmesteLeder,
-        harEgenmeldingsdager: getEgenmeldingsdager(values.egenmeldingsdager),
+        harEgenmeldingsdager: hasEgenmeldingsdager,
         egenmeldingsdager:
+            hasEgenmeldingsdager === YesOrNo.YES &&
             values.egenmeldingsdager != null &&
-            values.egenmeldingsdager.length > 0 &&
-            values.egenmeldingsdager[0].harPerioder !== YesOrNo.NO
-                ? mapEgenmeldingsdager(values.egenmeldingsdager)
+            values.egenmeldingsdager.length > 0
+                ? getEgenmeldingsdagerDateList(values.egenmeldingsdager)
                 : undefined,
     }
 }
 
 function mapSykmeldingFrilansOrSelvstendig(values: FormValues): SendSykmeldingValues {
+    const egenmeldingsperioder =
+        values.egenmeldingsperioder?.map((periode) => ({
+            fom: periode.fom ? toDateString(periode.fom) : null,
+            tom: periode.tom ? toDateString(periode.tom) : null,
+        })) ?? undefined
+
     return {
         erOpplysningeneRiktige: values.erOpplysningeneRiktige,
-        uriktigeOpplysninger: values.uriktigeOpplysninger ?? undefined,
+        uriktigeOpplysninger: values.erOpplysningeneRiktige === YesOrNo.NO ? values.uriktigeOpplysninger : undefined,
         arbeidssituasjon: values.arbeidssituasjon,
         harBruktEgenmelding: values.harBruktEgenmelding ?? undefined,
-        egenmeldingsperioder:
-            values.egenmeldingsperioder?.map((periode) => ({
-                fom: periode.fom ? toDateString(periode.fom) : null,
-                tom: periode.tom ? toDateString(periode.tom) : null,
-            })) ?? undefined,
+        egenmeldingsperioder: values.harBruktEgenmelding === YesOrNo.YES ? egenmeldingsperioder : undefined,
         harForsikring: values.harForsikring ?? undefined,
     }
 }
@@ -57,18 +61,18 @@ function mapSykmeldingFrilansOrSelvstendig(values: FormValues): SendSykmeldingVa
 function mapSykmeldingArbeidsledigPermitertOrAnnet(values: FormValues): SendSykmeldingValues {
     return {
         erOpplysningeneRiktige: values.erOpplysningeneRiktige,
-        uriktigeOpplysninger: values.uriktigeOpplysninger ?? undefined,
+        uriktigeOpplysninger: values.erOpplysningeneRiktige === YesOrNo.NO ? values.uriktigeOpplysninger : undefined,
         arbeidssituasjon: values.arbeidssituasjon,
     }
 }
 
-function getEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['harEgenmeldingsdager'] {
+function getHasEgenmeldingsdager(value: FormValues['egenmeldingsdager']): SendSykmeldingValues['harEgenmeldingsdager'] {
     if (value == null || value.length === 0) return undefined
 
     return value[0].harPerioder
 }
 
-export function mapEgenmeldingsdager(value: EgenmeldingsdagerFormValue[]): readonly string[] {
+export function getEgenmeldingsdagerDateList(value: EgenmeldingsdagerFormValue[]): readonly string[] {
     const dates = value.flatMap((dager) => dager.datoer).filter((it): it is Date => it != null)
 
     if (dates.length === 0) return []
