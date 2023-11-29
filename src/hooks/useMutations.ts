@@ -20,7 +20,7 @@ import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { EgenmeldingsdagerSubForm } from '../components/FormComponents/Egenmelding/EgenmeldingerField'
 import { typedRefetchQuery } from '../fetching/apollo'
 import { useFlag } from '../toggles/context'
-import { mapEgenmeldingsdager, mapToSendSykmeldingValues } from '../utils/toSendSykmeldingUtils'
+import { getEgenmeldingsdagerDateList, mapToSendSykmeldingValues } from '../utils/toSendSykmeldingUtils'
 
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,
@@ -119,7 +119,7 @@ export function useEndreEgenmeldingsdager(
                 )
             }
 
-            const egenmeldingsdager = mapEgenmeldingsdager(values.egenmeldingsdager)
+            const egenmeldingsdager = getEgenmeldingsdagerDateList(values.egenmeldingsdager)
             await endreEgenmeldingsdager({
                 variables: { sykmeldingId, egenmeldingsdager: [...egenmeldingsdager].sort() },
             })

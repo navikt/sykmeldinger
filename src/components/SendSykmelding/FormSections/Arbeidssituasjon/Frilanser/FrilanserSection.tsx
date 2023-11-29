@@ -6,8 +6,8 @@ import { YesOrNo } from 'queries'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../../../FormComponents/FormStructure'
 
-import HarBruktEgenmeldingField from './HarBruktEgenmeldingField'
-import EgenmeldingerField from './EgenmeldingerField'
+import HarBruktEgenmeldingsPerioderField from './HarBruktEgenmeldingsPerioderField'
+import FrilanserEgenmeldingPerioderField from './FrilanserEgenmeldingPerioderField'
 import HarForsikringField from './HarForsikringField'
 
 interface Props {
@@ -20,8 +20,10 @@ function FrilanserSection({ oppfolgingsdato }: Props): ReactElement {
 
     return (
         <SectionWrapper title="Fravær før sykmeldingen">
-            <HarBruktEgenmeldingField oppfolgingsdato={oppfolgingsdato} />
-            {harBruktEgenmelding === YesOrNo.YES && <EgenmeldingerField oppfolgingsdato={oppfolgingsdato} />}
+            <HarBruktEgenmeldingsPerioderField oppfolgingsdato={oppfolgingsdato} />
+            {harBruktEgenmelding === YesOrNo.YES && (
+                <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato} />
+            )}
             <HarForsikringField />
         </SectionWrapper>
     )

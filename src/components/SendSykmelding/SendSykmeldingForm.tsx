@@ -58,7 +58,8 @@ function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
             arbeidsgiverOrgnummer: null,
             riktigNarmesteLeder: null,
             harBruktEgenmelding: null,
-            egenmeldingsperioder: null,
+            // useFieldArray doesn't allow default values when mounted
+            egenmeldingsperioder: [{ fom: null, tom: null }],
             harForsikring: null,
             egenmeldingsdager: null,
         },

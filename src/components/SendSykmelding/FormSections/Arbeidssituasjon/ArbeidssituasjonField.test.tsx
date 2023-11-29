@@ -9,7 +9,11 @@ import ArbeidssituasjonField from './ArbeidssituasjonField'
 
 describe('ArbeidssituasjonField', () => {
     const ArbeidssituasjonFieldInForm = ({ harAvventendePeriode }: { harAvventendePeriode: boolean }): ReactElement => {
-        const form = useForm()
+        const form = useForm({
+            defaultValues: {
+                arbeidssituasjon: null,
+            },
+        })
 
         return (
             <FormProvider {...form}>
