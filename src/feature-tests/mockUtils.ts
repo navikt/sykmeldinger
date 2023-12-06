@@ -27,7 +27,6 @@ export function createExtraFormDataMock({
                 brukerinformasjon: {
                     __typename: 'Brukerinformasjon',
                     arbeidsgivere: [],
-                    strengtFortroligAdresse: false,
                     ...brukerinformasjon,
                 },
             },

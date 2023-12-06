@@ -14,7 +14,6 @@ import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
 
 describe('sendSykmeldingMapping', () => {
     const brukerinformasjon: Brukerinformasjon = {
-        strengtFortroligAdresse: false,
         arbeidsgivere: defaultArbeidsgivere.slice(0, 2),
     }
     const erUtenforVentetid: ErUtenforVentetid = { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' }

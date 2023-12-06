@@ -36,7 +36,6 @@ class MockDb {
 
     brukerinformasjon(): Brukerinformasjon {
         return {
-            strengtFortroligAdresse: false,
             arbeidsgivere: this.arbeidsgivere(),
         }
     }
