@@ -121,7 +121,6 @@ export type Behandlingsutfall = {
 export type Brukerinformasjon = {
     readonly __typename: 'Brukerinformasjon'
     readonly arbeidsgivere: ReadonlyArray<Arbeidsgiver>
-    readonly strengtFortroligAdresse: Scalars['Boolean']['output']
 }
 
 export type DagerSvar = {
@@ -253,7 +252,6 @@ export type Mutation = {
     readonly changeSykmeldingStatus: Sykmelding
     readonly dev_changeScenario: Scalars['Boolean']['output']
     readonly dev_setAntallArbeidsgivere: Scalars['Boolean']['output']
-    readonly dev_toggleStrengtFortroligAdresse: Scalars['Boolean']['output']
     readonly feedback: Scalars['Boolean']['output']
     readonly sendSykmelding: Sykmelding
     readonly updateEgenmeldingsdager: Sykmelding

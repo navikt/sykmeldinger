@@ -125,7 +125,6 @@ export type Behandlingsutfall = {
 export type Brukerinformasjon = {
     __typename?: 'Brukerinformasjon'
     arbeidsgivere: Array<Arbeidsgiver>
-    strengtFortroligAdresse: Scalars['Boolean']['output']
 }
 
 export type DagerSvar = {
@@ -257,7 +256,6 @@ export type Mutation = {
     changeSykmeldingStatus: Sykmelding
     dev_changeScenario: Scalars['Boolean']['output']
     dev_setAntallArbeidsgivere: Scalars['Boolean']['output']
-    dev_toggleStrengtFortroligAdresse: Scalars['Boolean']['output']
     feedback: Scalars['Boolean']['output']
     sendSykmelding: Sykmelding
     updateEgenmeldingsdager: Sykmelding
@@ -834,7 +832,6 @@ export type BrukerinformasjonResolvers<
     ParentType extends ResolversParentTypes['Brukerinformasjon'] = ResolversParentTypes['Brukerinformasjon'],
 > = ResolversObject<{
     arbeidsgivere?: Resolver<Array<ResolversTypes['Arbeidsgiver']>, ParentType, ContextType>
-    strengtFortroligAdresse?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -1022,7 +1019,6 @@ export type MutationResolvers<
         ContextType,
         RequireFields<MutationDev_SetAntallArbeidsgivereArgs, 'antall'>
     >
-    dev_toggleStrengtFortroligAdresse?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
     feedback?: Resolver<
         ResolversTypes['Boolean'],
         ParentType,

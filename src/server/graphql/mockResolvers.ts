@@ -31,9 +31,6 @@ const Mutation: MutationResolvers = {
         mockDb().set(context.sessionId, scenario as Scenarios)
         return true
     },
-    dev_toggleStrengtFortroligAdresse: async () => {
-        return true
-    },
     dev_setAntallArbeidsgivere: async (_, { antall }, { sessionId }) => {
         mockDb().get(sessionId).setAntallArbeidsgivere(antall)
         return true

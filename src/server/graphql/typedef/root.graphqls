@@ -17,7 +17,6 @@ type Mutation {
 
     # developer tools, not available in production
     dev_changeScenario(scenario: String!): Boolean!
-    dev_toggleStrengtFortroligAdresse: Boolean!
     dev_setAntallArbeidsgivere(antall: Int!): Boolean!
 }
 
