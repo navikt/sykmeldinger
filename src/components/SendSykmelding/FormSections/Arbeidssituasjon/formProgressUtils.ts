@@ -8,7 +8,6 @@ import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdag
 import { FormValues } from '../../SendSykmeldingForm'
 
 type UseDynamicSubSections = {
-    shouldShowStrengtFortroligInfo: boolean
     shouldShowArbeidsgiverOrgnummer: boolean
     shouldShowEgenmeldingsperioderSporsmal: boolean
     shouldShowSendesTilArbeidsgiverInfo: boolean
@@ -23,15 +22,13 @@ export function useArbeidssituasjonSubSections(
     const egenmeldingsdager = watch('egenmeldingsdager')
     const egenmeldingsdagerHitPrevious = watch('egenmeldingsdagerHitPrevious')
 
-    const hasStrengtFortroligAdresse: boolean = brukerinformasjon.strengtFortroligAdresse
     const hasActiveArbeidsgiver: boolean = isActiveArbeidsgiver(brukerinformasjon.arbeidsgivere, arbeidsgiverOrgnummer)
     const wasEgenmeldingsdagerRelevant: boolean =
         hasCompletedEgenmeldingsdager(egenmeldingsdager) ||
         egenmeldingsdagerHitPrevious === true ||
         !isArbeidstaker(arbeidssituasjon)
 
-    const shouldShowStrengtFortroligInfo: boolean = isArbeidstaker(arbeidssituasjon) && hasStrengtFortroligAdresse
-    const shouldShowArbeidsgiverOrgnummer: boolean = isArbeidstaker(arbeidssituasjon) && !hasStrengtFortroligAdresse
+    const shouldShowArbeidsgiverOrgnummer: boolean = isArbeidstaker(arbeidssituasjon)
     const shouldShowEgenmeldingsperioderSporsmal: boolean =
         isFrilanserOrNaeringsdrivende(arbeidssituasjon) && !sykmeldingUtenforVentetid.erUtenforVentetid
     const shouldShowSendesTilArbeidsgiverInfo: boolean =
@@ -40,7 +37,6 @@ export function useArbeidssituasjonSubSections(
         (!hasActiveArbeidsgiver || wasEgenmeldingsdagerRelevant)
 
     return {
-        shouldShowStrengtFortroligInfo,
         shouldShowArbeidsgiverOrgnummer,
         shouldShowEgenmeldingsperioderSporsmal,
         shouldShowSendesTilArbeidsgiverInfo,

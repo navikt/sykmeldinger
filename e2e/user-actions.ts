@@ -6,15 +6,13 @@ import { getRadioInGroup } from './test-utils'
 
 export function gotoScenario(
     scenario: Scenarios = 'normal',
-    options: Partial<{ antallArbeidsgivere: 0 | 1 | 2 | 3 | 4; strengtFortroligAdresse: boolean }> = {
+    options: Partial<{ antallArbeidsgivere: 0 | 1 | 2 | 3 | 4 }> = {
         antallArbeidsgivere: 1,
-        strengtFortroligAdresse: false,
     },
 ) {
     return async (page: Page): Promise<void> => {
         const antallArbeidsgivere = options.antallArbeidsgivere ?? 1
-        const strengtFortroligAdresse = options.strengtFortroligAdresse ?? false
-        if (scenario == 'normal' && antallArbeidsgivere === 1 && !strengtFortroligAdresse) {
+        if (scenario == 'normal' && antallArbeidsgivere === 1) {
             // Basic scenario
             await page.goto('/')
             return
@@ -23,7 +21,6 @@ export function gotoScenario(
         const searchParams = new URLSearchParams({
             scenario,
             antallArbeidsgivere: antallArbeidsgivere.toString(),
-            strengtFortroligAdresse: strengtFortroligAdresse.toString(),
         })
 
         await page.goto(`/?${searchParams.toString()}`)

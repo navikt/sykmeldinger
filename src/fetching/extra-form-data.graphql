@@ -3,7 +3,6 @@ fragment NaermesteLeder on NaermesteLeder {
 }
 
 fragment Brukerinformasjon on Brukerinformasjon {
-    strengtFortroligAdresse
     arbeidsgivere {
         orgnummer
         navn

@@ -6,7 +6,7 @@ import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'
 
-import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo, StrengtFortroligInfo } from './ArbeidssituasjonInfo'
+import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
 import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 import FrilanserSection from './Frilanser/FrilanserSection'
@@ -29,7 +29,6 @@ function ArbeidssituasjonSection({
     const {
         shouldShowArbeidsgiverOrgnummer,
         shouldShowEgenmeldingsperioderSporsmal,
-        shouldShowStrengtFortroligInfo,
         shouldShowSendesTilArbeidsgiverInfo,
     } = useArbeidssituasjonSubSections(brukerinformasjon, sykmeldingUtenforVentetid)
 
@@ -41,7 +40,6 @@ function ArbeidssituasjonSection({
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             {!(<ArbeidssituasjonStatusInfo />)}
-            {shouldShowStrengtFortroligInfo && <StrengtFortroligInfo />}
             {shouldShowArbeidsgiverOrgnummer && (
                 <ArbeidsgiverSection sykmelding={sykmelding} arbeidsgivere={brukerinformasjon.arbeidsgivere} />
             )}

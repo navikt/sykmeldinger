@@ -519,13 +519,6 @@ export type Dev_ChangeUserScenarioMutationVariables = Exact<{
 
 export type Dev_ChangeUserScenarioMutation = { readonly __typename: 'Mutation'; readonly dev_changeScenario: boolean }
 
-export type Dev_ToggleStrengtFortroligAdresseMutationVariables = Exact<{ [key: string]: never }>
-
-export type Dev_ToggleStrengtFortroligAdresseMutation = {
-    readonly __typename: 'Mutation'
-    readonly dev_toggleStrengtFortroligAdresse: boolean
-}
-
 export type Dev_SetAntallArbeidsgivereMutationVariables = Exact<{
     antall: Scalars['Int']['input']
 }>
@@ -541,7 +534,6 @@ export type Dev_BrukerinformasjonQuery = {
     readonly __typename: 'Query'
     readonly brukerinformasjon: {
         readonly __typename: 'Brukerinformasjon'
-        readonly strengtFortroligAdresse: boolean
         readonly arbeidsgivere: ReadonlyArray<{
             readonly __typename: 'Arbeidsgiver'
             readonly orgnummer: string
@@ -739,7 +731,6 @@ export type NaermesteLederFragment = { readonly __typename: 'NaermesteLeder'; re
 
 export type BrukerinformasjonFragment = {
     readonly __typename: 'Brukerinformasjon'
-    readonly strengtFortroligAdresse: boolean
     readonly arbeidsgivere: ReadonlyArray<{
         readonly __typename: 'Arbeidsgiver'
         readonly orgnummer: string
@@ -763,7 +754,6 @@ export type ExtraFormDataQuery = {
     readonly __typename: 'Query'
     readonly brukerinformasjon: {
         readonly __typename: 'Brukerinformasjon'
-        readonly strengtFortroligAdresse: boolean
         readonly arbeidsgivere: ReadonlyArray<{
             readonly __typename: 'Arbeidsgiver'
             readonly orgnummer: string
@@ -1869,7 +1859,6 @@ export const BrukerinformasjonFragmentDoc = {
             selectionSet: {
                 kind: 'SelectionSet',
                 selections: [
-                    { kind: 'Field', name: { kind: 'Name', value: 'strengtFortroligAdresse' } },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'arbeidsgivere' },
@@ -2797,23 +2786,6 @@ export const Dev_ChangeUserScenarioDocument = {
         },
     ],
 } as unknown as DocumentNode<Dev_ChangeUserScenarioMutation, Dev_ChangeUserScenarioMutationVariables>
-export const Dev_ToggleStrengtFortroligAdresseDocument = {
-    kind: 'Document',
-    definitions: [
-        {
-            kind: 'OperationDefinition',
-            operation: 'mutation',
-            name: { kind: 'Name', value: 'Dev_ToggleStrengtFortroligAdresse' },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'dev_toggleStrengtFortroligAdresse' } }],
-            },
-        },
-    ],
-} as unknown as DocumentNode<
-    Dev_ToggleStrengtFortroligAdresseMutation,
-    Dev_ToggleStrengtFortroligAdresseMutationVariables
->
 export const Dev_SetAntallArbeidsgivereDocument = {
     kind: 'Document',
     definitions: [
@@ -2886,7 +2858,6 @@ export const Dev_BrukerinformasjonDocument = {
             selectionSet: {
                 kind: 'SelectionSet',
                 selections: [
-                    { kind: 'Field', name: { kind: 'Name', value: 'strengtFortroligAdresse' } },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'arbeidsgivere' },
@@ -3490,7 +3461,6 @@ export const ExtraFormDataDocument = {
             selectionSet: {
                 kind: 'SelectionSet',
                 selections: [
-                    { kind: 'Field', name: { kind: 'Name', value: 'strengtFortroligAdresse' } },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'arbeidsgivere' },

@@ -24,7 +24,6 @@ import { defaultArbeidsgivere } from './data-creators'
 
 class MockDb {
     private readonly _sykmeldinger: Sykmelding[]
-    private _strengtFortroligAdresse = false
     private _antallArbeidsgivere = 1
 
     constructor(scenario: { sykmeldinger: Sykmelding[] }) {
@@ -37,7 +36,7 @@ class MockDb {
 
     brukerinformasjon(): Brukerinformasjon {
         return {
-            strengtFortroligAdresse: this._strengtFortroligAdresse,
+            strengtFortroligAdresse: false,
             arbeidsgivere: this.arbeidsgivere(),
         }
     }
@@ -146,10 +145,6 @@ class MockDb {
         sykmelding.sykmeldingStatus.timestamp = toDateString(new Date())
 
         return sykmelding
-    }
-
-    toggleStrengtFortroligAdresse(): void {
-        this._strengtFortroligAdresse = !this._strengtFortroligAdresse
     }
 
     setAntallArbeidsgivere(antall: number): void {

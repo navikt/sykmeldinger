@@ -1,5 +1,5 @@
 import { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
-import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link, Switch } from '@navikt/ds-react'
+import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -9,7 +9,6 @@ import {
     Dev_BrukerinformasjonDocument,
     Dev_ChangeUserScenarioDocument,
     Dev_SetAntallArbeidsgivereDocument,
-    Dev_ToggleStrengtFortroligAdresseDocument,
 } from 'queries'
 
 import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
@@ -174,30 +173,18 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
 
 function ScenarioOptions(): ReactElement {
     const brukerinformasjonQuery = useQuery(Dev_BrukerinformasjonDocument)
-    const [toggleMutation, toggleMutationResult] = useMutation(Dev_ToggleStrengtFortroligAdresseDocument, {
-        refetchQueries: [Dev_BrukerinformasjonDocument],
-    })
     const [antallArbeidsgivereMutation, antallArbeidsgivereMutationResult] = useMutation(
         Dev_SetAntallArbeidsgivereDocument,
         { refetchQueries: [Dev_BrukerinformasjonDocument] },
     )
 
-    const anyLoading =
-        brukerinformasjonQuery.loading || toggleMutationResult.loading || antallArbeidsgivereMutationResult.loading
+    const anyLoading = brukerinformasjonQuery.loading || antallArbeidsgivereMutationResult.loading
 
     return (
         <div className={cn({ 'cursor-not-allowed opacity-70': anyLoading })}>
             <Heading size="small" level="4" className="mt-4">
                 Oppdater scenario
             </Heading>
-            <Switch
-                value="strengtFortroligAdresse"
-                disabled={anyLoading}
-                onChange={() => toggleMutation()}
-                checked={brukerinformasjonQuery.data?.brukerinformasjon.strengtFortroligAdresse ?? false}
-            >
-                Strengt fortrolig adresse
-            </Switch>
             <Select
                 label="Antall arbeidsgivere"
                 onChange={(event) =>

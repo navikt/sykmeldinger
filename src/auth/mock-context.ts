@@ -13,13 +13,10 @@ export function handleMockContext(
 ): Promise<GetServerSidePropsResult<ServerSidePropsResult>> {
     const scenario = context.query.scenario as string | undefined
     const antallArbeidsgivere = context.query.antallArbeidsgivere as string | undefined
-    const strengtFortroligAdresse = context.query.strengtFortroligAdresse as string | undefined
 
-    logger.info(
-        `Setting up mock context, scenario: ${scenario}, antallArbeidsgivere: ${antallArbeidsgivere}, strengtFortroligAdresse: ${strengtFortroligAdresse}`,
-    )
+    logger.info(`Setting up mock context, scenario: ${scenario}, antallArbeidsgivere: ${antallArbeidsgivere}`)
 
-    if (isValidScenario(scenario) || antallArbeidsgivere || strengtFortroligAdresse) {
+    if (isValidScenario(scenario) || antallArbeidsgivere) {
         const newId = v4()
         context.res.setHeader('set-cookie', `next-session-id=${newId}; Path=/`)
 
@@ -31,10 +28,6 @@ export function handleMockContext(
 
         if (antallArbeidsgivere) {
             mockDb().get(newId).setAntallArbeidsgivere(+antallArbeidsgivere)
-        }
-
-        if (strengtFortroligAdresse === 'true') {
-            mockDb().get(newId).toggleStrengtFortroligAdresse()
         }
     } else if (!context.req.cookies['next-session-id']) {
         const newId = v4()

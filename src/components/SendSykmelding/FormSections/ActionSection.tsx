@@ -20,11 +20,10 @@ import { getTrengerNySykmelding } from './shared/sykmeldingUtils'
 
 interface Props {
     sykmeldingId: string
-    isStrengtFortroligAdresse: boolean
     sendResult: MutationResult<SendSykmeldingMutation>
 }
 
-function ActionSection({ sykmeldingId, isStrengtFortroligAdresse, sendResult }: Props): ReactElement {
+function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
     const avbryteRef = useRef<HTMLButtonElement>(null)
     const [avbrytSykmelding, setAvbrytSykmelding] = useState(false)
     const { watch } = useFormContext<FormValues>()
@@ -39,11 +38,9 @@ function ActionSection({ sykmeldingId, isStrengtFortroligAdresse, sendResult }: 
     return (
         <QuestionWrapper>
             <div className="flex flex-col items-center justify-center gap-4">
-                {!isStrengtFortroligAdresse && (
-                    <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading}>
-                        {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
-                    </Button>
-                )}
+                <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading}>
+                    {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
+                </Button>
                 <Button
                     ref={avbryteRef}
                     variant="tertiary"
