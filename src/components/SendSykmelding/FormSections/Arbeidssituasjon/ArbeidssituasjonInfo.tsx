@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Alert, BodyLong, BodyShort, Label, Link, ReadMore } from '@navikt/ds-react'
+import { BodyLong, BodyShort, Link, ReadMore } from '@navikt/ds-react'
 
 export function ArbeidssituasjonInfo(): ReactElement {
     return (
@@ -28,20 +28,5 @@ export function ArbeidssituasjonStatusInfo(): ReactElement {
                 </Link>
             </BodyLong>
         </div>
-    )
-}
-
-export function StrengtFortroligInfo(): ReactElement {
-    return (
-        <Alert variant="warning">
-            <BodyLong>
-                Du er registrert med adressesperre strengt fortrolig. Du kan derfor ikke sende sykmeldingen til
-                arbeidsgiveren din fra nav.no. Det betyr at du må levere sykmeldingen personlig til arbeidsgiveren din.
-            </BodyLong>
-            <Label>
-                For å levere sykmeldingen til arbeidsgiveren din kan du ta kontakt med den som har sykmeldt deg for å få
-                en utskrift.
-            </Label>
-        </Alert>
     )
 }

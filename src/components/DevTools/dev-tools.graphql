@@ -2,10 +2,6 @@ mutation Dev_ChangeUserScenario($scenario: String!) {
     dev_changeScenario(scenario: $scenario)
 }
 
-mutation Dev_ToggleStrengtFortroligAdresse {
-    dev_toggleStrengtFortroligAdresse
-}
-
 mutation Dev_SetAntallArbeidsgivere($antall: Int!) {
     dev_setAntallArbeidsgivere(antall: $antall)
 }

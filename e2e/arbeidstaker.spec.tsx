@@ -114,21 +114,6 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await expect(page.getByText(/Vi klarer ikke å finne noen arbeidsforhold registrert på deg/)).toBeVisible()
             await expect(page).toHaveNoViolations()
         })
-
-        test('should show information for people with diskresjonskode strengt fortrilig adresse', async ({ page }) => {
-            await gotoScenario('normal', {
-                strengtFortroligAdresse: true,
-            })(page)
-            await navigateToFirstSykmelding('nye', '100%')(page)
-
-            await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
-            await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
-
-            await expect(page.getByText(/Du er registrert med adressesperre/)).toBeVisible()
-            await expect(page).toHaveNoViolations()
-            await expect(page.getByRole('button', { name: 'Send sykmelding' })).not.toBeVisible()
-            await expect(page.getByRole('button', { name: 'Bekreft sykmelding' })).not.toBeVisible()
-        })
     })
 
     test.describe('given previous sykmeldinger', () => {

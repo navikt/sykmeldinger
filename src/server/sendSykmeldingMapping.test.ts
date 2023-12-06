@@ -9,10 +9,15 @@ import {
 } from './graphql/resolver-types.generated'
 import { defaultArbeidsgivere, SykmeldingBuilder } from './graphql/mock-db/data-creators'
 import { Sykmelding } from './api-models/sykmelding/Sykmelding'
+import { Brukerinformasjon } from './api-models/Brukerinformasjon'
+import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
 
 describe('sendSykmeldingMapping', () => {
-    const brukerinformasjon = { strengtFortroligAdresse: false, arbeidsgivere: defaultArbeidsgivere.slice(0, 2) }
-    const erUtenforVentetid = { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' }
+    const brukerinformasjon: Brukerinformasjon = {
+        strengtFortroligAdresse: false,
+        arbeidsgivere: defaultArbeidsgivere.slice(0, 2),
+    }
+    const erUtenforVentetid: ErUtenforVentetid = { erUtenforVentetid: false, oppfolgingsdato: '2021-04-10' }
 
     const sykmeldingApen = (): Sykmelding =>
         new SykmeldingBuilder().status(StatusEvent.APEN).enkelPeriode({ offset: 0, days: 7 }).build()
