@@ -102,6 +102,7 @@ export enum ArbeidssituasjonType {
     ANNET = 'ANNET',
     ARBEIDSLEDIG = 'ARBEIDSLEDIG',
     ARBEIDSTAKER = 'ARBEIDSTAKER',
+    FISKER = 'FISKER',
     FRILANSER = 'FRILANSER',
     NAERINGSDRIVENDE = 'NAERINGSDRIVENDE',
     PERMITTERT = 'PERMITTERT',
@@ -120,6 +121,11 @@ export type Behandlingsutfall = {
     __typename?: 'Behandlingsutfall'
     ruleHits: Array<RegelInfo>
     status: RegelStatus
+}
+
+export enum Blad {
+    A = 'A',
+    B = 'B',
 }
 
 export type Brukerinformasjon = {
@@ -160,6 +166,11 @@ export type ErIkkeIArbeid = {
     vurderingsdato: Maybe<Scalars['Date']['output']>
 }
 
+export type FiskerInput = {
+    blad?: InputMaybe<Blad>
+    lottOgHyre?: InputMaybe<LottOgHyre>
+}
+
 export type FomTom = {
     __typename?: 'FomTom'
     fom: Scalars['Date']['output']
@@ -187,6 +198,12 @@ export type KontaktMedPasient = {
     __typename?: 'KontaktMedPasient'
     begrunnelseIkkeKontakt: Maybe<Scalars['String']['output']>
     kontaktDato: Maybe<Scalars['Date']['output']>
+}
+
+export enum LottOgHyre {
+    BEGGE = 'BEGGE',
+    HYRE = 'HYRE',
+    LOTT = 'LOTT',
 }
 
 export type MedisinskArsak = {
@@ -384,6 +401,7 @@ export type SendSykmeldingValues = {
     egenmeldingsdager?: InputMaybe<Array<Scalars['Date']['input']>>
     egenmeldingsperioder?: InputMaybe<Array<DateRange>>
     erOpplysningeneRiktige?: InputMaybe<YesOrNo>
+    fisker?: InputMaybe<FiskerInput>
     harBruktEgenmelding?: InputMaybe<YesOrNo>
     harEgenmeldingsdager?: InputMaybe<YesOrNo>
     harForsikring?: InputMaybe<YesOrNo>
@@ -609,6 +627,7 @@ export type ResolversTypes = ResolversObject<{
     ArbeidssituasjonType: ArbeidssituasjonType
     Behandler: ResolverTypeWrapper<Behandler>
     Behandlingsutfall: ResolverTypeWrapper<Behandlingsutfall>
+    Blad: Blad
     Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
     Brukerinformasjon: ResolverTypeWrapper<Brukerinformasjon>
     DagerSvar: ResolverTypeWrapper<DagerSvar>
@@ -618,6 +637,7 @@ export type ResolversTypes = ResolversObject<{
     Diagnose: ResolverTypeWrapper<Diagnose>
     ErIArbeid: ResolverTypeWrapper<ErIArbeid>
     ErIkkeIArbeid: ResolverTypeWrapper<ErIkkeIArbeid>
+    FiskerInput: FiskerInput
     FomTom: ResolverTypeWrapper<FomTom>
     GradertMinimal: ResolverTypeWrapper<GradertMinimal>
     GradertPeriode: ResolverTypeWrapper<GradertPeriode>
@@ -625,6 +645,7 @@ export type ResolversTypes = ResolversObject<{
     JSON: ResolverTypeWrapper<Scalars['JSON']['output']>
     JaNeiSvar: ResolverTypeWrapper<JaNeiSvar>
     KontaktMedPasient: ResolverTypeWrapper<KontaktMedPasient>
+    LottOgHyre: LottOgHyre
     MedisinskArsak: ResolverTypeWrapper<MedisinskArsak>
     MedisinskArsakType: MedisinskArsakType
     MedisinskVurdering: ResolverTypeWrapper<MedisinskVurdering>
@@ -686,6 +707,7 @@ export type ResolversParentTypes = ResolversObject<{
     Diagnose: Diagnose
     ErIArbeid: ErIArbeid
     ErIkkeIArbeid: ErIkkeIArbeid
+    FiskerInput: FiskerInput
     FomTom: FomTom
     GradertMinimal: GradertMinimal
     GradertPeriode: GradertPeriode

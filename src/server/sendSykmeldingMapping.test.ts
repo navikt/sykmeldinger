@@ -1,12 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
+import { Blad, ArbeidssituasjonType, LottOgHyre, StatusEvent, UriktigeOpplysningerType, YesOrNo } from 'queries'
+
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
-import {
-    ArbeidssituasjonType,
-    StatusEvent,
-    UriktigeOpplysningerType,
-    YesOrNo,
-} from './graphql/resolver-types.generated'
 import { defaultArbeidsgivere, SykmeldingBuilder } from './graphql/mock-db/data-creators'
 import { Sykmelding } from './api-models/sykmelding/Sykmelding'
 import { Brukerinformasjon } from './api-models/Brukerinformasjon'
@@ -50,6 +46,7 @@ describe('sendSykmeldingMapping', () => {
             uriktigeOpplysninger: null,
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
+            fisker: null,
         })
     })
 
@@ -82,6 +79,7 @@ describe('sendSykmeldingMapping', () => {
             uriktigeOpplysninger: null,
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
+            fisker: null,
         })
     })
 
@@ -118,6 +116,7 @@ describe('sendSykmeldingMapping', () => {
             riktigNarmesteLeder: null,
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
+            fisker: null,
         })
     })
 
@@ -158,6 +157,7 @@ describe('sendSykmeldingMapping', () => {
             uriktigeOpplysninger: null,
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
+            fisker: null,
         })
     })
 
@@ -197,6 +197,7 @@ describe('sendSykmeldingMapping', () => {
             uriktigeOpplysninger: null,
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
+            fisker: null,
         })
     })
 
@@ -248,6 +249,138 @@ describe('sendSykmeldingMapping', () => {
             uriktigeOpplysninger: null,
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
+            fisker: null,
+        })
+    })
+
+    describe('fisker', () => {
+        it('should map a fisker with blad A+Lott (næringsdrivende w/insurance) with egenmeldingsperioder and forsikring correctly', () => {
+            const sykmelding = sykmeldingApen()
+            const mappedResult = mapSendSykmeldingValuesToV3Api(
+                {
+                    erOpplysningeneRiktige: YesOrNo.YES,
+                    arbeidssituasjon: ArbeidssituasjonType.FISKER,
+                    fisker: {
+                        blad: Blad.A,
+                        lottOgHyre: LottOgHyre.LOTT,
+                    },
+                    harBruktEgenmelding: YesOrNo.YES,
+                    egenmeldingsperioder: [
+                        { fom: '2021-04-10', tom: '2021-04-11' },
+                        { fom: '2021-04-12', tom: '2021-04-13' },
+                    ],
+                    harForsikring: YesOrNo.YES,
+                },
+                sykmelding,
+                brukerinformasjon,
+                erUtenforVentetid,
+            )
+
+            expect(mappedResult).toEqual({
+                erOpplysningeneRiktige: {
+                    sporsmaltekst: 'Stemmer opplysningene?',
+                    svar: 'JA',
+                },
+                arbeidssituasjon: {
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    // TODO: Fisker or not?
+                    svar: 'NAERINGSDRIVENDE',
+                },
+                harBruktEgenmelding: {
+                    sporsmaltekst:
+                        'Vi har registrert at du ble syk 10. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                    svar: 'JA',
+                },
+                egenmeldingsperioder: {
+                    sporsmaltekst: 'Hvilke dager var du borte fra jobb før 10. april 2021?',
+                    svar: [
+                        { fom: '2021-04-10', tom: '2021-04-11' },
+                        { fom: '2021-04-12', tom: '2021-04-13' },
+                    ],
+                },
+                harForsikring: {
+                    sporsmaltekst: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
+                    svar: 'JA',
+                },
+                fisker: {
+                    blad: {
+                        sporsmaltekst: 'Velg blad',
+                        svar: 'A',
+                    },
+                    lottOgHyre: {
+                        sporsmaltekst: 'Mottar du lott eller er du på hyre?',
+                        svar: 'LOTT',
+                    },
+                },
+                arbeidsgiverOrgnummer: null,
+                riktigNarmesteLeder: null,
+                uriktigeOpplysninger: null,
+                harBruktEgenmeldingsdager: null,
+                egenmeldingsdager: null,
+            })
+        })
+
+        it('should map a fisker with blad A+Hyre (arbeidstaker)', () => {
+            const sykmelding = sykmeldingApen()
+            const mappedResult = mapSendSykmeldingValuesToV3Api(
+                {
+                    erOpplysningeneRiktige: YesOrNo.YES,
+                    arbeidssituasjon: ArbeidssituasjonType.FISKER,
+                    fisker: {
+                        blad: Blad.A,
+                        lottOgHyre: LottOgHyre.HYRE,
+                    },
+                    arbeidsgiverOrgnummer: '110110110',
+                    riktigNarmesteLeder: YesOrNo.YES,
+                    harEgenmeldingsdager: YesOrNo.YES,
+                    egenmeldingsdager: ['2021-04-10', '2021-04-11'],
+                },
+                sykmelding,
+                brukerinformasjon,
+                erUtenforVentetid,
+            )
+
+            expect(mappedResult).toEqual({
+                erOpplysningeneRiktige: {
+                    sporsmaltekst: 'Stemmer opplysningene?',
+                    svar: 'JA',
+                },
+                arbeidssituasjon: {
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    // TODO: Fisker or not?
+                    svar: 'ARBEIDSTAKER',
+                },
+                fisker: {
+                    blad: {
+                        sporsmaltekst: 'Velg blad',
+                        svar: 'A',
+                    },
+                    lottOgHyre: {
+                        sporsmaltekst: 'Mottar du lott eller er du på hyre?',
+                        svar: 'HYRE',
+                    },
+                },
+                arbeidsgiverOrgnummer: {
+                    sporsmaltekst: 'Velg arbeidsgiver',
+                    svar: '110110110',
+                },
+                riktigNarmesteLeder: {
+                    sporsmaltekst: 'Er det Station Officer Steele som skal følge deg opp på jobben mens du er syk?',
+                    svar: 'JA',
+                },
+                harBruktEgenmeldingsdager: {
+                    sporsmaltekst: 'Brukte du egenmelding hos PONTYPANDY FIRE SERVICE',
+                    svar: 'JA',
+                },
+                egenmeldingsdager: {
+                    sporsmaltekst: 'Velg dagene du brukte egenmelding',
+                    svar: ['2021-04-10', '2021-04-11'],
+                },
+                harBruktEgenmelding: null,
+                egenmeldingsperioder: null,
+                harForsikring: null,
+                uriktigeOpplysninger: null,
+            })
         })
     })
 })

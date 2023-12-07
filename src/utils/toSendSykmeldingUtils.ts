@@ -1,4 +1,4 @@
-import { SendSykmeldingValues, YesOrNo } from 'queries'
+import { Blad, LottOgHyre, SendSykmeldingValues, YesOrNo } from 'queries'
 
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { ArbeidssituasjonType } from '../server/graphql/resolver-types.generated'
@@ -10,6 +10,8 @@ export function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingVal
     switch (values.arbeidssituasjon) {
         case ArbeidssituasjonType.ARBEIDSTAKER:
             return mapSykmeldingArbeidstaker(values)
+        case ArbeidssituasjonType.FISKER:
+            return mapSykmeldingFisker(values)
         case ArbeidssituasjonType.FRILANSER:
         case ArbeidssituasjonType.NAERINGSDRIVENDE:
             return mapSykmeldingFrilansOrSelvstendig(values)
@@ -38,6 +40,49 @@ function mapSykmeldingArbeidstaker(values: FormValues): SendSykmeldingValues {
             values.egenmeldingsdager.length > 0
                 ? getEgenmeldingsdagerDateList(values.egenmeldingsdager)
                 : undefined,
+    }
+}
+
+function mapSykmeldingFisker(values: FormValues): SendSykmeldingValues {
+    const baseFields = {
+        erOpplysningeneRiktige: values.erOpplysningeneRiktige,
+        uriktigeOpplysninger: values.erOpplysningeneRiktige === YesOrNo.NO ? values.uriktigeOpplysninger : undefined,
+        arbeidssituasjon: ArbeidssituasjonType.FISKER,
+        fisker: {
+            blad: values.fisker.blad,
+            lottOgHyre: values.fisker.lottOgHyre,
+        },
+    } satisfies SendSykmeldingValues
+
+    // In essence an arbeidstaker when LottOgHyre is HYRE
+    if (values.fisker.lottOgHyre === LottOgHyre.HYRE) {
+        const hasEgenmeldingsdager = getHasEgenmeldingsdager(values.egenmeldingsdager)
+
+        return {
+            ...baseFields,
+            arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer,
+            riktigNarmesteLeder: values.riktigNarmesteLeder,
+            harEgenmeldingsdager: hasEgenmeldingsdager,
+            egenmeldingsdager:
+                hasEgenmeldingsdager === YesOrNo.YES &&
+                values.egenmeldingsdager != null &&
+                values.egenmeldingsdager.length > 0
+                    ? getEgenmeldingsdagerDateList(values.egenmeldingsdager)
+                    : undefined,
+        }
+    } else {
+        const egenmeldingsperioder =
+            values.egenmeldingsperioder?.map((periode) => ({
+                fom: periode.fom ? toDateString(periode.fom) : null,
+                tom: periode.tom ? toDateString(periode.tom) : null,
+            })) ?? undefined
+
+        return {
+            ...baseFields,
+            harBruktEgenmelding: values.harBruktEgenmelding ?? undefined,
+            egenmeldingsperioder: values.harBruktEgenmelding === YesOrNo.YES ? egenmeldingsperioder : undefined,
+            harForsikring: values.fisker.blad === Blad.A ? values.harForsikring ?? undefined : undefined,
+        }
     }
 }
 

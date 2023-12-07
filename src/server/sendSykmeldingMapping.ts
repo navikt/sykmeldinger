@@ -1,11 +1,13 @@
 import { logger } from '@navikt/next-logger'
 
+import { FiskerInput, LottOgHyre } from 'queries'
+
 import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 
 import {
-    SendSykmeldingValues,
     ArbeidssituasjonType,
+    SendSykmeldingValues,
     UriktigeOpplysningerType,
     YesOrNo,
 } from './graphql/resolver-types.generated'
@@ -48,7 +50,7 @@ export function mapSendSykmeldingValuesToV3Api(
             sporsmaltekst: sporsmal.erOpplysningeneRiktige,
         },
         arbeidssituasjon: {
-            svar: arbeidssituasjonTypeToV3Enum(values.arbeidssituasjon),
+            svar: arbeidssituasjonTypeToV3Enum(values.arbeidssituasjon, values.fisker),
             sporsmaltekst: sporsmal.arbeidssituasjon,
         },
         arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer
@@ -111,6 +113,22 @@ export function mapSendSykmeldingValuesToV3Api(
                   sporsmaltekst: sporsmal.egenmeldingsdager,
               }
             : null,
+        fisker: values.fisker
+            ? {
+                  blad: values.fisker.blad
+                      ? {
+                            sporsmaltekst: sporsmal.fisker.velgBlad,
+                            svar: values.fisker.blad,
+                        }
+                      : null,
+                  lottOgHyre: values.fisker.lottOgHyre
+                      ? {
+                            sporsmaltekst: sporsmal.fisker.lottEllerHyre,
+                            svar: values.fisker.lottOgHyre,
+                        }
+                      : null,
+              }
+            : null,
     }
 }
 
@@ -118,7 +136,10 @@ function yesOrNoTypeToV3Enum(value: YesOrNo): JaEllerNei {
     return value === YesOrNo.YES ? JaEllerNei.JA : JaEllerNei.NEI
 }
 
-function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonV3 {
+function arbeidssituasjonTypeToV3Enum(
+    value: ArbeidssituasjonType,
+    fisker: FiskerInput | null | undefined,
+): ArbeidssituasjonV3 {
     switch (value) {
         // Permittert falls back to arbeidsledig in the API, this is intentional
         case ArbeidssituasjonType.ARBEIDSLEDIG:
@@ -126,6 +147,12 @@ function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): Arbeidssitua
             return ArbeidssituasjonV3.ARBEIDSLEDIG
         case ArbeidssituasjonType.ARBEIDSTAKER:
             return ArbeidssituasjonV3.ARBEIDSTAKER
+        case ArbeidssituasjonType.FISKER:
+            if (fisker == null) throw new Error('Illegal state: Can not be fisker without lottOgHyre option')
+
+            return fisker.lottOgHyre === LottOgHyre.HYRE
+                ? ArbeidssituasjonV3.ARBEIDSTAKER
+                : ArbeidssituasjonV3.NAERINGSDRIVENDE
         case ArbeidssituasjonType.FRILANSER:
             return ArbeidssituasjonV3.FRILANSER
         case ArbeidssituasjonType.NAERINGSDRIVENDE:
