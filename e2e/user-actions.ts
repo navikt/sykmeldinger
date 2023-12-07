@@ -67,7 +67,7 @@ export async function opplysingeneStemmer(page: Page): Promise<void> {
     await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
 }
 
-export function velgArbeidssituasjon(situasjon: 'ansatt' | 'arbeidsledig' | 'annet' | 'frilanser') {
+export function velgArbeidssituasjon(situasjon: 'ansatt' | 'arbeidsledig' | 'annet' | 'fisker' | 'frilanser') {
     return async (page: Page): Promise<void> => {
         await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: situasjon }).click()
     }
@@ -144,5 +144,21 @@ export function filloutArbeidstaker(arbeidstaker: RegExp): (page: Page) => Promi
         await opplysingeneStemmer(page)
         await velgArbeidssituasjon('ansatt')(page)
         await velgArbeidstaker(arbeidstaker)(page)
+    }
+}
+
+export function fillOutFisker(
+    blad: `Blad ${'A' | 'B'}`,
+    lott: 'Lott' | 'Hyre' | 'Både lott og hyre',
+): (page: Page) => Promise<void> {
+    return async (page: Page): Promise<void> => {
+        await navigateToFirstSykmelding('nye', '100%')(page)
+        await opplysingeneStemmer(page)
+        await velgArbeidssituasjon('fisker')(page)
+        await getRadioInGroup(page)({ name: /Velg blad/i }, { name: blad }).click()
+        await getRadioInGroup(page)(
+            { name: /Mottar du lott eller er du på hyre?/i },
+            { name: lott, exact: true },
+        ).click()
     }
 }

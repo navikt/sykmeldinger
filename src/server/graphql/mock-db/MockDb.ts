@@ -7,6 +7,7 @@ import { Brukerinformasjon } from '../../api-models/Brukerinformasjon'
 import { ErUtenforVentetid } from '../../api-models/ErUtenforVentetid'
 import {
     ArbeidssituasjonType,
+    LottOgHyre,
     Merknadtype,
     MinimalSykmelding,
     SendSykmeldingValues,
@@ -101,7 +102,10 @@ class MockDb {
                 : null,
         ])
 
-        if (values.arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER) {
+        if (
+            values.arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER ||
+            (values.arbeidssituasjon === ArbeidssituasjonType.FISKER && values.fisker?.lottOgHyre === LottOgHyre.HYRE)
+        ) {
             const selectedArbeidsgiver = this.arbeidsgivere().find(
                 (it) => it.orgnummer === values.arbeidsgiverOrgnummer,
             )

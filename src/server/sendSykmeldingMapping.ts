@@ -1,9 +1,8 @@
 import { logger } from '@navikt/next-logger'
 
-import { FiskerInput, LottOgHyre } from 'queries'
-
 import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
+import { raise } from '../utils/ts-utils'
 
 import {
     ArbeidssituasjonType,
@@ -50,7 +49,7 @@ export function mapSendSykmeldingValuesToV3Api(
             sporsmaltekst: sporsmal.erOpplysningeneRiktige,
         },
         arbeidssituasjon: {
-            svar: arbeidssituasjonTypeToV3Enum(values.arbeidssituasjon, values.fisker),
+            svar: arbeidssituasjonTypeToV3Enum(values.arbeidssituasjon),
             sporsmaltekst: sporsmal.arbeidssituasjon,
         },
         arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer
@@ -120,13 +119,13 @@ export function mapSendSykmeldingValuesToV3Api(
                             sporsmaltekst: sporsmal.fisker.velgBlad,
                             svar: values.fisker.blad,
                         }
-                      : null,
+                      : raise('Illegal state: blad is required when arbeidssituasjon is fisker'),
                   lottOgHyre: values.fisker.lottOgHyre
                       ? {
                             sporsmaltekst: sporsmal.fisker.lottEllerHyre,
                             svar: values.fisker.lottOgHyre,
                         }
-                      : null,
+                      : raise('Illegal state: lottOgHyre is required when arbeidssituasjon is fisker'),
               }
             : null,
     }
@@ -136,10 +135,7 @@ function yesOrNoTypeToV3Enum(value: YesOrNo): JaEllerNei {
     return value === YesOrNo.YES ? JaEllerNei.JA : JaEllerNei.NEI
 }
 
-function arbeidssituasjonTypeToV3Enum(
-    value: ArbeidssituasjonType,
-    fisker: FiskerInput | null | undefined,
-): ArbeidssituasjonV3 {
+function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonV3 {
     switch (value) {
         // Permittert falls back to arbeidsledig in the API, this is intentional
         case ArbeidssituasjonType.ARBEIDSLEDIG:
@@ -148,11 +144,7 @@ function arbeidssituasjonTypeToV3Enum(
         case ArbeidssituasjonType.ARBEIDSTAKER:
             return ArbeidssituasjonV3.ARBEIDSTAKER
         case ArbeidssituasjonType.FISKER:
-            if (fisker == null) throw new Error('Illegal state: Can not be fisker without lottOgHyre option')
-
-            return fisker.lottOgHyre === LottOgHyre.HYRE
-                ? ArbeidssituasjonV3.ARBEIDSTAKER
-                : ArbeidssituasjonV3.NAERINGSDRIVENDE
+            return ArbeidssituasjonV3.FISKER
         case ArbeidssituasjonType.FRILANSER:
             return ArbeidssituasjonV3.FRILANSER
         case ArbeidssituasjonType.NAERINGSDRIVENDE:
