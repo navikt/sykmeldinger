@@ -4,7 +4,7 @@ import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
 import * as R from 'remeda'
 
-import { YesOrNo, UriktigeOpplysningerType, ArbeidssituasjonType, SykmeldingFragment } from 'queries'
+import { YesOrNo, UriktigeOpplysningerType, ArbeidssituasjonType, SykmeldingFragment, Blad, LottOgHyre } from 'queries'
 
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import useExtraFormData from '../../hooks/useExtraFormData'
@@ -36,6 +36,10 @@ export interface FormValues extends EgenmeldingsdagerSubForm {
     harBruktEgenmelding: YesOrNo | null
     egenmeldingsperioder: { fom: Date | null; tom: Date | null }[] | null
     harForsikring: YesOrNo | null
+    fisker: {
+        blad: Blad | null
+        lottOgHyre: LottOgHyre | null
+    }
 }
 
 interface Props {
@@ -62,6 +66,10 @@ function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
             egenmeldingsperioder: [{ fom: null, tom: null }],
             harForsikring: null,
             egenmeldingsdager: null,
+            fisker: {
+                blad: null,
+                lottOgHyre: null,
+            },
         },
     })
     const extraFormData = useExtraFormData(sykmeldingId)

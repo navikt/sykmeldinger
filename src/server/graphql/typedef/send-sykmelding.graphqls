@@ -9,6 +9,23 @@ input SendSykmeldingValues {
     harForsikring: YesOrNo
     egenmeldingsdager: [Date!]
     harEgenmeldingsdager: YesOrNo
+    fisker: FiskerInput
+}
+
+input FiskerInput {
+    blad: Blad
+    lottOgHyre: LottOgHyre
+}
+
+enum Blad {
+    A
+    B
+}
+
+enum LottOgHyre {
+    LOTT
+    HYRE
+    BEGGE
 }
 
 input DateRange {
@@ -35,6 +52,7 @@ enum ArbeidssituasjonType {
     FRILANSER
     NAERINGSDRIVENDE
     ARBEIDSLEDIG
+    FISKER
     PERMITTERT
     ANNET
 }

@@ -4,17 +4,13 @@ import { useFormContext } from 'react-hook-form'
 import { MutationResult } from '@apollo/client'
 import { XMarkIcon } from '@navikt/aksel-icons'
 
-import {
-    ArbeidssituasjonType,
-    ChangeSykmeldingStatusMutation,
-    SendSykmeldingMutation,
-    SykmeldingChangeStatus,
-} from 'queries'
+import { ChangeSykmeldingStatusMutation, SendSykmeldingMutation, SykmeldingChangeStatus } from 'queries'
 
 import { FormValues } from '../SendSykmeldingForm'
 import { useChangeSykmeldingStatus } from '../../../hooks/useMutations'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import { QuestionWrapper } from '../../FormComponents/FormStructure'
+import { isArbeidstaker } from '../../../utils/arbeidssituasjonUtils'
 
 import { getTrengerNySykmelding } from './shared/sykmeldingUtils'
 
@@ -27,8 +23,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
     const avbryteRef = useRef<HTMLButtonElement>(null)
     const [avbrytSykmelding, setAvbrytSykmelding] = useState(false)
     const { watch } = useFormContext<FormValues>()
-
-    const erArbeidstaker = watch('arbeidssituasjon') === ArbeidssituasjonType.ARBEIDSTAKER
+    const [arbeidssituasjon, fisker] = watch(['arbeidssituasjon', 'fisker'])
     const trengerNySykmelding = getTrengerNySykmelding(watch('uriktigeOpplysninger'))
 
     if (trengerNySykmelding) {
@@ -39,7 +34,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
         <QuestionWrapper>
             <div className="flex flex-col items-center justify-center gap-4">
                 <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading}>
-                    {erArbeidstaker ? 'Send' : 'Bekreft'} sykmelding
+                    {isArbeidstaker(arbeidssituasjon, fisker) ? 'Send' : 'Bekreft'} sykmelding
                 </Button>
                 <Button
                     ref={avbryteRef}

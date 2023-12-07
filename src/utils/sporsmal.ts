@@ -18,6 +18,10 @@ export const sporsmal = {
     uriktigeOpplysninger: 'Hvilke opplysninger stemmer ikke?',
     harBruktEgenmeldingsdager: (arbeidsgiverNavn: string) => `Brukte du egenmelding hos ${arbeidsgiverNavn}`,
     egenmeldingsdager: 'Velg dagene du brukte egenmelding',
+    fisker: {
+        velgBlad: 'Velg blad',
+        lottEllerHyre: 'Mottar du lott eller er du på hyre?',
+    },
 }
 
 export function arbeidsSituasjonEnumToText(arbeidssituasjon: ArbeidssituasjonType): string {
@@ -28,6 +32,8 @@ export function arbeidsSituasjonEnumToText(arbeidssituasjon: ArbeidssituasjonTyp
             return 'frilanser'
         case ArbeidssituasjonType.NAERINGSDRIVENDE:
             return 'selvstendig næringsdrivende'
+        case ArbeidssituasjonType.FISKER:
+            return 'fisker'
         case ArbeidssituasjonType.ARBEIDSLEDIG:
             return 'arbeidsledig'
         case ArbeidssituasjonType.PERMITTERT:

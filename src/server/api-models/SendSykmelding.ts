@@ -11,6 +11,10 @@ export type SykmeldingUserEventV3Api = {
     harForsikring: SporsmalSvar<JaEllerNei> | null
     egenmeldingsdager: SporsmalSvar<Array<string>> | null
     harBruktEgenmeldingsdager: SporsmalSvar<JaEllerNei> | null
+    fisker: {
+        blad: SporsmalSvar<'A' | 'B'> | null
+        lottOgHyre: SporsmalSvar<'LOTT' | 'HYRE' | 'BEGGE'> | null
+    } | null
 }
 
 type SporsmalSvar<T> = {

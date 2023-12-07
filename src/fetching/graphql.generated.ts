@@ -98,6 +98,7 @@ export enum ArbeidssituasjonType {
     ANNET = 'ANNET',
     ARBEIDSLEDIG = 'ARBEIDSLEDIG',
     ARBEIDSTAKER = 'ARBEIDSTAKER',
+    FISKER = 'FISKER',
     FRILANSER = 'FRILANSER',
     NAERINGSDRIVENDE = 'NAERINGSDRIVENDE',
     PERMITTERT = 'PERMITTERT',
@@ -116,6 +117,11 @@ export type Behandlingsutfall = {
     readonly __typename: 'Behandlingsutfall'
     readonly ruleHits: ReadonlyArray<RegelInfo>
     readonly status: RegelStatus
+}
+
+export enum Blad {
+    A = 'A',
+    B = 'B',
 }
 
 export type Brukerinformasjon = {
@@ -156,6 +162,11 @@ export type ErIkkeIArbeid = {
     readonly vurderingsdato?: Maybe<Scalars['Date']['output']>
 }
 
+export type FiskerInput = {
+    readonly blad?: InputMaybe<Blad>
+    readonly lottOgHyre?: InputMaybe<LottOgHyre>
+}
+
 export type FomTom = {
     readonly __typename: 'FomTom'
     readonly fom: Scalars['Date']['output']
@@ -183,6 +194,12 @@ export type KontaktMedPasient = {
     readonly __typename: 'KontaktMedPasient'
     readonly begrunnelseIkkeKontakt?: Maybe<Scalars['String']['output']>
     readonly kontaktDato?: Maybe<Scalars['Date']['output']>
+}
+
+export enum LottOgHyre {
+    BEGGE = 'BEGGE',
+    HYRE = 'HYRE',
+    LOTT = 'LOTT',
 }
 
 export type MedisinskArsak = {
@@ -380,6 +397,7 @@ export type SendSykmeldingValues = {
     readonly egenmeldingsdager?: InputMaybe<ReadonlyArray<Scalars['Date']['input']>>
     readonly egenmeldingsperioder?: InputMaybe<ReadonlyArray<DateRange>>
     readonly erOpplysningeneRiktige?: InputMaybe<YesOrNo>
+    readonly fisker?: InputMaybe<FiskerInput>
     readonly harBruktEgenmelding?: InputMaybe<YesOrNo>
     readonly harEgenmeldingsdager?: InputMaybe<YesOrNo>
     readonly harForsikring?: InputMaybe<YesOrNo>

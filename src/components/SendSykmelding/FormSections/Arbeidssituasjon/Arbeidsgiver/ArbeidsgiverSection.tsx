@@ -17,6 +17,8 @@ import { useFindPrevSykmeldingTom } from '../../../../../hooks/useFindPrevSykmel
 import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
 import { toDate } from '../../../../../utils/dateUtils'
 import EgenmeldingerField from '../../../../FormComponents/Egenmelding/EgenmeldingerField'
+import SendesTilArbeidsgiverInfo from '../SendesTilArbeidsgiver/SendesTilArbeidsgiverInfo'
+import { useShouldShowSendesTilArbeidsgiverInfo } from '../formProgressUtils'
 
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
@@ -37,6 +39,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
         [Periodetype.AVVENTENDE],
     )
     const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
+    const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo(arbeidsgivere)
 
     return (
         <SectionWrapper>
@@ -57,6 +60,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
                     amplitudeSkjemanavn="Egenmeldingsdager"
                 />
             )}
+            {shouldShowSendesTilArbeidsgiverInfo && <SendesTilArbeidsgiverInfo sykmelding={sykmelding} />}
         </SectionWrapper>
     )
 }
