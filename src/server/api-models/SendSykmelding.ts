@@ -12,8 +12,8 @@ export type SykmeldingUserEventV3Api = {
     egenmeldingsdager: SporsmalSvar<Array<string>> | null
     harBruktEgenmeldingsdager: SporsmalSvar<JaEllerNei> | null
     fisker: {
-        blad: SporsmalSvar<'A' | 'B'> | null
-        lottOgHyre: SporsmalSvar<'LOTT' | 'HYRE' | 'BEGGE'> | null
+        blad: SporsmalSvar<'A' | 'B'>
+        lottOgHyre: SporsmalSvar<'LOTT' | 'HYRE' | 'BEGGE'>
     } | null
 }
 
@@ -40,6 +40,7 @@ export enum ArbeidssituasjonV3 {
     ARBEIDSTAKER = 'ARBEIDSTAKER',
     FRILANSER = 'FRILANSER',
     NAERINGSDRIVENDE = 'NAERINGSDRIVENDE',
+    FISKER = 'FISKER',
     ARBEIDSLEDIG = 'ARBEIDSLEDIG',
     ANNET = 'ANNET',
 }

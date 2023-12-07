@@ -283,8 +283,7 @@ describe('sendSykmeldingMapping', () => {
                 },
                 arbeidssituasjon: {
                     sporsmaltekst: 'Jeg er sykmeldt som',
-                    // TODO: Fisker or not?
-                    svar: 'NAERINGSDRIVENDE',
+                    svar: 'FISKER',
                 },
                 harBruktEgenmelding: {
                     sporsmaltekst:
@@ -347,8 +346,7 @@ describe('sendSykmeldingMapping', () => {
                 },
                 arbeidssituasjon: {
                     sporsmaltekst: 'Jeg er sykmeldt som',
-                    // TODO: Fisker or not?
-                    svar: 'ARBEIDSTAKER',
+                    svar: 'FISKER',
                 },
                 fisker: {
                     blad: {
