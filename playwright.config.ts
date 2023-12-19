@@ -6,8 +6,7 @@ const PORT = process.env.PORT || 3000
 type OptionsType = { baseURL: string; timeout: number; server: PlaywrightTestConfig['webServer'] }
 const opts: OptionsType =
     process.env.CI || process.env.FAST
-        ? // Github Actions runs server in a services image
-          {
+        ? {
               baseURL: `http://localhost:${PORT}`,
               timeout: 30 * 1000,
               server: {
@@ -15,6 +14,8 @@ const opts: OptionsType =
                   url: `http://localhost:${PORT}`,
                   timeout: 120 * 1000,
                   reuseExistingServer: !process.env.CI,
+                  stderr: 'pipe',
+                  stdout: 'pipe',
               },
           }
         : // Local dev server

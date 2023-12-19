@@ -36,7 +36,6 @@ export function useArbeidssituasjonSubSections(
  * - User has selected an active arbeidsgiver
  *   - has selected nærmeste leder
  *   - has skipped nærmeste leder because it's inactive
- *   - has strengt fortrolig adresse, therefore can't send to arbeidsgiver
  * - User has filled out egenmeldingsdager
  *   - until user has hit previous sykmelding date, or answers no on "Har du flere egenmeldingsdager?"
  *   - has skipped egenmeldingsdager because it's not relevant
