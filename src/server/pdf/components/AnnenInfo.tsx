@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     view: { marginBottom: 12 },
 })
 
-const AnnenInfo = ({ sykmelding }: Props): ReactElement | null => {
+function AnnenInfo({ sykmelding }: Props): ReactElement | null {
     return (
         <Section title="Annen info" Icon={Information}>
             <View style={styles.content}>

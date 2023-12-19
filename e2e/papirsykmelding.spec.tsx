@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 import { getRadioInGroup } from './test-utils'
-import { gotoScenario, navigateToFirstSykmelding } from './user-actions'
+import { gotoRoot, gotoScenario, navigateToFirstSykmelding } from './user-actions'
 
 test.describe('Papir sykmelding', () => {
     test('should show information if papirsykmelding is already passed on', async ({ page }) => {
@@ -54,7 +54,7 @@ test.describe('Papir sykmelding', () => {
             await expect(page.getByRole('heading', { name: 'Sykmeldingen ble avbrutt av deg' })).toBeVisible()
 
             // The second unsent one is utenlansk and papir
-            await page.goBack()
+            await gotoRoot(page)
             await navigateToFirstSykmelding('nye', '100%')(page)
 
             const annenInfoSection = page.getByRole('region', { name: 'Annen info' })

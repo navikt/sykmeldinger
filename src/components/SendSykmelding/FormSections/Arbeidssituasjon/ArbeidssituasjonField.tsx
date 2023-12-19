@@ -8,12 +8,14 @@ import { FormValues } from '../../SendSykmeldingForm'
 import { QuestionWrapper } from '../../../FormComponents/FormStructure'
 import { arbeidsSituasjonEnumToText, sporsmal } from '../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { useFlag } from '../../../../toggles/context'
 
 interface Props {
     harAvventendePeriode: boolean
 }
 
 function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
+    const fiskereToggle = useFlag('SYKMELDINGER_FISKERE')
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidssituasjon',
         rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
@@ -44,9 +46,11 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.NAERINGSDRIVENDE}>
                     {arbeidsSituasjonEnumToText(ArbeidssituasjonType.NAERINGSDRIVENDE)}
                 </Radio>
-                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.FISKER}>
-                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.FISKER)}
-                </Radio>
+                {fiskereToggle.enabled && (
+                    <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.FISKER}>
+                        {arbeidsSituasjonEnumToText(ArbeidssituasjonType.FISKER)}
+                    </Radio>
+                )}
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.ARBEIDSLEDIG}>
                     {arbeidsSituasjonEnumToText(ArbeidssituasjonType.ARBEIDSLEDIG)}
                 </Radio>
