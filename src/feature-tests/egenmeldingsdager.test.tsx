@@ -136,6 +136,7 @@ describe('Egenmeldingsdager', () => {
         )
 
         expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        // @ts-expect-error vitest-axe doesn't work with vitest v1
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
@@ -236,6 +237,7 @@ describe('Egenmeldingsdager', () => {
         )
 
         expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        // @ts-expect-error vitest-axe doesn't work with vitest v1
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 
@@ -342,6 +344,7 @@ describe('Egenmeldingsdager', () => {
         )
 
         expect(await screen.findByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeInTheDocument()
+        // @ts-expect-error vitest-axe doesn't work with vitest v1
         expect(await axe(container)).toHaveNoViolations()
         await userEvent.click(await screen.findByRole('button', { name: 'Send sykmelding' }))
 

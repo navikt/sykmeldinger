@@ -34,6 +34,7 @@ describe('AktivitetIkkeMulig', () => {
         expect(screen.getByText('Manglende tilrettelegging på arbeidsplassen')).toBeInTheDocument()
         expect(screen.getByText('arbeidsrelatert beskrivelse')).toBeInTheDocument()
 
+        // @ts-expect-error vitest-axe doesn't work with vitest v1
         expect(await axe(container)).toHaveNoViolations()
     })
 

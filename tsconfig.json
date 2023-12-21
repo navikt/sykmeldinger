@@ -26,6 +26,6 @@
             "queries": ["./src/fetching/graphql.generated.ts"]
         }
     },
-    "include": ["next-env.d.ts", "src/app-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    "include": ["next-env.d.ts", "src/app-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./vitest.setup.ts"],
     "exclude": ["node_modules"]
 }

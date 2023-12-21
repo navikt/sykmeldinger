@@ -78,6 +78,7 @@ describe('Frilanser', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2020')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
 
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -141,6 +142,7 @@ describe('Frilanser', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2019')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
 
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -188,6 +190,7 @@ describe('Frilanser', () => {
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
             await userEvent.click(screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'frilanser' }))
 
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
 
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -214,6 +217,7 @@ describe('Frilanser', () => {
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(await screen.findByRole('link', { name: 'Du må fylle inn fra dato.' })).toBeInTheDocument()
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
         })
 
@@ -237,6 +241,7 @@ describe('Frilanser', () => {
             expect(
                 await screen.findByRole('link', { name: 'Fra dato må være på formatet DD.MM.YYYY.' }),
             ).toBeInTheDocument()
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
         })
 
@@ -260,6 +265,7 @@ describe('Frilanser', () => {
             expect(
                 await screen.findByRole('link', { name: 'Fra dato kan ikke være oppfølgingsdato eller senere.' }),
             ).toBeInTheDocument()
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
         })
 
@@ -283,6 +289,7 @@ describe('Frilanser', () => {
             expect(
                 await screen.findByRole('link', { name: 'Til dato kan ikke være oppfølgingsdato eller senere.' }),
             ).toBeInTheDocument()
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
         })
 
@@ -306,6 +313,7 @@ describe('Frilanser', () => {
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
 
             expect(await screen.findByRole('link', { name: 'Fra kan ikke være etter til dato.' })).toBeInTheDocument()
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
         })
 
@@ -332,6 +340,7 @@ describe('Frilanser', () => {
             expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(4)
             await userEvent.click(screen.getByRole('button', { name: 'Fjern periode' }))
             expect(periodeSection.getAllByRole('textbox', { name: /(Fra|Til) og med/ })).toHaveLength(2)
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
         })
 
@@ -358,6 +367,7 @@ describe('Frilanser', () => {
                     'Hei, denne egenmeldingen er utløpt og kan derfor ikke benyttes. Du kan fortsatt se opplysninger fra egenmeldingen under.',
                 ),
             ).toBeInTheDocument()
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
         })
     })
