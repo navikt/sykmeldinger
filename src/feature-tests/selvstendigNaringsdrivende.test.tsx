@@ -80,6 +80,7 @@ describe('Selvstendig næringsdrivende', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2020')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
 
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -146,6 +147,7 @@ describe('Selvstendig næringsdrivende', () => {
             await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '27.12.2019')
             await userEvent.click(screen.getRadioInGroup({ name: /Har du forsikring som gjelder/i }, { name: 'Ja' }))
 
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
 
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))
@@ -189,11 +191,11 @@ describe('Selvstendig næringsdrivende', () => {
             })
 
             await userEvent.click(await screen.findRadioInGroup({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }))
-            return
             await userEvent.click(
                 screen.getRadioInGroup({ name: /Jeg er sykmeldt som/i }, { name: 'selvstendig næringsdrivende' }),
             )
 
+            // @ts-expect-error vitest-axe doesn't work with vitest v1
             expect(await axe(container)).toHaveNoViolations()
 
             await userEvent.click(await screen.findByRole('button', { name: 'Bekreft sykmelding' }))

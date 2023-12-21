@@ -50,6 +50,7 @@ describe('Ugyldig tilbakedatert sykmelding', () => {
 
         expect(await screen.findByText(sporsmal.erOpplysningeneRiktige)).toBeInTheDocument()
         expect(screen.getByRole('heading', { name: 'Tilbakedateringen kan ikke godkjennes' })).toBeInTheDocument()
+        // @ts-expect-error vitest-axe doesn't work with vitest v1
         expect(await axe(container)).toHaveNoViolations()
     })
 })
