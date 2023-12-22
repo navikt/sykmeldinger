@@ -6,13 +6,21 @@ import { getRadioInGroup } from './test-utils'
 
 export function gotoScenario(
     scenario: Scenarios = 'normal',
-    options: Partial<{ antallArbeidsgivere: 0 | 1 | 2 | 3 | 4 }> = {
+    options: Partial<{
+        antallArbeidsgivere: 0 | 1 | 2 | 3 | 4
+        erUtenforVentetid: boolean
+        oppfolgingsdato: string | null
+    }> = {
         antallArbeidsgivere: 1,
+        erUtenforVentetid: false,
     },
 ) {
     return async (page: Page): Promise<void> => {
         const antallArbeidsgivere = options.antallArbeidsgivere ?? 1
-        if (scenario == 'normal' && antallArbeidsgivere === 1) {
+        const erUtenforVentetid = options.erUtenforVentetid ?? false
+        const oppfolgingsdato = options.oppfolgingsdato ?? null
+
+        if (scenario == 'normal' && antallArbeidsgivere === 1 && !erUtenforVentetid && oppfolgingsdato == null) {
             // Basic scenario
             await page.goto('/')
             return
@@ -21,10 +29,16 @@ export function gotoScenario(
         const searchParams = new URLSearchParams({
             scenario,
             antallArbeidsgivere: antallArbeidsgivere.toString(),
+            utenforVentetid: erUtenforVentetid.toString(),
+            oppfolgingsdato: oppfolgingsdato ?? '',
         })
 
         await page.goto(`/?${searchParams.toString()}`)
     }
+}
+
+export async function gotoRoot(page: Page): Promise<void> {
+    await page.goto(`/`)
 }
 
 export function navigateToFirstSykmelding(type: 'nye' | 'tidligere', variant: '100%' | 'egenmelding') {
@@ -53,7 +67,7 @@ export async function opplysingeneStemmer(page: Page): Promise<void> {
     await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
 }
 
-export function velgArbeidssituasjon(situasjon: 'ansatt' | 'arbeidsledig' | 'annet') {
+export function velgArbeidssituasjon(situasjon: 'ansatt' | 'arbeidsledig' | 'annet' | 'frilanser') {
     return async (page: Page): Promise<void> => {
         await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: situasjon }).click()
     }
@@ -62,6 +76,44 @@ export function velgArbeidssituasjon(situasjon: 'ansatt' | 'arbeidsledig' | 'ann
 export function velgArbeidstaker(arbeidstaker: RegExp) {
     return async (page: Page): Promise<void> => {
         await getRadioInGroup(page)({ name: /Velg arbeidsgiver/i }, { name: arbeidstaker }).click()
+    }
+}
+
+export function velgForsikring(svar: 'Ja' | 'Nei') {
+    return async (page: Page): Promise<void> => {
+        await getRadioInGroup(page)(
+            { name: /Har du forsikring som gjelder for de første 16 dagene av sykefraværet?/i },
+            { name: svar },
+        ).click()
+    }
+}
+
+export function frilanserEgenmeldingsperioder(
+    svar:
+        | 'Nei'
+        | {
+              fom: string
+              tom: string
+          }[],
+) {
+    return async (page: Page): Promise<void> => {
+        const jaEllerNei = Array.isArray(svar) ? 'Ja' : 'Nei'
+        await getRadioInGroup(page)(
+            { name: /Brukte du egenmelding eller noen annen sykmelding før denne datoen?/i },
+            { name: jaEllerNei },
+        ).click()
+
+        if (Array.isArray(svar)) {
+            let index = 0
+            for (const { fom, tom } of svar) {
+                await page.getByRole('textbox', { name: 'Fra og med' }).nth(index).fill(fom)
+                await page.getByRole('textbox', { name: 'Til og med' }).nth(index).fill(tom)
+                if (index < svar.length - 1) {
+                    await page.getByRole('button', { name: 'Legg til' }).nth(0).click()
+                }
+                index++
+            }
+        }
     }
 }
 

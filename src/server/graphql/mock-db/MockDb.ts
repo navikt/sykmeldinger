@@ -25,6 +25,8 @@ import { defaultArbeidsgivere } from './data-creators'
 class MockDb {
     private readonly _sykmeldinger: Sykmelding[]
     private _antallArbeidsgivere = 1
+    private _erUtenforVentetid = false
+    private _oppfolgingsdato: string | null = '2021-04-10'
 
     constructor(scenario: { sykmeldinger: Sykmelding[] }) {
         this._sykmeldinger = scenario.sykmeldinger
@@ -42,8 +44,8 @@ class MockDb {
 
     sykeldingErUtenforVentetid(): ErUtenforVentetid {
         return {
-            erUtenforVentetid: false,
-            oppfolgingsdato: '2021-04-10',
+            erUtenforVentetid: this._erUtenforVentetid,
+            oppfolgingsdato: this._oppfolgingsdato,
         }
     }
 
@@ -148,6 +150,19 @@ class MockDb {
 
     setAntallArbeidsgivere(antall: number): void {
         this._antallArbeidsgivere = antall
+    }
+
+    setErUtenforVentetid(erUtenforVentetid: boolean): void {
+        this._erUtenforVentetid = erUtenforVentetid
+    }
+
+    setOppfolgingsdato(oppfolgingsdato: string | ''): void {
+        if (!oppfolgingsdato) {
+            this._oppfolgingsdato = null
+            return
+        }
+
+        this._oppfolgingsdato = oppfolgingsdato
     }
 
     private arbeidsgivere(): Arbeidsgiver[] {

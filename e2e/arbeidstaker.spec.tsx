@@ -117,7 +117,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
     })
 
     test.describe('given previous sykmeldinger', () => {
-        test('should collide with 100% sykmelding and show "Legg til egenmeldingsdager"', async ({ page }) => {
+        test('should collide with 100% sykmelding and NOT show "Legg til egenmeldingsdager"', async ({ page }) => {
             await gotoScenario('buttAgainstGradert')(page)
 
             await navigateToFirstSykmelding('tidligere', '100%')(page)
