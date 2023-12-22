@@ -19,7 +19,7 @@ jobs:
     name: 'Playwright Tests'
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.40.0-jammy
+      image: mcr.microsoft.com/playwright:v1.40.1-jammy
     steps:
       - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@main
         with:
