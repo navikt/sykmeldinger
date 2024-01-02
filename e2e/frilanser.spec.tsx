@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 import {
+    expectOppfolgingsdato,
     frilanserEgenmeldingsperioder,
     gotoScenario,
     navigateToFirstSykmelding,
@@ -15,11 +16,13 @@ test.describe('Frilanser', () => {
         test('should be able to submit form', async ({ page }) => {
             await gotoScenario('normal', {
                 erUtenforVentetid: false,
+                oppfolgingsdato: '2021-04-01',
             })(page)
             await navigateToFirstSykmelding('nye', '100%')(page)
             await opplysingeneStemmer(page)
             await velgArbeidssituasjon('frilanser')(page)
 
+            await expectOppfolgingsdato('2021-04-01')(page)
             await frilanserEgenmeldingsperioder([{ fom: '20.12.2020', tom: '27.12.2020' }])(page)
             await velgForsikring('Ja')(page)
 
@@ -42,6 +45,8 @@ test.describe('Frilanser', () => {
             await navigateToFirstSykmelding('nye', '100%')(page)
             await opplysingeneStemmer(page)
             await velgArbeidssituasjon('frilanser')(page)
+
+            await expectOppfolgingsdato('2021-04-10')(page)
             await frilanserEgenmeldingsperioder([{ fom: '20.12.2020', tom: '27.12.2020' }])(page)
             await velgForsikring('Ja')(page)
 
