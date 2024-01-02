@@ -2,11 +2,11 @@ import { IToggle } from '@unleash/nextjs'
 
 import { browserEnv } from '../utils/env'
 
-import { EXPECTED_TOGGLES, ExpectedToggles } from './toggles'
+import { EXPECTED_TOGGLES } from './toggles'
 
 export function localDevelopmentToggles(): IToggle[] {
     return [
-        ...EXPECTED_TOGGLES.filter((it) => it !== 'SYKMELDINGER_FISKERE').map(
+        ...EXPECTED_TOGGLES.map(
             (it): IToggle => ({
                 name: it,
                 enabled: false,
@@ -17,15 +17,6 @@ export function localDevelopmentToggles(): IToggle[] {
                 },
             }),
         ),
-        {
-            name: 'SYKMELDINGER_FISKERE' satisfies ExpectedToggles,
-            enabled: true,
-            impressionData: false,
-            variant: {
-                name: 'disabled',
-                enabled: false,
-            },
-        },
     ]
 }
 
