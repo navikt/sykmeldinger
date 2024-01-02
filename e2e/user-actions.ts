@@ -1,6 +1,7 @@
 import { expect, Page } from '@playwright/test'
 
 import type { Scenarios } from '../src/server/graphql/mock-db/scenarios'
+import { toReadableDate } from '../src/utils/dateUtils'
 
 import { getRadioInGroup } from './test-utils'
 
@@ -67,7 +68,9 @@ export async function opplysingeneStemmer(page: Page): Promise<void> {
     await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
 }
 
-export function velgArbeidssituasjon(situasjon: 'ansatt' | 'arbeidsledig' | 'annet' | 'fisker' | 'frilanser') {
+export function velgArbeidssituasjon(
+    situasjon: 'ansatt' | 'arbeidsledig' | 'annet' | 'fisker' | 'frilanser' | 'selvstendig næringsdrivende',
+) {
     return async (page: Page): Promise<void> => {
         await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: situasjon }).click()
     }
@@ -85,6 +88,14 @@ export function velgForsikring(svar: 'Ja' | 'Nei') {
             { name: /Har du forsikring som gjelder for de første 16 dagene av sykefraværet?/i },
             { name: svar },
         ).click()
+    }
+}
+
+export function expectOppfolgingsdato(dato: string) {
+    return async (page: Page): Promise<void> => {
+        await expect(
+            page.getByRole('group', { name: new RegExp(`Vi har registrert at du ble syk ${toReadableDate(dato)}`) }),
+        ).toBeVisible()
     }
 }
 
