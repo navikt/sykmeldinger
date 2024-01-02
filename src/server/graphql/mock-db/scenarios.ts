@@ -88,6 +88,16 @@ const avvist: ScenarioCreator = () => ({
     ],
 })
 
+const ugyldigTilbakedatering: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: -7 })
+            .enkelPeriode()
+            .status(StatusEvent.APEN)
+            .merknader([{ type: Merknadtype.UGYLDIG_TILBAKEDATERING, beskrivelse: null }])
+            .build(),
+    ],
+})
+
 const utgatt: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).enkelPeriode().status(StatusEvent.UTGATT).build()],
 })
@@ -290,6 +300,10 @@ export const otherScenarios = {
     avvist20Data: {
         description: 'Avvist grunnet under 20%',
         scenario: avvist20Data,
+    },
+    ugyldigTilbakedatering: {
+        description: 'Sykmelding med ugyldig tilbakedatering og er til manuell behandling',
+        scenario: ugyldigTilbakedatering,
     },
     utgatt: {
         description: 'Utgått sykmelding',
