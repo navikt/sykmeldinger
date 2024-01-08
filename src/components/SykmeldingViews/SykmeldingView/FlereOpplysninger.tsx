@@ -10,7 +10,9 @@ function FlereOpplysninger({ children }: PropsWithChildren): ReactElement {
                     <div className="mt-1.5 grid shrink-0 place-content-center text-4xl">
                         <FileSearchIcon role="img" aria-hidden />
                     </div>
-                    <ExpansionCard.Title id="flere-opplysninger-heading">Flere opplysninger</ExpansionCard.Title>
+                    <ExpansionCard.Title id="flere-opplysninger-heading" as="h2">
+                        Flere opplysninger
+                    </ExpansionCard.Title>
                 </div>
             </ExpansionCard.Header>
             <ExpansionCard.Content>{children}</ExpansionCard.Content>

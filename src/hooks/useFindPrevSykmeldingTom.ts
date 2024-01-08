@@ -75,11 +75,11 @@ export function useFindPrevSykmeldingTom(
     }
 }
 
-function removeAvventende (sykmelding: SykmeldingFragment): boolean {
+function removeAvventende(sykmelding: SykmeldingFragment): boolean {
     return (
         intersection(
             [Periodetype.AVVENTENDE],
-                  sykmelding.sykmeldingsperioder.map((it) => it.type),
+            sykmelding.sykmeldingsperioder.map((it) => it.type),
         ).length === 0
     )
 }

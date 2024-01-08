@@ -22,8 +22,9 @@ function StatusBanner({
         if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
             return (
                 <Alert variant="info">
-                    Du bekreftet at du har lest at sykmeldingen er avvist den{' '}
-                    {toReadableDate(sykmeldingStatus.timestamp)}
+                    {`Du bekreftet at du har lest at sykmeldingen er avvist den ${toReadableDate(
+                        sykmeldingStatus.timestamp,
+                    )}`}
                 </Alert>
             )
         }
@@ -33,8 +34,9 @@ function StatusBanner({
         return (
             <Alert variant="success">
                 <Heading size="small" level="2" className="overflow-anywhere">
-                    {isEgenmeldingsKvittering ? 'Egenmeldingsdagene' : 'Sykmeldingen'} ble sendt til{' '}
-                    {sykmeldingStatus.arbeidsgiver?.orgNavn}
+                    {isEgenmeldingsKvittering
+                        ? `Egenmeldingsdagene ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}`
+                        : `Sykmeldingen ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}`}
                 </Heading>
                 <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
@@ -45,7 +47,7 @@ function StatusBanner({
         return (
             <Alert variant="success">
                 <Heading size="small" level="2">
-                    {egenmeldt ? 'Egenmelding' : 'Sykmelding'}en ble sendt til NAV
+                    {egenmeldt ? 'Egenmeldingen ble sendt til NAV' : 'Sykmeldingen ble sendt til NAV'}
                 </Heading>
                 <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>

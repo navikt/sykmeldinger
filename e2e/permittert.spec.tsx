@@ -12,7 +12,7 @@ test.describe('Arbeidssituasjon - Permittert', () => {
     test('should submit PERMITTERT when user choose radio button permittert', async ({ page }) => {
         await page
             .getByRole('region', { name: /Nye sykmeldinger/i })
-            .getByRole('link', { name: /Sykmelding 100%/ })
+            .getByRole('link', { name: /100% Sykmelding/ })
             .click()
 
         await page

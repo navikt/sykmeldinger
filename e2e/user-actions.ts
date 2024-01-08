@@ -42,17 +42,27 @@ export async function gotoRoot(page: Page): Promise<void> {
     await page.goto(`/`)
 }
 
-export function navigateToFirstSykmelding(type: 'nye' | 'tidligere', variant: '100%' | 'egenmelding') {
+export function navigateToFirstSykmelding(
+    type: 'nye' | 'tidligere',
+    variant: '100%' | 'egenmelding' | 'papirsykmelding' | 'utenlandsk',
+) {
     return async (page: Page): Promise<void> => {
         const sectionRegex = type === 'nye' ? /Nye sykmeldinger/i : /Tidligere sykmeldinger/i
 
+        // Text in aria-label
         let linkRegexp: RegExp
         switch (variant) {
             case '100%':
-                linkRegexp = type === 'nye' ? /Sykmelding 100%/i : /100% sykmeldt/i
+                linkRegexp = /100% sykmelding/i
                 break
             case 'egenmelding':
                 linkRegexp = /Egenmelding/i
+                break
+            case 'papirsykmelding':
+                linkRegexp = /Papirsykmelding/i
+                break
+            case 'utenlandsk':
+                linkRegexp = /Utenlandsk/i
                 break
         }
 

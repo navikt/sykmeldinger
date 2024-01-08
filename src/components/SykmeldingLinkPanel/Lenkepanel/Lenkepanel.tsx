@@ -7,6 +7,7 @@ import { SykmeldingFragment } from 'queries'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../../utils/sykmeldingUtils'
 import { getDescription } from '../../../utils/periodeUtils'
 import { cn } from '../../../utils/tw-utils'
+import { toSykmeldingAriaLabel } from '../../../utils/toSykmeldingAriaLabel'
 
 import LenkepanelIcon from './LenkepanelIcon'
 import LenkepanelEtikett from './LenkepanelEtikett'
@@ -24,6 +25,7 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactEle
         id: sykmelding.id,
         papirsykmelding: sykmelding.papirsykmelding ?? false,
     }
+    const sykmeldingPeriod: string = getReadableSykmeldingLength(sykmelding)
 
     return (
         <Link href={`/${id}`} passHref legacyBehavior>
@@ -40,8 +42,8 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactEle
                             isPaper={Boolean(papirsykmelding)}
                         />
                     </div>
-                    <div className="grow">
-                        <BodyShort>{getReadableSykmeldingLength(sykmelding)}</BodyShort>
+                    <div className="grow" aria-label={toSykmeldingAriaLabel(sykmelding, sykmeldingPeriod)}>
+                        <BodyShort>{sykmeldingPeriod}</BodyShort>
                         <Heading size="small" level="3">
                             {getSykmeldingTitle(sykmelding)}
                         </Heading>

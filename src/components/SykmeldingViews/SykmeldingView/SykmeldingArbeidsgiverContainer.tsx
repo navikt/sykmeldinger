@@ -27,7 +27,9 @@ function SykmeldingArbeidsgiverContainer({ sykmelding, chosenEgenmeldingsdager }
                     <div className="mt-1.5 grid shrink-0 place-content-center text-4xl">
                         <FileSearchIcon role="img" aria-hidden />
                     </div>
-                    <ExpansionCard.Title id={headerId}>Se hva som sendes til jobben din</ExpansionCard.Title>
+                    <ExpansionCard.Title id={headerId} as="h2">
+                        Se hva som sendes til jobben din
+                    </ExpansionCard.Title>
                 </div>
             </ExpansionCard.Header>
             <ExpansionCard.Content>
