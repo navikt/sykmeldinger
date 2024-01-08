@@ -26,11 +26,11 @@ export const InfoOmDigitalSykmelding = (): ReactElement => (
                 <BodyLong>Ifølge folketrygdloven har den to formål:</BodyLong>
                 <ul>
                     <BodyLong as="li">
-                        melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake i
-                        jobb
+                        - Melde fra om sykefravær til NAV og arbeidsgiveren slik at du kan få hjelp til å komme tilbake
+                        i jobb.
                     </BodyLong>
                     <BodyLong as="li" spacing>
-                        legge til rette for at du kan søke om sykepenger
+                        - Legge til rette for at du kan søke om sykepenger.
                     </BodyLong>
                 </ul>
             </section>

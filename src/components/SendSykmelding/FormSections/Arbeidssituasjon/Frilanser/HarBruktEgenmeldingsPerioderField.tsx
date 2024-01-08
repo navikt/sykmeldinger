@@ -45,23 +45,23 @@ function HarBruktEgenmeldingReadMore(): ReactElement {
                 Siden vi ikke får tak i informasjonen automatisk, må vi få disse opplysningene fra deg.
             </BodyShort>
             <Label id={fravaerListId} spacing>
-                Med fravær mener vi
+                Med fravær mener vi:
             </Label>
             <ul aria-labelledby={fravaerListId}>
                 <li>
-                    <BodyShort>egenmelding</BodyShort>
+                    <BodyShort>- egenmelding</BodyShort>
                 </li>
                 <li>
-                    <BodyShort>papirsykmelding</BodyShort>
+                    <BodyShort>- papirsykmelding</BodyShort>
                 </li>
                 <li>
-                    <BodyShort>ferie</BodyShort>
+                    <BodyShort>- ferie</BodyShort>
                 </li>
                 <li>
-                    <BodyShort>permisjon</BodyShort>
+                    <BodyShort>- permisjon</BodyShort>
                 </li>
                 <li>
-                    <BodyShort>sykmelding fra et annet arbeidsforhold i samme bedrift</BodyShort>
+                    <BodyShort>- sykmelding fra et annet arbeidsforhold i samme bedrift</BodyShort>
                 </li>
             </ul>
         </ReadMore>

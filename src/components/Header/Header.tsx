@@ -1,4 +1,4 @@
-import { Heading, Skeleton } from '@navikt/ds-react'
+import { BodyLong, Heading, Skeleton } from '@navikt/ds-react'
 import { ReactElement } from 'react'
 
 type HeaderNormalProps = {
@@ -25,13 +25,11 @@ function Header(props: HeaderProps): ReactElement | null {
                 )}
                 {!('skeleton' in props) ? (
                     props.subTitle ? (
-                        <Heading size="medium" level="2">
-                            {props.subTitle}
-                        </Heading>
+                        <BodyLong className="font-bold text-2xl">{props.subTitle}</BodyLong>
                     ) : null
                 ) : (
                     <Skeleton>
-                        <Heading size="medium">X. - XX. XXXX</Heading>
+                        <BodyLong className="font-bold text-2xl">X. - XX. XXXX</BodyLong>
                     </Skeleton>
                 )}
             </div>

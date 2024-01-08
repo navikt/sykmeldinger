@@ -17,7 +17,7 @@ function ValgtEgenmeldingsdager({ dates, onEditClicked }: Props): ReactElement {
     return (
         <div className={styles.egenmeldingListWrapper}>
             <Heading id={headingId} size="xsmall" level="3">
-                Du brukte {pluralize('egenmeldingsdag', dates.length)}
+                {`Du brukte ${pluralize('egenmeldingsdag', dates.length)}`}
             </Heading>
             <ul aria-labelledby={headingId} className={styles.egenmeldingList}>
                 {dates.map((date: Date) => (

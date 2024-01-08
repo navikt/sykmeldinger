@@ -27,6 +27,9 @@ function EndreEgenmeldingsdagerPage(): ReactElement {
 
     return (
         <PageWrapper>
+            <Heading className="pt-4 pb-8" level="1" size="xlarge">
+                Egenmeldingsdager
+            </Heading>
             <GuidePanel className="mb-8">
                 <Heading level="2" size="small" spacing>
                     Endre egenmeldingsdager
