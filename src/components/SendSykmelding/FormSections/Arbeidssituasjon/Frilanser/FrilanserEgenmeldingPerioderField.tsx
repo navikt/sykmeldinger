@@ -24,7 +24,7 @@ function FrilanserEgenmeldingPerioderField({ oppfolgingsdato }: Props): ReactEle
 
     return (
         <SectionWrapper title={sporsmal.egenmeldingsperioder(oppfolgingsdato)} level="3" size="small">
-            <div className="mt-2 flex flex-col gap-4">
+            <ul className="mt-2 flex flex-col gap-4">
                 {fields.map((field, index) => (
                     <FrilanserEgenmeldingPeriodSubField
                         key={field.id}
@@ -34,7 +34,7 @@ function FrilanserEgenmeldingPerioderField({ oppfolgingsdato }: Props): ReactEle
                         otherPeriods={fields.filter((it) => it.id !== field.id)}
                     />
                 ))}
-            </div>
+            </ul>
             <Button
                 className="mt-4"
                 variant="tertiary"
