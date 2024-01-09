@@ -12,7 +12,7 @@ import {
 
 import { createMock, createSykmelding, createSykmeldingPeriode } from '../../utils/test/dataUtils'
 import { render, screen } from '../../utils/test/testUtils'
-import { createExtraFormDataMock } from '../../feature-tests/mockUtils'
+import { createExtraFormDataMock } from '../../utils/test/mockUtils'
 
 import KvitteringPage from './kvittering.page'
 

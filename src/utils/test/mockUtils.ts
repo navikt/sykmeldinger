@@ -2,7 +2,7 @@ import { MockedResponse } from '@apollo/client/testing'
 
 import { Brukerinformasjon, ExtraFormDataDocument, UtenforVentetid } from 'queries'
 
-import { createMock } from '../utils/test/dataUtils'
+import { createMock } from './dataUtils'
 
 export function createExtraFormDataMock({
     sykmeldingId = 'sykmelding-id',
