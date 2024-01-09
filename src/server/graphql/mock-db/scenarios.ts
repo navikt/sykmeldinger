@@ -312,8 +312,44 @@ export const otherScenarios = {
 } satisfies Record<string, { description: string; scenario: ScenarioCreator }>
 
 export const e2eScenarios = {
+    unsentButtAgainstNormal: {
+        description: 'En usendt sykmelding kant i kant med en tidligere sykmelding',
+        scenario: () => ({
+            sykmeldinger: [
+                new SykmeldingBuilder({ offset: -14 })
+                    .enkelPeriode({ offset: 0, days: 7 })
+                    .status(StatusEvent.SENDT)
+                    .build(),
+                new SykmeldingBuilder({ offset: -7 })
+                    .enkelPeriode({ offset: 1, days: 7 })
+                    .status(StatusEvent.APEN)
+                    .build(),
+            ],
+        }),
+    },
     buttAgainstAvventende: {
-        description: 'En sendte sykmelding kant i kant med en tidligere sykmelding med AVVENTENDE periode',
+        description: 'En sendt sykmelding kant i kant med en tidligere sykmelding med AVVENTENDE periode',
+        scenario: () => ({
+            sykmeldinger: [
+                new SykmeldingBuilder({ offset: -14 })
+                    .relativePeriode(
+                        {
+                            type: Periodetype.AVVENTENDE,
+                            tilrettelegging: 'Eksempel på tilrettelegging',
+                        },
+                        { offset: 0, days: 7 },
+                    )
+                    .status(StatusEvent.SENDT)
+                    .build(),
+                new SykmeldingBuilder({ offset: -7 })
+                    .enkelPeriode({ offset: 1, days: 7 })
+                    .status(StatusEvent.APEN)
+                    .build(),
+            ],
+        }),
+    },
+    buttAgainstAvventendeSent: {
+        description: 'En sendt sykmelding kant i kant med en tidligere sykmelding med AVVENTENDE periode',
         scenario: () => ({
             sykmeldinger: [
                 new SykmeldingBuilder({ offset: -14 })

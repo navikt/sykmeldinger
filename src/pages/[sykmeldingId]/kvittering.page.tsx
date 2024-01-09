@@ -6,7 +6,13 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { range } from 'remeda'
 
-import { RegelStatus, StatusEvent, SvarUnion_ArbeidssituasjonSvar_Fragment, SykmeldingFragment } from 'queries'
+import {
+    Periodetype,
+    RegelStatus,
+    StatusEvent,
+    SvarUnion_ArbeidssituasjonSvar_Fragment,
+    SykmeldingFragment,
+} from 'queries'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'
@@ -152,6 +158,7 @@ function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Syk
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
         sykmelding,
         sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,
+        [Periodetype.AVVENTENDE],
     )
 
     const hasHitPrevious = hasHitPreviousSykmeldingTom(sykmelding, previousSykmeldingTom)

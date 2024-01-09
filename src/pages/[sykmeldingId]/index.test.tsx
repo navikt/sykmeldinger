@@ -7,7 +7,7 @@ import { ExtraFormDataDocument, SykmeldingByIdDocument, SykmeldingerDocument } f
 import { render, screen } from '../../utils/test/testUtils'
 import { dateSub } from '../../utils/dateUtils'
 import { createMock, createSykmelding } from '../../utils/test/dataUtils'
-import { createExtraFormDataMock } from '../../feature-tests/mockUtils'
+import { createExtraFormDataMock } from '../../utils/test/mockUtils'
 
 import SykmeldingPage from './index.page'
 

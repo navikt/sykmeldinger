@@ -131,7 +131,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
         test('should not collide with AVVENTENDE sykmeldinger and still show "Legg til egenmeldingsdager"', async ({
             page,
         }) => {
-            await gotoScenario('buttAgainstAvventende')(page)
+            await gotoScenario('buttAgainstAvventendeSent')(page)
 
             await navigateToFirstSykmelding('tidligere', '100%')(page)
 
