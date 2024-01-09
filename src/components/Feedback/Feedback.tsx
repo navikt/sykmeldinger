@@ -165,7 +165,8 @@ function FeedbackButton({
             onClick={handleClick}
             disabled={disabled}
             className={cn({
-                'bg-surface-neutral-active text-text-on-inverted hover:bg-surface-neutral-active': active,
+                'bg-surface-neutral-active text-text-on-inverted hover:bg-surface-neutral-active focus:text-white':
+                    active,
             })}
         >
             {children}
