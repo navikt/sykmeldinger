@@ -97,7 +97,7 @@ function FrilanserEgenmeldingPeriodSubField({
     })
 
     return (
-        <div>
+        <li className="list-none">
             <DatePicker
                 {...datepickerProps}
                 wrapperClassName="grid gap-2 place-items-start sm:w-[52ch] sm:grid-cols-2 grid-cols-1"
@@ -143,7 +143,7 @@ function FrilanserEgenmeldingPeriodSubField({
                     </Button>
                 )}
             </div>
-        </div>
+        </li>
     )
 }
 
