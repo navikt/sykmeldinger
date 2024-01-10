@@ -19,7 +19,7 @@ const appDirectives = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-    output: !isE2E ? 'standalone' : undefined,
+    output: 'standalone',
     reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
