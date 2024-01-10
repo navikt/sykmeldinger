@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { MockedResponse } from '@apollo/client/testing'
 
-import { RegelStatus, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from 'queries'
+import { Periodetype, RegelStatus, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from 'queries'
 
 import { toDate } from '../utils/dateUtils'
 import { createMock, createSykmelding, createSykmeldingPeriode } from '../utils/test/dataUtils'
@@ -504,6 +504,71 @@ describe('useFindPrevSykmeldingTom', () => {
             await waitFor(() => expect(result.current.isLoading).toBe(false))
 
             expect(result.current.previousSykmeldingTom).toEqual(null)
+        })
+    })
+
+    describe('AVVENTENDE period type', () => {
+        it('should ignor sykmelding with period type AVVENTENDE', async () => {
+            const sykmeldinger = [
+                createSykmelding({
+                    id: 'id-1',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.BEKREFTET,
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2023-01-11',
+                            tom: '2023-01-25',
+                        }),
+                    ],
+                }),
+                createSykmelding({
+                    id: 'id-2',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.SENDT,
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2023-02-10',
+                            tom: '2023-02-29',
+                            type: Periodetype.AVVENTENDE,
+                        }),
+                    ],
+                }),
+                createSykmelding({
+                    id: 'id-3',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.SENDT,
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2023-03-11',
+                            tom: '2023-03-21',
+                            type: Periodetype.AVVENTENDE,
+                        }),
+                    ],
+                }),
+                createSykmelding({
+                    id: 'id-4',
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2023-04-02',
+                            tom: '2023-04-10',
+                        }),
+                    ],
+                }),
+            ]
+
+            const { result } = renderHook(() => useFindPrevSykmeldingTom(sykmeldinger[3], 'default-arbeidsgiver'), {
+                mocks: [sykmeldingerMock(sykmeldinger)],
+            })
+
+            await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+            expect(result.current.previousSykmeldingTom).toEqual(toDate('2023-01-25'))
         })
     })
 })

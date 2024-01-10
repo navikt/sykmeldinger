@@ -19,7 +19,6 @@ import useSykmeldinger from './useSykmeldinger'
 export function useFindPrevSykmeldingTom(
     sykmelding: SykmeldingFragment,
     valgtArbeidsgiverOrgnummer: string | null | undefined,
-    ignore?: Periodetype[],
 ): {
     previousSykmeldingTom: Date | null
     isLoading: boolean
@@ -29,7 +28,6 @@ export function useFindPrevSykmeldingTom(
     return (newFetching.enabled ? useFindPrevMinimalSykmeldingTom : useFindPrevSykmeldingTomOld)(
         sykmelding,
         valgtArbeidsgiverOrgnummer,
-        ignore,
     )
 }
 
@@ -64,7 +62,6 @@ function removeInsideSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]) {
 export function useFindPrevSykmeldingTomOld(
     sykmelding: SykmeldingFragment,
     valgtArbeidsgiverOrgnummer: string | null | undefined,
-    ignore?: Periodetype[],
 ): {
     previousSykmeldingTom: Date | null
     isLoading: boolean
@@ -85,7 +82,7 @@ export function useFindPrevSykmeldingTomOld(
         .filter(isSendtSykmelding)
         .filter((it) => it.id !== sykmelding.id)
         .filter((it) => it.sykmeldingStatus.arbeidsgiver?.orgnummer == valgtArbeidsgiverOrgnummer)
-        .filter(removeIgnored(ignore))
+        .filter(removeAvventende)
 
     const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding.sykmeldingsperioder))
     const latestTomList: Date[] = sendtSykmeldinger
@@ -101,23 +98,21 @@ export function useFindPrevSykmeldingTomOld(
     }
 }
 
-function removeIgnored(ignored: Periodetype[] | undefined) {
-    return (sykmelding: SykmeldingFragment | MinimalSykmeldingFragment): boolean =>
-        ignored == null
-            ? true
-            : intersection(
-                  ignored,
-                  (sykmelding.__typename === 'Sykmelding'
-                      ? sykmelding.sykmeldingsperioder
-                      : sykmelding.sykmelding.sykmeldingsperioder
-                  ).map((it) => it.type),
-              ).length === 0
+function removeAvventende(sykmelding: SykmeldingFragment | MinimalSykmeldingFragment): boolean {
+    return (
+        intersection(
+            [Periodetype.AVVENTENDE],
+            (sykmelding.__typename === 'Sykmelding'
+                ? sykmelding.sykmeldingsperioder
+                : sykmelding.sykmelding.sykmeldingsperioder
+            ).map((it) => it.type),
+        ).length === 0
+    )
 }
 
 export function useFindPrevMinimalSykmeldingTom(
     sykmelding: SykmeldingFragment,
     valgtArbeidsgiverOrgnummer: string | null | undefined,
-    ignore?: Periodetype[],
 ): {
     previousSykmeldingTom: Date | null
     isLoading: boolean
@@ -146,7 +141,7 @@ export function useFindPrevMinimalSykmeldingTom(
     const sykmeldinger: MinimalSykmeldingFragment[] = relevantSykmeldinger
         // TODO: implement logic in "old" impl.
         .filter((it) => it.arbeidsgiver?.orgnummer == valgtArbeidsgiverOrgnummer)
-        .filter(removeIgnored(ignore))
+        .filter(removeAvventende)
 
     const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding.sykmeldingsperioder))
     const latestTomList: Date[] = sykmeldinger
