@@ -12,7 +12,6 @@ import { SendSykmeldingValues, SykmeldingCategory, SykmeldingChangeStatus } from
 import { RequestContext } from './graphql/resolvers'
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 import { getErUtenforVentetid } from './flexService'
-import { ArbeidssituasjonV3 } from './api-models/SendSykmelding'
 import metrics from './metrics'
 import { MinimalSykmelding, MinimalSykmeldingSchema } from './api-models/sykmelding/MinimalSykmelding'
 
@@ -20,10 +19,6 @@ export function getMinimalSykmeldinger(
     category: SykmeldingCategory,
     context: RequestContext,
 ): Promise<MinimalSykmelding[]> {
-    const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Fetching sykmeldinger by category (${category}) from backend, requestId: ${context.requestId}`)
-
     return fetchApi(
         { type: 'GET' },
         `v2/sykmeldinger/minimal/${category}`,
@@ -36,10 +31,6 @@ export function getMinimalSykmeldinger(
 const serverEnv = getServerEnv()
 
 export async function getSykmeldinger(context: RequestContext): Promise<Sykmelding[]> {
-    const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Fetching sykmeldinger from backend, requestId: ${context.requestId}`)
-
     return fetchApi(
         { type: 'GET' },
         'v2/sykmeldinger',
@@ -50,10 +41,6 @@ export async function getSykmeldinger(context: RequestContext): Promise<Sykmeldi
 }
 
 export async function getSykmelding(sykmeldingId: string, context: RequestContext): Promise<Sykmelding> {
-    const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Fetching sykmelding with ID ${sykmeldingId} from backend, requestId: ${context.requestId}`)
-
     return fetchApi(
         { type: 'GET' },
         `v2/sykmeldinger/${sykmeldingId}`,
@@ -64,10 +51,6 @@ export async function getSykmelding(sykmeldingId: string, context: RequestContex
 }
 
 export async function getBrukerinformasjon(context: RequestContext): Promise<Brukerinformasjon> {
-    const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Fetching brukerinformasjon from backend, requestId: ${context.requestId}`)
-
     return fetchApi(
         { type: 'GET' },
         'v2/brukerinformasjon',
@@ -84,14 +67,13 @@ export async function changeSykmeldingStatus(
 ): Promise<Sykmelding> {
     const childLogger = createChildLogger(context.requestId)
 
-    childLogger.info(`Changing sykmelding with ID ${sykmeldingId} to status ${status}, requestId: ${context.requestId}`)
     try {
         await fetchApi(
             { type: 'POST', body: undefined },
             `v2/sykmeldinger/${sykmeldingId}/${statusToEndpoint(status)}`,
             () => null,
             context,
-            'POST: changeSykmeldingStatus',
+            `POST: changeSykmeldingStatus ${status}`,
         )
         return getSykmelding(sykmeldingId, context)
     } catch (e) {
@@ -115,8 +97,6 @@ export async function sendSykmelding(
 ): Promise<Sykmelding> {
     const childLogger = createChildLogger(context.requestId)
 
-    childLogger.info(`Sending sykmelding with ID ${sykmeldingId}, requestId: ${context.requestId}`)
-
     const [sykmelding, brukerinformasjon, erUtenforVentetid] = await Promise.all([
         getSykmelding(sykmeldingId, context),
         getBrukerinformasjon(context),
@@ -134,15 +114,6 @@ export async function sendSykmelding(
             'POST: sendSykmelding',
         )
 
-        if (mappedValues.arbeidssituasjon.svar === ArbeidssituasjonV3.ARBEIDSTAKER) {
-            if (mappedValues.harBruktEgenmeldingsdager) {
-                childLogger.info(`Sykmelding sendt WITH egenmeldingsdager-question answered`)
-            } else {
-                childLogger.info(`Sykmelding sendt without egenmeldingsdager-question answered`)
-            }
-        }
-
-        // Return the updated sykmelding so apollo can update the cache
         return getSykmelding(sykmeldingId, context)
     } catch (e) {
         if (e instanceof GraphQLError && e.extensions.code === 'UNAUTHENTICATED') {
@@ -220,13 +191,32 @@ async function fetchApi<ResponseObject>(
             'x-request-id': context.requestId,
         },
     })
-    stopApiResponsetimer()
+    const timerSeconds = stopApiResponsetimer()
+    const ms = +(timerSeconds * 1000).toFixed(0)
+    const bucket = +(Math.ceil(ms / 25) * 25).toFixed(0)
 
     if (response.ok) {
         try {
             if (response.headers.get('Content-Type') === 'application/json') {
-                return response.json().then(parse)
+                const json = await response.json()
+
+                childLogger
+                    .child({
+                        x_what: what,
+                        x_timingBucket: bucket,
+                        x_items: Array.isArray(json) ? json.length : 1,
+                    })
+                    .info(`Fetching ${what} from backend took ${(timerSeconds * 1000).toFixed(0)} ms`)
+
+                return parse(json)
             }
+
+            childLogger
+                .child({
+                    x_what: what,
+                    x_timingBucket: bucket,
+                })
+                .info(`Fetching ${what} from backend took ${(timerSeconds * 1000).toFixed(0)} ms`)
 
             return parse()
         } catch (e) {
