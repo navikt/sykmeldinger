@@ -50,6 +50,9 @@ spec:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
     path: /syk/sykmeldinger/api/internal/is_ready
+  preStopHook:
+    http:
+      path: /syk/sykmeldinger/api/internal/pre_stop
   env:
     - name: SYKMELDINGER_BACKEND
       value: 'http://sykmeldinger-backend'
