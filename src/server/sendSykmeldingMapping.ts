@@ -145,6 +145,8 @@ function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): Arbeidssitua
             return ArbeidssituasjonV3.ARBEIDSTAKER
         case ArbeidssituasjonType.FISKER:
             return ArbeidssituasjonV3.FISKER
+        case ArbeidssituasjonType.JORDBRUKER:
+            return ArbeidssituasjonV3.JORDBRUKER
         case ArbeidssituasjonType.FRILANSER:
             return ArbeidssituasjonV3.FRILANSER
         case ArbeidssituasjonType.NAERINGSDRIVENDE:

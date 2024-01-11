@@ -19,5 +19,7 @@ export const isArbeidstaker = (
 export const isFisker = (arbeidssituasjon?: ArbeidssituasjonType | null): boolean =>
     arbeidssituasjon === ArbeidssituasjonType.FISKER
 
-export const isFrilanserOrNaeringsdrivende = (arbeidssituasjon?: ArbeidssituasjonType | null): boolean =>
-    arbeidssituasjon === ArbeidssituasjonType.FRILANSER || arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE
+export const isFrilanserOrNaeringsdrivendeOrJordbruker = (arbeidssituasjon?: ArbeidssituasjonType | null): boolean =>
+    arbeidssituasjon === ArbeidssituasjonType.FRILANSER ||
+    arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE ||
+    arbeidssituasjon === ArbeidssituasjonType.JORDBRUKER
