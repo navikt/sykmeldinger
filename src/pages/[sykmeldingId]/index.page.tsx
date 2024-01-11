@@ -112,6 +112,9 @@ function SykmeldingComponent({
     const reopen = useCallback(() => {
         setHasReopenedSykmelding(true)
     }, [])
+    const closeReopen = useCallback(() => {
+        setHasReopenedSykmelding(false)
+    }, [])
 
     const behandlingsutfall = sykmelding.behandlingsutfall.status
     const status = sykmelding.sykmeldingStatus.statusEvent
@@ -125,6 +128,7 @@ function SykmeldingComponent({
                         sykmelding={sykmelding}
                         olderSykmeldingId={olderSykmeldingId}
                         olderSykmeldingCount={olderSykmeldingCount}
+                        onSykmeldingAvbrutt={closeReopen}
                     />
                 )
             }
@@ -136,6 +140,7 @@ function SykmeldingComponent({
                             sykmelding={sykmelding}
                             olderSykmeldingId={olderSykmeldingId}
                             olderSykmeldingCount={olderSykmeldingCount}
+                            onSykmeldingAvbrutt={() => void 0}
                         />
                     )
                 case 'BEKREFTET':
