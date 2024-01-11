@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import Link from 'next/link'
 import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react'
 
-import { MinimalSykmeldingFragment, RegelStatus, StatusEvent, SykmeldingFragment } from 'queries'
+import { SykmeldingFragment } from 'queries'
 
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../../utils/sykmeldingUtils'
 import { getDescription } from '../../../utils/periodeUtils'
@@ -12,12 +12,18 @@ import LenkepanelIcon from './LenkepanelIcon'
 import LenkepanelEtikett from './LenkepanelEtikett'
 
 interface LenkepanelProps {
-    sykmelding: SykmeldingFragment | MinimalSykmeldingFragment
+    sykmelding: SykmeldingFragment
     notifying: boolean
 }
 
 export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactElement {
-    const { status, behandlingsutfallStatus, arbeidsgiverNavn, id, papirsykmelding } = getInnerValues(sykmelding)
+    const { status, behandlingsutfallStatus, arbeidsgiverNavn, id, papirsykmelding } = {
+        status: sykmelding.sykmeldingStatus.statusEvent,
+        behandlingsutfallStatus: sykmelding.behandlingsutfall.status,
+        arbeidsgiverNavn: sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn ?? '',
+        id: sykmelding.id,
+        papirsykmelding: sykmelding.papirsykmelding ?? false,
+    }
 
     return (
         <Link href={`/${id}`} passHref legacyBehavior>
@@ -40,10 +46,7 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactEle
                             {getSykmeldingTitle(sykmelding)}
                         </Heading>
                         <ul className="list-disc pl-4">
-                            {(sykmelding.__typename === 'Sykmelding'
-                                ? sykmelding.sykmeldingsperioder
-                                : sykmelding.sykmelding.sykmeldingsperioder
-                            ).map((periode, index) => (
+                            {sykmelding.sykmeldingsperioder.map((periode, index) => (
                                 <li key={index}>
                                     <BodyShort className="overflow-anywhere">
                                         {getDescription(periode, arbeidsgiverNavn)}
@@ -59,34 +62,6 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactEle
             </LinkPanel>
         </Link>
     )
-}
-
-const getInnerValues = (
-    sykmelding: SykmeldingFragment | MinimalSykmeldingFragment,
-): {
-    status: StatusEvent
-    behandlingsutfallStatus: RegelStatus
-    arbeidsgiverNavn: string
-    id: string
-    papirsykmelding: boolean
-} => {
-    if (sykmelding.__typename === 'Sykmelding') {
-        return {
-            status: sykmelding.sykmeldingStatus.statusEvent,
-            behandlingsutfallStatus: sykmelding.behandlingsutfall.status,
-            arbeidsgiverNavn: sykmelding.sykmeldingStatus.arbeidsgiver?.orgNavn ?? '',
-            id: sykmelding.id,
-            papirsykmelding: sykmelding.papirsykmelding ?? false,
-        }
-    } else {
-        return {
-            status: sykmelding.event,
-            behandlingsutfallStatus: sykmelding.behandlingsutfall,
-            arbeidsgiverNavn: sykmelding.arbeidsgiver?.orgNavn ?? '',
-            id: sykmelding.sykmelding_id,
-            papirsykmelding: sykmelding.sykmelding.papirsykmelding ?? false,
-        }
-    }
 }
 
 export default Lenkepanel

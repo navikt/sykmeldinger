@@ -15,8 +15,6 @@ export interface RequestContext {
 }
 
 const Query: QueryResolvers = {
-    minimalSykmeldinger: async (_, { category }, context) =>
-        sykmeldingerService.getMinimalSykmeldinger(category, context),
     sykmeldinger: async (_, args, context) => sykmeldingerService.getSykmeldinger(context),
     sykmelding: async (_, { id }, context) => sykmeldingerService.getSykmelding(id, context),
     brukerinformasjon: async (_, args, context) => sykmeldingerService.getBrukerinformasjon(context),

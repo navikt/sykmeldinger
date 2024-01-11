@@ -1,35 +1,12 @@
 import { closestTo, isBefore, isSameDay, isWithinInterval } from 'date-fns'
 import { intersection } from 'remeda'
-import { useQuery } from '@apollo/client'
 
-import {
-    MinimalSykmeldingerDocument,
-    MinimalSykmeldingFragment,
-    Periodetype,
-    SykmeldingCategory,
-    SykmeldingFragment,
-} from 'queries'
+import { Periodetype, SykmeldingFragment } from 'queries'
 
 import { toDate } from '../utils/dateUtils'
 import { getSykmeldingEndDate, getSykmeldingStartDate, isSendtSykmelding } from '../utils/sykmeldingUtils'
-import { useFlag } from '../toggles/context'
 
 import useSykmeldinger from './useSykmeldinger'
-
-export function useFindPrevSykmeldingTom(
-    sykmelding: SykmeldingFragment,
-    valgtArbeidsgiverOrgnummer: string | null | undefined,
-): {
-    previousSykmeldingTom: Date | null
-    isLoading: boolean
-    error: Error | undefined
-} {
-    const newFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
-    return (newFetching.enabled ? useFindPrevMinimalSykmeldingTom : useFindPrevSykmeldingTomOld)(
-        sykmelding,
-        valgtArbeidsgiverOrgnummer,
-    )
-}
 
 function isValidRange(sykmelding: SykmeldingFragment): boolean {
     const start = getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
@@ -59,7 +36,7 @@ function removeInsideSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]) {
     }
 }
 
-export function useFindPrevSykmeldingTomOld(
+export function useFindPrevSykmeldingTom(
     sykmelding: SykmeldingFragment,
     valgtArbeidsgiverOrgnummer: string | null | undefined,
 ): {
@@ -98,60 +75,11 @@ export function useFindPrevSykmeldingTomOld(
     }
 }
 
-function removeAvventende(sykmelding: SykmeldingFragment | MinimalSykmeldingFragment): boolean {
+function removeAvventende (sykmelding: SykmeldingFragment): boolean {
     return (
         intersection(
             [Periodetype.AVVENTENDE],
-            (sykmelding.__typename === 'Sykmelding'
-                ? sykmelding.sykmeldingsperioder
-                : sykmelding.sykmelding.sykmeldingsperioder
-            ).map((it) => it.type),
+                  sykmelding.sykmeldingsperioder.map((it) => it.type),
         ).length === 0
     )
-}
-
-export function useFindPrevMinimalSykmeldingTom(
-    sykmelding: SykmeldingFragment,
-    valgtArbeidsgiverOrgnummer: string | null | undefined,
-): {
-    previousSykmeldingTom: Date | null
-    isLoading: boolean
-    error: Error | undefined
-} {
-    const older = useQuery(MinimalSykmeldingerDocument, {
-        variables: { category: SykmeldingCategory.OLDER },
-    })
-    const processing = useQuery(MinimalSykmeldingerDocument, {
-        variables: { category: SykmeldingCategory.PROCESSING },
-    })
-
-    if (older.loading || processing.loading || older.error == null || processing.error) {
-        return {
-            previousSykmeldingTom: null,
-            isLoading: older.loading || processing.loading,
-            error: older.error ?? processing.error,
-        }
-    }
-
-    const relevantSykmeldinger = [
-        ...(older.data?.minimalSykmeldinger ?? []),
-        ...(processing.data?.minimalSykmeldinger ?? []),
-    ]
-
-    const sykmeldinger: MinimalSykmeldingFragment[] = relevantSykmeldinger
-        // TODO: implement logic in "old" impl.
-        .filter((it) => it.arbeidsgiver?.orgnummer == valgtArbeidsgiverOrgnummer)
-        .filter(removeAvventende)
-
-    const latestTomForGivenSykmelding: Date = toDate(getSykmeldingEndDate(sykmelding.sykmeldingsperioder))
-    const latestTomList: Date[] = sykmeldinger
-        .flatMap((it) => toDate(getSykmeldingEndDate(it.sykmelding.sykmeldingsperioder)))
-        .filter((date) => isBefore(date, latestTomForGivenSykmelding) || isSameDay(date, latestTomForGivenSykmelding))
-    const nearestTom: Date | undefined = closestTo(latestTomForGivenSykmelding, latestTomList)
-
-    return {
-        previousSykmeldingTom: nearestTom ?? null,
-        isLoading: false,
-        error: undefined,
-    }
 }

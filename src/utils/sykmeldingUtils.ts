@@ -1,6 +1,6 @@
 import { differenceInDays, isAfter, isBefore, parseISO } from 'date-fns'
 
-import { MinimalSykmeldingFragment, RegelStatus, StatusEvent, SykmeldingFragment } from 'queries'
+import { RegelStatus, StatusEvent, SykmeldingFragment } from 'queries'
 
 import { toDate, toReadableDatePeriod } from './dateUtils'
 import { isUtenlandsk } from './utenlanskUtils'
@@ -34,15 +34,13 @@ export function isSendtSykmelding(sykmelding: SykmeldingFragment): boolean {
  * @return {string}
  */
 export function getSykmeldingTitle(
-    sykmelding: SykmeldingFragment | MinimalSykmeldingFragment | undefined,
+    sykmelding: SykmeldingFragment | undefined,
 ): 'Sykmelding' | 'Papirsykmelding' | 'Egenmelding' | 'Utenlandsk sykmelding' {
     if (sykmelding && isUtenlandsk(sykmelding)) {
         return 'Utenlandsk sykmelding'
-    } else if (
-        sykmelding?.__typename === 'Sykmelding' ? sykmelding.papirsykmelding : sykmelding?.sykmelding.papirsykmelding
-    ) {
+    } else if (sykmelding?.papirsykmelding) {
         return 'Papirsykmelding'
-    } else if (sykmelding?.__typename === 'Sykmelding' ? sykmelding.egenmeldt : sykmelding?.sykmelding.egenmeldt) {
+    } else if (sykmelding?.egenmeldt) {
         return 'Egenmelding'
     }
     return 'Sykmelding'
@@ -68,11 +66,8 @@ export function getSykmeldingEndDate(perioder: readonly { readonly fom: string; 
  * Get the text representation of the sykmelding length from start date to end date
  * @return {string} The sykmelding length
  */
-export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment | MinimalSykmeldingFragment): string {
-    const perioder =
-        sykmelding.__typename === 'Sykmelding'
-            ? sykmelding.sykmeldingsperioder
-            : sykmelding.sykmelding.sykmeldingsperioder
+export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment): string {
+    const perioder = sykmelding.sykmeldingsperioder
 
     const startDate = getSykmeldingStartDate(perioder)
     const endDate = getSykmeldingEndDate(perioder)
