@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 import { BodyShort, Heading, Select } from '@navikt/ds-react'
 
-import { MinimalSykmeldingFragment, SykmeldingFragment } from 'queries'
+import { SykmeldingFragment } from 'queries'
 
 import { sortSykmeldingerByArbeidsgiver, sykmeldingByDateAsc } from '../../utils/sykmeldingSortUtils'
 
@@ -13,20 +13,19 @@ export enum SortBy {
     ARBEIDSGIVER = 'ARBEIDSGIVER',
 }
 
-interface LenkepanelContainerProps<Sykmelding extends SykmeldingFragment | MinimalSykmeldingFragment>
-    extends PropsWithChildren {
-    sykmeldinger: Sykmelding[]
+interface LenkepanelContainerProps extends PropsWithChildren {
+    sykmeldinger: SykmeldingFragment[]
     type: 'NYE_SYKMELDINGER' | 'TIDLIGERE_SYKMELDINGER' | 'UNDER_BEHANDLING'
     title: string
     defaultSortBy?: SortBy
 }
 
-function SykmeldingLinkPanel<Sykmelding extends SykmeldingFragment | MinimalSykmeldingFragment>({
+function SykmeldingLinkPanel({
     sykmeldinger,
     type,
     title,
     defaultSortBy = SortBy.DATE,
-}: LenkepanelContainerProps<Sykmelding>): ReactElement | null {
+}: LenkepanelContainerProps): ReactElement | null {
     const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy)
     const sykmeldingerSortedByArbeidsgiver = useMemo(() => sortSykmeldingerByArbeidsgiver(sykmeldinger), [sykmeldinger])
 

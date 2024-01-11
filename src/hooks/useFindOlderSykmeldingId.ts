@@ -1,23 +1,17 @@
 import { isBefore, parseISO } from 'date-fns'
-import { useQuery } from '@apollo/client'
 
-import { MinimalSykmeldingerDocument, MinimalSykmeldingFragment, SykmeldingCategory, SykmeldingFragment } from 'queries'
+import { SykmeldingFragment } from 'queries'
 
 import { getSykmeldingStartDate, isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
-import { useFlag } from '../toggles/context'
 
 import useSykmeldinger from './useSykmeldinger'
 
 /**
  * Used by reduce to find the earliest sykmelding
  */
-export function toEarliestSykmelding<Sykmelding extends SykmeldingFragment | MinimalSykmeldingFragment>(
-    acc: Sykmelding,
-    value: Sykmelding,
-): Sykmelding {
-    const valuePerioder =
-        value.__typename === 'Sykmelding' ? value.sykmeldingsperioder : value.sykmelding.sykmeldingsperioder
-    const accPerioder = acc.__typename === 'Sykmelding' ? acc.sykmeldingsperioder : acc.sykmelding.sykmeldingsperioder
+export function toEarliestSykmelding(acc: SykmeldingFragment, value: SykmeldingFragment): SykmeldingFragment {
+    const valuePerioder = value.sykmeldingsperioder
+    const accPerioder = acc.sykmeldingsperioder
 
     return isBefore(parseISO(getSykmeldingStartDate(valuePerioder)), parseISO(getSykmeldingStartDate(accPerioder)))
         ? value
@@ -48,40 +42,13 @@ export function useUnsentSykmeldinger(): {
     }
 }
 
-export function useUnsentSykmeldingerMinimal(): {
-    unsentSykmeldinger: MinimalSykmeldingFragment[] | null
-    isLoading: boolean
-    error: Error | undefined
-} {
-    const { data, error, loading } = useQuery(MinimalSykmeldingerDocument, {
-        variables: { category: SykmeldingCategory.UNSENT },
-    })
-
-    if (loading || error || data?.minimalSykmeldinger == null) {
-        return {
-            unsentSykmeldinger: null,
-            isLoading: loading,
-            error,
-        }
-    }
-
-    return {
-        unsentSykmeldinger: [...data.minimalSykmeldinger],
-        isLoading: false,
-        error: undefined,
-    }
-}
-
 function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
     earliestSykmeldingId: string | null
     olderSykmeldingCount: number
     isLoading: boolean
     error: Error | undefined
 } {
-    const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
-    const { unsentSykmeldinger, error, isLoading } = (
-        newDataFetching.enabled ? useUnsentSykmeldingerMinimal : useUnsentSykmeldinger
-    )()
+    const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
 
     if (sykmelding == null || isLoading || error || unsentSykmeldinger == null) {
         return {
@@ -94,15 +61,11 @@ function useFindOlderSykmeldingId(sykmelding: SykmeldingFragment | undefined): {
 
     const startDate: string = getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
     const unsentExceptOverlappingDates = unsentSykmeldinger.filter(
-        (it) =>
-            getSykmeldingStartDate(
-                it.__typename === 'Sykmelding' ? it.sykmeldingsperioder : it.sykmelding.sykmeldingsperioder,
-            ) !== startDate,
+        (it) => getSykmeldingStartDate(it.sykmeldingsperioder) !== startDate,
     )
 
     const earliestSykmelding = unsentExceptOverlappingDates.reduce(toEarliestSykmelding, sykmelding)
-    const earliestId =
-        earliestSykmelding.__typename === 'Sykmelding' ? earliestSykmelding.id : earliestSykmelding.sykmelding_id
+    const earliestId = earliestSykmelding.id
 
     return {
         // When the earliest sykmelding is the provided sykmelding, it's the very first

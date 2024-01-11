@@ -60,12 +60,6 @@ export type Arbeidsgiver = {
     readonly orgnummer: Scalars['String']['output']
 }
 
-export type ArbeidsgiverMinimal = {
-    readonly __typename: 'ArbeidsgiverMinimal'
-    readonly orgNavn: Scalars['String']['output']
-    readonly orgnummer: Scalars['String']['output']
-}
-
 export type ArbeidsgiverStatus = {
     readonly __typename: 'ArbeidsgiverStatus'
     readonly orgNavn: Scalars['String']['output']
@@ -173,11 +167,6 @@ export type FomTom = {
     readonly tom: Scalars['Date']['output']
 }
 
-export type GradertMinimal = {
-    readonly __typename: 'GradertMinimal'
-    readonly grad: Scalars['Int']['output']
-}
-
 export type GradertPeriode = {
     readonly __typename: 'GradertPeriode'
     readonly grad: Scalars['Int']['output']
@@ -242,26 +231,6 @@ export enum Merknadtype {
     TILBAKEDATERT_PAPIRSYKMELDING = 'TILBAKEDATERT_PAPIRSYKMELDING',
     UGYLDIG_TILBAKEDATERING = 'UGYLDIG_TILBAKEDATERING',
     UNDER_BEHANDLING = 'UNDER_BEHANDLING',
-}
-
-export type MinimalPeriod = {
-    readonly __typename: 'MinimalPeriod'
-    readonly behandlingsdager?: Maybe<Scalars['Int']['output']>
-    readonly fom: Scalars['String']['output']
-    readonly gradert?: Maybe<GradertMinimal>
-    readonly tom: Scalars['String']['output']
-    readonly type: Periodetype
-}
-
-export type MinimalSykmelding = {
-    readonly __typename: 'MinimalSykmelding'
-    readonly arbeidsgiver?: Maybe<ArbeidsgiverMinimal>
-    readonly behandlingsutfall: RegelStatus
-    readonly event: StatusEvent
-    readonly rule_hits: ReadonlyArray<RuleHitsMinimal>
-    readonly sykmelding: SykmeldingMinimal
-    readonly sykmelding_id: Scalars['String']['output']
-    readonly timestamp: Scalars['DateTime']['output']
 }
 
 export type Mutation = {
@@ -351,14 +320,9 @@ export type Prognose = {
 export type Query = {
     readonly __typename: 'Query'
     readonly brukerinformasjon: Brukerinformasjon
-    readonly minimalSykmeldinger: ReadonlyArray<MinimalSykmelding>
     readonly sykmelding: Sykmelding
     readonly sykmeldingUtenforVentetid: UtenforVentetid
     readonly sykmeldinger: ReadonlyArray<Sykmelding>
-}
-
-export type QueryMinimalSykmeldingerArgs = {
-    category: SykmeldingCategory
 }
 
 export type QuerySykmeldingArgs = {
@@ -381,14 +345,6 @@ export enum RegelStatus {
     INVALID = 'INVALID',
     MANUAL_PROCESSING = 'MANUAL_PROCESSING',
     OK = 'OK',
-}
-
-export type RuleHitsMinimal = {
-    readonly __typename: 'RuleHitsMinimal'
-    readonly messageForSender: Scalars['String']['output']
-    readonly messageForUser: Scalars['String']['output']
-    readonly ruleName: Scalars['String']['output']
-    readonly ruleStatus: Scalars['String']['output']
 }
 
 export type SendSykmeldingValues = {
@@ -479,14 +435,6 @@ export enum SykmeldingCategory {
 export enum SykmeldingChangeStatus {
     AVBRYT = 'AVBRYT',
     BEKREFT_AVVIST = 'BEKREFT_AVVIST',
-}
-
-export type SykmeldingMinimal = {
-    readonly __typename: 'SykmeldingMinimal'
-    readonly egenmeldt?: Maybe<Scalars['Boolean']['output']>
-    readonly papirsykmelding?: Maybe<Scalars['Boolean']['output']>
-    readonly sykmeldingsperioder: ReadonlyArray<MinimalPeriod>
-    readonly utenlandskSykmelding?: Maybe<UtenlandskSykmelding>
 }
 
 export type SykmeldingStatus = {
@@ -783,84 +731,6 @@ export type ExtraFormDataQuery = {
         readonly erUtenforVentetid: boolean
         readonly oppfolgingsdato?: string | null
     }
-}
-
-export type MinimalSykmeldingFragment = {
-    readonly __typename: 'MinimalSykmelding'
-    readonly sykmelding_id: string
-    readonly event: StatusEvent
-    readonly timestamp: string
-    readonly behandlingsutfall: RegelStatus
-    readonly arbeidsgiver?: {
-        readonly __typename: 'ArbeidsgiverMinimal'
-        readonly orgNavn: string
-        readonly orgnummer: string
-    } | null
-    readonly rule_hits: ReadonlyArray<{
-        readonly __typename: 'RuleHitsMinimal'
-        readonly ruleName: string
-        readonly ruleStatus: string
-        readonly messageForUser: string
-        readonly messageForSender: string
-    }>
-    readonly sykmelding: {
-        readonly __typename: 'SykmeldingMinimal'
-        readonly egenmeldt?: boolean | null
-        readonly papirsykmelding?: boolean | null
-        readonly sykmeldingsperioder: ReadonlyArray<{
-            readonly __typename: 'MinimalPeriod'
-            readonly fom: string
-            readonly tom: string
-            readonly type: Periodetype
-            readonly behandlingsdager?: number | null
-            readonly gradert?: { readonly __typename: 'GradertMinimal'; readonly grad: number } | null
-        }>
-        readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
-    }
-}
-
-export type MinimalSykmeldingerQueryVariables = Exact<{
-    category: SykmeldingCategory
-}>
-
-export type MinimalSykmeldingerQuery = {
-    readonly __typename: 'Query'
-    readonly minimalSykmeldinger: ReadonlyArray<{
-        readonly __typename: 'MinimalSykmelding'
-        readonly sykmelding_id: string
-        readonly event: StatusEvent
-        readonly timestamp: string
-        readonly behandlingsutfall: RegelStatus
-        readonly arbeidsgiver?: {
-            readonly __typename: 'ArbeidsgiverMinimal'
-            readonly orgNavn: string
-            readonly orgnummer: string
-        } | null
-        readonly rule_hits: ReadonlyArray<{
-            readonly __typename: 'RuleHitsMinimal'
-            readonly ruleName: string
-            readonly ruleStatus: string
-            readonly messageForUser: string
-            readonly messageForSender: string
-        }>
-        readonly sykmelding: {
-            readonly __typename: 'SykmeldingMinimal'
-            readonly egenmeldt?: boolean | null
-            readonly papirsykmelding?: boolean | null
-            readonly sykmeldingsperioder: ReadonlyArray<{
-                readonly __typename: 'MinimalPeriod'
-                readonly fom: string
-                readonly tom: string
-                readonly type: Periodetype
-                readonly behandlingsdager?: number | null
-                readonly gradert?: { readonly __typename: 'GradertMinimal'; readonly grad: number } | null
-            }>
-            readonly utenlandskSykmelding?: {
-                readonly __typename: 'UtenlandskSykmelding'
-                readonly land: string
-            } | null
-        }
-    }>
 }
 
 export type ChangeSykmeldingStatusMutationVariables = Exact<{
@@ -1928,91 +1798,6 @@ export const SykmeldingUtenforVentetidFragmentDoc = {
         },
     ],
 } as unknown as DocumentNode<SykmeldingUtenforVentetidFragment, unknown>
-export const MinimalSykmeldingFragmentDoc = {
-    kind: 'Document',
-    definitions: [
-        {
-            kind: 'FragmentDefinition',
-            name: { kind: 'Name', value: 'MinimalSykmelding' },
-            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'MinimalSykmelding' } },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [
-                    { kind: 'Field', name: { kind: 'Name', value: 'sykmelding_id' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'event' } },
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'arbeidsgiver' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                            ],
-                        },
-                    },
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'rule_hits' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'ruleName' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'ruleStatus' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'messageForUser' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'messageForSender' } },
-                            ],
-                        },
-                    },
-                    { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'behandlingsutfall' } },
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'sykmelding' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'egenmeldt' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'papirsykmelding' } },
-                                {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'sykmeldingsperioder' },
-                                    selectionSet: {
-                                        kind: 'SelectionSet',
-                                        selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-                                            {
-                                                kind: 'Field',
-                                                name: { kind: 'Name', value: 'gradert' },
-                                                selectionSet: {
-                                                    kind: 'SelectionSet',
-                                                    selections: [
-                                                        { kind: 'Field', name: { kind: 'Name', value: 'grad' } },
-                                                    ],
-                                                },
-                                            },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'behandlingsdager' } },
-                                        ],
-                                    },
-                                },
-                                {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'utenlandskSykmelding' },
-                                    selectionSet: {
-                                        kind: 'SelectionSet',
-                                        selections: [{ kind: 'Field', name: { kind: 'Name', value: 'land' } }],
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                ],
-            },
-        },
-    ],
-} as unknown as DocumentNode<MinimalSykmeldingFragment, unknown>
 export const PeriodeFragmentDoc = {
     kind: 'Document',
     definitions: [
@@ -3516,128 +3301,6 @@ export const ExtraFormDataDocument = {
         },
     ],
 } as unknown as DocumentNode<ExtraFormDataQuery, ExtraFormDataQueryVariables>
-export const MinimalSykmeldingerDocument = {
-    kind: 'Document',
-    definitions: [
-        {
-            kind: 'OperationDefinition',
-            operation: 'query',
-            name: { kind: 'Name', value: 'MinimalSykmeldinger' },
-            variableDefinitions: [
-                {
-                    kind: 'VariableDefinition',
-                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'category' } },
-                    type: {
-                        kind: 'NonNullType',
-                        type: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingCategory' } },
-                    },
-                },
-            ],
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'minimalSykmeldinger' },
-                        arguments: [
-                            {
-                                kind: 'Argument',
-                                name: { kind: 'Name', value: 'category' },
-                                value: { kind: 'Variable', name: { kind: 'Name', value: 'category' } },
-                            },
-                        ],
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'MinimalSykmelding' } },
-                            ],
-                        },
-                    },
-                ],
-            },
-        },
-        {
-            kind: 'FragmentDefinition',
-            name: { kind: 'Name', value: 'MinimalSykmelding' },
-            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'MinimalSykmelding' } },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [
-                    { kind: 'Field', name: { kind: 'Name', value: 'sykmelding_id' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'event' } },
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'arbeidsgiver' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                            ],
-                        },
-                    },
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'rule_hits' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'ruleName' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'ruleStatus' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'messageForUser' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'messageForSender' } },
-                            ],
-                        },
-                    },
-                    { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                    { kind: 'Field', name: { kind: 'Name', value: 'behandlingsutfall' } },
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'sykmelding' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'egenmeldt' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'papirsykmelding' } },
-                                {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'sykmeldingsperioder' },
-                                    selectionSet: {
-                                        kind: 'SelectionSet',
-                                        selections: [
-                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-                                            {
-                                                kind: 'Field',
-                                                name: { kind: 'Name', value: 'gradert' },
-                                                selectionSet: {
-                                                    kind: 'SelectionSet',
-                                                    selections: [
-                                                        { kind: 'Field', name: { kind: 'Name', value: 'grad' } },
-                                                    ],
-                                                },
-                                            },
-                                            { kind: 'Field', name: { kind: 'Name', value: 'behandlingsdager' } },
-                                        ],
-                                    },
-                                },
-                                {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'utenlandskSykmelding' },
-                                    selectionSet: {
-                                        kind: 'SelectionSet',
-                                        selections: [{ kind: 'Field', name: { kind: 'Name', value: 'land' } }],
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                ],
-            },
-        },
-    ],
-} as unknown as DocumentNode<MinimalSykmeldingerQuery, MinimalSykmeldingerQueryVariables>
 export const ChangeSykmeldingStatusDocument = {
     kind: 'Document',
     definitions: [

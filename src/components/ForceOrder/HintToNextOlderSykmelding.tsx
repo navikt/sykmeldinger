@@ -2,21 +2,13 @@ import { BodyLong, Button, GuidePanel } from '@navikt/ds-react'
 import Link from 'next/link'
 import { ReactElement, useEffect } from 'react'
 
-import {
-    toEarliestSykmelding,
-    useUnsentSykmeldinger,
-    useUnsentSykmeldingerMinimal,
-} from '../../hooks/useFindOlderSykmeldingId'
+import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId'
 import { pluralize } from '../../utils/stringUtils'
 import { browserEnv } from '../../utils/env'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
-import { useFlag } from '../../toggles/context'
 
 function HintToNextOlderSykmelding(): ReactElement | null {
-    const newDataFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
-    const { unsentSykmeldinger, error, isLoading } = (
-        newDataFetching.enabled ? useUnsentSykmeldingerMinimal : useUnsentSykmeldinger
-    )()
+    const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
     const dontShowYet = isLoading || error || unsentSykmeldinger == null
     const isDone = unsentSykmeldinger?.length === 0 ?? false
 
@@ -54,7 +46,7 @@ function HintToNextOlderSykmelding(): ReactElement | null {
     }
 
     const earliest = unsentSykmeldinger.reduce(toEarliestSykmelding)
-    const earliestId = earliest.__typename === 'Sykmelding' ? earliest.id : earliest.sykmelding_id
+    const earliestId = earliest.id
 
     return (
         <GuidePanel poster className="mt-8">

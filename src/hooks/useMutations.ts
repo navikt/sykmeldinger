@@ -2,24 +2,19 @@ import { MutationResult, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { logger } from '@navikt/next-logger'
 import { useRef } from 'react'
-import * as R from 'remeda'
 
 import {
     ChangeSykmeldingStatusDocument,
     ChangeSykmeldingStatusMutation,
     EndreEgenmeldingsdagerDocument,
     EndreEgenmeldingsdagerMutation,
-    MinimalSykmeldingerDocument,
     SendSykmeldingDocument,
     SendSykmeldingMutation,
-    SykmeldingCategory,
     SykmeldingChangeStatus,
 } from 'queries'
 
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { EgenmeldingsdagerSubForm } from '../components/FormComponents/Egenmelding/EgenmeldingerField'
-import { typedRefetchQuery } from '../fetching/apollo'
-import { useFlag } from '../toggles/context'
 import { getEgenmeldingsdagerDateList, mapToSendSykmeldingValues } from '../utils/toSendSykmeldingUtils'
 
 export function useChangeSykmeldingStatus(
@@ -29,9 +24,7 @@ export function useChangeSykmeldingStatus(
     onError: () => void,
 ): [MutationResult<ChangeSykmeldingStatusMutation>, () => void] {
     const dedupeRef = useRef(false)
-    const newFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
     const [submit, result] = useMutation(ChangeSykmeldingStatusDocument, {
-        refetchQueries: newFetching.enabled ? refetchListQueries : [],
         variables: {
             sykmeldingId,
             status,
@@ -68,9 +61,7 @@ export function useSendSykmelding(
     onError: () => void,
 ): [MutationResult<SendSykmeldingMutation>, (values: FormValues) => void] {
     const router = useRouter()
-    const newFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
     const [submit, result] = useMutation(SendSykmeldingDocument, {
-        refetchQueries: newFetching.enabled ? refetchListQueries : [],
         onCompleted: async () => {
             await router.push(`/${sykmeldingId}/kvittering`)
         },
@@ -97,10 +88,7 @@ export function useEndreEgenmeldingsdager(
     onError: () => void,
 ): [MutationResult<EndreEgenmeldingsdagerMutation>, (values: EgenmeldingsdagerSubForm) => void] {
     const router = useRouter()
-    const newFetching = useFlag('SYKMELDINGER_LIST_VIEW_DATA_FETCHING')
     const [endreEgenmeldingsdager, result] = useMutation(EndreEgenmeldingsdagerDocument, {
-        refetchQueries: newFetching.enabled ? refetchListQueries : [],
-
         onCompleted: () => {
             window.scrollTo(0, 0)
             router.push(`/${sykmeldingId}/kvittering?egenmelding=true`)
@@ -128,14 +116,3 @@ export function useEndreEgenmeldingsdager(
         },
     ]
 }
-
-const refetchListQueries = R.pipe(
-    SykmeldingCategory,
-    R.values,
-    R.map((category) =>
-        typedRefetchQuery({
-            query: MinimalSykmeldingerDocument,
-            variables: { category: category },
-        }),
-    ),
-)
