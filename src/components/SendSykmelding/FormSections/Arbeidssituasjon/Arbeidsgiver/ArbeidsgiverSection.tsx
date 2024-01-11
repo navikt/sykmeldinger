@@ -1,14 +1,7 @@
 import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
-import {
-    Arbeidsgiver,
-    BrukerinformasjonFragment,
-    NaermesteLederFragment,
-    Periodetype,
-    SykmeldingFragment,
-    YesOrNo,
-} from 'queries'
+import { Arbeidsgiver, BrukerinformasjonFragment, NaermesteLederFragment, SykmeldingFragment, YesOrNo } from 'queries'
 
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../../../FormComponents/FormStructure'
@@ -33,11 +26,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
     const { watch } = useFormContext<FormValues>()
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
 
-    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
-        sykmelding,
-        valgtArbeidsgiverOrgnummer,
-        [Periodetype.AVVENTENDE],
-    )
+    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
     const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
     const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo(arbeidsgivere)
 
