@@ -26,7 +26,17 @@ function selectEgenmeldingsdager({
         await section.getByRole('radio', { name: /Ja/ }).click()
         const datesToClick = currentDays.map((day) => add(initialDate, { days: day }))
         for (const date of datesToClick) {
-            await page.getByRole('button', { name: format(date, 'd. MMMM (EEEE)', { locale: nb }) }).click()
+            const dateButton = page.getByRole('button', { name: format(date, 'd. MMMM (EEEE)', { locale: nb }) })
+            if (!(await dateButton.isVisible())) {
+                const previousMonthButton = page.getByRole('button', { name: 'Gå til forrige måned' })
+                if (await previousMonthButton.isDisabled()) {
+                    await page.getByRole('button', { name: 'Gå til neste måned' }).click()
+                } else {
+                    await previousMonthButton.click()
+                }
+            }
+
+            await dateButton.click()
         }
         await section.getByRole('button', { name: /Videre/ }).click()
 
