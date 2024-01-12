@@ -16,16 +16,16 @@ describe('arbeidssituasjonUtils', () => {
     })
 
     describe('isFrilanserOrNaeringsdrivende', () => {
-        it('should return true if arbeidssituasjon is FRILANSER', () => {
+        it('should return true if arbeidssituasjon is FRILANSER or NARINGSDRIVENDE or JORDBRUKER', () => {
             expect(isFrilanserOrNaeringsdrivendeOrJordbruker(ArbeidssituasjonType.FRILANSER)).toBe(true)
+            expect(isFrilanserOrNaeringsdrivendeOrJordbruker(ArbeidssituasjonType.NAERINGSDRIVENDE)).toBe(true)
+            expect(isFrilanserOrNaeringsdrivendeOrJordbruker(ArbeidssituasjonType.JORDBRUKER)).toBe(true)
         })
 
-        it('should return true if arbeidssituasjon is NAERINGSDRIVENDE', () => {
-            expect(isFrilanserOrNaeringsdrivendeOrJordbruker(ArbeidssituasjonType.FRILANSER)).toBe(true)
-        })
-
-        it('should return false if arbeidssituasjon is other than FRILANSER or NAERINGSDRIVENDE', () => {
+        it('should return false if arbeidssituasjon is other than FRILANSER or NAERINGSDRIVENDE or JORDBRUKER', () => {
             expect(isFrilanserOrNaeringsdrivendeOrJordbruker(ArbeidssituasjonType.ARBEIDSTAKER)).toBe(false)
+            expect(isFrilanserOrNaeringsdrivendeOrJordbruker(ArbeidssituasjonType.ANNET)).toBe(false)
+            expect(isFrilanserOrNaeringsdrivendeOrJordbruker(ArbeidssituasjonType.FISKER)).toBe(false)
         })
     })
 })
