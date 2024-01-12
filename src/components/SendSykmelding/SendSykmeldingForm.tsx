@@ -44,9 +44,10 @@ export interface FormValues extends EgenmeldingsdagerSubForm {
 
 interface Props {
     sykmelding: SykmeldingFragment
+    onSykmeldingAvbrutt: () => void
 }
 
-function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
+function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactElement {
     const skjemanavn = !sykmelding.papirsykmelding ? 'åpen sykmelding' : 'åpen papirsykmelding'
     const sykmeldingId = useGetSykmeldingIdParam()
 
@@ -125,7 +126,11 @@ function SendSykmeldingForm({ sykmelding }: Props): ReactElement {
                     brukerinformasjon={extraFormData.data.brukerinformasjon}
                 />
                 <ErrorSection ref={errorSectionRef} />
-                <ActionSection sykmeldingId={sykmeldingId} sendResult={sendSykmeldingResult} />
+                <ActionSection
+                    sykmeldingId={sykmeldingId}
+                    sendResult={sendSykmeldingResult}
+                    onSykmeldingAvbrutt={onSykmeldingAvbrutt}
+                />
                 {process.env.NODE_ENV !== 'production' && <FormDevTools />}
             </form>
         </FormProvider>

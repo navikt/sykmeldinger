@@ -17,9 +17,10 @@ import { getTrengerNySykmelding } from './shared/sykmeldingUtils'
 interface Props {
     sykmeldingId: string
     sendResult: MutationResult<SendSykmeldingMutation>
+    onSykmeldingAvbrutt: () => void
 }
 
-function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
+function ActionSection({ sykmeldingId, sendResult, onSykmeldingAvbrutt }: Props): ReactElement {
     const avbryteRef = useRef<HTMLButtonElement>(null)
     const [avbrytSykmelding, setAvbrytSykmelding] = useState(false)
     const { watch } = useFormContext<FormValues>()
@@ -48,6 +49,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
             {avbrytSykmelding && (
                 <AvbrytSykmeldingen
                     sykmeldingId={sykmeldingId}
+                    onAvbryt={onSykmeldingAvbrutt}
                     closeAvbryt={() => {
                         setAvbrytSykmelding(false)
                         requestAnimationFrame(() => avbryteRef.current?.focus())
@@ -72,7 +74,7 @@ function ActionSection({ sykmeldingId, sendResult }: Props): ReactElement {
 
 function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): ReactElement {
     const panelRef = useRef<HTMLDivElement>(null)
-    const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId)
+    const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId, () => void 0)
 
     return (
         <Panel ref={panelRef} className="mt-8 flex flex-col items-center justify-center bg-bg-subtle">
@@ -96,13 +98,15 @@ function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): 
 
 function AvbrytSykmeldingen({
     sykmeldingId,
+    onAvbryt,
     closeAvbryt,
 }: {
     sykmeldingId: string
     closeAvbryt: () => void
+    onAvbryt: () => void
 }): ReactElement {
     const panelRef = useRef<HTMLDivElement>(null)
-    const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId)
+    const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId, onAvbryt)
 
     useEffect(() => {
         panelRef.current?.focus()
@@ -143,11 +147,17 @@ function AvbrytSykmeldingen({
     )
 }
 
-function useAvbryt(sykmeldingId: string): [MutationResult<ChangeSykmeldingStatusMutation>, () => void] {
+function useAvbryt(
+    sykmeldingId: string,
+    onAvbryt: () => void,
+): [MutationResult<ChangeSykmeldingStatusMutation>, () => void] {
     return useChangeSykmeldingStatus(
         sykmeldingId,
         SykmeldingChangeStatus.AVBRYT,
-        () => logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn: 'avbryt åpen sykmelding' } }),
+        () => {
+            onAvbryt()
+            logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn: 'avbryt åpen sykmelding' } })
+        },
         () =>
             logAmplitudeEvent({
                 eventName: 'skjema innsending feilet',

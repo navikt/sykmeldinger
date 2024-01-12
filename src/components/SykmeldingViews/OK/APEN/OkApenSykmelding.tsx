@@ -10,16 +10,18 @@ import SendSykmeldingForm from '../../../SendSykmelding/SendSykmeldingForm'
 
 import PapirInfoheader from './PapirInfoheader'
 
-interface OkApenSykmeldingProps {
+type OkApenSykmeldingProps = {
     sykmelding: SykmeldingFragment
     olderSykmeldingId: string | null
     olderSykmeldingCount: number
+    onSykmeldingAvbrutt: () => void
 }
 
 function OkApenSykmelding({
     sykmelding,
     olderSykmeldingId,
     olderSykmeldingCount,
+    onSykmeldingAvbrutt,
 }: OkApenSykmeldingProps): ReactElement {
     if (olderSykmeldingId) {
         return (
@@ -62,7 +64,7 @@ function OkApenSykmelding({
             <div className="mb-8">
                 <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </div>
-            <SendSykmeldingForm sykmelding={sykmelding} />
+            <SendSykmeldingForm sykmelding={sykmelding} onSykmeldingAvbrutt={onSykmeldingAvbrutt} />
         </div>
     )
 }

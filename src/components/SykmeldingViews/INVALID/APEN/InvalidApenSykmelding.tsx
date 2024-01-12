@@ -12,7 +12,7 @@ import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
 
-interface InvalidApenSykmeldingProps {
+type InvalidApenSykmeldingProps = {
     sykmelding: SykmeldingFragment
 }
 
