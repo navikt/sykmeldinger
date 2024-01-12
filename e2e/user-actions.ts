@@ -69,7 +69,14 @@ export async function opplysingeneStemmer(page: Page): Promise<void> {
 }
 
 export function velgArbeidssituasjon(
-    situasjon: 'ansatt' | 'arbeidsledig' | 'annet' | 'fisker' | 'frilanser' | 'selvstendig næringsdrivende',
+    situasjon:
+        | 'ansatt'
+        | 'arbeidsledig'
+        | 'annet'
+        | 'fisker'
+        | 'frilanser'
+        | 'jordbruker'
+        | 'selvstendig næringsdrivende',
 ) {
     return async (page: Page): Promise<void> => {
         await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: situasjon }).click()

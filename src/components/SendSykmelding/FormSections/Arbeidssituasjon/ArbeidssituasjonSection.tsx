@@ -25,7 +25,7 @@ function ArbeidssituasjonSection({
     brukerinformasjon,
 }: Props): ReactElement | null {
     const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
-    const { shouldShowArbeidsgiverOrgnummer, shouldShowEgenmeldingsperioderSporsmal, shouldShowFisker } =
+    const { shouldShowArbeidsgiverOrgnummer, shouldShowFrilanserSelvstendigSection, shouldShowFisker } =
         useArbeidssituasjonSubSections(sykmeldingUtenforVentetid)
 
     // Don't show arbeidssituasjon section given certain criteria
@@ -49,7 +49,7 @@ function ArbeidssituasjonSection({
                     }
                 />
             )}
-            {shouldShowEgenmeldingsperioderSporsmal && (
+            {shouldShowFrilanserSelvstendigSection && (
                 <FrilanserSection
                     oppfolgingsdato={
                         sykmeldingUtenforVentetid.oppfolgingsdato ||

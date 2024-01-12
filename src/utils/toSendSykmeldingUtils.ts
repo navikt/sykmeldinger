@@ -14,7 +14,8 @@ export function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingVal
             return mapSykmeldingFisker(values)
         case ArbeidssituasjonType.FRILANSER:
         case ArbeidssituasjonType.NAERINGSDRIVENDE:
-            return mapSykmeldingFrilansOrSelvstendig(values)
+        case ArbeidssituasjonType.JORDBRUKER:
+            return mapSykmeldingFrilansOrSelvstendigOrJordbruker(values)
         case ArbeidssituasjonType.ARBEIDSLEDIG:
         case ArbeidssituasjonType.PERMITTERT:
         case ArbeidssituasjonType.ANNET:
@@ -86,7 +87,7 @@ function mapSykmeldingFisker(values: FormValues): SendSykmeldingValues {
     }
 }
 
-function mapSykmeldingFrilansOrSelvstendig(values: FormValues): SendSykmeldingValues {
+function mapSykmeldingFrilansOrSelvstendigOrJordbruker(values: FormValues): SendSykmeldingValues {
     const egenmeldingsperioder =
         values.egenmeldingsperioder?.map((periode) => ({
             fom: periode.fom ? toDateString(periode.fom) : null,

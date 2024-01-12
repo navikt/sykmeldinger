@@ -34,6 +34,8 @@ export function arbeidsSituasjonEnumToText(arbeidssituasjon: ArbeidssituasjonTyp
             return 'selvstendig næringsdrivende'
         case ArbeidssituasjonType.FISKER:
             return 'fisker'
+        case ArbeidssituasjonType.JORDBRUKER:
+            return 'jordbruker'
         case ArbeidssituasjonType.ARBEIDSLEDIG:
             return 'arbeidsledig'
         case ArbeidssituasjonType.PERMITTERT:

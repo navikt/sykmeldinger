@@ -47,6 +47,9 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.FISKER}>
                     {arbeidsSituasjonEnumToText(ArbeidssituasjonType.FISKER)}
                 </Radio>
+                <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.JORDBRUKER}>
+                    {arbeidsSituasjonEnumToText(ArbeidssituasjonType.JORDBRUKER)}
+                </Radio>
                 <Radio disabled={harAvventendePeriode} value={ArbeidssituasjonType.ARBEIDSLEDIG}>
                     {arbeidsSituasjonEnumToText(ArbeidssituasjonType.ARBEIDSLEDIG)}
                 </Radio>

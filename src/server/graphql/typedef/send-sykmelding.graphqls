@@ -53,6 +53,7 @@ enum ArbeidssituasjonType {
     NAERINGSDRIVENDE
     ARBEIDSLEDIG
     FISKER
+    JORDBRUKER
     PERMITTERT
     ANNET
 }
