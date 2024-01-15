@@ -64,6 +64,12 @@ export type Arbeidsgiver = {
     orgnummer: Scalars['String']['output']
 }
 
+export type ArbeidsgiverOrgnummerBrukerSvar = {
+    __typename?: 'ArbeidsgiverOrgnummerBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: Scalars['String']['output']
+}
+
 export type ArbeidsgiverStatus = {
     __typename?: 'ArbeidsgiverStatus'
     orgNavn: Scalars['String']['output']
@@ -84,6 +90,12 @@ export type ArbeidsrelatertArsak = {
 export enum ArbeidsrelatertArsakType {
     ANNET = 'ANNET',
     MANGLENDE_TILRETTELEGGING = 'MANGLENDE_TILRETTELEGGING',
+}
+
+export type ArbeidssituasjonBrukerSvar = {
+    __typename?: 'ArbeidssituasjonBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: ArbeidssituasjonType
 }
 
 export type ArbeidssituasjonSvar = {
@@ -123,6 +135,27 @@ export enum Blad {
     B = 'B',
 }
 
+export type BladBrukerSvar = {
+    __typename?: 'BladBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: Blad
+}
+
+export type BrukerSvar = {
+    __typename?: 'BrukerSvar'
+    arbeidsgiverOrgnummer: Maybe<ArbeidsgiverOrgnummerBrukerSvar>
+    arbeidssituasjon: ArbeidssituasjonBrukerSvar
+    egenmeldingsdager: Maybe<EgenmeldingsdagerBrukerSvar>
+    egenmeldingsperioder: Maybe<FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar>
+    erOpplysningeneRiktige: ErOpplysningeneRiktigeBrukerSvar
+    fisker: Maybe<FiskerBrukerSvar>
+    harBruktEgenmelding: Maybe<HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar>
+    harBruktEgenmeldingsdager: Maybe<HarBruktEgenmeldingsdagerBrukerSvar>
+    harForsikring: Maybe<HarForsikringBrukerSvar>
+    riktigNarmesteLeder: Maybe<RiktigNarmesteLederBrukerSvar>
+    uriktigeOpplysninger: Maybe<UriktigeOpplysningerBrukerSvar>
+}
+
 export type Brukerinformasjon = {
     __typename?: 'Brukerinformasjon'
     arbeidsgivere: Array<Arbeidsgiver>
@@ -146,6 +179,12 @@ export type Diagnose = {
     tekst: Maybe<Scalars['String']['output']>
 }
 
+export type EgenmeldingsdagerBrukerSvar = {
+    __typename?: 'EgenmeldingsdagerBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: Array<Scalars['Date']['output']>
+}
+
 export type ErIArbeid = {
     __typename?: 'ErIArbeid'
     annetArbeidPaSikt: Scalars['Boolean']['output']
@@ -161,6 +200,18 @@ export type ErIkkeIArbeid = {
     vurderingsdato: Maybe<Scalars['Date']['output']>
 }
 
+export type ErOpplysningeneRiktigeBrukerSvar = {
+    __typename?: 'ErOpplysningeneRiktigeBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: JaEllerNei
+}
+
+export type FiskerBrukerSvar = {
+    __typename?: 'FiskerBrukerSvar'
+    blad: BladBrukerSvar
+    lottOgHyre: LottOgHyreBrukerSvar
+}
+
 export type FiskerInput = {
     blad?: InputMaybe<Blad>
     lottOgHyre?: InputMaybe<LottOgHyre>
@@ -172,10 +223,39 @@ export type FomTom = {
     tom: Scalars['Date']['output']
 }
 
+export type FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar = {
+    __typename?: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: Array<FomTom>
+}
+
 export type GradertPeriode = {
     __typename?: 'GradertPeriode'
     grad: Scalars['Int']['output']
     reisetilskudd: Scalars['Boolean']['output']
+}
+
+export type HarBruktEgenmeldingsdagerBrukerSvar = {
+    __typename?: 'HarBruktEgenmeldingsdagerBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: JaEllerNei
+}
+
+export type HarForsikringBrukerSvar = {
+    __typename?: 'HarForsikringBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: JaEllerNei
+}
+
+export type HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar = {
+    __typename?: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: JaEllerNei
+}
+
+export enum JaEllerNei {
+    JA = 'JA',
+    NEI = 'NEI',
 }
 
 export type JaNeiSvar = {
@@ -194,6 +274,12 @@ export enum LottOgHyre {
     BEGGE = 'BEGGE',
     HYRE = 'HYRE',
     LOTT = 'LOTT',
+}
+
+export type LottOgHyreBrukerSvar = {
+    __typename?: 'LottOgHyreBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: LottOgHyre
 }
 
 export type MedisinskArsak = {
@@ -352,6 +438,12 @@ export enum RegelStatus {
     OK = 'OK',
 }
 
+export type RiktigNarmesteLederBrukerSvar = {
+    __typename?: 'RiktigNarmesteLederBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: JaEllerNei
+}
+
 export type SendSykmeldingValues = {
     arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']['input']>
     arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
@@ -445,9 +537,16 @@ export enum SykmeldingChangeStatus {
 export type SykmeldingStatus = {
     __typename?: 'SykmeldingStatus'
     arbeidsgiver: Maybe<ArbeidsgiverStatus>
+    brukerSvar: Maybe<BrukerSvar>
     sporsmalOgSvarListe: Array<Sporsmal>
     statusEvent: StatusEvent
     timestamp: Scalars['Date']['output']
+}
+
+export type UriktigeOpplysningerBrukerSvar = {
+    __typename?: 'UriktigeOpplysningerBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: Array<UriktigeOpplysningerType>
 }
 
 export enum UriktigeOpplysningerType {
@@ -567,32 +666,45 @@ export type ResolversTypes = ResolversObject<{
     AnnenFraverGrunn: AnnenFraverGrunn
     AnnenFraversArsak: ResolverTypeWrapper<AnnenFraversArsak>
     Arbeidsgiver: ResolverTypeWrapper<Arbeidsgiver>
+    ArbeidsgiverOrgnummerBrukerSvar: ResolverTypeWrapper<ArbeidsgiverOrgnummerBrukerSvar>
     ArbeidsgiverStatus: ResolverTypeWrapper<ArbeidsgiverStatus>
     ArbeidsgiverSykmelding: ResolverTypeWrapper<ArbeidsgiverSykmelding>
     ArbeidsrelatertArsak: ResolverTypeWrapper<ArbeidsrelatertArsak>
     ArbeidsrelatertArsakType: ArbeidsrelatertArsakType
+    ArbeidssituasjonBrukerSvar: ResolverTypeWrapper<ArbeidssituasjonBrukerSvar>
     ArbeidssituasjonSvar: ResolverTypeWrapper<ArbeidssituasjonSvar>
     ArbeidssituasjonType: ArbeidssituasjonType
     Behandler: ResolverTypeWrapper<Behandler>
     Behandlingsutfall: ResolverTypeWrapper<Behandlingsutfall>
     Blad: Blad
+    BladBrukerSvar: ResolverTypeWrapper<BladBrukerSvar>
     Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
+    BrukerSvar: ResolverTypeWrapper<BrukerSvar>
     Brukerinformasjon: ResolverTypeWrapper<Brukerinformasjon>
     DagerSvar: ResolverTypeWrapper<DagerSvar>
     Date: ResolverTypeWrapper<Scalars['Date']['output']>
     DateRange: DateRange
     DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
     Diagnose: ResolverTypeWrapper<Diagnose>
+    EgenmeldingsdagerBrukerSvar: ResolverTypeWrapper<EgenmeldingsdagerBrukerSvar>
     ErIArbeid: ResolverTypeWrapper<ErIArbeid>
     ErIkkeIArbeid: ResolverTypeWrapper<ErIkkeIArbeid>
+    ErOpplysningeneRiktigeBrukerSvar: ResolverTypeWrapper<ErOpplysningeneRiktigeBrukerSvar>
+    FiskerBrukerSvar: ResolverTypeWrapper<FiskerBrukerSvar>
     FiskerInput: FiskerInput
     FomTom: ResolverTypeWrapper<FomTom>
+    FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar: ResolverTypeWrapper<FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar>
     GradertPeriode: ResolverTypeWrapper<GradertPeriode>
+    HarBruktEgenmeldingsdagerBrukerSvar: ResolverTypeWrapper<HarBruktEgenmeldingsdagerBrukerSvar>
+    HarForsikringBrukerSvar: ResolverTypeWrapper<HarForsikringBrukerSvar>
+    HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar: ResolverTypeWrapper<HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar>
     Int: ResolverTypeWrapper<Scalars['Int']['output']>
     JSON: ResolverTypeWrapper<Scalars['JSON']['output']>
+    JaEllerNei: JaEllerNei
     JaNeiSvar: ResolverTypeWrapper<JaNeiSvar>
     KontaktMedPasient: ResolverTypeWrapper<KontaktMedPasient>
     LottOgHyre: LottOgHyre
+    LottOgHyreBrukerSvar: ResolverTypeWrapper<LottOgHyreBrukerSvar>
     MedisinskArsak: ResolverTypeWrapper<MedisinskArsak>
     MedisinskArsakType: MedisinskArsakType
     MedisinskVurdering: ResolverTypeWrapper<MedisinskVurdering>
@@ -609,6 +721,7 @@ export type ResolversTypes = ResolversObject<{
     Query: ResolverTypeWrapper<{}>
     RegelInfo: ResolverTypeWrapper<RegelInfo>
     RegelStatus: RegelStatus
+    RiktigNarmesteLederBrukerSvar: ResolverTypeWrapper<RiktigNarmesteLederBrukerSvar>
     SendSykmeldingValues: SendSykmeldingValues
     ShortName: ShortName
     Sporsmal: ResolverTypeWrapper<Omit<Sporsmal, 'svar'> & { svar: ResolversTypes['SvarTypeUnion'] }>
@@ -621,6 +734,7 @@ export type ResolversTypes = ResolversObject<{
     SykmeldingCategory: SykmeldingCategory
     SykmeldingChangeStatus: SykmeldingChangeStatus
     SykmeldingStatus: ResolverTypeWrapper<SykmeldingStatus>
+    UriktigeOpplysningerBrukerSvar: ResolverTypeWrapper<UriktigeOpplysningerBrukerSvar>
     UriktigeOpplysningerType: UriktigeOpplysningerType
     UtdypendeOpplysning: ResolverTypeWrapper<UtdypendeOpplysning>
     UtenforVentetid: ResolverTypeWrapper<UtenforVentetid>
@@ -634,28 +748,40 @@ export type ResolversParentTypes = ResolversObject<{
     AktivitetIkkeMuligPeriode: AktivitetIkkeMuligPeriode
     AnnenFraversArsak: AnnenFraversArsak
     Arbeidsgiver: Arbeidsgiver
+    ArbeidsgiverOrgnummerBrukerSvar: ArbeidsgiverOrgnummerBrukerSvar
     ArbeidsgiverStatus: ArbeidsgiverStatus
     ArbeidsgiverSykmelding: ArbeidsgiverSykmelding
     ArbeidsrelatertArsak: ArbeidsrelatertArsak
+    ArbeidssituasjonBrukerSvar: ArbeidssituasjonBrukerSvar
     ArbeidssituasjonSvar: ArbeidssituasjonSvar
     Behandler: Behandler
     Behandlingsutfall: Behandlingsutfall
+    BladBrukerSvar: BladBrukerSvar
     Boolean: Scalars['Boolean']['output']
+    BrukerSvar: BrukerSvar
     Brukerinformasjon: Brukerinformasjon
     DagerSvar: DagerSvar
     Date: Scalars['Date']['output']
     DateRange: DateRange
     DateTime: Scalars['DateTime']['output']
     Diagnose: Diagnose
+    EgenmeldingsdagerBrukerSvar: EgenmeldingsdagerBrukerSvar
     ErIArbeid: ErIArbeid
     ErIkkeIArbeid: ErIkkeIArbeid
+    ErOpplysningeneRiktigeBrukerSvar: ErOpplysningeneRiktigeBrukerSvar
+    FiskerBrukerSvar: FiskerBrukerSvar
     FiskerInput: FiskerInput
     FomTom: FomTom
+    FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar: FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar
     GradertPeriode: GradertPeriode
+    HarBruktEgenmeldingsdagerBrukerSvar: HarBruktEgenmeldingsdagerBrukerSvar
+    HarForsikringBrukerSvar: HarForsikringBrukerSvar
+    HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar: HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar
     Int: Scalars['Int']['output']
     JSON: Scalars['JSON']['output']
     JaNeiSvar: JaNeiSvar
     KontaktMedPasient: KontaktMedPasient
+    LottOgHyreBrukerSvar: LottOgHyreBrukerSvar
     MedisinskArsak: MedisinskArsak
     MedisinskVurdering: MedisinskVurdering
     MeldingTilNAV: MeldingTilNav
@@ -668,12 +794,14 @@ export type ResolversParentTypes = ResolversObject<{
     Prognose: Prognose
     Query: {}
     RegelInfo: RegelInfo
+    RiktigNarmesteLederBrukerSvar: RiktigNarmesteLederBrukerSvar
     SendSykmeldingValues: SendSykmeldingValues
     Sporsmal: Omit<Sporsmal, 'svar'> & { svar: ResolversParentTypes['SvarTypeUnion'] }
     String: Scalars['String']['output']
     SvarTypeUnion: ResolversUnionTypes<ResolversParentTypes>['SvarTypeUnion']
     Sykmelding: Sykmelding
     SykmeldingStatus: SykmeldingStatus
+    UriktigeOpplysningerBrukerSvar: UriktigeOpplysningerBrukerSvar
     UtdypendeOpplysning: UtdypendeOpplysning
     UtenforVentetid: UtenforVentetid
     UtenlandskSykmelding: UtenlandskSykmelding
@@ -721,6 +849,16 @@ export type ArbeidsgiverResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type ArbeidsgiverOrgnummerBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['ArbeidsgiverOrgnummerBrukerSvar'] = ResolversParentTypes['ArbeidsgiverOrgnummerBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type ArbeidsgiverStatusResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsgiverStatus'] = ResolversParentTypes['ArbeidsgiverStatus'],
@@ -744,6 +882,16 @@ export type ArbeidsrelatertArsakResolvers<
 > = ResolversObject<{
     arsak?: Resolver<Array<ResolversTypes['ArbeidsrelatertArsakType']>, ParentType, ContextType>
     beskrivelse?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type ArbeidssituasjonBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['ArbeidssituasjonBrukerSvar'] = ResolversParentTypes['ArbeidssituasjonBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['ArbeidssituasjonType'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -774,6 +922,45 @@ export type BehandlingsutfallResolvers<
 > = ResolversObject<{
     ruleHits?: Resolver<Array<ResolversTypes['RegelInfo']>, ParentType, ContextType>
     status?: Resolver<ResolversTypes['RegelStatus'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type BladBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['BladBrukerSvar'] = ResolversParentTypes['BladBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['Blad'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type BrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['BrukerSvar'] = ResolversParentTypes['BrukerSvar'],
+> = ResolversObject<{
+    arbeidsgiverOrgnummer?: Resolver<Maybe<ResolversTypes['ArbeidsgiverOrgnummerBrukerSvar']>, ParentType, ContextType>
+    arbeidssituasjon?: Resolver<ResolversTypes['ArbeidssituasjonBrukerSvar'], ParentType, ContextType>
+    egenmeldingsdager?: Resolver<Maybe<ResolversTypes['EgenmeldingsdagerBrukerSvar']>, ParentType, ContextType>
+    egenmeldingsperioder?: Resolver<
+        Maybe<ResolversTypes['FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar']>,
+        ParentType,
+        ContextType
+    >
+    erOpplysningeneRiktige?: Resolver<ResolversTypes['ErOpplysningeneRiktigeBrukerSvar'], ParentType, ContextType>
+    fisker?: Resolver<Maybe<ResolversTypes['FiskerBrukerSvar']>, ParentType, ContextType>
+    harBruktEgenmelding?: Resolver<
+        Maybe<ResolversTypes['HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar']>,
+        ParentType,
+        ContextType
+    >
+    harBruktEgenmeldingsdager?: Resolver<
+        Maybe<ResolversTypes['HarBruktEgenmeldingsdagerBrukerSvar']>,
+        ParentType,
+        ContextType
+    >
+    harForsikring?: Resolver<Maybe<ResolversTypes['HarForsikringBrukerSvar']>, ParentType, ContextType>
+    riktigNarmesteLeder?: Resolver<Maybe<ResolversTypes['RiktigNarmesteLederBrukerSvar']>, ParentType, ContextType>
+    uriktigeOpplysninger?: Resolver<Maybe<ResolversTypes['UriktigeOpplysningerBrukerSvar']>, ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -812,6 +999,16 @@ export type DiagnoseResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type EgenmeldingsdagerBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['EgenmeldingsdagerBrukerSvar'] = ResolversParentTypes['EgenmeldingsdagerBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<Array<ResolversTypes['Date']>, ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type ErIArbeidResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ErIArbeid'] = ResolversParentTypes['ErIArbeid'],
@@ -833,6 +1030,25 @@ export type ErIkkeIArbeidResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type ErOpplysningeneRiktigeBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['ErOpplysningeneRiktigeBrukerSvar'] = ResolversParentTypes['ErOpplysningeneRiktigeBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['JaEllerNei'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type FiskerBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['FiskerBrukerSvar'] = ResolversParentTypes['FiskerBrukerSvar'],
+> = ResolversObject<{
+    blad?: Resolver<ResolversTypes['BladBrukerSvar'], ParentType, ContextType>
+    lottOgHyre?: Resolver<ResolversTypes['LottOgHyreBrukerSvar'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type FomTomResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['FomTom'] = ResolversParentTypes['FomTom'],
@@ -842,12 +1058,52 @@ export type FomTomResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'] = ResolversParentTypes['FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<Array<ResolversTypes['FomTom']>, ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type GradertPeriodeResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['GradertPeriode'] = ResolversParentTypes['GradertPeriode'],
 > = ResolversObject<{
     grad?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
     reisetilskudd?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type HarBruktEgenmeldingsdagerBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['HarBruktEgenmeldingsdagerBrukerSvar'] = ResolversParentTypes['HarBruktEgenmeldingsdagerBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['JaEllerNei'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type HarForsikringBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['HarForsikringBrukerSvar'] = ResolversParentTypes['HarForsikringBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['JaEllerNei'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'] = ResolversParentTypes['HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['JaEllerNei'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -870,6 +1126,15 @@ export type KontaktMedPasientResolvers<
 > = ResolversObject<{
     begrunnelseIkkeKontakt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     kontaktDato?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type LottOgHyreBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['LottOgHyreBrukerSvar'] = ResolversParentTypes['LottOgHyreBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['LottOgHyre'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -1040,6 +1305,16 @@ export type RegelInfoResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type RiktigNarmesteLederBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['RiktigNarmesteLederBrukerSvar'] = ResolversParentTypes['RiktigNarmesteLederBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['JaEllerNei'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type SporsmalResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Sporsmal'] = ResolversParentTypes['Sporsmal'],
@@ -1096,9 +1371,20 @@ export type SykmeldingStatusResolvers<
     ParentType extends ResolversParentTypes['SykmeldingStatus'] = ResolversParentTypes['SykmeldingStatus'],
 > = ResolversObject<{
     arbeidsgiver?: Resolver<Maybe<ResolversTypes['ArbeidsgiverStatus']>, ParentType, ContextType>
+    brukerSvar?: Resolver<Maybe<ResolversTypes['BrukerSvar']>, ParentType, ContextType>
     sporsmalOgSvarListe?: Resolver<Array<ResolversTypes['Sporsmal']>, ParentType, ContextType>
     statusEvent?: Resolver<ResolversTypes['StatusEvent'], ParentType, ContextType>
     timestamp?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type UriktigeOpplysningerBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['UriktigeOpplysningerBrukerSvar'] = ResolversParentTypes['UriktigeOpplysningerBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<Array<ResolversTypes['UriktigeOpplysningerType']>, ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -1134,24 +1420,36 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     AktivitetIkkeMuligPeriode?: AktivitetIkkeMuligPeriodeResolvers<ContextType>
     AnnenFraversArsak?: AnnenFraversArsakResolvers<ContextType>
     Arbeidsgiver?: ArbeidsgiverResolvers<ContextType>
+    ArbeidsgiverOrgnummerBrukerSvar?: ArbeidsgiverOrgnummerBrukerSvarResolvers<ContextType>
     ArbeidsgiverStatus?: ArbeidsgiverStatusResolvers<ContextType>
     ArbeidsgiverSykmelding?: ArbeidsgiverSykmeldingResolvers<ContextType>
     ArbeidsrelatertArsak?: ArbeidsrelatertArsakResolvers<ContextType>
+    ArbeidssituasjonBrukerSvar?: ArbeidssituasjonBrukerSvarResolvers<ContextType>
     ArbeidssituasjonSvar?: ArbeidssituasjonSvarResolvers<ContextType>
     Behandler?: BehandlerResolvers<ContextType>
     Behandlingsutfall?: BehandlingsutfallResolvers<ContextType>
+    BladBrukerSvar?: BladBrukerSvarResolvers<ContextType>
+    BrukerSvar?: BrukerSvarResolvers<ContextType>
     Brukerinformasjon?: BrukerinformasjonResolvers<ContextType>
     DagerSvar?: DagerSvarResolvers<ContextType>
     Date?: GraphQLScalarType
     DateTime?: GraphQLScalarType
     Diagnose?: DiagnoseResolvers<ContextType>
+    EgenmeldingsdagerBrukerSvar?: EgenmeldingsdagerBrukerSvarResolvers<ContextType>
     ErIArbeid?: ErIArbeidResolvers<ContextType>
     ErIkkeIArbeid?: ErIkkeIArbeidResolvers<ContextType>
+    ErOpplysningeneRiktigeBrukerSvar?: ErOpplysningeneRiktigeBrukerSvarResolvers<ContextType>
+    FiskerBrukerSvar?: FiskerBrukerSvarResolvers<ContextType>
     FomTom?: FomTomResolvers<ContextType>
+    FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar?: FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvarResolvers<ContextType>
     GradertPeriode?: GradertPeriodeResolvers<ContextType>
+    HarBruktEgenmeldingsdagerBrukerSvar?: HarBruktEgenmeldingsdagerBrukerSvarResolvers<ContextType>
+    HarForsikringBrukerSvar?: HarForsikringBrukerSvarResolvers<ContextType>
+    HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar?: HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvarResolvers<ContextType>
     JSON?: GraphQLScalarType
     JaNeiSvar?: JaNeiSvarResolvers<ContextType>
     KontaktMedPasient?: KontaktMedPasientResolvers<ContextType>
+    LottOgHyreBrukerSvar?: LottOgHyreBrukerSvarResolvers<ContextType>
     MedisinskArsak?: MedisinskArsakResolvers<ContextType>
     MedisinskVurdering?: MedisinskVurderingResolvers<ContextType>
     MeldingTilNAV?: MeldingTilNavResolvers<ContextType>
@@ -1164,10 +1462,12 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     Prognose?: PrognoseResolvers<ContextType>
     Query?: QueryResolvers<ContextType>
     RegelInfo?: RegelInfoResolvers<ContextType>
+    RiktigNarmesteLederBrukerSvar?: RiktigNarmesteLederBrukerSvarResolvers<ContextType>
     Sporsmal?: SporsmalResolvers<ContextType>
     SvarTypeUnion?: SvarTypeUnionResolvers<ContextType>
     Sykmelding?: SykmeldingResolvers<ContextType>
     SykmeldingStatus?: SykmeldingStatusResolvers<ContextType>
+    UriktigeOpplysningerBrukerSvar?: UriktigeOpplysningerBrukerSvarResolvers<ContextType>
     UtdypendeOpplysning?: UtdypendeOpplysningResolvers<ContextType>
     UtenforVentetid?: UtenforVentetidResolvers<ContextType>
     UtenlandskSykmelding?: UtenlandskSykmeldingResolvers<ContextType>

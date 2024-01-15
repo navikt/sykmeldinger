@@ -1,9 +1,15 @@
 import { z } from 'zod'
 
-import { ArbeidssituasjonType, YesOrNo } from 'queries'
-
 import { LocalDateSchema } from '../date'
-import { ShortName, StatusEvent } from '../../graphql/resolver-types.generated'
+import {
+    ShortName,
+    StatusEvent,
+    UriktigeOpplysningerType,
+    ArbeidssituasjonType,
+    YesOrNo,
+    Blad,
+    LottOgHyre,
+} from '../../graphql/resolver-types.generated'
 
 export enum Svartype {
     ARBEIDSSITUASJON = 'ARBEIDSSITUASJON',
@@ -61,10 +67,44 @@ const SporsmalSchema = z.object({
     svar: SvarSchema,
 })
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const SporsmalSvarSchema = <T>(type: z.ZodType<T>) =>
+    z.object({
+        sporsmaltekst: z.string(),
+        svar: type,
+    })
+
+const BrukerSvarSchema = z.object({
+    erOpplysningeneRiktige: SporsmalSvarSchema(z.nativeEnum(JaEllerNei)),
+    uriktigeOpplysninger: SporsmalSvarSchema(z.array(z.nativeEnum(UriktigeOpplysningerType))).nullable(),
+    arbeidssituasjon: SporsmalSvarSchema(z.nativeEnum(ArbeidssituasjonType)),
+    arbeidsgiverOrgnummer: SporsmalSvarSchema(z.string()).nullable(),
+    riktigNarmesteLeder: SporsmalSvarSchema(z.nativeEnum(JaEllerNei)).nullable(),
+    harBruktEgenmelding: SporsmalSvarSchema(z.nativeEnum(JaEllerNei)).nullable(),
+    egenmeldingsperioder: SporsmalSvarSchema(
+        z.array(
+            z.object({
+                fom: LocalDateSchema,
+                tom: LocalDateSchema,
+            }),
+        ),
+    ).nullable(),
+    harForsikring: SporsmalSvarSchema(z.nativeEnum(JaEllerNei)).nullable(),
+    egenmeldingsdager: SporsmalSvarSchema(z.array(LocalDateSchema)).nullable(),
+    harBruktEgenmeldingsdager: SporsmalSvarSchema(z.nativeEnum(JaEllerNei)).nullable(),
+    fisker: z
+        .object({
+            blad: SporsmalSvarSchema(z.nativeEnum(Blad)),
+            lottOgHyre: SporsmalSvarSchema(z.nativeEnum(LottOgHyre)),
+        })
+        .nullable(),
+})
+
 export type SykmeldingStatus = z.infer<typeof SykmeldingStatusSchema>
 export const SykmeldingStatusSchema = z.object({
     statusEvent: z.nativeEnum(StatusEvent),
     timestamp: LocalDateSchema,
     arbeidsgiver: ArbeidsgiverStatusSchema.nullable(),
     sporsmalOgSvarListe: z.array(SporsmalSchema),
+    brukerSvar: BrukerSvarSchema.nullable(),
 })

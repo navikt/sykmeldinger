@@ -6,6 +6,7 @@ import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
 import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
+    ArbeidssituasjonType,
     MedisinskArsakType,
     Periodetype,
     RegelStatus,
@@ -14,6 +15,8 @@ import {
 import { AktivitetIkkeMuligPeriode, Periode } from '../../api-models/sykmelding/Periode'
 import { dateAdd } from '../../../utils/dateUtils'
 import { RuleHit } from '../../api-models/sykmelding/Behandlingsutfall'
+import { sporsmal } from '../../../utils/sporsmal'
+import { JaEllerNei } from '../../api-models/sykmelding/SykmeldingStatus'
 
 export class SykmeldingBuilder {
     private readonly mottatt: string = '2020-02-01'
@@ -30,9 +33,10 @@ export class SykmeldingBuilder {
         sykmeldingsperioder: [],
         sykmeldingStatus: {
             timestamp: this.mottatt,
-            statusEvent: StatusEvent.SENDT,
+            statusEvent: StatusEvent.APEN,
             arbeidsgiver: null,
             sporsmalOgSvarListe: [],
+            brukerSvar: null,
         },
         medisinskVurdering: {
             hovedDiagnose: {
@@ -149,15 +153,84 @@ export class SykmeldingBuilder {
         return this.relativePeriode(periode, relative)
     }
 
-    status(status: StatusEvent, timestamp = this.mottatt): SykmeldingBuilder {
+    status(
+        status: StatusEvent.APEN | StatusEvent.AVBRUTT | StatusEvent.UTGATT,
+        timestamp = this.mottatt,
+    ): SykmeldingBuilder {
         this._sykmelding.sykmeldingStatus.statusEvent = status
         this._sykmelding.sykmeldingStatus.timestamp = timestamp
 
-        if (status === StatusEvent.SENDT) {
-            this._sykmelding.sykmeldingStatus.arbeidsgiver = {
-                orgNavn: defaultArbeidsgivere[0].navn,
-                orgnummer: defaultArbeidsgivere[0].orgnummer,
-            }
+        return this
+    }
+
+    send(): SykmeldingBuilder {
+        this._sykmelding.sykmeldingStatus.statusEvent = StatusEvent.SENDT
+        this._sykmelding.sykmeldingStatus.timestamp = this.mottatt
+
+        this._sykmelding.sykmeldingStatus.arbeidsgiver = {
+            orgNavn: defaultArbeidsgivere[0].navn,
+            orgnummer: defaultArbeidsgivere[0].orgnummer,
+        }
+        this._sykmelding.sykmeldingStatus.brukerSvar = {
+            erOpplysningeneRiktige: {
+                sporsmaltekst: sporsmal.erOpplysningeneRiktige,
+                svar: JaEllerNei.JA,
+            },
+            uriktigeOpplysninger: null,
+            arbeidssituasjon: {
+                sporsmaltekst: sporsmal.arbeidssituasjon,
+                svar: ArbeidssituasjonType.ARBEIDSTAKER,
+            },
+            arbeidsgiverOrgnummer: {
+                sporsmaltekst: sporsmal.arbeidsgiverOrgnummer,
+                svar: defaultArbeidsgivere[0].orgnummer,
+            },
+            riktigNarmesteLeder: {
+                sporsmaltekst: sporsmal.riktigNarmesteLeder(defaultArbeidsgivere[0].naermesteLeder?.navn ?? 'Ukjent'),
+                svar: JaEllerNei.JA,
+            },
+            harBruktEgenmeldingsdager: {
+                sporsmaltekst: sporsmal.harBruktEgenmeldingsdager(
+                    defaultArbeidsgivere[0].naermesteLeder?.navn ?? 'Ukjent',
+                ),
+                svar: JaEllerNei.NEI,
+            },
+            egenmeldingsdager: null,
+            egenmeldingsperioder: null,
+            fisker: null,
+            harBruktEgenmelding: null,
+            harForsikring: null,
+        }
+
+        return this
+    }
+
+    bekreft(
+        arbeidssituasjon:
+            | ArbeidssituasjonType.ANNET
+            | ArbeidssituasjonType.ARBEIDSLEDIG = ArbeidssituasjonType.ARBEIDSLEDIG,
+    ): SykmeldingBuilder {
+        this._sykmelding.sykmeldingStatus.statusEvent = StatusEvent.BEKREFTET
+        this._sykmelding.sykmeldingStatus.timestamp = this.mottatt
+
+        this._sykmelding.sykmeldingStatus.brukerSvar = {
+            erOpplysningeneRiktige: {
+                sporsmaltekst: sporsmal.erOpplysningeneRiktige,
+                svar: JaEllerNei.JA,
+            },
+            uriktigeOpplysninger: null,
+            arbeidssituasjon: {
+                sporsmaltekst: sporsmal.arbeidssituasjon,
+                svar: arbeidssituasjon,
+            },
+            arbeidsgiverOrgnummer: null,
+            riktigNarmesteLeder: null,
+            harBruktEgenmeldingsdager: null,
+            egenmeldingsdager: null,
+            egenmeldingsperioder: null,
+            fisker: null,
+            harBruktEgenmelding: null,
+            harForsikring: null,
         }
 
         return this
