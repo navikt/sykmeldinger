@@ -55,14 +55,15 @@ type Sporsmal {
     svar: SvarTypeUnion!
 }
 
+type FomTom {
+    fom: Date!
+    tom: Date!
+}
+
 type SykmeldingStatus {
     statusEvent: StatusEvent!
     timestamp: Date!
     arbeidsgiver: ArbeidsgiverStatus
     sporsmalOgSvarListe: [Sporsmal!]!
-}
-
-type FomTom {
-    fom: Date!
-    tom: Date!
+    brukerSvar: BrukerSvar
 }

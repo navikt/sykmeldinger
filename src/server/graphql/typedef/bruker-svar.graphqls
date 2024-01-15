@@ -1,0 +1,83 @@
+enum JaEllerNei {
+    JA
+    NEI
+}
+
+type ErOpplysningeneRiktigeBrukerSvar {
+    sporsmaltekst: String!
+    svar: JaEllerNei!
+}
+
+type UriktigeOpplysningerBrukerSvar {
+    sporsmaltekst: String!
+    svar: [UriktigeOpplysningerType!]!
+}
+
+type ArbeidssituasjonBrukerSvar {
+    sporsmaltekst: String!
+    svar: ArbeidssituasjonType!
+}
+
+type ArbeidsgiverOrgnummerBrukerSvar {
+    sporsmaltekst: String!
+    svar: String!
+}
+
+type RiktigNarmesteLederBrukerSvar {
+    sporsmaltekst: String!
+    svar: JaEllerNei!
+}
+
+type HarBruktEgenmeldingsdagerBrukerSvar {
+    sporsmaltekst: String!
+    svar: JaEllerNei!
+}
+
+type EgenmeldingsdagerBrukerSvar {
+    sporsmaltekst: String!
+    svar: [Date!]!
+}
+
+type HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar {
+    sporsmaltekst: String!
+    svar: JaEllerNei!
+}
+
+type FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar {
+    sporsmaltekst: String!
+    svar: [FomTom!]!
+}
+
+type HarForsikringBrukerSvar {
+    sporsmaltekst: String!
+    svar: JaEllerNei!
+}
+
+type BladBrukerSvar {
+    sporsmaltekst: String!
+    svar: Blad!
+}
+
+type LottOgHyreBrukerSvar {
+    sporsmaltekst: String!
+    svar: LottOgHyre!
+}
+
+type FiskerBrukerSvar {
+    blad: BladBrukerSvar!
+    lottOgHyre: LottOgHyreBrukerSvar!
+}
+
+type BrukerSvar {
+    erOpplysningeneRiktige: ErOpplysningeneRiktigeBrukerSvar!
+    uriktigeOpplysninger: UriktigeOpplysningerBrukerSvar
+    arbeidssituasjon: ArbeidssituasjonBrukerSvar!
+    arbeidsgiverOrgnummer: ArbeidsgiverOrgnummerBrukerSvar
+    riktigNarmesteLeder: RiktigNarmesteLederBrukerSvar
+    harBruktEgenmeldingsdager: HarBruktEgenmeldingsdagerBrukerSvar
+    egenmeldingsdager: EgenmeldingsdagerBrukerSvar
+    harBruktEgenmelding: HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar
+    egenmeldingsperioder: FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar
+    harForsikring: HarForsikringBrukerSvar
+    fisker: FiskerBrukerSvar
+}

@@ -60,6 +60,12 @@ export type Arbeidsgiver = {
     readonly orgnummer: Scalars['String']['output']
 }
 
+export type ArbeidsgiverOrgnummerBrukerSvar = {
+    readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: Scalars['String']['output']
+}
+
 export type ArbeidsgiverStatus = {
     readonly __typename: 'ArbeidsgiverStatus'
     readonly orgNavn: Scalars['String']['output']
@@ -80,6 +86,12 @@ export type ArbeidsrelatertArsak = {
 export enum ArbeidsrelatertArsakType {
     ANNET = 'ANNET',
     MANGLENDE_TILRETTELEGGING = 'MANGLENDE_TILRETTELEGGING',
+}
+
+export type ArbeidssituasjonBrukerSvar = {
+    readonly __typename: 'ArbeidssituasjonBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: ArbeidssituasjonType
 }
 
 export type ArbeidssituasjonSvar = {
@@ -119,6 +131,27 @@ export enum Blad {
     B = 'B',
 }
 
+export type BladBrukerSvar = {
+    readonly __typename: 'BladBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: Blad
+}
+
+export type BrukerSvar = {
+    readonly __typename: 'BrukerSvar'
+    readonly arbeidsgiverOrgnummer?: Maybe<ArbeidsgiverOrgnummerBrukerSvar>
+    readonly arbeidssituasjon: ArbeidssituasjonBrukerSvar
+    readonly egenmeldingsdager?: Maybe<EgenmeldingsdagerBrukerSvar>
+    readonly egenmeldingsperioder?: Maybe<FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar>
+    readonly erOpplysningeneRiktige: ErOpplysningeneRiktigeBrukerSvar
+    readonly fisker?: Maybe<FiskerBrukerSvar>
+    readonly harBruktEgenmelding?: Maybe<HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar>
+    readonly harBruktEgenmeldingsdager?: Maybe<HarBruktEgenmeldingsdagerBrukerSvar>
+    readonly harForsikring?: Maybe<HarForsikringBrukerSvar>
+    readonly riktigNarmesteLeder?: Maybe<RiktigNarmesteLederBrukerSvar>
+    readonly uriktigeOpplysninger?: Maybe<UriktigeOpplysningerBrukerSvar>
+}
+
 export type Brukerinformasjon = {
     readonly __typename: 'Brukerinformasjon'
     readonly arbeidsgivere: ReadonlyArray<Arbeidsgiver>
@@ -142,6 +175,12 @@ export type Diagnose = {
     readonly tekst?: Maybe<Scalars['String']['output']>
 }
 
+export type EgenmeldingsdagerBrukerSvar = {
+    readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: ReadonlyArray<Scalars['Date']['output']>
+}
+
 export type ErIArbeid = {
     readonly __typename: 'ErIArbeid'
     readonly annetArbeidPaSikt: Scalars['Boolean']['output']
@@ -157,6 +196,18 @@ export type ErIkkeIArbeid = {
     readonly vurderingsdato?: Maybe<Scalars['Date']['output']>
 }
 
+export type ErOpplysningeneRiktigeBrukerSvar = {
+    readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: JaEllerNei
+}
+
+export type FiskerBrukerSvar = {
+    readonly __typename: 'FiskerBrukerSvar'
+    readonly blad: BladBrukerSvar
+    readonly lottOgHyre: LottOgHyreBrukerSvar
+}
+
 export type FiskerInput = {
     readonly blad?: InputMaybe<Blad>
     readonly lottOgHyre?: InputMaybe<LottOgHyre>
@@ -168,10 +219,39 @@ export type FomTom = {
     readonly tom: Scalars['Date']['output']
 }
 
+export type FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar = {
+    readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: ReadonlyArray<FomTom>
+}
+
 export type GradertPeriode = {
     readonly __typename: 'GradertPeriode'
     readonly grad: Scalars['Int']['output']
     readonly reisetilskudd: Scalars['Boolean']['output']
+}
+
+export type HarBruktEgenmeldingsdagerBrukerSvar = {
+    readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: JaEllerNei
+}
+
+export type HarForsikringBrukerSvar = {
+    readonly __typename: 'HarForsikringBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: JaEllerNei
+}
+
+export type HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar = {
+    readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: JaEllerNei
+}
+
+export enum JaEllerNei {
+    JA = 'JA',
+    NEI = 'NEI',
 }
 
 export type JaNeiSvar = {
@@ -190,6 +270,12 @@ export enum LottOgHyre {
     BEGGE = 'BEGGE',
     HYRE = 'HYRE',
     LOTT = 'LOTT',
+}
+
+export type LottOgHyreBrukerSvar = {
+    readonly __typename: 'LottOgHyreBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: LottOgHyre
 }
 
 export type MedisinskArsak = {
@@ -348,6 +434,12 @@ export enum RegelStatus {
     OK = 'OK',
 }
 
+export type RiktigNarmesteLederBrukerSvar = {
+    readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: JaEllerNei
+}
+
 export type SendSykmeldingValues = {
     readonly arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']['input']>
     readonly arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
@@ -441,9 +533,16 @@ export enum SykmeldingChangeStatus {
 export type SykmeldingStatus = {
     readonly __typename: 'SykmeldingStatus'
     readonly arbeidsgiver?: Maybe<ArbeidsgiverStatus>
+    readonly brukerSvar?: Maybe<BrukerSvar>
     readonly sporsmalOgSvarListe: ReadonlyArray<Sporsmal>
     readonly statusEvent: StatusEvent
     readonly timestamp: Scalars['Date']['output']
+}
+
+export type UriktigeOpplysningerBrukerSvar = {
+    readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: ReadonlyArray<UriktigeOpplysningerType>
 }
 
 export enum UriktigeOpplysningerType {
