@@ -52,9 +52,6 @@ spec:
           namespace: flex
       external:
         - host: teamsykmelding-unleash-api.nav.cloud.nais.io
-        - host: flex-syketilfelle.flex
-        - host: nav.no
-        - host: cdn.nav.no
   env:
     - name: SYKMELDINGER_BACKEND
       value: 'http://sykmeldinger-backend'

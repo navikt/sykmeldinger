@@ -23,9 +23,6 @@ spec:
       path: /syk/sykmeldinger/api/internal/pre_stop
   accessPolicy:
     outbound:
-      external:
-        - host: nav.no
-        - host: demo.ekstern.dev.nav.no
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
