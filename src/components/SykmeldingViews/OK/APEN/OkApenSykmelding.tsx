@@ -5,7 +5,7 @@ import { SykmeldingFragment } from 'queries'
 
 import InformationBanner from '../../../InformationBanner/InformationBanner'
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 import SendSykmeldingForm from '../../../SendSykmelding/SendSykmeldingForm'
 
 import PapirInfoheader from './PapirInfoheader'
@@ -42,7 +42,7 @@ function OkApenSykmelding({
                     </GuidePanel>
                 </div>
 
-                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+                <SykmeldingSykmeldtSection sykmelding={sykmelding} />
             </div>
         )
     }
@@ -62,7 +62,7 @@ function OkApenSykmelding({
             )}
 
             <div className="mb-8">
-                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+                <SykmeldingSykmeldtSection sykmelding={sykmelding} />
             </div>
             <SendSykmeldingForm sykmelding={sykmelding} onSykmeldingAvbrutt={onSykmeldingAvbrutt} />
         </div>

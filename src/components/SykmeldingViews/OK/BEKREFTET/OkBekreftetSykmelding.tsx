@@ -6,7 +6,7 @@ import { SykmeldingFragment } from 'queries'
 
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
 interface OkBekreftetSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -46,7 +46,7 @@ function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProp
                 </div>
             )}
 
-            <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+            <SykmeldingSykmeldtSection sykmelding={sykmelding} />
         </div>
     )
 }

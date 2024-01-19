@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form'
 
 import { SykmeldingFragment } from 'queries'
 
-import SykmeldingArbeidsgiverContainer from '../../../../SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
+import SykmeldingArbeidsgiverExpansionCard from '../../../../Sykmelding/SykmeldingerArbeidsgiver/SykmeldingArbeidsgiverExpansionCard'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { toDateString } from '../../../../../utils/dateUtils'
 import { notNull } from '../../../../../utils/ts-utils'
@@ -26,7 +26,7 @@ function SendesTilArbeidsgiverInfo({ sykmelding }: Props): ReactElement {
     return (
         <div>
             <VeilederSenderSykmeldingenInfo />
-            <SykmeldingArbeidsgiverContainer
+            <SykmeldingArbeidsgiverExpansionCard
                 sykmelding={sykmelding}
                 chosenEgenmeldingsdager={chosenEgenmeldingsdager}
             />

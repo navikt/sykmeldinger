@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { SykmeldingFragment } from 'queries'
 
 import StatusBanner from '../../../StatusBanner/StatusBanner'
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
+import SykmeldingArbeidsgiverExpansionCard from '../../../Sykmelding/SykmeldingerArbeidsgiver/SykmeldingArbeidsgiverExpansionCard'
 import { isUnderbehandling } from '../../../../utils/sykmeldingUtils'
 import { UnderBehandlingGuidePanel } from '../../../InformationBanner/InformationBanner'
 import { useFindPrevSykmeldingTom } from '../../../../hooks/useFindPrevSykmeldingTom'
 import Spinner from '../../../Spinner/Spinner'
 import { hasHitPreviousSykmeldingTom } from '../../../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
-import SykmeldingArbeidsgiverContainer from '../../SykmeldingView/SykmeldingArbeidsgiverContainer'
 
 interface OkSendtSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -37,7 +37,7 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): ReactElement
                 <OkSendtSykmeldingSykmeldtContainer sykmelding={sykmelding} />
             </div>
 
-            <SykmeldingArbeidsgiverContainer sykmelding={sykmelding} />
+            <SykmeldingArbeidsgiverExpansionCard sykmelding={sykmelding} />
         </div>
     )
 }
@@ -74,7 +74,7 @@ function OkSendtSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Sykmel
         )
     }
 
-    return <SykmeldingSykmeldtContainer sykmelding={sykmelding} editableEgenmelding={!hasHitPrevious} />
+    return <SykmeldingSykmeldtSection sykmelding={sykmelding} editableEgenmelding={!hasHitPrevious} />
 }
 
 export default OkSendtSykmelding

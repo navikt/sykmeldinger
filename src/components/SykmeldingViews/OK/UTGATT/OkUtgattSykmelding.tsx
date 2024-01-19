@@ -4,7 +4,7 @@ import { Alert, Detail, Heading } from '@navikt/ds-react'
 import { SykmeldingFragment } from 'queries'
 
 import { toReadableDate } from '../../../../utils/dateUtils'
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
 interface OkUtgattSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -21,7 +21,7 @@ function OkUtgattSykmelding({ sykmelding }: OkUtgattSykmeldingProps): ReactEleme
                     <Detail>{toReadableDate(sykmelding.sykmeldingStatus.timestamp)}</Detail>
                 </Alert>
             </div>
-            <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+            <SykmeldingSykmeldtSection sykmelding={sykmelding} />
         </div>
     )
 }

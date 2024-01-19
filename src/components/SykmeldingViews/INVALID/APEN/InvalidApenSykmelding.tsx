@@ -10,7 +10,7 @@ import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
 type InvalidApenSykmeldingProps = {
     sykmelding: SykmeldingFragment
@@ -48,7 +48,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): Reac
             </div>
 
             <div className="mb-8">
-                <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+                <SykmeldingSykmeldtSection sykmelding={sykmelding} />
             </div>
 
             <form

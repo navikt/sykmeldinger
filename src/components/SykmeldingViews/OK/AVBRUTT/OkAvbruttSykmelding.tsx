@@ -7,7 +7,7 @@ import { SykmeldingFragment } from 'queries'
 import { toReadableDate } from '../../../../utils/dateUtils'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
 interface OkAvbruttSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -46,7 +46,7 @@ function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): 
                     </div>
                 </div>
             )}
-            <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+            <SykmeldingSykmeldtSection sykmelding={sykmelding} />
 
             <HintToNextOlderSykmelding />
         </div>
