@@ -4,6 +4,13 @@ on:
     branches:
       - demo**
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+  packages: write
+  id-token: write
+
 jobs:
   branch-delete:
     uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app-demo-delete.yaml@main
