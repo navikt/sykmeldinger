@@ -5,7 +5,7 @@
     "engines": {
         "node": "20"
     },
-    "packageManager": "yarn@4.0.1",
+    "packageManager": "yarn@4.0.2",
     "scripts": {
         "dev": "yarn start",
         "start": "concurrently -n next,codegen \"yarn start:watch\" \"yarn gen:watch\"",
