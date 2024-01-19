@@ -17,8 +17,8 @@ import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
 import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding'
-import SykmeldingArbeidsgiverContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingArbeidsgiverContainer'
-import SykmeldingSykmeldtContainer from '../../components/SykmeldingViews/SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingArbeidsgiverExpansionCard from '../../components/Sykmelding/SykmeldingerArbeidsgiver/SykmeldingArbeidsgiverExpansionCard'
+import SykmeldingSykmeldtSection from '../../components/Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
 import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
@@ -123,7 +123,7 @@ function SykmeldingkvitteringPage(): ReactElement {
             </div>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
-                <SykmeldingArbeidsgiverContainer sykmelding={data.sykmelding} />
+                <SykmeldingArbeidsgiverExpansionCard sykmelding={data.sykmelding} />
             )}
 
             <HintToNextOlderSykmelding />
@@ -188,7 +188,7 @@ function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Syk
     }
 
     return (
-        <SykmeldingSykmeldtContainer
+        <SykmeldingSykmeldtSection
             sykmelding={sykmelding}
             editableEgenmelding={!hasHitPrevious && sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT}
         />

@@ -6,7 +6,7 @@ import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import StatusBanner from '../../../StatusBanner/StatusBanner'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
-import SykmeldingSykmeldtContainer from '../../SykmeldingView/SykmeldingSykmeldtContainer'
+import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
 interface InvalidBekreftetSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -30,7 +30,7 @@ function InvalidBekreftetSykmelding({ sykmelding }: InvalidBekreftetSykmeldingPr
                 />
             </div>
 
-            <SykmeldingSykmeldtContainer sykmelding={sykmelding} />
+            <SykmeldingSykmeldtSection sykmelding={sykmelding} />
 
             <HintToNextOlderSykmelding />
         </div>

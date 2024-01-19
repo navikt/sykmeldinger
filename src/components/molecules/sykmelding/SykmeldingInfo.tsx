@@ -2,7 +2,7 @@ import { ReactElement, PropsWithChildren } from 'react'
 import { BodyShort, Heading } from '@navikt/ds-react'
 import cn from 'classnames'
 
-import SladdSvg from '../../SykmeldingViews/SykmeldingView/Svg/SladdSvg'
+import SladdSvg from './SladdSvg'
 
 interface SykmeldingInfoProps {
     className?: string
