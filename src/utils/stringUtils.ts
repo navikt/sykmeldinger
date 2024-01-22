@@ -9,3 +9,7 @@ export function cleanId(input: string): string {
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9\-]/g, '')
 }
+
+export function capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+}

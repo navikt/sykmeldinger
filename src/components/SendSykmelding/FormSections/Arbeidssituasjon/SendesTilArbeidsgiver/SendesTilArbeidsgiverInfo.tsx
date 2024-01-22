@@ -7,25 +7,37 @@ import SykmeldingArbeidsgiverExpansionCard from '../../../../Sykmelding/Sykmeldi
 import { FormValues } from '../../../SendSykmeldingForm'
 import { toDateString } from '../../../../../utils/dateUtils'
 import { notNull } from '../../../../../utils/ts-utils'
+import {
+    BrukerSvarExpansionCard,
+    SporsmaltekstMetadata,
+} from '../../../../Sykmelding/SykmeldingerSykmeldt/Felles/BrukerSvar'
 
 import VeilederSenderSykmeldingenInfo from './VeilederSenderSykmeldingenInfo'
 
 interface Props {
     sykmelding: SykmeldingFragment
+    metadata: SporsmaltekstMetadata
 }
 
-function SendesTilArbeidsgiverInfo({ sykmelding }: Props): ReactElement {
+function SendesTilArbeidsgiverInfo({ sykmelding, metadata }: Props): ReactElement {
     const { watch } = useFormContext<FormValues>()
+    const formValues = watch()
 
     const chosenEgenmeldingsdager: string[] | undefined =
-        watch('egenmeldingsdager')
+        formValues.egenmeldingsdager
             ?.flatMap((it) => it.datoer)
             ?.filter(notNull)
-            .map(toDateString) ?? undefined
+            ?.map(toDateString) ?? undefined
 
     return (
         <div>
             <VeilederSenderSykmeldingenInfo />
+            <BrukerSvarExpansionCard
+                brukerSvar={{
+                    values: formValues,
+                    sporsmaltekstMetadata: metadata,
+                }}
+            />
             <SykmeldingArbeidsgiverExpansionCard
                 sykmelding={sykmelding}
                 chosenEgenmeldingsdager={chosenEgenmeldingsdager}

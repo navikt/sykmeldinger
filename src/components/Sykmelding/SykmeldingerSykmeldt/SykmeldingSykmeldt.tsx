@@ -20,6 +20,7 @@ import Prognose from './Nasjonal/Prognose'
 import Arbeidsevne from './Nasjonal/Arbeidsevne'
 import MeldingTilArbeidsgiver from './Nasjonal/MeldingTilArbeidsgiver'
 import Tilbakedatering from './Nasjonal/Tilbakedatering'
+import { BrukerSvarExpansionCard } from './Felles/BrukerSvar'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -57,6 +58,10 @@ function SykmeldingSykmeldt({ sykmelding, editableEgenmelding }: Props): ReactEl
             </Perioder>
 
             <AnnenInfo sykmelding={sykmelding} parentId={sectionId} />
+
+            {sykmelding.sykmeldingStatus.brukerSvar && (
+                <BrukerSvarExpansionCard brukerSvar={sykmelding.sykmeldingStatus.brukerSvar} />
+            )}
 
             <FlereOpplysningerSykmeldt>
                 <MedisinskTilstand

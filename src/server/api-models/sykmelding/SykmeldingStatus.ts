@@ -9,6 +9,7 @@ import {
     YesOrNo,
     Blad,
     LottOgHyre,
+    JaEllerNei,
 } from '../../graphql/resolver-types.generated'
 
 export enum Svartype {
@@ -16,11 +17,6 @@ export enum Svartype {
     PERIODER = 'PERIODER',
     JA_NEI = 'JA_NEI',
     DAGER = 'DAGER',
-}
-
-export enum JaEllerNei {
-    JA = 'JA',
-    NEI = 'NEI',
 }
 
 const ArbeidsgiverStatusSchema = z.object({
@@ -74,6 +70,7 @@ const SporsmalSvarSchema = <T>(type: z.ZodType<T>) =>
         svar: type,
     })
 
+export type BrukerSvar = z.infer<typeof BrukerSvarSchema>
 const BrukerSvarSchema = z.object({
     erOpplysningeneRiktige: SporsmalSvarSchema(z.nativeEnum(JaEllerNei)),
     uriktigeOpplysninger: SporsmalSvarSchema(z.array(z.nativeEnum(UriktigeOpplysningerType))).nullable(),

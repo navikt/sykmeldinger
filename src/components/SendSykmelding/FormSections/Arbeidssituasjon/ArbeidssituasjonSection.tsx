@@ -31,32 +31,29 @@ function ArbeidssituasjonSection({
     // Don't show arbeidssituasjon section given certain criteria
     if (!useShouldArbeidssituasjonShow()) return null
 
+    const oppfolgingsdato =
+        sykmeldingUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
+
     return (
         <SectionWrapper title="Din arbeidssituasjon">
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             {!(<ArbeidssituasjonStatusInfo />)}
             {shouldShowArbeidsgiverOrgnummer && (
-                <ArbeidsgiverSection sykmelding={sykmelding} arbeidsgivere={brukerinformasjon.arbeidsgivere} />
+                <ArbeidsgiverSection
+                    sykmelding={sykmelding}
+                    arbeidsgivere={brukerinformasjon.arbeidsgivere}
+                    oppfolgingsdato={oppfolgingsdato}
+                />
             )}
             {shouldShowFisker && (
                 <FiskerSection
                     sykmelding={sykmelding}
                     brukerinformasjon={brukerinformasjon}
-                    oppfolgingsdato={
-                        sykmeldingUtenforVentetid.oppfolgingsdato ||
-                        getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
-                    }
+                    oppfolgingsdato={oppfolgingsdato}
                 />
             )}
-            {shouldShowFrilanserSelvstendigSection && (
-                <FrilanserSection
-                    oppfolgingsdato={
-                        sykmeldingUtenforVentetid.oppfolgingsdato ||
-                        getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
-                    }
-                />
-            )}
+            {shouldShowFrilanserSelvstendigSection && <FrilanserSection oppfolgingsdato={oppfolgingsdato} />}
         </SectionWrapper>
     )
 }
