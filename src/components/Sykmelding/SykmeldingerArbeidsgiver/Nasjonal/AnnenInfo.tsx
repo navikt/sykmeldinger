@@ -23,7 +23,7 @@ function AnnenInfo({ sykmelding, parentId }: Props): ReactElement {
                 heading="Sykmeldingen ble skrevet av"
                 lines={[
                     getBehandlerName(sykmelding.behandler),
-                    sykmelding.behandler.tlf ? `Tlf: ${sykmelding.behandler.tlf}` : 'Tlf: —',
+                    sykmelding.behandler.tlf ? `Tlf: ${sykmelding.behandler.tlf}` : 'Tlf: mangler',
                 ]}
             />
             {sykmelding.arbeidsgiver && sykmelding.arbeidsgiver?.navn && (
