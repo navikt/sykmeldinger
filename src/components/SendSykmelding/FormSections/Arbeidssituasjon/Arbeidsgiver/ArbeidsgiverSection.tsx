@@ -20,15 +20,17 @@ import ArbeidsgiverField from './ArbeidsgiverField'
 interface Props {
     sykmelding: SykmeldingFragment
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
+    oppfolgingsdato: string
 }
 
-function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement | null {
+function ArbeidsgiverSection({ sykmelding, arbeidsgivere, oppfolgingsdato }: Props): ReactElement | null {
     const { watch } = useFormContext<FormValues>()
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
 
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
     const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
     const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo(arbeidsgivere)
+    const valgtArbeidsgiver = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
 
     return (
         <SectionWrapper>
@@ -49,7 +51,16 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
                     amplitudeSkjemanavn="Egenmeldingsdager"
                 />
             )}
-            {shouldShowSendesTilArbeidsgiverInfo && <SendesTilArbeidsgiverInfo sykmelding={sykmelding} />}
+            {shouldShowSendesTilArbeidsgiverInfo && (
+                <SendesTilArbeidsgiverInfo
+                    sykmelding={sykmelding}
+                    metadata={{
+                        arbeidsgiverNavn: valgtArbeidsgiver?.navn ?? '',
+                        narmestelederNavn: valgtArbeidsgiver?.naermesteLeder?.navn ?? '',
+                        oppfolgingsdato,
+                    }}
+                />
+            )}
         </SectionWrapper>
     )
 }

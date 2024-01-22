@@ -7,6 +7,7 @@ import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
     ArbeidssituasjonType,
+    JaEllerNei,
     MedisinskArsakType,
     Periodetype,
     RegelStatus,
@@ -16,7 +17,6 @@ import { AktivitetIkkeMuligPeriode, Periode } from '../../api-models/sykmelding/
 import { dateAdd } from '../../../utils/dateUtils'
 import { RuleHit } from '../../api-models/sykmelding/Behandlingsutfall'
 import { sporsmal } from '../../../utils/sporsmal'
-import { JaEllerNei } from '../../api-models/sykmelding/SykmeldingStatus'
 
 export class SykmeldingBuilder {
     private readonly mottatt: string = '2020-02-01'

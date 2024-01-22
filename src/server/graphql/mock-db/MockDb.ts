@@ -12,7 +12,7 @@ import {
     ShortName,
     StatusEvent,
 } from '../resolver-types.generated'
-import { Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus'
+import { BrukerSvar, Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus'
 import { sporsmal } from '../../../utils/sporsmal'
 import { toDateString } from '../../../utils/dateUtils'
 import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
@@ -72,7 +72,12 @@ class MockDb {
         const sykmelding = this.sykmelding(id)
 
         // Validate that real mapping would have worked
-        mapSendSykmeldingValuesToV3Api(values, sykmelding, this.brukerinformasjon(), this.sykeldingErUtenforVentetid())
+        const apiValues = mapSendSykmeldingValuesToV3Api(
+            values,
+            sykmelding,
+            this.brukerinformasjon(),
+            this.sykeldingErUtenforVentetid(),
+        )
 
         const sporsmalOgSvarListe: Sporsmal[] = R.compact([
             {
@@ -113,7 +118,9 @@ class MockDb {
         } else {
             sykmelding.sykmeldingStatus.statusEvent = StatusEvent.BEKREFTET
         }
+
         sykmelding.sykmeldingStatus.sporsmalOgSvarListe = sporsmalOgSvarListe
+        sykmelding.sykmeldingStatus.brukerSvar = apiValues as unknown as BrukerSvar
 
         return sykmelding
     }

@@ -10,6 +10,7 @@ import SykmeldingenGjelder from './Felles/SykmeldingenGjelder'
 import Egenmeldingsdager from './Felles/Egenmeldingsdager'
 import RedigerEgenmeldingsdagerLink from './Felles/RedigerEgenmeldingsdagerLink'
 import AnnenInfoUtenlandsk from './Utenlandsk/AnnenInfoUtenlandsk'
+import { BrukerSvarExpansionCard } from './Felles/BrukerSvar'
 
 interface Props {
     sykmelding: UtenlandskSykmelding
@@ -42,6 +43,11 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props
                     />
                 )}
             </Perioder>
+
+            {sykmelding.sykmeldingStatus.brukerSvar && (
+                <BrukerSvarExpansionCard brukerSvar={sykmelding.sykmeldingStatus.brukerSvar} />
+            )}
+
             <AnnenInfoUtenlandsk sykmelding={sykmelding} parentId="sykmelding-sykmeldt-utenlandsk" />
         </div>
     )

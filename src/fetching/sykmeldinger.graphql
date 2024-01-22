@@ -59,6 +59,65 @@ fragment SykmeldingStatus on SykmeldingStatus {
             ...SvarUnion
         }
     }
+    brukerSvar {
+        ...BrukerSvar
+    }
+}
+
+fragment BrukerSvar on BrukerSvar {
+    erOpplysningeneRiktige {
+        sporsmaltekst
+        svar
+    }
+    uriktigeOpplysninger {
+        sporsmaltekst
+        svar
+    }
+    arbeidssituasjon {
+        sporsmaltekst
+        svar
+    }
+    arbeidsgiverOrgnummer {
+        sporsmaltekst
+        svar
+    }
+    riktigNarmesteLeder {
+        sporsmaltekst
+        svar
+    }
+    harBruktEgenmeldingsdager {
+        sporsmaltekst
+        svar
+    }
+    egenmeldingsdager {
+        sporsmaltekst
+        svar
+    }
+    harBruktEgenmelding {
+        sporsmaltekst
+        svar
+    }
+    egenmeldingsperioder {
+        sporsmaltekst
+        svar {
+            fom
+            tom
+        }
+    }
+    harForsikring {
+        sporsmaltekst
+        svar
+    }
+    fisker {
+        blad {
+            sporsmaltekst
+            svar
+        }
+        lottOgHyre {
+            sporsmaltekst
+            svar
+        }
+    }
 }
 
 fragment MedisinskVurdering on MedisinskVurdering {

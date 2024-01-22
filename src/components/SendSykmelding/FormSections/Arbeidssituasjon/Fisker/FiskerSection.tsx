@@ -44,7 +44,11 @@ function FiskerSection({ oppfolgingsdato, brukerinformasjon, sykmelding }: Props
                 <FiskerSelvstendigSection oppfolgingsdato={oppfolgingsdato} askForsikring={blad === 'A'} />
             )}
             {lottOgHyre === 'HYRE' && (
-                <FiskerArbeidstakerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />
+                <FiskerArbeidstakerSection
+                    sykmelding={sykmelding}
+                    brukerinformasjon={brukerinformasjon}
+                    oppfolgingsdato={oppfolgingsdato}
+                />
             )}
         </SectionWrapper>
     )

@@ -5,6 +5,7 @@ import cn from 'classnames'
 import SladdSvg from './SladdSvg'
 
 interface SykmeldingInfoProps {
+    icon?: ReactElement
     className?: string
     heading?: string
     variant?: 'blue' | 'gray' | 'transparent'
@@ -17,6 +18,7 @@ export function SykmeldingInfo({
     className,
     heading,
     children,
+    icon,
     variant = 'transparent',
 }: PropsWithChildren<SykmeldingInfoProps>): ReactElement {
     return (
@@ -31,7 +33,10 @@ export function SykmeldingInfo({
                     {heading}
                 </Heading>
             )}
-            {typeof children === 'string' ? <BodyShort>{children}</BodyShort> : children}
+            <div className="flex gap-3 items-center">
+                {icon && <span className="text-xl">{icon}</span>}
+                <div>{typeof children === 'string' ? <BodyShort>{children}</BodyShort> : children}</div>
+            </div>
         </div>
     )
 }

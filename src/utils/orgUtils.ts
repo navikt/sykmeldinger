@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from './stringUtils'
+
 const shouldUpperCase = [
     'SFO',
     'AS',
@@ -36,10 +38,6 @@ const shouldLowerCase = [
     'sykehjem',
     'videregående',
 ]
-
-function capitalizeFirstLetter(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-}
 
 function handleCase(word: string): string {
     if (shouldUpperCase.includes(word.toUpperCase())) {

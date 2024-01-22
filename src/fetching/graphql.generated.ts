@@ -708,6 +708,76 @@ export type EndreEgenmeldingsdagerMutation = {
                           }>
                       }
             }>
+            readonly brukerSvar?: {
+                readonly __typename: 'BrukerSvar'
+                readonly erOpplysningeneRiktige: {
+                    readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                }
+                readonly uriktigeOpplysninger?: {
+                    readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+                } | null
+                readonly arbeidssituasjon: {
+                    readonly __typename: 'ArbeidssituasjonBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ArbeidssituasjonType
+                }
+                readonly arbeidsgiverOrgnummer?: {
+                    readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: string
+                } | null
+                readonly riktigNarmesteLeder?: {
+                    readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly harBruktEgenmeldingsdager?: {
+                    readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsdager?: {
+                    readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<string>
+                } | null
+                readonly harBruktEgenmelding?: {
+                    readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsperioder?: {
+                    readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<{
+                        readonly __typename: 'FomTom'
+                        readonly fom: string
+                        readonly tom: string
+                    }>
+                } | null
+                readonly harForsikring?: {
+                    readonly __typename: 'HarForsikringBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly fisker?: {
+                    readonly __typename: 'FiskerBrukerSvar'
+                    readonly blad: {
+                        readonly __typename: 'BladBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: Blad
+                    }
+                    readonly lottOgHyre: {
+                        readonly __typename: 'LottOgHyreBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: LottOgHyre
+                    }
+                } | null
+            } | null
         }
         readonly medisinskVurdering?: {
             readonly __typename: 'MedisinskVurdering'
@@ -927,6 +997,76 @@ export type ChangeSykmeldingStatusMutation = {
                           }>
                       }
             }>
+            readonly brukerSvar?: {
+                readonly __typename: 'BrukerSvar'
+                readonly erOpplysningeneRiktige: {
+                    readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                }
+                readonly uriktigeOpplysninger?: {
+                    readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+                } | null
+                readonly arbeidssituasjon: {
+                    readonly __typename: 'ArbeidssituasjonBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ArbeidssituasjonType
+                }
+                readonly arbeidsgiverOrgnummer?: {
+                    readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: string
+                } | null
+                readonly riktigNarmesteLeder?: {
+                    readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly harBruktEgenmeldingsdager?: {
+                    readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsdager?: {
+                    readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<string>
+                } | null
+                readonly harBruktEgenmelding?: {
+                    readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsperioder?: {
+                    readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<{
+                        readonly __typename: 'FomTom'
+                        readonly fom: string
+                        readonly tom: string
+                    }>
+                } | null
+                readonly harForsikring?: {
+                    readonly __typename: 'HarForsikringBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly fisker?: {
+                    readonly __typename: 'FiskerBrukerSvar'
+                    readonly blad: {
+                        readonly __typename: 'BladBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: Blad
+                    }
+                    readonly lottOgHyre: {
+                        readonly __typename: 'LottOgHyreBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: LottOgHyre
+                    }
+                } | null
+            } | null
         }
         readonly medisinskVurdering?: {
             readonly __typename: 'MedisinskVurdering'
@@ -1104,6 +1244,76 @@ export type SendSykmeldingMutation = {
                           }>
                       }
             }>
+            readonly brukerSvar?: {
+                readonly __typename: 'BrukerSvar'
+                readonly erOpplysningeneRiktige: {
+                    readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                }
+                readonly uriktigeOpplysninger?: {
+                    readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+                } | null
+                readonly arbeidssituasjon: {
+                    readonly __typename: 'ArbeidssituasjonBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ArbeidssituasjonType
+                }
+                readonly arbeidsgiverOrgnummer?: {
+                    readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: string
+                } | null
+                readonly riktigNarmesteLeder?: {
+                    readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly harBruktEgenmeldingsdager?: {
+                    readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsdager?: {
+                    readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<string>
+                } | null
+                readonly harBruktEgenmelding?: {
+                    readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsperioder?: {
+                    readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<{
+                        readonly __typename: 'FomTom'
+                        readonly fom: string
+                        readonly tom: string
+                    }>
+                } | null
+                readonly harForsikring?: {
+                    readonly __typename: 'HarForsikringBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly fisker?: {
+                    readonly __typename: 'FiskerBrukerSvar'
+                    readonly blad: {
+                        readonly __typename: 'BladBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: Blad
+                    }
+                    readonly lottOgHyre: {
+                        readonly __typename: 'LottOgHyreBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: LottOgHyre
+                    }
+                } | null
+            } | null
         }
         readonly medisinskVurdering?: {
             readonly __typename: 'MedisinskVurdering'
@@ -1276,6 +1486,135 @@ export type SykmeldingStatusFragment = {
                   }>
               }
     }>
+    readonly brukerSvar?: {
+        readonly __typename: 'BrukerSvar'
+        readonly erOpplysningeneRiktige: {
+            readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: JaEllerNei
+        }
+        readonly uriktigeOpplysninger?: {
+            readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+        } | null
+        readonly arbeidssituasjon: {
+            readonly __typename: 'ArbeidssituasjonBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: ArbeidssituasjonType
+        }
+        readonly arbeidsgiverOrgnummer?: {
+            readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: string
+        } | null
+        readonly riktigNarmesteLeder?: {
+            readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: JaEllerNei
+        } | null
+        readonly harBruktEgenmeldingsdager?: {
+            readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: JaEllerNei
+        } | null
+        readonly egenmeldingsdager?: {
+            readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: ReadonlyArray<string>
+        } | null
+        readonly harBruktEgenmelding?: {
+            readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: JaEllerNei
+        } | null
+        readonly egenmeldingsperioder?: {
+            readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: ReadonlyArray<{ readonly __typename: 'FomTom'; readonly fom: string; readonly tom: string }>
+        } | null
+        readonly harForsikring?: {
+            readonly __typename: 'HarForsikringBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: JaEllerNei
+        } | null
+        readonly fisker?: {
+            readonly __typename: 'FiskerBrukerSvar'
+            readonly blad: {
+                readonly __typename: 'BladBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: Blad
+            }
+            readonly lottOgHyre: {
+                readonly __typename: 'LottOgHyreBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: LottOgHyre
+            }
+        } | null
+    } | null
+}
+
+export type BrukerSvarFragment = {
+    readonly __typename: 'BrukerSvar'
+    readonly erOpplysningeneRiktige: {
+        readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: JaEllerNei
+    }
+    readonly uriktigeOpplysninger?: {
+        readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+    } | null
+    readonly arbeidssituasjon: {
+        readonly __typename: 'ArbeidssituasjonBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: ArbeidssituasjonType
+    }
+    readonly arbeidsgiverOrgnummer?: {
+        readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: string
+    } | null
+    readonly riktigNarmesteLeder?: {
+        readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: JaEllerNei
+    } | null
+    readonly harBruktEgenmeldingsdager?: {
+        readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: JaEllerNei
+    } | null
+    readonly egenmeldingsdager?: {
+        readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: ReadonlyArray<string>
+    } | null
+    readonly harBruktEgenmelding?: {
+        readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: JaEllerNei
+    } | null
+    readonly egenmeldingsperioder?: {
+        readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: ReadonlyArray<{ readonly __typename: 'FomTom'; readonly fom: string; readonly tom: string }>
+    } | null
+    readonly harForsikring?: {
+        readonly __typename: 'HarForsikringBrukerSvar'
+        readonly sporsmaltekst: string
+        readonly svar: JaEllerNei
+    } | null
+    readonly fisker?: {
+        readonly __typename: 'FiskerBrukerSvar'
+        readonly blad: { readonly __typename: 'BladBrukerSvar'; readonly sporsmaltekst: string; readonly svar: Blad }
+        readonly lottOgHyre: {
+            readonly __typename: 'LottOgHyreBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: LottOgHyre
+        }
+    } | null
 }
 
 export type MedisinskVurderingFragment = {
@@ -1389,6 +1728,76 @@ export type SykmeldingFragment = {
                       }>
                   }
         }>
+        readonly brukerSvar?: {
+            readonly __typename: 'BrukerSvar'
+            readonly erOpplysningeneRiktige: {
+                readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: JaEllerNei
+            }
+            readonly uriktigeOpplysninger?: {
+                readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+            } | null
+            readonly arbeidssituasjon: {
+                readonly __typename: 'ArbeidssituasjonBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: ArbeidssituasjonType
+            }
+            readonly arbeidsgiverOrgnummer?: {
+                readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: string
+            } | null
+            readonly riktigNarmesteLeder?: {
+                readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: JaEllerNei
+            } | null
+            readonly harBruktEgenmeldingsdager?: {
+                readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: JaEllerNei
+            } | null
+            readonly egenmeldingsdager?: {
+                readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: ReadonlyArray<string>
+            } | null
+            readonly harBruktEgenmelding?: {
+                readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: JaEllerNei
+            } | null
+            readonly egenmeldingsperioder?: {
+                readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: ReadonlyArray<{
+                    readonly __typename: 'FomTom'
+                    readonly fom: string
+                    readonly tom: string
+                }>
+            } | null
+            readonly harForsikring?: {
+                readonly __typename: 'HarForsikringBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: JaEllerNei
+            } | null
+            readonly fisker?: {
+                readonly __typename: 'FiskerBrukerSvar'
+                readonly blad: {
+                    readonly __typename: 'BladBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: Blad
+                }
+                readonly lottOgHyre: {
+                    readonly __typename: 'LottOgHyreBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: LottOgHyre
+                }
+            } | null
+        } | null
     }
     readonly medisinskVurdering?: {
         readonly __typename: 'MedisinskVurdering'
@@ -1562,6 +1971,76 @@ export type SykmeldingerQuery = {
                           }>
                       }
             }>
+            readonly brukerSvar?: {
+                readonly __typename: 'BrukerSvar'
+                readonly erOpplysningeneRiktige: {
+                    readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                }
+                readonly uriktigeOpplysninger?: {
+                    readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+                } | null
+                readonly arbeidssituasjon: {
+                    readonly __typename: 'ArbeidssituasjonBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ArbeidssituasjonType
+                }
+                readonly arbeidsgiverOrgnummer?: {
+                    readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: string
+                } | null
+                readonly riktigNarmesteLeder?: {
+                    readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly harBruktEgenmeldingsdager?: {
+                    readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsdager?: {
+                    readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<string>
+                } | null
+                readonly harBruktEgenmelding?: {
+                    readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsperioder?: {
+                    readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<{
+                        readonly __typename: 'FomTom'
+                        readonly fom: string
+                        readonly tom: string
+                    }>
+                } | null
+                readonly harForsikring?: {
+                    readonly __typename: 'HarForsikringBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly fisker?: {
+                    readonly __typename: 'FiskerBrukerSvar'
+                    readonly blad: {
+                        readonly __typename: 'BladBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: Blad
+                    }
+                    readonly lottOgHyre: {
+                        readonly __typename: 'LottOgHyreBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: LottOgHyre
+                    }
+                } | null
+            } | null
         }
         readonly medisinskVurdering?: {
             readonly __typename: 'MedisinskVurdering'
@@ -1738,6 +2217,76 @@ export type SykmeldingByIdQuery = {
                           }>
                       }
             }>
+            readonly brukerSvar?: {
+                readonly __typename: 'BrukerSvar'
+                readonly erOpplysningeneRiktige: {
+                    readonly __typename: 'ErOpplysningeneRiktigeBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                }
+                readonly uriktigeOpplysninger?: {
+                    readonly __typename: 'UriktigeOpplysningerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<UriktigeOpplysningerType>
+                } | null
+                readonly arbeidssituasjon: {
+                    readonly __typename: 'ArbeidssituasjonBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ArbeidssituasjonType
+                }
+                readonly arbeidsgiverOrgnummer?: {
+                    readonly __typename: 'ArbeidsgiverOrgnummerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: string
+                } | null
+                readonly riktigNarmesteLeder?: {
+                    readonly __typename: 'RiktigNarmesteLederBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly harBruktEgenmeldingsdager?: {
+                    readonly __typename: 'HarBruktEgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsdager?: {
+                    readonly __typename: 'EgenmeldingsdagerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<string>
+                } | null
+                readonly harBruktEgenmelding?: {
+                    readonly __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly egenmeldingsperioder?: {
+                    readonly __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: ReadonlyArray<{
+                        readonly __typename: 'FomTom'
+                        readonly fom: string
+                        readonly tom: string
+                    }>
+                } | null
+                readonly harForsikring?: {
+                    readonly __typename: 'HarForsikringBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: JaEllerNei
+                } | null
+                readonly fisker?: {
+                    readonly __typename: 'FiskerBrukerSvar'
+                    readonly blad: {
+                        readonly __typename: 'BladBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: Blad
+                    }
+                    readonly lottOgHyre: {
+                        readonly __typename: 'LottOgHyreBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: LottOgHyre
+                    }
+                } | null
+            } | null
         }
         readonly medisinskVurdering?: {
             readonly __typename: 'MedisinskVurdering'
@@ -2044,6 +2593,172 @@ export const SvarUnionFragmentDoc = {
         },
     ],
 } as unknown as DocumentNode<SvarUnionFragment, unknown>
+export const BrukerSvarFragmentDoc = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<BrukerSvarFragment, unknown>
 export const SykmeldingStatusFragmentDoc = {
     kind: 'Document',
     definitions: [
@@ -2087,6 +2802,14 @@ export const SykmeldingStatusFragmentDoc = {
                                     },
                                 },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerSvar' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BrukerSvar' } }],
                         },
                     },
                 ],
@@ -2163,6 +2886,167 @@ export const SykmeldingStatusFragmentDoc = {
                                     kind: 'Field',
                                     alias: { kind: 'Name', value: 'dager' },
                                     name: { kind: 'Name', value: 'svar' },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
                                 },
                             ],
                         },
@@ -2503,6 +3387,167 @@ export const SykmeldingFragmentDoc = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'Periode' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Periode' } },
             selectionSet: {
@@ -2599,6 +3644,14 @@ export const SykmeldingFragmentDoc = {
                                     },
                                 },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerSvar' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BrukerSvar' } }],
                         },
                     },
                 ],
@@ -3011,6 +4064,167 @@ export const EndreEgenmeldingsdagerDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -3049,6 +4263,14 @@ export const EndreEgenmeldingsdagerDocument = {
                                     },
                                 },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerSvar' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BrukerSvar' } }],
                         },
                     },
                 ],
@@ -3587,6 +4809,167 @@ export const ChangeSykmeldingStatusDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -3625,6 +5008,14 @@ export const ChangeSykmeldingStatusDocument = {
                                     },
                                 },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerSvar' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BrukerSvar' } }],
                         },
                     },
                 ],
@@ -4061,6 +5452,167 @@ export const SendSykmeldingDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -4099,6 +5651,14 @@ export const SendSykmeldingDocument = {
                                     },
                                 },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerSvar' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BrukerSvar' } }],
                         },
                     },
                 ],
@@ -4508,6 +6068,167 @@ export const SykmeldingerDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -4546,6 +6267,14 @@ export const SykmeldingerDocument = {
                                     },
                                 },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerSvar' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BrukerSvar' } }],
                         },
                     },
                 ],
@@ -4969,6 +6698,167 @@ export const SykmeldingByIdDocument = {
         },
         {
             kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'BrukerSvar' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'BrukerSvar' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'erOpplysningeneRiktige' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'uriktigeOpplysninger' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidssituasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgiverOrgnummer' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'riktigNarmesteLeder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsdager' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harBruktEgenmelding' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'egenmeldingsperioder' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'svar' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'fom' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'tom' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'harForsikring' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fisker' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'blad' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingStatus' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'SykmeldingStatus' } },
             selectionSet: {
@@ -5007,6 +6897,14 @@ export const SykmeldingByIdDocument = {
                                     },
                                 },
                             ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerSvar' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BrukerSvar' } }],
                         },
                     },
                 ],

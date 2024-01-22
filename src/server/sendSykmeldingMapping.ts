@@ -4,17 +4,11 @@ import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 import { raise } from '../utils/ts-utils'
 
-import {
-    ArbeidssituasjonType,
-    SendSykmeldingValues,
-    UriktigeOpplysningerType,
-    YesOrNo,
-} from './graphql/resolver-types.generated'
-import { ArbeidssituasjonV3, SykmeldingUserEventV3Api, UriktigeOpplysningerV3 } from './api-models/SendSykmelding'
+import { ArbeidssituasjonType, JaEllerNei, SendSykmeldingValues, YesOrNo } from './graphql/resolver-types.generated'
+import { SykmeldingUserEventV3Api } from './api-models/SendSykmelding'
 import { Brukerinformasjon } from './api-models/Brukerinformasjon'
 import { ErUtenforVentetid } from './api-models/ErUtenforVentetid'
 import { Sykmelding } from './api-models/sykmelding/Sykmelding'
-import { JaEllerNei } from './api-models/sykmelding/SykmeldingStatus'
 
 export function mapSendSykmeldingValuesToV3Api(
     values: SendSykmeldingValues,
@@ -45,7 +39,7 @@ export function mapSendSykmeldingValuesToV3Api(
 
     return {
         erOpplysningeneRiktige: {
-            svar: yesOrNoTypeToV3Enum(values.erOpplysningeneRiktige),
+            svar: yesOrNoToJaEllerNei(values.erOpplysningeneRiktige),
             sporsmaltekst: sporsmal.erOpplysningeneRiktige,
         },
         arbeidssituasjon: {
@@ -61,13 +55,13 @@ export function mapSendSykmeldingValuesToV3Api(
         riktigNarmesteLeder:
             values.riktigNarmesteLeder && valgtNarmesteLederNavn != null
                 ? {
-                      svar: yesOrNoTypeToV3Enum(values.riktigNarmesteLeder),
+                      svar: yesOrNoToJaEllerNei(values.riktigNarmesteLeder),
                       sporsmaltekst: sporsmal.riktigNarmesteLeder(valgtNarmesteLederNavn),
                   }
                 : null,
         harBruktEgenmelding: values.harBruktEgenmelding
             ? {
-                  svar: yesOrNoTypeToV3Enum(values.harBruktEgenmelding),
+                  svar: yesOrNoToJaEllerNei(values.harBruktEgenmelding),
                   sporsmaltekst: sporsmal.harBruktEgenmelding(oppfolgingsdato),
               }
             : null,
@@ -89,20 +83,20 @@ export function mapSendSykmeldingValuesToV3Api(
                 : null,
         harForsikring: values.harForsikring
             ? {
-                  svar: yesOrNoTypeToV3Enum(values.harForsikring),
+                  svar: yesOrNoToJaEllerNei(values.harForsikring),
                   sporsmaltekst: sporsmal.harForsikring,
               }
             : null,
         uriktigeOpplysninger: values.uriktigeOpplysninger
             ? {
-                  svar: values.uriktigeOpplysninger.map(uriktigeOpplysningerTypeToV3Enum),
+                  svar: values.uriktigeOpplysninger,
                   sporsmaltekst: sporsmal.uriktigeOpplysninger,
               }
             : null,
         harBruktEgenmeldingsdager:
             values.harEgenmeldingsdager && valgtArbeidsgiver
                 ? {
-                      svar: yesOrNoTypeToV3Enum(values.harEgenmeldingsdager),
+                      svar: yesOrNoToJaEllerNei(values.harEgenmeldingsdager),
                       sporsmaltekst: sporsmal.harBruktEgenmeldingsdager(valgtArbeidsgiver.navn),
                   }
                 : null,
@@ -131,44 +125,27 @@ export function mapSendSykmeldingValuesToV3Api(
     }
 }
 
-function yesOrNoTypeToV3Enum(value: YesOrNo): JaEllerNei {
+export function yesOrNoToJaEllerNei(value: YesOrNo): JaEllerNei {
     return value === YesOrNo.YES ? JaEllerNei.JA : JaEllerNei.NEI
 }
 
-function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonV3 {
+function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonType {
     switch (value) {
         // Permittert falls back to arbeidsledig in the API, this is intentional
         case ArbeidssituasjonType.ARBEIDSLEDIG:
         case ArbeidssituasjonType.PERMITTERT:
-            return ArbeidssituasjonV3.ARBEIDSLEDIG
+            return ArbeidssituasjonType.ARBEIDSLEDIG
         case ArbeidssituasjonType.ARBEIDSTAKER:
-            return ArbeidssituasjonV3.ARBEIDSTAKER
+            return ArbeidssituasjonType.ARBEIDSTAKER
         case ArbeidssituasjonType.FISKER:
-            return ArbeidssituasjonV3.FISKER
+            return ArbeidssituasjonType.FISKER
         case ArbeidssituasjonType.JORDBRUKER:
-            return ArbeidssituasjonV3.JORDBRUKER
+            return ArbeidssituasjonType.JORDBRUKER
         case ArbeidssituasjonType.FRILANSER:
-            return ArbeidssituasjonV3.FRILANSER
+            return ArbeidssituasjonType.FRILANSER
         case ArbeidssituasjonType.NAERINGSDRIVENDE:
-            return ArbeidssituasjonV3.NAERINGSDRIVENDE
+            return ArbeidssituasjonType.NAERINGSDRIVENDE
         case ArbeidssituasjonType.ANNET:
-            return ArbeidssituasjonV3.ANNET
-    }
-}
-
-function uriktigeOpplysningerTypeToV3Enum(value: UriktigeOpplysningerType): UriktigeOpplysningerV3 {
-    switch (value) {
-        case UriktigeOpplysningerType.ANDRE_OPPLYSNINGER:
-            return UriktigeOpplysningerV3.ANDRE_OPPLYSNINGER
-        case UriktigeOpplysningerType.ARBEIDSGIVER:
-            return UriktigeOpplysningerV3.ARBEIDSGIVER
-        case UriktigeOpplysningerType.DIAGNOSE:
-            return UriktigeOpplysningerV3.DIAGNOSE
-        case UriktigeOpplysningerType.PERIODE:
-            return UriktigeOpplysningerV3.PERIODE
-        case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_HOY:
-            return UriktigeOpplysningerV3.SYKMELDINGSGRAD_FOR_HOY
-        case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_LAV:
-            return UriktigeOpplysningerV3.SYKMELDINGSGRAD_FOR_LAV
+            return ArbeidssituasjonType.ANNET
     }
 }

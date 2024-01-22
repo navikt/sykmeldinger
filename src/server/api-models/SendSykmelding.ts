@@ -1,9 +1,9 @@
-import { JaEllerNei } from './sykmelding/SykmeldingStatus'
+import { ArbeidssituasjonType, JaEllerNei, UriktigeOpplysningerType } from '../graphql/resolver-types.generated'
 
 export type SykmeldingUserEventV3Api = {
     erOpplysningeneRiktige: SporsmalSvar<JaEllerNei>
-    uriktigeOpplysninger: SporsmalSvar<Array<UriktigeOpplysningerV3>> | null
-    arbeidssituasjon: SporsmalSvar<ArbeidssituasjonV3>
+    uriktigeOpplysninger: SporsmalSvar<Array<UriktigeOpplysningerType>> | null
+    arbeidssituasjon: SporsmalSvar<ArbeidssituasjonType>
     arbeidsgiverOrgnummer: SporsmalSvar<string> | null
     riktigNarmesteLeder: SporsmalSvar<JaEllerNei> | null
     harBruktEgenmelding: SporsmalSvar<JaEllerNei> | null
@@ -25,23 +25,4 @@ type SporsmalSvar<T> = {
 type EgenmeldingsperiodeV3 = {
     fom: string
     tom: string
-}
-
-export enum UriktigeOpplysningerV3 {
-    PERIODE = 'PERIODE',
-    SYKMELDINGSGRAD_FOR_HOY = 'SYKMELDINGSGRAD_FOR_HOY',
-    SYKMELDINGSGRAD_FOR_LAV = 'SYKMELDINGSGRAD_FOR_LAV',
-    ARBEIDSGIVER = 'ARBEIDSGIVER',
-    DIAGNOSE = 'DIAGNOSE',
-    ANDRE_OPPLYSNINGER = 'ANDRE_OPPLYSNINGER',
-}
-
-export enum ArbeidssituasjonV3 {
-    ARBEIDSTAKER = 'ARBEIDSTAKER',
-    FRILANSER = 'FRILANSER',
-    NAERINGSDRIVENDE = 'NAERINGSDRIVENDE',
-    FISKER = 'FISKER',
-    JORDBRUKER = 'JORDBRUKER',
-    ARBEIDSLEDIG = 'ARBEIDSLEDIG',
-    ANNET = 'ANNET',
 }
