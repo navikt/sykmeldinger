@@ -130,7 +130,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                 <div aria-live="polite">
                     {isComplete && (
                         <div className="mt-2 rounded-medium bg-surface-success-subtle p-6">
-                            <Heading size="small" as="p" className="flex items-center">
+                            <Heading level="2" size="small" as="p" className="flex items-center">
                                 Takk for tilbakemeldingen din <FaceSmileIcon className="ml-1" />
                             </Heading>
                         </div>

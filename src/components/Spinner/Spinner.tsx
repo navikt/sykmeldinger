@@ -10,7 +10,7 @@ interface SpinnerProps {
 function Spinner({ className, headline }: SpinnerProps): ReactElement {
     return (
         <div className={cn(className, 'flex flex-col items-center')}>
-            <Heading size="medium" className="mb-4">
+            <Heading level="2" size="medium" className="mb-4">
                 {headline}
             </Heading>
             <Loader />
