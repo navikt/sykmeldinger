@@ -33,7 +33,7 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall, perioder }: AvvistVe
 
     return (
         <GuidePanel poster>
-            <Heading size="small" className="my-4 text-left">
+            <Heading level="2" size="small" className="my-4 text-left">
                 Sykmeldingen kan dessverre ikke brukes her
             </Heading>
             <div className="mt-6">

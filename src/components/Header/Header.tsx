@@ -17,10 +17,14 @@ function Header(props: HeaderProps): ReactElement | null {
         <div className="mx-auto flex max-w-2xl items-center p-4">
             <div>
                 {!('skeleton' in props) ? (
-                    <Heading size="xlarge">{props.title ?? 'Sykmelding'}</Heading>
+                    <Heading level="1" size="xlarge">
+                        {props.title ?? 'Sykmelding'}
+                    </Heading>
                 ) : (
                     <Skeleton>
-                        <Heading size="xlarge">Sykmelding</Heading>
+                        <Heading level="1" size="xlarge">
+                            Sykmelding
+                        </Heading>
                     </Skeleton>
                 )}
                 {!('skeleton' in props) ? (
