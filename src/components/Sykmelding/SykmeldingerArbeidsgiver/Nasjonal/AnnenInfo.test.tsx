@@ -157,6 +157,6 @@ describe('AnnenInfo', () => {
         }
 
         render(<AnnenInfo sykmelding={sykmelding} parentId="test" />)
-        expect(screen.getByText('Tlf: —')).toBeInTheDocument()
+        expect(screen.getByText('Tlf: mangler')).toBeInTheDocument()
     })
 })

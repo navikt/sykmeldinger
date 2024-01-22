@@ -46,7 +46,7 @@ function AnnenInfo({ sykmelding }: Props): ReactElement | null {
                             <Text style={styles.title}>Sykmeldingen ble skrevet av</Text>
                             <Text style={styles.text}>{getBehandlerName(sykmelding.behandler)}</Text>
                             <Text style={styles.text}>
-                                {sykmelding.behandler.tlf ? `Tlf: ${sykmelding.behandler.tlf}` : 'Tlf: —'}
+                                {sykmelding.behandler.tlf ? `Tlf: ${sykmelding.behandler.tlf}` : 'Tlf: mangler'}
                             </Text>
                         </View>
                         <View style={styles.view}>

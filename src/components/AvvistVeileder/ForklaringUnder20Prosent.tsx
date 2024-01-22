@@ -14,13 +14,13 @@ function ForklaringUnder20Prosent({ perioder }: Props): ReactElement {
         <>
             {grad == null ? (
                 <BodyShort className="pb-5">
-                    Behandleren din har oppgitt at sykmeldingsgraden din er under 20 %, noe som ikke gir deg rett til
+                    Behandleren din har oppgitt at sykmeldingsgraden din er under 20%, noe som ikke gir deg rett til
                     sykepenger. Hvis du mener det er feil, kan du kontakte legen din.
                 </BodyShort>
             ) : (
                 <BodyShort className="pb-5">
-                    Behandleren din har oppgitt at du er <strong>{grad ?? 'oh yes'} % sykmeldt</strong>. Du må være
-                    minst <strong>20 % sykmeldt</strong> for å ha krav på sykepenger. Hvis du mener det er feil, kan du
+                    Behandleren din har oppgitt at du er <strong>{grad}% sykmeldt</strong>. Du må være minst{' '}
+                    <strong>20% sykmeldt</strong> for å ha krav på sykepenger. Hvis du mener det er feil, kan du
                     kontakte legen din.
                 </BodyShort>
             )}
