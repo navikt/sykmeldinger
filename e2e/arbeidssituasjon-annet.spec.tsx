@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 
 import {
     bekreftSykmelding,
@@ -7,6 +7,7 @@ import {
     opplysingeneStemmer,
     velgArbeidssituasjon,
 } from './user-actions'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Arbeidssituasjon - Annet', () => {
     test('should be able to submit form with work situation annet', async ({ page }) => {
@@ -16,8 +17,14 @@ test.describe('Arbeidssituasjon - Annet', () => {
         await velgArbeidssituasjon('annet')(page)
         await bekreftSykmelding(page)
 
-        await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+
+        await expectDineSvar({
+            stemmer: 'Ja',
+            arbeidssituasjon: 'Annet',
+        })(page)
     })
 })

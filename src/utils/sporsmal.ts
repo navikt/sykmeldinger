@@ -3,6 +3,7 @@ import { ArbeidssituasjonType } from 'queries'
 import { UriktigeOpplysningerType } from '../server/graphql/resolver-types.generated'
 
 import { toReadableDate } from './dateUtils'
+import { prettifyOrgName } from './orgUtils'
 
 export const sporsmal = {
     erOpplysningeneRiktige: 'Stemmer opplysningene?',
@@ -16,7 +17,8 @@ export const sporsmal = {
         `Hvilke dager var du borte fra jobb før ${toReadableDate(oppfolgingsdato)}?`,
     harForsikring: 'Har du forsikring som gjelder for de første 16 dagene av sykefraværet?',
     uriktigeOpplysninger: 'Hvilke opplysninger stemmer ikke?',
-    harBruktEgenmeldingsdager: (arbeidsgiverNavn: string) => `Brukte du egenmelding hos ${arbeidsgiverNavn}`,
+    harBruktEgenmeldingsdager: (arbeidsgiverNavn: string) =>
+        `Brukte du egenmelding hos ${prettifyOrgName(arbeidsgiverNavn)}`,
     egenmeldingsdager: 'Velg dagene du brukte egenmelding',
     fisker: {
         velgBlad: 'Velg blad',
