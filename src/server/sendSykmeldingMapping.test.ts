@@ -367,7 +367,7 @@ describe('sendSykmeldingMapping', () => {
                     svar: 'JA',
                 },
                 harBruktEgenmeldingsdager: {
-                    sporsmaltekst: 'Brukte du egenmelding hos PONTYPANDY FIRE SERVICE',
+                    sporsmaltekst: 'Brukte du egenmelding hos Pontypandy Fire Service',
                     svar: 'JA',
                 },
                 egenmeldingsdager: {

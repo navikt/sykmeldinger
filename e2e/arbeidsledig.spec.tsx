@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { format, getDate, sub } from 'date-fns'
 import { nb } from 'date-fns/locale'
 
@@ -10,6 +10,7 @@ import {
     opplysingeneStemmer,
     velgArbeidssituasjon,
 } from './user-actions'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Arbeidssituasjon - Arbeidsledig', () => {
     test('should be able to submit form with work situation arbeidsledig', async ({ page }) => {
@@ -20,11 +21,15 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
 
-        await page.waitForURL('**/kvittering')
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
 
-        await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+        await expectDineSvar({
+            stemmer: 'Ja',
+            arbeidssituasjon: 'Arbeidsledig',
+        })(page)
     })
 
     test('should not send egenmeldingsdager and stuff when first filled out as arbeidsgiver, then changes back to arbeidsledig', async ({
@@ -66,11 +71,14 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
 
-        await page.waitForURL('**/kvittering')
-
-        await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
         await expect(page.getByRole('heading', { name: /Egenmeldingsdager/ })).not.toBeVisible()
-        await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+        await expectDineSvar({
+            stemmer: 'Ja',
+            arbeidssituasjon: 'Arbeidsledig',
+        })(page)
     })
 })

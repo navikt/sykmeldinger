@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 import { getRadioInGroup } from './test-utils'
 import {
@@ -8,6 +8,7 @@ import {
     navigateToFirstSykmelding,
     sendSykmelding,
 } from './user-actions'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Arbeidssituasjon - Arbeidstaker', () => {
     test.describe('normal situation', () => {
@@ -23,11 +24,23 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await sendSykmelding(page)
 
-            await expect(
-                page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-            ).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'Pontypandy Fire Service',
+                egenmeldingsdager: 'legg til',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Ansatt',
+                arbeidsgiver: '110110110',
+                narmesteleder: {
+                    navn: 'Station Officer Steele',
+                    svar: 'Ja',
+                },
+                egenmeldingsdager: {
+                    arbeidsgiver: 'Pontypandy Fire Service',
+                    svar: 'Nei',
+                },
+            })(page)
         })
 
         test('should be able to submit form with active arbeidsgiver and chosing "No" on correct narmeste leder', async ({
@@ -49,11 +62,23 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
             await sendSykmelding(page)
 
-            await expect(
-                page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-            ).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'Pontypandy Fire Service',
+                egenmeldingsdager: 'legg til',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Ansatt',
+                arbeidsgiver: '110110110',
+                narmesteleder: {
+                    navn: 'Station Officer Steele',
+                    svar: 'Nei',
+                },
+                egenmeldingsdager: {
+                    arbeidsgiver: 'Pontypandy Fire Service',
+                    svar: 'Nei',
+                },
+            })(page)
         })
 
         test('should be able to submit form with inactive arbeidsgiver', async ({ page }) => {
@@ -72,11 +97,20 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
             await sendSykmelding(page)
 
-            await expect(
-                page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Andeby Brannstation' }),
-            ).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'Andeby Brannstation',
+                egenmeldingsdager: 'legg til',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Ansatt',
+                arbeidsgiver: '110110112',
+                narmesteleder: ExpectMeta.NotInDom,
+                egenmeldingsdager: {
+                    arbeidsgiver: 'Andeby Brannstation',
+                    svar: 'Nei',
+                },
+            })(page)
         })
 
         test('should be able to submit form with missing NL but active arbeidsgiver', async ({ page }) => {
@@ -95,11 +129,20 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
             await sendSykmelding(page)
 
-            await expect(
-                page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Nottinghamshire Missing Narmesteleder' }),
-            ).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'Nottinghamshire Missing Narmesteleder',
+                egenmeldingsdager: 'legg til',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Ansatt',
+                arbeidsgiver: '110110113',
+                narmesteleder: ExpectMeta.NotInDom,
+                egenmeldingsdager: {
+                    arbeidsgiver: 'Nottinghamshire Missing Narmesteleder',
+                    svar: 'Nei',
+                },
+            })(page)
         })
 
         test('should show warning if user does not have any arbeidsforhold', async ({ page }) => {
