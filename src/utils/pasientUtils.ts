@@ -7,3 +7,7 @@ export function getPasientName<
         pasient.etternavn ? ' ' + pasient.etternavn : ''
     }`
 }
+
+export function fnrText(fnr: string | null | undefined): string {
+    return `Fødselsnummer: ${fnr ? `${fnr.substring(0, 6)} ${fnr.substring(6)}` : 'mangler'}`
+}
