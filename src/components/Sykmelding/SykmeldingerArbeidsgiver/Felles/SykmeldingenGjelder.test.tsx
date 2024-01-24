@@ -31,6 +31,6 @@ describe('SykmeldingenGjelderView', () => {
         render(<SykmeldingenGjelder pasient={pasient} parentId="test" />)
         expect(screen.getByText('Sykmeldingen gjelder')).toBeInTheDocument()
         expect(screen.getByText('Ola Nordmann')).toBeInTheDocument()
-        expect(screen.getByText('Fødselsnr: 12345678901')).toBeInTheDocument()
+        expect(screen.getByText('Fødselsnummer: 123456 78901')).toBeInTheDocument()
     })
 })

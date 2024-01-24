@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { getPasientName } from '../../../utils/pasientUtils'
+import { fnrText, getPasientName } from '../../../utils/pasientUtils'
 import { Pasient } from '../../api-models/sykmelding/Pasient'
 
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
@@ -32,7 +32,7 @@ const SykmeldingenGjelder = ({ pasient }: Props): ReactElement | null => {
         <Section title="Sykmeldingen gjelder" Icon={People}>
             <View style={styles.content}>
                 <Text style={styles.text}>{name}</Text>
-                <Text>Fødselsnr: {pasient.fnr}</Text>
+                <Text>{fnrText(pasient.fnr)}</Text>
             </View>
         </Section>
     )
