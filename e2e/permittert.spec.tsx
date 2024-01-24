@@ -1,8 +1,14 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 
-test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-})
+import {
+    bekreftSykmelding,
+    gotoScenario,
+    navigateToFirstSykmelding,
+    opplysingeneStemmer,
+    velgArbeidssituasjon,
+} from './user-actions'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
+import { userInteractionsGroup } from './test-utils'
 
 test.describe('Arbeidssituasjon - Permittert', () => {
     /**
@@ -10,27 +16,20 @@ test.describe('Arbeidssituasjon - Permittert', () => {
      * to the mapping in the API layer
      */
     test('should submit PERMITTERT when user choose radio button permittert', async ({ page }) => {
-        await page
-            .getByRole('region', { name: /Nye sykmeldinger/i })
-            .getByRole('link', { name: /100% Sykmelding/ })
-            .click()
+        await userInteractionsGroup(
+            gotoScenario('normal'),
+            navigateToFirstSykmelding('nye', '100%'),
+            opplysingeneStemmer,
+            velgArbeidssituasjon('permittert'),
+            bekreftSykmelding,
+        )(page)
 
-        await page
-            .getByRole('group', { name: /Stemmer opplysningene?/ })
-            .getByRole('radio', { name: /Ja/ })
-            .click()
-
-        await page
-            .getByRole('group', { name: /Jeg er sykmeldt som/i })
-            .getByRole('radio', { name: /permittert/ })
-            .click()
-
-        await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
-
-        await page.waitForURL('**/kvittering')
-
-        await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+        await expectDineSvar({
+            arbeidssituasjon: 'Arbeidsledig',
+        })(page)
     })
 })

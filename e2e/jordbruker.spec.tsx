@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 import {
+    bekreftSykmelding,
     expectOppfolgingsdato,
     frilanserEgenmeldingsperioder,
     gotoScenario,
@@ -9,6 +10,7 @@ import {
     velgArbeidssituasjon,
     velgForsikring,
 } from './user-actions'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Jordbruker', () => {
     test('should be able to submit form within ventetid', async ({ page }) => {
@@ -24,15 +26,20 @@ test.describe('Jordbruker', () => {
         await frilanserEgenmeldingsperioder([{ fom: '20.12.2020', tom: '27.12.2020' }])(page)
         await velgForsikring('Ja')(page)
 
-        await expect(page).toHaveNoViolations()
+        await bekreftSykmelding(page)
 
-        await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
-        await page.waitForURL('**/kvittering')
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
 
-        await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('heading', { name: /Egenmeldingsdager/ })).not.toBeVisible()
-        await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+        await expectDineSvar({
+            arbeidssituasjon: 'Jordbruker',
+            selvstendig: {
+                egenmeldingsperioder: ['20. - 27. desember 2020'],
+                forsikring: 'Ja',
+            },
+        })(page)
     })
 
     test('should be able to submit form outside ventetid', async ({ page }) => {
@@ -45,12 +52,15 @@ test.describe('Jordbruker', () => {
 
         await expect(page).toHaveNoViolations()
 
-        await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
-        await page.waitForURL('**/kvittering')
+        await bekreftSykmelding(page)
 
-        await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('heading', { name: /Egenmeldingsdager/ })).not.toBeVisible()
-        await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+
+        await expectDineSvar({
+            arbeidssituasjon: 'Jordbruker',
+        })(page)
     })
 })

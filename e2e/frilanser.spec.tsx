@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 import {
+    bekreftSykmelding,
     expectOppfolgingsdato,
     frilanserEgenmeldingsperioder,
     gotoScenario,
@@ -10,6 +11,7 @@ import {
     velgForsikring,
 } from './user-actions'
 import { getRadioInGroup } from './test-utils'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Frilanser', () => {
     test.describe('Within ventetid', () => {
@@ -26,15 +28,20 @@ test.describe('Frilanser', () => {
             await frilanserEgenmeldingsperioder([{ fom: '20.12.2020', tom: '27.12.2020' }])(page)
             await velgForsikring('Ja')(page)
 
-            await expect(page).toHaveNoViolations()
+            await bekreftSykmelding(page)
 
-            await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
-            await page.waitForURL('**/kvittering')
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
 
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-            await expect(page.getByRole('heading', { name: /Egenmeldingsdager/ })).not.toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+            await expectDineSvar({
+                arbeidssituasjon: 'Frilanser',
+                selvstendig: {
+                    egenmeldingsperioder: ['20. - 27. desember 2020'],
+                    forsikring: 'Ja',
+                },
+            })(page)
         })
 
         test('should use first fom in sykmelding period if oppfolgingsdato is missing', async ({ page }) => {
@@ -50,15 +57,20 @@ test.describe('Frilanser', () => {
             await frilanserEgenmeldingsperioder([{ fom: '20.12.2020', tom: '27.12.2020' }])(page)
             await velgForsikring('Ja')(page)
 
-            await expect(page).toHaveNoViolations()
+            await bekreftSykmelding(page)
 
-            await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
-            await page.waitForURL('**/kvittering')
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
 
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-            await expect(page.getByRole('heading', { name: /Egenmeldingsdager/ })).not.toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+            await expectDineSvar({
+                arbeidssituasjon: 'Frilanser',
+                selvstendig: {
+                    egenmeldingsperioder: ['20. - 27. desember 2020'],
+                    forsikring: 'Ja',
+                },
+            })(page)
         })
     })
 
@@ -71,15 +83,20 @@ test.describe('Frilanser', () => {
             await opplysingeneStemmer(page)
             await velgArbeidssituasjon('frilanser')(page)
 
-            await expect(page).toHaveNoViolations()
+            await bekreftSykmelding(page)
 
-            await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
-            await page.waitForURL('**/kvittering')
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
 
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-            await expect(page.getByRole('heading', { name: /Egenmeldingsdager/ })).not.toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+            await expectDineSvar({
+                arbeidssituasjon: 'Frilanser',
+                selvstendig: {
+                    egenmeldingsperioder: ExpectMeta.NotInDom,
+                    forsikring: ExpectMeta.NotInDom,
+                },
+            })(page)
         })
     })
 
@@ -97,7 +114,6 @@ test.describe('Frilanser', () => {
             ).click()
 
             await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
-
             await expect(page.getByRole('link', { name: 'Du må fylle inn fra dato.' })).toBeVisible()
             await expect(page).toHaveNoViolations()
         })

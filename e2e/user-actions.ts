@@ -86,6 +86,7 @@ export function velgArbeidssituasjon(
         | 'fisker'
         | 'frilanser'
         | 'jordbruker'
+        | 'permittert'
         | 'selvstendig næringsdrivende',
 ) {
     return async (page: Page): Promise<void> => {

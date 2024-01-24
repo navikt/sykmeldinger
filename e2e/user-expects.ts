@@ -37,7 +37,15 @@ export function expectKvittering(opts: {
 export function expectDineSvar(svar: {
     stemmer?: 'Ja' | 'Nei'
     uriktige?: UriktigeOpplysningerType[]
-    arbeidssituasjon: 'Ansatt' | 'Arbeidsledig' | 'Annet' | 'Fisker'
+    arbeidssituasjon:
+        | 'Ansatt'
+        | 'Arbeidsledig'
+        | 'Annet'
+        | 'Fisker'
+        | 'Frilanser'
+        | 'Jordbruker'
+        | 'Permittert'
+        | 'Selvstendig næringsdrivende'
     arbeidsgiver?: string
     narmesteleder?:
         | {
