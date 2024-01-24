@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { test } from '@playwright/test'
 
 import {
     bekreftNarmesteleder,
@@ -11,6 +11,7 @@ import {
     velgForsikring,
 } from './user-actions'
 import { getRadioInGroup } from './test-utils'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Arbeidssituasjon - Fiskere', () => {
     test.describe('Blad A', () => {
@@ -32,8 +33,22 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await bekreftSykmelding(page)
 
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: ['1. - 2. januar 2021', '4. - 6. januar 2021'],
+                    forsikring: 'Ja',
+                },
+                fisker: {
+                    blad: 'A',
+                    lottEllerHyre: 'Lott',
+                },
+            })(page)
         })
 
         test('Hyre, should be arbeidsgiver-esque', async ({ page }) => {
@@ -48,10 +63,23 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
             ).click()
             await sendSykmelding(page)
 
-            await expect(
-                page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-            ).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'Pontypandy Fire Service',
+                egenmeldingsdager: 'legg til',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                arbeidsgiver: '110110110',
+                narmesteleder: {
+                    navn: 'Station Officer Steele',
+                    svar: 'Ja',
+                },
+                fisker: {
+                    blad: 'A',
+                    lottEllerHyre: 'Lott',
+                },
+            })(page)
         })
 
         test('Lott & Hyre, should be næringsdrivende-esque', async ({ page }) => {
@@ -72,8 +100,22 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await bekreftSykmelding(page)
 
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: ['1. - 2. januar 2021', '4. - 6. januar 2021'],
+                    forsikring: 'Ja',
+                },
+                fisker: {
+                    blad: 'A',
+                    lottEllerHyre: 'Lott',
+                },
+            })(page)
         })
     })
 
@@ -85,8 +127,22 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
             // No forsikring question for Blad B
             await bekreftSykmelding(page)
 
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: ['1. - 2. januar 2021'],
+                    forsikring: ExpectMeta.NotInDom,
+                },
+                fisker: {
+                    blad: 'B',
+                    lottEllerHyre: 'Lott',
+                },
+            })(page)
         })
 
         test('Hyre, should be arbeidsgiver-esque', async ({ page }) => {
@@ -101,10 +157,23 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
             ).click()
             await sendSykmelding(page)
 
-            await expect(
-                page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-            ).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'Pontypandy Fire Service',
+                egenmeldingsdager: 'legg til',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                arbeidsgiver: '110110110',
+                narmesteleder: {
+                    navn: 'Station Officer Steele',
+                    svar: 'Ja',
+                },
+                fisker: {
+                    blad: 'B',
+                    lottEllerHyre: 'Lott',
+                },
+            })(page)
         })
 
         test('Lott & Hyre, should be næringsdrivende-esque without forsikring', async ({ page }) => {
@@ -115,8 +184,22 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
             // No forsikring question for Blad B
             await bekreftSykmelding(page)
 
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
-            await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: ['1. - 2. januar 2021'],
+                    forsikring: ExpectMeta.NotInDom,
+                },
+                fisker: {
+                    blad: 'B',
+                    lottEllerHyre: 'Lott',
+                },
+            })(page)
         })
     })
 })
