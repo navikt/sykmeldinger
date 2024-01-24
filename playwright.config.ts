@@ -67,10 +67,16 @@ export default defineConfig({
             name: 'Mobile Chrome',
             use: { ...devices['Pixel 5'] },
         },
-        {
-            name: 'Mobile Safari',
-            use: { ...devices['iPhone 12'] },
-        },
+        // Safari seems broken, unable to scroll or record videos.
+        // TODO: Check if Safari is still being Safari after a few new versions.
+        ...(process.env.RUN_SAFARI
+            ? [
+                  {
+                      name: 'Mobile Safari',
+                      use: { ...devices['iPhone 12'] },
+                  },
+              ]
+            : []),
         ...(!process.env.CI
             ? [
                   {

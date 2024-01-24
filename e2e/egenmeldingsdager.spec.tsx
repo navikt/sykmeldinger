@@ -1,9 +1,10 @@
 import * as R from 'remeda'
-import { test, expect, Page } from '@playwright/test'
+import { expect, Page, test } from '@playwright/test'
 import { add, format, getDate, sub } from 'date-fns'
 import { nb } from 'date-fns/locale'
 
 import { bekreftNarmesteleder, filloutArbeidstaker, gotoScenario } from './user-actions'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 function selectEgenmeldingsdager({
     daysToSelect,
@@ -65,11 +66,22 @@ test.describe('Egenmeldingsdager', () => {
 
         await page.getByRole('button', { name: /Send sykmelding/ }).click()
 
-        await expect(
-            page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-        ).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Endre egenmeldingsdager/ })).toBeVisible()
+        await expectKvittering({
+            sendtTil: 'Pontypandy Fire Service',
+            egenmeldingsdager: 'endre',
+        })(page)
+
+        await expectDineSvar({
+            arbeidssituasjon: 'Ansatt',
+            narmesteleder: {
+                navn: 'Station Officer Steele',
+                svar: 'Ja',
+            },
+            egenmeldingsdager: {
+                arbeidsgiver: 'Pontypandy Fire Service',
+                antallDager: 2,
+            },
+        })(page)
     })
 
     test('should be able to submit form with two periods of egenmeldingsdager', async ({ page }) => {
@@ -86,11 +98,23 @@ test.describe('Egenmeldingsdager', () => {
         await expectNumberOfEgenmeldingsdagerInput(4)(page)
 
         await page.getByRole('button', { name: /Send sykmelding/ }).click()
-        await expect(
-            page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-        ).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Endre egenmeldingsdager/ })).toBeVisible()
+
+        await expectKvittering({
+            sendtTil: 'Pontypandy Fire Service',
+            egenmeldingsdager: 'endre',
+        })(page)
+
+        await expectDineSvar({
+            arbeidssituasjon: 'Ansatt',
+            narmesteleder: {
+                navn: 'Station Officer Steele',
+                svar: 'Ja',
+            },
+            egenmeldingsdager: {
+                arbeidsgiver: 'Pontypandy Fire Service',
+                antallDager: 4,
+            },
+        })(page)
     })
 
     test('should be able to submit form after editing previous period with egenmeldingsdager', async ({ page }) => {
@@ -113,11 +137,23 @@ test.describe('Egenmeldingsdager', () => {
         await expectNumberOfEgenmeldingsdagerInput(2)(page)
 
         await page.getByRole('button', { name: /Send sykmelding/ }).click()
-        await expect(
-            page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-        ).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('button', { name: /Endre egenmeldingsdager/ })).toBeVisible()
+
+        await expectKvittering({
+            sendtTil: 'Pontypandy Fire Service',
+            egenmeldingsdager: 'endre',
+        })(page)
+
+        await expectDineSvar({
+            arbeidssituasjon: 'Ansatt',
+            narmesteleder: {
+                navn: 'Station Officer Steele',
+                svar: 'Ja',
+            },
+            egenmeldingsdager: {
+                arbeidsgiver: 'Pontypandy Fire Service',
+                antallDager: 2,
+            },
+        })(page)
     })
 
     test(`should NOT be asked about egenmeldingsdager when sykmelding is right against
@@ -130,11 +166,20 @@ test.describe('Egenmeldingsdager', () => {
         await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
 
         await page.getByRole('button', { name: /Send sykmelding/ }).click()
-        await expect(
-            page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-        ).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
-        await expect(page.getByRole('button', { name: /^(Endre|Legg til) egenmeldingsdager/ })).not.toBeVisible()
+
+        await expectKvittering({
+            sendtTil: 'Pontypandy Fire Service',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+
+        await expectDineSvar({
+            arbeidssituasjon: 'Ansatt',
+            narmesteleder: {
+                navn: 'Station Officer Steele',
+                svar: 'Ja',
+            },
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
     })
 
     test(`should be asked about egenmeldingsdager when sykmelding is right against AVVENTENDE sykmelding`, async ({
@@ -151,12 +196,23 @@ test.describe('Egenmeldingsdager', () => {
         await expect(page).toHaveNoViolations()
 
         await page.getByRole('button', { name: /Send sykmelding/ }).click()
-        await expect(
-            page.getByRole('heading', { name: 'Sykmeldingen ble sendt til Pontypandy Fire Service' }),
-        ).toBeVisible()
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
 
-        await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
+        await expectKvittering({
+            sendtTil: 'Pontypandy Fire Service',
+            egenmeldingsdager: 'legg til',
+        })(page)
+
+        await expectDineSvar({
+            arbeidssituasjon: 'Ansatt',
+            narmesteleder: {
+                navn: 'Station Officer Steele',
+                svar: 'Ja',
+            },
+            egenmeldingsdager: {
+                arbeidsgiver: 'Pontypandy Fire Service',
+                svar: 'Nei',
+            },
+        })(page)
     })
 })
 

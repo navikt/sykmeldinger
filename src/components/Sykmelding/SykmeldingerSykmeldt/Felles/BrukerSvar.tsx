@@ -94,12 +94,7 @@ function YesNoAnswer({
     if (response == null) return null
 
     return (
-        <SykmeldingInfo
-            heading={response.sporsmaltekst}
-            icon={
-                response.svar === JaEllerNei.JA ? <CheckmarkCircleIcon aria-hidden /> : <XMarkOctagonIcon aria-hidden />
-            }
-        >
+        <SykmeldingInfo heading={response.sporsmaltekst} icon={<CheckmarkCircleIcon aria-hidden />}>
             {response.svar === JaEllerNei.JA ? 'Ja' : 'Nei'}
         </SykmeldingInfo>
     )

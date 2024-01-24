@@ -25,7 +25,7 @@ export function expectKvittering(opts: {
         }
 
         if (opts.egenmeldingsdager === ExpectMeta.NotInDom) {
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
+            await expect(page.getByRole('button', { name: /^(Endre|Legg til) egenmeldingsdager/ })).not.toBeVisible()
         } else if (opts.egenmeldingsdager === 'legg til') {
             await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
         } else {
@@ -45,10 +45,16 @@ export function expectDineSvar(svar: {
               svar: 'Ja' | 'Nei'
           }
         | ExpectMeta.NotInDom
-    egenmeldingsdager?: {
-        arbeidsgiver: string
-        svar: 'Nei'
-    }
+    egenmeldingsdager?:
+        | {
+              arbeidsgiver: string
+              svar: 'Nei'
+          }
+        | {
+              arbeidsgiver: string
+              antallDager: number
+          }
+        | ExpectMeta.NotInDom
 }) {
     return async (page: Page): Promise<void> => {
         const region = page.getByRole('region', { name: /Dine svar/i })
@@ -78,12 +84,23 @@ export function expectDineSvar(svar: {
             ).not.toBeVisible()
         }
         if (svar.egenmeldingsdager) {
-            if (svar.egenmeldingsdager.svar === 'Nei') {
+            if (svar.egenmeldingsdager === ExpectMeta.NotInDom) {
+                await expect(getInfoItem(new RegExp(`Brukte du egenmelding hos`))(region)).not.toBeVisible()
+            } else if ('svar' in svar.egenmeldingsdager && svar.egenmeldingsdager.svar === 'Nei') {
                 await expect(
                     getInfoItem(new RegExp(`Brukte du egenmelding hos ${svar.egenmeldingsdager.arbeidsgiver}`, 'i'))(
                         region,
                     ),
                 ).toHaveText(/Nei/i)
+            } else if ('antallDager' in svar.egenmeldingsdager) {
+                await expect(
+                    getInfoItem(new RegExp(`Brukte du egenmelding hos ${svar.egenmeldingsdager.arbeidsgiver}`, 'i'))(
+                        region,
+                    ),
+                ).toHaveText(/Ja/i)
+                await expect(getInfoItem('Velg dagene du brukte egenmelding')(region)).toHaveText(
+                    new RegExp(`(${svar.egenmeldingsdager.antallDager} dager)`, 'i'),
+                )
             } else {
                 raise('Illegal state: Needs to be implemented')
             }
