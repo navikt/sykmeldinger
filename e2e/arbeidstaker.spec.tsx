@@ -31,7 +31,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await expectDineSvar({
                 arbeidssituasjon: 'Ansatt',
-                arbeidsgiver: '110110110',
+                arbeidsgiver: 'Pontypandy Fire Service',
                 narmesteleder: {
                     navn: 'Station Officer Steele',
                     svar: 'Ja',

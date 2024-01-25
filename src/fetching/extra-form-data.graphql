@@ -26,3 +26,9 @@ query ExtraFormData($sykmeldingId: String!) {
         ...SykmeldingUtenforVentetid
     }
 }
+
+query Brukerinformasjon {
+    brukerinformasjon {
+        ...Brukerinformasjon
+    }
+}
