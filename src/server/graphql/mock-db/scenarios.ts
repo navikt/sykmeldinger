@@ -381,6 +381,18 @@ export const e2eScenarios = {
             ],
         }),
     },
+    noBrukerSvar: {
+        description: 'En sykmelding som ble sendt inn før vi lagret brukersvar i databasen',
+        scenario: () => ({
+            sykmeldinger: [
+                new SykmeldingBuilder({ offset: -14 })
+                    .enkelPeriode({ offset: 0, days: 7 })
+                    .send()
+                    .noBrukerSvar()
+                    .build(),
+            ],
+        }),
+    },
 } satisfies Record<string, { description: string; scenario: ScenarioCreator }>
 
 export function isValidScenario(scenario: string | null | undefined): scenario is Scenarios {
