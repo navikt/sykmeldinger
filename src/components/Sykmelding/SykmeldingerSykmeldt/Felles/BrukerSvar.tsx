@@ -31,10 +31,15 @@ export function BrukerSvarExpansionCard({ brukerSvar }: Props): ReactElement {
             aria-labelledby="oppsummering-bruker-svar-heading"
             className="pb-8"
             onToggle={(open) => {
-                logAmplitudeEvent({
-                    eventName: `accordion ${open ? 'åpnet' : 'lukket'}`,
-                    data: { tekst: 'Dine svar' },
-                })
+                logAmplitudeEvent(
+                    {
+                        eventName: `accordion ${open ? 'åpnet' : 'lukket'}`,
+                        data: { tekst: 'Dine svar' },
+                    },
+                    {
+                        status: '__typename' in brukerSvar ? 'sendt/bekreftet' : 'ikke sendt',
+                    },
+                )
             }}
         >
             <ExpansionCard.Header>
