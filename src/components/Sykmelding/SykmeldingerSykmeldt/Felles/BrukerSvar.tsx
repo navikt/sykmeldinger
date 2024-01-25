@@ -10,6 +10,7 @@ import { arbeidsSituasjonEnumToText, uriktigeOpplysningerEnumToText } from '../.
 import { capitalizeFirstLetter, pluralize } from '../../../../utils/stringUtils'
 import { toReadableDate, toReadableDatePeriod } from '../../../../utils/dateUtils'
 import { FormValues } from '../../../SendSykmelding/SendSykmeldingForm'
+import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
 import { mapFormValuesToBrukerSvar, SporsmaltekstMetadata } from './BrukerSvarUtils'
 
@@ -26,7 +27,16 @@ export function BrukerSvarExpansionCard({ brukerSvar }: Props): ReactElement {
             : mapFormValuesToBrukerSvar(brukerSvar.values, brukerSvar.sporsmaltekstMetadata)
 
     return (
-        <ExpansionCard aria-labelledby="oppsummering-bruker-svar-heading" className="pb-8">
+        <ExpansionCard
+            aria-labelledby="oppsummering-bruker-svar-heading"
+            className="pb-8"
+            onToggle={(open) => {
+                logAmplitudeEvent({
+                    eventName: `accordion ${open ? 'åpnet' : 'lukket'}`,
+                    data: { tekst: 'Dine svar' },
+                })
+            }}
+        >
             <ExpansionCard.Header>
                 <div className="flex items-center gap-4">
                     <div className="mt-1.5 grid shrink-0 place-content-center text-4xl">

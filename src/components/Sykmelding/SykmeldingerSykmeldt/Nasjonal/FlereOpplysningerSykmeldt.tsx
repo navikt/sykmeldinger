@@ -2,9 +2,19 @@ import { ReactElement, PropsWithChildren } from 'react'
 import { ExpansionCard } from '@navikt/ds-react'
 import { FileSearchIcon } from '@navikt/aksel-icons'
 
+import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
+
 function FlereOpplysningerSykmeldt({ children }: PropsWithChildren): ReactElement {
     return (
-        <ExpansionCard aria-labelledby="flere-opplysninger-heading">
+        <ExpansionCard
+            aria-labelledby="flere-opplysninger-heading"
+            onToggle={(open) => {
+                logAmplitudeEvent({
+                    eventName: `accordion ${open ? 'åpnet' : 'lukket'}`,
+                    data: { tekst: 'Flere opplysninger' },
+                })
+            }}
+        >
             <ExpansionCard.Header>
                 <div className="flex items-center gap-4">
                     <div className="mt-1.5 grid shrink-0 place-content-center text-4xl">
