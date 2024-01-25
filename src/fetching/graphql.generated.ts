@@ -903,6 +903,22 @@ export type ExtraFormDataQuery = {
     }
 }
 
+export type BrukerinformasjonQueryVariables = Exact<{ [key: string]: never }>
+
+export type BrukerinformasjonQuery = {
+    readonly __typename: 'Query'
+    readonly brukerinformasjon: {
+        readonly __typename: 'Brukerinformasjon'
+        readonly arbeidsgivere: ReadonlyArray<{
+            readonly __typename: 'Arbeidsgiver'
+            readonly orgnummer: string
+            readonly navn: string
+            readonly aktivtArbeidsforhold: boolean
+            readonly naermesteLeder?: { readonly __typename: 'NaermesteLeder'; readonly navn: string } | null
+        }>
+    }
+}
+
 export type ChangeSykmeldingStatusMutationVariables = Exact<{
     sykmeldingId: Scalars['String']['input']
     status: SykmeldingChangeStatus
@@ -4623,6 +4639,72 @@ export const ExtraFormDataDocument = {
         },
     ],
 } as unknown as DocumentNode<ExtraFormDataQuery, ExtraFormDataQueryVariables>
+export const BrukerinformasjonDocument = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'OperationDefinition',
+            operation: 'query',
+            name: { kind: 'Name', value: 'Brukerinformasjon' },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'brukerinformasjon' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Brukerinformasjon' } },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'NaermesteLeder' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'NaermesteLeder' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'navn' } }],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'Brukerinformasjon' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Brukerinformasjon' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsgivere' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'navn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'aktivtArbeidsforhold' } },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'naermesteLeder' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'NaermesteLeder' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<BrukerinformasjonQuery, BrukerinformasjonQueryVariables>
 export const ChangeSykmeldingStatusDocument = {
     kind: 'Document',
     definitions: [

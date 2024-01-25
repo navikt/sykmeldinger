@@ -158,7 +158,8 @@ export function expectDineSvar(svar: {
             } else {
                 await expect(getInfoItem('Velg blad')(page)).toHaveText(new RegExp(`Blad ${svar.fisker.blad}`, 'i'))
                 await expect(getInfoItem('Mottar du lott eller er du på hyre?')(page)).toHaveText(
-                    new RegExp(svar.fisker.lottEllerHyre, 'i'),
+                    // Don't ignore case on this assertion, because the question has the word "lott" and "hyre" in it
+                    new RegExp(svar.fisker.lottEllerHyre),
                 )
             }
         }

@@ -8,6 +8,7 @@ interface SykmeldingInfoProps {
     icon?: ReactElement
     className?: string
     heading?: string
+    level?: '3' | '4'
     variant?: 'blue' | 'gray' | 'transparent'
 }
 
@@ -17,6 +18,7 @@ interface SykmeldingInfoProps {
 export function SykmeldingInfo({
     className,
     heading,
+    level = '4',
     children,
     icon,
     variant = 'transparent',
@@ -29,7 +31,7 @@ export function SykmeldingInfo({
             })}
         >
             {heading && (
-                <Heading size="xsmall" level="4" spacing>
+                <Heading size="xsmall" level={level} spacing>
                     {heading}
                 </Heading>
             )}

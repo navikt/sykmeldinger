@@ -77,7 +77,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
                 },
                 fisker: {
                     blad: 'A',
-                    lottEllerHyre: 'Lott',
+                    lottEllerHyre: 'Hyre',
                 },
             })(page)
         })
@@ -113,7 +113,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
                 },
                 fisker: {
                     blad: 'A',
-                    lottEllerHyre: 'Lott',
+                    lottEllerHyre: 'Begge',
                 },
             })(page)
         })
@@ -164,14 +164,14 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await expectDineSvar({
                 arbeidssituasjon: 'Fisker',
-                arbeidsgiver: '110110110',
+                arbeidsgiver: 'Pontypandy Fire Service',
                 narmesteleder: {
                     navn: 'Station Officer Steele',
                     svar: 'Ja',
                 },
                 fisker: {
                     blad: 'B',
-                    lottEllerHyre: 'Lott',
+                    lottEllerHyre: 'Hyre',
                 },
             })(page)
         })
@@ -197,7 +197,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
                 },
                 fisker: {
                     blad: 'B',
-                    lottEllerHyre: 'Lott',
+                    lottEllerHyre: 'Begge',
                 },
             })(page)
         })
