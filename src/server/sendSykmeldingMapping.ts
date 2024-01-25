@@ -43,7 +43,7 @@ export function mapSendSykmeldingValuesToV3Api(
             sporsmaltekst: sporsmal.erOpplysningeneRiktige,
         },
         arbeidssituasjon: {
-            svar: arbeidssituasjonTypeToV3Enum(values.arbeidssituasjon),
+            svar: arbeidssituasjonWithPermittertFallback(values.arbeidssituasjon),
             sporsmaltekst: sporsmal.arbeidssituasjon,
         },
         arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer
@@ -129,23 +129,13 @@ export function yesOrNoToJaEllerNei(value: YesOrNo): JaEllerNei {
     return value === YesOrNo.YES ? JaEllerNei.JA : JaEllerNei.NEI
 }
 
-function arbeidssituasjonTypeToV3Enum(value: ArbeidssituasjonType): ArbeidssituasjonType {
+function arbeidssituasjonWithPermittertFallback(value: ArbeidssituasjonType): ArbeidssituasjonType {
     switch (value) {
         // Permittert falls back to arbeidsledig in the API, this is intentional
         case ArbeidssituasjonType.ARBEIDSLEDIG:
         case ArbeidssituasjonType.PERMITTERT:
             return ArbeidssituasjonType.ARBEIDSLEDIG
-        case ArbeidssituasjonType.ARBEIDSTAKER:
-            return ArbeidssituasjonType.ARBEIDSTAKER
-        case ArbeidssituasjonType.FISKER:
-            return ArbeidssituasjonType.FISKER
-        case ArbeidssituasjonType.JORDBRUKER:
-            return ArbeidssituasjonType.JORDBRUKER
-        case ArbeidssituasjonType.FRILANSER:
-            return ArbeidssituasjonType.FRILANSER
-        case ArbeidssituasjonType.NAERINGSDRIVENDE:
-            return ArbeidssituasjonType.NAERINGSDRIVENDE
-        case ArbeidssituasjonType.ANNET:
-            return ArbeidssituasjonType.ANNET
+        default:
+            return value
     }
 }

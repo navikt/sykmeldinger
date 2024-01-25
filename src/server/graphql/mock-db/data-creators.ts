@@ -271,6 +271,15 @@ export class SykmeldingBuilder {
         return this
     }
 
+    /** @deprecated
+     * Once all users are migrated over to BrukerSvar, and it's no longer nullable, we won't need this
+     */
+    noBrukerSvar(): SykmeldingBuilder {
+        this._sykmelding.sykmeldingStatus.brukerSvar = null
+
+        return this
+    }
+
     build(): Sykmelding {
         if (this._sykmelding.sykmeldingsperioder.length === 0) {
             throw new Error('Sykmelding må ha minst en periode')
