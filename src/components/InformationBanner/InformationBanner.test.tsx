@@ -64,4 +64,13 @@ describe('InformationBanner', () => {
         ).toBeInTheDocument()
         expect(screen.getByText('Når du er ferdig sender du sykmeldingen, nederst på siden.')).toBeInTheDocument()
     })
+
+    it('Renders info about sykmelding below 20% if sykmelding is below 20%', () => {
+        render(<InformationBanner isUnder20Percent={19} />)
+
+        expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument()
+        expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument()
+        expect(screen.getByText(/Behandleren din har oppgitt at du er/i)).toBeInTheDocument()
+        expect(screen.getByText(/19% sykmeldt/i)).toBeInTheDocument()
+    })
 })

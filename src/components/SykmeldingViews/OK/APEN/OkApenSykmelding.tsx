@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { GuidePanel } from '@navikt/ds-react'
 
-import { SykmeldingFragment } from 'queries'
+import { Periodetype, SykmeldingFragment } from 'queries'
 
 import InformationBanner from '../../../InformationBanner/InformationBanner'
 import ForceUseOlderSykmelding from '../../../ForceOrder/ForceUseOlderSykmelding'
@@ -51,7 +51,15 @@ function OkApenSykmelding({
         <div className="sykmelding-container">
             {!olderSykmeldingId && (
                 <div className="mb-8">
-                    <InformationBanner merknader={sykmelding.merknader} papirsykmelding={sykmelding.papirsykmelding} />
+                    <InformationBanner
+                        merknader={sykmelding.merknader}
+                        papirsykmelding={sykmelding.papirsykmelding}
+                        isUnder20Percent={
+                            sykmelding.sykmeldingsperioder.find(
+                                (it) => it.type === Periodetype.GRADERT && it.gradert != null && it.gradert?.grad < 20,
+                            )?.gradert?.grad ?? null
+                        }
+                    />
                 </div>
             )}
 
