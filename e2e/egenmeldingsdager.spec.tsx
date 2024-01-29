@@ -16,7 +16,7 @@ function selectEgenmeldingsdager({
     return async (page: Page): Promise<void> => {
         const [currentDays, ...restDays] = daysToSelect
         const section = page.getByLabel(
-            new RegExp(`Brukte du egenmelding hos Pontypandy Fire Service i perioden ${getDate(initialDate)}`, 'i'),
+            new RegExp(`Brukte du egenmelding hos Pontypandy Fire Service i perioden ${getDate(initialDate)}. `, 'i'),
         )
 
         if (currentDays === 'Nei') {
