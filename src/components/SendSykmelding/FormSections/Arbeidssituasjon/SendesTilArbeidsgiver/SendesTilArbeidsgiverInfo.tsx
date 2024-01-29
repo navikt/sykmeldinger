@@ -33,6 +33,7 @@ function SendesTilArbeidsgiverInfo({ sykmelding, metadata }: Props): ReactElemen
         <div>
             <VeilederSenderSykmeldingenInfo />
             <BrukerSvarExpansionCard
+                title="Oppsummering av dine svar"
                 brukerSvar={{
                     values: formValues,
                     sporsmaltekstMetadata: metadata,

@@ -17,10 +17,11 @@ import { mapFormValuesToBrukerSvar, SporsmaltekstMetadata } from './BrukerSvarUt
 export type { SporsmaltekstMetadata }
 
 type Props = {
+    title: 'Oppsummering av dine svar' | 'Dine svar'
     brukerSvar: BrukerSvarFragment | { values: FormValues; sporsmaltekstMetadata: SporsmaltekstMetadata }
 }
 
-export function BrukerSvarExpansionCard({ brukerSvar }: Props): ReactElement {
+export function BrukerSvarExpansionCard({ title, brukerSvar }: Props): ReactElement {
     const mappedValues: BrukerSvarFragment =
         '__typename' in brukerSvar
             ? brukerSvar
@@ -34,7 +35,7 @@ export function BrukerSvarExpansionCard({ brukerSvar }: Props): ReactElement {
                 logAmplitudeEvent(
                     {
                         eventName: `accordion ${open ? 'åpnet' : 'lukket'}`,
-                        data: { tekst: 'Dine svar' },
+                        data: { tekst: title },
                     },
                     {
                         status: '__typename' in brukerSvar ? 'sendt/bekreftet' : 'ikke sendt',
@@ -48,7 +49,7 @@ export function BrukerSvarExpansionCard({ brukerSvar }: Props): ReactElement {
                         <TasklistIcon role="img" aria-hidden />
                     </div>
                     <ExpansionCard.Title id="oppsummering-bruker-svar-heading" as="h2">
-                        Dine svar
+                        {title}
                     </ExpansionCard.Title>
                 </div>
             </ExpansionCard.Header>

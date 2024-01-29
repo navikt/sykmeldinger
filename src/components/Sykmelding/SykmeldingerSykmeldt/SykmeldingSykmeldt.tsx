@@ -60,7 +60,7 @@ function SykmeldingSykmeldt({ sykmelding, editableEgenmelding }: Props): ReactEl
             <AnnenInfo sykmelding={sykmelding} parentId={sectionId} />
 
             {sykmelding.sykmeldingStatus.brukerSvar && (
-                <BrukerSvarExpansionCard brukerSvar={sykmelding.sykmeldingStatus.brukerSvar} />
+                <BrukerSvarExpansionCard title="Dine svar" brukerSvar={sykmelding.sykmeldingStatus.brukerSvar} />
             )}
 
             <FlereOpplysningerSykmeldt>
