@@ -6,7 +6,7 @@ import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'
 
-import { ArbeidssituasjonInfo, ArbeidssituasjonStatusInfo } from './ArbeidssituasjonInfo'
+import { ArbeidssituasjonInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
 import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 import FrilanserSection from './Frilanser/FrilanserSection'
@@ -38,7 +38,6 @@ function ArbeidssituasjonSection({
         <SectionWrapper title="Din arbeidssituasjon">
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
-            {!(<ArbeidssituasjonStatusInfo />)}
             {shouldShowArbeidsgiverOrgnummer && (
                 <ArbeidsgiverSection
                     sykmelding={sykmelding}
