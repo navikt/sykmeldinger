@@ -217,6 +217,7 @@ fragment Sykmelding on Sykmelding {
         fornavn
         mellomnavn
         etternavn
+        overSyttiAar
     }
     utenlandskSykmelding {
         land

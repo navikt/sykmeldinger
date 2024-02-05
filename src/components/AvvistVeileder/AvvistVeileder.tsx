@@ -5,7 +5,6 @@ import { Behandlingsutfall, SykmeldingFragment } from 'queries'
 
 import ForklaringZDiagnose from './ForklaringZDiagnose'
 import ForklaringAndre from './ForklaringAndre'
-import ForklaringOverSytti from './ForklaringOverSytti'
 import ForklaringUnder20Prosent from './ForklaringUnder20Prosent'
 
 interface AvvistVeilederProps {
@@ -26,7 +25,6 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall, perioder }: AvvistVe
     const isOver12Weeks = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_MT_FT_KI_OVER_12_UKER',
     )
-    const isOver70 = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'PASIENT_ELDRE_ENN_70')
     const isZDiagnosis = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'ICPC_2_Z_DIAGNOSE')
 
     const isUnder20Prosent = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'GRADERT_UNDER_20_PROSENT')
@@ -50,8 +48,6 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall, perioder }: AvvistVe
                         </BodyLong>
                         <BodyLong>Du må få en lege til å skrive sykmeldingen.</BodyLong>
                     </>
-                ) : isOver70 ? (
-                    <ForklaringOverSytti />
                 ) : isZDiagnosis ? (
                     <ForklaringZDiagnose />
                 ) : isUnder20Prosent ? (

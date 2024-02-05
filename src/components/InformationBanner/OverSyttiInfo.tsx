@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
-import { BodyShort, Link } from '@navikt/ds-react'
+import { BodyShort, GuidePanel, Link } from '@navikt/ds-react'
 
-function ForklaringOverSytti(): ReactElement {
+function OverSyttiInfo(): ReactElement {
     return (
-        <>
+        <GuidePanel poster>
             <BodyShort className="pb-5">Du har ikke rett til sykepenger, fordi du er over 70 år.</BodyShort>
             <BodyShort className="pb-5">
                 Dersom du likevel ønsker å søke, må du først sende inn en{' '}
@@ -18,8 +18,8 @@ function ForklaringOverSytti(): ReactElement {
             <BodyShort>
                 Hvis du trenger dokumentasjon på at du er syk, kan du be legen om en skriftlig bekreftelse.
             </BodyShort>
-        </>
+        </GuidePanel>
     )
 }
 
-export default ForklaringOverSytti
+export default OverSyttiInfo
