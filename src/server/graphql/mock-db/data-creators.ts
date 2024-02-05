@@ -78,6 +78,7 @@ export class SykmeldingBuilder {
             fornavn: 'Ola',
             mellomnavn: null,
             etternavn: 'Nordmann',
+            overSyttiAar: null,
         },
         kontaktMedPasient: { kontaktDato: null, begrunnelseIkkeKontakt: null },
         behandletTidspunkt: this.mottatt,

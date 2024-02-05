@@ -184,7 +184,7 @@ async function fetchApi<ResponseObject>(
     if (response.ok) {
         try {
             if (response.headers.get('Content-Type') === 'application/json') {
-                const json = await response.json()
+                const json: unknown = await response.json()
 
                 childLogger
                     .child({

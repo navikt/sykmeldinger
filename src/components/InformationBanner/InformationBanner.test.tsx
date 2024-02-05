@@ -53,7 +53,7 @@ describe('InformationBanner', () => {
     })
 
     it('Renders Normal view if merknader and papirsykmelding is undefined', () => {
-        render(<InformationBanner />)
+        render(<InformationBanner merknader={null} papirsykmelding={null} />)
         expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument()
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument()
         expect(screen.getByText('Vi har mottatt sykmeldingen din')).toBeInTheDocument()

@@ -368,6 +368,7 @@ export type Pasient = {
     readonly fnr?: Maybe<Scalars['String']['output']>
     readonly fornavn?: Maybe<Scalars['String']['output']>
     readonly mellomnavn?: Maybe<Scalars['String']['output']>
+    readonly overSyttiAar?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type Periode = {

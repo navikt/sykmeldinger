@@ -71,6 +71,7 @@ type Pasient {
     fornavn: String
     mellomnavn: String
     etternavn: String
+    overSyttiAar: Boolean
 }
 
 enum SvarRestriksjon {
