@@ -45,6 +45,7 @@ function EndreEgenmeldingForm({
                 data: { skjemanavn: skjemanavn },
             }),
     )
+
     const form = useForm<EgenmeldingsdagerSubForm>({
         defaultValues: egenmeldingsdager
             ? {

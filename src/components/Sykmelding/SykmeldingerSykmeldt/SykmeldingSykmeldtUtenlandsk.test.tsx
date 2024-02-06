@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
 
-import { createSykmelding } from '../../../utils/test/dataUtils'
+import { BrukerinformasjonDocument } from 'queries'
+
+import { createInitialQuery, createSykmelding } from '../../../utils/test/dataUtils'
+import { render, screen } from '../../../utils/test/testUtils'
 
 import SykmeldingSykmeldtUtenlandsk from './SykmeldingSykmeldtUtenlandsk'
 
@@ -18,6 +20,14 @@ describe('SykmeldingSykmeldtUtenlandsk', () => {
                 }}
                 editableEgenmelding={false}
             />,
+            {
+                initialState: [
+                    createInitialQuery(BrukerinformasjonDocument, {
+                        __typename: 'Query',
+                        brukerinformasjon: { __typename: 'Brukerinformasjon', arbeidsgivere: [] },
+                    }),
+                ],
+            },
         )
 
         expect(screen.getByRole('heading', { name: 'Landet sykmeldingen ble skrevet' })).toBeInTheDocument()

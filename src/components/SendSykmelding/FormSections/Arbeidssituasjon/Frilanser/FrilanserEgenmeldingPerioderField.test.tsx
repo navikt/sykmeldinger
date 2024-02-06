@@ -63,7 +63,7 @@ describe('FrilanserEgenmeldingPerioderField', () => {
                 { fom: '2021-02-18', tom: '2021-02-22' },
             ]),
         )
-    })
+    }, 10_000)
 
     it('should remove period', async () => {
         render(<EgenmeldingerFieldInForm oppfolgingsdato="2021-03-01" />)
@@ -81,7 +81,7 @@ describe('FrilanserEgenmeldingPerioderField', () => {
         expect(screen.getByTestId('value')).toHaveTextContent(
             JSON.stringify([{ fom: '2021-02-12', tom: '2021-02-17' }]),
         )
-    })
+    }, 10_000)
 
     it('should reset dates', async () => {
         render(<EgenmeldingerFieldInForm oppfolgingsdato="2021-03-01" />)

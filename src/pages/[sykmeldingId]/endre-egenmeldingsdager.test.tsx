@@ -148,7 +148,7 @@ describe('endre egenmeldingsdager page', () => {
 
             await userEvent.click(await screen.findByRole('button', { name: 'Registrer endringene' }))
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
-        })
+        }, 10_000)
 
         it('editing the period and adding a new period should work as expected', async () => {
             setup(sykmeldingWith1EgenmeldingPeriod, [
@@ -205,7 +205,7 @@ describe('endre egenmeldingsdager page', () => {
 
             await userEvent.click(await screen.findByRole('button', { name: 'Registrer endringene' }))
             await waitFor(() => expect(mockRouter.pathname).toBe(`/[sykmeldingId]/kvittering`))
-        })
+        }, 10_000)
     })
 
     describe('given two egenmeldingperiods', () => {

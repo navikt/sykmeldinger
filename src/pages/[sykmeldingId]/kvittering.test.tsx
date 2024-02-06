@@ -3,6 +3,7 @@ import mockRouter from 'next-router-mock'
 
 import {
     Arbeidsgiver,
+    ExtraFormDataDocument,
     Periodetype,
     StatusEvent,
     SykmeldingByIdDocument,
@@ -10,9 +11,9 @@ import {
     SykmeldingFragment,
 } from 'queries'
 
-import { createMock, createSykmelding, createSykmeldingPeriode } from '../../utils/test/dataUtils'
+import { createInitialQuery, createMock, createSykmelding, createSykmeldingPeriode } from '../../utils/test/dataUtils'
 import { render, screen } from '../../utils/test/testUtils'
-import { createExtraFormDataMock } from '../../utils/test/mockUtils'
+import { extraFormData } from '../../utils/test/mockUtils'
 
 import KvitteringPage from './kvittering.page'
 
@@ -50,7 +51,12 @@ describe('kvittering page', () => {
                         data: { __typename: 'Query', sykmeldinger: sykmeldinger },
                     },
                 }),
-                createExtraFormDataMock({ brukerinformasjon: { arbeidsgivere: arbeidsgivereMock } }),
+            ],
+            initialState: [
+                createInitialQuery(
+                    ExtraFormDataDocument,
+                    extraFormData(undefined, { arbeidsgivere: arbeidsgivereMock }),
+                ),
             ],
         })
     }

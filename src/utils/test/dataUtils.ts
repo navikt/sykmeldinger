@@ -6,6 +6,8 @@ import { ResultFunction } from '@apollo/client/testing/core/mocking/mockLink'
 import {
     AnnenFraverGrunn,
     ArbeidsrelatertArsakType,
+    ArbeidssituasjonType,
+    JaEllerNei,
     MedisinskArsakType,
     Merknadtype,
     PeriodeFragment,
@@ -20,6 +22,7 @@ import {
 } from 'queries'
 
 import { dateAdd, dateSub } from '../dateUtils'
+import { sporsmal } from '../sporsmal'
 
 export function createSykmelding(
     overrides?: Partial<SykmeldingFragment>,
@@ -197,6 +200,28 @@ export const createSykmeldingStatus = (
         __typename: 'ArbeidsgiverStatus',
         orgnummer: 'default-arbeidsgiver',
         orgNavn: 'Default Arbeidsgiverssen AS',
+    },
+    brukerSvar: {
+        __typename: 'BrukerSvar',
+        arbeidssituasjon: {
+            __typename: 'ArbeidssituasjonBrukerSvar',
+            sporsmaltekst: sporsmal.arbeidssituasjon,
+            svar: ArbeidssituasjonType.ARBEIDSTAKER,
+        },
+        erOpplysningeneRiktige: {
+            __typename: 'ErOpplysningeneRiktigeBrukerSvar',
+            sporsmaltekst: sporsmal.erOpplysningeneRiktige,
+            svar: JaEllerNei.JA,
+        },
+        uriktigeOpplysninger: null,
+        arbeidsgiverOrgnummer: null,
+        riktigNarmesteLeder: null,
+        harBruktEgenmeldingsdager: null,
+        egenmeldingsdager: null,
+        harBruktEgenmelding: null,
+        egenmeldingsperioder: null,
+        harForsikring: null,
+        fisker: null,
     },
     ...overrides,
 })
