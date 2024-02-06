@@ -13,18 +13,22 @@ import { getUserRequestId } from '../utils/userRequestId'
 
 import possibleTypesGenerated from './possible-types.generated'
 
+export const createInMemoryCache = (): InMemoryCache =>
+    new InMemoryCache({
+        dataIdFromObject: () => false,
+        typePolicies: {
+            Sykmelding: { keyFields: ['id'] },
+            MinimalSykmelding: { keyFields: ['sykmelding_id'] },
+            Brukerinformasjon: { keyFields: () => 'brukerinformasjon' },
+        },
+        possibleTypes: possibleTypesGenerated.possibleTypes,
+    })
+
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return new ApolloClient({
         connectToDevTools:
             process.env.NODE_ENV === 'development' || browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev',
-        cache: new InMemoryCache({
-            dataIdFromObject: () => false,
-            typePolicies: {
-                Sykmelding: { keyFields: ['id'] },
-                MinimalSykmelding: { keyFields: ['sykmelding_id'] },
-            },
-            possibleTypes: possibleTypesGenerated.possibleTypes,
-        }),
+        cache: createInMemoryCache(),
         link: from([
             errorLink,
             new RetryLink({

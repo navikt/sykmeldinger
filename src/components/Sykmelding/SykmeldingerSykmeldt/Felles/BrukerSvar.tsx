@@ -68,7 +68,10 @@ function BrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragment }): ReactEl
             <ArbeidssituasjonAnswer response={brukerSvar.arbeidssituasjon} />
             <FiskerBladAnswer response={brukerSvar.fisker?.blad} />
             <FiskerLottOgHyreAnswer response={brukerSvar.fisker?.lottOgHyre} />
-            <ArbeidsgiverOrgnummerAnswer response={brukerSvar.arbeidsgiverOrgnummer} />
+            {brukerSvar.arbeidsgiverOrgnummer && (
+                // This component does some data-fetching, avoid rendering it to avoid unnecessary requests
+                <ArbeidsgiverOrgnummerAnswer response={brukerSvar.arbeidsgiverOrgnummer} />
+            )}
             <YesNoAnswer response={brukerSvar.riktigNarmesteLeder} />
             <YesNoAnswer response={brukerSvar.harBruktEgenmeldingsdager} />
             <EgenmeldingsdagerAnswer response={brukerSvar.egenmeldingsdager} />
@@ -134,15 +137,10 @@ function ArbeidssituasjonAnswer({
 function ArbeidsgiverOrgnummerAnswer({
     response,
 }: {
-    response:
-        | Pick<NonNullable<BrukerSvarFragment['arbeidsgiverOrgnummer']>, 'sporsmaltekst' | 'svar'>
-        | null
-        | undefined
-}): ReactElement | null {
+    response: Pick<NonNullable<BrukerSvarFragment['arbeidsgiverOrgnummer']>, 'sporsmaltekst' | 'svar'>
+}): ReactElement {
     // This loading state will never be seen, so we can ignore it
     const { data } = useQuery(BrukerinformasjonDocument)
-
-    if (response == null) return null
 
     const relevantArbeidsgiverNavn: string | null =
         data?.brukerinformasjon.arbeidsgivere.find((it) => it.orgnummer === response.svar)?.navn ?? null

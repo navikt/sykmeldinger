@@ -2,12 +2,12 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import mockRouter from 'next-router-mock'
 import { GraphQLError } from 'graphql'
 
-import { ExtraFormDataDocument, SykmeldingByIdDocument, SykmeldingerDocument } from 'queries'
+import { BrukerinformasjonDocument, ExtraFormDataDocument, SykmeldingByIdDocument, SykmeldingerDocument } from 'queries'
 
 import { render, screen } from '../../utils/test/testUtils'
 import { dateSub } from '../../utils/dateUtils'
-import { createMock, createSykmelding } from '../../utils/test/dataUtils'
-import { createExtraFormDataMock } from '../../utils/test/mockUtils'
+import { createInitialQuery, createMock, createSykmelding } from '../../utils/test/dataUtils'
+import { createExtraFormDataMock, extraFormData } from '../../utils/test/mockUtils'
 
 import SykmeldingPage from './index.page'
 
@@ -62,7 +62,9 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     request: { query: SykmeldingerDocument },
                     result: { data: { __typename: 'Query', sykmeldinger: [thisSykmelding, previousSykmelding] } },
                 }),
-                createExtraFormDataMock({ sykmeldingId: 'this-sykmelding' }),
+            ],
+            initialState: [
+                createInitialQuery(ExtraFormDataDocument, extraFormData(), { sykmeldingId: 'this-sykmelding' }),
             ],
         })
 
@@ -119,10 +121,18 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                         extensions: { dontLog: true },
                     },
                 }),
+                createMock({
+                    request: { query: BrukerinformasjonDocument },
+                    result: {
+                        data: null,
+                        errors: [new GraphQLError('Some backend error')],
+                        extensions: { dontLog: true },
+                    },
+                }),
             ],
         })
 
         expect(await screen.findByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeInTheDocument()
-        expect(await screen.findByText(/Vi klarte dessverre ikke å hente opp informasjonen/)).toBeInTheDocument()
+        expect(await screen.findByText(/Vi klarte dessverre ikke å hente informasjonen/)).toBeInTheDocument()
     })
 })

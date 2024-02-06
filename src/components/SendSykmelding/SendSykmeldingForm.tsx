@@ -93,8 +93,8 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
     if (extraFormData.error || !extraFormData.data) {
         return (
             <Alert variant="error" role="alert" aria-live="polite">
-                Vi klarte dessverre ikke å hente opp informasjonen som trengs for at du kan bruke sykmeldingen.
-                Vennligst prøv igjen senere.
+                Vi klarte dessverre ikke å hente informasjonen som trengs for at du kan bruke sykmeldingen. Vennligst
+                prøv igjen senere.
             </Alert>
         )
     }
