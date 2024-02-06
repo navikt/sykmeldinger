@@ -27,7 +27,7 @@ function selectEgenmeldingsdager({
         await section.getByRole('radio', { name: /Ja/ }).click()
         const datesToClick = currentDays.map((day) => add(initialDate, { days: day }))
         for (const date of datesToClick) {
-            const dateButton = page.getByRole('button', { name: format(date, 'd. MMMM (EEEE)', { locale: nb }) })
+            const dateButton = page.getByRole('button', { name: format(date, 'EEEE d', { locale: nb }) })
             if (!(await dateButton.isVisible())) {
                 const previousMonthButton = page.getByRole('button', { name: 'Gå til forrige måned' })
                 if (await previousMonthButton.isDisabled()) {

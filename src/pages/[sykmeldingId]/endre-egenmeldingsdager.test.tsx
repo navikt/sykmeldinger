@@ -132,10 +132,10 @@ describe('endre egenmeldingsdager page', () => {
             await clickDays(
                 section,
                 // Untoggling this date
-                /28\. april/,
+                /søndag 26/,
                 // Adding these
-                /27\. april/,
-                /26\. april/,
+                /mandag 27/,
+                /tirsdag 28/,
             )
             await userEvent.click(section.getByRole('button', { name: 'Videre' }))
 
@@ -183,7 +183,7 @@ describe('endre egenmeldingsdager page', () => {
             )
 
             await userEvent.click(section.getByRole('button', { name: 'Endre' }))
-            await clickDays(section, /26\. april/)
+            await clickDays(section, /søndag 26/)
             await userEvent.click(section.getByRole('button', { name: 'Videre' }))
 
             const newSection = within(
@@ -193,7 +193,7 @@ describe('endre egenmeldingsdager page', () => {
             )
 
             await userEvent.click(newSection.getByRole('radio', { name: 'Ja' }))
-            await clickDays(newSection, /11\. april/, /12\. april/, /13\. april/, /14\. april/)
+            await clickDays(newSection, /lørdag 11/, /søndag 12/, /mandag 13/, /tirsdag 14/)
             await userEvent.click(newSection.getByRole('button', { name: 'Videre' }))
 
             await userEvent.click(
@@ -281,7 +281,7 @@ describe('endre egenmeldingsdager page', () => {
             )
 
             await userEvent.click(section.getByRole('radio', { name: 'Ja' }))
-            await clickDays(section, /^3\. april/, /^6\. april/)
+            await clickDays(section, /fredag 3/, /mandag 6/)
             await userEvent.click(section.getByRole('button', { name: 'Videre' }))
 
             await userEvent.click(
@@ -399,7 +399,7 @@ describe('endre egenmeldingsdager page', () => {
 
             // Add some new days to the third section
             await userEvent.click(lastSection.getByRole('button', { name: 'Endre' }))
-            await clickDays(lastSection, /25\. mars/, /23\. mars/)
+            await clickDays(lastSection, /onsdag 25/, /mandag 23/)
             await userEvent.click(lastSection.getByRole('button', { name: 'Videre' }))
 
             // We have to select no for the fourth section again since the form state is nuked from the n-th section.
@@ -443,7 +443,7 @@ describe('endre egenmeldingsdager page', () => {
 
             // Add some new days to the first section
             await userEvent.click(lastSection.getByRole('button', { name: 'Endre' }))
-            await clickDays(lastSection, /16\. april/)
+            await clickDays(lastSection, /torsdag 16/)
             await userEvent.click(lastSection.getByRole('button', { name: 'Videre' }))
 
             // Select NO on the second section, so we should end up with only a single section
@@ -494,7 +494,7 @@ describe('endre egenmeldingsdager page', () => {
 
             // Add some new days to the first section
             await userEvent.click(lastSection.getByRole('button', { name: 'Endre' }))
-            await clickDays(lastSection, /17\. april/)
+            await clickDays(lastSection, /fredag 17/)
             await userEvent.click(lastSection.getByRole('button', { name: 'Videre' }))
 
             const secondSection = within(
@@ -505,7 +505,7 @@ describe('endre egenmeldingsdager page', () => {
 
             // Fill out the second section, which is now empty
             await userEvent.click(secondSection.getByRole('radio', { name: 'Ja' }))
-            await clickDays(secondSection, /^3\. april/, /14\. april/)
+            await clickDays(secondSection, /fredag 3/, /tirsdag 14/)
             await userEvent.click(secondSection.getByRole('button', { name: 'Videre' }))
 
             // Select NO on the third section, so we should end up with only two sections worth of dates
@@ -616,7 +616,7 @@ describe('endre egenmeldingsdager page', () => {
             )
 
             await userEvent.click(section.getByRole('radio', { name: 'Ja' }))
-            await clickDays(section, /^17\. april/, /23\. april/)
+            await clickDays(section, /fredag 17/, /torsdag 23/)
             await userEvent.click(section.getByRole('button', { name: 'Videre' }))
 
             await userEvent.click(
