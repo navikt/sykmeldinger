@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { BandageIcon } from '@navikt/aksel-icons'
 import * as R from 'remeda'
+import { BodyShort } from '@navikt/ds-react'
 
 import { MedisinskVurdering } from 'queries'
 
@@ -20,6 +21,9 @@ function MedisinskTilstand({ isV3, medisinskVurdering, parentId }: Props): React
 
     return (
         <SykmeldingGroup parentId={parentId} heading="Medisinsk tilstand" Icon={BandageIcon}>
+            <BodyShort className="italic">
+                Diagnose, bidiagnose og medisinsk tilstand blir ikke sendt til din eventuelle arbeidsgiver.
+            </BodyShort>
             {medisinskVurdering.hovedDiagnose?.tekst && (
                 <SykmeldingInfo heading="Diagnose" variant="gray">
                     {medisinskVurdering.hovedDiagnose.tekst}

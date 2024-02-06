@@ -1,6 +1,5 @@
 import { ReactElement } from 'react'
 import { InformationIcon } from '@navikt/aksel-icons'
-import * as R from 'remeda'
 
 import { SykmeldingGroup } from '../../../molecules/sykmelding/SykmeldingGroup'
 import { toReadableDate } from '../../../../utils/dateUtils'
@@ -22,12 +21,6 @@ function AnnenInfo({ sykmelding, parentId }: Props): ReactElement {
                 {sykmelding.utenlandskSykmelding.land}
             </SykmeldingInfo>
             {sykmelding.medisinskVurdering?.hovedDiagnose?.tekst && <SykmeldingSladd heading="Diagnose" />}
-            {R.pipe(
-                sykmelding.medisinskVurdering?.biDiagnoser ?? [],
-                R.map(R.prop('tekst')),
-                R.compact,
-                R.map((text) => <SykmeldingSladd key={text} heading="Bidiagnose" />),
-            )}
         </SykmeldingGroup>
     )
 }
