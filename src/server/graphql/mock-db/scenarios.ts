@@ -120,7 +120,7 @@ const avvistData: ScenarioCreator = () => ({
     ],
 })
 
-const avvist20Data: ScenarioCreator = () => ({
+const under20Prosent: ScenarioCreator = () => ({
     sykmeldinger: [
         new SykmeldingBuilder({ offset: 7 })
             .relativePeriode(
@@ -134,15 +134,6 @@ const avvist20Data: ScenarioCreator = () => ({
                 { offset: 0, days: 14 },
             )
             .status(StatusEvent.APEN)
-            .behandlingsutfall(RegelStatus.INVALID, [
-                {
-                    messageForSender:
-                        'Sykmeldingen kan ikke rettes, det må skrives en ny. Pasienten har fått beskjed om å vente på ny sykmelding fra deg. Grunnet følgende:Hvis sykmeldingsgrad er høyere enn 99% for delvis sykmelding avvises meldingen',
-                    messageForUser: 'Sykmeldingsgraden kan ikke være mer enn 99% fordi det er en gradert sykmelding.',
-                    ruleName: 'GRADERT_UNDER_20_PROSENT',
-                    ruleStatus: RegelStatus.INVALID,
-                },
-            ])
             .build(),
     ],
 })
@@ -297,9 +288,9 @@ export const otherScenarios = {
         description: 'Avvist grunnet ugyldig data',
         scenario: avvistData,
     },
-    avvist20Data: {
-        description: 'Avvist grunnet under 20%',
-        scenario: avvist20Data,
+    under20Prosent: {
+        description: 'Sykmelding med grad under 20%',
+        scenario: under20Prosent,
     },
     ugyldigTilbakedatering: {
         description: 'Sykmelding med ugyldig tilbakedatering og er til manuell behandling',

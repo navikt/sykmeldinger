@@ -5,12 +5,15 @@ import { Merknad, Merknadtype } from 'queries'
 
 import VeilederMaleSvg from '../Veileder/svg/VeilederMaleSvg'
 
+import ForklaringUnder20Prosent from './ForklaringUnder20Prosent'
+
 interface InformationBannerProps {
     merknader?: readonly Merknad[] | null
     papirsykmelding?: boolean | null
+    isUnder20Percent?: number | null
 }
 
-const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProps): ReactElement => {
+const InformationBanner = ({ merknader, papirsykmelding, isUnder20Percent }: InformationBannerProps): ReactElement => {
     if (merknader?.some((merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING)) {
         return (
             <div data-testid="merknad-banner">
@@ -65,6 +68,10 @@ const InformationBanner = ({ merknader, papirsykmelding }: InformationBannerProp
                 <UnderBehandlingGuidePanel isSent={false} />
             </div>
         )
+    }
+
+    if (isUnder20Percent) {
+        return <ForklaringUnder20Prosent grad={isUnder20Percent} />
     }
 
     if (papirsykmelding === true) {
