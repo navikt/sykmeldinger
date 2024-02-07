@@ -1,18 +1,20 @@
 import { ReactElement } from 'react'
 import { BodyLong, BodyShort, GuidePanel, Heading } from '@navikt/ds-react'
 
-import { Behandlingsutfall } from 'queries'
+import { Behandlingsutfall, SykmeldingFragment } from 'queries'
 
 import ForklaringZDiagnose from './ForklaringZDiagnose'
 import ForklaringAndre from './ForklaringAndre'
 import ForklaringOverSytti from './ForklaringOverSytti'
+import ForklaringUnder20Prosent from './ForklaringUnder20Prosent'
 
 interface AvvistVeilederProps {
     behandlerNavn: string
     behandlingsutfall: Behandlingsutfall
+    perioder: SykmeldingFragment['sykmeldingsperioder']
 }
 
-function AvvistVeileder({ behandlerNavn, behandlingsutfall }: AvvistVeilederProps): ReactElement {
+function AvvistVeileder({ behandlerNavn, behandlingsutfall, perioder }: AvvistVeilederProps): ReactElement {
     const isNotValidInHPR = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'BEHANDLER_IKKE_GYLDIG_I_HPR')
     const isMissingAuthorization = behandlingsutfall.ruleHits.some(
         (regel) => regel.ruleName === 'BEHANDLER_MANGLER_AUTORISASJON_I_HPR',
@@ -26,6 +28,8 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall }: AvvistVeilederProp
     )
     const isOver70 = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'PASIENT_ELDRE_ENN_70')
     const isZDiagnosis = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'ICPC_2_Z_DIAGNOSE')
+
+    const isUnder20Prosent = behandlingsutfall.ruleHits.some((regel) => regel.ruleName === 'GRADERT_UNDER_20_PROSENT')
 
     return (
         <GuidePanel poster>
@@ -50,6 +54,8 @@ function AvvistVeileder({ behandlerNavn, behandlingsutfall }: AvvistVeilederProp
                     <ForklaringOverSytti />
                 ) : isZDiagnosis ? (
                     <ForklaringZDiagnose />
+                ) : isUnder20Prosent ? (
+                    <ForklaringUnder20Prosent perioder={perioder} />
                 ) : (
                     <ForklaringAndre behandlerNavn={behandlerNavn} ruleHits={behandlingsutfall.ruleHits} />
                 )}

@@ -21,7 +21,7 @@ describe('AvvistVeileder', () => {
             ],
         }
 
-        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} />)
+        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} perioder={[]} />)
 
         expect(screen.getByText(/Den som har skrevet sykmeldingen, har ikke autorisasjon/)).toBeInTheDocument()
     })
@@ -40,7 +40,7 @@ describe('AvvistVeileder', () => {
                 },
             ],
         }
-        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} />)
+        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} perioder={[]} />)
 
         expect(screen.getByText('Sykmeldingen kan dessverre ikke brukes her')).toBeInTheDocument()
         expect(screen.getByText(/Du har ikke rett til sykepenger, fordi du er over 70 år/)).toBeInTheDocument()
@@ -60,7 +60,7 @@ describe('AvvistVeileder', () => {
                 },
             ],
         }
-        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} />)
+        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} perioder={[]} />)
 
         expect(
             screen.getByText(/Legen har skrevet en diagnose i sykmeldingen som ikke gir deg rett til sykepenger./),
@@ -81,7 +81,7 @@ describe('AvvistVeileder', () => {
                 },
             ],
         }
-        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} />)
+        render(<AvvistVeileder behandlerNavn="Doktor Legesen" behandlingsutfall={behandlingsutfall} perioder={[]} />)
 
         expect(screen.getByText('Sykmeldingen kan dessverre ikke brukes her')).toBeInTheDocument()
         expect(screen.getByText(/Du trenger en ny sykmelding/)).toBeInTheDocument()

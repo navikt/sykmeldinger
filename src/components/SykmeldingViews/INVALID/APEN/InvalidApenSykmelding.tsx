@@ -43,6 +43,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): Reac
                 <AvvistVeileder
                     behandlerNavn={getBehandlerName(sykmelding.behandler)}
                     behandlingsutfall={sykmelding.behandlingsutfall}
+                    perioder={sykmelding.sykmeldingsperioder}
                 />
             </div>
 

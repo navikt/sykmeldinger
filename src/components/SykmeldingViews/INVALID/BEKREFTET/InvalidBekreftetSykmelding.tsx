@@ -26,6 +26,7 @@ function InvalidBekreftetSykmelding({ sykmelding }: InvalidBekreftetSykmeldingPr
                 <AvvistVeileder
                     behandlerNavn={getBehandlerName(sykmelding.behandler)}
                     behandlingsutfall={sykmelding.behandlingsutfall}
+                    perioder={sykmelding.sykmeldingsperioder}
                 />
             </div>
 
