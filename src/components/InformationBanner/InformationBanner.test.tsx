@@ -70,7 +70,6 @@ describe('InformationBanner', () => {
 
         expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument()
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument()
-        expect(screen.getByText(/Behandleren din har oppgitt at du er/i)).toBeInTheDocument()
-        expect(screen.getByText(/19% sykmeldt/i)).toBeInTheDocument()
+        expect(screen.getByText(/Denne sykmeldingen viser at du er 19 prosent sykmeldt/i)).toBeInTheDocument()
     })
 })
