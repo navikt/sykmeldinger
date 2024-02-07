@@ -52,6 +52,14 @@ describe('InformationBanner', () => {
         expect(screen.getByText('Før du bruker sykmeldingen')).toBeInTheDocument()
     })
 
+    it('Renders over 70 view if over 70 is true', () => {
+        render(<InformationBanner overSyttiAar />)
+
+        expect(
+            screen.getByText('Når du har passert 70 år, har du ikke lenger rett til sykepenger.'),
+        ).toBeInTheDocument()
+    })
+
     it('Renders Normal view if merknader and papirsykmelding is undefined', () => {
         render(<InformationBanner merknader={null} papirsykmelding={null} />)
         expect(screen.queryByTestId('merknad-banner')).not.toBeInTheDocument()

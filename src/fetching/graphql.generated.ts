@@ -857,6 +857,7 @@ export type EndreEgenmeldingsdagerMutation = {
             readonly fornavn?: string | null
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
+            readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
@@ -1162,6 +1163,7 @@ export type ChangeSykmeldingStatusMutation = {
             readonly fornavn?: string | null
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
+            readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
@@ -1409,6 +1411,7 @@ export type SendSykmeldingMutation = {
             readonly fornavn?: string | null
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
+            readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
@@ -1893,6 +1896,7 @@ export type SykmeldingFragment = {
         readonly fornavn?: string | null
         readonly mellomnavn?: string | null
         readonly etternavn?: string | null
+        readonly overSyttiAar?: boolean | null
     } | null
     readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
 }
@@ -2136,6 +2140,7 @@ export type SykmeldingerQuery = {
             readonly fornavn?: string | null
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
+            readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }>
@@ -2382,6 +2387,7 @@ export type SykmeldingByIdQuery = {
             readonly fornavn?: string | null
             readonly mellomnavn?: string | null
             readonly etternavn?: string | null
+            readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
     }
@@ -3309,6 +3315,7 @@ export const SykmeldingFragmentDoc = {
                                 { kind: 'Field', name: { kind: 'Name', value: 'fornavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'mellomnavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'etternavn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'overSyttiAar' } },
                             ],
                         },
                     },
@@ -4521,6 +4528,7 @@ export const EndreEgenmeldingsdagerDocument = {
                                 { kind: 'Field', name: { kind: 'Name', value: 'fornavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'mellomnavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'etternavn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'overSyttiAar' } },
                             ],
                         },
                     },
@@ -5332,6 +5340,7 @@ export const ChangeSykmeldingStatusDocument = {
                                 { kind: 'Field', name: { kind: 'Name', value: 'fornavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'mellomnavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'etternavn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'overSyttiAar' } },
                             ],
                         },
                     },
@@ -5975,6 +5984,7 @@ export const SendSykmeldingDocument = {
                                 { kind: 'Field', name: { kind: 'Name', value: 'fornavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'mellomnavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'etternavn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'overSyttiAar' } },
                             ],
                         },
                     },
@@ -6591,6 +6601,7 @@ export const SykmeldingerDocument = {
                                 { kind: 'Field', name: { kind: 'Name', value: 'fornavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'mellomnavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'etternavn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'overSyttiAar' } },
                             ],
                         },
                     },
@@ -7221,6 +7232,7 @@ export const SykmeldingByIdDocument = {
                                 { kind: 'Field', name: { kind: 'Name', value: 'fornavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'mellomnavn' } },
                                 { kind: 'Field', name: { kind: 'Name', value: 'etternavn' } },
+                                { kind: 'Field', name: { kind: 'Name', value: 'overSyttiAar' } },
                             ],
                         },
                     },

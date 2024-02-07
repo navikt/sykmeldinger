@@ -59,6 +59,7 @@ function OkApenSykmelding({
                                 (it) => it.type === Periodetype.GRADERT && it.gradert != null && it.gradert?.grad < 20,
                             )?.gradert?.grad ?? null
                         }
+                        overSyttiAar={sykmelding.pasient?.overSyttiAar}
                     />
                 </div>
             )}
