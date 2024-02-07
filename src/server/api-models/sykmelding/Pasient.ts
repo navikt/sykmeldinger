@@ -6,4 +6,5 @@ export const PasientSchema = z.object({
     fornavn: z.string().nullable(),
     mellomnavn: z.string().nullable(),
     etternavn: z.string().nullable(),
+    overSyttiAar: z.boolean().nullable(),
 })

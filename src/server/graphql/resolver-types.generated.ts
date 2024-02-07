@@ -372,6 +372,7 @@ export type Pasient = {
     fnr: Maybe<Scalars['String']['output']>
     fornavn: Maybe<Scalars['String']['output']>
     mellomnavn: Maybe<Scalars['String']['output']>
+    overSyttiAar: Maybe<Scalars['Boolean']['output']>
 }
 
 export type Periode = {
@@ -1236,6 +1237,7 @@ export type PasientResolvers<
     fnr?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     fornavn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     mellomnavn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+    overSyttiAar?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
