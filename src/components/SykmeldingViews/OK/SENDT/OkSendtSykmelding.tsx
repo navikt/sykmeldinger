@@ -29,7 +29,7 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): ReactElement
 
             {isUnderbehandling(sykmelding) && (
                 <div className="mb-8">
-                    <UnderBehandlingGuidePanel isSent />
+                    <UnderBehandlingGuidePanel />
                 </div>
             )}
 

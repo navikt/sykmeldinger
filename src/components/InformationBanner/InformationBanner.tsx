@@ -15,7 +15,12 @@ interface InformationBannerProps {
     isUnder20Percent?: number | null
 }
 
-const InformationBanner = ({ merknader, papirsykmelding, overSyttiAar, isUnder20Percent }: InformationBannerProps): ReactElement => {
+const InformationBanner = ({
+    merknader,
+    papirsykmelding,
+    overSyttiAar,
+    isUnder20Percent,
+}: InformationBannerProps): ReactElement => {
     if (overSyttiAar) {
         return <ForklaringOverSyttiInfo />
     }
@@ -75,7 +80,7 @@ const InformationBanner = ({ merknader, papirsykmelding, overSyttiAar, isUnder20
     if (merknader?.some((merknad) => merknad.type === Merknadtype.UNDER_BEHANDLING)) {
         return (
             <div data-testid="merknad-banner">
-                <UnderBehandlingGuidePanel isSent={false} />
+                <UnderBehandlingGuidePanel />
             </div>
         )
     }
@@ -118,27 +123,33 @@ const InformationBanner = ({ merknader, papirsykmelding, overSyttiAar, isUnder20
     )
 }
 
-export function UnderBehandlingGuidePanel({ isSent }: { isSent: boolean }): ReactElement {
+export function UnderBehandlingGuidePanel(): ReactElement {
     return (
         <GuidePanel poster>
+            <div className="mb-6">
+                <Heading className="mb-4" level="2" size="small">
+                    Viktig informasjon
+                </Heading>
+                <BodyLong className="mb-2">
+                    Sykmeldingen din er skrevet tilbake i tid, og NAV må derfor vurdere om det er en gyldig grunn til at
+                    sykmeldingen starter før du var i kontakt med legen.
+                </BodyLong>
+                <BodyLong className="mb-2">
+                    Hvis vi må innhente flere opplysninger om hvorfor sykmeldingen din er tilbakedatert, kan det ta
+                    lengre tid for oss å behandle saken din.
+                </BodyLong>
+            </div>
             <Heading level="2" size="small" className="mb-4">
-                Viktig informasjon
+                Hva nå?
             </Heading>
             <BodyLong className="mb-2">
-                Vanligvis starter sykmeldingen fra den dagen du er hos legen. I ditt tilfelle har legen skrevet at den
-                startet tidligere. NAV må derfor vurdere om det er en gyldig grunn for at sykmeldingen din starter før
-                du var i kontakt med legen.
+                For at vi skal behandle saken din så raskt som mulig, må du bekrefte sykmeldingen og sende søknad om
+                sykepenger.
             </BodyLong>
-            {!isSent && (
-                <>
-                    <BodyLong className="mb-2">Du kan fortsatt sende inn sykmeldingen som vanlig.</BodyLong>
-                    <hr className="my-4 opacity-50" />
-                    <BodyLong>
-                        Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
-                        Du velger selv om du vil bruke sykmeldingen.
-                    </BodyLong>
-                </>
-            )}
+            <BodyLong>
+                Søknad om sykepenger blir tilgjengelig for innsending etter at sykmeldingsperioden er over, selv om
+                sykmeldingen foreløpig ikke er godkjent.
+            </BodyLong>
         </GuidePanel>
     )
 }

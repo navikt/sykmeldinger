@@ -42,7 +42,7 @@ describe('InformationBanner', () => {
         render(<InformationBanner merknader={[merknad]} />)
         expect(screen.getByTestId('merknad-banner')).toBeInTheDocument()
         expect(screen.queryByTestId('papir-banner')).not.toBeInTheDocument()
-        expect(screen.getByRole('heading')).toHaveTextContent('Viktig informasjon')
+        expect(screen.getByRole('heading', { name: 'Viktig informasjon' })).toBeInTheDocument()
     })
 
     it('Renders papirsinfo view if papirsykmelding is true', () => {
