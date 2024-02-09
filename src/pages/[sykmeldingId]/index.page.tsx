@@ -121,6 +121,7 @@ function SykmeldingComponent({
 
     switch (behandlingsutfall) {
         case 'OK':
+        case 'MANUAL_PROCESSING':
             if (hasReopenedSykmelding) {
                 return (
                     <OkApenSykmelding
