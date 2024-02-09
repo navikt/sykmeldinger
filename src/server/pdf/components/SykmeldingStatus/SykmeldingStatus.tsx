@@ -18,6 +18,7 @@ const SykmeldingStatus = ({ sykmelding }: Props): ReactElement | null => {
         case 'INVALID':
             return <SykmeldingStatusAvvist sykmelding={sykmelding} />
         case 'OK':
+        case 'MANUAL_PROCESSING':
             switch (status) {
                 case 'AVBRUTT':
                     return <SykmeldingStatusAvbrutt sykmelding={sykmelding} />
