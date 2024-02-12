@@ -1,4 +1,5 @@
 import { v4 } from 'uuid'
+import * as R from 'remeda'
 
 import { Sykmelding } from '../../api-models/sykmelding/Sykmelding'
 import { Merknad } from '../../api-models/sykmelding/Merknad'
@@ -17,6 +18,7 @@ import { AktivitetIkkeMuligPeriode, Periode } from '../../api-models/sykmelding/
 import { dateAdd } from '../../../utils/dateUtils'
 import { RuleHit } from '../../api-models/sykmelding/Behandlingsutfall'
 import { sporsmal } from '../../../utils/sporsmal'
+import { Pasient } from '../../api-models/sykmelding/Pasient'
 
 export class SykmeldingBuilder {
     private readonly mottatt: string = '2020-02-01'
@@ -268,6 +270,14 @@ export class SykmeldingBuilder {
             status,
             ruleHits,
         }
+
+        return this
+    }
+
+    pasient(pasient: Partial<Pasient>): SykmeldingBuilder {
+        const newPasient = R.merge(this._sykmelding.pasient, pasient)
+
+        this._sykmelding.pasient = newPasient
 
         return this
     }

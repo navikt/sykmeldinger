@@ -51,6 +51,20 @@ const utenlandsk: ScenarioCreator = () => ({
     ],
 })
 
+const overSytti: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 7 })
+            .enkelPeriode()
+            .pasient({
+                fornavn: 'Fransisca',
+                etternavn: 'Frost',
+                overSyttiAar: true,
+            })
+            .status(StatusEvent.APEN)
+            .build(),
+    ],
+})
+
 const avbrutt: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).enkelPeriode().status(StatusEvent.AVBRUTT).build()],
 })
@@ -255,6 +269,10 @@ export const otherScenarios = {
     utenlandsk: {
         description: 'Utenlanske sykmeldinger',
         scenario: utenlandsk,
+    },
+    overSytti: {
+        description: 'En ny sykmelding, sykmeldt er over 70',
+        scenario: overSytti,
     },
     egenmeldt: {
         description: 'Egenmeldt sykmelding',
