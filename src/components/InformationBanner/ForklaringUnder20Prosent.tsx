@@ -11,7 +11,7 @@ function ForklaringUnder20Prosent({ grad }: Props): ReactElement {
             <BodyShort spacing>Under ser du opplysningene vi har fått fra behandleren din.</BodyShort>
             <BodyLong spacing>
                 Denne sykmeldingen viser at du er {grad} prosent sykmeldt. Hvis du er under 20 prosent sykmeldt, har du
-                ikke rett til sykepenger. Om du sykmeldt fra flere arbeidsforhold, kan du i noen tilfeller ha rett til
+                ikke rett til sykepenger. Om du er sykmeldt fra flere arbeidsforhold, kan du i noen tilfeller ha rett til
                 sykepenger likevel.
             </BodyLong>
             <BodyLong>
