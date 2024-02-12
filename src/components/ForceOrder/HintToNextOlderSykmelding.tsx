@@ -53,20 +53,19 @@ function HintToNextOlderSykmelding(): ReactElement | null {
             <BodyLong spacing>
                 Du har {pluralize('sykmelding', unsentSykmeldinger.length)} du må velge om du skal bruke
             </BodyLong>
-            <Link passHref href={`/${earliestId}`} legacyBehavior>
-                <Button
-                    as="a"
-                    variant="primary"
-                    onClick={() =>
-                        logAmplitudeEvent({
-                            eventName: 'navigere',
-                            data: { destinasjon: 'neste ubrukte sykmelding', lenketekst: 'Gå til sykmeldingen' },
-                        })
-                    }
-                >
-                    {unsentSykmeldinger.length > 1 ? 'Gå videre' : 'Gå til sykmeldingen'}
-                </Button>
-            </Link>
+            <Button
+                as={Link}
+                href={`/${earliestId}`}
+                variant="primary"
+                onClick={() =>
+                    logAmplitudeEvent({
+                        eventName: 'navigere',
+                        data: { destinasjon: 'neste ubrukte sykmelding', lenketekst: 'Gå til sykmeldingen' },
+                    })
+                }
+            >
+                {unsentSykmeldinger.length > 1 ? 'Gå videre' : 'Gå til sykmeldingen'}
+            </Button>
         </GuidePanel>
     )
 }

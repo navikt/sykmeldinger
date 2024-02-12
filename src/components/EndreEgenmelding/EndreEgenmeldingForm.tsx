@@ -89,11 +89,9 @@ function EndreEgenmeldingForm({
                         </Button>
                     </div>
                     <div>
-                        <Link href={`/${sykmelding.id}`} legacyBehavior passHref>
-                            <Button as="a" variant="secondary" disabled={loading}>
-                                Avbryt
-                            </Button>
-                        </Link>
+                        <Button as={Link} href={`/${sykmelding.id}`} variant="secondary" disabled={loading}>
+                            Avbryt
+                        </Button>
                     </div>
                 </div>
                 {error && (
