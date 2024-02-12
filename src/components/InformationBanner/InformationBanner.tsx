@@ -15,7 +15,12 @@ interface InformationBannerProps {
     isUnder20Percent?: number | null
 }
 
-const InformationBanner = ({ merknader, papirsykmelding, overSyttiAar, isUnder20Percent }: InformationBannerProps): ReactElement => {
+const InformationBanner = ({
+    merknader,
+    papirsykmelding,
+    overSyttiAar,
+    isUnder20Percent,
+}: InformationBannerProps): ReactElement => {
     if (overSyttiAar) {
         return <ForklaringOverSyttiInfo />
     }
