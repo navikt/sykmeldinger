@@ -13,6 +13,7 @@ describe('pasientUtils', () => {
                 fornavn: 'Ola',
                 mellomnavn: 'Halvor',
                 etternavn: 'Nordmann',
+                overSyttiAar: null,
             }
             expect(getPasientName(pasient)).toEqual('Ola Halvor Nordmann')
         })
@@ -24,6 +25,7 @@ describe('pasientUtils', () => {
                 fornavn: 'Ola',
                 mellomnavn: null,
                 etternavn: 'Nordmann',
+                overSyttiAar: null,
             }
             expect(getPasientName(pasient)).toEqual('Ola Nordmann')
         })

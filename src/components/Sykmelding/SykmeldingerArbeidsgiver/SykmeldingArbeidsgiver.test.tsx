@@ -73,6 +73,7 @@ const minimalSykmelding: SykmeldingFragment = {
         fornavn: null,
         mellomnavn: null,
         etternavn: null,
+        overSyttiAar: null,
     },
     rulesetVersion: 2,
 }

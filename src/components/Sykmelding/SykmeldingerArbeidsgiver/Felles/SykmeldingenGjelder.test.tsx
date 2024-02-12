@@ -13,6 +13,7 @@ describe('SykmeldingenGjelderView', () => {
             fornavn: null,
             mellomnavn: null,
             etternavn: null,
+            overSyttiAar: null,
         }
         render(<SykmeldingenGjelder pasient={pasient} parentId="test" />)
         expect(screen.queryByText('Sykmeldingen gjelder')).not.toBeInTheDocument()
@@ -27,6 +28,7 @@ describe('SykmeldingenGjelderView', () => {
             fornavn: 'Ola',
             mellomnavn: null,
             etternavn: 'Nordmann',
+            overSyttiAar: null,
         }
         render(<SykmeldingenGjelder pasient={pasient} parentId="test" />)
         expect(screen.getByText('Sykmeldingen gjelder')).toBeInTheDocument()

@@ -75,6 +75,7 @@ describe('AnnenInfo', () => {
                 fornavn: null,
                 mellomnavn: null,
                 etternavn: null,
+                overSyttiAar: null,
             },
             rulesetVersion: 2,
         }
@@ -152,6 +153,7 @@ describe('AnnenInfo', () => {
                 fornavn: null,
                 mellomnavn: null,
                 etternavn: null,
+                overSyttiAar: null,
             },
             rulesetVersion: 2,
         }

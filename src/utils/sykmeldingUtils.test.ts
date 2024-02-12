@@ -58,6 +58,7 @@ const minimalSykmelding: SykmeldingFragment = {
         fornavn: null,
         mellomnavn: null,
         etternavn: null,
+        overSyttiAar: null,
     },
     andreTiltak: null,
     meldingTilArbeidsgiver: null,

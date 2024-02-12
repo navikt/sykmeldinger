@@ -182,6 +182,7 @@ export function createSykmelding(
             fornavn: 'Ola',
             mellomnavn: null,
             etternavn: 'Nordmann',
+            overSyttiAar: null,
         },
         utenlandskSykmelding: null,
         rulesetVersion: 2,
