@@ -7,6 +7,7 @@ import { arbeidsrelatertArsakToText, medisinskArsakToText } from '../../../../ut
 import { SykmeldingGroup } from '../../../molecules/sykmelding/SykmeldingGroup'
 import {
     SykmeldingInfo,
+    SykmeldingInfoMissing,
     SykmeldingInfoSubGroup,
     SykmeldingListInfo,
 } from '../../../molecules/sykmelding/SykmeldingInfo'
@@ -18,10 +19,6 @@ interface Props {
 }
 
 const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3, parentId }: Props): ReactElement | null => {
-    if (!aktivitetIkkeMulig.medisinskArsak && !aktivitetIkkeMulig.arbeidsrelatertArsak) {
-        return null
-    }
-
     return (
         <SykmeldingGroup parentId={parentId} heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
             {aktivitetIkkeMulig.medisinskArsak != null && (
@@ -37,7 +34,7 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3, parentId }: Props): Reac
                     )}
                 </SykmeldingInfoSubGroup>
             )}
-            {aktivitetIkkeMulig.arbeidsrelatertArsak != null && (
+            {aktivitetIkkeMulig.arbeidsrelatertArsak ? (
                 <SykmeldingInfoSubGroup variant="gray">
                     <SykmeldingListInfo
                         heading="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
@@ -49,6 +46,12 @@ const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, isV3, parentId }: Props): Reac
                         </SykmeldingInfo>
                     )}
                 </SykmeldingInfoSubGroup>
+            ) : (
+                <SykmeldingInfoMissing
+                    heading="Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet"
+                    text="Ikke utfylt av behandler"
+                    variant="gray"
+                />
             )}
         </SykmeldingGroup>
     )
