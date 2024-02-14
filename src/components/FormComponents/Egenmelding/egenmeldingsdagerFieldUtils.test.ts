@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
+import { YesOrNo } from 'queries'
+
 import { toDate, toDateString } from '../../../utils/dateUtils'
 
-import { currentPeriodDatePicker } from './egenmeldingsdagerFieldUtils'
+import { cumulativeDays, currentPeriodDatePicker } from './egenmeldingsdagerFieldUtils'
+import { EgenmeldingsdagerFormValue } from './EgenmeldingerField'
 
 describe('egenmeldingsdagerFieldUtils', () => {
     describe('root case', () => {
@@ -101,5 +104,105 @@ describe('egenmeldingsdagerFieldUtils', () => {
                 expect(toDateString(latest)).toEqual('2022-04-14')
             })
         })
+    })
+})
+
+describe('cumulativeDays', () => {
+    it('should give cumulative days for the first period', () => {
+        const noPeriods: EgenmeldingsdagerFormValue[] = []
+        const { cumulativeBefore, cumulativeIncluding } = cumulativeDays(noPeriods, 0)
+
+        expect(cumulativeBefore).toEqual(0)
+        expect(cumulativeIncluding).toEqual(0)
+    })
+
+    it('should handle single un-touched form value', () => {
+        const singleNotTouched: EgenmeldingsdagerFormValue[] = [
+            {
+                datoer: null,
+                harPerioder: null,
+                hasClickedVidere: null,
+            },
+        ]
+        const { cumulativeBefore, cumulativeIncluding } = cumulativeDays(singleNotTouched, 0)
+
+        expect(cumulativeBefore).toEqual(0)
+        expect(cumulativeIncluding).toEqual(0)
+    })
+
+    it('should handle single touched form value', () => {
+        const singleNotTouched: EgenmeldingsdagerFormValue[] = [
+            {
+                datoer: [new Date(2024, 1, 15), new Date(2024, 1, 17)],
+                harPerioder: YesOrNo.YES,
+                hasClickedVidere: null,
+            },
+        ]
+        const { cumulativeBefore, cumulativeIncluding } = cumulativeDays(singleNotTouched, 0)
+
+        expect(cumulativeBefore).toEqual(0)
+        expect(cumulativeIncluding).toEqual(2)
+    })
+
+    it('should handle touched+untouched form value', () => {
+        const singleNotTouched: EgenmeldingsdagerFormValue[] = [
+            {
+                datoer: [new Date(2024, 1, 15), new Date(2024, 1, 17)],
+                harPerioder: YesOrNo.YES,
+                hasClickedVidere: null,
+            },
+            {
+                datoer: null,
+                harPerioder: null,
+                hasClickedVidere: null,
+            },
+        ]
+        const { cumulativeBefore, cumulativeIncluding } = cumulativeDays(singleNotTouched, 1)
+
+        expect(cumulativeBefore).toEqual(2)
+        expect(cumulativeIncluding).toEqual(2)
+    })
+
+    it('should handle touched+untouched form value when index 0', () => {
+        const singleNotTouched: EgenmeldingsdagerFormValue[] = [
+            {
+                datoer: [new Date(2024, 1, 15), new Date(2024, 1, 17)],
+                harPerioder: YesOrNo.YES,
+                hasClickedVidere: null,
+            },
+            {
+                datoer: null,
+                harPerioder: null,
+                hasClickedVidere: null,
+            },
+        ]
+        const { cumulativeBefore, cumulativeIncluding } = cumulativeDays(singleNotTouched, 0)
+
+        expect(cumulativeBefore).toEqual(0)
+        expect(cumulativeIncluding).toEqual(2)
+    })
+
+    it('should handle multiple', () => {
+        const singleNotTouched: EgenmeldingsdagerFormValue[] = [
+            {
+                datoer: [new Date(2024, 1, 15), new Date(2024, 1, 17)],
+                harPerioder: YesOrNo.YES,
+                hasClickedVidere: true,
+            },
+            {
+                datoer: [new Date(2024, 1, 15), new Date(2024, 1, 17)],
+                harPerioder: YesOrNo.YES,
+                hasClickedVidere: true,
+            },
+            {
+                datoer: [new Date(2024, 1, 15), new Date(2024, 1, 17)],
+                harPerioder: YesOrNo.YES,
+                hasClickedVidere: true,
+            },
+        ]
+
+        expect(cumulativeDays(singleNotTouched, 0)).toEqual({ cumulativeBefore: 0, cumulativeIncluding: 2 })
+        expect(cumulativeDays(singleNotTouched, 1)).toEqual({ cumulativeBefore: 2, cumulativeIncluding: 4 })
+        expect(cumulativeDays(singleNotTouched, 2)).toEqual({ cumulativeBefore: 4, cumulativeIncluding: 6 })
     })
 })

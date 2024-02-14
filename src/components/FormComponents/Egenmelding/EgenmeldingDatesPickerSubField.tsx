@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { useController } from 'react-hook-form'
-import { ErrorMessage, Label, DatePicker } from '@navikt/ds-react'
+import { DatePickerProps, ErrorMessage, Label, DatePicker } from '@navikt/ds-react'
 import { endOfMonth, isSameMonth, startOfMonth } from 'date-fns'
 
 import { sporsmal } from '../../../utils/sporsmal'
@@ -12,6 +12,7 @@ interface Props {
     earliestPossibleDate: Date
     latestPossibleDate: Date
     resetClickedVidere: () => void
+    disabled?: NonNullable<DatePickerProps['disabled']>
 }
 
 function EgenmeldingDatesPickerSubField({
@@ -19,6 +20,7 @@ function EgenmeldingDatesPickerSubField({
     earliestPossibleDate,
     latestPossibleDate,
     resetClickedVidere,
+    disabled,
 }: Props): ReactElement {
     const { field: datoerField, fieldState: datoerFieldState } = useController<
         EgenmeldingsdagerSubForm,
@@ -49,6 +51,7 @@ function EgenmeldingDatesPickerSubField({
                         }}
                         fromDate={earliestPossibleDate}
                         toDate={endOfMonth(earliestPossibleDate)}
+                        disabled={disabled}
                     />
                     <DatePicker.Standalone
                         mode="multiple"
@@ -59,6 +62,7 @@ function EgenmeldingDatesPickerSubField({
                         }}
                         fromDate={startOfMonth(latestPossibleDate)}
                         toDate={latestPossibleDate}
+                        disabled={disabled}
                     />
                 </div>
             ) : (
@@ -74,6 +78,7 @@ function EgenmeldingDatesPickerSubField({
                     }}
                     fromDate={earliestPossibleDate}
                     toDate={latestPossibleDate}
+                    disabled={disabled}
                 />
             )}
             {datoerFieldState.error && <ErrorMessage className="mb-4">{datoerFieldState.error?.message}</ErrorMessage>}

@@ -10,7 +10,7 @@ function selectEgenmeldingsdager({
     daysToSelect,
     initialDate,
 }: {
-    daysToSelect: [...number[][], 'Nei']
+    daysToSelect: [...number[][], 'Nei' | ExpectMeta.NotInDom]
     initialDate: Date
 }) {
     return async (page: Page): Promise<void> => {
@@ -21,6 +21,11 @@ function selectEgenmeldingsdager({
 
         if (currentDays === 'Nei') {
             await section.getByRole('radio', { name: /Nei/ }).click()
+            return
+        }
+
+        if (currentDays === ExpectMeta.NotInDom) {
+            await expect(section.getByRole('radio', { name: /Nei/ })).not.toBeVisible()
             return
         }
 
@@ -213,6 +218,100 @@ test.describe('Egenmeldingsdager', () => {
                 svar: 'Nei',
             },
         })(page)
+    })
+
+    test.describe('limiting to 16 egenmeldingsdager', () => {
+        const pickArbeidsgiverAndBoss = async (page: Page): Promise<void> => {
+            await gotoScenario('kunNy')(page)
+            await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
+            await bekreftNarmesteleder('Station Officer Steele')(page)
+        }
+
+        const expect16EgenmeldingsdagerAndEverythingGood = async (page: Page): Promise<void> => {
+            await expect(
+                page.getByText('Du har valgt 16 egenmeldingsdager, og trenger ikke å velge flere.'),
+            ).toBeVisible()
+            await expect(page).toHaveNoViolations()
+
+            await expectNumberOfEgenmeldingsdagerInput(16)(page)
+
+            await page.getByRole('button', { name: /Send sykmelding/ }).click()
+
+            await expectKvittering({
+                sendtTil: 'Pontypandy Fire Service',
+                egenmeldingsdager: 'endre',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Ansatt',
+                narmesteleder: {
+                    navn: 'Station Officer Steele',
+                    svar: 'Ja',
+                },
+                egenmeldingsdager: {
+                    arbeidsgiver: 'Pontypandy Fire Service',
+                    antallDager: 16,
+                },
+            })(page)
+        }
+
+        test('should be warned and allowed to submit when selecting 16 egenmeldingsdager on a single period', async ({
+            page,
+        }) => {
+            await pickArbeidsgiverAndBoss(page)
+            await selectEgenmeldingsdager({
+                daysToSelect: [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], ExpectMeta.NotInDom],
+                initialDate: sub(new Date(), { days: 9 }),
+            })(page)
+
+            await expect16EgenmeldingsdagerAndEverythingGood(page)
+        })
+
+        test('should be warned and allowed to submit when selecting 16 egenmeldingsdager over two periods', async ({
+            page,
+        }) => {
+            await pickArbeidsgiverAndBoss(page)
+            await selectEgenmeldingsdager({
+                daysToSelect: [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [2], ExpectMeta.NotInDom],
+                initialDate: sub(new Date(), { days: 9 }),
+            })(page)
+
+            await expect16EgenmeldingsdagerAndEverythingGood(page)
+        })
+
+        test('should be warned and allowed to submit when selecting 16 egenmeldingsdager over multiple periods', async ({
+            page,
+        }) => {
+            await pickArbeidsgiverAndBoss(page)
+            await selectEgenmeldingsdager({
+                daysToSelect: [
+                    [0, 2, 4, 6],
+                    [2, 4, 9],
+                    [2, 8],
+                    [3], // Comment so prettier keeps this beautiful thing
+                    [4, 8],
+                    [3, 5, 7, 9],
+                    ExpectMeta.NotInDom,
+                ],
+                initialDate: sub(new Date(), { days: 9 }),
+            })(page)
+
+            await expect16EgenmeldingsdagerAndEverythingGood(page)
+        })
+
+        test('should be warned and allowed to submit when selecting 16 egenmeldingsdager 16 single day periods', async ({
+            page,
+        }) => {
+            await gotoScenario('kunNy')(page)
+            await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
+            await bekreftNarmesteleder('Station Officer Steele')(page)
+            await selectEgenmeldingsdager({
+                daysToSelect: [...R.range(0, 16).map(() => [0]), ExpectMeta.NotInDom],
+                initialDate: sub(new Date(), { days: 9 }),
+            })(page)
+
+            await expect16EgenmeldingsdagerAndEverythingGood(page)
+        })
     })
 })
 
