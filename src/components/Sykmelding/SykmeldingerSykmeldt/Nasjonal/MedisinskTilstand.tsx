@@ -21,7 +21,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering, parentId }: Props): React
 
     return (
         <SykmeldingGroup parentId={parentId} heading="Medisinsk tilstand" Icon={BandageIcon}>
-            <BodyShort className="italic">
+            <BodyShort as="em">
                 Diagnose, bidiagnose og medisinsk tilstand blir ikke sendt til din eventuelle arbeidsgiver.
             </BodyShort>
             {medisinskVurdering.hovedDiagnose?.tekst && (
