@@ -118,3 +118,11 @@ export function SykmeldingInfoSubGroup({
         </div>
     )
 }
+
+export function SykmeldingInfoMissing({ text, ...props }: SykmeldingInfoProps & { text: string }): ReactElement {
+    return (
+        <SykmeldingInfo className="text-gray-600" {...props}>
+            <BodyShort as="em">{text}</BodyShort>
+        </SykmeldingInfo>
+    )
+}

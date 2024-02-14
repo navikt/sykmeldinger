@@ -38,7 +38,7 @@ describe('AktivitetIkkeMulig', () => {
         expect(await axe(container)).toHaveNoViolations()
     })
 
-    it('should display title if medisinskArsak and arbeidsrelatertArsak is missing', () => {
+    it('should display text if medisinskArsak and arbeidsrelatertArsak is missing', () => {
         const periode: AktivitetIkkeMuligPeriode = {
             __typename: 'AktivitetIkkeMuligPeriode',
             medisinskArsak: null,
@@ -46,6 +46,10 @@ describe('AktivitetIkkeMulig', () => {
         }
 
         render(<AktivitetIkkeMulig aktivitetIkkeMulig={periode} isV3={false} parentId="test" />)
-        expect(screen.queryByText('Aktivitet på arbeidsplassen')).not.toBeInTheDocument()
+        expect(screen.getByText('Aktivitet på arbeidsplassen')).toBeInTheDocument()
+        expect(
+            screen.getByText('Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet'),
+        ).toBeInTheDocument()
+        expect(screen.getByText('Ikke utfylt av behandler')).toBeInTheDocument()
     })
 })
