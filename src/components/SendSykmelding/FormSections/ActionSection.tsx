@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useRef, useState } from 'react'
-import { Alert, BodyShort, Button, Heading, Panel } from '@navikt/ds-react'
+import { Alert, BodyShort, Box, Button, Heading } from '@navikt/ds-react'
 import { useFormContext } from 'react-hook-form'
 import { MutationResult } from '@apollo/client'
 import { XMarkIcon } from '@navikt/aksel-icons'
@@ -73,11 +73,11 @@ function ActionSection({ sykmeldingId, sendResult, onSykmeldingAvbrutt }: Props)
 }
 
 function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): ReactElement {
-    const panelRef = useRef<HTMLDivElement>(null)
+    const boxRef = useRef<HTMLDivElement>(null)
     const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId, () => void 0)
 
     return (
-        <Panel ref={panelRef} className="mt-8 flex flex-col items-center justify-center bg-bg-subtle">
+        <Box ref={boxRef} className="mt-8 flex flex-col items-center justify-center" background="bg-subtle" padding="4">
             <Heading size="small" level="3" spacing>
                 Du kan ikke bruke denne sykmeldingen
             </Heading>
@@ -92,7 +92,7 @@ function AvbrytTrengerNySykmelding({ sykmeldingId }: { sykmeldingId: string }): 
                     Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
                 </Alert>
             )}
-        </Panel>
+        </Box>
     )
 }
 
@@ -105,17 +105,17 @@ function AvbrytSykmeldingen({
     closeAvbryt: () => void
     onAvbryt: () => void
 }): ReactElement {
-    const panelRef = useRef<HTMLDivElement>(null)
+    const boxRef = useRef<HTMLDivElement>(null)
     const [{ loading, error }, avbryt] = useAvbryt(sykmeldingId, onAvbryt)
 
     useEffect(() => {
-        panelRef.current?.focus()
-    }, [panelRef])
+        boxRef.current?.focus()
+    }, [boxRef])
 
     return (
-        <Panel
-            ref={panelRef}
-            className="relative mt-8 flex flex-col items-center justify-center bg-bg-subtle"
+        <Box
+            ref={boxRef}
+            className="relative mt-8 flex flex-col items-center justify-center"
             onKeyDown={(event) => {
                 if (event.key === 'Escape') {
                     closeAvbryt()
@@ -124,6 +124,8 @@ function AvbrytSykmeldingen({
             tabIndex={-1}
             role="dialog"
             aria-labelledby={`${sykmeldingId}-avbryt-body`}
+            background="bg-subtle"
+            padding="4"
         >
             <BodyShort id={`${sykmeldingId}-avbryt-body`} className="max-w-3/4">
                 Er du sikker på at du vil avbryte sykmeldingen?
@@ -135,7 +137,7 @@ function AvbrytSykmeldingen({
                 className="absolute right-1 top-1"
                 variant="tertiary"
                 type="button"
-                icon={<XMarkIcon title="Lukk avbryt panel" />}
+                icon={<XMarkIcon title="Lukk avbryt box" />}
                 onClick={closeAvbryt}
             />
             {error && (
@@ -143,7 +145,7 @@ function AvbrytSykmeldingen({
                     Det oppsto en feil ved avbryting av sykmeldingen. Vennligst prøv igjen senere.
                 </Alert>
             )}
-        </Panel>
+        </Box>
     )
 }
 

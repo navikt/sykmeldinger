@@ -281,7 +281,7 @@ export function createMock<Query, Variables extends Record<string, unknown>>(moc
     result?: FetchResult<Query> | ResultFunction<FetchResult<Query>>
     error?: Error
     delay?: number
-    newData?: ResultFunction<FetchResult>
+    newData?: ResultFunction<FetchResult<Query>, Record<string, unknown>>
 }): MockedResponse<Query> {
     return mockedResponse
 }
