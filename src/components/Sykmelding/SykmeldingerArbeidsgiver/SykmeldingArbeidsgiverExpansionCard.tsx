@@ -21,6 +21,7 @@ function SykmeldingArbeidsgiverExpansionCard({ sykmelding, chosenEgenmeldingsdag
     return (
         <ExpansionCard
             aria-labelledby={headerId}
+            className="mb-8"
             style={{ '--ac-expansioncard-bg': 'var(--a-orange-50)' } as CSSProperties}
             onToggle={(open) => {
                 logAmplitudeEvent({
