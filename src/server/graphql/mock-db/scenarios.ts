@@ -17,6 +17,12 @@ const normal: ScenarioCreator = () => ({
     ],
 })
 
+const kunNy: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 7 }).status(StatusEvent.APEN).enkelPeriode({ offset: 0, days: 7 }).build(),
+    ],
+})
+
 const gradertPeriode: ScenarioCreator = () => ({
     sykmeldinger: [
         new SykmeldingBuilder({ offset: 7 })
@@ -238,6 +244,10 @@ export const simpleScenarios = {
     normal: {
         description: 'En ny og et par innsendte (standard)',
         scenario: normal,
+    },
+    kunNy: {
+        description: 'Kun èn ny sykmelding',
+        scenario: kunNy,
     },
     gradertPeriode: {
         description: 'En åpen sykmelding med gradert periode',

@@ -1,6 +1,6 @@
-import { Button, ErrorMessage } from '@navikt/ds-react'
+import { Alert, Button, ErrorMessage } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
-import { isAfter } from 'date-fns'
+import { isAfter, isSameDay } from 'date-fns'
 import { ReactElement, useEffect, useLayoutEffect } from 'react'
 import * as R from 'remeda'
 import cn from 'classnames'
@@ -13,7 +13,7 @@ import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import HarBruktEgenmelding from './HarBruktEgenmelding'
 import ValgtEgenmeldingsdager from './ValgtEgenmeldingsdager'
 import EgenmeldingDatesPickerSubField from './EgenmeldingDatesPickerSubField'
-import { currentPeriodDatePicker } from './egenmeldingsdagerFieldUtils'
+import { cumulativeDays, currentPeriodDatePicker } from './egenmeldingsdagerFieldUtils'
 
 export type EgenmeldingsdagerSubForm = {
     egenmeldingsdager: EgenmeldingsdagerFormValue[] | null
@@ -40,6 +40,8 @@ interface Props {
     amplitudeSkjemanavn: string
 }
 
+export const MAX_EGENMELDINGSDAGER = 16
+
 function EgenmeldingerField({
     index,
     previous,
@@ -48,11 +50,13 @@ function EgenmeldingerField({
     amplitudeSkjemanavn,
 }: Props): ReactElement | null {
     const { watch, setValue, getValues } = useFormContext<EgenmeldingsdagerSubForm>()
+    const allPeriods: EgenmeldingsdagerFormValue[] = watch('egenmeldingsdager') ?? []
     const harPerioder: YesOrNo | null = watch(`egenmeldingsdager.${index}.harPerioder`)
     const selectedDates: Date[] | null = watch(`egenmeldingsdager.${index}.datoer`)
     const hasClickedVidere: boolean | null = watch(`egenmeldingsdager.${index}.hasClickedVidere`)
     const egenmeldingsdagerHitPrevious: boolean | null = watch('egenmeldingsdagerHitPrevious')
 
+    const { cumulativeBefore, cumulativeIncluding } = cumulativeDays(allPeriods, index)
     const [earliestPossibleDate, latestPossibleDate] = currentPeriodDatePicker(previous, metadata.previousSykmeldingTom)
     const hasHitPreviousSykmeldingTom = isAfter(earliestPossibleDate, latestPossibleDate)
 
@@ -74,6 +78,11 @@ function EgenmeldingerField({
 
     if (hasHitPreviousSykmeldingTom) {
         // The user has hit the previous sykmelding, we don't need to ask anymore.
+        return null
+    }
+
+    if (cumulativeBefore >= MAX_EGENMELDINGSDAGER) {
+        // The previous recursive period maxed out the number of days
         return null
     }
 
@@ -110,6 +119,14 @@ function EgenmeldingerField({
                             earliestPossibleDate={earliestPossibleDate}
                             latestPossibleDate={latestPossibleDate}
                             resetClickedVidere={() => setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)}
+                            disabled={[
+                                (date) => {
+                                    if (cumulativeIncluding >= MAX_EGENMELDINGSDAGER)
+                                        return !selectedDates?.some((d) => isSameDay(d, date))
+
+                                    return false
+                                },
+                            ]}
                         />
                         <VidereButtonField index={index} missingDates={missingDates} />
                         {missingDatesOnVidereClick && (
@@ -145,6 +162,11 @@ function EgenmeldingerField({
                     editSentEgenmelding={editSentEgenmelding}
                     amplitudeSkjemanavn={amplitudeSkjemanavn}
                 />
+            )}
+            {cumulativeIncluding >= MAX_EGENMELDINGSDAGER && (
+                <Alert variant="info" className="my-8">
+                    Du har valgt 16 egenmeldingsdager, og trenger ikke å velge flere.
+                </Alert>
             )}
         </>
     )

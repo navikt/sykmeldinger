@@ -32,16 +32,16 @@ function SendesTilArbeidsgiverInfo({ sykmelding, metadata }: Props): ReactElemen
     return (
         <div>
             <VeilederSenderSykmeldingenInfo />
+            <SykmeldingArbeidsgiverExpansionCard
+                sykmelding={sykmelding}
+                chosenEgenmeldingsdager={chosenEgenmeldingsdager}
+            />
             <BrukerSvarExpansionCard
                 title="Oppsummering av dine svar"
                 brukerSvar={{
                     values: formValues,
                     sporsmaltekstMetadata: metadata,
                 }}
-            />
-            <SykmeldingArbeidsgiverExpansionCard
-                sykmelding={sykmelding}
-                chosenEgenmeldingsdager={chosenEgenmeldingsdager}
             />
         </div>
     )
