@@ -27,8 +27,9 @@ function PapirInfoheader(): ReactElement {
     }, [harGittVidere])
 
     return (
-        <>
+        <section aria-labelledby="har-gitt-papirsykmelding-videre-group">
             <RadioGroup
+                id="har-gitt-papirsykmelding-videre-group"
                 name="harDuGittPapirsykmeldingenVidere"
                 legend="Har du allerede gitt papirsykmeldingen videre?"
                 value={harGittVidere}
@@ -91,7 +92,7 @@ function PapirInfoheader(): ReactElement {
                     </Alert>
                 </div>
             )}
-        </>
+        </section>
     )
 }
 

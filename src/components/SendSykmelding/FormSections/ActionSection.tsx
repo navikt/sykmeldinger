@@ -34,17 +34,19 @@ function ActionSection({ sykmeldingId, sendResult, onSykmeldingAvbrutt }: Props)
     return (
         <QuestionWrapper>
             <div className="flex flex-col items-center justify-center gap-4">
-                <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading}>
-                    {isArbeidstaker(arbeidssituasjon, fisker) ? 'Send' : 'Bekreft'} sykmelding
-                </Button>
-                <Button
-                    ref={avbryteRef}
-                    variant="tertiary"
-                    type="button"
-                    onClick={() => setAvbrytSykmelding((b) => !b)}
-                >
-                    Jeg vil avbryte sykmeldingen
-                </Button>
+                <div className="flex flex-col gap-8">
+                    <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading}>
+                        {isArbeidstaker(arbeidssituasjon, fisker) ? 'Send' : 'Bekreft'} sykmelding
+                    </Button>
+                    <Button
+                        ref={avbryteRef}
+                        variant="secondary"
+                        type="button"
+                        onClick={() => setAvbrytSykmelding((b) => !b)}
+                    >
+                        Avbryt sykmeldingen
+                    </Button>
+                </div>
             </div>
             {avbrytSykmelding && (
                 <AvbrytSykmeldingen
