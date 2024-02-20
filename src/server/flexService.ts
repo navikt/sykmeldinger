@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql'
 import { createChildLogger } from '@navikt/next-logger'
-import { grantTokenXOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall'
+import { requestOboToken } from '@navikt/oasis'
 
 import { getServerEnv } from '../utils/env'
 
@@ -15,10 +15,10 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
 
     childLogger.info(`Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}`)
 
-    const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE)
-    if (isInvalidTokenSet(tokenX)) {
+    const tokenX = await requestOboToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE)
+    if (!tokenX.ok) {
         throw new Error(
-            `Unable to exchange token for flex-syketilfelle token, requestId: ${context.requestId},reason: ${tokenX.message}`,
+            `Unable to exchange token for flex-syketilfelle token, requestId: ${context.requestId},reason: ${tokenX.error.message}`,
             {
                 cause: tokenX.error,
             },
@@ -32,7 +32,7 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
         `${getServerEnv().FLEX_SYKETILFELLE}/api/bruker/v2/ventetid/${sykmeldingId}/erUtenforVentetid`,
         {
             headers: {
-                Authorization: `Bearer ${tokenX}`,
+                Authorization: `Bearer ${tokenX.token}`,
                 'Content-Type': 'application/json',
                 'x-request-id': context.requestId,
             },
@@ -72,10 +72,10 @@ export async function feedback(feedback: object, context: RequestContext): Promi
 
     childLogger.info(`Submitting feedback to flexjar-backend`)
 
-    const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.FLEXJAR_BACKEND_SCOPE)
-    if (isInvalidTokenSet(tokenX)) {
+    const tokenX = await requestOboToken(context.accessToken, serverEnv.FLEXJAR_BACKEND_SCOPE)
+    if (!tokenX.ok) {
         throw new Error(
-            `Unable to exchange token for flex-syketilfelle token, requestId: ${context.requestId},reason: ${tokenX.message}`,
+            `Unable to exchange token for flex-syketilfelle token, requestId: ${context.requestId},reason: ${tokenX.error.message}`,
             {
                 cause: tokenX.error,
             },
@@ -85,7 +85,7 @@ export async function feedback(feedback: object, context: RequestContext): Promi
     const response = await fetch(`${serverEnv.FLEXJAR}/api/v1/feedback`, {
         method: 'POST',
         headers: {
-            Authorization: `Bearer ${tokenX}`,
+            Authorization: `Bearer ${tokenX.token}`,
             'Content-Type': 'application/json',
             'x-request-id': context.requestId,
         },
