@@ -77,6 +77,34 @@ const InformationBanner = ({
         )
     }
 
+    if (merknader?.some((merknad) => merknad.type === Merknadtype.DELVIS_GODKJENT)) {
+        return (
+            <div data-testid="merknad-banner">
+                <GuidePanel poster>
+                    <div className="mb-6">
+                        <Heading className="mb-4" level="2" size="small">
+                            Sykmeldingen din er delvis godkjent
+                        </Heading>
+                        <BodyLong className="mb-2">
+                            Sykmeldingen din starter før du oppsøkte lege. Perioden før du oppsøkte lege er
+                            tilbakedatert, og det er ikke oppgitt noen gyldig grunn til dette. Du vil derfor ikke få
+                            sykepenger for denne perioden. Sykmeldingen er godkjent fra tidspunktet du oppsøkte lege.
+                        </BodyLong>
+                    </div>
+                    <Heading level="2" size="small" className="mb-4">
+                        Hva gjør jeg nå?
+                    </Heading>
+                    <BodyLong>
+                        Du kan sende inn sykmeldingen nederst på siden, og deretter søknad om sykepenger. Når du har
+                        sendt inn søknaden, vil vi vurdere om du har rett til sykepenger for den delen av sykmeldingen
+                        som er godkjent. Du vil da få et skriftlig vedtak med nærmere begrunnelse og informasjon om
+                        klagemuligheter.
+                    </BodyLong>
+                </GuidePanel>
+            </div>
+        )
+    }
+
     if (merknader?.some((merknad) => merknad.type === Merknadtype.UNDER_BEHANDLING)) {
         return (
             <div data-testid="merknad-banner">

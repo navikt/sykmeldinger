@@ -118,6 +118,16 @@ const ugyldigTilbakedatering: ScenarioCreator = () => ({
     ],
 })
 
+const delvisGodkjentTilbakedatering: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: -7 })
+            .enkelPeriode()
+            .status(StatusEvent.APEN)
+            .merknader([{ type: Merknadtype.DELVIS_GODKJENT, beskrivelse: null }])
+            .build(),
+    ],
+})
+
 const utgatt: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).enkelPeriode().status(StatusEvent.UTGATT).build()],
 })
@@ -323,6 +333,10 @@ export const otherScenarios = {
     ugyldigTilbakedatering: {
         description: 'Sykmelding med ugyldig tilbakedatering og er til manuell behandling',
         scenario: ugyldigTilbakedatering,
+    },
+    delvisGodkjentTilbakedatering: {
+        description: 'Delvis godkjent tilbakedatering og er til manuell behandling',
+        scenario: delvisGodkjentTilbakedatering,
     },
     utgatt: {
         description: 'Utgått sykmelding',

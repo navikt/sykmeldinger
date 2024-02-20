@@ -12,6 +12,7 @@ import { UnderBehandlingGuidePanel } from '../../../InformationBanner/Informatio
 import { useFindPrevSykmeldingTom } from '../../../../hooks/useFindPrevSykmeldingTom'
 import Spinner from '../../../Spinner/Spinner'
 import { hasHitPreviousSykmeldingTom } from '../../../FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
+import InformationBannerSendt from '../../../InformationBanner/InformationBannerSendt'
 
 interface OkSendtSykmeldingProps {
     sykmelding: SykmeldingFragment
@@ -32,6 +33,8 @@ function OkSendtSykmelding({ sykmelding }: OkSendtSykmeldingProps): ReactElement
                     <UnderBehandlingGuidePanel />
                 </div>
             )}
+
+            {sykmelding.merknader != null && <InformationBannerSendt merknader={sykmelding.merknader} />}
 
             <div className="mb-8">
                 <OkSendtSykmeldingSykmeldtContainer sykmelding={sykmelding} />
