@@ -19,9 +19,10 @@ export type { SporsmaltekstMetadata }
 type Props = {
     title: 'Oppsummering av dine svar' | 'Dine svar'
     brukerSvar: BrukerSvarFragment | { values: FormValues; sporsmaltekstMetadata: SporsmaltekstMetadata }
+    className?: string
 }
 
-export function BrukerSvarExpansionCard({ title, brukerSvar }: Props): ReactElement {
+export function BrukerSvarExpansionCard({ title, brukerSvar, className }: Props): ReactElement {
     const mappedValues: BrukerSvarFragment =
         '__typename' in brukerSvar
             ? brukerSvar
@@ -30,7 +31,7 @@ export function BrukerSvarExpansionCard({ title, brukerSvar }: Props): ReactElem
     return (
         <ExpansionCard
             aria-labelledby="oppsummering-bruker-svar-heading"
-            className="pb-8"
+            className={className}
             onToggle={(open) => {
                 logAmplitudeEvent(
                     {

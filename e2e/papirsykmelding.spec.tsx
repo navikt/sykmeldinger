@@ -37,8 +37,13 @@ test.describe('Papir sykmelding', () => {
         await navigateToFirstSykmelding('nye', 'papirsykmelding')(page)
 
         await expect(page.getByRole('heading', { name: 'Papirsykmelding', level: 1 })).toBeVisible()
-        await getRadioInGroup(page)({ name: /Har du allerede gitt papirsykmeldingen videre?/i }, { name: 'Ja' }).click()
-        await page.getByRole('button', { name: 'Avbryt sykmeldingen' }).click()
+
+        const region = page.getByRole('region', { name: 'Har du allerede gitt papirsykmeldingen videre?' })
+        await getRadioInGroup(region)(
+            { name: /Har du allerede gitt papirsykmeldingen videre?/i },
+            { name: 'Ja' },
+        ).click()
+        await region.getByRole('button', { name: 'Avbryt sykmeldingen' }).click()
 
         await expect(page.getByText('Sykmeldingen ble avbrutt av deg')).toBeVisible()
     })
@@ -49,7 +54,7 @@ test.describe('Papir sykmelding', () => {
             await navigateToFirstSykmelding('nye', 'utenlandsk')(page)
 
             // Avbryt the first one so we can get to the second one :)))) (could make specific scenario ofc)
-            await page.getByRole('button', { name: 'Jeg vil avbryte sykmeldingen' }).click()
+            await page.getByRole('button', { name: 'Avbryt sykmeldingen' }).click()
             await page.getByRole('button', { name: 'Ja, jeg er sikker' }).click()
             await expect(page.getByRole('heading', { name: 'Sykmeldingen ble avbrutt av deg' })).toBeVisible()
 

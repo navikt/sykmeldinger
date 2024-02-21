@@ -14,7 +14,7 @@ test.describe('Avbryt sykmelding', () => {
         await navigateToFirstSykmelding('tidligere', '100%')(page)
 
         await expect(page.getByText(/Sykmeldingen ble avbrutt av deg/)).toBeVisible()
-        await expect(page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ })).not.toBeVisible()
+        await expect(page.getByRole('button', { name: /Avbryt sykmeldingen/ })).not.toBeVisible()
         await expect(page.getByRole('button', { name: /GJØR UTFYLLINGEN PÅ NYTT/ })).toBeVisible()
 
         await expect(page).toHaveNoViolations()
@@ -25,19 +25,19 @@ test.describe('Avbryt sykmelding', () => {
         await navigateToFirstSykmelding('tidligere', '100%')(page)
 
         await expect(page.getByText(/Sykmeldingen ble avbrutt av deg/)).toBeVisible()
-        await expect(page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ })).not.toBeVisible()
+        await expect(page.getByRole('button', { name: /Avbryt sykmeldingen/ })).not.toBeVisible()
 
         await page.getByRole('button', { name: /GJØR UTFYLLINGEN PÅ NYTT/ }).click()
 
         await expect(page.getByText(/Sykmeldingen ble avbrutt av deg/)).not.toBeVisible()
-        await expect(page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ })).toBeVisible()
+        await expect(page.getByRole('button', { name: /Avbryt sykmeldingen/ })).toBeVisible()
     })
 
     test('should avbryte open sykmelding', async ({ page }) => {
         await page.goto('/')
         await navigateToFirstSykmelding('nye', '100%')(page)
 
-        await page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ }).click()
+        await page.getByRole('button', { name: /Avbryt sykmeldingen/ }).click()
         await expect(page.getByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeVisible()
         await page.getByRole('button', { name: /Ja, jeg er sikker/ }).click()
 
@@ -62,7 +62,7 @@ test.describe('Avbryt sykmelding', () => {
 
         await page.getByRole('button', { name: 'GJØR UTFYLLINGEN PÅ NYTT' }).click()
 
-        await page.getByRole('button', { name: /Jeg vil avbryte sykmeldingen/ }).click()
+        await page.getByRole('button', { name: /Avbryt sykmeldingen/ }).click()
         await expect(page.getByText(/Er du sikker på at du vil avbryte sykmeldingen?/)).toBeVisible()
         await page.getByRole('button', { name: /Ja, jeg er sikker/ }).click()
 
