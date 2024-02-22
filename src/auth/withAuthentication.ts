@@ -100,8 +100,6 @@ export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
 
         const token = getToken(req)
         if (token == null) {
-            logger.error(`JWT-less request for API ${req.url}`)
-
             res.status(401).json({ message: 'Access denied' })
             return
         }
