@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { createChildLogger } from '@navikt/next-logger'
-import { grantTokenXOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall'
+import { requestOboToken } from '@navikt/oasis'
 import { GraphQLError } from 'graphql'
 
 import { getServerEnv } from '../utils/env'
@@ -157,10 +157,10 @@ async function fetchApi<ResponseObject>(
 ): Promise<ResponseObject> {
     const childLogger = createChildLogger(context.requestId)
 
-    const tokenX = await grantTokenXOboToken(context.accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE)
-    if (isInvalidTokenSet(tokenX)) {
+    const tokenX = await requestOboToken(context.accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE)
+    if (!tokenX.ok) {
         throw new Error(
-            `Unable to exchange token for sykmeldinger-backend token, requestId: ${context.requestId}, reason: ${tokenX.message}`,
+            `Unable to exchange token for sykmeldinger-backend token (${tokenX.errorType}), requestId: ${context.requestId}, reason: ${tokenX.error.message}`,
             {
                 cause: tokenX.error,
             },
@@ -172,7 +172,7 @@ async function fetchApi<ResponseObject>(
         method: method.type,
         body: method.type === 'POST' ? method.body : undefined,
         headers: {
-            Authorization: `Bearer ${tokenX}`,
+            Authorization: `Bearer ${tokenX.token}`,
             'Content-Type': 'application/json',
             'x-request-id': context.requestId,
         },
