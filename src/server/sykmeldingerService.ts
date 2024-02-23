@@ -160,10 +160,8 @@ async function fetchApi<ResponseObject>(
     const tokenX = await requestOboToken(context.accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE)
     if (!tokenX.ok) {
         throw new Error(
-            `Unable to exchange token for sykmeldinger-backend token (${tokenX.errorType}), requestId: ${context.requestId}, reason: ${tokenX.error.message}`,
-            {
-                cause: tokenX.error,
-            },
+            `Unable to exchange token for sykmeldinger-backend token, requestId: ${context.requestId}, reason: ${tokenX.error.message}`,
+            { cause: tokenX.error },
         )
     }
 

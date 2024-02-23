@@ -2317,9 +2317,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/oasis@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@navikt/oasis@npm:2.2.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Foasis%2F2.2.0%2F74987c579ecd66d123efd8c2c6a402ceb0e3fdf1"
+"@navikt/oasis@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@navikt/oasis@npm:3.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Foasis%2F3.1.0%2Fafe12d4a17a6ba3ea71c1be203c7cc7ef97e9f76"
   dependencies:
     jose: "npm:^5.2.2"
     openid-client: "npm:^5.6.4"
@@ -2327,7 +2327,7 @@ __metadata:
   dependenciesMeta:
     prom-client:
       optional: true
-  checksum: b16496623ef33f7a6a4acb74f5ae7633c15fe62353320e3303b5940ddfe3d4e92bb57cbaab1c652eab513c5adec2b36fbfff399f8f9cce0049b55fc6226bfa29
+  checksum: 68fbb73e531d2914efe88609d6d17af2fda902492b67d966ca22cd8f672d3951e57b3866d2c532780158b8d24fe3464ccdaa23526f483883b76e6d96f005acc0
   languageName: node
   linkType: hard
 
@@ -11816,7 +11816,7 @@ __metadata:
     "@navikt/eslint-config-teamsykmelding": "npm:^5.1.0"
     "@navikt/nav-dekoratoren-moduler": "npm:^2.1.5"
     "@navikt/next-logger": "npm:^1.21.0"
-    "@navikt/oasis": "npm:^2.2.0"
+    "@navikt/oasis": "npm:^3.1.0"
     "@next/bundle-analyzer": "npm:14.1.0"
     "@parcel/watcher": "npm:^2.4.0"
     "@playwright/test": "npm:^1.41.2"
