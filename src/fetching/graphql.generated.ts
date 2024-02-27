@@ -593,22 +593,6 @@ export type Dev_SetAntallArbeidsgivereMutation = {
     readonly dev_setAntallArbeidsgivere: boolean
 }
 
-export type Dev_BrukerinformasjonQueryVariables = Exact<{ [key: string]: never }>
-
-export type Dev_BrukerinformasjonQuery = {
-    readonly __typename: 'Query'
-    readonly brukerinformasjon: {
-        readonly __typename: 'Brukerinformasjon'
-        readonly arbeidsgivere: ReadonlyArray<{
-            readonly __typename: 'Arbeidsgiver'
-            readonly orgnummer: string
-            readonly navn: string
-            readonly aktivtArbeidsforhold: boolean
-            readonly naermesteLeder?: { readonly __typename: 'NaermesteLeder'; readonly navn: string } | null
-        }>
-    }
-}
-
 export type FeedbackMutationVariables = Exact<{
     feedback: Scalars['JSON']['input']
 }>
@@ -882,22 +866,12 @@ export type SykmeldingUtenforVentetidFragment = {
     readonly oppfolgingsdato?: string | null
 }
 
-export type ExtraFormDataQueryVariables = Exact<{
+export type SykmeldingErUtenforVentetidQueryVariables = Exact<{
     sykmeldingId: Scalars['String']['input']
 }>
 
-export type ExtraFormDataQuery = {
+export type SykmeldingErUtenforVentetidQuery = {
     readonly __typename: 'Query'
-    readonly brukerinformasjon: {
-        readonly __typename: 'Brukerinformasjon'
-        readonly arbeidsgivere: ReadonlyArray<{
-            readonly __typename: 'Arbeidsgiver'
-            readonly orgnummer: string
-            readonly navn: string
-            readonly aktivtArbeidsforhold: boolean
-            readonly naermesteLeder?: { readonly __typename: 'NaermesteLeder'; readonly navn: string } | null
-        }>
-    }
     readonly sykmeldingUtenforVentetid: {
         readonly __typename: 'UtenforVentetid'
         readonly erUtenforVentetid: boolean
@@ -3797,72 +3771,6 @@ export const Dev_SetAntallArbeidsgivereDocument = {
         },
     ],
 } as unknown as DocumentNode<Dev_SetAntallArbeidsgivereMutation, Dev_SetAntallArbeidsgivereMutationVariables>
-export const Dev_BrukerinformasjonDocument = {
-    kind: 'Document',
-    definitions: [
-        {
-            kind: 'OperationDefinition',
-            operation: 'query',
-            name: { kind: 'Name', value: 'Dev_Brukerinformasjon' },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'brukerinformasjon' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Brukerinformasjon' } },
-                            ],
-                        },
-                    },
-                ],
-            },
-        },
-        {
-            kind: 'FragmentDefinition',
-            name: { kind: 'Name', value: 'NaermesteLeder' },
-            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'NaermesteLeder' } },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'navn' } }],
-            },
-        },
-        {
-            kind: 'FragmentDefinition',
-            name: { kind: 'Name', value: 'Brukerinformasjon' },
-            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Brukerinformasjon' } },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'arbeidsgivere' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'navn' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'aktivtArbeidsforhold' } },
-                                {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'naermesteLeder' },
-                                    selectionSet: {
-                                        kind: 'SelectionSet',
-                                        selections: [
-                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'NaermesteLeder' } },
-                                        ],
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                ],
-            },
-        },
-    ],
-} as unknown as DocumentNode<Dev_BrukerinformasjonQuery, Dev_BrukerinformasjonQueryVariables>
 export const FeedbackDocument = {
     kind: 'Document',
     definitions: [
@@ -4546,13 +4454,13 @@ export const EndreEgenmeldingsdagerDocument = {
         },
     ],
 } as unknown as DocumentNode<EndreEgenmeldingsdagerMutation, EndreEgenmeldingsdagerMutationVariables>
-export const ExtraFormDataDocument = {
+export const SykmeldingErUtenforVentetidDocument = {
     kind: 'Document',
     definitions: [
         {
             kind: 'OperationDefinition',
             operation: 'query',
-            name: { kind: 'Name', value: 'ExtraFormData' },
+            name: { kind: 'Name', value: 'SykmeldingErUtenforVentetid' },
             variableDefinitions: [
                 {
                     kind: 'VariableDefinition',
@@ -4563,16 +4471,6 @@ export const ExtraFormDataDocument = {
             selectionSet: {
                 kind: 'SelectionSet',
                 selections: [
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'brukerinformasjon' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Brukerinformasjon' } },
-                            ],
-                        },
-                    },
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'sykmeldingUtenforVentetid' },
@@ -4595,47 +4493,6 @@ export const ExtraFormDataDocument = {
         },
         {
             kind: 'FragmentDefinition',
-            name: { kind: 'Name', value: 'NaermesteLeder' },
-            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'NaermesteLeder' } },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'navn' } }],
-            },
-        },
-        {
-            kind: 'FragmentDefinition',
-            name: { kind: 'Name', value: 'Brukerinformasjon' },
-            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Brukerinformasjon' } },
-            selectionSet: {
-                kind: 'SelectionSet',
-                selections: [
-                    {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'arbeidsgivere' },
-                        selectionSet: {
-                            kind: 'SelectionSet',
-                            selections: [
-                                { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'navn' } },
-                                { kind: 'Field', name: { kind: 'Name', value: 'aktivtArbeidsforhold' } },
-                                {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'naermesteLeder' },
-                                    selectionSet: {
-                                        kind: 'SelectionSet',
-                                        selections: [
-                                            { kind: 'FragmentSpread', name: { kind: 'Name', value: 'NaermesteLeder' } },
-                                        ],
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                ],
-            },
-        },
-        {
-            kind: 'FragmentDefinition',
             name: { kind: 'Name', value: 'SykmeldingUtenforVentetid' },
             typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'UtenforVentetid' } },
             selectionSet: {
@@ -4647,7 +4504,7 @@ export const ExtraFormDataDocument = {
             },
         },
     ],
-} as unknown as DocumentNode<ExtraFormDataQuery, ExtraFormDataQueryVariables>
+} as unknown as DocumentNode<SykmeldingErUtenforVentetidQuery, SykmeldingErUtenforVentetidQueryVariables>
 export const BrukerinformasjonDocument = {
     kind: 'Document',
     definitions: [

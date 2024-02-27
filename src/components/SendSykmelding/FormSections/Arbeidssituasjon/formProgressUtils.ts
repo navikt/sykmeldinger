@@ -1,36 +1,26 @@
 import { useFormContext } from 'react-hook-form'
 
-import { ArbeidssituasjonType, BrukerinformasjonFragment, SykmeldingUtenforVentetidFragment } from 'queries'
+import { ArbeidssituasjonType, BrukerinformasjonFragment } from 'queries'
 
 import { isActiveArbeidsgiver } from '../../../../utils/arbeidsgiverUtils'
-import {
-    isArbeidstaker,
-    isFisker,
-    isFrilanserOrNaeringsdrivendeOrJordbruker,
-} from '../../../../utils/arbeidssituasjonUtils'
+import { isArbeidstaker, isFisker } from '../../../../utils/arbeidssituasjonUtils'
 import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdagerUtils'
 import { FormValues } from '../../SendSykmeldingForm'
 import { EgenmeldingsdagerFormValue } from '../../../FormComponents/Egenmelding/EgenmeldingerField'
 
 type UseDynamicSubSections = {
     shouldShowArbeidsgiverOrgnummer: boolean
-    shouldShowFrilanserSelvstendigSection: boolean
     shouldShowFisker: boolean
 }
 
-export function useArbeidssituasjonSubSections(
-    sykmeldingUtenforVentetid: SykmeldingUtenforVentetidFragment,
-): UseDynamicSubSections {
+export function useArbeidssituasjonSubSections(): UseDynamicSubSections {
     const { watch } = useFormContext<FormValues>()
     const [arbeidssituasjon] = watch(['arbeidssituasjon'])
 
     const shouldShowArbeidsgiverOrgnummer: boolean = isArbeidstaker(arbeidssituasjon)
-    const shouldShowFrilanserSelvstendigSection: boolean =
-        isFrilanserOrNaeringsdrivendeOrJordbruker(arbeidssituasjon) && !sykmeldingUtenforVentetid.erUtenforVentetid
 
     return {
         shouldShowArbeidsgiverOrgnummer,
-        shouldShowFrilanserSelvstendigSection,
         shouldShowFisker: isFisker(arbeidssituasjon),
     }
 }

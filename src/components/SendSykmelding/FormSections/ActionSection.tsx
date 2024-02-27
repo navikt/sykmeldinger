@@ -59,7 +59,7 @@ function ActionSection({ sykmeldingId, sendResult, onSykmeldingAvbrutt }: Props)
                 />
             )}
             {sendResult.error && (
-                <Alert className="mt-4" variant="error" role="alert">
+                <Alert className="mt-8" variant="error" role="alert">
                     <Heading size="small" level="3" spacing>
                         Klarte ikke å sende inn sykmeldingen
                     </Heading>

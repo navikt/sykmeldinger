@@ -3,11 +3,19 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
 import * as R from 'remeda'
+import { useQuery } from '@apollo/client'
 
-import { YesOrNo, UriktigeOpplysningerType, ArbeidssituasjonType, SykmeldingFragment, Blad, LottOgHyre } from 'queries'
+import {
+    YesOrNo,
+    UriktigeOpplysningerType,
+    ArbeidssituasjonType,
+    SykmeldingFragment,
+    Blad,
+    LottOgHyre,
+    BrukerinformasjonDocument,
+} from 'queries'
 
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
-import useExtraFormData from '../../hooks/useExtraFormData'
 import { useSendSykmelding } from '../../hooks/useMutations'
 import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import Spinner from '../Spinner/Spinner'
@@ -73,7 +81,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
             },
         },
     })
-    const extraFormData = useExtraFormData(sykmeldingId)
+    const brukerinformasjonData = useQuery(BrukerinformasjonDocument)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
         (values) =>
@@ -86,11 +94,11 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
 
     useWarnUnsavedPopup(form.formState.isDirty && !form.formState.isSubmitSuccessful)
 
-    if (extraFormData.loading) {
+    if (brukerinformasjonData.loading) {
         return <Spinner headline="Henter arbeidsforhold" />
     }
 
-    if (extraFormData.error || !extraFormData.data) {
+    if (brukerinformasjonData.error || !brukerinformasjonData.data) {
         return (
             <Alert variant="error" role="alert" aria-live="polite">
                 Vi klarte dessverre ikke å hente informasjonen som trengs for at du kan bruke sykmeldingen. Vennligst
@@ -102,9 +110,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
     return (
         <FormProvider {...form}>
             {(browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev' ||
-                browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') && (
-                <AutoFillerDevTools sykmeldingId={sykmeldingId} />
-            )}
+                browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') && <AutoFillerDevTools />}
             <form
                 onSubmit={form.handleSubmit(sendSykmelding, (errors) => {
                     logAmplitudeEvent(
@@ -122,8 +128,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
                 <OpplysningerRiktigeSection />
                 <ArbeidssituasjonSection
                     sykmelding={sykmelding}
-                    sykmeldingUtenforVentetid={extraFormData.data.sykmeldingUtenforVentetid}
-                    brukerinformasjon={extraFormData.data.brukerinformasjon}
+                    brukerinformasjon={brukerinformasjonData.data.brukerinformasjon}
                 />
                 <ErrorSection ref={errorSectionRef} />
                 <ActionSection

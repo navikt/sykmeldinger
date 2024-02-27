@@ -7,12 +7,16 @@ import { raise } from '../../../../utils/ts-utils'
 import { mapToSendSykmeldingValues } from '../../../../utils/toSendSykmeldingUtils'
 
 export type SporsmaltekstMetadata = {
+    sykmeldingId: string
     arbeidsgiverNavn: string
     narmestelederNavn: string
-    oppfolgingsdato: string
+    sykmeldingStartDato: string
 }
 
-export function mapFormValuesToBrukerSvar(formValues: FormValues, metadata: SporsmaltekstMetadata): BrukerSvarFragment {
+export function mapFormValuesToBrukerSvar(
+    formValues: FormValues,
+    metadata: SporsmaltekstMetadata,
+): Omit<BrukerSvarFragment, 'egenmeldingsperioder' | 'harBruktEgenmelding' | 'harForsikring'> {
     const sendSykmeldingValues = mapToSendSykmeldingValues(formValues)
 
     return {
@@ -66,32 +70,6 @@ export function mapFormValuesToBrukerSvar(formValues: FormValues, metadata: Spor
                   svar: sendSykmeldingValues.egenmeldingsdager,
               }
             : null,
-        harForsikring:
-            sendSykmeldingValues.harForsikring != null
-                ? {
-                      __typename: 'HarForsikringBrukerSvar',
-                      sporsmaltekst: sporsmal.harForsikring,
-                      svar: yesOrNoToJaEllerNei(sendSykmeldingValues.harForsikring),
-                  }
-                : null,
-        harBruktEgenmelding: sendSykmeldingValues.harBruktEgenmelding
-            ? {
-                  __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar',
-                  sporsmaltekst: sporsmal.harBruktEgenmelding(metadata.oppfolgingsdato),
-                  svar: yesOrNoToJaEllerNei(sendSykmeldingValues.harBruktEgenmelding),
-              }
-            : null,
-        egenmeldingsperioder: sendSykmeldingValues.egenmeldingsperioder
-            ? {
-                  __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar',
-                  sporsmaltekst: sporsmal.egenmeldingsperioder(metadata.oppfolgingsdato),
-                  svar: sendSykmeldingValues.egenmeldingsperioder.map((it) => ({
-                      __typename: 'FomTom',
-                      fom: it.fom ?? raise('Fom må være satt'),
-                      tom: it.tom ?? raise('Tom må være satt'),
-                  })),
-              }
-            : null,
         fisker:
             sendSykmeldingValues.fisker != null
                 ? {
@@ -108,5 +86,41 @@ export function mapFormValuesToBrukerSvar(formValues: FormValues, metadata: Spor
                       },
                   }
                 : null,
+    }
+}
+
+export function mapFrilanserFormValuesToBrukerSvar(
+    formValues: FormValues,
+    oppfolgingsdato: string,
+): Pick<BrukerSvarFragment, 'egenmeldingsperioder' | 'harBruktEgenmelding' | 'harForsikring'> {
+    const sendSykmeldingValues = mapToSendSykmeldingValues(formValues)
+
+    return {
+        harForsikring:
+            sendSykmeldingValues.harForsikring != null
+                ? {
+                      __typename: 'HarForsikringBrukerSvar',
+                      sporsmaltekst: sporsmal.harForsikring,
+                      svar: yesOrNoToJaEllerNei(sendSykmeldingValues.harForsikring),
+                  }
+                : null,
+        harBruktEgenmelding: sendSykmeldingValues.harBruktEgenmelding
+            ? {
+                  __typename: 'HarFrilanserEllerSelvstendigBruktEgenmeldingBrukerSvar',
+                  sporsmaltekst: sporsmal.harBruktEgenmelding(oppfolgingsdato),
+                  svar: yesOrNoToJaEllerNei(sendSykmeldingValues.harBruktEgenmelding),
+              }
+            : null,
+        egenmeldingsperioder: sendSykmeldingValues.egenmeldingsperioder
+            ? {
+                  __typename: 'FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar',
+                  sporsmaltekst: sporsmal.egenmeldingsperioder(oppfolgingsdato),
+                  svar: sendSykmeldingValues.egenmeldingsperioder.map((it) => ({
+                      __typename: 'FomTom',
+                      fom: it.fom ?? raise('Fom må være satt'),
+                      tom: it.tom ?? raise('Tom må være satt'),
+                  })),
+              }
+            : null,
     }
 }

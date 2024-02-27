@@ -79,6 +79,15 @@ class MockDb {
             this.sykeldingErUtenforVentetid(),
         )
 
+        // Simulate what would happen in sykmeldinger-backend Validation step
+        if (apiValues.arbeidssituasjon.svar === ArbeidssituasjonType.FISKER && apiValues.fisker != null) {
+            if (apiValues.fisker.lottOgHyre.svar === 'LOTT' || apiValues.fisker.lottOgHyre.svar === 'BEGGE') {
+                if (apiValues.harBruktEgenmelding == null) {
+                    throw new Error('Valgt fisker uten å fylle ut fiskerfeltene')
+                }
+            }
+        }
+
         const sporsmalOgSvarListe: Sporsmal[] = R.compact([
             {
                 shortName: ShortName.ARBEIDSSITUASJON,

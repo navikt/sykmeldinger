@@ -12,7 +12,6 @@ import FiskerArbeidstakerSection from './FiskerArbeidstaker/FiskerArbeidstakerSe
 import FiskerSelvstendigSection from './FiskerSelvstendig/FiskerSelvstendigSection'
 
 type Props = {
-    oppfolgingsdato: string
     sykmelding: SykmeldingFragment
     brukerinformasjon: BrukerinformasjonFragment
 }
@@ -32,7 +31,7 @@ type Props = {
  * løst med komposisjon. Det betyr at alle "leaf-nodes" i state-"treet" har sin egen
  * oppsummering om hva som sendes f.eks til arbeidsgiver.
  */
-function FiskerSection({ oppfolgingsdato, brukerinformasjon, sykmelding }: Props): ReactElement {
+function FiskerSection({ brukerinformasjon, sykmelding }: Props): ReactElement {
     const { watch } = useFormContext<FormValues>()
     const [blad, lottOgHyre] = watch(['fisker.blad', 'fisker.lottOgHyre'])
 
@@ -41,14 +40,10 @@ function FiskerSection({ oppfolgingsdato, brukerinformasjon, sykmelding }: Props
             <BladField />
             {blad != null && <LottOgHyreField />}
             {(lottOgHyre === 'LOTT' || lottOgHyre === 'BEGGE') && (
-                <FiskerSelvstendigSection oppfolgingsdato={oppfolgingsdato} askForsikring={blad === 'A'} />
+                <FiskerSelvstendigSection sykmelding={sykmelding} askForsikring={blad === 'A'} />
             )}
             {lottOgHyre === 'HYRE' && (
-                <FiskerArbeidstakerSection
-                    sykmelding={sykmelding}
-                    brukerinformasjon={brukerinformasjon}
-                    oppfolgingsdato={oppfolgingsdato}
-                />
+                <FiskerArbeidstakerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />
             )}
         </SectionWrapper>
     )

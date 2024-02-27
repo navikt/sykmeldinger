@@ -3,7 +3,7 @@ import { BoatIcon, BriefcaseIcon, CheckmarkCircleIcon, TasklistIcon, XMarkOctago
 import { ExpansionCard } from '@navikt/ds-react'
 import { useQuery } from '@apollo/client'
 
-import { BrukerinformasjonDocument, BrukerSvarFragment, JaEllerNei } from 'queries'
+import { BrukerinformasjonDocument, BrukerSvarFragment, JaEllerNei, SykmeldingErUtenforVentetidDocument } from 'queries'
 
 import { SykmeldingInfo, SykmeldingListInfo } from '../../../molecules/sykmelding/SykmeldingInfo'
 import { arbeidsSituasjonEnumToText, uriktigeOpplysningerEnumToText } from '../../../../utils/sporsmal'
@@ -11,8 +11,9 @@ import { capitalizeFirstLetter, pluralize } from '../../../../utils/stringUtils'
 import { toReadableDate, toReadableDatePeriod } from '../../../../utils/dateUtils'
 import { FormValues } from '../../../SendSykmelding/SendSykmeldingForm'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
 
-import { mapFormValuesToBrukerSvar, SporsmaltekstMetadata } from './BrukerSvarUtils'
+import { mapFormValuesToBrukerSvar, mapFrilanserFormValuesToBrukerSvar, SporsmaltekstMetadata } from './BrukerSvarUtils'
 
 export type { SporsmaltekstMetadata }
 
@@ -23,11 +24,6 @@ type Props = {
 }
 
 export function BrukerSvarExpansionCard({ title, brukerSvar, className }: Props): ReactElement {
-    const mappedValues: BrukerSvarFragment =
-        '__typename' in brukerSvar
-            ? brukerSvar
-            : mapFormValuesToBrukerSvar(brukerSvar.values, brukerSvar.sporsmaltekstMetadata)
-
     return (
         <ExpansionCard
             aria-labelledby="oppsummering-bruker-svar-heading"
@@ -55,15 +51,19 @@ export function BrukerSvarExpansionCard({ title, brukerSvar, className }: Props)
                 </div>
             </ExpansionCard.Header>
             <ExpansionCard.Content>
-                <BrukerSvar brukerSvar={mappedValues} />
+                {'__typename' in brukerSvar ? (
+                    <SentSykmeldingBrukerSvar brukerSvar={brukerSvar} />
+                ) : (
+                    <CurrentFormValuesBrukerSvar brukerSvar={brukerSvar} />
+                )}
             </ExpansionCard.Content>
         </ExpansionCard>
     )
 }
 
-function BrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragment }): ReactElement {
+function SentSykmeldingBrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragment }): ReactElement {
     return (
-        <div>
+        <>
             <YesNoAnswer response={brukerSvar.erOpplysningeneRiktige} />
             <UriktigeOpplysningerAnswer response={brukerSvar.uriktigeOpplysninger} />
             <ArbeidssituasjonAnswer response={brukerSvar.arbeidssituasjon} />
@@ -79,7 +79,69 @@ function BrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragment }): ReactEl
             <YesNoAnswer response={brukerSvar.harBruktEgenmelding} />
             <FrilanserEgenmeldingsperioderAnswer response={brukerSvar.egenmeldingsperioder} />
             <YesNoAnswer response={brukerSvar.harForsikring} />
-        </div>
+        </>
+    )
+}
+
+function CurrentFormValuesBrukerSvar({
+    brukerSvar,
+}: {
+    brukerSvar: { values: FormValues; sporsmaltekstMetadata: SporsmaltekstMetadata }
+}): ReactElement {
+    const mappedValues = mapFormValuesToBrukerSvar(brukerSvar.values, brukerSvar.sporsmaltekstMetadata)
+
+    return (
+        <>
+            <YesNoAnswer response={mappedValues.erOpplysningeneRiktige} />
+            <UriktigeOpplysningerAnswer response={mappedValues.uriktigeOpplysninger} />
+            <ArbeidssituasjonAnswer response={mappedValues.arbeidssituasjon} />
+            <FiskerBladAnswer response={mappedValues.fisker?.blad} />
+            <FiskerLottOgHyreAnswer response={mappedValues.fisker?.lottOgHyre} />
+            {mappedValues.arbeidsgiverOrgnummer && (
+                // This component does some data-fetching, avoid rendering it to avoid unnecessary requests
+                <ArbeidsgiverOrgnummerAnswer response={mappedValues.arbeidsgiverOrgnummer} />
+            )}
+            <YesNoAnswer response={mappedValues.riktigNarmesteLeder} />
+            <YesNoAnswer response={mappedValues.harBruktEgenmeldingsdager} />
+            <EgenmeldingsdagerAnswer response={mappedValues.egenmeldingsdager} />
+            {isFrilanserOrNaeringsdrivendeOrJordbruker(mappedValues.arbeidssituasjon?.svar) && (
+                <FrilanserNaeringsdrivendeBrukerSvar
+                    formValues={brukerSvar.values}
+                    sykmeldingStartDato={brukerSvar.sporsmaltekstMetadata.sykmeldingStartDato}
+                    sykmeldingId={brukerSvar.sporsmaltekstMetadata.sykmeldingId}
+                />
+            )}
+        </>
+    )
+}
+
+function FrilanserNaeringsdrivendeBrukerSvar({
+    formValues,
+    sykmeldingStartDato,
+    sykmeldingId,
+}: {
+    formValues: FormValues
+    sykmeldingStartDato: string
+    sykmeldingId: string
+}): React.ReactElement | null {
+    // This loading state will never be seen, so we can ignore it
+    const { data } = useQuery(SykmeldingErUtenforVentetidDocument, {
+        variables: { sykmeldingId },
+    })
+
+    if (!data) {
+        return null
+    }
+
+    const oppfolgingsdato = data.sykmeldingUtenforVentetid.oppfolgingsdato || sykmeldingStartDato
+    const mappedValues = mapFrilanserFormValuesToBrukerSvar(formValues, oppfolgingsdato)
+
+    return (
+        <>
+            <YesNoAnswer response={mappedValues.harBruktEgenmelding} />
+            <FrilanserEgenmeldingsperioderAnswer response={mappedValues.egenmeldingsperioder} />
+            <YesNoAnswer response={mappedValues.harForsikring} />
+        </>
     )
 }
 

@@ -2,12 +2,12 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import mockRouter from 'next-router-mock'
 import { GraphQLError } from 'graphql'
 
-import { BrukerinformasjonDocument, ExtraFormDataDocument, SykmeldingByIdDocument, SykmeldingerDocument } from 'queries'
+import { BrukerinformasjonDocument, SykmeldingByIdDocument, SykmeldingerDocument } from 'queries'
 
 import { render, screen } from '../../utils/test/testUtils'
 import { dateSub } from '../../utils/dateUtils'
 import { createInitialQuery, createMock, createSykmelding } from '../../utils/test/dataUtils'
-import { createExtraFormDataMock, extraFormData } from '../../utils/test/mockUtils'
+import { brukerinformasjonData, createExtraFormDataMock } from '../../utils/test/mockUtils'
 
 import SykmeldingPage from './index.page'
 
@@ -29,7 +29,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     request: { query: SykmeldingerDocument },
                     result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
                 }),
-                createExtraFormDataMock(),
+                ...createExtraFormDataMock(),
             ],
         })
 
@@ -63,9 +63,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     result: { data: { __typename: 'Query', sykmeldinger: [thisSykmelding, previousSykmelding] } },
                 }),
             ],
-            initialState: [
-                createInitialQuery(ExtraFormDataDocument, extraFormData(), { sykmeldingId: 'this-sykmelding' }),
-            ],
+            initialState: [createInitialQuery(BrukerinformasjonDocument, brukerinformasjonData())],
         })
 
         expect(
@@ -93,7 +91,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                         extensions: { dontLog: true },
                     },
                 }),
-                createExtraFormDataMock(),
+                ...createExtraFormDataMock(),
             ],
         })
 
@@ -114,7 +112,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
                 }),
                 createMock({
-                    request: { query: ExtraFormDataDocument, variables: { sykmeldingId: 'sykmelding-id' } },
+                    request: { query: BrukerinformasjonDocument },
                     result: {
                         data: null,
                         errors: [new GraphQLError('Some backend error')],
