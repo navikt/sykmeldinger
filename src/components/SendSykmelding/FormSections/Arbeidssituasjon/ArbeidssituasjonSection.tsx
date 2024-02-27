@@ -1,10 +1,13 @@
 import { ReactElement } from 'react'
+import { useFormContext } from 'react-hook-form'
 
-import { BrukerinformasjonFragment, Periodetype, SykmeldingFragment, SykmeldingUtenforVentetidFragment } from 'queries'
+import { BrukerinformasjonFragment, Periodetype, SykmeldingFragment } from 'queries'
 
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'
+import { isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
+import { FormValues } from '../../SendSykmeldingForm'
 
 import { ArbeidssituasjonInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
@@ -16,43 +19,31 @@ import FiskerSection from './Fisker/FiskerSection'
 interface Props {
     sykmelding: SykmeldingFragment
     brukerinformasjon: BrukerinformasjonFragment
-    sykmeldingUtenforVentetid: SykmeldingUtenforVentetidFragment
 }
 
-function ArbeidssituasjonSection({
-    sykmelding,
-    sykmeldingUtenforVentetid,
-    brukerinformasjon,
-}: Props): ReactElement | null {
+function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): ReactElement | null {
+    const { watch } = useFormContext<FormValues>()
     const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
-    const { shouldShowArbeidsgiverOrgnummer, shouldShowFrilanserSelvstendigSection, shouldShowFisker } =
-        useArbeidssituasjonSubSections(sykmeldingUtenforVentetid)
+    const { shouldShowArbeidsgiverOrgnummer, shouldShowFisker } = useArbeidssituasjonSubSections()
+    const arbeidssituasjon = watch('arbeidssituasjon')
 
     // Don't show arbeidssituasjon section given certain criteria
     if (!useShouldArbeidssituasjonShow()) return null
-
-    const oppfolgingsdato =
-        sykmeldingUtenforVentetid.oppfolgingsdato || getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
 
     return (
         <SectionWrapper title="Din arbeidssituasjon">
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             {shouldShowArbeidsgiverOrgnummer && (
-                <ArbeidsgiverSection
-                    sykmelding={sykmelding}
-                    arbeidsgivere={brukerinformasjon.arbeidsgivere}
-                    oppfolgingsdato={oppfolgingsdato}
+                <ArbeidsgiverSection sykmelding={sykmelding} arbeidsgivere={brukerinformasjon.arbeidsgivere} />
+            )}
+            {shouldShowFisker && <FiskerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />}
+            {isFrilanserOrNaeringsdrivendeOrJordbruker(arbeidssituasjon) && (
+                <FrilanserSection
+                    sykmeldingId={sykmelding.id}
+                    sykmeldingStartDato={getSykmeldingStartDate(sykmelding.sykmeldingsperioder)}
                 />
             )}
-            {shouldShowFisker && (
-                <FiskerSection
-                    sykmelding={sykmelding}
-                    brukerinformasjon={brukerinformasjon}
-                    oppfolgingsdato={oppfolgingsdato}
-                />
-            )}
-            {shouldShowFrilanserSelvstendigSection && <FrilanserSection oppfolgingsdato={oppfolgingsdato} />}
         </SectionWrapper>
     )
 }

@@ -20,10 +20,9 @@ import ArbeidsgiverField from './ArbeidsgiverField'
 interface Props {
     sykmelding: SykmeldingFragment
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
-    oppfolgingsdato: string
 }
 
-function ArbeidsgiverSection({ sykmelding, arbeidsgivere, oppfolgingsdato }: Props): ReactElement | null {
+function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement | null {
     const { watch } = useFormContext<FormValues>()
     const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
 
@@ -55,9 +54,10 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere, oppfolgingsdato }: Pro
                 <SendesTilArbeidsgiverInfo
                     sykmelding={sykmelding}
                     metadata={{
+                        sykmeldingId: sykmelding.id,
                         arbeidsgiverNavn: valgtArbeidsgiver?.navn ?? '',
                         narmestelederNavn: valgtArbeidsgiver?.naermesteLeder?.navn ?? '',
-                        oppfolgingsdato,
+                        sykmeldingStartDato: getSykmeldingStartDate(sykmelding.sykmeldingsperioder),
                     }}
                 />
             )}

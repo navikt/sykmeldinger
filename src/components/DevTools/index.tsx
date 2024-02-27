@@ -5,11 +5,7 @@ import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { toPairs } from 'remeda'
 
-import {
-    Dev_BrukerinformasjonDocument,
-    Dev_ChangeUserScenarioDocument,
-    Dev_SetAntallArbeidsgivereDocument,
-} from 'queries'
+import { BrukerinformasjonDocument, Dev_ChangeUserScenarioDocument, Dev_SetAntallArbeidsgivereDocument } from 'queries'
 
 import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
 import { cn } from '../../utils/tw-utils'
@@ -172,10 +168,10 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
 }
 
 function ScenarioOptions(): ReactElement {
-    const brukerinformasjonQuery = useQuery(Dev_BrukerinformasjonDocument)
+    const brukerinformasjonQuery = useQuery(BrukerinformasjonDocument)
     const [antallArbeidsgivereMutation, antallArbeidsgivereMutationResult] = useMutation(
         Dev_SetAntallArbeidsgivereDocument,
-        { refetchQueries: [Dev_BrukerinformasjonDocument] },
+        { refetchQueries: [BrukerinformasjonDocument] },
     )
 
     const anyLoading = brukerinformasjonQuery.loading || antallArbeidsgivereMutationResult.loading

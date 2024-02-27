@@ -5,9 +5,3 @@ mutation Dev_ChangeUserScenario($scenario: String!) {
 mutation Dev_SetAntallArbeidsgivere($antall: Int!) {
     dev_setAntallArbeidsgivere(antall: $antall)
 }
-
-query Dev_Brukerinformasjon {
-    brukerinformasjon {
-        ...Brukerinformasjon
-    }
-}

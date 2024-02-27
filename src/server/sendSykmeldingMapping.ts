@@ -3,6 +3,7 @@ import { logger } from '@navikt/next-logger'
 import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 import { raise } from '../utils/ts-utils'
+import { isFrilanserOrNaeringsdrivendeOrJordbruker } from '../utils/arbeidssituasjonUtils'
 
 import { ArbeidssituasjonType, JaEllerNei, SendSykmeldingValues, YesOrNo } from './graphql/resolver-types.generated'
 import { SykmeldingUserEventV3Api } from './api-models/SendSykmelding'
@@ -32,6 +33,16 @@ export function mapSendSykmeldingValuesToV3Api(
     ) {
         logger.warn(
             `Illegal state: unable to find narmeste leder for selected aktive arbeidsgiver ${values.arbeidsgiverOrgnummer}. SykmeldingId: ${sykmelding.id}`,
+        )
+    }
+
+    if (
+        isFrilanserOrNaeringsdrivendeOrJordbruker(values.arbeidssituasjon) &&
+        !erUtenforVentetid.erUtenforVentetid &&
+        values.harForsikring == null
+    ) {
+        throw new Error(
+            'Illegal state: harForsikring is required for frilanser, naeringsdrivende and jordbruker when is inside ventyTid',
         )
     }
 

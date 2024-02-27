@@ -1,13 +1,30 @@
 import { MockedResponse } from '@apollo/client/testing'
 
-import { Brukerinformasjon, ExtraFormDataDocument, ExtraFormDataQuery, UtenforVentetid } from 'queries'
+import {
+    Brukerinformasjon,
+    BrukerinformasjonDocument,
+    BrukerinformasjonQuery,
+    SykmeldingErUtenforVentetidDocument,
+    SykmeldingErUtenforVentetidQuery,
+    UtenforVentetid,
+} from 'queries'
 
 import { createMock } from './dataUtils'
 
-export function extraFormData(
+export function brukerinformasjonData(brukerinformasjon: Partial<Brukerinformasjon> = {}): BrukerinformasjonQuery {
+    return {
+        __typename: 'Query',
+        brukerinformasjon: {
+            __typename: 'Brukerinformasjon',
+            arbeidsgivere: [],
+            ...brukerinformasjon,
+        },
+    }
+}
+
+export function erUtenforVentetidData(
     utenforVentetid: Partial<UtenforVentetid> = {},
-    brukerinformasjon: Partial<Brukerinformasjon> = {},
-): ExtraFormDataQuery {
+): SykmeldingErUtenforVentetidQuery {
     return {
         __typename: 'Query',
         sykmeldingUtenforVentetid: {
@@ -15,11 +32,6 @@ export function extraFormData(
             erUtenforVentetid: true,
             oppfolgingsdato: null,
             ...utenforVentetid,
-        },
-        brukerinformasjon: {
-            __typename: 'Brukerinformasjon',
-            arbeidsgivere: [],
-            ...brukerinformasjon,
         },
     }
 }
@@ -32,11 +44,19 @@ export function createExtraFormDataMock({
     sykmeldingId?: string
     utenforVentetid?: Partial<UtenforVentetid>
     brukerinformasjon?: Partial<Brukerinformasjon>
-} = {}): MockedResponse {
-    return createMock({
-        request: { query: ExtraFormDataDocument, variables: { sykmeldingId } },
-        result: {
-            data: extraFormData(utenforVentetid, brukerinformasjon),
-        },
-    })
+} = {}): MockedResponse[] {
+    return [
+        createMock({
+            request: { query: BrukerinformasjonDocument },
+            result: {
+                data: brukerinformasjonData(brukerinformasjon),
+            },
+        }),
+        createMock({
+            request: { query: SykmeldingErUtenforVentetidDocument, variables: { sykmeldingId } },
+            result: {
+                data: erUtenforVentetidData(utenforVentetid),
+            },
+        }),
+    ]
 }
