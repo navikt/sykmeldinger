@@ -34,6 +34,36 @@ const InformationBannerSendt = ({ merknader }: InfoBannerSendtProps): ReactEleme
             </div>
         )
     }
+
+    if (merknader.find((merknad: Merknad) => merknad.type === Merknadtype.UGYLDIG_TILBAKEDATERING)) {
+        return (
+            <div className="mb-8" data-testid="merknad-banner">
+                <GuidePanel poster>
+                    <div className="mb-6">
+                        <Heading className="mb-4" level="2" size="small">
+                            Tilbakedateringen kan ikke godkjennes
+                        </Heading>
+                        <BodyLong className="mb-2">
+                            Vanligvis starter sykmeldingen den datoen du er hos behandleren. I enkelte tilfeller kan
+                            datoen i sykmeldingen settes tilbake i tid, det vi kaller tilbakedatering. NAV vurderer om
+                            det er en gyldig grunn for tilbakedateringen.
+                        </BodyLong>
+                        <BodyLong className="mb-2">
+                            Sykmeldingen din startet før du oppsøkte behandleren, og vi kan ikke godkjenne grunnen.
+                            Derfor vil du ikke få sykepenger for disse dagene.
+                        </BodyLong>
+                    </div>
+                    <Heading level="2" size="small" className="mb-4">
+                        Hva gjør jeg nå?
+                    </Heading>
+                    <BodyLong>
+                        Når søknaden om sykepenger er behandlet, vil du få en begrunnelse for hvorfor du ikke kan få
+                        sykepenger for de tilbakedaterte dagene, og du får samtidig mulighet til å klage.
+                    </BodyLong>
+                </GuidePanel>
+            </div>
+        )
+    }
     return null
 }
 
