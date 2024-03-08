@@ -85,18 +85,17 @@ function EgenmeldingReadMore({ index }: { index: number }): ReactElement {
         return (
             <ReadMore header="Hva betyr dette?" open={open} onClick={handleOnReadMoreClick}>
                 <BodyLong spacing>
-                    <Link
-                        href="https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/egenmelding#chapter-1"
-                        target="_blank"
-                    >
-                        Egenmelding
-                    </Link>{' '}
-                    er når du selv melder deg syk til arbeidsgiveren. Du kan bruke egenmeldingen opptil 3 kalenderdager
-                    om gangen, opptil 4 ganger i løpet av ett år.
+                    Egenmelding betyr at du melder fra til arbeidsgiveren din om at du er syk, uten at du leverer
+                    sykmelding. Du skal kun registrere fravær som skyldes egen sykdom.
                 </BodyLong>
-                <BodyLong>
-                    Om det har gått mindre enn 16 dager fra du brukte egenmeldingen, til første dagen i denne
-                    sykmeldingsperioden, inngår det i beregningen av arbeidsgiverperioden.
+                <BodyLong spacing>
+                    Du finner mer informasjon om egenmeldingsdager på{' '}
+                    <Link href="https://www.nav.no/egenmelding" target="_blank">
+                        www.nav.no/egenmelding
+                    </Link>
+                </BodyLong>
+                <BodyLong spacing>
+                    Hvis du er usikker på hvilke dager du har brukt egenmelding, kan du ta kontakt med din arbeidsgiver.
                 </BodyLong>
             </ReadMore>
         )
@@ -104,9 +103,13 @@ function EgenmeldingReadMore({ index }: { index: number }): ReactElement {
 
     return (
         <ReadMore header="Hvorfor spør vi igjen?" open={open} onClick={handleOnReadMoreClick}>
-            <BodyLong>
-                Om det har gått mindre enn 16 dager fra du bruke egenmeldingsdager, til den første egenmeldingsdagen du
-                valgte i forrige spørsmål, kommer de med i beregningen av{' '}
+            <BodyLong spacing>
+                Ettersom du har opplyst om at du har benyttet egenmeldingsdager i spørsmålet over, trenger vi også
+                informasjon om du brukte egenmelding i løpet av de 16 dagene før egenmeldingsperioden i forrige periode.
+            </BodyLong>
+            <BodyLong spacing>
+                Hvis det har gått mindre enn 16 dager fra du brukte egenmeldingsdager, til den første egenmeldingsdagen
+                du oppgav i forrige spørsmål, kommer de med i beregningen av{' '}
                 <Link
                     href="https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/sykepenger/sykepenger-i-arbeidsgiverperioden#chapter-1"
                     target="_blank"
