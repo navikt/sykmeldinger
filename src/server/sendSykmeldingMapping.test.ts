@@ -47,6 +47,7 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
             fisker: null,
+            arbeidsledig: null,
         })
     })
 
@@ -80,6 +81,7 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
             fisker: null,
+            arbeidsledig: null,
         })
     })
 
@@ -117,6 +119,7 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
             fisker: null,
+            arbeidsledig: null,
         })
     })
 
@@ -158,6 +161,7 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
             fisker: null,
+            arbeidsledig: null,
         })
     })
 
@@ -198,6 +202,7 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
             fisker: null,
+            arbeidsledig: null,
         })
     })
 
@@ -250,6 +255,7 @@ describe('sendSykmeldingMapping', () => {
             harBruktEgenmeldingsdager: null,
             egenmeldingsdager: null,
             fisker: null,
+            arbeidsledig: null,
         })
     })
 
@@ -316,6 +322,7 @@ describe('sendSykmeldingMapping', () => {
                 uriktigeOpplysninger: null,
                 harBruktEgenmeldingsdager: null,
                 egenmeldingsdager: null,
+                arbeidsledig: null,
             })
         })
 
@@ -374,6 +381,49 @@ describe('sendSykmeldingMapping', () => {
                     sporsmaltekst: 'Velg dagene du brukte egenmelding',
                     svar: ['2021-04-10', '2021-04-11'],
                 },
+                harBruktEgenmelding: null,
+                egenmeldingsperioder: null,
+                harForsikring: null,
+                uriktigeOpplysninger: null,
+                arbeidsledig: null,
+            })
+        })
+
+        it('should map a arbeidsledig correctly', () => {
+            const sykmelding = sykmeldingApen()
+            const mappedResult = mapSendSykmeldingValuesToV3Api(
+                {
+                    erOpplysningeneRiktige: YesOrNo.YES,
+                    arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                    arbeidsledig: {
+                        arbeidsledigFraOrgnummer: '121212121',
+                    },
+                },
+                sykmelding,
+                brukerinformasjon,
+                erUtenforVentetid,
+            )
+
+            expect(mappedResult).toEqual({
+                erOpplysningeneRiktige: {
+                    sporsmaltekst: 'Stemmer opplysningene?',
+                    svar: 'JA',
+                },
+                arbeidssituasjon: {
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    svar: 'ARBEIDSLEDIG',
+                },
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: {
+                        sporsmaltekst: 'Hvilken arbeidsgiver har du blitt arbeidsledig fra?',
+                        svar: '121212121',
+                    },
+                },
+                fisker: null,
+                arbeidsgiverOrgnummer: null,
+                riktigNarmesteLeder: null,
+                harBruktEgenmeldingsdager: null,
+                egenmeldingsdager: null,
                 harBruktEgenmelding: null,
                 egenmeldingsperioder: null,
                 harForsikring: null,

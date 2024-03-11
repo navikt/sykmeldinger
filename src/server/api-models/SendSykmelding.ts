@@ -15,6 +15,9 @@ export type SykmeldingUserEventV3Api = {
         blad: SporsmalSvar<'A' | 'B'>
         lottOgHyre: SporsmalSvar<'LOTT' | 'HYRE' | 'BEGGE'>
     } | null
+    arbeidsledig: {
+        arbeidsledigFraOrgnummer: SporsmalSvar<string>
+    } | null
 }
 
 type SporsmalSvar<T> = {

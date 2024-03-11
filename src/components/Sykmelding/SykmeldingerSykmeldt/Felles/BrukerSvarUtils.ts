@@ -86,6 +86,19 @@ export function mapFormValuesToBrukerSvar(
                       },
                   }
                 : null,
+        arbeidsledig:
+            sendSykmeldingValues.arbeidsledig?.arbeidsledigFraOrgnummer != null
+                ? {
+                      __typename: 'ArbeidsledigBrukerSvar',
+                      arbeidsledigFraOrgnummer: {
+                          __typename: 'ArbeidsledigFraOrgnummerBrukerSvar',
+                          sporsmaltekst: sporsmal.arbeidsledigFra,
+                          svar:
+                              sendSykmeldingValues.arbeidsledig.arbeidsledigFraOrgnummer ??
+                              raise('Orgnummer må være satt'),
+                      },
+                  }
+                : null,
     }
 }
 

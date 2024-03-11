@@ -118,6 +118,12 @@ fragment BrukerSvar on BrukerSvar {
             svar
         }
     }
+    arbeidsledig {
+        arbeidsledigFraOrgnummer {
+            sporsmaltekst
+            svar
+        }
+    }
 }
 
 fragment MedisinskVurdering on MedisinskVurdering {
