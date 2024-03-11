@@ -53,6 +53,12 @@ const testToggles: IToggle[] = [
         impressionData: false,
         enabled: false,
     },
+    {
+        name: 'SYKMELDINGER_ENDRE_ARBEIDSSITUASJON',
+        variant: { name: 'default', enabled: false },
+        impressionData: false,
+        enabled: false,
+    },
 ]
 
 function AllTheProviders({ children, initialState, mocks }: PropsWithChildren<ProviderProps>): ReactElement {

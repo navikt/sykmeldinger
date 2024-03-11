@@ -48,6 +48,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -79,6 +80,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -114,6 +116,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -155,6 +158,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -188,6 +192,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -239,6 +244,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.HYRE,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -274,6 +280,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.LOTT,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -313,6 +320,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: Blad.B,
                     lottOgHyre: LottOgHyre.LOTT,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -353,6 +361,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -388,6 +397,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -420,6 +430,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -449,6 +460,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -464,13 +476,13 @@ describe('toSendSykmeldingUtils', () => {
         })
     })
 
-    describe('ARBEIDSLEDIG, PERMITTERT, ANNET', () => {
+    describe('ARBEIDSLEDIG', () => {
         it('should map sykmelding for arbeidsledig', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
                 uriktigeOpplysninger: null,
                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
-                arbeidsgiverOrgnummer: null,
+                arbeidsgiverOrgnummer: '98989898',
                 riktigNarmesteLeder: null,
                 harBruktEgenmelding: null,
                 egenmeldingsperioder: null,
@@ -481,17 +493,21 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
             const expectValues: SendSykmeldingValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                arbeidsgiverOrgnummer: '98989898',
             }
 
             expect(mapToValues).toEqual(expectValues)
         })
+    })
 
+    describe('PERMITTERT or ANNET', () => {
         it('should map sykmelding for permittert', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
@@ -508,6 +524,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -535,6 +552,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -563,6 +581,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)

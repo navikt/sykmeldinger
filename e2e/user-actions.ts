@@ -100,6 +100,12 @@ export function velgArbeidstaker(arbeidstaker: RegExp) {
     }
 }
 
+export function velgArbeidstakerArbeidsledig(arbeidstaker: RegExp) {
+    return async (page: Page): Promise<void> => {
+        await getRadioInGroup(page)({ name: /Hvilken arbeidsgiver har du blitt arbeidsledig/i }, { name: arbeidstaker }).click()
+    }
+}
+
 export function velgForsikring(svar: 'Ja' | 'Nei') {
     return async (page: Page): Promise<void> => {
         await getRadioInGroup(page)(

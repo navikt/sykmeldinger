@@ -83,7 +83,13 @@ export function expectDineSvar(svar: {
         await expect(getInfoItem('Jeg er sykmeldt som')(region)).toHaveText(new RegExp(svar.arbeidssituasjon, 'i'))
 
         if (svar.arbeidsgiver) {
-            await expect(getInfoItem('Velg arbeidsgiver')(region)).toHaveText(new RegExp(svar.arbeidsgiver, 'i'))
+            if (svar.arbeidssituasjon === 'Arbeidsledig') {
+                await expect(getInfoItem('Hvilken arbeidsgiver har du blitt arbeidsledig fra?')(region)).toHaveText(
+                    new RegExp(svar.arbeidsgiver, 'i'),
+                )
+            } else {
+                await expect(getInfoItem('Velg arbeidsgiver')(region)).toHaveText(new RegExp(svar.arbeidsgiver, 'i'))
+            }
         }
 
         if (svar.narmesteleder != null && typeof svar.narmesteleder !== 'string') {

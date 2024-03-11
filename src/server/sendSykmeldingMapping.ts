@@ -3,7 +3,7 @@ import { logger } from '@navikt/next-logger'
 import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 import { raise } from '../utils/ts-utils'
-import { isFrilanserOrNaeringsdrivendeOrJordbruker } from '../utils/arbeidssituasjonUtils'
+import { isArbeidstaker, isFrilanserOrNaeringsdrivendeOrJordbruker } from '../utils/arbeidssituasjonUtils'
 
 import { ArbeidssituasjonType, JaEllerNei, SendSykmeldingValues, YesOrNo } from './graphql/resolver-types.generated'
 import { SykmeldingUserEventV3Api } from './api-models/SendSykmelding'
@@ -60,7 +60,9 @@ export function mapSendSykmeldingValuesToV3Api(
         arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer
             ? {
                   svar: values.arbeidsgiverOrgnummer,
-                  sporsmaltekst: sporsmal.arbeidsgiverOrgnummer,
+                  sporsmaltekst: isArbeidstaker(values.arbeidssituasjon, values.fisker)
+                      ? sporsmal.arbeidsgiverOrgnummer
+                      : sporsmal.arbeidsledigFra,
               }
             : null,
         riktigNarmesteLeder:

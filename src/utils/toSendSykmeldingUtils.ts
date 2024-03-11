@@ -17,9 +17,10 @@ export function mapToSendSykmeldingValues(values: FormValues): SendSykmeldingVal
         case ArbeidssituasjonType.JORDBRUKER:
             return mapSykmeldingFrilansOrSelvstendigOrJordbruker(values)
         case ArbeidssituasjonType.ARBEIDSLEDIG:
+            return mapSykmeldingArbiedsledig(values)
         case ArbeidssituasjonType.PERMITTERT:
         case ArbeidssituasjonType.ANNET:
-            return mapSykmeldingArbeidsledigPermitertOrAnnet(values)
+            return mapSykmeldingPermitertOrAnnet(values)
         default:
             throw new Error(`Illegal state: arbeidssituasjon ${values.arbeidssituasjon} is not valid.`)
     }
@@ -104,7 +105,16 @@ function mapSykmeldingFrilansOrSelvstendigOrJordbruker(values: FormValues): Send
     }
 }
 
-function mapSykmeldingArbeidsledigPermitertOrAnnet(values: FormValues): SendSykmeldingValues {
+function mapSykmeldingArbiedsledig(values: FormValues): SendSykmeldingValues {
+    return {
+        erOpplysningeneRiktige: values.erOpplysningeneRiktige,
+        uriktigeOpplysninger: values.erOpplysningeneRiktige === YesOrNo.NO ? values.uriktigeOpplysninger : undefined,
+        arbeidssituasjon: values.arbeidssituasjon,
+        arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer,
+    }
+}
+
+function mapSykmeldingPermitertOrAnnet(values: FormValues): SendSykmeldingValues {
     return {
         erOpplysningeneRiktige: values.erOpplysningeneRiktige,
         uriktigeOpplysninger: values.erOpplysningeneRiktige === YesOrNo.NO ? values.uriktigeOpplysninger : undefined,

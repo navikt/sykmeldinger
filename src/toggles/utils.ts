@@ -31,6 +31,10 @@ const localToggleMap: Record<ExpectedToggles, IToggle> = {
         name: 'SYKMELDINGER_ANNET_BONUSSPORSMAL',
         ...enabled,
     },
+    SYKMELDINGER_ENDRE_ARBEIDSSITUASJON: {
+        name: 'SYKMELDINGER_ENDRE_ARBEIDSSITUASJON',
+        ...enabled,
+    },
 }
 
 export function localDevelopmentToggles(): IToggle[] {
