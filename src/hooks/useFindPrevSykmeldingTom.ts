@@ -4,16 +4,9 @@ import { intersection } from 'remeda'
 import { Periodetype, SykmeldingFragment } from 'queries'
 
 import { toDate } from '../utils/dateUtils'
-import { getSykmeldingEndDate, getSykmeldingStartDate, isSendtSykmelding } from '../utils/sykmeldingUtils'
+import { getSykmeldingEndDate, getSykmeldingStartDate, isSendtSykmelding, isValidRange } from '../utils/sykmeldingUtils'
 
 import useSykmeldinger from './useSykmeldinger'
-
-function isValidRange(sykmelding: SykmeldingFragment): boolean {
-    const start = getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
-    const end = getSykmeldingEndDate(sykmelding.sykmeldingsperioder)
-
-    return isBefore(toDate(start), toDate(end))
-}
 
 function removeInsideSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]) {
     return (sykmelding: SykmeldingFragment): boolean => {

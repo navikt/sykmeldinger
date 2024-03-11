@@ -1,10 +1,8 @@
-import { ArbeidssituasjonType } from 'queries'
-
-import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
+import { ArbeidssituasjonType, FiskerInput } from 'queries'
 
 export const isArbeidstaker = (
     arbeidssituasjon?: ArbeidssituasjonType | null,
-    fisker?: FormValues['fisker'],
+    fisker?: FiskerInput | null,
 ): boolean => {
     switch (arbeidssituasjon) {
         case ArbeidssituasjonType.ARBEIDSTAKER:
@@ -23,3 +21,6 @@ export const isFrilanserOrNaeringsdrivendeOrJordbruker = (arbeidssituasjon?: Arb
     arbeidssituasjon === ArbeidssituasjonType.FRILANSER ||
     arbeidssituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE ||
     arbeidssituasjon === ArbeidssituasjonType.JORDBRUKER
+
+export const isArbeidsledig = (arbeidssituasjon?: ArbeidssituasjonType | null): boolean =>
+    arbeidssituasjon === ArbeidssituasjonType.ARBEIDSLEDIG

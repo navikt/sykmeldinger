@@ -9,6 +9,7 @@ import {
     navigateToFirstSykmelding,
     opplysingeneStemmer,
     velgArbeidssituasjon,
+    velgArbeidstakerArbeidsledig,
 } from './user-actions'
 import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
@@ -81,6 +82,29 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
         await expectDineSvar({
             stemmer: 'Ja',
             arbeidssituasjon: 'Arbeidsledig',
+        })(page)
+    })
+
+    test('should be able to submit form with work situation arbeidsledig with arbeidsgiver', async ({ page }) => {
+        await gotoScenario('kantIKant', { antallArbeidsgivere: 2 })(page)
+        await navigateToFirstSykmelding('nye', '100%')(page)
+        await opplysingeneStemmer(page)
+        await velgArbeidssituasjon('arbeidsledig')(page)
+        await velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/)(page)
+
+        await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
+
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+
+        await expectDineSvar({
+            stemmer: 'Ja',
+            arbeidssituasjon: 'Arbeidsledig',
+            arbeidsledig: {
+                arbeidsledigFraOrgnummer: '110110110',
+            },
         })(page)
     })
 })

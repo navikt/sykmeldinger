@@ -73,6 +73,11 @@ export function expectDineSvar(svar: {
               lottEllerHyre: 'Lott' | 'Hyre' | 'Begge'
           }
         | ExpectMeta.NotInDom
+    arbeidsledig?:
+        | {
+              arbeidsledigFraOrgnummer: string
+          }
+        | ExpectMeta.NotInDom
 }) {
     return async (page: Page): Promise<void> => {
         const region = page.getByRole('region', { name: /Dine svar/i })
@@ -84,6 +89,18 @@ export function expectDineSvar(svar: {
 
         if (svar.arbeidsgiver) {
             await expect(getInfoItem('Velg arbeidsgiver')(region)).toHaveText(new RegExp(svar.arbeidsgiver, 'i'))
+        }
+
+        if (svar.arbeidsledig) {
+            if (svar.arbeidsledig === ExpectMeta.NotInDom) {
+                await expect(
+                    getInfoItem('Hvilken arbeidsgiver har du blitt arbeidsledig fra?')(region),
+                ).not.toBeVisible()
+            } else {
+                await expect(getInfoItem('Hvilken arbeidsgiver har du blitt arbeidsledig fra?')(region)).toHaveText(
+                    new RegExp(svar.arbeidsledig.arbeidsledigFraOrgnummer, 'i'),
+                )
+            }
         }
 
         if (svar.narmesteleder != null && typeof svar.narmesteleder !== 'string') {
