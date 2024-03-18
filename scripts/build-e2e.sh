@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 #!/bin/bash
 
 echo -e "\033[0;32mBuilding app for e2e, making sure dev mode isn't running\033[0m"
