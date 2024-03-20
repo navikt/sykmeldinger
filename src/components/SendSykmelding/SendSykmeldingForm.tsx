@@ -48,6 +48,10 @@ export interface FormValues extends EgenmeldingsdagerSubForm {
         blad: Blad | null
         lottOgHyre: LottOgHyre | null
     }
+    extra: {
+        annetSituasjon: string | null
+        annetSituasjonTekst: string | null
+    } | null
 }
 
 interface Props {
@@ -84,11 +88,26 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
     const brukerinformasjonData = useQuery(BrukerinformasjonDocument)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
-        (values) =>
+        (values) => {
             logAmplitudeEvent(
                 { eventName: 'skjema fullført', data: { skjemanavn } },
                 { 'antall egenmeldingsdager': values.egenmeldingsdager?.length ?? null },
-            ),
+            )
+
+            const annetSituationExtraValue: string | null =
+                values.extra?.annetSituasjonTekst ?? values.extra?.annetSituasjon ?? null
+
+            if (annetSituationExtraValue) {
+                logAmplitudeEvent({
+                    eventName: 'skjema spørsmål besvart',
+                    data: {
+                        skjemanavn: 'åpen sykmelding',
+                        spørsmål: 'Hvilken situasjon er du i som gjorde at du valgte annet?',
+                        svar: annetSituationExtraValue,
+                    },
+                })
+            }
+        },
         () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
 
