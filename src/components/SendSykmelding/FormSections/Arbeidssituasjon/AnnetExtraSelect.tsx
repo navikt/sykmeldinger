@@ -6,7 +6,15 @@ import { useController, useFormContext } from 'react-hook-form'
 import { FormValues } from '../../SendSykmeldingForm'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 
-const initialOptions = ['Pensjonist', 'Student', 'Konkurs', 'Lærling', 'Dagpenger', 'Flere arbeidsgivere']
+const initialOptions = [
+    'Pensjonist',
+    'Student',
+    'Konkurs',
+    'Lærling',
+    'Dagpenger',
+    'Varig tilrettelagt arbeid (VTA)',
+    'Flere arbeidsgivere',
+]
 
 function AnnetExtraSelect(): ReactElement {
     const { register } = useFormContext<FormValues>()
