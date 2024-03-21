@@ -2,22 +2,39 @@ import { IToggle } from '@unleash/nextjs'
 
 import { browserEnv } from '../utils/env'
 
-import { EXPECTED_TOGGLES } from './toggles'
+import { ExpectedToggles } from './toggles'
+
+const enabled: Omit<IToggle, 'name'> = {
+    enabled: true,
+    impressionData: false,
+    variant: {
+        name: 'enabled',
+        enabled: true,
+    },
+}
+
+const disabled: Omit<IToggle, 'name'> = {
+    ...enabled,
+    enabled: false,
+    variant: {
+        name: 'disabled',
+        enabled: false,
+    },
+}
+
+const localToggleMap: Record<ExpectedToggles, IToggle> = {
+    SYKMELDINGER_FLEXJAR_KVITTERING: {
+        name: 'SYKMELDINGER_FLEXJAR_KVITTERING',
+        ...disabled,
+    },
+    SYKMELDINGER_ANNET_BONUSSPORSMAL: {
+        name: 'SYKMELDINGER_ANNET_BONUSSPORSMAL',
+        ...enabled,
+    },
+}
 
 export function localDevelopmentToggles(): IToggle[] {
-    return [
-        ...EXPECTED_TOGGLES.map(
-            (it): IToggle => ({
-                name: it,
-                enabled: false,
-                impressionData: false,
-                variant: {
-                    name: 'disabled',
-                    enabled: false,
-                },
-            }),
-        ),
-    ]
+    return Object.values(localToggleMap)
 }
 
 export function getUnleashEnvironment(): 'development' | 'production' {
