@@ -15,21 +15,20 @@ function RedigerEgenmeldingsdagerLink({
 
     return (
         <div className="w-full">
-            <Link passHref href={`/${sykmeldingId}/endre-egenmeldingsdager`} legacyBehavior>
-                <Button
-                    as="a"
-                    variant="secondary"
-                    className="mt-4"
-                    onClick={() => {
-                        logAmplitudeEvent({
-                            eventName: 'skjema startet',
-                            data: { skjemanavn: `${typeOfEditEgenmeldingsdager} egenmeldingsdager i kvittering` },
-                        })
-                    }}
-                >
-                    {typeOfEditEgenmeldingsdager} egenmeldingsdager
-                </Button>
-            </Link>
+            <Button
+                as={Link}
+                href={`/${sykmeldingId}/endre-egenmeldingsdager`}
+                variant="secondary"
+                className="mt-4"
+                onClick={() => {
+                    logAmplitudeEvent({
+                        eventName: 'skjema startet',
+                        data: { skjemanavn: `${typeOfEditEgenmeldingsdager} egenmeldingsdager i kvittering` },
+                    })
+                }}
+            >
+                {typeOfEditEgenmeldingsdager} egenmeldingsdager
+            </Button>
         </div>
     )
 }
