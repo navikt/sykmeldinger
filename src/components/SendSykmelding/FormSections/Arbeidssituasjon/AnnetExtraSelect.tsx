@@ -10,6 +10,7 @@ const initialOptions = [
     'Pensjonist',
     'Student',
     'Konkurs',
+    'Vikar',
     'Lærling',
     'Dagpenger',
     'Varig tilrettelagt arbeid (VTA)',
@@ -83,18 +84,25 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
                     <BodyShort
                         spacing
                         className="font-bold"
-                    >{`Du burde endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
+                    >{`Du bør endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
                     <BodyShort>
                         Dersom legen din ikke har sendt deg èn sykmelding per arbeidsgiver, må du ta kontakt med legen
                         og be om dette.
                     </BodyShort>
                 </Alert>
             )
+        case 'Vikar':
+            return (
+                <Alert variant="warning" className="mt-4">
+                    <BodyShort spacing>Som vikar er du ansatt på samme måte som en arbeidstaker.</BodyShort>
+                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
+                </Alert>
+            )
         case 'Lærling':
             return (
                 <Alert variant="warning" className="mt-4">
                     <BodyShort spacing>Som lærling er du ansatt på samme måte som en arbeidstaker</BodyShort>
-                    <BodyShort className="font-bold">{`Du burde endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
+                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
                 </Alert>
             )
         case 'Dagpenger':
@@ -103,7 +111,7 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
                     <BodyShort spacing>
                         Dersom du er på dagpenger betyr dette at du er arbeidsledig eller permittert.
                     </BodyShort>
-                    <BodyShort className="font-bold">{`Du burde derfor endre valget ditt over fra "annet" til "arbeidsledig" eller "permittert".`}</BodyShort>
+                    <BodyShort className="font-bold">{`Du bør derfor endre valget ditt over fra "annet" til "arbeidsledig" eller "permittert".`}</BodyShort>
                 </Alert>
             )
         default:
