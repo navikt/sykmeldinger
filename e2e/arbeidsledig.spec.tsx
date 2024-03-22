@@ -100,7 +100,9 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
         await expectDineSvar({
             stemmer: 'Ja',
             arbeidssituasjon: 'Arbeidsledig',
-            arbeidsgiver: '110110110',
+            arbeidsledig: {
+                arbeidsledigFraOrgnummer: '110110110',
+            },
         })(page)
     })
 })

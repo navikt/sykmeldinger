@@ -203,6 +203,7 @@ export class SykmeldingBuilder {
             fisker: null,
             harBruktEgenmelding: null,
             harForsikring: null,
+            arbeidsledig: null,
         }
 
         return this
@@ -234,6 +235,7 @@ export class SykmeldingBuilder {
             fisker: null,
             harBruktEgenmelding: null,
             harForsikring: null,
+            arbeidsledig: null,
         }
 
         return this

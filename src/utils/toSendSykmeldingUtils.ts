@@ -110,7 +110,11 @@ function mapSykmeldingArbiedsledig(values: FormValues): SendSykmeldingValues {
         erOpplysningeneRiktige: values.erOpplysningeneRiktige,
         uriktigeOpplysninger: values.erOpplysningeneRiktige === YesOrNo.NO ? values.uriktigeOpplysninger : undefined,
         arbeidssituasjon: values.arbeidssituasjon,
-        arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer,
+        arbeidsledig: values.arbeidsledig
+            ? {
+                  arbeidsledigFraOrgnummer: values.arbeidsledig.arbeidsledigFraOrgnummer,
+              }
+            : undefined,
     }
 }
 

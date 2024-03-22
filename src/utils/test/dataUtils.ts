@@ -223,6 +223,7 @@ export const createSykmeldingStatus = (
         egenmeldingsperioder: null,
         harForsikring: null,
         fisker: null,
+        arbeidsledig: null,
     },
     ...overrides,
 })

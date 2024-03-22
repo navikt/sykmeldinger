@@ -18,7 +18,7 @@ interface Props {
 
 function ArbeidsledigSection({ sykmelding, brukerinfoArbeidsgivere }: Props): ReactElement | null {
     const { field, fieldState } = useController<FormValues>({
-        name: 'arbeidsgiverOrgnummer',
+        name: 'arbeidsledig.arbeidsledigFraOrgnummer',
         rules: { required: 'Du må svare på hvilket arbeid du har blitt arbeidsledig fra.' },
     })
 

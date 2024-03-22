@@ -77,6 +77,21 @@ export type ArbeidsgiverSykmelding = {
     readonly navn?: Maybe<Scalars['String']['output']>
 }
 
+export type ArbeidsledigBrukerSvar = {
+    readonly __typename: 'ArbeidsledigBrukerSvar'
+    readonly arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar
+}
+
+export type ArbeidsledigFraOrgnummerBrukerSvar = {
+    readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: Scalars['String']['output']
+}
+
+export type ArbeidsledigInput = {
+    readonly arbeidsledigFraOrgnummer?: InputMaybe<Scalars['String']['input']>
+}
+
 export type ArbeidsrelatertArsak = {
     readonly __typename: 'ArbeidsrelatertArsak'
     readonly arsak: ReadonlyArray<ArbeidsrelatertArsakType>
@@ -140,6 +155,7 @@ export type BladBrukerSvar = {
 export type BrukerSvar = {
     readonly __typename: 'BrukerSvar'
     readonly arbeidsgiverOrgnummer?: Maybe<ArbeidsgiverOrgnummerBrukerSvar>
+    readonly arbeidsledig?: Maybe<ArbeidsledigBrukerSvar>
     readonly arbeidssituasjon: ArbeidssituasjonBrukerSvar
     readonly egenmeldingsdager?: Maybe<EgenmeldingsdagerBrukerSvar>
     readonly egenmeldingsperioder?: Maybe<FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar>
@@ -444,6 +460,7 @@ export type RiktigNarmesteLederBrukerSvar = {
 
 export type SendSykmeldingValues = {
     readonly arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']['input']>
+    readonly arbeidsledig?: InputMaybe<ArbeidsledigInput>
     readonly arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
     readonly egenmeldingsdager?: InputMaybe<ReadonlyArray<Scalars['Date']['input']>>
     readonly egenmeldingsperioder?: InputMaybe<ReadonlyArray<DateRange>>
@@ -763,6 +780,14 @@ export type EndreEgenmeldingsdagerMutation = {
                         readonly svar: LottOgHyre
                     }
                 } | null
+                readonly arbeidsledig?: {
+                    readonly __typename: 'ArbeidsledigBrukerSvar'
+                    readonly arbeidsledigFraOrgnummer: {
+                        readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    }
+                } | null
             } | null
         }
         readonly medisinskVurdering?: {
@@ -1059,6 +1084,14 @@ export type ChangeSykmeldingStatusMutation = {
                         readonly svar: LottOgHyre
                     }
                 } | null
+                readonly arbeidsledig?: {
+                    readonly __typename: 'ArbeidsledigBrukerSvar'
+                    readonly arbeidsledigFraOrgnummer: {
+                        readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    }
+                } | null
             } | null
         }
         readonly medisinskVurdering?: {
@@ -1307,6 +1340,14 @@ export type SendSykmeldingMutation = {
                         readonly svar: LottOgHyre
                     }
                 } | null
+                readonly arbeidsledig?: {
+                    readonly __typename: 'ArbeidsledigBrukerSvar'
+                    readonly arbeidsledigFraOrgnummer: {
+                        readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    }
+                } | null
             } | null
         }
         readonly medisinskVurdering?: {
@@ -1546,6 +1587,14 @@ export type SykmeldingStatusFragment = {
                 readonly svar: LottOgHyre
             }
         } | null
+        readonly arbeidsledig?: {
+            readonly __typename: 'ArbeidsledigBrukerSvar'
+            readonly arbeidsledigFraOrgnummer: {
+                readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: string
+            }
+        } | null
     } | null
 }
 
@@ -1608,6 +1657,14 @@ export type BrukerSvarFragment = {
             readonly __typename: 'LottOgHyreBrukerSvar'
             readonly sporsmaltekst: string
             readonly svar: LottOgHyre
+        }
+    } | null
+    readonly arbeidsledig?: {
+        readonly __typename: 'ArbeidsledigBrukerSvar'
+        readonly arbeidsledigFraOrgnummer: {
+            readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: string
         }
     } | null
 }
@@ -1790,6 +1847,14 @@ export type SykmeldingFragment = {
                     readonly __typename: 'LottOgHyreBrukerSvar'
                     readonly sporsmaltekst: string
                     readonly svar: LottOgHyre
+                }
+            } | null
+            readonly arbeidsledig?: {
+                readonly __typename: 'ArbeidsledigBrukerSvar'
+                readonly arbeidsledigFraOrgnummer: {
+                    readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: string
                 }
             } | null
         } | null
@@ -2034,6 +2099,14 @@ export type SykmeldingerQuery = {
                         readonly __typename: 'LottOgHyreBrukerSvar'
                         readonly sporsmaltekst: string
                         readonly svar: LottOgHyre
+                    }
+                } | null
+                readonly arbeidsledig?: {
+                    readonly __typename: 'ArbeidsledigBrukerSvar'
+                    readonly arbeidsledigFraOrgnummer: {
+                        readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
                     }
                 } | null
             } | null
@@ -2281,6 +2354,14 @@ export type SykmeldingByIdQuery = {
                         readonly __typename: 'LottOgHyreBrukerSvar'
                         readonly sporsmaltekst: string
                         readonly svar: LottOgHyre
+                    }
+                } | null
+                readonly arbeidsledig?: {
+                    readonly __typename: 'ArbeidsledigBrukerSvar'
+                    readonly arbeidsledigFraOrgnummer: {
+                        readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
                     }
                 } | null
             } | null
@@ -2752,6 +2833,26 @@ export const BrukerSvarFragmentDoc = {
                             ],
                         },
                     },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -3038,6 +3139,26 @@ export const SykmeldingStatusFragmentDoc = {
                                 {
                                     kind: 'Field',
                                     name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
@@ -3531,6 +3652,26 @@ export const SykmeldingFragmentDoc = {
                                 {
                                     kind: 'Field',
                                     name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
@@ -4142,6 +4283,26 @@ export const EndreEgenmeldingsdagerDocument = {
                                 {
                                     kind: 'Field',
                                     name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
@@ -4914,6 +5075,26 @@ export const ChangeSykmeldingStatusDocument = {
                             ],
                         },
                     },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -5558,6 +5739,26 @@ export const SendSykmeldingDocument = {
                             ],
                         },
                     },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -6164,6 +6365,26 @@ export const SykmeldingerDocument = {
                                 {
                                     kind: 'Field',
                                     name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [
@@ -6795,6 +7016,26 @@ export const SykmeldingByIdDocument = {
                                 {
                                     kind: 'Field',
                                     name: { kind: 'Name', value: 'lottOgHyre' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'arbeidsledig' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigFraOrgnummer' },
                                     selectionSet: {
                                         kind: 'SelectionSet',
                                         selections: [

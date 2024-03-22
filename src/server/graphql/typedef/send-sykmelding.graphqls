@@ -10,6 +10,11 @@ input SendSykmeldingValues {
     egenmeldingsdager: [Date!]
     harEgenmeldingsdager: YesOrNo
     fisker: FiskerInput
+    arbeidsledig: ArbeidsledigInput
+}
+
+input ArbeidsledigInput {
+    arbeidsledigFraOrgnummer: String
 }
 
 input FiskerInput {

@@ -11,7 +11,7 @@ import { capitalizeFirstLetter, pluralize } from '../../../../utils/stringUtils'
 import { toReadableDate, toReadableDatePeriod } from '../../../../utils/dateUtils'
 import { FormValues } from '../../../SendSykmelding/SendSykmeldingForm'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
-import { isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
+import { isArbeidsledig, isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
 
 import { mapFormValuesToBrukerSvar, mapFrilanserFormValuesToBrukerSvar, SporsmaltekstMetadata } from './BrukerSvarUtils'
 
@@ -79,6 +79,9 @@ function SentSykmeldingBrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragme
             <YesNoAnswer response={brukerSvar.harBruktEgenmelding} />
             <FrilanserEgenmeldingsperioderAnswer response={brukerSvar.egenmeldingsperioder} />
             <YesNoAnswer response={brukerSvar.harForsikring} />
+            {isArbeidsledig(brukerSvar.arbeidssituasjon?.svar) && (
+                <ArbeidsledigFraOrgnummerAnswer response={brukerSvar.arbeidsledig?.arbeidsledigFraOrgnummer} />
+            )}
         </>
     )
 }
@@ -112,6 +115,32 @@ function CurrentFormValuesBrukerSvar({
                 />
             )}
         </>
+    )
+}
+
+function ArbeidsledigFraOrgnummerAnswer({
+    response,
+}: {
+    response:
+        | Pick<
+              NonNullable<NonNullable<BrukerSvarFragment['arbeidsledig']>['arbeidsledigFraOrgnummer']>,
+              'sporsmaltekst' | 'svar'
+          >
+        | null
+        | undefined
+}): ReactElement | null {
+    // This loading state will never be seen, so we can ignore it
+    const { data } = useQuery(BrukerinformasjonDocument)
+    if (response == null) return null
+
+    const relevantArbeidsgiverNavn: string | null =
+        data?.brukerinformasjon.arbeidsgivere.find((it) => it.orgnummer === response.svar)?.navn ?? null
+    const text = relevantArbeidsgiverNavn != null ? `${relevantArbeidsgiverNavn} (${response.svar})` : response.svar
+
+    return (
+        <SykmeldingInfo heading={response.sporsmaltekst} level="3" icon={<BriefcaseIcon aria-hidden />}>
+            {text}
+        </SykmeldingInfo>
     )
 }
 

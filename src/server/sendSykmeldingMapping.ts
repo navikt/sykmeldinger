@@ -3,7 +3,7 @@ import { logger } from '@navikt/next-logger'
 import { sporsmal } from '../utils/sporsmal'
 import { getSykmeldingStartDate } from '../utils/sykmeldingUtils'
 import { raise } from '../utils/ts-utils'
-import { isArbeidstaker, isFrilanserOrNaeringsdrivendeOrJordbruker } from '../utils/arbeidssituasjonUtils'
+import { isFrilanserOrNaeringsdrivendeOrJordbruker } from '../utils/arbeidssituasjonUtils'
 
 import { ArbeidssituasjonType, JaEllerNei, SendSykmeldingValues, YesOrNo } from './graphql/resolver-types.generated'
 import { SykmeldingUserEventV3Api } from './api-models/SendSykmelding'
@@ -60,9 +60,7 @@ export function mapSendSykmeldingValuesToV3Api(
         arbeidsgiverOrgnummer: values.arbeidsgiverOrgnummer
             ? {
                   svar: values.arbeidsgiverOrgnummer,
-                  sporsmaltekst: isArbeidstaker(values.arbeidssituasjon, values.fisker)
-                      ? sporsmal.arbeidsgiverOrgnummer
-                      : sporsmal.arbeidsledigFra,
+                  sporsmaltekst: sporsmal.arbeidsgiverOrgnummer,
               }
             : null,
         riktigNarmesteLeder:
@@ -133,6 +131,18 @@ export function mapSendSykmeldingValuesToV3Api(
                             svar: values.fisker.lottOgHyre,
                         }
                       : raise('Illegal state: lottOgHyre is required when arbeidssituasjon is fisker'),
+              }
+            : null,
+        arbeidsledig: values.arbeidsledig
+            ? {
+                  arbeidsledigFraOrgnummer: values.arbeidsledig.arbeidsledigFraOrgnummer
+                      ? {
+                            sporsmaltekst: sporsmal.arbeidsledigFra,
+                            svar: values.arbeidsledig.arbeidsledigFraOrgnummer,
+                        }
+                      : raise(
+                            'Illegal state: arbeidsledigFraOrgnummer is required when arbeidssituasjon is arbeidsledig',
+                        ),
               }
             : null,
     }
