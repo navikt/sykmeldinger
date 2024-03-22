@@ -48,6 +48,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -78,6 +82,10 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
                 },
             }
 
@@ -113,6 +121,10 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
                 },
             }
 
@@ -155,6 +167,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -187,6 +203,10 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
                 },
             }
 
@@ -239,6 +259,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.HYRE,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -273,6 +297,10 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.LOTT,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
                 },
             }
 
@@ -312,6 +340,10 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: Blad.B,
                     lottOgHyre: LottOgHyre.LOTT,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
                 },
             }
 
@@ -353,6 +385,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -388,6 +424,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -420,6 +460,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -449,6 +493,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -464,7 +512,7 @@ describe('toSendSykmeldingUtils', () => {
         })
     })
 
-    describe('ARBEIDSLEDIG, PERMITTERT, ANNET', () => {
+    describe('ARBEIDSLEDIG', () => {
         it('should map sykmelding for arbeidsledig', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
@@ -481,17 +529,26 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: '98989898',
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
             const expectValues: SendSykmeldingValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: '98989898',
+                },
             }
 
             expect(mapToValues).toEqual(expectValues)
         })
+    })
 
+    describe('PERMITTERT or ANNET', () => {
         it('should map sykmelding for permittert', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
@@ -507,6 +564,10 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
                 },
             }
 
@@ -535,6 +596,10 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -562,6 +627,10 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
                 },
             }
 

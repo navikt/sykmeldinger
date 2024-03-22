@@ -95,6 +95,11 @@ const BrukerSvarSchema = z.object({
             lottOgHyre: SporsmalSvarSchema(z.nativeEnum(LottOgHyre)),
         })
         .nullable(),
+    arbeidsledig: z
+        .object({
+            arbeidsledigFraOrgnummer: SporsmalSvarSchema(z.string()),
+        })
+        .nullable(),
 })
 
 export type SykmeldingStatus = z.infer<typeof SykmeldingStatusSchema>

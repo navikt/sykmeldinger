@@ -81,6 +81,21 @@ export type ArbeidsgiverSykmelding = {
     navn: Maybe<Scalars['String']['output']>
 }
 
+export type ArbeidsledigBrukerSvar = {
+    __typename?: 'ArbeidsledigBrukerSvar'
+    arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar
+}
+
+export type ArbeidsledigFraOrgnummerBrukerSvar = {
+    __typename?: 'ArbeidsledigFraOrgnummerBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: Scalars['String']['output']
+}
+
+export type ArbeidsledigInput = {
+    arbeidsledigFraOrgnummer?: InputMaybe<Scalars['String']['input']>
+}
+
 export type ArbeidsrelatertArsak = {
     __typename?: 'ArbeidsrelatertArsak'
     arsak: Array<ArbeidsrelatertArsakType>
@@ -144,6 +159,7 @@ export type BladBrukerSvar = {
 export type BrukerSvar = {
     __typename?: 'BrukerSvar'
     arbeidsgiverOrgnummer: Maybe<ArbeidsgiverOrgnummerBrukerSvar>
+    arbeidsledig: Maybe<ArbeidsledigBrukerSvar>
     arbeidssituasjon: ArbeidssituasjonBrukerSvar
     egenmeldingsdager: Maybe<EgenmeldingsdagerBrukerSvar>
     egenmeldingsperioder: Maybe<FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar>
@@ -448,6 +464,7 @@ export type RiktigNarmesteLederBrukerSvar = {
 
 export type SendSykmeldingValues = {
     arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']['input']>
+    arbeidsledig?: InputMaybe<ArbeidsledigInput>
     arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
     egenmeldingsdager?: InputMaybe<Array<Scalars['Date']['input']>>
     egenmeldingsperioder?: InputMaybe<Array<DateRange>>
@@ -671,6 +688,9 @@ export type ResolversTypes = ResolversObject<{
     ArbeidsgiverOrgnummerBrukerSvar: ResolverTypeWrapper<ArbeidsgiverOrgnummerBrukerSvar>
     ArbeidsgiverStatus: ResolverTypeWrapper<ArbeidsgiverStatus>
     ArbeidsgiverSykmelding: ResolverTypeWrapper<ArbeidsgiverSykmelding>
+    ArbeidsledigBrukerSvar: ResolverTypeWrapper<ArbeidsledigBrukerSvar>
+    ArbeidsledigFraOrgnummerBrukerSvar: ResolverTypeWrapper<ArbeidsledigFraOrgnummerBrukerSvar>
+    ArbeidsledigInput: ArbeidsledigInput
     ArbeidsrelatertArsak: ResolverTypeWrapper<ArbeidsrelatertArsak>
     ArbeidsrelatertArsakType: ArbeidsrelatertArsakType
     ArbeidssituasjonBrukerSvar: ResolverTypeWrapper<ArbeidssituasjonBrukerSvar>
@@ -753,6 +773,9 @@ export type ResolversParentTypes = ResolversObject<{
     ArbeidsgiverOrgnummerBrukerSvar: ArbeidsgiverOrgnummerBrukerSvar
     ArbeidsgiverStatus: ArbeidsgiverStatus
     ArbeidsgiverSykmelding: ArbeidsgiverSykmelding
+    ArbeidsledigBrukerSvar: ArbeidsledigBrukerSvar
+    ArbeidsledigFraOrgnummerBrukerSvar: ArbeidsledigFraOrgnummerBrukerSvar
+    ArbeidsledigInput: ArbeidsledigInput
     ArbeidsrelatertArsak: ArbeidsrelatertArsak
     ArbeidssituasjonBrukerSvar: ArbeidssituasjonBrukerSvar
     ArbeidssituasjonSvar: ArbeidssituasjonSvar
@@ -878,6 +901,24 @@ export type ArbeidsgiverSykmeldingResolvers<
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type ArbeidsledigBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['ArbeidsledigBrukerSvar'] = ResolversParentTypes['ArbeidsledigBrukerSvar'],
+> = ResolversObject<{
+    arbeidsledigFraOrgnummer?: Resolver<ResolversTypes['ArbeidsledigFraOrgnummerBrukerSvar'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type ArbeidsledigFraOrgnummerBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['ArbeidsledigFraOrgnummerBrukerSvar'] = ResolversParentTypes['ArbeidsledigFraOrgnummerBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type ArbeidsrelatertArsakResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsrelatertArsak'] = ResolversParentTypes['ArbeidsrelatertArsak'],
@@ -941,6 +982,7 @@ export type BrukerSvarResolvers<
     ParentType extends ResolversParentTypes['BrukerSvar'] = ResolversParentTypes['BrukerSvar'],
 > = ResolversObject<{
     arbeidsgiverOrgnummer?: Resolver<Maybe<ResolversTypes['ArbeidsgiverOrgnummerBrukerSvar']>, ParentType, ContextType>
+    arbeidsledig?: Resolver<Maybe<ResolversTypes['ArbeidsledigBrukerSvar']>, ParentType, ContextType>
     arbeidssituasjon?: Resolver<ResolversTypes['ArbeidssituasjonBrukerSvar'], ParentType, ContextType>
     egenmeldingsdager?: Resolver<Maybe<ResolversTypes['EgenmeldingsdagerBrukerSvar']>, ParentType, ContextType>
     egenmeldingsperioder?: Resolver<
@@ -1426,6 +1468,8 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     ArbeidsgiverOrgnummerBrukerSvar?: ArbeidsgiverOrgnummerBrukerSvarResolvers<ContextType>
     ArbeidsgiverStatus?: ArbeidsgiverStatusResolvers<ContextType>
     ArbeidsgiverSykmelding?: ArbeidsgiverSykmeldingResolvers<ContextType>
+    ArbeidsledigBrukerSvar?: ArbeidsledigBrukerSvarResolvers<ContextType>
+    ArbeidsledigFraOrgnummerBrukerSvar?: ArbeidsledigFraOrgnummerBrukerSvarResolvers<ContextType>
     ArbeidsrelatertArsak?: ArbeidsrelatertArsakResolvers<ContextType>
     ArbeidssituasjonBrukerSvar?: ArbeidssituasjonBrukerSvarResolvers<ContextType>
     ArbeidssituasjonSvar?: ArbeidssituasjonSvarResolvers<ContextType>

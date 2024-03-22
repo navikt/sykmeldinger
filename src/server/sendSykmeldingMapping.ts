@@ -133,6 +133,18 @@ export function mapSendSykmeldingValuesToV3Api(
                       : raise('Illegal state: lottOgHyre is required when arbeidssituasjon is fisker'),
               }
             : null,
+        arbeidsledig: values.arbeidsledig
+            ? {
+                  arbeidsledigFraOrgnummer: values.arbeidsledig.arbeidsledigFraOrgnummer
+                      ? {
+                            sporsmaltekst: sporsmal.arbeidsledigFra,
+                            svar: values.arbeidsledig.arbeidsledigFraOrgnummer,
+                        }
+                      : raise(
+                            'Illegal state: arbeidsledigFraOrgnummer is required when arbeidssituasjon is arbeidsledig',
+                        ),
+              }
+            : null,
     }
 }
 

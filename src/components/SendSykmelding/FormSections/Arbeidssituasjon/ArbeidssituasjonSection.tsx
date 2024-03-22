@@ -6,8 +6,9 @@ import { BrukerinformasjonFragment, Periodetype, SykmeldingFragment } from 'quer
 import { useShouldArbeidssituasjonShow } from '../shared/sykmeldingUtils'
 import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'
-import { isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
+import { isArbeidsledig, isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
 import { FormValues } from '../../SendSykmeldingForm'
+import { useFlag } from '../../../../toggles/context'
 
 import { ArbeidssituasjonInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
@@ -15,6 +16,7 @@ import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 import FrilanserSection from './Frilanser/FrilanserSection'
 import { useArbeidssituasjonSubSections } from './formProgressUtils'
 import FiskerSection from './Fisker/FiskerSection'
+import ArbeidsledigSection from './Arbeidsledig/ArbeidsledigSection'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -22,6 +24,7 @@ interface Props {
 }
 
 function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): ReactElement | null {
+    const endreArbeidssituasjonToggle = useFlag('SYKMELDINGER_ENDRE_ARBEIDSSITUASJON')
     const { watch } = useFormContext<FormValues>()
     const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
     const { shouldShowArbeidsgiverOrgnummer, shouldShowFisker } = useArbeidssituasjonSubSections()
@@ -44,6 +47,14 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
                     sykmeldingStartDato={getSykmeldingStartDate(sykmelding.sykmeldingsperioder)}
                 />
             )}
+            {endreArbeidssituasjonToggle.enabled &&
+                isArbeidsledig(arbeidssituasjon) &&
+                brukerinformasjon.arbeidsgivere.length >= 2 && (
+                    <ArbeidsledigSection
+                        sykmelding={sykmelding}
+                        brukerinfoArbeidsgivere={brukerinformasjon.arbeidsgivere}
+                    />
+                )}
         </SectionWrapper>
     )
 }

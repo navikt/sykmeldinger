@@ -78,3 +78,10 @@ export function getReadableSykmeldingLength(sykmelding: SykmeldingFragment): str
 export function isV3(sykmelding: SykmeldingFragment): boolean {
     return sykmelding.rulesetVersion === 3
 }
+
+export function isValidRange(sykmelding: SykmeldingFragment): boolean {
+    const start = getSykmeldingStartDate(sykmelding.sykmeldingsperioder)
+    const end = getSykmeldingEndDate(sykmelding.sykmeldingsperioder)
+
+    return isBefore(toDate(start), toDate(end))
+}
