@@ -52,7 +52,7 @@
         "next-logger": "^3.0.2",
         "nextleton": "^0.6.1",
         "pino": "^8.18.0",
-        "prom-client": "^15.1.0",
+        "prom-client": "^15.1.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "7.50.1",
