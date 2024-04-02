@@ -51,7 +51,9 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
         const today = new Date()
         const sixteenDaysAgo = sub(today, { days: 16 })
 
-        await page.getByRole('button', { name: format(today, 'EEEE d', { locale: nb }) }).click()
+        await page
+            .getByRole('button', { name: format(today, 'EEEE d', { locale: nb }), includeHidden: false, exact: true })
+            .click()
         await page.getByRole('button', { name: /Videre/ }).click()
         await page
             .getByRole('group', {
