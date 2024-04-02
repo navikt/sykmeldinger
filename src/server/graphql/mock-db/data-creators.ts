@@ -275,7 +275,7 @@ export class SykmeldingBuilder {
     }
 
     pasient(pasient: Partial<Pasient>): SykmeldingBuilder {
-        const newPasient = R.merge(this._sykmelding.pasient, pasient)
+        const newPasient = R.merge(pasient, this._sykmelding.pasient)
 
         this._sykmelding.pasient = newPasient
 

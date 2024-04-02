@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { PersonChatIcon } from '@navikt/aksel-icons'
 
-import { MeldingTilNav } from 'queries'
+import type { MeldingTilNav } from 'queries'
 
 import { SykmeldingGroup } from '../../../molecules/sykmelding/SykmeldingGroup'
 import { SykmeldingInfo, SykmeldingJaInfo } from '../../../molecules/sykmelding/SykmeldingInfo'

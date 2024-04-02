@@ -48,6 +48,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -79,6 +80,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -114,6 +116,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -155,6 +158,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -188,6 +192,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -239,6 +244,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.HYRE,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -274,6 +280,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.LOTT,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -313,6 +320,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: Blad.B,
                     lottOgHyre: LottOgHyre.LOTT,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -353,6 +361,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -388,6 +397,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -420,6 +430,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -449,6 +460,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -481,6 +493,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -508,6 +521,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -535,6 +549,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -563,6 +578,7 @@ describe('toSendSykmeldingUtils', () => {
                     blad: null,
                     lottOgHyre: null,
                 },
+                extra: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)

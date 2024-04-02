@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
 
-import { Prognose } from '../../api-models/sykmelding/Prognose'
+import type { Prognose } from '../../api-models/sykmelding/Prognose'
 
 import { Section } from './Section'
 import { contentBorder, contentBorderRadius, contentMarginBottom, contentPadding, textMarginBottom } from './constants'
