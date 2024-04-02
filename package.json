@@ -44,7 +44,7 @@
         "@unleash/nextjs": "^1.4.2",
         "classnames": "^2.5.1",
         "crypto-hash": "^3.0.0",
-        "date-fns": "2.30.0",
+        "date-fns": "3.6.0",
         "globalthis-polyfill": "^1.0.0",
         "graphql": "^16.8.1",
         "graphql-scalars": "^1.23.0",
