@@ -82,34 +82,29 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
             })(page)
         })
 
-        test('Lott & Hyre, should be næringsdrivende-esque', async ({ page }) => {
+        test('Lott & Hyre, should be arbeidsgiver-esque', async ({ page }) => {
             await gotoScenario('normal')(page)
-            // Behaves similar to normal nearingsdrivende
             await fillOutFisker('Blad A', 'Både lott og hyre')(page)
-            await frilanserEgenmeldingsperioder([
-                {
-                    fom: '01.01.2021',
-                    tom: '02.01.2021',
-                },
-                {
-                    fom: '04.01.2021',
-                    tom: '06.01.2021',
-                },
-            ])(page)
-            await velgForsikring('Ja')(page)
-
-            await bekreftSykmelding(page)
+            // 'Begge' behaves similar to normal arbeidstaker
+            await velgArbeidstaker(/Pontypandy Fire Service/)(page)
+            await bekreftNarmesteleder('Station Officer Steele')(page)
+            await getRadioInGroup(page)(
+                { name: /Brukte du egenmelding hos Pontypandy Fire Service i perioden/ },
+                { name: 'Nei' },
+            ).click()
+            await sendSykmelding(page)
 
             await expectKvittering({
-                sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                sendtTil: 'Pontypandy Fire Service',
+                egenmeldingsdager: 'legg til',
             })(page)
 
             await expectDineSvar({
                 arbeidssituasjon: 'Fisker',
-                selvstendig: {
-                    egenmeldingsperioder: ['1. - 2. januar 2021', '4. - 6. januar 2021'],
-                    forsikring: 'Ja',
+                arbeidsgiver: '110110110',
+                narmesteleder: {
+                    navn: 'Station Officer Steele',
+                    svar: 'Ja',
                 },
                 fisker: {
                     blad: 'A',
@@ -176,24 +171,29 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
             })(page)
         })
 
-        test('Lott & Hyre, should be næringsdrivende-esque without forsikring', async ({ page }) => {
+        test('Lott & Hyre, should be arbeidsgiver-esque', async ({ page }) => {
             await gotoScenario('normal')(page)
-            // Behaves similar to normal nearingsdrivende
             await fillOutFisker('Blad B', 'Både lott og hyre')(page)
-            await frilanserEgenmeldingsperioder([{ fom: '01.01.2021', tom: '02.01.2021' }])(page)
-            // No forsikring question for Blad B
-            await bekreftSykmelding(page)
+            // 'Begge' behaves similar to normal arbeidstaker
+            await velgArbeidstaker(/Pontypandy Fire Service/)(page)
+            await bekreftNarmesteleder('Station Officer Steele')(page)
+            await getRadioInGroup(page)(
+                { name: /Brukte du egenmelding hos Pontypandy Fire Service i perioden/ },
+                { name: 'Nei' },
+            ).click()
+            await sendSykmelding(page)
 
             await expectKvittering({
-                sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                sendtTil: 'Pontypandy Fire Service',
+                egenmeldingsdager: 'legg til',
             })(page)
 
             await expectDineSvar({
                 arbeidssituasjon: 'Fisker',
-                selvstendig: {
-                    egenmeldingsperioder: ['1. - 2. januar 2021'],
-                    forsikring: ExpectMeta.NotInDom,
+                arbeidsgiver: 'Pontypandy Fire Service',
+                narmesteleder: {
+                    navn: 'Station Officer Steele',
+                    svar: 'Ja',
                 },
                 fisker: {
                     blad: 'B',
