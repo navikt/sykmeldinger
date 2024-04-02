@@ -79,15 +79,15 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
             return (
                 <Alert variant="warning" className="mt-4">
                     <BodyShort spacing>
-                        Hvis du har flere arbeidsgivere, må du sende en sykmelding for hver arbeidsgiver.
+                        Hvis du har flere arbeidsgivere, må du sende en sykmelding for hvert arbeidsforhold.
                     </BodyShort>
                     <BodyShort
                         spacing
                         className="font-bold"
                     >{`Du bør endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
                     <BodyShort>
-                        Dersom legen din ikke har sendt deg èn sykmelding per arbeidsgiver, må du ta kontakt med legen
-                        og be om dette.
+                        Dersom du ikke har fått èn sykmelding per arbeidsforhold, må du ta kontakt med legen og be om
+                        dette.
                     </BodyShort>
                 </Alert>
             )
