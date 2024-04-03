@@ -55,8 +55,8 @@ function mapSykmeldingFisker(values: FormValues): SendSykmeldingValues {
         },
     } satisfies SendSykmeldingValues
 
-    // In essence an arbeidstaker when LottOgHyre is HYRE
-    if (values.fisker.lottOgHyre === LottOgHyre.HYRE) {
+    // In essence an arbeidstaker when LottOgHyre is HYRE or BEGGE
+    if (values.fisker.lottOgHyre === LottOgHyre.HYRE || values.fisker.lottOgHyre === LottOgHyre.BEGGE) {
         const hasEgenmeldingsdager = getHasEgenmeldingsdager(values.egenmeldingsdager)
 
         return {

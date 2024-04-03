@@ -10,7 +10,7 @@ export const isArbeidstaker = (
         case ArbeidssituasjonType.ARBEIDSTAKER:
             return true
         case ArbeidssituasjonType.FISKER:
-            return fisker?.lottOgHyre === 'HYRE'
+            return fisker?.lottOgHyre === 'HYRE' || fisker?.lottOgHyre === 'BEGGE'
         default:
             return false
     }

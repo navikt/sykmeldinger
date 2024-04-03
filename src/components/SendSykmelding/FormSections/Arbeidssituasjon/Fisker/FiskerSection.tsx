@@ -20,12 +20,12 @@ type Props = {
  * Fisker-flyt, består av 6 ulike permutasjoner av blad og lott/hyre
  *
  * Blad A+LOTT = selvstending næringsdrivende flyt MED forsikringsspørsmål
- * Blad A+BEGGE = selvstending næringsdrivende flyt MED forsikringsspørsmål
  * Blad B+LOTT = selvstending næringsdrivende flyt UTEN forsikringsspørsmål
- * Blad B+BEGGE = selvstending næringsdrivende flyt UTEN forsikringsspørsmål
  *
  * Blad A+HYRE = arbeidstaker - vanlig flyt
  * Blad B+HYRE = arbeidstaker - vanlig flyt
+ * Blad A+BEGGE = arbeidstaker - vanlig flyt
+ * Blad B+BEGGE = arbeidstaker - vanlig flyt
  *
  * Isteden for at denne logikken er sentralisert i parent-komponenten, så er det
  * løst med komposisjon. Det betyr at alle "leaf-nodes" i state-"treet" har sin egen
@@ -39,10 +39,8 @@ function FiskerSection({ brukerinformasjon, sykmelding }: Props): ReactElement {
         <SectionWrapper>
             <BladField />
             {blad != null && <LottOgHyreField />}
-            {(lottOgHyre === 'LOTT' || lottOgHyre === 'BEGGE') && (
-                <FiskerSelvstendigSection sykmelding={sykmelding} askForsikring={blad === 'A'} />
-            )}
-            {lottOgHyre === 'HYRE' && (
+            {lottOgHyre === 'LOTT' && <FiskerSelvstendigSection sykmelding={sykmelding} askForsikring={blad === 'A'} />}
+            {(lottOgHyre === 'HYRE' || lottOgHyre === 'BEGGE') && (
                 <FiskerArbeidstakerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />
             )}
         </SectionWrapper>

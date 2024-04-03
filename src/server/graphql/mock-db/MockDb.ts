@@ -81,9 +81,14 @@ class MockDb {
 
         // Simulate what would happen in sykmeldinger-backend Validation step
         if (apiValues.arbeidssituasjon.svar === ArbeidssituasjonType.FISKER && apiValues.fisker != null) {
-            if (apiValues.fisker.lottOgHyre.svar === 'LOTT' || apiValues.fisker.lottOgHyre.svar === 'BEGGE') {
+            if (apiValues.fisker.lottOgHyre.svar === 'LOTT') {
                 if (apiValues.harBruktEgenmelding == null) {
                     throw new Error('Valgt fisker uten å fylle ut fiskerfeltene')
+                }
+            } else {
+                // HYRE eller BEGGE
+                if (apiValues.arbeidsgiverOrgnummer == null) {
+                    throw new Error('Valgt fisker uten å fylle ut arbeidsgiverOrgnummer')
                 }
             }
         }
@@ -111,7 +116,8 @@ class MockDb {
 
         if (
             values.arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER ||
-            (values.arbeidssituasjon === ArbeidssituasjonType.FISKER && values.fisker?.lottOgHyre === LottOgHyre.HYRE)
+            (values.arbeidssituasjon === ArbeidssituasjonType.FISKER &&
+                (values.fisker?.lottOgHyre === LottOgHyre.HYRE || values.fisker?.lottOgHyre === LottOgHyre.BEGGE))
         ) {
             const selectedArbeidsgiver = this.arbeidsgivere().find(
                 (it) => it.orgnummer === values.arbeidsgiverOrgnummer,
