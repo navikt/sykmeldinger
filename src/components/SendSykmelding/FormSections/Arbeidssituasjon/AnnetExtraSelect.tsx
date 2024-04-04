@@ -1,5 +1,5 @@
 import * as R from 'remeda'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect, useRef } from 'react'
 import { Alert, BodyShort, Select, TextField } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
 
@@ -13,21 +13,42 @@ const initialOptions = [
     'Vikar',
     'Lærling',
     'Dagpenger',
+    'Foreldrepermisjon',
     'Varig tilrettelagt arbeid (VTA)',
     'Flere arbeidsgivere',
 ]
 
 function AnnetExtraSelect(): ReactElement {
-    const { register } = useFormContext<FormValues>()
+    const { register, watch, setValue } = useFormContext<FormValues>()
     const { field } = useController<FormValues, 'extra.annetSituasjon'>({
         name: 'extra.annetSituasjon',
     })
+    const extraText = watch('extra.annetSituasjonTekst')
+    const inferredOption: string | null = getInferredOption(extraText)
+
+    const hasAmplitudedInferredOption = useRef(false)
+
+    useEffect(() => {
+        if (!inferredOption || hasAmplitudedInferredOption.current) return
+
+        logAmplitudeEvent({
+            eventName: 'skjema spørsmål besvart',
+            data: {
+                skjemanavn: 'åpen sykmelding',
+                spørsmål: 'Hvilken situasjon er du i som gjorde at du valgte annet? (draft)',
+                svar: inferredOption,
+            },
+        })
+
+        hasAmplitudedInferredOption.current = true
+    }, [inferredOption])
 
     return (
         <>
             <div className="mt-4 max-w-md">
                 <Select
                     onChange={(event) => {
+                        setValue('extra.annetSituasjonTekst', '')
                         field.onChange(event.currentTarget.value)
 
                         logAmplitudeEvent({
@@ -68,7 +89,7 @@ function AnnetExtraSelect(): ReactElement {
                     </>
                 )}
             </div>
-            <TryToHelpWarnings value={field.value} />
+            <TryToHelpWarnings value={inferredOption ?? field.value} />
         </>
     )
 }
@@ -117,6 +138,14 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
         default:
             return null
     }
+}
+
+function getInferredOption(value: string | null): string | null {
+    if (value == null) return null
+
+    if (value.toLowerCase().includes('vikar')) return 'Vikar'
+
+    return null
 }
 
 export default AnnetExtraSelect
