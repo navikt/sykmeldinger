@@ -322,14 +322,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@axe-core/playwright@npm:^4.8.5":
-  version: 4.8.5
-  resolution: "@axe-core/playwright@npm:4.8.5"
+"@axe-core/playwright@npm:^4.9.0":
+  version: 4.9.0
+  resolution: "@axe-core/playwright@npm:4.9.0"
   dependencies:
-    axe-core: "npm:~4.8.4"
+    axe-core: "npm:~4.9.0"
   peerDependencies:
     playwright-core: ">= 1.0.0"
-  checksum: f9b0bd8f58173d1e050e96ca75253e66146720225b9dd2eaa4ad441ba333d9867029b3efab7f1623199f4283a9bc8ae840a3e5885dfe222df6cd55403c0345a3
+  checksum: 0cf53fe7e56c51504d4ccc47e373d23e522654a04a826df4f9a1dcfbfac4dd5ffabcf0b9e208c29b84c6a41d50b86a7f121de17e6713d2693e2328576cc7b99a
   languageName: node
   linkType: hard
 
@@ -1586,24 +1586,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/faro-core@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "@grafana/faro-core@npm:1.5.0"
+"@grafana/faro-core@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "@grafana/faro-core@npm:1.5.1"
   dependencies:
     "@opentelemetry/api": "npm:^1.7.0"
     "@opentelemetry/otlp-transformer": "npm:^0.48.0"
-  checksum: d02fe9bf2096dd1461a7b753898b982e19cb4165ea946bd571f4b0aa8f53b3c4a291576cbeb88fe1c3d203b53dde8bf332ea3e194582b0dd8302c98f11baf5ad
+  checksum: eb2e45f8fe091f590ce51fc7f3258e759b920fc3e880069f9848d0048c048ec79f6545b8ff5dee77392a6bddc70fbe7e22e800976bcbd3b16c2c77830bd5079c
   languageName: node
   linkType: hard
 
-"@grafana/faro-web-sdk@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@grafana/faro-web-sdk@npm:1.5.0"
+"@grafana/faro-web-sdk@npm:1.5.1":
+  version: 1.5.1
+  resolution: "@grafana/faro-web-sdk@npm:1.5.1"
   dependencies:
-    "@grafana/faro-core": "npm:^1.5.0"
+    "@grafana/faro-core": "npm:^1.5.1"
     ua-parser-js: "npm:^1.0.32"
     web-vitals: "npm:^3.1.1"
-  checksum: 3bdec02093eaed76fb2518948d355aea414bf83a83489c89026c14523d6a4cbcf2c88377fc2ca89b65c209f8554431a23c722124d98d6fd4a4e79d0d6104a64b
+  checksum: 468e7289ea9e7e00c75469ca558d723f385d5282dfdba66ba963b22381557c3c5f02f7725a0a61d2532929ac9b4132967549ccce67d235d01fad4500e78c6a7d
   languageName: node
   linkType: hard
 
@@ -4052,12 +4052,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.12.2":
-  version: 20.12.2
-  resolution: "@types/node@npm:20.12.2"
+"@types/node@npm:20.12.4":
+  version: 20.12.4
+  resolution: "@types/node@npm:20.12.4"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: f1f0ebfe475aefa183763b856e0023b81b76554196e8676a45b9fcfd1012cdd20d32adefb3c0330001c0011e074676603c34c24821a4924228250ea13a75da43
+  checksum: eab4ed07774b96ea77fc23eb27508dbfe094b52c8326764f5044c609c036a1570fd8708ba770e13db7ad7b69d8a834bf3a4e59fc2f1ade31d6501db76cf5a39b
   languageName: node
   linkType: hard
 
@@ -4098,12 +4098,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.23":
-  version: 18.2.23
-  resolution: "@types/react-dom@npm:18.2.23"
+"@types/react-dom@npm:^18.2.24":
+  version: 18.2.24
+  resolution: "@types/react-dom@npm:18.2.24"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 8311c67767b0aafb5cd94176a90f801f0f5f6930731d57caaa04bb0d87fdef6bc6f723a116d9777d2082ec022682acaad7a62d04dc27e330e818cf34f2ef2703
+  checksum: bbd4005f2f65b7606505e9b8759b6e99e222d503602765594ea327893fb7061de8951279baef47a1932f04d94d1865daea05a32f9fcf6f9f1143dbabce5b33de
   languageName: node
   linkType: hard
 
@@ -5036,10 +5036,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:~4.8.4":
-  version: 4.8.4
-  resolution: "axe-core@npm:4.8.4"
-  checksum: c8b3972b17afac33b9e151556fa500b9218086ca763866942de30e7f51ac50582902ad03ec16381796c95afaacfa8c33efb2d02ab4f09b6c09d6be58b95da978
+"axe-core@npm:~4.9.0":
+  version: 4.9.0
+  resolution: "axe-core@npm:4.9.0"
+  checksum: d337c4600e522bb85ed7b242e8eea322892025bc3c951fcda4845a664f9cfb065c509bc17428315c7f8571a4b5c55552d9011d752a6aae8be006bfa54d725a42
   languageName: node
   linkType: hard
 
@@ -11179,10 +11179,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^1.57.0":
-  version: 1.57.0
-  resolution: "remeda@npm:1.57.0"
-  checksum: cb770a28f19cfcd25a615dfb1a6363530033d6d3078ca7afb92e0260db03c5a55dc188e47d479f36ba794c04da18e615f14a9dabc7eda80c69801a7654c62fa3
+"remeda@npm:^1.57.1":
+  version: 1.57.1
+  resolution: "remeda@npm:1.57.1"
+  checksum: 98b7423081460de6bce3b525913e10a3cc0713bd8da3a3f66fbd07b8bcf4dce31929c2be5ee3eb5635c3c902b021724d573cfb5eb5c6cc663c5fb19499b9150f
   languageName: node
   linkType: hard
 
@@ -12299,8 +12299,8 @@ __metadata:
     "@apollo/client": "npm:^3.9.10"
     "@apollo/server": "npm:^4.10.2"
     "@as-integrations/next": "npm:^3.0.0"
-    "@axe-core/playwright": "npm:^4.8.5"
-    "@grafana/faro-web-sdk": "npm:1.5.0"
+    "@axe-core/playwright": "npm:^4.9.0"
+    "@grafana/faro-web-sdk": "npm:1.5.1"
     "@graphql-codegen/add": "npm:5.0.2"
     "@graphql-codegen/cli": "npm:5.0.2"
     "@graphql-codegen/fragment-matcher": "npm:5.0.2"
@@ -12330,9 +12330,9 @@ __metadata:
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/http-proxy": "npm:^1.17.14"
     "@types/jsdom": "npm:^21.1.6"
-    "@types/node": "npm:20.12.2"
+    "@types/node": "npm:20.12.4"
     "@types/react": "npm:^18.2.74"
-    "@types/react-dom": "npm:^18.2.23"
+    "@types/react-dom": "npm:^18.2.24"
     "@types/uuid": "npm:^9.0.8"
     "@unleash/nextjs": "npm:^1.4.2"
     "@vitejs/plugin-react": "npm:^4.2.1"
@@ -12368,12 +12368,12 @@ __metadata:
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:7.51.2"
-    remeda: "npm:^1.57.0"
+    remeda: "npm:^1.57.1"
     tailwind-merge: "npm:^2.2.2"
     tailwindcss: "npm:^3.4.3"
     typescript: "npm:^5.4.3"
     uuid: "npm:^9.0.1"
-    vite: "npm:^5.2.7"
+    vite: "npm:^5.2.8"
     vitest: "npm:1.4.0"
     vitest-axe: "npm:^0.1.0"
     zod: "npm:^3.22.4"
@@ -13163,9 +13163,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.2.7":
-  version: 5.2.7
-  resolution: "vite@npm:5.2.7"
+"vite@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "vite@npm:5.2.8"
   dependencies:
     esbuild: "npm:^0.20.1"
     fsevents: "npm:~2.3.3"
@@ -13199,7 +13199,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: a00173446c8392069a70a92be78b060f7e5895f28c229eb25198953daa55c16ffbddcd4e8f015f220b2b1113e12d30e7a892221de34be336b222a12cddbb78a4
+  checksum: caa40343c2c4e6d8e257fccb4c3029f62909c319a86063ce727ed550925c0a834460b0d1ca20c4d6c915f35302aa1052f6ec5193099a47ce21d74b9b817e69e1
   languageName: node
   linkType: hard
 
