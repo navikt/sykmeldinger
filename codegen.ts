@@ -3,7 +3,7 @@ import { CodegenConfig } from '@graphql-codegen/cli'
 const config: CodegenConfig = {
     overwrite: true,
     schema: './src/**/*.graphqls',
-    documents: './src/**/*.graphql',
+    documents: ['./src/**/*.graphql'],
     hooks: {
         afterOneFileWrite: ['prettier --write'],
     },

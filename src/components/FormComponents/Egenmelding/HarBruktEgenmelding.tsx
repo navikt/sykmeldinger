@@ -4,7 +4,7 @@ import { differenceInDays } from 'date-fns'
 
 import { YesOrNo } from 'queries'
 
-import { toDate, toReadableDatePeriod } from '../../../utils/dateUtils'
+import { toReadableDatePeriod } from '../../../utils/dateUtils'
 import { sporsmal } from '../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 import YesNoField from '../YesNoField/YesNoField'
@@ -15,8 +15,8 @@ import { EgenmeldingsdagerSubForm } from './EgenmeldingerField'
 interface Props {
     index: number
     arbeidsgiverNavn: string
-    lastPossibleDate: Date | string
-    firstPossibleDate: Date | string
+    lastPossibleDate: Date
+    firstPossibleDate: Date
     onNo: () => void
     amplitudeSkjemanavn: string
 }
@@ -30,7 +30,7 @@ function HarBruktEgenmelding({
     amplitudeSkjemanavn,
 }: Props): ReactElement {
     const period: string = toReadableDatePeriod(lastPossibleDate, firstPossibleDate)
-    const periodLength: number = differenceInDays(toDate(firstPossibleDate), toDate(lastPossibleDate)) + 1
+    const periodLength: number = differenceInDays(firstPossibleDate, lastPossibleDate) + 1
 
     return (
         <QuestionWrapper>

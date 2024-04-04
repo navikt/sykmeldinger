@@ -1,6 +1,6 @@
 import { Component, ErrorInfo, PropsWithChildren, ReactNode } from 'react'
-import { ContentContainer } from '@navikt/ds-react'
 import { createChildLogger } from '@navikt/next-logger'
+import { Page } from '@navikt/ds-react'
 
 import { getUserRequestId } from '../../utils/userRequestId'
 
@@ -37,9 +37,11 @@ class ErrorBoundary extends Component<PropsWithChildren, State> {
     render(): ReactNode {
         if (this.state.hasError) {
             return (
-                <ContentContainer>
-                    <ErrorFallback />
-                </ContentContainer>
+                <Page>
+                    <Page.Block width="xl">
+                        <ErrorFallback />
+                    </Page.Block>
+                </Page>
             )
         }
 
