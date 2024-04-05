@@ -9,22 +9,21 @@ import {
     isSameYear,
     parseISO,
     sub,
+    Duration,
 } from 'date-fns'
-import nbLocale from 'date-fns/locale/nb'
+import { nb } from 'date-fns/locale/nb'
 import { sortBy } from 'remeda'
 
 export function dateAdd(date: string | Date, duration: Duration): string {
-    return toDateString(add(toDate(date), duration))
+    return toDateString(add(date, duration))
 }
 
 export function dateSub(date: string | Date, duration: Duration): string {
-    return toDateString(sub(toDate(date), duration))
+    return toDateString(sub(date, duration))
 }
 
-export const subMonths = (date: string, months: number): string => formatISO(sub(parseISO(date), { months }))
-
-export function toDate(date: string | Date): Date {
-    return typeof date === 'string' ? parseISO(date) : date
+export function toDate(date: string): Date {
+    return parseISO(date)
 }
 
 export function toDateString(date: Date): string {
@@ -32,11 +31,11 @@ export function toDateString(date: Date): string {
 }
 
 export function toReadableDate(date: string | Date): string {
-    return format(toDate(date), `d. MMMM yyyy`, { locale: nbLocale })
+    return format(date, `d. MMMM yyyy`, { locale: nb })
 }
 
 export function toReadableDateNoYear(date: string | Date): string {
-    return format(toDate(date), 'd. MMMM', { locale: nbLocale })
+    return format(date, 'd. MMMM', { locale: nb })
 }
 
 /**
@@ -44,17 +43,14 @@ export function toReadableDateNoYear(date: string | Date): string {
  * @return {string} The period string
  */
 export function toReadableDatePeriod(fom: string | Date, tom: string | Date): string {
-    const fomDate = toDate(fom)
-    const tomDate = toDate(tom)
-
-    if (isSameDay(fomDate, tomDate)) {
-        return toReadableDate(fomDate)
-    } else if (isSameMonth(fomDate, tomDate)) {
-        return `${getDate(fomDate)}. - ${toReadableDate(tomDate)}`
-    } else if (isSameYear(fomDate, tomDate)) {
-        return `${toReadableDateNoYear(fomDate)} - ${toReadableDate(tomDate)}`
+    if (isSameDay(fom, tom)) {
+        return toReadableDate(fom)
+    } else if (isSameMonth(fom, tom)) {
+        return `${getDate(fom)}. - ${toReadableDate(tom)}`
+    } else if (isSameYear(fom, tom)) {
+        return `${toReadableDateNoYear(fom)} - ${toReadableDate(tom)}`
     } else {
-        return `${toReadableDate(fomDate)} - ${toReadableDate(tomDate)}`
+        return `${toReadableDate(fom)} - ${toReadableDate(tom)}`
     }
 }
 
