@@ -77,21 +77,6 @@ export type ArbeidsgiverSykmelding = {
     readonly navn?: Maybe<Scalars['String']['output']>
 }
 
-export type ArbeidsledigBrukerSvar = {
-    readonly __typename: 'ArbeidsledigBrukerSvar'
-    readonly arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar
-}
-
-export type ArbeidsledigFraOrgnummerBrukerSvar = {
-    readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
-    readonly sporsmaltekst: Scalars['String']['output']
-    readonly svar: Scalars['String']['output']
-}
-
-export type ArbeidsledigInput = {
-    readonly arbeidsledigFraOrgnummer?: InputMaybe<Scalars['String']['input']>
-}
-
 export type ArbeidsrelatertArsak = {
     readonly __typename: 'ArbeidsrelatertArsak'
     readonly arsak: ReadonlyArray<ArbeidsrelatertArsakType>
@@ -155,7 +140,6 @@ export type BladBrukerSvar = {
 export type BrukerSvar = {
     readonly __typename: 'BrukerSvar'
     readonly arbeidsgiverOrgnummer?: Maybe<ArbeidsgiverOrgnummerBrukerSvar>
-    readonly arbeidsledig?: Maybe<ArbeidsledigBrukerSvar>
     readonly arbeidssituasjon: ArbeidssituasjonBrukerSvar
     readonly egenmeldingsdager?: Maybe<EgenmeldingsdagerBrukerSvar>
     readonly egenmeldingsperioder?: Maybe<FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar>
@@ -460,7 +444,6 @@ export type RiktigNarmesteLederBrukerSvar = {
 
 export type SendSykmeldingValues = {
     readonly arbeidsgiverOrgnummer?: InputMaybe<Scalars['String']['input']>
-    readonly arbeidsledig?: InputMaybe<ArbeidsledigInput>
     readonly arbeidssituasjon?: InputMaybe<ArbeidssituasjonType>
     readonly egenmeldingsdager?: InputMaybe<ReadonlyArray<Scalars['Date']['input']>>
     readonly egenmeldingsperioder?: InputMaybe<ReadonlyArray<DateRange>>
