@@ -68,15 +68,6 @@ type FiskerBrukerSvar {
     lottOgHyre: LottOgHyreBrukerSvar!
 }
 
-type ArbeidsledigFraOrgnummerBrukerSvar {
-    sporsmaltekst: String!
-    svar: String!
-}
-
-type ArbeidsledigBrukerSvar {
-    arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar!
-}
-
 type BrukerSvar {
     erOpplysningeneRiktige: ErOpplysningeneRiktigeBrukerSvar!
     uriktigeOpplysninger: UriktigeOpplysningerBrukerSvar
@@ -89,5 +80,4 @@ type BrukerSvar {
     egenmeldingsperioder: FrilanserEllerSelvstendigEgenmeldingsperioderBrukerSvar
     harForsikring: HarForsikringBrukerSvar
     fisker: FiskerBrukerSvar
-    arbeidsledig: ArbeidsledigBrukerSvar
 }
