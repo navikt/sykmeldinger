@@ -99,7 +99,7 @@ const BrukerSvarSchema = z.object({
         .object({
             arbeidsledigFraOrgnummer: SporsmalSvarSchema(z.string()),
         })
-        .nullable(),
+        .optional(),
 })
 
 export type SykmeldingStatus = z.infer<typeof SykmeldingStatusSchema>
