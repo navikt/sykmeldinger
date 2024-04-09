@@ -52,6 +52,7 @@ class MockDb {
         if (!sykmelding) {
             throw new Error(`Unable to find sykmelding by sykmeldingId: ${id}`)
         }
+
         return sykmelding
     }
 
