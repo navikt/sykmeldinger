@@ -105,7 +105,7 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
                     <BodyShort
                         spacing
                         className="font-bold"
-                    >{`Du bør endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
+                    >{`Du bør endre valget ditt over fra "annet" til "ansatt".`}</BodyShort>
                     <BodyShort>
                         Dersom du ikke har fått èn sykmelding per arbeidsforhold, må du ta kontakt med legen og be om
                         dette.
@@ -116,14 +116,14 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
             return (
                 <Alert variant="warning" className="mt-4">
                     <BodyShort spacing>Som vikar er du ansatt på samme måte som en arbeidstaker.</BodyShort>
-                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
+                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "ansatt".`}</BodyShort>
                 </Alert>
             )
         case 'Lærling':
             return (
                 <Alert variant="warning" className="mt-4">
                     <BodyShort spacing>Som lærling er du ansatt på samme måte som en arbeidstaker</BodyShort>
-                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "arbeidstaker".`}</BodyShort>
+                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "ansatt".`}</BodyShort>
                 </Alert>
             )
         case 'Dagpenger':
