@@ -68,6 +68,7 @@ class MyDocument extends Document<Props> {
                         type="font/woff2"
                         crossOrigin="anonymous"
                     />
+                    <link rel="icon" href="https://www.nav.no/favicon.ico" type="image/x-icon" />
                 </Head>
                 <body>
                     <Decorator.Header />
