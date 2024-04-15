@@ -51,6 +51,7 @@ export function useFindRelevantArbeidsgivere(
 
     const earlierArbeidsgivere: PossibleArbeidsgiver[] = R.pipe(
         sykmeldingerEdgeToEdge,
+        R.filter((it) => !isFomTheSame(it, sykmelding)),
         R.map((syk) => {
             return {
                 navn: syk.sykmeldingStatus.arbeidsgiver?.orgNavn,
@@ -77,6 +78,13 @@ export function useFindRelevantArbeidsgivere(
         isLoading: loading,
         error,
     }
+}
+
+function isFomTheSame(sykmelding: SykmeldingFragment, relevantSykmelding: SykmeldingFragment): boolean {
+    const sykmeldingFom = toDate(getSykmeldingStartDate(sykmelding.sykmeldingsperioder))
+    const relevantSykmeldingFom = toDate(getSykmeldingStartDate(relevantSykmelding.sykmeldingsperioder))
+
+    return isSameDay(sykmeldingFom, relevantSykmeldingFom)
 }
 
 function isPrevSykmeldingFomBeforeTom(sykmelding: SykmeldingFragment, relevantSykmelding: SykmeldingFragment): boolean {

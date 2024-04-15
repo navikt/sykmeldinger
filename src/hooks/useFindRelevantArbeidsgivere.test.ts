@@ -224,7 +224,7 @@ describe('useFindRelevantArbeidsgivere', () => {
         ])
     })
 
-    it('should find arbeidsgivere in previous SENDT sykmeldinger when fom is same day as relevant sykmelding fom', async () => {
+    it('should ignore previous SENDT sykmeldinger when fom is same day as relevant sykmelding fom', async () => {
         const sykmeldinger: SykmeldingFragment[] = [
             createSykmelding({
                 id: 'id-1',
@@ -277,16 +277,7 @@ describe('useFindRelevantArbeidsgivere', () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false))
 
-        expect(result.current.arbeidsgivere).toEqual([
-            {
-                orgnummer: '12345678',
-                navn: 'Bedrift 1',
-            },
-            {
-                orgnummer: '222',
-                navn: 'Bedrift 22',
-            },
-        ])
+        expect(result.current.arbeidsgivere).toEqual(null)
     })
 
     it('should return null and ignore previous SENDT sykmelding when days between relevant sykmelding fom', async () => {
@@ -435,121 +426,6 @@ describe('useFindRelevantArbeidsgivere', () => {
                 {
                     orgnummer: '99999999',
                     navn: 'Firma AS',
-                },
-            ])
-        })
-
-        it('should find unique arbeidsgivere in previous SENDT sykmeldinger when duplicate arbeidsgivere and kant i kant', async () => {
-            const sykmeldinger: SykmeldingFragment[] = [
-                // sykmeldingsperiod kant i kant
-                createSykmelding({
-                    id: 'id-1',
-                    sykmeldingStatus: {
-                        ...createSykmelding().sykmeldingStatus,
-                        statusEvent: StatusEvent.SENDT,
-                        arbeidsgiver: {
-                            __typename: 'ArbeidsgiverStatus',
-                            orgnummer: '12345678',
-                            orgNavn: 'Bedrift 1',
-                        },
-                    },
-                    sykmeldingsperioder: [
-                        createSykmeldingPeriode({
-                            fom: '2024-03-01',
-                            tom: '2024-03-05',
-                        }),
-                    ],
-                }),
-                // sykmeldingsperiod kant i kant with id-1 and within relevant sykmelding
-                createSykmelding({
-                    id: 'id-2',
-                    sykmeldingStatus: {
-                        ...createSykmelding().sykmeldingStatus,
-                        statusEvent: StatusEvent.SENDT,
-                        arbeidsgiver: {
-                            __typename: 'ArbeidsgiverStatus',
-                            orgnummer: '12345678',
-                            orgNavn: 'Bedrift 1',
-                        },
-                    },
-                    sykmeldingsperioder: [
-                        createSykmeldingPeriode({
-                            fom: '2024-03-06',
-                            tom: '2024-03-13',
-                        }),
-                    ],
-                }),
-                // sykmeldingsperiod outside
-                createSykmelding({
-                    id: 'id-3',
-                    sykmeldingStatus: {
-                        ...createSykmelding().sykmeldingStatus,
-                        statusEvent: StatusEvent.SENDT,
-                        arbeidsgiver: {
-                            __typename: 'ArbeidsgiverStatus',
-                            orgnummer: '2222222',
-                            orgNavn: 'Bedrift 2',
-                        },
-                    },
-                    sykmeldingsperioder: [
-                        createSykmeldingPeriode({
-                            fom: '2024-03-14',
-                            tom: '2024-03-22',
-                        }),
-                    ],
-                }),
-                // relevant sykmelding
-                createSykmelding({
-                    id: 'id-4',
-                    sykmeldingStatus: {
-                        ...createSykmelding().sykmeldingStatus,
-                        statusEvent: StatusEvent.APEN,
-                        arbeidsgiver: null,
-                    },
-                    sykmeldingsperioder: [
-                        createSykmeldingPeriode({
-                            fom: '2024-03-06',
-                            tom: '2024-03-20',
-                        }),
-                    ],
-                }),
-            ]
-
-            const brukerinfoArbeidsgiver: Arbeidsgiver[] = [
-                {
-                    __typename: 'Arbeidsgiver',
-                    orgnummer: '3333333',
-                    navn: 'Bedrift 3',
-                    aktivtArbeidsforhold: false,
-                    naermesteLeder: null,
-                },
-                {
-                    __typename: 'Arbeidsgiver',
-                    orgnummer: '2222222',
-                    navn: 'Bedrift 2',
-                    aktivtArbeidsforhold: false,
-                    naermesteLeder: null,
-                },
-            ]
-
-            const { result } = renderHook(() => useFindRelevantArbeidsgivere(sykmeldinger[3], brukerinfoArbeidsgiver), {
-                mocks: [sykmeldingerMock(sykmeldinger)],
-            })
-
-            await waitFor(() => expect(result.current.isLoading).toBe(false))
-
-            expect(result.current.arbeidsgivere).toEqual([
-                {
-                    orgnummer: '12345678',
-                    navn: 'Bedrift 1',
-                },
-                {
-                    orgnummer: '2222222',
-                    navn: 'Bedrift 2',
-                },
-                {
-                    orgnummer: '3333333',
-                    navn: 'Bedrift 3',
                 },
             ])
         })
@@ -758,6 +634,123 @@ describe('useFindRelevantArbeidsgivere', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false))
 
         expect(result.current.arbeidsgivere).toEqual(null)
+    })
+
+    describe('ignore sykmelding with same fom ', () => {
+        it('should ignore sykmeldingsperiode when fom is the same and find arbeidsgivere in previous SENDT sykmeldinger when kant i kant', async () => {
+            const sykmeldinger: SykmeldingFragment[] = [
+                // sykmeldingsperiod kant i kant
+                createSykmelding({
+                    id: 'id-1',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.SENDT,
+                        arbeidsgiver: {
+                            __typename: 'ArbeidsgiverStatus',
+                            orgnummer: '12345678',
+                            orgNavn: 'Bedrift 1',
+                        },
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2024-03-01',
+                            tom: '2024-03-05',
+                        }),
+                    ],
+                }),
+                // same fom as relevant sykmelding
+                createSykmelding({
+                    id: 'id-2',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.SENDT,
+                        arbeidsgiver: {
+                            __typename: 'ArbeidsgiverStatus',
+                            orgnummer: '4444444',
+                            orgNavn: 'Bedrift 4',
+                        },
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2024-03-06',
+                            tom: '2024-03-13',
+                        }),
+                    ],
+                }),
+                // sykmeldingsperiod outside
+                createSykmelding({
+                    id: 'id-3',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.SENDT,
+                        arbeidsgiver: {
+                            __typename: 'ArbeidsgiverStatus',
+                            orgnummer: '2222222',
+                            orgNavn: 'Bedrift 2',
+                        },
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2024-03-14',
+                            tom: '2024-03-22',
+                        }),
+                    ],
+                }),
+                // relevant sykmelding
+                createSykmelding({
+                    id: 'id-4',
+                    sykmeldingStatus: {
+                        ...createSykmelding().sykmeldingStatus,
+                        statusEvent: StatusEvent.APEN,
+                        arbeidsgiver: null,
+                    },
+                    sykmeldingsperioder: [
+                        createSykmeldingPeriode({
+                            fom: '2024-03-06',
+                            tom: '2024-03-20',
+                        }),
+                    ],
+                }),
+            ]
+
+            const brukerinfoArbeidsgiver: Arbeidsgiver[] = [
+                {
+                    __typename: 'Arbeidsgiver',
+                    orgnummer: '3333333',
+                    navn: 'Bedrift 3',
+                    aktivtArbeidsforhold: false,
+                    naermesteLeder: null,
+                },
+                {
+                    __typename: 'Arbeidsgiver',
+                    orgnummer: '2222222',
+                    navn: 'Bedrift 2',
+                    aktivtArbeidsforhold: false,
+                    naermesteLeder: null,
+                },
+            ]
+
+            const { result } = renderHook(() => useFindRelevantArbeidsgivere(sykmeldinger[3], brukerinfoArbeidsgiver), {
+                mocks: [sykmeldingerMock(sykmeldinger)],
+            })
+
+            await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+            expect(result.current.arbeidsgivere).toEqual([
+                {
+                    orgnummer: '12345678',
+                    navn: 'Bedrift 1',
+                },
+                {
+                    orgnummer: '2222222',
+                    navn: 'Bedrift 2',
+                },
+                {
+                    orgnummer: '3333333',
+                    navn: 'Bedrift 3',
+                },
+            ])
+        })
     })
 })
 
