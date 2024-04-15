@@ -15,7 +15,7 @@ const initialOptions = [
     'Dagpenger',
     'Foreldrepermisjon',
     'Varig tilrettelagt arbeid (VTA)',
-    'Flere arbeidsgivere',
+    'Flere arbeidsforhold',
 ]
 
 function AnnetExtraSelect(): ReactElement {
@@ -96,11 +96,11 @@ function AnnetExtraSelect(): ReactElement {
 
 function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | null {
     switch (value) {
-        case 'Flere arbeidsgivere':
+        case 'Flere arbeidsforhold':
             return (
                 <Alert variant="warning" className="mt-4">
                     <BodyShort spacing>
-                        Hvis du har flere arbeidsgivere, må du sende en sykmelding for hvert arbeidsforhold.
+                        Hvis du har flere arbeidsforhold, må du sende en sykmelding for hvert arbeidsforhold.
                     </BodyShort>
                     <BodyShort
                         spacing
