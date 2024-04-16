@@ -26,11 +26,6 @@ function AnnenInfo({ sykmelding, parentId }: Props): ReactElement {
                     sykmelding.behandler.tlf ? `Tlf: ${sykmelding.behandler.tlf}` : 'Tlf: mangler',
                 ]}
             />
-            {sykmelding.arbeidsgiver && sykmelding.arbeidsgiver?.navn && (
-                <SykmeldingInfo heading="Arbeidsgiver som er oppgitt i sykmeldingen">
-                    {sykmelding.arbeidsgiver.navn}
-                </SykmeldingInfo>
-            )}
         </SykmeldingGroup>
     )
 }
