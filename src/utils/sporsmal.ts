@@ -25,6 +25,7 @@ export const sporsmal = {
         lottEllerHyre: 'Mottar du lott eller er du på hyre?',
     },
     arbeidsledigFra: 'Hvilken arbeidsgiver har du blitt arbeidsledig fra?',
+    erSykmeldtFraFlereArbeidsforhold: 'Er du syk fra flere arbeidsforhold i denne perioden?',
 }
 
 export function arbeidsSituasjonEnumToText(arbeidssituasjon: ArbeidssituasjonType): string {

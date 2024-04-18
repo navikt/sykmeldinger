@@ -391,7 +391,7 @@ export const defaultArbeidsgivere: readonly Arbeidsgiver[] = [
         },
         navn: 'ANDEBY BRANNSTATION',
         orgnummer: '110110112',
-        aktivtArbeidsforhold: false,
+        aktivtArbeidsforhold: true,
     },
     {
         naermesteLeder: null,
@@ -405,6 +405,6 @@ export const defaultArbeidsgivere: readonly Arbeidsgiver[] = [
         },
         navn: 'MT.FRANK STORBYUNIVERSITET,STUDIESTEDETTILNOENVELDIGVIKTIGE Pekepinnstredet',
         orgnummer: '120120124',
-        aktivtArbeidsforhold: true,
+        aktivtArbeidsforhold: false,
     },
 ]

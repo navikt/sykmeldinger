@@ -1,12 +1,16 @@
 import { useFormContext } from 'react-hook-form'
+import { isSameDay } from 'date-fns'
 
-import { ArbeidssituasjonType, BrukerinformasjonFragment } from 'queries'
+import { ArbeidssituasjonType, BrukerinformasjonFragment, SykmeldingFragment } from 'queries'
 
 import { isActiveArbeidsgiver } from '../../../../utils/arbeidsgiverUtils'
 import { isArbeidstaker, isFisker } from '../../../../utils/arbeidssituasjonUtils'
 import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdagerUtils'
 import { FormValues } from '../../SendSykmeldingForm'
 import { EgenmeldingsdagerFormValue } from '../../../FormComponents/Egenmelding/EgenmeldingerField'
+import useSykmeldinger from '../../../../hooks/useSykmeldinger'
+import { toDate } from '../../../../utils/dateUtils'
+import { getSykmeldingEndDate, getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 
 type UseDynamicSubSections = {
     shouldShowArbeidsgiverOrgnummer: boolean
@@ -70,4 +74,50 @@ function isEgenmeldingsdagerCompleteOrSkipped(
         egenmeldingsdagerHitPrevious === true ||
         !isArbeidstaker(arbeidssituasjon, fisker)
     )
+}
+
+export function useShouldShowSeveralArbeidsgivereInfo(
+    arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere'],
+    sykmelding: SykmeldingFragment,
+): {
+    shouldAskForSeveralSykmeldinger: boolean | null
+    isLoading: boolean
+    error: Error | undefined
+} {
+    const { data, error, loading } = useSykmeldinger()
+
+    if (loading || error || data?.sykmeldinger == null) {
+        return {
+            shouldAskForSeveralSykmeldinger: null,
+            isLoading: loading,
+            error,
+        }
+    }
+
+    const activeArbeidsforhold: BrukerinformasjonFragment['arbeidsgivere'] = arbeidsgivere.filter(
+        (arbeidsgiver) => arbeidsgiver.aktivtArbeidsforhold,
+    )
+
+    const sykmeldingerWithSamePeriod: SykmeldingFragment[] = data?.sykmeldinger
+        .filter((it) => it.id !== sykmelding.id)
+        .filter((it) => isFomTheSameAndTomTheSame(it, sykmelding))
+
+    const isArbeidsgiverGreaterThenSykmelding: boolean =
+        activeArbeidsforhold.length >= 2 && activeArbeidsforhold.length - 1 > sykmeldingerWithSamePeriod.length
+
+    return {
+        shouldAskForSeveralSykmeldinger: isArbeidsgiverGreaterThenSykmelding,
+        isLoading: loading,
+        error,
+    }
+}
+
+function isFomTheSameAndTomTheSame(sykmelding: SykmeldingFragment, relevantSykmelding: SykmeldingFragment): boolean {
+    const sykmeldingFom = toDate(getSykmeldingStartDate(sykmelding.sykmeldingsperioder))
+    const sykmeldingTom = toDate(getSykmeldingEndDate(sykmelding.sykmeldingsperioder))
+
+    const relevantSykmeldingFom = toDate(getSykmeldingStartDate(relevantSykmelding.sykmeldingsperioder))
+    const relevantSykmeldingTom = toDate(getSykmeldingEndDate(relevantSykmelding.sykmeldingsperioder))
+
+    return isSameDay(sykmeldingFom, relevantSykmeldingFom) && isSameDay(sykmeldingTom, relevantSykmeldingTom)
 }

@@ -26,9 +26,10 @@ interface Props {
 function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): ReactElement | null {
     const endreArbeidssituasjonToggle = useFlag('SYKMELDINGER_ENDRE_ARBEIDSSITUASJON')
     const { watch } = useFormContext<FormValues>()
-    const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
-    const { shouldShowArbeidsgiverOrgnummer, shouldShowFisker } = useArbeidssituasjonSubSections()
     const arbeidssituasjon = watch('arbeidssituasjon')
+
+    const { shouldShowArbeidsgiverOrgnummer, shouldShowFisker } = useArbeidssituasjonSubSections()
+    const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
 
     // Don't show arbeidssituasjon section given certain criteria
     if (!useShouldArbeidssituasjonShow()) return null
