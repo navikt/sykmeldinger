@@ -14,7 +14,7 @@ function UxSignalsWidget(): ReactElement | null {
                 strategy="lazyOnload"
                 src="https://uxsignals-frontend.uxsignals.app.iterate.no/embed.js"
             />
-            <div data-uxsignals-embed="study-6fkh2x1b4r" className={styles.uxSignalsContainer} />
+            <div data-uxsignals-embed="panel-etd0zg7795" className={styles.uxSignalsContainer} />
         </>
     )
 }
