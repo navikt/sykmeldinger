@@ -39,7 +39,7 @@ function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): C
     const prefixedCrumbs: CompleteCrumb[] = breadcrumbs.map(
         (it): CompleteCrumb => ({
             ...it,
-            url: 'url' in it ? `${browserEnv.NEXT_PUBLIC_BASE_PATH}${it.url}` : '/',
+            url: 'url' in it ? `${browserEnv.NEXT_PUBLIC_BASE_PATH ?? ''}${it.url}` : '/',
             handleInApp: true,
         }),
     )
