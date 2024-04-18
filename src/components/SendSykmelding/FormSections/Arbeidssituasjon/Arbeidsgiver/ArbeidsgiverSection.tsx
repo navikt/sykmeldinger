@@ -11,11 +11,12 @@ import { getSykmeldingStartDate } from '../../../../../utils/sykmeldingUtils'
 import { toDate } from '../../../../../utils/dateUtils'
 import EgenmeldingerField from '../../../../FormComponents/Egenmelding/EgenmeldingerField'
 import SendesTilArbeidsgiverInfo from '../SendesTilArbeidsgiver/SendesTilArbeidsgiverInfo'
-import { useShouldShowSendesTilArbeidsgiverInfo } from '../formProgressUtils'
+import { useShouldShowSendesTilArbeidsgiverInfo, useShouldShowSeveralArbeidsgivereInfo } from '../formProgressUtils'
 
 import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
 import ArbeidsgiverField from './ArbeidsgiverField'
+import FlereArbeidsgivereSection from './FlereArbeidsgivereSection'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -24,18 +25,32 @@ interface Props {
 
 function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement | null {
     const { watch } = useFormContext<FormValues>()
-    const valgtArbeidsgiverOrgnummer: string | null = watch('arbeidsgiverOrgnummer')
+    const [valgtArbeidsgiverOrgnummer, harFlereArbeidsforhold]: [string | null, YesOrNo | null] = watch([
+        'arbeidsgiverOrgnummer',
+        'erSykmeldtFraFlereArbeidsforhold',
+    ])
 
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
     const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
     const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo(arbeidsgivere)
+    const { shouldAskForSeveralSykmeldinger } = useShouldShowSeveralArbeidsgivereInfo(arbeidsgivere, sykmelding)
     const valgtArbeidsgiver = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
+
+    const hasCompletedSeveralArbeidsgivere: boolean =
+        (shouldAskForSeveralSykmeldinger && harFlereArbeidsforhold === YesOrNo.YES) ||
+        (shouldAskForSeveralSykmeldinger && harFlereArbeidsforhold === YesOrNo.NO) ||
+        !shouldAskForSeveralSykmeldinger
 
     return (
         <SectionWrapper>
             <ArbeidsgiverField arbeidsgivere={arbeidsgivere} />
+            {valgtArbeidsgiverOrgnummer && (
+                <FlereArbeidsgivereSection sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} />
+            )}
             {hasNoArbeidsgiver && <ArbeidsgivereMissingInfo />}
-            {hasAktiv && <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />}
+            {hasAktiv && hasCompletedSeveralArbeidsgivere && (
+                <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />
+            )}
             {shouldShowEgenmeldingsdager && !error && !isLoading && (
                 <EgenmeldingerField
                     index={0}

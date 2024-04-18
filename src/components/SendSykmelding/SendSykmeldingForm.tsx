@@ -55,6 +55,7 @@ export interface FormValues extends EgenmeldingsdagerSubForm {
     arbeidsledig: {
         arbeidsledigFraOrgnummer: string | null
     } | null
+    erSykmeldtFraFlereArbeidsforhold: YesOrNo | null
 }
 
 interface Props {
@@ -89,6 +90,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
             arbeidsledig: {
                 arbeidsledigFraOrgnummer: null,
             },
+            erSykmeldtFraFlereArbeidsforhold: null,
         },
     })
     const brukerinformasjonData = useQuery(BrukerinformasjonDocument)

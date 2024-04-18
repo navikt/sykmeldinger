@@ -83,14 +83,25 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
         test('should be able to submit form with inactive arbeidsgiver', async ({ page }) => {
             await gotoScenario('normal', {
-                antallArbeidsgivere: 2,
+                antallArbeidsgivere: 4,
             })(page)
 
-            await filloutArbeidstaker(/Andeby Brannstation/)(page)
+            await filloutArbeidstaker(/Mt.frank Storbyuniversitet Studiestedettilnoenveldigviktige Pekepinnstredet/)(
+                page,
+            )
+
+            await getRadioInGroup(page)(
+                {
+                    name: /Er du syk fra flere arbeidsforhold i denne perioden/,
+                },
+                { name: 'Nei' },
+            ).click()
 
             // Should ask about egenmeldingsdager even though arbeidsgiver is inactive
             await getRadioInGroup(page)(
-                { name: /Brukte du egenmelding hos Andeby Brannstation i perioden/ },
+                {
+                    name: /Brukte du egenmelding hos Mt.frank Storbyuniversitet Studiestedettilnoenveldigviktige Pekepinnstredet i perioden/,
+                },
                 { name: 'Nei' },
             ).click()
 
@@ -98,16 +109,16 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await sendSykmelding(page)
 
             await expectKvittering({
-                sendtTil: 'Andeby Brannstation',
+                sendtTil: 'Mt.frank Storbyuniversitet Studiestedettilnoenveldigviktige Pekepinnstredet',
                 egenmeldingsdager: 'legg til',
             })(page)
 
             await expectDineSvar({
                 arbeidssituasjon: 'Ansatt',
-                arbeidsgiver: '110110112',
+                arbeidsgiver: '120120124',
                 narmesteleder: ExpectMeta.NotInDom,
                 egenmeldingsdager: {
-                    arbeidsgiver: 'Andeby Brannstation',
+                    arbeidsgiver: 'Mt.frank Storbyuniversitet Studiestedettilnoenveldigviktige Pekepinnstredet',
                     svar: 'Nei',
                 },
             })(page)
@@ -119,6 +130,12 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             })(page)
 
             await filloutArbeidstaker(/Nottinghamshire Missing Narmesteleder/)(page)
+            await getRadioInGroup(page)(
+                {
+                    name: /Er du syk fra flere arbeidsforhold i denne perioden/,
+                },
+                { name: 'Nei' },
+            ).click()
 
             // Should ask about egenmeldingsdager even though NL is null, but arbeidsforhold is active
             await getRadioInGroup(page)(

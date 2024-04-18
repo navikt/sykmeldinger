@@ -50,6 +50,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -83,6 +84,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -120,6 +122,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -163,6 +166,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -198,6 +202,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -251,6 +256,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -288,6 +294,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -329,6 +336,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -371,6 +379,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -408,6 +417,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -442,6 +452,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -473,6 +484,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -509,6 +521,7 @@ describe('toSendSykmeldingUtils', () => {
                 arbeidsledig: {
                     arbeidsledigFraOrgnummer: '98989898',
                 },
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -543,6 +556,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -572,6 +586,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
@@ -602,6 +617,7 @@ describe('toSendSykmeldingUtils', () => {
                 },
                 extra: null,
                 arbeidsledig: null,
+                erSykmeldtFraFlereArbeidsforhold: null,
             }
 
             const mapToValues = mapToSendSykmeldingValues(formValues)
