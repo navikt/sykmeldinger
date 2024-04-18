@@ -160,7 +160,7 @@ function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Syk
         return (
             <section aria-labelledby="sykmeldinger-loading-skeleton">
                 <Heading id="sykmeldinger-loading-skeleton" size="medium" level="3" hidden>
-                    Henter sykmeldinger
+                    Laster sykmeldinger
                 </Heading>
                 <KvitteringSkeletonBottom />
             </section>

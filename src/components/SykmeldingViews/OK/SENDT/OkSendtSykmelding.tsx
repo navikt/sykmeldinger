@@ -54,7 +54,7 @@ function OkSendtSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: Sykmel
     const hasHitPrevious = hasHitPreviousSykmeldingTom(sykmelding, previousSykmeldingTom)
 
     if (isLoading) {
-        return <Spinner headline="Henter sykmeldinger..." />
+        return <Spinner headline="Laster sykmeldinger..." />
     }
 
     if (error) {
