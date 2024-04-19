@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 
 import { Arbeidsgiver } from 'queries'
 
-import { findValgtArbeidsgiver, isActiveArbeidsgiver } from './arbeidsgiverUtils'
+import { findValgtArbeidsgiver } from './arbeidsgiverUtils'
 
 describe('arbeidsgiverUtils', () => {
     describe('findValgtArbeidsgiver', () => {
@@ -48,53 +48,6 @@ describe('arbeidsgiverUtils', () => {
             ]
             const orgnummer = '9894224'
             expect(findValgtArbeidsgiver(arbeidsgivere, orgnummer)).toBe(undefined)
-        })
-    })
-    describe('isActiveArbeidsgiver', () => {
-        const arbeidsgivereMock: Arbeidsgiver[] = [
-            {
-                __typename: 'Arbeidsgiver',
-                naermesteLeder: {
-                    __typename: 'NaermesteLeder',
-                    navn: 'Lise',
-                },
-                navn: 'Vaskeri AS',
-                orgnummer: '78453253',
-                aktivtArbeidsforhold: false,
-            },
-            {
-                __typename: 'Arbeidsgiver',
-                naermesteLeder: {
-                    __typename: 'NaermesteLeder',
-                    navn: 'Knut',
-                },
-                navn: 'Snill Torpedo',
-                orgnummer: '84093212',
-                aktivtArbeidsforhold: true,
-            },
-        ]
-        it('should return true if given arbeidsgiver is active and naermesteLeder is not null', () => {
-            const orgnummer = '84093212'
-            expect(isActiveArbeidsgiver(arbeidsgivereMock, orgnummer)).toBe(true)
-        })
-
-        it('should return false if given arbeidsgiver is not active', () => {
-            const orgnummer = '78453253'
-            expect(isActiveArbeidsgiver(arbeidsgivereMock, orgnummer)).toBe(false)
-        })
-
-        it('should return false if given arbeidsgiver is active but is missing naermesteLeder', () => {
-            const arbeidsgivereMock: Arbeidsgiver[] = [
-                {
-                    __typename: 'Arbeidsgiver',
-                    naermesteLeder: null,
-                    navn: 'Snill Torpedo',
-                    orgnummer: '84093212',
-                    aktivtArbeidsforhold: true,
-                },
-            ]
-            const orgnummer = '84093212'
-            expect(isActiveArbeidsgiver(arbeidsgivereMock, orgnummer)).toBe(false)
         })
     })
 })
