@@ -3,7 +3,6 @@ import { isSameDay } from 'date-fns'
 
 import { ArbeidssituasjonType, BrukerinformasjonFragment, SykmeldingFragment } from 'queries'
 
-import { isActiveArbeidsgiver } from '../../../../utils/arbeidsgiverUtils'
 import { isArbeidstaker, isFisker } from '../../../../utils/arbeidssituasjonUtils'
 import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdagerUtils'
 import { FormValues } from '../../SendSykmeldingForm'
@@ -38,9 +37,7 @@ export function useArbeidssituasjonSubSections(): UseDynamicSubSections {
  *   - until user has hit previous sykmelding date, or answers no on "Har du flere egenmeldingsdager?"
  *   - has skipped egenmeldingsdager because it's not relevant
  */
-export function useShouldShowSendesTilArbeidsgiverInfo(
-    arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere'],
-): boolean {
+export function useShouldShowSendesTilArbeidsgiverInfo(): boolean {
     const { watch } = useFormContext<FormValues>()
     const [arbeidssituasjon, arbeidsgiverOrgnummer, fisker, egenmeldingsdager, egenmeldingsdagerHitPrevious] = watch([
         'arbeidssituasjon',
@@ -52,7 +49,6 @@ export function useShouldShowSendesTilArbeidsgiverInfo(
 
     const arbeidstaker: boolean = isArbeidstaker(arbeidssituasjon, fisker)
     const hasSelectedArbeidstaker: boolean = arbeidsgiverOrgnummer != null
-    const hasActiveArbeidsgiver: boolean = isActiveArbeidsgiver(arbeidsgivere, arbeidsgiverOrgnummer)
     const egenmeldingsdagerCompletedOrSkipped: boolean = isEgenmeldingsdagerCompleteOrSkipped(
         arbeidssituasjon,
         egenmeldingsdager,
@@ -60,7 +56,7 @@ export function useShouldShowSendesTilArbeidsgiverInfo(
         fisker,
     )
 
-    return arbeidstaker && hasSelectedArbeidstaker && (!hasActiveArbeidsgiver || egenmeldingsdagerCompletedOrSkipped)
+    return arbeidstaker && hasSelectedArbeidstaker && egenmeldingsdagerCompletedOrSkipped
 }
 
 function isEgenmeldingsdagerCompleteOrSkipped(

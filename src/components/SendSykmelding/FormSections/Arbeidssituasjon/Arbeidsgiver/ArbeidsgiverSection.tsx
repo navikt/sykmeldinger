@@ -32,8 +32,8 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
 
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
     const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
-    const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo(arbeidsgivere)
     const { shouldAskForSeveralSykmeldinger } = useShouldShowSeveralArbeidsgivereInfo(arbeidsgivere, sykmelding)
+    const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo()
     const valgtArbeidsgiver = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
 
     const hasCompletedSeveralArbeidsgivere: boolean =
