@@ -107,6 +107,7 @@ export class SykmeldingBuilder {
         tiltakArbeidsplassen: null,
         tiltakNAV: null,
         utenlandskSykmelding: null,
+        tidligereArbeidsgiverList: null,
         rulesetVersion: 3,
     }
 
