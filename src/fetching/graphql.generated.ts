@@ -79,7 +79,8 @@ export type ArbeidsgiverSykmelding = {
 
 export type ArbeidsledigBrukerSvar = {
     readonly __typename: 'ArbeidsledigBrukerSvar'
-    readonly arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar
+    readonly arbeidsledigFraOrgnummer?: Maybe<ArbeidsledigFraOrgnummerBrukerSvar>
+    readonly arbeidsledigOrgnavn?: Maybe<ArbeidsledigOrgnavnBrukerSvar>
 }
 
 export type ArbeidsledigFraOrgnummerBrukerSvar = {
@@ -90,6 +91,13 @@ export type ArbeidsledigFraOrgnummerBrukerSvar = {
 
 export type ArbeidsledigInput = {
     readonly arbeidsledigFraOrgnummer?: InputMaybe<Scalars['String']['input']>
+    readonly arbeidsledigOrgnavn?: InputMaybe<Scalars['String']['input']>
+}
+
+export type ArbeidsledigOrgnavnBrukerSvar = {
+    readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+    readonly sporsmaltekst: Scalars['String']['output']
+    readonly svar: Scalars['String']['output']
 }
 
 export type ArbeidsrelatertArsak = {
@@ -532,6 +540,7 @@ export type Sykmelding = {
     readonly rulesetVersion: Scalars['Int']['output']
     readonly sykmeldingStatus: SykmeldingStatus
     readonly sykmeldingsperioder: ReadonlyArray<Periode>
+    readonly tidligereArbeidsgiverList?: Maybe<ReadonlyArray<Maybe<TidligereArbeidsgivere>>>
     readonly tiltakArbeidsplassen?: Maybe<Scalars['String']['output']>
     readonly tiltakNAV?: Maybe<Scalars['String']['output']>
     readonly utdypendeOpplysninger: Scalars['JSON']['output']
@@ -556,6 +565,13 @@ export type SykmeldingStatus = {
     readonly sporsmalOgSvarListe: ReadonlyArray<Sporsmal>
     readonly statusEvent: StatusEvent
     readonly timestamp: Scalars['Date']['output']
+}
+
+export type TidligereArbeidsgivere = {
+    readonly __typename: 'TidligereArbeidsgivere'
+    readonly orgNavn: Scalars['String']['output']
+    readonly orgnummer: Scalars['String']['output']
+    readonly sykmeldingsId: Scalars['String']['output']
 }
 
 export type UriktigeOpplysningerBrukerSvar = {
@@ -782,11 +798,11 @@ export type EndreEgenmeldingsdagerMutation = {
                 } | null
                 readonly arbeidsledig?: {
                     readonly __typename: 'ArbeidsledigBrukerSvar'
-                    readonly arbeidsledigFraOrgnummer: {
+                    readonly arbeidsledigFraOrgnummer?: {
                         readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
                         readonly sporsmaltekst: string
                         readonly svar: string
-                    }
+                    } | null
                 } | null
             } | null
         }
@@ -1086,11 +1102,11 @@ export type ChangeSykmeldingStatusMutation = {
                 } | null
                 readonly arbeidsledig?: {
                     readonly __typename: 'ArbeidsledigBrukerSvar'
-                    readonly arbeidsledigFraOrgnummer: {
+                    readonly arbeidsledigFraOrgnummer?: {
                         readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
                         readonly sporsmaltekst: string
                         readonly svar: string
-                    }
+                    } | null
                 } | null
             } | null
         }
@@ -1342,11 +1358,11 @@ export type SendSykmeldingMutation = {
                 } | null
                 readonly arbeidsledig?: {
                     readonly __typename: 'ArbeidsledigBrukerSvar'
-                    readonly arbeidsledigFraOrgnummer: {
+                    readonly arbeidsledigFraOrgnummer?: {
                         readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
                         readonly sporsmaltekst: string
                         readonly svar: string
-                    }
+                    } | null
                 } | null
             } | null
         }
@@ -1589,11 +1605,11 @@ export type SykmeldingStatusFragment = {
         } | null
         readonly arbeidsledig?: {
             readonly __typename: 'ArbeidsledigBrukerSvar'
-            readonly arbeidsledigFraOrgnummer: {
+            readonly arbeidsledigFraOrgnummer?: {
                 readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
                 readonly sporsmaltekst: string
                 readonly svar: string
-            }
+            } | null
         } | null
     } | null
 }
@@ -1661,11 +1677,11 @@ export type BrukerSvarFragment = {
     } | null
     readonly arbeidsledig?: {
         readonly __typename: 'ArbeidsledigBrukerSvar'
-        readonly arbeidsledigFraOrgnummer: {
+        readonly arbeidsledigFraOrgnummer?: {
             readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
             readonly sporsmaltekst: string
             readonly svar: string
-        }
+        } | null
     } | null
 }
 
@@ -1851,11 +1867,11 @@ export type SykmeldingFragment = {
             } | null
             readonly arbeidsledig?: {
                 readonly __typename: 'ArbeidsledigBrukerSvar'
-                readonly arbeidsledigFraOrgnummer: {
+                readonly arbeidsledigFraOrgnummer?: {
                     readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
                     readonly sporsmaltekst: string
                     readonly svar: string
-                }
+                } | null
             } | null
         } | null
     }
@@ -2103,11 +2119,11 @@ export type SykmeldingerQuery = {
                 } | null
                 readonly arbeidsledig?: {
                     readonly __typename: 'ArbeidsledigBrukerSvar'
-                    readonly arbeidsledigFraOrgnummer: {
+                    readonly arbeidsledigFraOrgnummer?: {
                         readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
                         readonly sporsmaltekst: string
                         readonly svar: string
-                    }
+                    } | null
                 } | null
             } | null
         }
@@ -2358,11 +2374,11 @@ export type SykmeldingByIdQuery = {
                 } | null
                 readonly arbeidsledig?: {
                     readonly __typename: 'ArbeidsledigBrukerSvar'
-                    readonly arbeidsledigFraOrgnummer: {
+                    readonly arbeidsledigFraOrgnummer?: {
                         readonly __typename: 'ArbeidsledigFraOrgnummerBrukerSvar'
                         readonly sporsmaltekst: string
                         readonly svar: string
-                    }
+                    } | null
                 } | null
             } | null
         }

@@ -83,7 +83,8 @@ export type ArbeidsgiverSykmelding = {
 
 export type ArbeidsledigBrukerSvar = {
     __typename?: 'ArbeidsledigBrukerSvar'
-    arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar
+    arbeidsledigFraOrgnummer: Maybe<ArbeidsledigFraOrgnummerBrukerSvar>
+    arbeidsledigOrgnavn: Maybe<ArbeidsledigOrgnavnBrukerSvar>
 }
 
 export type ArbeidsledigFraOrgnummerBrukerSvar = {
@@ -94,6 +95,13 @@ export type ArbeidsledigFraOrgnummerBrukerSvar = {
 
 export type ArbeidsledigInput = {
     arbeidsledigFraOrgnummer?: InputMaybe<Scalars['String']['input']>
+    arbeidsledigOrgnavn?: InputMaybe<Scalars['String']['input']>
+}
+
+export type ArbeidsledigOrgnavnBrukerSvar = {
+    __typename?: 'ArbeidsledigOrgnavnBrukerSvar'
+    sporsmaltekst: Scalars['String']['output']
+    svar: Scalars['String']['output']
 }
 
 export type ArbeidsrelatertArsak = {
@@ -536,6 +544,7 @@ export type Sykmelding = {
     rulesetVersion: Scalars['Int']['output']
     sykmeldingStatus: SykmeldingStatus
     sykmeldingsperioder: Array<Periode>
+    tidligereArbeidsgiverList: Maybe<Array<Maybe<TidligereArbeidsgivere>>>
     tiltakArbeidsplassen: Maybe<Scalars['String']['output']>
     tiltakNAV: Maybe<Scalars['String']['output']>
     utdypendeOpplysninger: Scalars['JSON']['output']
@@ -560,6 +569,13 @@ export type SykmeldingStatus = {
     sporsmalOgSvarListe: Array<Sporsmal>
     statusEvent: StatusEvent
     timestamp: Scalars['Date']['output']
+}
+
+export type TidligereArbeidsgivere = {
+    __typename?: 'TidligereArbeidsgivere'
+    orgNavn: Scalars['String']['output']
+    orgnummer: Scalars['String']['output']
+    sykmeldingsId: Scalars['String']['output']
 }
 
 export type UriktigeOpplysningerBrukerSvar = {
@@ -691,6 +707,7 @@ export type ResolversTypes = ResolversObject<{
     ArbeidsledigBrukerSvar: ResolverTypeWrapper<ArbeidsledigBrukerSvar>
     ArbeidsledigFraOrgnummerBrukerSvar: ResolverTypeWrapper<ArbeidsledigFraOrgnummerBrukerSvar>
     ArbeidsledigInput: ArbeidsledigInput
+    ArbeidsledigOrgnavnBrukerSvar: ResolverTypeWrapper<ArbeidsledigOrgnavnBrukerSvar>
     ArbeidsrelatertArsak: ResolverTypeWrapper<ArbeidsrelatertArsak>
     ArbeidsrelatertArsakType: ArbeidsrelatertArsakType
     ArbeidssituasjonBrukerSvar: ResolverTypeWrapper<ArbeidssituasjonBrukerSvar>
@@ -756,6 +773,7 @@ export type ResolversTypes = ResolversObject<{
     SykmeldingCategory: SykmeldingCategory
     SykmeldingChangeStatus: SykmeldingChangeStatus
     SykmeldingStatus: ResolverTypeWrapper<SykmeldingStatus>
+    TidligereArbeidsgivere: ResolverTypeWrapper<TidligereArbeidsgivere>
     UriktigeOpplysningerBrukerSvar: ResolverTypeWrapper<UriktigeOpplysningerBrukerSvar>
     UriktigeOpplysningerType: UriktigeOpplysningerType
     UtdypendeOpplysning: ResolverTypeWrapper<UtdypendeOpplysning>
@@ -776,6 +794,7 @@ export type ResolversParentTypes = ResolversObject<{
     ArbeidsledigBrukerSvar: ArbeidsledigBrukerSvar
     ArbeidsledigFraOrgnummerBrukerSvar: ArbeidsledigFraOrgnummerBrukerSvar
     ArbeidsledigInput: ArbeidsledigInput
+    ArbeidsledigOrgnavnBrukerSvar: ArbeidsledigOrgnavnBrukerSvar
     ArbeidsrelatertArsak: ArbeidsrelatertArsak
     ArbeidssituasjonBrukerSvar: ArbeidssituasjonBrukerSvar
     ArbeidssituasjonSvar: ArbeidssituasjonSvar
@@ -826,6 +845,7 @@ export type ResolversParentTypes = ResolversObject<{
     SvarTypeUnion: ResolversUnionTypes<ResolversParentTypes>['SvarTypeUnion']
     Sykmelding: Sykmelding
     SykmeldingStatus: SykmeldingStatus
+    TidligereArbeidsgivere: TidligereArbeidsgivere
     UriktigeOpplysningerBrukerSvar: UriktigeOpplysningerBrukerSvar
     UtdypendeOpplysning: UtdypendeOpplysning
     UtenforVentetid: UtenforVentetid
@@ -905,7 +925,12 @@ export type ArbeidsledigBrukerSvarResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['ArbeidsledigBrukerSvar'] = ResolversParentTypes['ArbeidsledigBrukerSvar'],
 > = ResolversObject<{
-    arbeidsledigFraOrgnummer?: Resolver<ResolversTypes['ArbeidsledigFraOrgnummerBrukerSvar'], ParentType, ContextType>
+    arbeidsledigFraOrgnummer?: Resolver<
+        Maybe<ResolversTypes['ArbeidsledigFraOrgnummerBrukerSvar']>,
+        ParentType,
+        ContextType
+    >
+    arbeidsledigOrgnavn?: Resolver<Maybe<ResolversTypes['ArbeidsledigOrgnavnBrukerSvar']>, ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -913,6 +938,16 @@ export type ArbeidsledigFraOrgnummerBrukerSvarResolvers<
     ContextType = RequestContext,
     ParentType extends
         ResolversParentTypes['ArbeidsledigFraOrgnummerBrukerSvar'] = ResolversParentTypes['ArbeidsledigFraOrgnummerBrukerSvar'],
+> = ResolversObject<{
+    sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    svar?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type ArbeidsledigOrgnavnBrukerSvarResolvers<
+    ContextType = RequestContext,
+    ParentType extends
+        ResolversParentTypes['ArbeidsledigOrgnavnBrukerSvar'] = ResolversParentTypes['ArbeidsledigOrgnavnBrukerSvar'],
 > = ResolversObject<{
     sporsmaltekst?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     svar?: Resolver<ResolversTypes['String'], ParentType, ContextType>
@@ -1404,6 +1439,11 @@ export type SykmeldingResolvers<
     rulesetVersion?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
     sykmeldingStatus?: Resolver<ResolversTypes['SykmeldingStatus'], ParentType, ContextType>
     sykmeldingsperioder?: Resolver<Array<ResolversTypes['Periode']>, ParentType, ContextType>
+    tidligereArbeidsgiverList?: Resolver<
+        Maybe<Array<Maybe<ResolversTypes['TidligereArbeidsgivere']>>>,
+        ParentType,
+        ContextType
+    >
     tiltakArbeidsplassen?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     tiltakNAV?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
     utdypendeOpplysninger?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>
@@ -1420,6 +1460,16 @@ export type SykmeldingStatusResolvers<
     sporsmalOgSvarListe?: Resolver<Array<ResolversTypes['Sporsmal']>, ParentType, ContextType>
     statusEvent?: Resolver<ResolversTypes['StatusEvent'], ParentType, ContextType>
     timestamp?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type TidligereArbeidsgivereResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['TidligereArbeidsgivere'] = ResolversParentTypes['TidligereArbeidsgivere'],
+> = ResolversObject<{
+    orgNavn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    sykmeldingsId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -1470,6 +1520,7 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     ArbeidsgiverSykmelding?: ArbeidsgiverSykmeldingResolvers<ContextType>
     ArbeidsledigBrukerSvar?: ArbeidsledigBrukerSvarResolvers<ContextType>
     ArbeidsledigFraOrgnummerBrukerSvar?: ArbeidsledigFraOrgnummerBrukerSvarResolvers<ContextType>
+    ArbeidsledigOrgnavnBrukerSvar?: ArbeidsledigOrgnavnBrukerSvarResolvers<ContextType>
     ArbeidsrelatertArsak?: ArbeidsrelatertArsakResolvers<ContextType>
     ArbeidssituasjonBrukerSvar?: ArbeidssituasjonBrukerSvarResolvers<ContextType>
     ArbeidssituasjonSvar?: ArbeidssituasjonSvarResolvers<ContextType>
@@ -1514,6 +1565,7 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     SvarTypeUnion?: SvarTypeUnionResolvers<ContextType>
     Sykmelding?: SykmeldingResolvers<ContextType>
     SykmeldingStatus?: SykmeldingStatusResolvers<ContextType>
+    TidligereArbeidsgivere?: TidligereArbeidsgivereResolvers<ContextType>
     UriktigeOpplysningerBrukerSvar?: UriktigeOpplysningerBrukerSvarResolvers<ContextType>
     UtdypendeOpplysning?: UtdypendeOpplysningResolvers<ContextType>
     UtenforVentetid?: UtenforVentetidResolvers<ContextType>

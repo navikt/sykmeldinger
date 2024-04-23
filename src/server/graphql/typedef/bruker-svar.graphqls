@@ -73,8 +73,14 @@ type ArbeidsledigFraOrgnummerBrukerSvar {
     svar: String!
 }
 
+type ArbeidsledigOrgnavnBrukerSvar {
+    sporsmaltekst: String!
+    svar: String!
+}
+
 type ArbeidsledigBrukerSvar {
-    arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar!
+    arbeidsledigFraOrgnummer: ArbeidsledigFraOrgnummerBrukerSvar
+    arbeidsledigOrgnavn: ArbeidsledigOrgnavnBrukerSvar
 }
 
 type BrukerSvar {
