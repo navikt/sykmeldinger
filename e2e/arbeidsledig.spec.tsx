@@ -104,6 +104,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
             arbeidssituasjon: 'Arbeidsledig',
             arbeidsledig: {
                 arbeidsledigFraOrgnummer: '110110110',
+                arbeidsledigOrgnavn: 'Pontypandy Fire Service',
             },
         })(page)
     })

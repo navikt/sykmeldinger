@@ -133,14 +133,19 @@ export function mapSendSykmeldingValuesToV3Api(
                       : raise('Illegal state: lottOgHyre is required when arbeidssituasjon is fisker'),
               }
             : null,
-        arbeidsledig: values.arbeidsledig?.arbeidsledigFraOrgnummer
-            ? {
-                  arbeidsledigFraOrgnummer: {
-                      sporsmaltekst: sporsmal.arbeidsledigFra,
-                      svar: values.arbeidsledig.arbeidsledigFraOrgnummer,
-                  },
-              }
-            : null,
+        arbeidsledig:
+            values.arbeidsledig?.arbeidsledigFraOrgnummer && values.arbeidsledig.arbeidsledigOrgnavn
+                ? {
+                      arbeidsledigFraOrgnummer: {
+                          sporsmaltekst: sporsmal.arbeidsledigFra,
+                          svar: values.arbeidsledig.arbeidsledigFraOrgnummer,
+                      },
+                      arbeidsledigOrgnavn: {
+                          sporsmaltekst: sporsmal.arbeidsledigFra,
+                          svar: values.arbeidsledig.arbeidsledigOrgnavn,
+                      },
+                  }
+                : null,
     }
 }
 

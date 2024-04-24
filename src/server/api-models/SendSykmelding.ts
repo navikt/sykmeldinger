@@ -17,6 +17,7 @@ export type SykmeldingUserEventV3Api = {
     } | null
     arbeidsledig: {
         arbeidsledigFraOrgnummer: SporsmalSvar<string>
+        arbeidsledigOrgnavn: SporsmalSvar<string>
     } | null
 }
 

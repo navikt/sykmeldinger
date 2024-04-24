@@ -251,7 +251,11 @@ const flerePerioder: ScenarioCreator = () => ({
 
 const kantIKant: ScenarioCreator = () => ({
     sykmeldinger: [
-        new SykmeldingBuilder({ offset: 7 }).status(StatusEvent.APEN).enkelPeriode({ offset: 0, days: 7 }).build(),
+        new SykmeldingBuilder({ offset: 7 })
+            .status(StatusEvent.APEN)
+            .enkelPeriode({ offset: 0, days: 7 })
+            .tidligereArbeidsgivere()
+            .build(),
         new SykmeldingBuilder({ offset: -1 }).send().enkelPeriode({ offset: 0, days: 7 }).build(),
         new SykmeldingBuilder({ offset: -9 }).send().enkelPeriode({ offset: 0, days: 7 }).build(),
     ],
@@ -288,7 +292,7 @@ export const simpleScenarios = {
         scenario: papirSykmelding,
     },
     kantIKant: {
-        description: 'Tre kant i kant',
+        description: 'Tre kant i kant med tidligere arbeidsgivere',
         scenario: kantIKant,
     },
     emptyState: {

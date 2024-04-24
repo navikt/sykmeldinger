@@ -803,6 +803,11 @@ export type EndreEgenmeldingsdagerMutation = {
                         readonly sporsmaltekst: string
                         readonly svar: string
                     } | null
+                    readonly arbeidsledigOrgnavn?: {
+                        readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    } | null
                 } | null
             } | null
         }
@@ -886,6 +891,12 @@ export type EndreEgenmeldingsdagerMutation = {
             readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
+        readonly tidligereArbeidsgiverList?: ReadonlyArray<{
+            readonly __typename: 'TidligereArbeidsgivere'
+            readonly orgNavn: string
+            readonly orgnummer: string
+            readonly sykmeldingsId: string
+        } | null> | null
     }
 }
 
@@ -1107,6 +1118,11 @@ export type ChangeSykmeldingStatusMutation = {
                         readonly sporsmaltekst: string
                         readonly svar: string
                     } | null
+                    readonly arbeidsledigOrgnavn?: {
+                        readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    } | null
                 } | null
             } | null
         }
@@ -1190,6 +1206,12 @@ export type ChangeSykmeldingStatusMutation = {
             readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
+        readonly tidligereArbeidsgiverList?: ReadonlyArray<{
+            readonly __typename: 'TidligereArbeidsgivere'
+            readonly orgNavn: string
+            readonly orgnummer: string
+            readonly sykmeldingsId: string
+        } | null> | null
     }
 }
 
@@ -1363,6 +1385,11 @@ export type SendSykmeldingMutation = {
                         readonly sporsmaltekst: string
                         readonly svar: string
                     } | null
+                    readonly arbeidsledigOrgnavn?: {
+                        readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    } | null
                 } | null
             } | null
         }
@@ -1446,6 +1473,12 @@ export type SendSykmeldingMutation = {
             readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
+        readonly tidligereArbeidsgiverList?: ReadonlyArray<{
+            readonly __typename: 'TidligereArbeidsgivere'
+            readonly orgNavn: string
+            readonly orgnummer: string
+            readonly sykmeldingsId: string
+        } | null> | null
     }
 }
 
@@ -1610,6 +1643,11 @@ export type SykmeldingStatusFragment = {
                 readonly sporsmaltekst: string
                 readonly svar: string
             } | null
+            readonly arbeidsledigOrgnavn?: {
+                readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+                readonly sporsmaltekst: string
+                readonly svar: string
+            } | null
         } | null
     } | null
 }
@@ -1682,6 +1720,11 @@ export type BrukerSvarFragment = {
             readonly sporsmaltekst: string
             readonly svar: string
         } | null
+        readonly arbeidsledigOrgnavn?: {
+            readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+            readonly sporsmaltekst: string
+            readonly svar: string
+        } | null
     } | null
 }
 
@@ -1707,6 +1750,13 @@ export type MedisinskVurderingFragment = {
         readonly grunn: ReadonlyArray<AnnenFraverGrunn>
         readonly beskrivelse?: string | null
     } | null
+}
+
+export type TidligereArbeidsgiverListFragment = {
+    readonly __typename: 'TidligereArbeidsgivere'
+    readonly orgNavn: string
+    readonly orgnummer: string
+    readonly sykmeldingsId: string
 }
 
 export type SykmeldingFragment = {
@@ -1872,6 +1922,11 @@ export type SykmeldingFragment = {
                     readonly sporsmaltekst: string
                     readonly svar: string
                 } | null
+                readonly arbeidsledigOrgnavn?: {
+                    readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+                    readonly sporsmaltekst: string
+                    readonly svar: string
+                } | null
             } | null
         } | null
     }
@@ -1955,6 +2010,12 @@ export type SykmeldingFragment = {
         readonly overSyttiAar?: boolean | null
     } | null
     readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
+    readonly tidligereArbeidsgiverList?: ReadonlyArray<{
+        readonly __typename: 'TidligereArbeidsgivere'
+        readonly orgNavn: string
+        readonly orgnummer: string
+        readonly sykmeldingsId: string
+    } | null> | null
 }
 
 export type SykmeldingerQueryVariables = Exact<{ [key: string]: never }>
@@ -2124,6 +2185,11 @@ export type SykmeldingerQuery = {
                         readonly sporsmaltekst: string
                         readonly svar: string
                     } | null
+                    readonly arbeidsledigOrgnavn?: {
+                        readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    } | null
                 } | null
             } | null
         }
@@ -2207,6 +2273,12 @@ export type SykmeldingerQuery = {
             readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
+        readonly tidligereArbeidsgiverList?: ReadonlyArray<{
+            readonly __typename: 'TidligereArbeidsgivere'
+            readonly orgNavn: string
+            readonly orgnummer: string
+            readonly sykmeldingsId: string
+        } | null> | null
     }>
 }
 
@@ -2379,6 +2451,11 @@ export type SykmeldingByIdQuery = {
                         readonly sporsmaltekst: string
                         readonly svar: string
                     } | null
+                    readonly arbeidsledigOrgnavn?: {
+                        readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
+                        readonly sporsmaltekst: string
+                        readonly svar: string
+                    } | null
                 } | null
             } | null
         }
@@ -2462,6 +2539,12 @@ export type SykmeldingByIdQuery = {
             readonly overSyttiAar?: boolean | null
         } | null
         readonly utenlandskSykmelding?: { readonly __typename: 'UtenlandskSykmelding'; readonly land: string } | null
+        readonly tidligereArbeidsgiverList?: ReadonlyArray<{
+            readonly __typename: 'TidligereArbeidsgivere'
+            readonly orgNavn: string
+            readonly orgnummer: string
+            readonly sykmeldingsId: string
+        } | null> | null
     }
 }
 
@@ -2866,6 +2949,17 @@ export const BrukerSvarFragmentDoc = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -3183,6 +3277,17 @@ export const SykmeldingStatusFragmentDoc = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -3244,6 +3349,24 @@ export const MedisinskVurderingFragmentDoc = {
         },
     ],
 } as unknown as DocumentNode<MedisinskVurderingFragment, unknown>
+export const TidligereArbeidsgiverListFragmentDoc = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiverList' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgivere' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'sykmeldingsId' } },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<TidligereArbeidsgiverListFragment, unknown>
 export const SykmeldingFragmentDoc = {
     kind: 'Document',
     definitions: [
@@ -3440,6 +3563,16 @@ export const SykmeldingFragmentDoc = {
                         },
                     },
                     { kind: 'Field', name: { kind: 'Name', value: 'rulesetVersion' } },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tidligereArbeidsgiverList' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'TidligereArbeidsgiverList' } },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -3696,6 +3829,17 @@ export const SykmeldingFragmentDoc = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -3858,6 +4002,19 @@ export const SykmeldingFragmentDoc = {
                     { kind: 'Field', name: { kind: 'Name', value: 'svangerskap' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskade' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskadeDato' } },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiverList' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgivere' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'sykmeldingsId' } },
                 ],
             },
         },
@@ -4327,6 +4484,17 @@ export const EndreEgenmeldingsdagerDocument = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -4431,6 +4599,19 @@ export const EndreEgenmeldingsdagerDocument = {
                     { kind: 'Field', name: { kind: 'Name', value: 'svangerskap' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskade' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskadeDato' } },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiverList' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgivere' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'sykmeldingsId' } },
                 ],
             },
         },
@@ -4627,6 +4808,16 @@ export const EndreEgenmeldingsdagerDocument = {
                         },
                     },
                     { kind: 'Field', name: { kind: 'Name', value: 'rulesetVersion' } },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tidligereArbeidsgiverList' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'TidligereArbeidsgiverList' } },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -5108,6 +5299,17 @@ export const ChangeSykmeldingStatusDocument = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -5212,6 +5414,19 @@ export const ChangeSykmeldingStatusDocument = {
                     { kind: 'Field', name: { kind: 'Name', value: 'svangerskap' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskade' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskadeDato' } },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiverList' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgivere' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'sykmeldingsId' } },
                 ],
             },
         },
@@ -5408,6 +5623,16 @@ export const ChangeSykmeldingStatusDocument = {
                         },
                     },
                     { kind: 'Field', name: { kind: 'Name', value: 'rulesetVersion' } },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tidligereArbeidsgiverList' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'TidligereArbeidsgiverList' } },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -5772,6 +5997,17 @@ export const SendSykmeldingDocument = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -5876,6 +6112,19 @@ export const SendSykmeldingDocument = {
                     { kind: 'Field', name: { kind: 'Name', value: 'svangerskap' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskade' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskadeDato' } },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiverList' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgivere' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'sykmeldingsId' } },
                 ],
             },
         },
@@ -6072,6 +6321,16 @@ export const SendSykmeldingDocument = {
                         },
                     },
                     { kind: 'Field', name: { kind: 'Name', value: 'rulesetVersion' } },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tidligereArbeidsgiverList' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'TidligereArbeidsgiverList' } },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -6409,6 +6668,17 @@ export const SykmeldingerDocument = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -6513,6 +6783,19 @@ export const SykmeldingerDocument = {
                     { kind: 'Field', name: { kind: 'Name', value: 'svangerskap' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskade' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskadeDato' } },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiverList' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgivere' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'sykmeldingsId' } },
                 ],
             },
         },
@@ -6709,6 +6992,16 @@ export const SykmeldingerDocument = {
                         },
                     },
                     { kind: 'Field', name: { kind: 'Name', value: 'rulesetVersion' } },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tidligereArbeidsgiverList' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'TidligereArbeidsgiverList' } },
+                            ],
+                        },
+                    },
                 ],
             },
         },
@@ -7060,6 +7353,17 @@ export const SykmeldingByIdDocument = {
                                         ],
                                     },
                                 },
+                                {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'arbeidsledigOrgnavn' },
+                                    selectionSet: {
+                                        kind: 'SelectionSet',
+                                        selections: [
+                                            { kind: 'Field', name: { kind: 'Name', value: 'sporsmaltekst' } },
+                                            { kind: 'Field', name: { kind: 'Name', value: 'svar' } },
+                                        ],
+                                    },
+                                },
                             ],
                         },
                     },
@@ -7164,6 +7468,19 @@ export const SykmeldingByIdDocument = {
                     { kind: 'Field', name: { kind: 'Name', value: 'svangerskap' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskade' } },
                     { kind: 'Field', name: { kind: 'Name', value: 'yrkesskadeDato' } },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiverList' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgivere' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'sykmeldingsId' } },
                 ],
             },
         },
@@ -7360,6 +7677,16 @@ export const SykmeldingByIdDocument = {
                         },
                     },
                     { kind: 'Field', name: { kind: 'Name', value: 'rulesetVersion' } },
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tidligereArbeidsgiverList' },
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'TidligereArbeidsgiverList' } },
+                            ],
+                        },
+                    },
                 ],
             },
         },

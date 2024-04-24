@@ -80,7 +80,10 @@ function SentSykmeldingBrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragme
             <FrilanserEgenmeldingsperioderAnswer response={brukerSvar.egenmeldingsperioder} />
             <YesNoAnswer response={brukerSvar.harForsikring} />
             {isArbeidsledig(brukerSvar.arbeidssituasjon?.svar) && (
-                <ArbeidsledigFraOrgnummerAnswer response={brukerSvar.arbeidsledig?.arbeidsledigFraOrgnummer} />
+                <ArbeidsledigFraOrgnummerAnswer
+                    arbeidsledigFraOrgnummer={brukerSvar.arbeidsledig?.arbeidsledigFraOrgnummer}
+                    arbeidsledigOrgnavn={brukerSvar.arbeidsledig?.arbeidsledigOrgnavn}
+                />
             )}
         </>
     )
@@ -119,26 +122,31 @@ function CurrentFormValuesBrukerSvar({
 }
 
 function ArbeidsledigFraOrgnummerAnswer({
-    response,
+    arbeidsledigFraOrgnummer,
+    arbeidsledigOrgnavn,
 }: {
-    response:
+    arbeidsledigFraOrgnummer:
         | Pick<
               NonNullable<NonNullable<BrukerSvarFragment['arbeidsledig']>['arbeidsledigFraOrgnummer']>,
               'sporsmaltekst' | 'svar'
           >
         | null
         | undefined
+    arbeidsledigOrgnavn:
+        | Pick<
+              NonNullable<NonNullable<BrukerSvarFragment['arbeidsledig']>['arbeidsledigOrgnavn']>,
+              'sporsmaltekst' | 'svar'
+          >
+        | null
+        | undefined
 }): ReactElement | null {
     // This loading state will never be seen, so we can ignore it
-    const { data } = useQuery(BrukerinformasjonDocument)
-    if (response == null) return null
+    if (arbeidsledigFraOrgnummer == null) return null
 
-    const relevantArbeidsgiverNavn: string | null =
-        data?.brukerinformasjon.arbeidsgivere.find((it) => it.orgnummer === response.svar)?.navn ?? null
-    const text = relevantArbeidsgiverNavn != null ? `${relevantArbeidsgiverNavn} (${response.svar})` : response.svar
+    const text = `${arbeidsledigOrgnavn?.svar} (${arbeidsledigFraOrgnummer?.svar})`
 
     return (
-        <SykmeldingInfo heading={response.sporsmaltekst} level="3" icon={<BriefcaseIcon aria-hidden />}>
+        <SykmeldingInfo heading={arbeidsledigFraOrgnummer.sporsmaltekst} level="3" icon={<BriefcaseIcon aria-hidden />}>
             {text}
         </SykmeldingInfo>
     )

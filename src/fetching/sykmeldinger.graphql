@@ -123,6 +123,10 @@ fragment BrukerSvar on BrukerSvar {
             sporsmaltekst
             svar
         }
+        arbeidsledigOrgnavn {
+            sporsmaltekst
+            svar
+        }
     }
 }
 
@@ -144,6 +148,12 @@ fragment MedisinskVurdering on MedisinskVurdering {
     svangerskap
     yrkesskade
     yrkesskadeDato
+}
+
+fragment TidligereArbeidsgiverList on TidligereArbeidsgivere {
+    orgNavn
+    orgnummer
+    sykmeldingsId
 }
 
 fragment Sykmelding on Sykmelding {
@@ -229,6 +239,9 @@ fragment Sykmelding on Sykmelding {
         land
     }
     rulesetVersion
+    tidligereArbeidsgiverList {
+        ...TidligereArbeidsgiverList
+    }
 }
 
 query Sykmeldinger {

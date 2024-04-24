@@ -9,6 +9,9 @@ const objectResolvers: Partial<Resolvers> = {
     Arbeidsgiver: {
         navn: (parent) => prettifyOrgName(parent.navn),
     },
+    TidligereArbeidsgivere: {
+        orgNavn: (parent) => prettifyOrgName(parent.orgNavn),
+    },
     SvarTypeUnion: {
         __resolveType: (parent) => {
             switch (parent.svarType) {

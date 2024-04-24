@@ -16,7 +16,7 @@ import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 import FrilanserSection from './Frilanser/FrilanserSection'
 import { useArbeidssituasjonSubSections } from './formProgressUtils'
 import FiskerSection from './Fisker/FiskerSection'
-import ArbeidsledigSection from './Arbeidsledig/ArbeidsledigSection'
+import ArbeidsledigArbeidsgiverField from './Arbeidsledig/ArbeidsledigArbeidsgiverField'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -49,11 +49,9 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
             )}
             {endreArbeidssituasjonToggle.enabled &&
                 isArbeidsledig(arbeidssituasjon) &&
-                brukerinformasjon.arbeidsgivere.length >= 2 && (
-                    <ArbeidsledigSection
-                        sykmelding={sykmelding}
-                        brukerinfoArbeidsgivere={brukerinformasjon.arbeidsgivere}
-                    />
+                sykmelding.tidligereArbeidsgiverList &&
+                sykmelding.tidligereArbeidsgiverList.length >= 1 && (
+                    <ArbeidsledigArbeidsgiverField arbeidsgivere={sykmelding.tidligereArbeidsgiverList} />
                 )}
         </SectionWrapper>
     )

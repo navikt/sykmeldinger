@@ -113,6 +113,7 @@ function mapSykmeldingArbiedsledig(values: FormValues): SendSykmeldingValues {
         arbeidsledig: values.arbeidsledig?.arbeidsledigFraOrgnummer
             ? {
                   arbeidsledigFraOrgnummer: values.arbeidsledig.arbeidsledigFraOrgnummer,
+                  arbeidsledigOrgnavn: values.arbeidsledig.arbeidsledigOrgnavn,
               }
             : undefined,
     }

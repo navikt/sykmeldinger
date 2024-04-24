@@ -285,6 +285,22 @@ export class SykmeldingBuilder {
         return this
     }
 
+    tidligereArbeidsgivere(): SykmeldingBuilder {
+        this._sykmelding.tidligereArbeidsgiverList = [
+            {
+                orgNavn: defaultArbeidsgivere[0].navn,
+                orgnummer: defaultArbeidsgivere[0].orgnummer,
+                sykmeldingsId: 'test-id-1',
+            },
+            {
+                orgNavn: defaultArbeidsgivere[3].navn,
+                orgnummer: defaultArbeidsgivere[3].orgnummer,
+                sykmeldingsId: 'test-id-2',
+            },
+        ]
+        return this
+    }
+
     /** @deprecated
      * Once all users are migrated over to BrukerSvar, and it's no longer nullable, we won't need this
      */

@@ -389,7 +389,7 @@ describe('sendSykmeldingMapping', () => {
             })
         })
 
-        it('should map a arbeidsledig correctly', () => {
+        it('should map a arbeidsledig with tidligere arbeidsgiver correctly', () => {
             const sykmelding = sykmeldingApen()
             const mappedResult = mapSendSykmeldingValuesToV3Api(
                 {
@@ -397,6 +397,7 @@ describe('sendSykmeldingMapping', () => {
                     arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
                     arbeidsledig: {
                         arbeidsledigFraOrgnummer: '121212121',
+                        arbeidsledigOrgnavn: 'Stort Firma',
                     },
                 },
                 sykmelding,
@@ -418,7 +419,45 @@ describe('sendSykmeldingMapping', () => {
                         sporsmaltekst: 'Hvilken arbeidsgiver har du blitt arbeidsledig fra?',
                         svar: '121212121',
                     },
+                    arbeidsledigOrgnavn: {
+                        sporsmaltekst: 'Hvilken arbeidsgiver har du blitt arbeidsledig fra?',
+                        svar: 'Stort Firma',
+                    },
                 },
+                fisker: null,
+                arbeidsgiverOrgnummer: null,
+                riktigNarmesteLeder: null,
+                harBruktEgenmeldingsdager: null,
+                egenmeldingsdager: null,
+                harBruktEgenmelding: null,
+                egenmeldingsperioder: null,
+                harForsikring: null,
+                uriktigeOpplysninger: null,
+            })
+        })
+
+        it('should map a arbeidsledig without tidligere arbeidsgiver correctly', () => {
+            const sykmelding = sykmeldingApen()
+            const mappedResult = mapSendSykmeldingValuesToV3Api(
+                {
+                    erOpplysningeneRiktige: YesOrNo.YES,
+                    arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                },
+                sykmelding,
+                brukerinformasjon,
+                erUtenforVentetid,
+            )
+
+            expect(mappedResult).toEqual({
+                erOpplysningeneRiktige: {
+                    sporsmaltekst: 'Stemmer opplysningene?',
+                    svar: 'JA',
+                },
+                arbeidssituasjon: {
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    svar: 'ARBEIDSLEDIG',
+                },
+                arbeidsledig: null,
                 fisker: null,
                 arbeidsgiverOrgnummer: null,
                 riktigNarmesteLeder: null,

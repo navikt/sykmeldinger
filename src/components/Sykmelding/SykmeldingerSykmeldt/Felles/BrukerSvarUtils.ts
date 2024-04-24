@@ -97,6 +97,11 @@ export function mapFormValuesToBrukerSvar(
                               sendSykmeldingValues.arbeidsledig.arbeidsledigFraOrgnummer ??
                               raise('Orgnummer må være satt'),
                       },
+                      arbeidsledigOrgnavn: {
+                          __typename: 'ArbeidsledigOrgnavnBrukerSvar',
+                          sporsmaltekst: sporsmal.arbeidsledigFra,
+                          svar: sendSykmeldingValues.arbeidsledig.arbeidsledigOrgnavn ?? '',
+                      },
                   }
                 : null,
     }

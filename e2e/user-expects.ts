@@ -76,6 +76,7 @@ export function expectDineSvar(svar: {
     arbeidsledig?:
         | {
               arbeidsledigFraOrgnummer: string
+              arbeidsledigOrgnavn: string
           }
         | ExpectMeta.NotInDom
 }) {

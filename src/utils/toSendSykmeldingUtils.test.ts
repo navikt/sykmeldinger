@@ -489,7 +489,7 @@ describe('toSendSykmeldingUtils', () => {
     })
 
     describe('ARBEIDSLEDIG ', () => {
-        it('should map sykmelding for arbeidsledig', () => {
+        it('should map sykmelding for arbeidsledig with tidligere arbedsgiver', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
                 uriktigeOpplysninger: null,
@@ -508,6 +508,7 @@ describe('toSendSykmeldingUtils', () => {
                 extra: null,
                 arbeidsledig: {
                     arbeidsledigFraOrgnummer: '98989898',
+                    arbeidsledigOrgnavn: 'Firma Navn',
                 },
             }
 
@@ -517,7 +518,37 @@ describe('toSendSykmeldingUtils', () => {
                 arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
                 arbeidsledig: {
                     arbeidsledigFraOrgnummer: '98989898',
+                    arbeidsledigOrgnavn: 'Firma Navn',
                 },
+            }
+
+            expect(mapToValues).toEqual(expectValues)
+        })
+
+        it('should map sykmelding for arbeidsledig without tidligere arbedsgiver', () => {
+            const formValues = {
+                erOpplysningeneRiktige: YesOrNo.YES,
+                uriktigeOpplysninger: null,
+                arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                arbeidsgiverOrgnummer: null,
+                riktigNarmesteLeder: null,
+                harBruktEgenmelding: null,
+                egenmeldingsperioder: null,
+                harForsikring: null,
+                egenmeldingsdager: null,
+                egenmeldingsdagerHitPrevious: null,
+                fisker: {
+                    blad: null,
+                    lottOgHyre: null,
+                },
+                extra: null,
+                arbeidsledig: null,
+            }
+
+            const mapToValues = mapToSendSykmeldingValues(formValues)
+            const expectValues: SendSykmeldingValues = {
+                erOpplysningeneRiktige: YesOrNo.YES,
+                arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
             }
 
             expect(mapToValues).toEqual(expectValues)
