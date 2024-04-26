@@ -428,6 +428,7 @@ export type Query = {
     readonly sykmelding: Sykmelding
     readonly sykmeldingUtenforVentetid: UtenforVentetid
     readonly sykmeldinger: ReadonlyArray<Sykmelding>
+    readonly tidligereArbeidsgivere?: Maybe<ReadonlyArray<TidligereArbeidsgiver>>
 }
 
 export type QuerySykmeldingArgs = {
@@ -435,6 +436,10 @@ export type QuerySykmeldingArgs = {
 }
 
 export type QuerySykmeldingUtenforVentetidArgs = {
+    id: Scalars['String']['input']
+}
+
+export type QueryTidligereArbeidsgivereArgs = {
     id: Scalars['String']['input']
 }
 
@@ -556,6 +561,12 @@ export type SykmeldingStatus = {
     readonly sporsmalOgSvarListe: ReadonlyArray<Sporsmal>
     readonly statusEvent: StatusEvent
     readonly timestamp: Scalars['Date']['output']
+}
+
+export type TidligereArbeidsgiver = {
+    readonly __typename: 'TidligereArbeidsgiver'
+    readonly orgNavn: Scalars['String']['output']
+    readonly orgnummer: Scalars['String']['output']
 }
 
 export type UriktigeOpplysningerBrukerSvar = {

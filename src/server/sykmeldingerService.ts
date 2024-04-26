@@ -13,6 +13,7 @@ import { RequestContext } from './graphql/resolvers'
 import { mapSendSykmeldingValuesToV3Api } from './sendSykmeldingMapping'
 import { getErUtenforVentetid } from './flexService'
 import metrics from './metrics'
+import { TidligereArbeidsgivere, TidligereArbeidsgivereSchema } from './api-models/TidligereArbeidsgiver'
 
 const serverEnv = getServerEnv()
 
@@ -43,6 +44,19 @@ export async function getBrukerinformasjon(context: RequestContext): Promise<Bru
         (it) => BrukerinformasjonSchema.parse(it),
         context,
         'GET: brukerinformasjon',
+    )
+}
+
+export async function getTidligereArbeidsgivere(
+    sykmeldingId: string,
+    context: RequestContext,
+): Promise<TidligereArbeidsgivere[] | null> {
+    return fetchApi(
+        { type: 'GET' },
+        `v2/sykmeldinger/${sykmeldingId}/tidligere-arbeidsgivere`,
+        (it) => z.array(TidligereArbeidsgivereSchema).parse(it),
+        context,
+        'GET: tidligere-arbeidsgivere',
     )
 }
 
