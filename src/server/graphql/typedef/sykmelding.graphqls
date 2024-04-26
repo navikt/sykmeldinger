@@ -22,7 +22,6 @@ type Sykmelding {
     pasient: Pasient
     rulesetVersion: Int!
     utenlandskSykmelding: UtenlandskSykmelding
-    tidligereArbeidsgiverList: [TidligereArbeidsgivere]
 }
 
 type ArbeidsgiverSykmelding {
@@ -89,10 +88,4 @@ type UtdypendeOpplysning {
 
 type UtenlandskSykmelding {
     land: String!
-}
-
-type TidligereArbeidsgivere {
-    orgNavn: String!
-    orgnummer: String!
-    sykmeldingsId: String!
 }
