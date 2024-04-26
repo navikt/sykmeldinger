@@ -235,7 +235,7 @@ describe('sendSykmeldingMapping', () => {
             },
             harBruktEgenmelding: {
                 sporsmaltekst:
-                    'Vi har registrert at du ble syk 10. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                    'Vi har registrert at du ble syk 10. april 2021. Brukte du egenmelding eller papirsykmelding før denne datoen?',
                 svar: 'JA',
             },
             egenmeldingsperioder: {
@@ -293,7 +293,7 @@ describe('sendSykmeldingMapping', () => {
                 },
                 harBruktEgenmelding: {
                     sporsmaltekst:
-                        'Vi har registrert at du ble syk 10. april 2021. Brukte du egenmelding eller noen annen sykmelding før denne datoen?',
+                        'Vi har registrert at du ble syk 10. april 2021. Brukte du egenmelding eller papirsykmelding før denne datoen?',
                     svar: 'JA',
                 },
                 egenmeldingsperioder: {

@@ -102,7 +102,10 @@ export function velgArbeidstaker(arbeidstaker: RegExp) {
 
 export function velgArbeidstakerArbeidsledig(arbeidstaker: RegExp) {
     return async (page: Page): Promise<void> => {
-        await getRadioInGroup(page)({ name: /Hvilken arbeidsgiver har du blitt arbeidsledig/i }, { name: arbeidstaker }).click()
+        await getRadioInGroup(page)(
+            { name: /Hvilken arbeidsgiver har du blitt arbeidsledig/i },
+            { name: arbeidstaker },
+        ).click()
     }
 }
 
@@ -134,7 +137,7 @@ export function frilanserEgenmeldingsperioder(
     return async (page: Page): Promise<void> => {
         const jaEllerNei = Array.isArray(svar) ? 'Ja' : 'Nei'
         await getRadioInGroup(page)(
-            { name: /Brukte du egenmelding eller noen annen sykmelding før denne datoen?/i },
+            { name: /Brukte du egenmelding eller papirsykmelding før denne datoen?/i },
             { name: jaEllerNei },
         ).click()
 
