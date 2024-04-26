@@ -31,7 +31,7 @@ function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement {
                         data: {
                             skjemanavn: 'arbeidsgiver',
                             spørsmål: sporsmal.arbeidsgiverOrgnummer,
-                            svar: value,
+                            svar: '[redacted]',
                         },
                     })
                     field.onChange(value)
