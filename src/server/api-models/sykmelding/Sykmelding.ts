@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { LocalDateSchema } from '../date'
 
-import { ArbeidsgiverSykmeldingSchema, TidligereArbeidsgiverListSchema } from './ArbeidsgiverSykmelding'
+import { ArbeidsgiverSykmeldingSchema } from './ArbeidsgiverSykmelding'
 import { BehandlerSchema } from './Behandler'
 import { BehandlingsutfallSchema } from './Behandlingsutfall'
 import { KontaktMedPasientSchema } from './KontaktMedPasient'
@@ -46,10 +46,4 @@ export const SykmeldingSchema = z.object({
     pasient: PasientSchema.nullable(),
     rulesetVersion: RulesetVersion,
     utenlandskSykmelding: UtenlandskSykmeldingSchema.nullable(),
-    tidligereArbeidsgiverList: z
-        .array(TidligereArbeidsgiverListSchema)
-        // TODO: Remove optional and transform once backend is in production and everything is in sync
-        .nullable()
-        .optional()
-        .transform((it) => it ?? null),
 })

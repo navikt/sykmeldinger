@@ -540,7 +540,6 @@ export type Sykmelding = {
     readonly rulesetVersion: Scalars['Int']['output']
     readonly sykmeldingStatus: SykmeldingStatus
     readonly sykmeldingsperioder: ReadonlyArray<Periode>
-    readonly tidligereArbeidsgiverList?: Maybe<ReadonlyArray<Maybe<TidligereArbeidsgivere>>>
     readonly tiltakArbeidsplassen?: Maybe<Scalars['String']['output']>
     readonly tiltakNAV?: Maybe<Scalars['String']['output']>
     readonly utdypendeOpplysninger: Scalars['JSON']['output']
@@ -565,13 +564,6 @@ export type SykmeldingStatus = {
     readonly sporsmalOgSvarListe: ReadonlyArray<Sporsmal>
     readonly statusEvent: StatusEvent
     readonly timestamp: Scalars['Date']['output']
-}
-
-export type TidligereArbeidsgivere = {
-    readonly __typename: 'TidligereArbeidsgivere'
-    readonly orgNavn: Scalars['String']['output']
-    readonly orgnummer: Scalars['String']['output']
-    readonly sykmeldingsId: Scalars['String']['output']
 }
 
 export type UriktigeOpplysningerBrukerSvar = {
