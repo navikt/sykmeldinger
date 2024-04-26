@@ -432,6 +432,7 @@ export type Query = {
     sykmelding: Sykmelding
     sykmeldingUtenforVentetid: UtenforVentetid
     sykmeldinger: Array<Sykmelding>
+    tidligereArbeidsgivere: Maybe<Array<TidligereArbeidsgiver>>
 }
 
 export type QuerySykmeldingArgs = {
@@ -439,6 +440,10 @@ export type QuerySykmeldingArgs = {
 }
 
 export type QuerySykmeldingUtenforVentetidArgs = {
+    id: Scalars['String']['input']
+}
+
+export type QueryTidligereArbeidsgivereArgs = {
     id: Scalars['String']['input']
 }
 
@@ -560,6 +565,12 @@ export type SykmeldingStatus = {
     sporsmalOgSvarListe: Array<Sporsmal>
     statusEvent: StatusEvent
     timestamp: Scalars['Date']['output']
+}
+
+export type TidligereArbeidsgiver = {
+    __typename?: 'TidligereArbeidsgiver'
+    orgNavn: Scalars['String']['output']
+    orgnummer: Scalars['String']['output']
 }
 
 export type UriktigeOpplysningerBrukerSvar = {
@@ -756,6 +767,7 @@ export type ResolversTypes = ResolversObject<{
     SykmeldingCategory: SykmeldingCategory
     SykmeldingChangeStatus: SykmeldingChangeStatus
     SykmeldingStatus: ResolverTypeWrapper<SykmeldingStatus>
+    TidligereArbeidsgiver: ResolverTypeWrapper<TidligereArbeidsgiver>
     UriktigeOpplysningerBrukerSvar: ResolverTypeWrapper<UriktigeOpplysningerBrukerSvar>
     UriktigeOpplysningerType: UriktigeOpplysningerType
     UtdypendeOpplysning: ResolverTypeWrapper<UtdypendeOpplysning>
@@ -826,6 +838,7 @@ export type ResolversParentTypes = ResolversObject<{
     SvarTypeUnion: ResolversUnionTypes<ResolversParentTypes>['SvarTypeUnion']
     Sykmelding: Sykmelding
     SykmeldingStatus: SykmeldingStatus
+    TidligereArbeidsgiver: TidligereArbeidsgiver
     UriktigeOpplysningerBrukerSvar: UriktigeOpplysningerBrukerSvar
     UtdypendeOpplysning: UtdypendeOpplysning
     UtenforVentetid: UtenforVentetid
@@ -1341,6 +1354,12 @@ export type QueryResolvers<
         RequireFields<QuerySykmeldingUtenforVentetidArgs, 'id'>
     >
     sykmeldinger?: Resolver<Array<ResolversTypes['Sykmelding']>, ParentType, ContextType>
+    tidligereArbeidsgivere?: Resolver<
+        Maybe<Array<ResolversTypes['TidligereArbeidsgiver']>>,
+        ParentType,
+        ContextType,
+        RequireFields<QueryTidligereArbeidsgivereArgs, 'id'>
+    >
 }>
 
 export type RegelInfoResolvers<
@@ -1424,6 +1443,15 @@ export type SykmeldingStatusResolvers<
     sporsmalOgSvarListe?: Resolver<Array<ResolversTypes['Sporsmal']>, ParentType, ContextType>
     statusEvent?: Resolver<ResolversTypes['StatusEvent'], ParentType, ContextType>
     timestamp?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type TidligereArbeidsgiverResolvers<
+    ContextType = RequestContext,
+    ParentType extends ResolversParentTypes['TidligereArbeidsgiver'] = ResolversParentTypes['TidligereArbeidsgiver'],
+> = ResolversObject<{
+    orgNavn?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+    orgnummer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -1518,6 +1546,7 @@ export type Resolvers<ContextType = RequestContext> = ResolversObject<{
     SvarTypeUnion?: SvarTypeUnionResolvers<ContextType>
     Sykmelding?: SykmeldingResolvers<ContextType>
     SykmeldingStatus?: SykmeldingStatusResolvers<ContextType>
+    TidligereArbeidsgiver?: TidligereArbeidsgiverResolvers<ContextType>
     UriktigeOpplysningerBrukerSvar?: UriktigeOpplysningerBrukerSvarResolvers<ContextType>
     UtdypendeOpplysning?: UtdypendeOpplysningResolvers<ContextType>
     UtenforVentetid?: UtenforVentetidResolvers<ContextType>

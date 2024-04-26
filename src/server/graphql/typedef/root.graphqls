@@ -4,6 +4,7 @@ type Query {
     sykmelding(id: String!): Sykmelding!
     brukerinformasjon: Brukerinformasjon!
     sykmeldingUtenforVentetid(id: String!): UtenforVentetid!
+    tidligereArbeidsgivere(id: String!): [TidligereArbeidsgiver!]
 }
 
 type Mutation {
