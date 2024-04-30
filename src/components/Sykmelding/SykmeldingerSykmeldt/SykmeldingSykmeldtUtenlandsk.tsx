@@ -47,7 +47,11 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props
             <AnnenInfoUtenlandsk sykmelding={sykmelding} parentId="sykmelding-sykmeldt-utenlandsk" />
 
             {sykmelding.sykmeldingStatus.brukerSvar && (
-                <BrukerSvarExpansionCard title="Dine svar" brukerSvar={sykmelding.sykmeldingStatus.brukerSvar} />
+                <BrukerSvarExpansionCard
+                    title="Dine svar"
+                    brukerSvar={sykmelding.sykmeldingStatus.brukerSvar}
+                    sykmeldingId={sykmelding.id}
+                />
             )}
         </div>
     )

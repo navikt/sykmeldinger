@@ -29,3 +29,14 @@ query Brukerinformasjon {
         ...Brukerinformasjon
     }
 }
+
+fragment TidligereArbeidsgiver on TidligereArbeidsgiver {
+    orgNavn
+    orgnummer
+}
+
+query TidligereArbeidsgivereById($sykmeldingId: String!) {
+    tidligereArbeidsgivere(id: $sykmeldingId) {
+        ...TidligereArbeidsgiver
+    }
+}

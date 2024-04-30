@@ -19,6 +19,7 @@ const Query: QueryResolvers = {
     sykmelding: async (_, { id }, context) => sykmeldingerService.getSykmelding(id, context),
     brukerinformasjon: async (_, args, context) => sykmeldingerService.getBrukerinformasjon(context),
     sykmeldingUtenforVentetid: async (_, { id }, context) => flexService.getErUtenforVentetid(id, context),
+    tidligereArbeidsgivere: async (_, { id }, context) => sykmeldingerService.getTidligereArbeidsgivere(id, context),
 }
 
 const Mutation: MutationResolvers = {

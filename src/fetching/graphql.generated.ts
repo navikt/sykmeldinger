@@ -932,6 +932,25 @@ export type BrukerinformasjonQuery = {
     }
 }
 
+export type TidligereArbeidsgiverFragment = {
+    readonly __typename: 'TidligereArbeidsgiver'
+    readonly orgNavn: string
+    readonly orgnummer: string
+}
+
+export type TidligereArbeidsgivereByIdQueryVariables = Exact<{
+    sykmeldingId: Scalars['String']['input']
+}>
+
+export type TidligereArbeidsgivereByIdQuery = {
+    readonly __typename: 'Query'
+    readonly tidligereArbeidsgivere?: ReadonlyArray<{
+        readonly __typename: 'TidligereArbeidsgiver'
+        readonly orgNavn: string
+        readonly orgnummer: string
+    }> | null
+}
+
 export type ChangeSykmeldingStatusMutationVariables = Exact<{
     sykmeldingId: Scalars['String']['input']
     status: SykmeldingChangeStatus
@@ -2537,6 +2556,23 @@ export const SykmeldingUtenforVentetidFragmentDoc = {
         },
     ],
 } as unknown as DocumentNode<SykmeldingUtenforVentetidFragment, unknown>
+export const TidligereArbeidsgiverFragmentDoc = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiver' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgiver' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<TidligereArbeidsgiverFragment, unknown>
 export const PeriodeFragmentDoc = {
     kind: 'Document',
     definitions: [
@@ -4744,6 +4780,57 @@ export const BrukerinformasjonDocument = {
         },
     ],
 } as unknown as DocumentNode<BrukerinformasjonQuery, BrukerinformasjonQueryVariables>
+export const TidligereArbeidsgivereByIdDocument = {
+    kind: 'Document',
+    definitions: [
+        {
+            kind: 'OperationDefinition',
+            operation: 'query',
+            name: { kind: 'Name', value: 'TidligereArbeidsgivereById' },
+            variableDefinitions: [
+                {
+                    kind: 'VariableDefinition',
+                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+                },
+            ],
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tidligereArbeidsgivere' },
+                        arguments: [
+                            {
+                                kind: 'Argument',
+                                name: { kind: 'Name', value: 'id' },
+                                value: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
+                            },
+                        ],
+                        selectionSet: {
+                            kind: 'SelectionSet',
+                            selections: [
+                                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'TidligereArbeidsgiver' } },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            kind: 'FragmentDefinition',
+            name: { kind: 'Name', value: 'TidligereArbeidsgiver' },
+            typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TidligereArbeidsgiver' } },
+            selectionSet: {
+                kind: 'SelectionSet',
+                selections: [
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgNavn' } },
+                    { kind: 'Field', name: { kind: 'Name', value: 'orgnummer' } },
+                ],
+            },
+        },
+    ],
+} as unknown as DocumentNode<TidligereArbeidsgivereByIdQuery, TidligereArbeidsgivereByIdQueryVariables>
 export const ChangeSykmeldingStatusDocument = {
     kind: 'Document',
     definitions: [

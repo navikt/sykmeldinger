@@ -6,6 +6,7 @@ import {
     navigateToFirstSykmelding,
     opplysingeneStemmer,
     velgArbeidssituasjon,
+    velgArbeidstakerArbeidsledig,
 } from './user-actions'
 
 test.describe('Avbryt sykmelding', () => {
@@ -52,6 +53,7 @@ test.describe('Avbryt sykmelding', () => {
         await navigateToFirstSykmelding('nye', '100%')(page)
         await opplysingeneStemmer(page)
         await velgArbeidssituasjon('arbeidsledig')(page)
+        await velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/)(page)
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
         await page.waitForURL('**/kvittering')

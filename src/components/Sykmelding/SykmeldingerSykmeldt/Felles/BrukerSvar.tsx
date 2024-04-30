@@ -3,7 +3,13 @@ import { BoatIcon, BriefcaseIcon, CheckmarkCircleIcon, TasklistIcon, XMarkOctago
 import { ExpansionCard } from '@navikt/ds-react'
 import { useQuery } from '@apollo/client'
 
-import { BrukerinformasjonDocument, BrukerSvarFragment, JaEllerNei, SykmeldingErUtenforVentetidDocument } from 'queries'
+import {
+    BrukerinformasjonDocument,
+    BrukerSvarFragment,
+    JaEllerNei,
+    SykmeldingErUtenforVentetidDocument,
+    TidligereArbeidsgivereByIdDocument,
+} from 'queries'
 
 import { SykmeldingInfo, SykmeldingListInfo } from '../../../molecules/sykmelding/SykmeldingInfo'
 import { arbeidsSituasjonEnumToText, uriktigeOpplysningerEnumToText } from '../../../../utils/sporsmal'
@@ -20,10 +26,11 @@ export type { SporsmaltekstMetadata }
 type Props = {
     title: 'Oppsummering av dine svar' | 'Dine svar'
     brukerSvar: BrukerSvarFragment | { values: FormValues; sporsmaltekstMetadata: SporsmaltekstMetadata }
+    sykmeldingId?: string | undefined
     className?: string
 }
 
-export function BrukerSvarExpansionCard({ title, brukerSvar, className }: Props): ReactElement {
+export function BrukerSvarExpansionCard({ title, brukerSvar, sykmeldingId, className }: Props): ReactElement {
     return (
         <ExpansionCard
             aria-labelledby="oppsummering-bruker-svar-heading"
@@ -52,7 +59,7 @@ export function BrukerSvarExpansionCard({ title, brukerSvar, className }: Props)
             </ExpansionCard.Header>
             <ExpansionCard.Content>
                 {'__typename' in brukerSvar ? (
-                    <SentSykmeldingBrukerSvar brukerSvar={brukerSvar} />
+                    <SentSykmeldingBrukerSvar brukerSvar={brukerSvar} sykmeldingId={sykmeldingId} />
                 ) : (
                     <CurrentFormValuesBrukerSvar brukerSvar={brukerSvar} />
                 )}
@@ -61,7 +68,13 @@ export function BrukerSvarExpansionCard({ title, brukerSvar, className }: Props)
     )
 }
 
-function SentSykmeldingBrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragment }): ReactElement {
+function SentSykmeldingBrukerSvar({
+    brukerSvar,
+    sykmeldingId,
+}: {
+    brukerSvar: BrukerSvarFragment
+    sykmeldingId: string | undefined
+}): ReactElement {
     return (
         <>
             <YesNoAnswer response={brukerSvar.erOpplysningeneRiktige} />
@@ -79,8 +92,11 @@ function SentSykmeldingBrukerSvar({ brukerSvar }: { brukerSvar: BrukerSvarFragme
             <YesNoAnswer response={brukerSvar.harBruktEgenmelding} />
             <FrilanserEgenmeldingsperioderAnswer response={brukerSvar.egenmeldingsperioder} />
             <YesNoAnswer response={brukerSvar.harForsikring} />
-            {isArbeidsledig(brukerSvar.arbeidssituasjon?.svar) && (
-                <ArbeidsledigFraOrgnummerAnswer response={brukerSvar.arbeidsledig?.arbeidsledigFraOrgnummer} />
+            {isArbeidsledig(brukerSvar.arbeidssituasjon?.svar) && sykmeldingId && (
+                <ArbeidsledigFraOrgnummerAnswer
+                    response={brukerSvar.arbeidsledig?.arbeidsledigFraOrgnummer}
+                    sykmeldingId={sykmeldingId}
+                />
             )}
         </>
     )
@@ -120,6 +136,7 @@ function CurrentFormValuesBrukerSvar({
 
 function ArbeidsledigFraOrgnummerAnswer({
     response,
+    sykmeldingId,
 }: {
     response:
         | Pick<
@@ -128,13 +145,16 @@ function ArbeidsledigFraOrgnummerAnswer({
           >
         | null
         | undefined
+    sykmeldingId: string
 }): ReactElement | null {
     // This loading state will never be seen, so we can ignore it
-    const { data } = useQuery(BrukerinformasjonDocument)
-    if (response == null) return null
+    const { data } = useQuery(TidligereArbeidsgivereByIdDocument, {
+        variables: { sykmeldingId },
+    })
+    if (response == null || !data) return null
 
     const relevantArbeidsgiverNavn: string | null =
-        data?.brukerinformasjon.arbeidsgivere.find((it) => it.orgnummer === response.svar)?.navn ?? null
+        data?.tidligereArbeidsgivere?.find((it) => it.orgnummer === response.svar)?.orgNavn ?? null
     const text = relevantArbeidsgiverNavn != null ? `${relevantArbeidsgiverNavn} (${response.svar})` : response.svar
 
     return (

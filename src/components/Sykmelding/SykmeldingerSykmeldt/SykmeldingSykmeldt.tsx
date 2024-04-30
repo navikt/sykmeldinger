@@ -63,6 +63,7 @@ function SykmeldingSykmeldt({ sykmelding, editableEgenmelding }: Props): ReactEl
                 <BrukerSvarExpansionCard
                     title="Dine svar"
                     brukerSvar={sykmelding.sykmeldingStatus.brukerSvar}
+                    sykmeldingId={sykmelding.id}
                     className="mb-8"
                 />
             )}
