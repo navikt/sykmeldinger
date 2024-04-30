@@ -17,6 +17,7 @@ import { sporsmal } from '../../../utils/sporsmal'
 import { toDateString } from '../../../utils/dateUtils'
 import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
 import { mapSendSykmeldingValuesToV3Api } from '../../sendSykmeldingMapping'
+import { TidligereArbeidsgivere } from '../../api-models/TidligereArbeidsgiver'
 
 import { defaultArbeidsgivere } from './data-creators'
 
@@ -45,6 +46,15 @@ class MockDb {
             erUtenforVentetid: this._erUtenforVentetid,
             oppfolgingsdato: this._oppfolgingsdato,
         }
+    }
+
+    tidligereArbeidsgivere(): TidligereArbeidsgivere[] {
+        return this.arbeidsgivere().map((ag) => {
+            return {
+                orgNavn: ag.navn,
+                orgnummer: ag.orgnummer,
+            }
+        })
     }
 
     sykmelding(id: string): Sykmelding {

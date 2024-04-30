@@ -2,16 +2,15 @@ import React, { ReactElement } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
 
-import { ArbeidssituasjonType } from 'queries'
+import { TidligereArbeidsgiver } from 'queries'
 
 import { QuestionWrapper, SectionWrapper } from '../../../../FormComponents/FormStructure'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import { FormValues } from '../../../SendSykmeldingForm'
-import { PossibleArbeidsgiver } from '../../../../../hooks/useFindRelevantArbeidsgivere'
 
 interface Props {
-    arbeidsgivere: PossibleArbeidsgiver[]
+    arbeidsgivere: readonly TidligereArbeidsgiver[]
 }
 
 function ArbeidsledigArbeidsgiverField({ arbeidsgivere }: Props): ReactElement | null {
@@ -27,7 +26,7 @@ function ArbeidsledigArbeidsgiverField({ arbeidsgivere }: Props): ReactElement |
                     {...field}
                     id={field.name}
                     legend={sporsmal.arbeidsledigFra}
-                    onChange={(value: ArbeidssituasjonType) => {
+                    onChange={(value) => {
                         logAmplitudeEvent({
                             eventName: 'skjema spørsmål besvart',
                             data: {
@@ -40,16 +39,19 @@ function ArbeidsledigArbeidsgiverField({ arbeidsgivere }: Props): ReactElement |
                     }}
                     error={fieldState.error?.message}
                 >
-                    {arbeidsgivere.map((arbeidsgiver: PossibleArbeidsgiver) => (
+                    {arbeidsgivere.map((arbeidsgiver: TidligereArbeidsgiver) => (
                         <Radio
                             key={arbeidsgiver?.orgnummer}
                             value={arbeidsgiver?.orgnummer}
                             className="overflow-anywhere"
                             description={`org.nr: ${arbeidsgiver?.orgnummer}`}
                         >
-                            {arbeidsgiver?.navn}
+                            {arbeidsgiver?.orgNavn}
                         </Radio>
                     ))}
+                    <Radio key="ikke-relevant" value="ingen" className="overflow-anywhere">
+                        Ikke relevant
+                    </Radio>
                 </RadioGroup>
             </QuestionWrapper>
         </SectionWrapper>

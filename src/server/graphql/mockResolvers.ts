@@ -10,6 +10,7 @@ const Query: QueryResolvers = {
     sykmelding: async (_, { id }, { sessionId }): Promise<Sykmelding> => mockDb().get(sessionId).sykmelding(id),
     brukerinformasjon: async (_, _args, { sessionId }) => mockDb().get(sessionId).brukerinformasjon(),
     sykmeldingUtenforVentetid: async (_, _args, { sessionId }) => mockDb().get(sessionId).sykeldingErUtenforVentetid(),
+    tidligereArbeidsgivere: async (_, _args, { sessionId }) => mockDb().get(sessionId).tidligereArbeidsgivere(),
 }
 
 const Mutation: MutationResolvers = {

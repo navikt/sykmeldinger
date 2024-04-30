@@ -19,6 +19,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
         await navigateToFirstSykmelding('nye', '100%')(page)
         await opplysingeneStemmer(page)
         await velgArbeidssituasjon('arbeidsledig')(page)
+        await velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/)(page)
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
 
@@ -71,6 +72,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
             .getByRole('group', { name: /Jeg er sykmeldt som/i })
             .getByRole('radio', { name: /arbeidsledig/ })
             .click()
+        await velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/)(page)
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
 

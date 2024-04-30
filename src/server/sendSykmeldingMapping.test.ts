@@ -430,5 +430,39 @@ describe('sendSykmeldingMapping', () => {
                 uriktigeOpplysninger: null,
             })
         })
+
+        it('should map a arbeidsledig without tidligere arbeidsgiver correctly', () => {
+            const sykmelding = sykmeldingApen()
+            const mappedResult = mapSendSykmeldingValuesToV3Api(
+                {
+                    erOpplysningeneRiktige: YesOrNo.YES,
+                    arbeidssituasjon: ArbeidssituasjonType.ARBEIDSLEDIG,
+                },
+                sykmelding,
+                brukerinformasjon,
+                erUtenforVentetid,
+            )
+
+            expect(mappedResult).toEqual({
+                erOpplysningeneRiktige: {
+                    sporsmaltekst: 'Stemmer opplysningene?',
+                    svar: 'JA',
+                },
+                arbeidssituasjon: {
+                    sporsmaltekst: 'Jeg er sykmeldt som',
+                    svar: 'ARBEIDSLEDIG',
+                },
+                arbeidsledig: null,
+                fisker: null,
+                arbeidsgiverOrgnummer: null,
+                riktigNarmesteLeder: null,
+                harBruktEgenmeldingsdager: null,
+                egenmeldingsdager: null,
+                harBruktEgenmelding: null,
+                egenmeldingsperioder: null,
+                harForsikring: null,
+                uriktigeOpplysninger: null,
+            })
+        })
     })
 })
