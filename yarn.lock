@@ -10543,10 +10543,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^1.60.0":
-  version: 1.60.0
-  resolution: "remeda@npm:1.60.0"
-  checksum: 10/9519482d213675b48307259f307f63ef0635509dbe140a4b7eb10b7adfed965f750a3bf51c353db0b02b8f61c30c3c8f28107538d3626a31a4331efe0497d315
+"remeda@npm:^1.61.0":
+  version: 1.61.0
+  resolution: "remeda@npm:1.61.0"
+  checksum: 10/0b0ec8688e340c7525a8788e99701b174ddca2eaf230d47f9e087d9aaccd54c7181a1f58bf4f95cb9c12bc1d26f03b17e3d3d9046a59225074a7ac3fa1356da3
   languageName: node
   linkType: hard
 
@@ -11666,7 +11666,7 @@ __metadata:
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:7.51.3"
-    remeda: "npm:^1.60.0"
+    remeda: "npm:^1.61.0"
     tailwind-merge: "npm:^2.2.2"
     tailwindcss: "npm:^3.4.3"
     typescript: "npm:^5.4.5"
@@ -11674,7 +11674,7 @@ __metadata:
     vite: "npm:^5.2.9"
     vitest: "npm:1.5.0"
     vitest-axe: "npm:^0.1.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^3.23.5"
   languageName: unknown
   linkType: soft
 
@@ -13034,9 +13034,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.22.4":
-  version: 3.22.4
-  resolution: "zod@npm:3.22.4"
-  checksum: 10/73622ca36a916f785cf528fe612a884b3e0f183dbe6b33365a7d0fc92abdbedf7804c5e2bd8df0a278e1472106d46674281397a3dd800fa9031dc3429758c6ac
+"zod@npm:^3.23.5":
+  version: 3.23.5
+  resolution: "zod@npm:3.23.5"
+  checksum: 10/e9169bc3d477f48cfcf193a755926dc2cbed20b59b51256a772de02ad6f7b016b121087209fcd2e5bbd62ad625e8c0583dff16c24cfee0bfeaa95f23155a38af
   languageName: node
   linkType: hard

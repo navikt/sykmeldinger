@@ -57,11 +57,11 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "7.51.3",
-        "remeda": "^1.60.0",
+        "remeda": "^1.61.0",
         "tailwind-merge": "^2.2.2",
         "uuid": "^9.0.1",
         "vite": "^5.2.9",
-        "zod": "^3.22.4"
+        "zod": "^3.23.5"
     },
     "devDependencies": {
         "@axe-core/playwright": "^4.9.0",
