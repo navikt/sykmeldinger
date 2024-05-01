@@ -45,9 +45,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.9.11":
-  version: 3.9.11
-  resolution: "@apollo/client@npm:3.9.11"
+"@apollo/client@npm:^3.10.1":
+  version: 3.10.1
+  resolution: "@apollo/client@npm:3.10.1"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -57,7 +57,7 @@ __metadata:
     hoist-non-react-statics: "npm:^3.3.2"
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.6"
+    rehackt: "npm:^0.1.0"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
@@ -78,7 +78,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/d16a334c9675955c79388bbb8b0b7ebf702bb6a24cb907a723be7e08ed878891ab6bfb37e46c6a4568a4f254f511405962896f06dd766c1cb01af41bc39566cf
+  checksum: 10/09ba47735f8e0211b1622341679aef3f05fdf1060900015b22db8f504b4b46bb4f4c6bcad0f88138486fd68e75fce42dcbd4d0e5b152405fb7cb7635417e2bff
   languageName: node
   linkType: hard
 
@@ -119,9 +119,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/server@npm:^4.10.3":
-  version: 4.10.3
-  resolution: "@apollo/server@npm:4.10.3"
+"@apollo/server@npm:^4.10.4":
+  version: 4.10.4
+  resolution: "@apollo/server@npm:4.10.4"
   dependencies:
     "@apollo/cache-control-types": "npm:^1.0.3"
     "@apollo/server-gateway-interface": "npm:^1.1.1"
@@ -150,7 +150,7 @@ __metadata:
     whatwg-mimetype: "npm:^3.0.0"
   peerDependencies:
     graphql: ^16.6.0
-  checksum: 10/afe39493a56528397e5cb0c7f0ca84c37b6fe9f93d3fad70e922fb8db2920e7e5ec635ae7b88e338f678bffeba8e593ee36be6fb35df6c3dc20d1c61a7fb19b6
+  checksum: 10/f31ca80225542aad5ce1e39cc56038abc2430502c916e348cf8726569406b0ee9f3d4fa9c3812af786b69ab64bf707e5ccc910dd0b956f5cac8a4bb0d6ac2fea
   languageName: node
   linkType: hard
 
@@ -10517,9 +10517,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehackt@npm:0.0.6":
-  version: 0.0.6
-  resolution: "rehackt@npm:0.0.6"
+"rehackt@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "rehackt@npm:0.1.0"
   peerDependencies:
     "@types/react": "*"
     react: "*"
@@ -10528,7 +10528,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10/3897c93270836159406529e0fa983bf4a11c07d2efc5c8f6bdfd7f6821d3b84a30d911c3f3b9c689948739e6955c5835c8dd9d91579150bec5092f356c0d91df
+  checksum: 10/c81adead82c165dffc574cbf9e1de3605522782a56b48df48b68d53d45c4d8c9253df3790109335bf97072424e54ad2423bb9544ca3a985fa91995dda43452fc
   languageName: node
   linkType: hard
 
@@ -11593,8 +11593,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sykmeldinger@workspace:."
   dependencies:
-    "@apollo/client": "npm:^3.9.11"
-    "@apollo/server": "npm:^4.10.3"
+    "@apollo/client": "npm:^3.10.1"
+    "@apollo/server": "npm:^4.10.4"
     "@as-integrations/next": "npm:^3.0.0"
     "@axe-core/playwright": "npm:^4.9.0"
     "@grafana/faro-web-sdk": "npm:1.5.1"
