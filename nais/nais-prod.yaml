@@ -20,6 +20,10 @@ spec:
   prometheus:
     enabled: true
     path: /syk/sykmeldinger/api/internal/prometheus
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   tokenx:
     enabled: true
   replicas:
