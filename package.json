@@ -37,7 +37,7 @@
         "@navikt/ds-css": "6.5.0",
         "@navikt/ds-react": "6.5.0",
         "@navikt/nav-dekoratoren-moduler": "^2.1.6",
-        "@navikt/next-logger": "^1.23.0",
+        "@navikt/next-logger": "^1.24.0",
         "@navikt/oasis": "^3.2.4",
         "@next/bundle-analyzer": "14.2.1",
         "@react-pdf/renderer": "^3.4.2",

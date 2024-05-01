@@ -2318,13 +2318,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/next-logger@npm:^1.23.0":
-  version: 1.23.0
-  resolution: "@navikt/next-logger@npm:1.23.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.23.0%2F322dcf9bb53a1415b5a8b6dce561c7a0ed53ee42"
+"@navikt/next-logger@npm:^1.24.0":
+  version: 1.24.0
+  resolution: "@navikt/next-logger@npm:1.24.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.24.0%2F45cb8c2c9151ed993db5576d247a65e9742a0c87"
   peerDependencies:
     next: 12 || 13 || 14
-    pino: 8
-  checksum: 10/d1bfc3550d4095014aa62cde90d1bdfdf689ba5c8b9808c094d1321712531da1a2cda1007f671c71d0b8295fda39e4cb9b470dbdf31184e1b2c7e999eb0548b7
+    pino: 8 || 9
+  checksum: 10/0dc1fdd32aa0527a32079bc9da67f051f75d6ea6b951ff114490e68bf052dad4b020223fb318406e63262e12991c35079399d8f1ee0ca2a93ebab354bca8b042
   languageName: node
   linkType: hard
 
@@ -11615,7 +11615,7 @@ __metadata:
     "@navikt/ds-tailwind": "npm:6.5.0"
     "@navikt/eslint-config-teamsykmelding": "npm:^6.1.0"
     "@navikt/nav-dekoratoren-moduler": "npm:^2.1.6"
-    "@navikt/next-logger": "npm:^1.23.0"
+    "@navikt/next-logger": "npm:^1.24.0"
     "@navikt/oasis": "npm:^3.2.4"
     "@next/bundle-analyzer": "npm:14.2.1"
     "@parcel/watcher": "npm:^2.4.1"
