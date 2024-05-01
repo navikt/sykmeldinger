@@ -40,7 +40,7 @@
         "@navikt/next-logger": "^1.23.0",
         "@navikt/oasis": "^3.2.4",
         "@next/bundle-analyzer": "14.2.1",
-        "@react-pdf/renderer": "^3.4.2",
+        "@react-pdf/renderer": "^3.4.4",
         "@react-pdf/types": "^2.4.1",
         "@unleash/nextjs": "^1.4.2",
         "classnames": "^2.5.1",
