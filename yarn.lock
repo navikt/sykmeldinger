@@ -3026,6 +3026,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-pdf/types@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@react-pdf/types@npm:2.5.0"
+  checksum: 10/d105abb0b50f09e0ce47d8cbd11fd56fb1c695d4381dce1f1a22a300705cc5f5f47ada6e256c4d9ac5b66ec4cea119924987932885f7b1220ff5a81ec76dda07
+  languageName: node
+  linkType: hard
+
 "@repeaterjs/repeater@npm:3.0.4, @repeaterjs/repeater@npm:^3.0.4":
   version: 3.0.4
   resolution: "@repeaterjs/repeater@npm:3.0.4"
@@ -11621,7 +11628,7 @@ __metadata:
     "@parcel/watcher": "npm:^2.4.1"
     "@playwright/test": "npm:^1.43.1"
     "@react-pdf/renderer": "npm:^3.4.2"
-    "@react-pdf/types": "npm:^2.4.1"
+    "@react-pdf/types": "npm:^2.5.0"
     "@testing-library/dom": "npm:^10.0.0"
     "@testing-library/jest-dom": "npm:^6.4.2"
     "@testing-library/react": "npm:^15.0.2"
