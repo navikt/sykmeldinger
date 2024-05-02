@@ -80,7 +80,6 @@ export type ArbeidsgiverSykmelding = {
 export type ArbeidsledigBrukerSvar = {
     readonly __typename: 'ArbeidsledigBrukerSvar'
     readonly arbeidsledigFraOrgnummer?: Maybe<ArbeidsledigFraOrgnummerBrukerSvar>
-    readonly arbeidsledigOrgnavn?: Maybe<ArbeidsledigOrgnavnBrukerSvar>
 }
 
 export type ArbeidsledigFraOrgnummerBrukerSvar = {
@@ -91,13 +90,6 @@ export type ArbeidsledigFraOrgnummerBrukerSvar = {
 
 export type ArbeidsledigInput = {
     readonly arbeidsledigFraOrgnummer?: InputMaybe<Scalars['String']['input']>
-    readonly arbeidsledigOrgnavn?: InputMaybe<Scalars['String']['input']>
-}
-
-export type ArbeidsledigOrgnavnBrukerSvar = {
-    readonly __typename: 'ArbeidsledigOrgnavnBrukerSvar'
-    readonly sporsmaltekst: Scalars['String']['output']
-    readonly svar: Scalars['String']['output']
 }
 
 export type ArbeidsrelatertArsak = {
