@@ -18,7 +18,8 @@ export function getFaro(): Faro | null {
         url: browserEnv.NEXT_PUBLIC_TELEMETRY_URL,
         app: {
             name: 'sykmeldinger',
-            // TODO: få commit hash fra serveren
+            version: process.env.NEXT_PUBLIC_VERSION,
+            environment: browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT,
         },
         instrumentations: [
             ...getWebInstrumentations({
