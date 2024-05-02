@@ -98,10 +98,6 @@ const BrukerSvarSchema = z.object({
     arbeidsledig: z
         .object({
             arbeidsledigFraOrgnummer: SporsmalSvarSchema(z.string()).nullable(),
-            arbeidsledigOrgnavn: SporsmalSvarSchema(z.string())
-                .nullable()
-                .optional()
-                .transform((it) => it ?? null),
         })
         .nullable()
         // TODO: Remove optional and transform once backend is in production and everything is in sync
