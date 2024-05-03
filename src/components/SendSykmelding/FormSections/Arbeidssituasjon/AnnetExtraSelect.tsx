@@ -1,6 +1,6 @@
 import * as R from 'remeda'
-import React, { ReactElement, useEffect, useRef } from 'react'
-import { Alert, BodyShort, Select, TextField } from '@navikt/ds-react'
+import React, { PropsWithChildren, ReactElement, useEffect, useRef } from 'react'
+import { Alert, BodyShort, Heading, Select, TextField } from '@navikt/ds-react'
 import { useController, useFormContext } from 'react-hook-form'
 
 import { FormValues } from '../../SendSykmeldingForm'
@@ -98,46 +98,76 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
     switch (value) {
         case 'Flere arbeidsforhold':
             return (
-                <Alert variant="warning" className="mt-4">
+                <FeedbackToUser>
+                    <BodyShort spacing className="font-bold">
+                        Du bør endre valget ditt over fra «annet» til «ansatt».
+                    </BodyShort>
                     <BodyShort spacing>
                         Hvis du har flere arbeidsforhold, må du sende en sykmelding for hvert arbeidsforhold.
                     </BodyShort>
-                    <BodyShort
-                        spacing
-                        className="font-bold"
-                    >{`Du bør endre valget ditt over fra "annet" til "ansatt".`}</BodyShort>
                     <BodyShort>
                         Dersom du ikke har fått èn sykmelding per arbeidsforhold, må du ta kontakt med legen og be om
                         dette.
                     </BodyShort>
-                </Alert>
+                </FeedbackToUser>
             )
         case 'Vikar':
             return (
-                <Alert variant="warning" className="mt-4">
+                <FeedbackToUser>
                     <BodyShort spacing>Som vikar er du ansatt på samme måte som en arbeidstaker.</BodyShort>
-                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "ansatt".`}</BodyShort>
-                </Alert>
+                    <BodyShort className="font-bold">Du bør endre valget ditt over fra «annet» til «ansatt».</BodyShort>
+                </FeedbackToUser>
             )
         case 'Lærling':
             return (
-                <Alert variant="warning" className="mt-4">
+                <FeedbackToUser>
                     <BodyShort spacing>Som lærling er du ansatt på samme måte som en arbeidstaker</BodyShort>
-                    <BodyShort className="font-bold">{`Du bør endre valget ditt over fra "annet" til "ansatt".`}</BodyShort>
-                </Alert>
+                    <BodyShort className="font-bold">Du bør endre valget ditt over fra «annet» til «ansatt».</BodyShort>
+                </FeedbackToUser>
             )
         case 'Dagpenger':
             return (
-                <Alert variant="warning" className="mt-4">
+                <FeedbackToUser>
                     <BodyShort spacing>
-                        Dersom du er på dagpenger betyr dette at du er arbeidsledig eller permittert.
+                        Dersom du mottar dagpenger betyr dette at du er arbeidsledig eller permittert.
                     </BodyShort>
-                    <BodyShort className="font-bold">{`Du bør derfor endre valget ditt over fra "annet" til "arbeidsledig" eller "permittert".`}</BodyShort>
-                </Alert>
+                    <BodyShort className="font-bold">
+                        Du bør derfor endre valget ditt over fra «annet» til «arbeidsledig» eller «permittert».
+                    </BodyShort>
+                </FeedbackToUser>
+            )
+        case 'Pensjonist':
+            return (
+                <FeedbackToUser>
+                    <BodyShort className="font-bold">
+                        Dersom du er sykmeldt i et arbeidsforhold du har ved siden av alderspensjon, bør du endre valget
+                        ditt over fra «annet» til «ansatt»
+                    </BodyShort>
+                </FeedbackToUser>
+            )
+        case 'Student':
+            return (
+                <FeedbackToUser>
+                    <BodyShort className="font-bold">
+                        Dersom du er sykmeldt i et arbeidsforhold du har ved siden av studiene, bør du endre valget ditt
+                        over fra «annet» til «ansatt»
+                    </BodyShort>
+                </FeedbackToUser>
             )
         default:
             return null
     }
+}
+
+function FeedbackToUser({ children }: PropsWithChildren): ReactElement {
+    return (
+        <Alert variant="warning" className="mt-4 max-w-md">
+            <Heading level="3" size="small" spacing>
+                Har du valgt rett situasjon?
+            </Heading>
+            {children}
+        </Alert>
+    )
 }
 
 function getInferredOption(value: string | null): string | null {
