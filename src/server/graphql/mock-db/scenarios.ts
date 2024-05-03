@@ -215,6 +215,15 @@ const harUnderBehandling: ScenarioCreator = () => ({
     ],
 })
 
+const harUnderBehandlingUsent: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: 7 })
+            .enkelPeriode({ offset: 0, days: 7 })
+            .merknader([{ type: Merknadtype.UNDER_BEHANDLING, beskrivelse: null }])
+            .build(),
+    ],
+})
+
 const mangeGamleSykmeldinger: ScenarioCreator = () => {
     const basicSykmelding = (offset: number): SykmeldingBuilder =>
         new SykmeldingBuilder({ offset: offset }).enkelPeriode({ offset: 0, days: 14 })
@@ -326,8 +335,12 @@ export const otherScenarios = {
         description: 'Èn avbrutt egenmelding',
         scenario: avbruttEgenmelding,
     },
+    harUnderBehandlingUsent: {
+        description: 'Har en ny under (manuell) behandling',
+        scenario: harUnderBehandlingUsent,
+    },
     harUnderBehandling: {
-        description: 'Har en innsendt under behandling',
+        description: 'Har en innsendt under (manuell) behandling',
         scenario: harUnderBehandling,
     },
     avvist: {
