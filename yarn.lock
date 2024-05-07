@@ -3810,6 +3810,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vercel/otel@npm:^1.8.2":
+  version: 1.8.2
+  resolution: "@vercel/otel@npm:1.8.2"
+  peerDependencies:
+    "@opentelemetry/api": ^1.7.0
+    "@opentelemetry/api-logs": ^0.46.0
+    "@opentelemetry/instrumentation": ^0.46.0
+    "@opentelemetry/resources": ^1.19.0
+    "@opentelemetry/sdk-logs": ^0.46.0
+    "@opentelemetry/sdk-metrics": ^1.19.0
+    "@opentelemetry/sdk-trace-base": ^1.19.0
+  checksum: 10/dac3066d3ecc7a3f7e1579a5c68d2b6f45f972b1f4f3f136e9c444e43ef1dc70a92ec7ff8241e8d44e5416458f60f43e674b261ba1f9a3d9275f4a9965d4d2fc
+  languageName: node
+  linkType: hard
+
 "@vitejs/plugin-react@npm:^4.2.1":
   version: 4.2.1
   resolution: "@vitejs/plugin-react@npm:4.2.1"
@@ -11586,6 +11601,7 @@ __metadata:
     "@types/react-dom": "npm:^18.3.0"
     "@types/uuid": "npm:^9.0.8"
     "@unleash/nextjs": "npm:^1.4.2"
+    "@vercel/otel": "npm:^1.8.2"
     "@vitejs/plugin-react": "npm:^4.2.1"
     "@vitest/coverage-v8": "npm:^1.5.0"
     autoprefixer: "npm:^10.4.19"

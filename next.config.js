@@ -27,6 +27,7 @@ const nextConfig = {
     transpilePackages: ['tailwind-merge'],
     experimental: {
         optimizePackageImports: ['@navikt/aksel-icons', '@navikt/ds-react'],
+        instrumentationHook: true,
     },
     typescript: {
         ignoreBuildErrors: isE2E,
