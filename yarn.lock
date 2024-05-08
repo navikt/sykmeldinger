@@ -11607,6 +11607,7 @@ __metadata:
     next-logger: "npm:^4.0.0"
     next-router-mock: "npm:^0.9.13"
     nextleton: "npm:^0.6.1"
+    node-cache: "npm:^5.1.2"
     open: "npm:^10.1.0"
     pino: "npm:^8.20.0"
     pino-pretty: "npm:^11.0.0"

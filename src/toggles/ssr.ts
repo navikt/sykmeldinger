@@ -1,5 +1,6 @@
 import { getRandomValues } from 'crypto'
 
+import NodeCache from 'node-cache'
 import { IToggle, getDefinitions, evaluateFlags } from '@unleash/nextjs'
 import { logger } from '@navikt/next-logger'
 import { GetServerSidePropsContext } from 'next/types'
@@ -46,13 +47,25 @@ export async function getFlagsServerSide(
     }
 }
 
+const unleashCache = new NodeCache({ stdTTL: 15 })
+
 /**
  * If there are any toggles defined in EXPECTED_TOGGLES that are not returned by Unleash, something is out of sync.
  */
 async function getAndValidateDefinitions(): Promise<ReturnType<typeof getDefinitions>> {
+    if (unleashCache.has('toggles')) {
+        const cachedToggles = unleashCache.get<ReturnType<typeof getDefinitions>>('toggles')
+        if (cachedToggles != null) {
+            logger.info('Using cached unleash definitions')
+            return cachedToggles
+        }
+    }
+
     const definitions = await getDefinitions({
         appName: 'sykmeldinger',
     })
+
+    unleashCache.set('toggles', definitions)
 
     const diff = R.difference(
         EXPECTED_TOGGLES,
