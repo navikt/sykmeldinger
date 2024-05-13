@@ -21,10 +21,7 @@ export default withAuthenticatedApi(
                 return createDemoRequestContext(req)
             }
 
-            const resolverContextType = createRequestContext(
-                req.headers['x-request-id'] as string | undefined,
-                req.headers['authorization'],
-            )
+            const resolverContextType = createRequestContext(req)
 
             if (!resolverContextType) {
                 throw new GraphQLError('User not logged in', {

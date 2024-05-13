@@ -89,7 +89,7 @@ export async function feedback(feedback: object, context: RequestContext): Promi
             'Content-Type': 'application/json',
             'x-request-id': context.requestId,
         },
-        body: JSON.stringify({ ...feedback, segment: inferSegment(context.payload.pid) }),
+        body: JSON.stringify({ ...feedback, segment: inferSegment(context.pid) }),
     })
 
     if (response.status === 401) {

@@ -2,13 +2,12 @@ import { GraphQLJSON } from 'graphql-scalars'
 
 import * as sykmeldingerService from '../../server/sykmeldingerService'
 import * as flexService from '../../server/flexService'
-import { TokenPayload } from '../../auth/withAuthentication'
 
 import { MutationResolvers, QueryResolvers, Resolvers } from './resolver-types.generated'
 import objectResolvers from './objectResolvers'
 
 export interface RequestContext {
-    payload: TokenPayload
+    pid: string
     accessToken: string
     requestId: string
     sessionId: string
