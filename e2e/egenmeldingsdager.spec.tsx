@@ -15,11 +15,21 @@ function selectEgenmeldingsdager({
 }) {
     return async (page: Page): Promise<void> => {
         const [currentDays, ...restDays] = daysToSelect
-        const section = page.getByLabel(
-            new RegExp(`Brukte du egenmelding hos Pontypandy Fire Service i perioden ${getDate(initialDate)}. `, 'i'),
-        )
+
+        // Had to use test-id her because certain dates, two periods that start on the same day across two months will be in the DOM
+        const section = page.getByTestId('last-egenmelding-section')
 
         if (currentDays === 'Nei') {
+            await expect(
+                page
+                    .getByLabel(
+                        new RegExp(
+                            `Brukte du egenmelding hos Pontypandy Fire Service i perioden ${getDate(initialDate)}. `,
+                            'i',
+                        ),
+                    )
+                    .last(),
+            ).toBeVisible()
             await section.getByRole('radio', { name: /Nei/ }).click()
             return
         }
@@ -29,6 +39,16 @@ function selectEgenmeldingsdager({
             return
         }
 
+        await expect(
+            page
+                .getByLabel(
+                    new RegExp(
+                        `Brukte du egenmelding hos Pontypandy Fire Service i perioden ${getDate(initialDate)}. `,
+                        'i',
+                    ),
+                )
+                .last(),
+        ).toBeVisible()
         await section.getByRole('radio', { name: /Ja/ }).click()
         const datesToClick = currentDays.map((day) => add(initialDate, { days: day }))
         for (const date of datesToClick) {
