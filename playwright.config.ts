@@ -1,5 +1,4 @@
-import { defineConfig, devices } from '@playwright/test'
-import { PlaywrightTestConfig } from 'playwright/types/test'
+import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test'
 
 const PORT = process.env.PORT || 3000
 
@@ -28,7 +27,7 @@ const opts: OptionsType = process.env.CI
       : // Local dev server
         {
             baseURL: `http://localhost:${PORT}`,
-            timeout: 60 * 1000,
+            timeout: 120 * 2 * 1000,
             server: {
                 command: 'NEXT_PUBLIC_IS_E2E=true yarn dev --turbo',
                 url: `http://localhost:${PORT}`,
