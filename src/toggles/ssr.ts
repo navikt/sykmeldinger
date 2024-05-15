@@ -5,9 +5,9 @@ import { IToggle, getDefinitions, evaluateFlags } from '@unleash/nextjs'
 import { logger } from '@navikt/next-logger'
 import { GetServerSidePropsContext } from 'next/types'
 import * as R from 'remeda'
+import { getToken, parseIdportenToken } from '@navikt/oasis'
 
 import { isLocalOrDemo } from '../utils/env'
-import { parseAuthHeader } from '../auth/withAuthentication'
 
 import { getUnleashEnvironment, localDevelopmentToggles } from './utils'
 import { EXPECTED_TOGGLES } from './toggles'
@@ -92,9 +92,9 @@ export function handleUnleashIds(
     userId: string | undefined
     sessionId: string
 } {
-    const pid = parseAuthHeader(req.headers)?.pid ?? undefined
-
+    const pid = safeGetPid(req)
     const existingUnleashId = req.cookies[unleashCookieName]
+
     if (existingUnleashId != null) {
         // Not logged in user, but user has already the unleash cookie
         return {
@@ -111,6 +111,19 @@ export function handleUnleashIds(
             sessionId: newId,
         }
     }
+}
+
+function safeGetPid(req: GetServerSidePropsContext['req']): string | undefined {
+    const token = getToken(req)
+    if (token == null) {
+        return undefined
+    }
+    const parsed = parseIdportenToken(token)
+    if (!parsed.ok) {
+        return undefined
+    }
+
+    return parsed.pid
 }
 
 function safeCoerceHeader(header: string | string[] | number | undefined | null): string[] {

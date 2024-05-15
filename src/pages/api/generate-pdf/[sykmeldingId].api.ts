@@ -6,9 +6,7 @@ import { createDemoRequestContext, createRequestContext, withAuthenticatedApi } 
 import { isLocalOrDemo } from '../../../utils/env'
 
 async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-    const context = !isLocalOrDemo
-        ? createRequestContext(req.headers['x-request-id'] as string | undefined, req.headers['authorization'])
-        : createDemoRequestContext(req)
+    const context = !isLocalOrDemo ? createRequestContext(req) : createDemoRequestContext(req)
 
     if (!context) {
         res.status(401).json({ message: 'Access denied' })

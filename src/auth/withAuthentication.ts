@@ -1,8 +1,6 @@
-import { IncomingHttpHeaders } from 'http'
-
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, GetServerSidePropsResult } from 'next'
 import { logger } from '@navikt/next-logger'
-import { validateToken, getToken } from '@navikt/oasis'
+import { validateToken, getToken, parseIdportenToken } from '@navikt/oasis'
 import { IToggle } from '@unleash/nextjs'
 
 import { browserEnv, isLocalOrDemo } from '../utils/env'
@@ -18,25 +16,6 @@ export interface ServerSidePropsResult {
 
 type ApiHandler = (req: NextApiRequest, res: NextApiResponse) => Promise<unknown> | unknown
 type PageHandler = (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<ServerSidePropsResult>>
-
-export interface TokenPayload {
-    sub: string
-    iss: string
-    client_amr: string
-    pid: string
-    token_type: string
-    client_id: string
-    acr: string
-    scope: string
-    exp: string
-    iat: string
-    client_orgno: string
-    jti: string
-    consumer: {
-        authority: string
-        ID: string
-    }
-}
 
 export const defaultPageHandler: PageHandler = async (context) => {
     const flags = await getFlagsServerSide(context.req, context.res)
@@ -134,29 +113,25 @@ function getRedirectPath(context: GetServerSidePropsContext): string {
 /**
  * Creates the HTTP context that is passed through the resolvers and services, both for prefetching and HTTP-fetching.
  */
-export function createRequestContext(requestId: string | undefined, token: string | undefined): RequestContext | null {
+export function createRequestContext(req: GetServerSidePropsContext['req'] | NextApiRequest): RequestContext | null {
+    const token = getToken(req)
     if (!token) {
         logger.warn('User is missing authorization bearer token')
         return null
     }
 
-    const accessToken = token.replace('Bearer ', '')
-    const jwtPayload = accessToken.split('.')[1]
+    const payload = parseIdportenToken(token)
+    if (!payload.ok) {
+        logger.error(`Failed to parse token: ${payload.error.message}`)
+        return null
+    }
+
     return {
-        accessToken,
-        payload: JSON.parse(Buffer.from(jwtPayload, 'base64').toString()),
-        requestId: requestId ?? 'not set',
+        accessToken: token,
+        pid: payload.pid,
+        requestId: (req.headers['x-request-id'] as string) ?? 'not set',
         sessionId: 'unused',
     }
-}
-
-export function parseAuthHeader(headers: IncomingHttpHeaders): TokenPayload | null {
-    if (!headers.authorization) return null
-
-    const accessToken = headers.authorization.replace('Bearer ', '')
-    const jwtPayload = accessToken.split('.')[1]
-
-    return JSON.parse(Buffer.from(jwtPayload, 'base64').toString())
 }
 
 /**
