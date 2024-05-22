@@ -16,6 +16,7 @@ const initialOptions = [
     'Foreldrepermisjon',
     'Varig tilrettelagt arbeid (VTA)',
     'Flere arbeidsforhold',
+    'Arbeidsavklaringspenger (AAP)',
 ]
 
 function AnnetExtraSelect(): ReactElement {
@@ -139,7 +140,7 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
         case 'Pensjonist':
             return (
                 <FeedbackToUser>
-                    <BodyShort className="font-bold">
+                    <BodyShort>
                         Dersom du er sykmeldt i et arbeidsforhold du har ved siden av alderspensjon, bør du endre valget
                         ditt over fra «annet» til «ansatt»
                     </BodyShort>
@@ -148,9 +149,18 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
         case 'Student':
             return (
                 <FeedbackToUser>
-                    <BodyShort className="font-bold">
+                    <BodyShort>
                         Dersom du er sykmeldt i et arbeidsforhold du har ved siden av studiene, bør du endre valget ditt
                         over fra «annet» til «ansatt»
+                    </BodyShort>
+                </FeedbackToUser>
+            )
+        case 'Arbeidsavklaringspenger (AAP)':
+            return (
+                <FeedbackToUser>
+                    <BodyShort>
+                        Dersom du er sykmeldt i en deltidsstilling du har ved siden av arbeidsavklaringspenger, bør du
+                        endre valget ditt over fra «annet» til «ansatt»
                     </BodyShort>
                 </FeedbackToUser>
             )
