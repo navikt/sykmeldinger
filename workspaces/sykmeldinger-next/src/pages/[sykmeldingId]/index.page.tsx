@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
 import { range } from 'remeda'
 
-import { SykmeldingFragment } from 'queries'
+import { SykmeldingFragment } from '../../fetching/graphql.generated'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'

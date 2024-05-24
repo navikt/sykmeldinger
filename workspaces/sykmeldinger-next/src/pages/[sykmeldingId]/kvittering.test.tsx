@@ -9,7 +9,7 @@ import {
     SykmeldingByIdDocument,
     SykmeldingerDocument,
     SykmeldingFragment,
-} from 'queries'
+} from '../../fetching/graphql.generated'
 
 import { createInitialQuery, createMock, createSykmelding, createSykmeldingPeriode } from '../../utils/test/dataUtils'
 import { render, screen } from '../../utils/test/testUtils'

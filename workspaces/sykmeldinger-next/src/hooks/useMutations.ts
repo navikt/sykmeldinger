@@ -11,7 +11,7 @@ import {
     SendSykmeldingDocument,
     SendSykmeldingMutation,
     SykmeldingChangeStatus,
-} from 'queries'
+} from '../fetching/graphql.generated'
 
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 import { EgenmeldingsdagerSubForm } from '../components/FormComponents/Egenmelding/EgenmeldingerField'

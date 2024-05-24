@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import mockRouter from 'next-router-mock'
 import { GraphQLError } from 'graphql'
 
-import { BrukerinformasjonDocument, SykmeldingByIdDocument, SykmeldingerDocument } from 'queries'
+import { BrukerinformasjonDocument, SykmeldingByIdDocument, SykmeldingerDocument } from '../../fetching/graphql.generated'
 
 import { render, screen } from '../../utils/test/testUtils'
 import { dateSub } from '../../utils/dateUtils'

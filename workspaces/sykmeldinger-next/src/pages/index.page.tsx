@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import Head from 'next/head'
+import Test from '@repo/components/Test'
 
 import { withAuthenticatedPage } from '../auth/withAuthentication'
 import Header from '../components/Header/Header'
@@ -18,6 +19,7 @@ function SykmeldingerPage(): ReactElement {
             </Head>
             <Header title="Sykmeldinger" />
             <PageWrapper>
+                <Test />
                 <SykmeldingerListAll />
                 <div className="mt-16">
                     <TilHovedsiden />

@@ -13,7 +13,7 @@ import {
     SykmeldingByIdDocument,
     SykmeldingerDocument,
     SykmeldingFragment,
-} from 'queries'
+} from '../../fetching/graphql.generated'
 
 import { render, screen, Screen, waitFor } from '../../utils/test/testUtils'
 import {

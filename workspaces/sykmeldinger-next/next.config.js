@@ -24,7 +24,7 @@ const nextConfig = {
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX,
-    transpilePackages: ['tailwind-merge'],
+    transpilePackages: ['@repo/components', 'tailwind-merge'],
     experimental: {
         optimizePackageImports: ['@navikt/aksel-icons', '@navikt/ds-react'],
     },

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { MockedResponse } from '@apollo/client/testing'
 
-import { Periodetype, RegelStatus, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from 'queries'
+import { Periodetype, RegelStatus, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { toDate } from '../utils/dateUtils'
 import { createMock, createSykmelding, createSykmeldingPeriode } from '../utils/test/dataUtils'

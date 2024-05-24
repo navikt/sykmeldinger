@@ -1,6 +1,6 @@
 import { isBefore, parseISO } from 'date-fns'
 
-import { SykmeldingFragment } from 'queries'
+import { SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { getSykmeldingStartDate, isActiveSykmelding, isUnderbehandling } from '../utils/sykmeldingUtils'
 

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { range } from 'remeda'
 
-import { RegelStatus, StatusEvent, SvarUnion_ArbeidssituasjonSvar_Fragment, SykmeldingFragment } from 'queries'
+import { RegelStatus, StatusEvent, SvarUnion_ArbeidssituasjonSvar_Fragment, SykmeldingFragment } from '../../fetching/graphql.generated'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'

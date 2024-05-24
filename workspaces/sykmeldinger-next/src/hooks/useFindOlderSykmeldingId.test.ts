@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { formatISO, sub } from 'date-fns'
 import { MockedResponse } from '@apollo/client/testing'
 
-import { Periodetype, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from 'queries'
+import { Periodetype, StatusEvent, SykmeldingerDocument, SykmeldingFragment } from '../fetching/graphql.generated'
 
 import { renderHook, waitFor } from '../utils/test/testUtils'
 import { dateAdd, dateSub } from '../utils/dateUtils'
