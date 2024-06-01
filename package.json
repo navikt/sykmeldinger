@@ -31,7 +31,7 @@
         "@grafana/faro-web-sdk": "1.7.3",
         "@graphql-tools/graphql-file-loader": "^8.0.1",
         "@graphql-tools/load": "^8.0.2",
-        "@graphql-tools/schema": "^10.0.3",
+        "@graphql-tools/schema": "^10.0.4",
         "@graphql-typed-document-node/core": "^3.2.0",
         "@navikt/aksel-icons": "6.8.0",
         "@navikt/ds-css": "6.8.0",
