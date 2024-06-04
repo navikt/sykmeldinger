@@ -23,4 +23,4 @@ export const isFrilanserOrNaeringsdrivendeOrJordbruker = (arbeidssituasjon?: Arb
     arbeidssituasjon === ArbeidssituasjonType.JORDBRUKER
 
 export const isArbeidsledig = (arbeidssituasjon?: ArbeidssituasjonType | null): boolean =>
-    arbeidssituasjon === ArbeidssituasjonType.ARBEIDSLEDIG
+    arbeidssituasjon === ArbeidssituasjonType.ARBEIDSLEDIG || arbeidssituasjon === ArbeidssituasjonType.PERMITTERT

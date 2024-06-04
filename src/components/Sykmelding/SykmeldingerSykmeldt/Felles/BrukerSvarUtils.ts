@@ -1,4 +1,4 @@
-import { BrukerSvarFragment } from 'queries'
+import { ArbeidssituasjonType, BrukerSvarFragment } from 'queries'
 
 import { FormValues } from '../../../SendSykmelding/SendSykmeldingForm'
 import { sporsmal } from '../../../../utils/sporsmal'
@@ -92,7 +92,7 @@ export function mapFormValuesToBrukerSvar(
                       __typename: 'ArbeidsledigBrukerSvar',
                       arbeidsledigFraOrgnummer: {
                           __typename: 'ArbeidsledigFraOrgnummerBrukerSvar',
-                          sporsmaltekst: sporsmal.arbeidsledigFra,
+                          sporsmaltekst: sporsmal.arbeidsledigFra(ArbeidssituasjonType.ARBEIDSLEDIG),
                           svar:
                               sendSykmeldingValues.arbeidsledig.arbeidsledigFraOrgnummer ??
                               raise('Orgnummer må være satt'),

@@ -500,7 +500,7 @@ describe('toSendSykmeldingUtils', () => {
         })
     })
 
-    describe('ARBEIDSLEDIG ', () => {
+    describe('ARBEIDSLEDIG or PERMITTERT', () => {
         it('should map sykmelding for arbeidsledig with tidligere arbedsgiver', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
@@ -596,10 +596,8 @@ describe('toSendSykmeldingUtils', () => {
 
             expect(mapToValues).toEqual(expectValues)
         })
-    })
 
-    describe('PERMITTERT or ANNET', () => {
-        it('should map sykmelding for permittert', () => {
+        it('should map sykmelding for permittert with tidligere arbedsgiver', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.YES,
                 uriktigeOpplysninger: null,
@@ -616,7 +614,44 @@ describe('toSendSykmeldingUtils', () => {
                     lottOgHyre: null,
                 },
                 extra: null,
-                arbeidsledig: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: '12121212',
+                },
+                erSykmeldtFraFlereArbeidsforhold: null,
+            }
+
+            const mapToValues = mapToSendSykmeldingValues(formValues)
+            const expectValues: SendSykmeldingValues = {
+                erOpplysningeneRiktige: YesOrNo.YES,
+                arbeidssituasjon: ArbeidssituasjonType.PERMITTERT,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: '12121212',
+                },
+            }
+
+            expect(mapToValues).toEqual(expectValues)
+        })
+
+        it('should map sykmelding for permittert without tidligere arbedsgiver', () => {
+            const formValues = {
+                erOpplysningeneRiktige: YesOrNo.YES,
+                uriktigeOpplysninger: null,
+                arbeidssituasjon: ArbeidssituasjonType.PERMITTERT,
+                arbeidsgiverOrgnummer: null,
+                riktigNarmesteLeder: null,
+                harBruktEgenmelding: null,
+                egenmeldingsperioder: null,
+                harForsikring: null,
+                egenmeldingsdager: null,
+                egenmeldingsdagerHitPrevious: null,
+                fisker: {
+                    blad: null,
+                    lottOgHyre: null,
+                },
+                extra: null,
+                arbeidsledig: {
+                    arbeidsledigFraOrgnummer: null,
+                },
                 erSykmeldtFraFlereArbeidsforhold: null,
             }
 
@@ -628,7 +663,9 @@ describe('toSendSykmeldingUtils', () => {
 
             expect(mapToValues).toEqual(expectValues)
         })
+    })
 
+    describe('ANNET', () => {
         it('should map sykmelding for annet with uriktigeOpplysninger', () => {
             const formValues = {
                 erOpplysningeneRiktige: YesOrNo.NO,

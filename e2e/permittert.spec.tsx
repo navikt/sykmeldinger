@@ -6,6 +6,7 @@ import {
     navigateToFirstSykmelding,
     opplysingeneStemmer,
     velgArbeidssituasjon,
+    velgArbeidstakerArbeidsledig,
 } from './user-actions'
 import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 import { userInteractionsGroup } from './test-utils'
@@ -21,6 +22,7 @@ test.describe('Arbeidssituasjon - Permittert', () => {
             navigateToFirstSykmelding('nye', '100%'),
             opplysingeneStemmer,
             velgArbeidssituasjon('permittert'),
+            velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/, 'permittert'),
             bekreftSykmelding,
         )(page)
 
