@@ -388,7 +388,9 @@ describe('sendSykmeldingMapping', () => {
                 arbeidsledig: null,
             })
         })
+    })
 
+    describe('Arbeidsledig', () => {
         it('should map a arbeidsledig correctly', () => {
             const sykmelding = sykmeldingApen()
             const mappedResult = mapSendSykmeldingValuesToV3Api(

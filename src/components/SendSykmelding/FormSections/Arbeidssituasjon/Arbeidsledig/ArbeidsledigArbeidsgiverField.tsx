@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
-import { useController } from 'react-hook-form'
+import { useController, useFormContext } from 'react-hook-form'
 
 import { TidligereArbeidsgiver } from 'queries'
 
@@ -8,6 +8,7 @@ import { QuestionWrapper, SectionWrapper } from '../../../../FormComponents/Form
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import { FormValues } from '../../../SendSykmeldingForm'
+import { ArbeidssituasjonType } from '../../../../../server/graphql/resolver-types.generated'
 
 interface Props {
     arbeidsgivere: readonly TidligereArbeidsgiver[]
@@ -18,6 +19,8 @@ function ArbeidsledigArbeidsgiverField({ arbeidsgivere }: Props): ReactElement |
         name: 'arbeidsledig.arbeidsledigFraOrgnummer',
         rules: { required: 'Du må svare på hvilket arbeid du har blitt arbeidsledig fra.' },
     })
+    const { watch } = useFormContext<FormValues>()
+    const arbeidssituasjon = watch('arbeidssituasjon') ?? ArbeidssituasjonType.ARBEIDSLEDIG
 
     return (
         <SectionWrapper>
@@ -25,13 +28,13 @@ function ArbeidsledigArbeidsgiverField({ arbeidsgivere }: Props): ReactElement |
                 <RadioGroup
                     {...field}
                     id={field.name}
-                    legend={sporsmal.arbeidsledigFra}
+                    legend={sporsmal.arbeidsledigFra(arbeidssituasjon)}
                     onChange={(value) => {
                         logAmplitudeEvent({
                             eventName: 'skjema spørsmål besvart',
                             data: {
                                 skjemanavn: 'endret arbeidssituasjon',
-                                spørsmål: sporsmal.arbeidsledigFra,
+                                spørsmål: sporsmal.arbeidsledigFra(arbeidssituasjon),
                                 svar: value,
                             },
                         })

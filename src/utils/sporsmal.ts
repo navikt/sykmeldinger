@@ -24,7 +24,8 @@ export const sporsmal = {
         velgBlad: 'Velg blad',
         lottEllerHyre: 'Mottar du lott eller er du på hyre?',
     },
-    arbeidsledigFra: 'Hvilken arbeidsgiver har du blitt arbeidsledig fra?',
+    arbeidsledigFra: (sykmeldtAs: ArbeidssituasjonType = ArbeidssituasjonType.ARBEIDSLEDIG) =>
+        `Hvilken arbeidsgiver har du blitt ${arbeidsSituasjonEnumToText(sykmeldtAs)} fra?`,
     erSykmeldtFraFlereArbeidsforhold: 'Er du syk fra flere arbeidsforhold i denne perioden?',
 }
 

@@ -100,10 +100,10 @@ export function velgArbeidstaker(arbeidstaker: RegExp) {
     }
 }
 
-export function velgArbeidstakerArbeidsledig(arbeidstaker: RegExp) {
+export function velgArbeidstakerArbeidsledig(arbeidstaker: RegExp, sykmeldtAs: string = 'arbeidsledig') {
     return async (page: Page): Promise<void> => {
         await getRadioInGroup(page)(
-            { name: /Hvilken arbeidsgiver har du blitt arbeidsledig/i },
+            { name: `Hvilken arbeidsgiver har du blitt ${sykmeldtAs}` },
             { name: arbeidstaker },
         ).click()
     }

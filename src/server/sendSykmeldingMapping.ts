@@ -136,7 +136,7 @@ export function mapSendSykmeldingValuesToV3Api(
         arbeidsledig: values.arbeidsledig?.arbeidsledigFraOrgnummer
             ? {
                   arbeidsledigFraOrgnummer: {
-                      sporsmaltekst: sporsmal.arbeidsledigFra,
+                      sporsmaltekst: sporsmal.arbeidsledigFra(ArbeidssituasjonType.ARBEIDSLEDIG),
                       svar: values.arbeidsledig.arbeidsledigFraOrgnummer,
                   },
               }
