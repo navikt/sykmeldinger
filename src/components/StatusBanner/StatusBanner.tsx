@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Alert, Detail, Heading } from '@navikt/ds-react'
+import { Alert, BodyShort, Detail } from '@navikt/ds-react'
 
 import { Behandlingsutfall, SykmeldingStatusFragment } from 'queries'
 
@@ -33,12 +33,14 @@ function StatusBanner({
     if (sykmeldingStatus.statusEvent === 'SENDT') {
         return (
             <Alert variant="success">
-                <Heading size="small" level="2" className="overflow-anywhere">
+                <BodyShort className="font-bold mb-6">
                     {isEgenmeldingsKvittering
-                        ? `Egenmeldingsdagene ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}`
-                        : `Sykmeldingen ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}`}
-                </Heading>
-                <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
+                        ? `Egenmeldingsdagene ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}.`
+                        : `Sykmeldingen ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}.`}
+                    {' Du finner den på Ditt sykefravær. Du får en melding fra oss hvis vi trenger noe mer fra deg.'}
+                </BodyShort>
+                <BodyShort className="font-bold mb-4">God bedring!</BodyShort>
+                <Detail>{'Sendt: ' + toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
         )
     }
@@ -46,10 +48,12 @@ function StatusBanner({
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
         return (
             <Alert variant="success">
-                <Heading size="small" level="2">
-                    {egenmeldt ? 'Egenmeldingen ble sendt til NAV' : 'Sykmeldingen ble sendt til NAV'}
-                </Heading>
-                <Detail>{toReadableDate(sykmeldingStatus.timestamp)}</Detail>
+                <BodyShort className="font-bold mb-6">
+                    {egenmeldt ? 'Egenmeldingen ble sendt til NAV.' : 'Sykmeldingen ble sendt til NAV.'}
+                    {' Du finner den på Ditt sykefravær. Du får en melding fra oss hvis vi trenger noe mer fra deg.'}
+                </BodyShort>
+                <BodyShort className="font-bold mb-4">God bedring!</BodyShort>
+                <Detail>{'Sendt: ' + toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
         )
     }

@@ -182,7 +182,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await navigateToFirstSykmelding('tidligere', '100%')(page)
 
-            await expect(page.getByRole('heading', { name: /Sykmeldingen ble sendt til/ })).toBeVisible()
+            await expect(page.getByText(/Sykmeldingen ble sendt til/)).toBeVisible()
             await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
 
             await expect(page).toHaveNoViolations()
@@ -195,7 +195,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await navigateToFirstSykmelding('tidligere', '100%')(page)
 
-            await expect(page.getByRole('heading', { name: /Sykmeldingen ble sendt til/ })).toBeVisible()
+            await expect(page.getByText(/Sykmeldingen ble sendt til/)).toBeVisible()
             await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
 
             await expect(page).toHaveNoViolations()

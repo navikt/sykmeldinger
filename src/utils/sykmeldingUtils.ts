@@ -47,6 +47,28 @@ export function getSykmeldingTitle(
 }
 
 /**
+ * Get the type of sykmelding
+ * Used for displaying the title.
+ * @return {string}
+ */
+export function getSentSykmeldingTitle(
+    sykmelding: SykmeldingFragment | undefined,
+):
+    | 'Sykmeldingen er sendt'
+    | 'Papirsykmeldingen er sendt'
+    | 'Egenmeldingen er sendt'
+    | 'Utenlandsk sykmelding er sendt' {
+    if (sykmelding && isUtenlandsk(sykmelding)) {
+        return 'Utenlandsk sykmelding er sendt'
+    } else if (sykmelding?.papirsykmelding) {
+        return 'Papirsykmeldingen er sendt'
+    } else if (sykmelding?.egenmeldt) {
+        return 'Egenmeldingen er sendt'
+    }
+    return 'Sykmeldingen er sendt'
+}
+
+/**
  * Get the first fom date of the earliest sykmelding period
  * @return {Date} The start date
  */

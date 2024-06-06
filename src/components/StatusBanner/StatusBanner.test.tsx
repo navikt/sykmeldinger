@@ -25,7 +25,7 @@ describe('StatusBanner', () => {
         }
 
         render(<StatusBanner sykmeldingStatus={sykmeldingStatus} behandlingsutfall={behandlingsutfall} />)
-        expect(screen.getByText('Sykmeldingen ble sendt til Politiet')).toBeInTheDocument()
+        expect(screen.getByText(/Sykmeldingen ble sendt til Politiet./)).toBeInTheDocument()
     })
 
     it('Renders Bekreftet banner', () => {
@@ -43,7 +43,7 @@ describe('StatusBanner', () => {
         }
 
         render(<StatusBanner sykmeldingStatus={sykmeldingStatus} behandlingsutfall={behandlingsutfall} />)
-        expect(screen.getByText('Sykmeldingen ble sendt til NAV')).toBeInTheDocument()
+        expect(screen.getByText(/Sykmeldingen ble sendt til NAV./)).toBeInTheDocument()
     })
 
     it('Renders Bekreftet egenmelding banner', () => {
@@ -61,7 +61,7 @@ describe('StatusBanner', () => {
         }
 
         render(<StatusBanner sykmeldingStatus={sykmeldingStatus} behandlingsutfall={behandlingsutfall} egenmeldt />)
-        expect(screen.getByText('Egenmeldingen ble sendt til NAV')).toBeInTheDocument()
+        expect(screen.getByText(/Egenmeldingen ble sendt til NAV./)).toBeInTheDocument()
     })
 
     it('Renders bekreftet avvist banner', () => {

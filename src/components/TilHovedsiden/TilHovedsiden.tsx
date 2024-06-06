@@ -8,7 +8,7 @@ function TilHovedsiden(): ReactElement {
     return (
         <Link href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT} className="mt-8">
             <ChevronLeftIcon role="img" aria-hidden />
-            <BodyShort>Til hovedsiden ditt sykefravær</BodyShort>
+            <BodyShort>Til hovedsiden Ditt sykefravær</BodyShort>
         </Link>
     )
 }
