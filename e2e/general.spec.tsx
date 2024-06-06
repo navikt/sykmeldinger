@@ -18,7 +18,7 @@ test.describe('sykmelding page tests that are not specific to a user', () => {
         await gotoScenario('noBrukerSvar')(page)
         await navigateToFirstSykmelding('tidligere', '100%')(page)
 
-        await expect(page.getByRole('heading', { name: /Sykmeldingen ble sendt til/ })).toBeVisible()
+        await expect(page.getByText(/Sykmeldingen ble sendt til/)).toBeVisible()
         await expect(page.getByRole('heading', { name: 'Opplysninger fra sykmeldingen' })).toBeVisible()
         await expect(page.getByRole('region', { name: 'Flere opplysninger' })).toBeVisible()
         await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()

@@ -43,7 +43,7 @@ test.describe('Avbryt sykmelding', () => {
         await page.getByRole('button', { name: /Ja, jeg er sikker/ }).click()
 
         await expect(page.getByText(/Sykmeldingen ble avbrutt av deg/)).toBeVisible()
-        await expect(page.getByRole('button', { name: 'Ferdig' })).toBeVisible()
+        await expect(page.getByRole('button', { name: 'Tilbake til Ditt sykefravær' })).toBeVisible()
 
         await expect(page).toHaveNoViolations()
     })
@@ -57,7 +57,7 @@ test.describe('Avbryt sykmelding', () => {
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
         await page.waitForURL('**/kvittering')
-        await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
+        await expect(page.getByText(/Sykmeldingen ble sendt til NAV./)).toBeVisible()
 
         await gotoRoot(page)
         await navigateToFirstSykmelding('tidligere', '100%')(page)

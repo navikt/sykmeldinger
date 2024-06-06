@@ -15,7 +15,7 @@ import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import Header from '../../components/Header/Header'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
-import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
+import { getReadableSykmeldingLength, getSentSykmeldingTitle } from '../../utils/sykmeldingUtils'
 import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding'
 import SykmeldingArbeidsgiverExpansionCard from '../../components/Sykmelding/SykmeldingerArbeidsgiver/SykmeldingArbeidsgiverExpansionCard'
 import SykmeldingSykmeldtSection from '../../components/Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
@@ -210,7 +210,7 @@ function KvitteringWrapper({
             {sykmelding == null ? (
                 <Header skeleton />
             ) : (
-                <Header title={getSykmeldingTitle(sykmelding)} subTitle={getReadableSykmeldingLength(sykmelding)} />
+                <Header title={getSentSykmeldingTitle(sykmelding)} subTitle={getReadableSykmeldingLength(sykmelding)} />
             )}
             <PageWrapper>{children}</PageWrapper>
         </>

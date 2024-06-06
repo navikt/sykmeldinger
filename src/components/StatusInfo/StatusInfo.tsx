@@ -1,18 +1,7 @@
 import { ReactElement } from 'react'
 import { BodyShort, GuidePanel, Link, Heading } from '@navikt/ds-react'
 
-import {
-    ShortName,
-    SvarUnion_JaNeiSvar_Fragment,
-    ArbeidssituasjonType,
-    YesOrNo,
-    Merknad,
-    Merknadtype,
-    Periode,
-    Periodetype,
-    SvarUnion_ArbeidssituasjonSvar_Fragment,
-    SykmeldingStatusFragment,
-} from 'queries'
+import { Merknad, Merknadtype, Periode, Periodetype, SykmeldingStatusFragment } from 'queries'
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatusFragment
@@ -28,20 +17,6 @@ function StatusInfo({
     const erAvventende = sykmeldingsperioder.some((p) => p.type === Periodetype.AVVENTENDE)
 
     const erUnderBehandlingTilbakedatert = sykmeldingMerknader.some((it) => it.type === Merknadtype.UNDER_BEHANDLING)
-
-    const arbeidssituasjonSporsmal = sykmeldingStatus.sporsmalOgSvarListe
-        .flatMap((it) => it.svar)
-        .find((svar): svar is SvarUnion_ArbeidssituasjonSvar_Fragment => svar.__typename === 'ArbeidssituasjonSvar')
-
-    const harForsikringSporsmal = sykmeldingStatus.sporsmalOgSvarListe
-        .filter((spmOgSvar) => spmOgSvar.shortName === ShortName.FORSIKRING)
-        .flatMap((it) => it.svar)
-        .find((svar): svar is SvarUnion_JaNeiSvar_Fragment => svar.__typename === 'JaNeiSvar')
-
-    const erFlEllerSnHarForsikring =
-        (arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.FRILANSER ||
-            arbeidssituasjonSporsmal?.arbeidsituasjon === ArbeidssituasjonType.NAERINGSDRIVENDE) &&
-        harForsikringSporsmal?.jaNei === YesOrNo.NO
 
     if (sykmeldingStatus.statusEvent !== 'SENDT' && sykmeldingStatus.statusEvent !== 'BEKREFTET') return null
 
@@ -97,43 +72,17 @@ function StatusInfo({
 
     return (
         <div data-testid="status-info">
-            <GuidePanel poster className="mb-8">
-                <div className="mb-4">
-                    <BodyShort>
-                        Takk, da har vi fått det vi trenger. Du får en melding fra oss hvis vi trenger noe mer fra deg.
-                    </BodyShort>
-                </div>
-
-                <div>
-                    <BodyShort>God bedring!</BodyShort>
-                </div>
-            </GuidePanel>
-
             <div className="my-8 rounded-medium bg-surface-subtle p-8">
                 <Heading spacing size="small" level="3">
-                    Greit å vite
+                    Skal du reise utenfor EØS når du er sykmeldt?
                 </Heading>
-
-                {erFlEllerSnHarForsikring && (
-                    <BodyShort className="mb-4">
-                        NAV dekker ikke de{' '}
-                        <Link href="https://www.nav.no/sykepenger#hvem-kan-fa" target="_blank">
-                            første 16 dagene
-                        </Link>{' '}
-                        av sykefraværet, med mindre du har tegnet{' '}
-                        <Link href="https://www.nav.no/forsikring-selvstendig-naringsdrivende" target="_blank">
-                            forsikring
-                        </Link>
-                        .
-                    </BodyShort>
-                )}
-
                 <BodyShort>
-                    Hvis du vurderer å reise utenfor EØS mens du er sykmeldt, må du{' '}
-                    <Link href="https://www.nav.no/syk/sykepengesoknad/sykepengesoknad-utland" target="_blank">
-                        søke om å beholde
-                    </Link>{' '}
-                    sykepengene før du reiser.
+                    Hvis du skal reise utenfor EØS når du er sykmeldt, kan du miste retten til sykepenger. Du kan søke
+                    NAV om å beholde sykepengene dine mens du er på reise. Du må sende søknaden på forhånd, og jo før du
+                    søker, jo bedre. Les mer om reise utenfor EØS og send søknad på{' '}
+                    <Link href="https://www.nav.no/sykepenger#sok-opphold-utland" target="_bland">
+                        nav.no/sykepenger#sok-opphold-utland
+                    </Link>
                 </BodyShort>
             </div>
         </div>

@@ -12,7 +12,7 @@ type HeaderSkeletonProps = {
 
 export type HeaderProps = HeaderNormalProps | HeaderSkeletonProps
 
-function Header(props: HeaderProps): ReactElement | null {
+function Header(props: HeaderProps): ReactElement {
     return (
         <div className="mx-auto flex max-w-2xl items-center p-4">
             <div>

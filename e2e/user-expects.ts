@@ -14,14 +14,12 @@ export function expectKvittering(opts: {
 }) {
     return async (page: Page): Promise<void> => {
         await page.waitForURL('**/kvittering')
-        await expect(page.getByRole('button', { name: /Ferdig/ })).toBeVisible()
+        await expect(page.getByRole('button', { name: /Tilbake til Ditt sykefravær/ })).toBeVisible()
 
         if (opts.sendtTil === 'NAV') {
-            await expect(page.getByRole('heading', { name: 'Sykmeldingen ble sendt til NAV' })).toBeVisible()
+            await expect(page.getByText(/Sykmeldingen ble sendt til NAV./)).toBeVisible()
         } else {
-            await expect(
-                page.getByRole('heading', { name: new RegExp(`Sykmeldingen ble sendt til ${opts.sendtTil}`) }),
-            ).toBeVisible()
+            await expect(page.getByText(`Sykmeldingen ble sendt til ${opts.sendtTil}.`)).toBeVisible()
         }
 
         if (opts.egenmeldingsdager === ExpectMeta.NotInDom) {

@@ -10,7 +10,7 @@ export const InfoOmDigitalSykmelding = (): ReactElement => (
             <section>
                 <BodyLong spacing>
                     NAV får alle sykmeldinger som blir skrevet i Norge. Den som er sykmeldt, finner den på{' '}
-                    <Link href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}>ditt sykefravær</Link>, der du er logget
+                    <Link href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}>Ditt sykefravær</Link>, der du er logget
                     inn nå.
                 </BodyLong>
                 <BodyLong spacing>

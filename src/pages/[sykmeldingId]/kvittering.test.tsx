@@ -62,9 +62,7 @@ describe('kvittering page', () => {
     }
 
     async function waitForQueriesLoaded(): Promise<void> {
-        expect(
-            await screen.findByRole('heading', { name: /Sykmeldingen ble sendt til Default Arbeidsgiverssen AS/ }),
-        ).toBeInTheDocument()
+        expect(await screen.findByText(/Sykmeldingen ble sendt til Default Arbeidsgiverssen AS/)).toBeInTheDocument()
         expect(await screen.findByRole('heading', { name: 'Sykmeldingen gjelder' })).toBeInTheDocument()
     }
 
@@ -144,7 +142,7 @@ describe('kvittering page', () => {
 
         setup([previousSendtSykmelding, confirmedSykmelding])
 
-        expect(await screen.findByRole('heading', { name: /Sykmeldingen ble sendt til NAV/ })).toBeInTheDocument()
+        expect(await screen.findByText(/Sykmeldingen ble sendt til NAV./)).toBeInTheDocument()
         expect(await screen.findByRole('heading', { name: 'Sykmeldingen gjelder' })).toBeInTheDocument()
 
         expect(screen.queryByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()

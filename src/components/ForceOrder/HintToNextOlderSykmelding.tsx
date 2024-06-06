@@ -28,18 +28,18 @@ function HintToNextOlderSykmelding(): ReactElement | null {
     if (dontShowYet) return null
     if (isDone) {
         return (
-            <div className="mt-8 flex items-center justify-center">
+            <div className="mt-8">
                 <Button
                     as="a"
                     href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}
                     onClick={() =>
                         logAmplitudeEvent({
                             eventName: 'navigere',
-                            data: { destinasjon: 'ditt sykefravær', lenketekst: 'Ferdig' },
+                            data: { destinasjon: 'ditt sykefravær', lenketekst: 'Tilbake til Ditt sykefravær' },
                         })
                     }
                 >
-                    Ferdig
+                    Tilbake til Ditt sykefravær
                 </Button>
             </div>
         )

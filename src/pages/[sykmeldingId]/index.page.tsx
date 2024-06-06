@@ -4,10 +4,10 @@ import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
 import { range } from 'remeda'
 
-import { SykmeldingFragment } from 'queries'
+import { StatusEvent, SykmeldingFragment } from 'queries'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
-import { getReadableSykmeldingLength, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
+import { getReadableSykmeldingLength, getSentSykmeldingTitle, getSykmeldingTitle } from '../../utils/sykmeldingUtils'
 import useFindOlderSykmeldingId from '../../hooks/useFindOlderSykmeldingId'
 import OkBekreftetSykmelding from '../../components/SykmeldingViews/OK/BEKREFTET/OkBekreftetSykmelding'
 import OkAvbruttSykmelding from '../../components/SykmeldingViews/OK/AVBRUTT/OkAvbruttSykmelding'
@@ -219,7 +219,15 @@ function SykmeldingerWrapper({
                 {sykmelding == null ? (
                     <Header skeleton />
                 ) : (
-                    <Header title={getSykmeldingTitle(sykmelding)} subTitle={getReadableSykmeldingLength(sykmelding)} />
+                    <Header
+                        title={
+                            sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT ||
+                            sykmelding.sykmeldingStatus.statusEvent === StatusEvent.BEKREFTET
+                                ? getSentSykmeldingTitle(sykmelding)
+                                : getSykmeldingTitle(sykmelding)
+                        }
+                        subTitle={getReadableSykmeldingLength(sykmelding)}
+                    />
                 )}
                 <PageWrapper>
                     {children}
