@@ -61,7 +61,7 @@
         "remeda": "^1.61.0",
         "tailwind-merge": "^2.3.0",
         "uuid": "^9.0.1",
-        "vite": "^5.2.11",
+        "vite": "^5.2.12",
         "zod": "^3.23.8"
     },
     "devDependencies": {
