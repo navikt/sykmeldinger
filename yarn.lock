@@ -2287,6 +2287,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-tools/schema@npm:^10.0.4":
+  version: 10.0.4
+  resolution: "@graphql-tools/schema@npm:10.0.4"
+  dependencies:
+    "@graphql-tools/merge": "npm:^9.0.3"
+    "@graphql-tools/utils": "npm:^10.2.1"
+    tslib: "npm:^2.4.0"
+    value-or-promise: "npm:^1.0.12"
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 10/c2144949d98096c7f51ac0ecd9979d525e5b1b0f6b31c87961277fcefc82286ad9a9f55e93c2c3fd36745a1ef9ac341ec395d0db2c071a55a2a228ab563c953a
+  languageName: node
+  linkType: hard
+
 "@graphql-tools/schema@npm:^9.0.0":
   version: 9.0.19
   resolution: "@graphql-tools/schema@npm:9.0.19"
@@ -2335,6 +2349,20 @@ __metadata:
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
   checksum: 10/e2e8362ac5d30b037d770559e66c634bb6903c76f4c57299a7426eb10dbd1d982605f3bf29cd948246d53f2f639d8f01fd905a392d7f58836f1827707f716d48
+  languageName: node
+  linkType: hard
+
+"@graphql-tools/utils@npm:^10.2.1":
+  version: 10.2.1
+  resolution: "@graphql-tools/utils@npm:10.2.1"
+  dependencies:
+    "@graphql-typed-document-node/core": "npm:^3.1.1"
+    cross-inspect: "npm:1.0.0"
+    dset: "npm:^3.1.2"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 10/ba291a4056cc66f13d7550a0e00ccfd4278c7b8ef6f9710b4e9670ce696c22c75ce5eeb51a5248c09256c338b98505d49cdfad95d7edc9b8aaa9c7796700b46a
   languageName: node
   linkType: hard
 
@@ -11945,7 +11973,7 @@ __metadata:
     "@graphql-codegen/typescript-resolvers": "npm:4.1.0"
     "@graphql-tools/graphql-file-loader": "npm:^8.0.1"
     "@graphql-tools/load": "npm:^8.0.2"
-    "@graphql-tools/schema": "npm:^10.0.3"
+    "@graphql-tools/schema": "npm:^10.0.4"
     "@graphql-typed-document-node/core": "npm:^3.2.0"
     "@hookform/devtools": "npm:^4.3.1"
     "@navikt/aksel-icons": "npm:6.8.0"
