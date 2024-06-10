@@ -7,9 +7,9 @@ import {
     MAX_EGENMELDINGSDAGER,
 } from '../components/FormComponents/Egenmelding/EgenmeldingerField'
 
-const hasMoreThan16Dates: (perioder: EgenmeldingsdagerFormValue[]) => boolean = R.createPipe(
+const hasMoreThan16Dates: (perioder: EgenmeldingsdagerFormValue[]) => boolean = R.piped(
     R.flatMap(R.prop('datoer')),
-    R.compact,
+    R.filter(R.isTruthy),
     R.length(),
     (it) => it >= MAX_EGENMELDINGSDAGER,
 )

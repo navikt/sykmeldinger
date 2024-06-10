@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Accordion, Alert } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
-import { groupBy } from 'remeda'
+import * as R from 'remeda'
 
 import { SykmeldingFragment } from 'queries'
 
@@ -72,7 +72,10 @@ const groupByPredicate = (sykmelding: SykmeldingFragment): keyof SykmeldingSecti
 }
 
 function filterSykmeldinger(sykmeldinger: readonly SykmeldingFragment[]): SykmeldingSections {
-    const grouped: Record<keyof SykmeldingSections, SykmeldingFragment[]> = groupBy(sykmeldinger, groupByPredicate)
+    const grouped: Partial<Record<keyof SykmeldingSections, SykmeldingFragment[]>> = R.groupBy(
+        sykmeldinger,
+        (sykmelding) => groupByPredicate(sykmelding),
+    )
 
     return {
         apenSykmeldinger: grouped.apenSykmeldinger ?? [],

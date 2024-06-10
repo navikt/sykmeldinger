@@ -66,7 +66,7 @@ function selectEgenmeldingsdager({
         }
         await section.getByRole('button', { name: /Videre/ }).click()
 
-        const earliestDate = R.minBy(datesToClick, (date) => date.getTime())!
+        const earliestDate = R.firstBy(datesToClick, (date) => date.getTime())!
         return await selectEgenmeldingsdager({
             daysToSelect: restDays as [...number[][], 'Nei'],
             initialDate: sub(earliestDate, { days: 16 }),

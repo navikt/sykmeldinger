@@ -3,7 +3,7 @@ import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Lin
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { toPairs } from 'remeda'
+import * as R from 'remeda'
 
 import { BrukerinformasjonDocument, Dev_ChangeUserScenarioDocument, Dev_SetAntallArbeidsgivereDocument } from 'queries'
 
@@ -115,7 +115,7 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
                     'pointer-events-none': loading,
                 })}
             >
-                {toPairs.strict(simpleScenarios).map(([key, { description }]) => {
+                {R.entries(simpleScenarios).map(([key, { description }]) => {
                     return (
                         <li key={key}>
                             <LinkPanel
@@ -137,7 +137,7 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
                     'pointer-events-none': loading,
                 })}
             >
-                {toPairs.strict(otherScenarios).map(([key, { description }]) => {
+                {R.entries(otherScenarios).map(([key, { description }]) => {
                     return (
                         <li key={key}>
                             <LinkPanel

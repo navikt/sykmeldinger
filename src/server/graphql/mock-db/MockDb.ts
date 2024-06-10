@@ -104,26 +104,29 @@ class MockDb {
             }
         }
 
-        const sporsmalOgSvarListe: Sporsmal[] = R.compact([
-            {
-                shortName: ShortName.ARBEIDSSITUASJON,
-                svar: {
-                    svarType: Svartype.ARBEIDSSITUASJON,
-                    svar: values.arbeidssituasjon as ArbeidssituasjonType,
+        const sporsmalOgSvarListe: Sporsmal[] = R.filter(
+            [
+                {
+                    tekst: 'Hva er din arbeidssituasjon?',
+                    shortName: ShortName.ARBEIDSSITUASJON,
+                    svar: {
+                        svarType: Svartype.ARBEIDSSITUASJON as Svartype.ARBEIDSSITUASJON,
+                        svar: values.arbeidssituasjon as ArbeidssituasjonType,
+                    },
                 },
-                tekst: 'Hva er din arbeidssituasjon?',
-            },
-            values.egenmeldingsdager != null && values.egenmeldingsdager.length > 0
-                ? {
-                      shortName: ShortName.EGENMELDINGSDAGER,
-                      tekst: 'Brukte du egenmeldingsdager?',
-                      svar: {
-                          svarType: Svartype.DAGER,
-                          svar: values.egenmeldingsdager as string[],
-                      },
-                  }
-                : null,
-        ])
+                values.egenmeldingsdager != null && values.egenmeldingsdager.length > 0
+                    ? {
+                          tekst: 'Brukte du egenmeldingsdager?',
+                          shortName: ShortName.EGENMELDINGSDAGER,
+                          svar: {
+                              svarType: Svartype.DAGER as Svartype.DAGER,
+                              svar: values.egenmeldingsdager as string[],
+                          },
+                      }
+                    : null,
+            ],
+            R.isTruthy,
+        )
 
         if (
             values.arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER ||

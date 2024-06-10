@@ -19,10 +19,10 @@ function UtdypendeOpplysninger({ utdypendeOpplysninger, parentId }: Props): Reac
 
     const sporsmalsToShow: SporsmalSvarTuple[] = R.pipe(
         utdypendeOpplysninger,
-        R.values,
-        R.flatMap(R.values),
+        R.values(),
+        R.flatMap(R.values()),
         R.map((it): SporsmalSvarTuple | null => (it.sporsmal != null ? [it.sporsmal, it.svar] : null)),
-        R.compact,
+        R.filter(R.isTruthy),
     )
 
     return (
