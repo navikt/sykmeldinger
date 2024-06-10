@@ -10891,10 +10891,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^1.61.0":
-  version: 1.61.0
-  resolution: "remeda@npm:1.61.0"
-  checksum: 10/0b0ec8688e340c7525a8788e99701b174ddca2eaf230d47f9e087d9aaccd54c7181a1f58bf4f95cb9c12bc1d26f03b17e3d3d9046a59225074a7ac3fa1356da3
+"remeda@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "remeda@npm:2.0.8"
+  dependencies:
+    type-fest: "npm:^4.18.2"
+  checksum: 10/661f26771c41c1331128ab4bd94334b5b2edec63a39e11859cda3cc67acec769ea6c4491a303f9b78d14042ddb4e4f42df4d583f58e1ec4602f60bb37861840d
   languageName: node
   linkType: hard
 
@@ -12043,7 +12045,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-hook-form: "npm:7.51.5"
-    remeda: "npm:^1.61.0"
+    remeda: "npm:^2.0.8"
     tailwind-merge: "npm:^2.3.0"
     tailwindcss: "npm:^3.4.4"
     typescript: "npm:^5.4.5"
@@ -12435,6 +12437,13 @@ __metadata:
   version: 0.21.3
   resolution: "type-fest@npm:0.21.3"
   checksum: 10/f4254070d9c3d83a6e573bcb95173008d73474ceadbbf620dd32d273940ca18734dff39c2b2480282df9afe5d1675ebed5499a00d791758748ea81f61a38961f
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.18.2":
+  version: 4.20.0
+  resolution: "type-fest@npm:4.20.0"
+  checksum: 10/df037c11f6393312f27825ea6eb2c8cd62b1ba21c31144bed41854648ba2a18dcb8c68a930607c7227dd531b42006cc7c7a60f7f034668d1c92c205523ae1ea2
   languageName: node
   linkType: hard
 
