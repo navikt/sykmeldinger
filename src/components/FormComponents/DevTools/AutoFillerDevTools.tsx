@@ -28,7 +28,7 @@ function AutoFillerDevTools(): ReactElement | null {
             focusButton: true,
         }
 
-        R.keys.strict(values).forEach((key, index) => {
+        R.keys(values).forEach((key, index) => {
             setTimeout(() => {
                 if (key === 'focusButton') {
                     // last step

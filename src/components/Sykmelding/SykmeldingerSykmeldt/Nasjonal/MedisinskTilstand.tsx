@@ -32,7 +32,7 @@ function MedisinskTilstand({ isV3, medisinskVurdering, parentId }: Props): React
             {R.pipe(
                 medisinskVurdering.biDiagnoser,
                 R.map(R.prop('tekst')),
-                R.compact,
+                R.filter(R.isTruthy),
                 R.map((tekst) => (
                     <SykmeldingInfo key={tekst} heading="Bidiagnose" variant="gray">
                         {tekst}

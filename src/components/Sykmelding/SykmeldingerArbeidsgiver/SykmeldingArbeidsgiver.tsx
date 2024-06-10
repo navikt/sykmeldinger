@@ -41,8 +41,8 @@ function SykmeldingArbeidsgiver({ sykmelding, chosenEgenmeldingsdager }: Sykmeld
             {R.pipe(
                 sykmelding.sykmeldingsperioder,
                 R.map(R.prop('aktivitetIkkeMulig')),
-                R.compact,
-                R.map.indexed((it, index) => (
+                R.filter(R.isTruthy),
+                R.map((it, index) => (
                     <AktivitetIkkeMulig
                         key={
                             it.arbeidsrelatertArsak?.arsak.join('-') ?? it.medisinskArsak?.arsak.join('-') ?? 'unknown'
