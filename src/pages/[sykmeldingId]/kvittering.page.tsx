@@ -26,6 +26,8 @@ import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Ege
 import Feedback from '../../components/Feedback/Feedback'
 import { useFlag } from '../../toggles/context'
 
+import EHelseforsikring from './e-helseforsikring'
+
 function SykmeldingkvitteringPage(): ReactElement {
     const feedbackToggle = useFlag('SYKMELDINGER_FLEXJAR_KVITTERING')
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -144,6 +146,8 @@ function SykmeldingkvitteringPage(): ReactElement {
                     />
                 </div>
             )}
+
+            <EHelseforsikring />
         </KvitteringWrapper>
     )
 }
