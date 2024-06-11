@@ -50,7 +50,6 @@ export interface FormValues extends EgenmeldingsdagerSubForm {
     }
     extra: {
         annetSituasjon: string | null
-        annetSituasjonTekst: string | null
     } | null
     arbeidsledig: {
         arbeidsledigFraOrgnummer: string | null
@@ -102,8 +101,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
                 { 'antall egenmeldingsdager': values.egenmeldingsdager?.length ?? null },
             )
 
-            const annetSituationExtraValue: string | null =
-                values.extra?.annetSituasjonTekst ?? values.extra?.annetSituasjon ?? null
+            const annetSituationExtraValue: string | null = values.extra?.annetSituasjon ?? null
 
             if (annetSituationExtraValue) {
                 logAmplitudeEvent({
