@@ -3,6 +3,8 @@ import { BodyShort, GuidePanel, Link, Heading } from '@navikt/ds-react'
 
 import { Merknad, Merknadtype, Periode, Periodetype, SykmeldingStatusFragment } from 'queries'
 
+import { logAmplitudeEvent } from '../../amplitude/amplitude'
+
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatusFragment
     sykmeldingsperioder: readonly Periode[]
@@ -80,7 +82,19 @@ function StatusInfo({
                     Hvis du skal reise utenfor EØS når du er sykmeldt, kan du miste retten til sykepenger. Du kan søke
                     NAV om å beholde sykepengene dine mens du er på reise. Du må sende søknaden på forhånd, og jo før du
                     søker, jo bedre. Les mer om reise utenfor EØS og send søknad på{' '}
-                    <Link href="https://www.nav.no/sykepenger#sok-opphold-utland" target="_bland">
+                    <Link
+                        href="https://www.nav.no/sykepenger#sok-opphold-utland"
+                        target="_bland"
+                        onClick={() =>
+                            logAmplitudeEvent({
+                                eventName: 'navigere',
+                                data: {
+                                    destinasjon: 'opphold i utland info',
+                                    lenketekst: 'Sykepenger sok opphold utland',
+                                },
+                            })
+                        }
+                    >
                         nav.no/sykepenger#sok-opphold-utland
                     </Link>
                 </BodyShort>
