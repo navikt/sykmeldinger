@@ -77,12 +77,12 @@ function StatusInfo({
         <div data-testid="status-info">
             <div className="my-8 rounded-medium bg-surface-subtle p-8">
                 <Heading spacing size="small" level="3">
-                    Skal du reise utenfor EØS når du er sykmeldt?
+                    Skal du reise utenfor EU/EØS når du er sykmeldt?
                 </Heading>
                 <BodyShort>
-                    Hvis du skal reise utenfor EØS når du er sykmeldt, kan du miste retten til sykepenger. Du kan søke
-                    NAV om å beholde sykepengene dine mens du er på reise. Du må sende søknaden på forhånd, og jo før du
-                    søker, jo bedre. Les mer om reise utenfor EØS og send søknad på{' '}
+                    Hvis du skal reise utenfor EU/EØS når du er sykmeldt, kan du miste retten til sykepenger. Du kan
+                    søke NAV om å beholde sykepengene dine mens du er på reise. Du bør sende søknaden på forhånd, og jo
+                    tidligere du søker, jo bedre. Les mer om reise utenfor EU/EØS og send søknad på{' '}
                     <Link
                         href={`${browserEnv.NEXT_PUBLIC_SYKEPENGESOKNAD_URL}/sykepengesoknad-utland`}
                         target="_bland"
@@ -98,6 +98,7 @@ function StatusInfo({
                     >
                         nav.no/syk/sykepengesoknad/sykepengesoknad-utland
                     </Link>
+                    .
                 </BodyShort>
             </div>
         </div>

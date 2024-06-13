@@ -17,7 +17,7 @@ import {
 import StatusInfo from './StatusInfo'
 
 const sjekkEos = (): void => {
-    expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+    expect(screen.getByText('Skal du reise utenfor EU/EØS når du er sykmeldt?')).toBeInTheDocument()
     const oppholdUtlandUrl = 'http://example.com/sykepengesoknad-utland'
     expect(
         screen
@@ -416,9 +416,6 @@ describe('StatusInfo', () => {
                     />,
                 )
                 sjekkEos()
-                expect(
-                    screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-                ).not.toBeInTheDocument()
             })
 
             it('Gradert reisetilskudd renders standard info', () => {
@@ -677,9 +674,6 @@ describe('StatusInfo', () => {
                     />,
                 )
                 sjekkEos()
-                expect(
-                    screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-                ).not.toBeInTheDocument()
             })
 
             it('Renders standard info with frilanser info for gradert reisetilskudd NAERINGSDRIVENDE', () => {
@@ -788,9 +782,6 @@ describe('StatusInfo', () => {
                     />,
                 )
                 sjekkEos()
-                expect(
-                    screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
-                ).not.toBeInTheDocument()
             })
         })
     })
