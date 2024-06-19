@@ -4,7 +4,7 @@ import { ReactElement } from 'react'
 
 function EHelseforsikring(): ReactElement {
     return (
-        <Box className="mt-20" padding="6" background="surface-info-subtle">
+        <Box padding="6" background="surface-info-subtle">
             <Heading size="small" level="4" spacing>
                 Fikk du denne sykmeldingen uten å møte opp på legekontoret?
             </Heading>

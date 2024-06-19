@@ -117,6 +117,10 @@ function SykmeldingkvitteringPage(): ReactElement {
             </div>
 
             <div className="mb-8">
+                <EHelseforsikring />
+            </div>
+
+            <div className="mb-8">
                 <UxSignalsWidget />
             </div>
 
@@ -146,8 +150,6 @@ function SykmeldingkvitteringPage(): ReactElement {
                     />
                 </div>
             )}
-
-            <EHelseforsikring />
         </KvitteringWrapper>
     )
 }
