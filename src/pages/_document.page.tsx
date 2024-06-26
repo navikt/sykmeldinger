@@ -13,10 +13,10 @@ const getDocumentParameter = (initialProps: DocumentInitialProps, name: string):
     return initialProps.head?.find((element) => element?.props?.name === name)?.props?.content
 }
 
-function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prodNext' {
+function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
     if (ctx.pathname === '/500' || ctx.pathname === '/404' || process.env.NODE_ENV === 'development') {
         // Blir statisk kompilert i GHA så må hentes defra
-        return 'prodNext'
+        return 'prod'
     }
 
     switch (browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT) {
@@ -26,7 +26,7 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prodNext' {
             return 'dev'
         case 'demo':
         case 'production':
-            return 'prodNext'
+            return 'prod'
         default:
             throw new Error(`Unknown runtime environment: ${browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT}`)
     }
