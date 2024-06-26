@@ -55,6 +55,9 @@ spec:
           namespace: flex
         - application: nav-dekoratoren
           namespace: personbruker
+        # TODO: Can be removed when decorator-next goes live
+        - application: decorator-next
+          namespace: personbruker
         - application: flexjar-backend
           namespace: flex
       external:
