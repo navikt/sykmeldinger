@@ -1129,12 +1129,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commander-js/extra-typings@npm:12.0.1":
-  version: 12.0.1
-  resolution: "@commander-js/extra-typings@npm:12.0.1"
+"@commander-js/extra-typings@npm:12.1.0":
+  version: 12.1.0
+  resolution: "@commander-js/extra-typings@npm:12.1.0"
   peerDependencies:
-    commander: ~12.0.0
-  checksum: 10/cd094ec7fa789dd91e20942727f18811b05bdd0006dfeefddbd3054e4ef89592bb20b7a1e93edfa86a77603045c714231a8ae7804ad153775258e74f9f378208
+    commander: ~12.1.0
+  checksum: 10/489ef40dcf18508da5d8db288fa1536e294773b8d07e4c1edee6709972fe4310e3713819ef10bdc1d234615c5cf42df6acf9ddce0b31c6c8114be704fd626971
   languageName: node
   linkType: hard
 
@@ -2653,17 +2653,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:14.1.2":
-  version: 14.1.2
-  resolution: "@next/env@npm:14.1.2"
-  checksum: 10/e81c94784c04b92b006ccd3da9f7f8c730571a721824bb09b8116d7f9caad3ac0fae1cc45bdd3b0e0119c6d42cbf52d664f39e8a5c80ed5d63e91f994e1d2813
-  languageName: node
-  linkType: hard
-
 "@next/env@npm:14.2.3":
   version: 14.2.3
   resolution: "@next/env@npm:14.2.3"
   checksum: 10/82b445331d46b4896dc86c0e33a7eaaa6f6abfd2408d49e1cb90fbfd6b26c698ea8e69c911ffe597e30fd8294db4e3445cde44b0771eabbfcd13663a9832a397
+  languageName: node
+  linkType: hard
+
+"@next/env@npm:14.2.4":
+  version: 14.2.4
+  resolution: "@next/env@npm:14.2.4"
+  checksum: 10/1f48bd96dd92a98b8e7ccfbd494f5893174721cb164dfda898728db37c0413fe0ca71872c1c7c56a46419a417137bc3aaa3e53543f938bea14589f68474bfd73
   languageName: node
   linkType: hard
 
@@ -2763,16 +2763,6 @@ __metadata:
     "@nodelib/fs.scandir": "npm:2.1.5"
     fastq: "npm:^1.6.0"
   checksum: 10/40033e33e96e97d77fba5a238e4bba4487b8284678906a9f616b5579ddaf868a18874c0054a75402c9fbaaa033a25ceae093af58c9c30278e35c23c9479e79b0
-  languageName: node
-  linkType: hard
-
-"@npmcli/agent@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@npmcli/agent@npm:1.1.0"
-  dependencies:
-    lru-cache: "npm:^7.18.3"
-    socks: "npm:^2.7.1"
-  checksum: 10/42ac24f1da2f9647cb98a9887ab1b63d33f3fc874873f16efc1b52c38a3fc57129449184f0931421b10b84e6bf006d7c5b68d2daed9a68153ad0333900a63da4
   languageName: node
   linkType: hard
 
@@ -4133,34 +4123,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unleash/nextjs@npm:^1.4.3":
-  version: 1.4.3
-  resolution: "@unleash/nextjs@npm:1.4.3"
+"@unleash/nextjs@npm:^1.4.4":
+  version: 1.4.4
+  resolution: "@unleash/nextjs@npm:1.4.4"
   dependencies:
-    "@commander-js/extra-typings": "npm:12.0.1"
-    "@next/env": "npm:14.1.2"
-    "@unleash/proxy-client-react": "npm:4.2.3"
-    commander: "npm:12.0.0"
+    "@commander-js/extra-typings": "npm:12.1.0"
+    "@next/env": "npm:14.2.4"
+    "@unleash/proxy-client-react": "npm:4.3.0"
+    commander: "npm:12.1.0"
     murmurhash3js: "npm:3.0.1"
-    semver: "npm:7.6.0"
-    unleash-client: "npm:5.5.1"
-    unleash-proxy-client: "npm:3.4.0"
+    semver: "npm:7.6.2"
+    unleash-client: "npm:5.5.5"
+    unleash-proxy-client: "npm:3.5.1"
   peerDependencies:
     next: ">=12"
     react: ">=17"
     react-dom: ">=17"
   bin:
     unleash: dist/cli/index.js
-  checksum: 10/c430e342cebf0cc5111af309fac0e5ad4fad787b10195412646a3259aacaa437d89690ab961fd22916068eb7d8ac65561f134f749c249c16a3831ecb973df217
+  checksum: 10/d9e9ab2c2dddeea0f3963411fef49effa0b44e3af3e50c782637d46d6f2d2a204f82761061b1442e9faa5026cf4701ffa59af57ae4d2802482018fbf29d38e59
   languageName: node
   linkType: hard
 
-"@unleash/proxy-client-react@npm:4.2.3":
-  version: 4.2.3
-  resolution: "@unleash/proxy-client-react@npm:4.2.3"
+"@unleash/proxy-client-react@npm:4.3.0":
+  version: 4.3.0
+  resolution: "@unleash/proxy-client-react@npm:4.3.0"
   peerDependencies:
-    unleash-proxy-client: ^3.2.0
-  checksum: 10/17a8ac88a40d356dd81af9b9c6d3d856b2379ecee0ac084bd772fb0f826c5d477ee4ce4b6956e74e7b0b27ac7e5fb8613949c4fae0c691077b89dedc508cbd60
+    unleash-proxy-client: ^3.5.1
+  checksum: 10/310573ce71f3359f88ad8ff05ba5c2db2c2e3b7069aa4befac60d6fdc8a17549acad107fad88b7b8f6fd1165acfee5a4bb0016e3ec9a0df023ac48d46a8bffb5
   languageName: node
   linkType: hard
 
@@ -5060,26 +5050,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cacache@npm:^17.0.0":
-  version: 17.1.4
-  resolution: "cacache@npm:17.1.4"
-  dependencies:
-    "@npmcli/fs": "npm:^3.1.0"
-    fs-minipass: "npm:^3.0.0"
-    glob: "npm:^10.2.2"
-    lru-cache: "npm:^7.7.1"
-    minipass: "npm:^7.0.3"
-    minipass-collect: "npm:^1.0.2"
-    minipass-flush: "npm:^1.0.5"
-    minipass-pipeline: "npm:^1.2.4"
-    p-map: "npm:^4.0.0"
-    ssri: "npm:^10.0.0"
-    tar: "npm:^6.1.11"
-    unique-filename: "npm:^3.0.0"
-  checksum: 10/6e26c788bc6a18ff42f4d4f97db30d5c60a5dfac8e7c10a03b0307a92cf1b647570547cf3cd96463976c051eb9c7258629863f156e224c82018862c1a8ad0e70
-  languageName: node
-  linkType: hard
-
 "cacache@npm:^18.0.0":
   version: 18.0.3
   resolution: "cacache@npm:18.0.3"
@@ -5469,10 +5439,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:12.0.0":
-  version: 12.0.0
-  resolution: "commander@npm:12.0.0"
-  checksum: 10/62062e2ffe6abd5aa42a551e62fd5eb9b2620f6ac4299382b2aa9fb02f95cda0242d7e84acb890479bd6491edb805f7f91aecb5b4f5c70dc57df49ed7f02ef14
+"commander@npm:12.1.0, commander@npm:~12.1.0":
+  version: 12.1.0
+  resolution: "commander@npm:12.1.0"
+  checksum: 10/cdaeb672d979816853a4eed7f1310a9319e8b976172485c2a6b437ed0db0a389a44cfb222bfbde772781efa9f215bdd1b936f80d6b249485b465c6cb906e1f93
   languageName: node
   linkType: hard
 
@@ -5487,13 +5457,6 @@ __metadata:
   version: 7.2.0
   resolution: "commander@npm:7.2.0"
   checksum: 10/9973af10727ad4b44f26703bf3e9fdc323528660a7590efe3aa9ad5042b4584c0deed84ba443f61c9d6f02dade54a5a5d3c95e306a1e1630f8374ae6db16c06d
-  languageName: node
-  linkType: hard
-
-"commander@npm:~12.1.0":
-  version: 12.1.0
-  resolution: "commander@npm:12.1.0"
-  checksum: 10/cdaeb672d979816853a4eed7f1310a9319e8b976172485c2a6b437ed0db0a389a44cfb222bfbde772781efa9f215bdd1b936f80d6b249485b465c6cb906e1f93
   languageName: node
   linkType: hard
 
@@ -7964,13 +7927,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ip@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "ip@npm:2.0.1"
-  checksum: 10/d6dd154e1bc5e8725adfdd6fb92218635b9cbe6d873d051bd63b178f009777f751a5eea4c67021723a7056325fc3052f8b6599af0a2d56f042c93e684b4a0349
-  languageName: node
-  linkType: hard
-
 "ipaddr.js@npm:1.9.1":
   version: 1.9.1
   resolution: "ipaddr.js@npm:1.9.1"
@@ -8977,7 +8933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^7.10.1, lru-cache@npm:^7.14.1, lru-cache@npm:^7.18.3, lru-cache@npm:^7.7.1":
+"lru-cache@npm:^7.10.1, lru-cache@npm:^7.14.1":
   version: 7.18.3
   resolution: "lru-cache@npm:7.18.3"
   checksum: 10/6029ca5aba3aacb554e919d7ef804fffd4adfc4c83db00fac8248c7c78811fb6d4b6f70f7fd9d55032b3823446546a007edaa66ad1f2377ae833bd983fac5d98
@@ -9022,26 +8978,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-fetch-happen@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "make-fetch-happen@npm:12.0.0"
-  dependencies:
-    "@npmcli/agent": "npm:^1.1.0"
-    cacache: "npm:^17.0.0"
-    http-cache-semantics: "npm:^4.1.1"
-    is-lambda: "npm:^1.0.1"
-    minipass: "npm:^7.0.2"
-    minipass-fetch: "npm:^3.0.0"
-    minipass-flush: "npm:^1.0.5"
-    minipass-pipeline: "npm:^1.2.4"
-    negotiator: "npm:^0.6.3"
-    promise-retry: "npm:^2.0.1"
-    ssri: "npm:^10.0.0"
-  checksum: 10/884c613d35c37120e1881eee1bc5dcb7075fb5ca7031370f7c2a0cfbf8aca1411399febe3da450082933b8673858d8227d526ffecf6b0ced95b0b67276adb99a
-  languageName: node
-  linkType: hard
-
-"make-fetch-happen@npm:^13.0.0":
+"make-fetch-happen@npm:^13.0.0, make-fetch-happen@npm:^13.0.1":
   version: 13.0.1
   resolution: "make-fetch-happen@npm:13.0.1"
   dependencies:
@@ -9228,15 +9165,6 @@ __metadata:
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 10/908491b6cc15a6c440ba5b22780a0ba89b9810e1aea684e253e43c4e3b8d56ec1dcdd7ea96dde119c29df59c936cde16062159eae4225c691e19c70b432b6e6f
-  languageName: node
-  linkType: hard
-
-"minipass-collect@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "minipass-collect@npm:1.0.2"
-  dependencies:
-    minipass: "npm:^3.0.0"
-  checksum: 10/14df761028f3e47293aee72888f2657695ec66bd7d09cae7ad558da30415fdc4752bbfee66287dcc6fd5e6a2fa3466d6c484dc1cbd986525d9393b9523d97f10
   languageName: node
   linkType: hard
 
@@ -11301,14 +11229,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.6.0":
-  version: 7.6.0
-  resolution: "semver@npm:7.6.0"
-  dependencies:
-    lru-cache: "npm:^6.0.0"
+"semver@npm:7.6.2, semver@npm:^7.6.2":
+  version: 7.6.2
+  resolution: "semver@npm:7.6.2"
   bin:
     semver: bin/semver.js
-  checksum: 10/1b41018df2d8aca5a1db4729985e8e20428c650daea60fcd16e926e9383217d00f574fab92d79612771884a98d2ee2a1973f49d630829a8d54d6570defe62535
+  checksum: 10/296b17d027f57a87ef645e9c725bff4865a38dfc9caf29b26aa084b85820972fbe7372caea1ba6857162fa990702c6d9c1d82297cecb72d56c78ab29070d2ca2
   languageName: node
   linkType: hard
 
@@ -12012,7 +11938,7 @@ __metadata:
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@types/uuid": "npm:^9.0.8"
-    "@unleash/nextjs": "npm:^1.4.3"
+    "@unleash/nextjs": "npm:^1.4.4"
     "@vitejs/plugin-react": "npm:^4.3.1"
     "@vitest/coverage-v8": "npm:^1.6.0"
     autoprefixer: "npm:^10.4.19"
@@ -12616,25 +12542,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unleash-client@npm:5.5.1":
-  version: 5.5.1
-  resolution: "unleash-client@npm:5.5.1"
+"unleash-client@npm:5.5.5":
+  version: 5.5.5
+  resolution: "unleash-client@npm:5.5.5"
   dependencies:
-    ip: "npm:^2.0.1"
-    make-fetch-happen: "npm:^12.0.0"
+    ip-address: "npm:^9.0.5"
+    make-fetch-happen: "npm:^13.0.1"
     murmurhash3js: "npm:^3.0.1"
-    semver: "npm:^7.5.3"
-  checksum: 10/f2d8a0b33e885f529e144ccb3f58de75bc67a9da21185150b891a88d4d9798cf04951601b22aa4058a14f5f6f93145e844623917b4e1ba24dc06f3e532601e78
+    semver: "npm:^7.6.2"
+  checksum: 10/1bcfa63ce268b9e5f7300dd8c2ccc40cf92b1cf5c4798db5e9ca9339d6e2cd82e7e4b000df0bdeef23e6620b8be86c0de5c1e7fb89e4d8ec01e9e4b326e1213c
   languageName: node
   linkType: hard
 
-"unleash-proxy-client@npm:3.4.0":
-  version: 3.4.0
-  resolution: "unleash-proxy-client@npm:3.4.0"
+"unleash-proxy-client@npm:3.5.1":
+  version: 3.5.1
+  resolution: "unleash-proxy-client@npm:3.5.1"
   dependencies:
     tiny-emitter: "npm:^2.1.0"
     uuid: "npm:^9.0.1"
-  checksum: 10/cacd694814fc5dc0b3f272db618f576a3e8a0baba63005ca4a1cf041ad989245e98d40ea897c04014e29582b054dd289412ddfe1f1d94ecc658f12a28f98d4f0
+  checksum: 10/fc0e70d4ae94ff0bdaee3f3bab77c38756e0b24d63a88efa9c2b2cf10510f0d559357c30acc01fe1eeb3ab3091a5e1c9218caa8f33f237b0fa7997781c5ee98d
   languageName: node
   linkType: hard
 
