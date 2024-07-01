@@ -101,7 +101,7 @@
         "next-router-mock": "^0.9.13",
         "open": "^10.1.0",
         "pino-pretty": "^11.2.1",
-        "playwright-core": "1.44.1",
+        "playwright-core": "1.45.0",
         "postcss": "^8.4.38",
         "postcss-import": "^16.1.0",
         "prettier": "^3.3.1",
