@@ -92,7 +92,7 @@
         "autoprefixer": "^10.4.19",
         "concurrently": "^8.2.2",
         "dotenv": "^16.4.5",
-        "eslint": "^8.57.0",
+        "eslint": "^9.6.0",
         "eslint-config-next": "14.2.4",
         "http-proxy": "^1.18.1",
         "husky": "^9.0.11",
