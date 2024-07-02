@@ -43,23 +43,22 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
                     </div>
                 </ReadMore>
             </div>
-            <Link passHref href={`/${olderSykmeldingId}`} legacyBehavior>
-                <Button
-                    as="a"
-                    variant="primary"
-                    onClick={() =>
-                        logAmplitudeEvent({
-                            eventName: 'navigere',
-                            data: {
-                                destinasjon: 'neste ubrukte sykmelding (tvungen)',
-                                lenketekst: 'Gå til sykmeldingen',
-                            },
-                        })
-                    }
-                >
-                    {olderSykmeldingCount > 1 ? 'Gå videre' : 'Gå til sykmeldingen'}
-                </Button>
-            </Link>
+            <Button
+                href={`/${olderSykmeldingId}`}
+                as={Link}
+                variant="primary"
+                onClick={() =>
+                    logAmplitudeEvent({
+                        eventName: 'navigere',
+                        data: {
+                            destinasjon: 'neste ubrukte sykmelding (tvungen)',
+                            lenketekst: 'Gå til sykmeldingen',
+                        },
+                    })
+                }
+            >
+                {olderSykmeldingCount > 1 ? 'Gå videre' : 'Gå til sykmeldingen'}
+            </Button>
         </GuidePanel>
     )
 }
