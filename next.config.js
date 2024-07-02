@@ -22,7 +22,6 @@ const nextConfig = {
     output: 'standalone',
     reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH,
-    pageExtensions: ['page.tsx', 'page.ts', 'api.ts'],
     assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX,
     transpilePackages: ['tailwind-merge'],
     experimental: {
@@ -45,9 +44,10 @@ const nextConfig = {
         ]
     },
     async headers() {
-        if (isE2E) return []
+        if (isE2E || process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') return []
 
         const environment = process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'production' ? 'prod' : 'dev'
+
         const cspValue = await buildCspHeader(appDirectives, { env: environment })
 
         return [
