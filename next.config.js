@@ -47,7 +47,13 @@ const nextConfig = {
     async headers() {
         if (isE2E) return []
 
-        const environment = process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'production' ? 'prod' : 'dev'
+        const environment =
+            process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local'
+                ? 'localhost'
+                : process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'production'
+                  ? 'prod'
+                  : 'dev'
+
         const cspValue = await buildCspHeader(appDirectives, { env: environment })
 
         return [
