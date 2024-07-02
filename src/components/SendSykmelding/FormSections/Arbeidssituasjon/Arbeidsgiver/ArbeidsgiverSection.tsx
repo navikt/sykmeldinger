@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { PropsWithChildren, ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { Arbeidsgiver, BrukerinformasjonFragment, NaermesteLederFragment, SykmeldingFragment, YesOrNo } from 'queries'
@@ -13,7 +13,6 @@ import EgenmeldingerField from '../../../../FormComponents/Egenmelding/Egenmeldi
 import SendesTilArbeidsgiverInfo from '../SendesTilArbeidsgiver/SendesTilArbeidsgiverInfo'
 import { useShouldShowSendesTilArbeidsgiverInfo, useShouldShowSeveralArbeidsgivereInfo } from '../formProgressUtils'
 
-import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
 import ArbeidsgiverField from './ArbeidsgiverField'
 import FlereArbeidsgivereSection from './FlereArbeidsgivereSection'
@@ -23,7 +22,10 @@ interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
 }
 
-function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement | null {
+/**
+ * Should only be rendered with a non-zero amount of arbeidsgivere.
+ */
+function ArbeidsgiverSection({ sykmelding, arbeidsgivere, children }: PropsWithChildren<Props>): ReactElement | null {
     const { watch } = useFormContext<FormValues>()
     const [valgtArbeidsgiverOrgnummer, harFlereArbeidsforhold]: [string | null, YesOrNo | null] = watch([
         'arbeidsgiverOrgnummer',
@@ -31,7 +33,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
     ])
 
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
-    const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
+    const { hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
     const { shouldAskForSeveralSykmeldinger } = useShouldShowSeveralArbeidsgivereInfo(arbeidsgivere, sykmelding)
     const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo()
     const valgtArbeidsgiver = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
@@ -44,10 +46,10 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
     return (
         <SectionWrapper>
             <ArbeidsgiverField arbeidsgivere={arbeidsgivere} />
+            {children}
             {valgtArbeidsgiverOrgnummer && (
                 <FlereArbeidsgivereSection sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} />
             )}
-            {hasNoArbeidsgiver && <ArbeidsgivereMissingInfo />}
             {hasAktiv && hasCompletedSeveralArbeidsgivere && (
                 <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />
             )}
@@ -81,7 +83,6 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
 }
 
 function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']): {
-    hasNoArbeidsgiver: boolean
     hasAktiv: { narmesteleder: NaermesteLederFragment } | null
     shouldShowEgenmeldingsdager: { arbeidsgiverNavn: string } | null
 } {
@@ -90,7 +91,6 @@ function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['ar
     const valgtRiktigNarmesteLeder: YesOrNo | null = watch('riktigNarmesteLeder')
 
     const valgtArbeidsgiver: Arbeidsgiver | undefined = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
-    const hasNoArbeidsgiver: boolean = arbeidsgivere.length === 0
     const hasAktivArbeidsgiverWithNarmesteleder =
         valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver.naermesteLeder != null
 
@@ -99,7 +99,6 @@ function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['ar
         (valgtArbeidsgiver != null && !hasAktivArbeidsgiverWithNarmesteleder)
 
     return {
-        hasNoArbeidsgiver,
         hasAktiv: hasAktivArbeidsgiverWithNarmesteleder
             ? {
                   narmesteleder: valgtArbeidsgiver.naermesteLeder,

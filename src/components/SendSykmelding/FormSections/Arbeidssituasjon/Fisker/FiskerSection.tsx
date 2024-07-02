@@ -22,10 +22,13 @@ type Props = {
  * Blad A+LOTT = selvstending næringsdrivende flyt MED forsikringsspørsmål
  * Blad B+LOTT = selvstending næringsdrivende flyt UTEN forsikringsspørsmål
  *
- * Blad A+HYRE = arbeidstaker - vanlig flyt
- * Blad B+HYRE = arbeidstaker - vanlig flyt
- * Blad A+BEGGE = arbeidstaker - vanlig flyt
- * Blad B+BEGGE = arbeidstaker - vanlig flyt
+ * Blad A+HYRE = arbeidstaker - vanlig flyt → if (ingenArbeidsgiver) → selvstending flyt MED forsikringsspørsmål
+ * Blad B+HYRE = arbeidstaker - vanlig flyt → if (ingenArbeidsgiver) → selvstending flyt UTEN forsikringsspørsmål
+ * Blad A+BEGGE = arbeidstaker - vanlig flyt → if (ingenArbeidsgiver) → selvstending flyt MED forsikringsspørsmål
+ * Blad B+BEGGE = arbeidstaker - vanlig flyt → if (ingenArbeidsgiver) → selvstending flyt UTEN forsikringsspørsmål
+ *
+ * SAMT dersom bruker ikke ser sin arbeidsgiver i listen, så skal brukeren få lov å gå inn i korrespenderende
+ * selvstendig flyt med tilhørende logikk basert på Blad.
  *
  * Isteden for at denne logikken er sentralisert i parent-komponenten, så er det
  * løst med komposisjon. Det betyr at alle "leaf-nodes" i state-"treet" har sin egen

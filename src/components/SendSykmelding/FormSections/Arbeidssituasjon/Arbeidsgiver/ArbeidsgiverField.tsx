@@ -11,12 +11,13 @@ import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
+    disabled?: boolean
 }
 
-function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement {
+function ArbeidsgiverField({ arbeidsgivere, disabled }: Props): ReactElement {
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidsgiverOrgnummer',
-        rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
+        rules: !disabled ? { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' } : { required: false },
     })
 
     return (
@@ -50,6 +51,7 @@ function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement {
                         value={arbeidsgiver.orgnummer}
                         className="overflow-anywhere"
                         description={`org.nr: ${arbeidsgiver.orgnummer}`}
+                        disabled={disabled}
                     >
                         {arbeidsgiver.navn}
                     </Radio>

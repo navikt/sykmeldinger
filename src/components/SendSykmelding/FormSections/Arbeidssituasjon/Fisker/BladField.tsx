@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
-import { useController } from 'react-hook-form'
+import { useController, useFormContext } from 'react-hook-form'
 
 import { ArbeidssituasjonType } from 'queries'
 
@@ -10,6 +10,7 @@ import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { FormValues } from '../../../SendSykmeldingForm'
 
 function BladField(): ReactElement {
+    const { setValue } = useFormContext<FormValues>()
     const { field, fieldState } = useController<FormValues>({
         name: 'fisker.blad',
         rules: { required: 'Du må svare på hvilket blad' },
@@ -30,6 +31,7 @@ function BladField(): ReactElement {
                             svar: value,
                         },
                     })
+                    setValue('fisker.overstyrArbeidsgiver', null)
                     field.onChange(value)
                 }}
                 error={fieldState.error?.message}
