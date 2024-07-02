@@ -16,6 +16,18 @@ import {
 
 import StatusInfo from './StatusInfo'
 
+const sjekkEos = (): void => {
+    expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+    const oppholdUtlandUrl = 'http://example.com/sykepengesoknad-utland'
+    expect(
+        screen
+            .getByRole('link', {
+                name: 'nav.no/syk/sykepengesoknad/sykepengesoknad-utland',
+            })
+            ?.attributes?.getNamedItem('href')?.value,
+    ).toEqual(oppholdUtlandUrl)
+}
+
 describe('StatusInfo', () => {
     it('Renders nothing when status is not SENDT or BEKREFTET', () => {
         const sykmeldingStatus: SykmeldingStatusFragment = {
@@ -154,7 +166,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -198,7 +210,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Ansatt with reisetilskudd in combination with another period type renders standard info', () => {
@@ -253,7 +265,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -303,7 +315,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
@@ -353,7 +365,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
@@ -403,7 +415,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
@@ -439,7 +451,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
         })
 
@@ -470,7 +482,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Reisetilskudd in combination with another period type renders standard info', () => {
@@ -514,7 +526,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Renders standard info with freelancer info for FRILANSER', () => {
@@ -564,7 +576,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Renders standard info with frilanser info for NAERINGSDRIVENDE', () => {
@@ -614,7 +626,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Renders standard info without frilanser info for ARBEIDSLEDIG', () => {
@@ -664,7 +676,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
@@ -721,7 +733,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
             })
 
             it('Renders standard info without frilanser info for gradert reisetilskudd ARBEIDSLEDIG', () => {
@@ -775,7 +787,7 @@ describe('StatusInfo', () => {
                         sykmeldingMerknader={[]}
                     />,
                 )
-                expect(screen.getByText(/Skal du reise utenfor EØS når du er sykmeldt/)).toBeInTheDocument()
+                sjekkEos()
                 expect(
                     screen.queryByText(/Husk at NAV ikke dekker sykepenger de første 16 dagene/),
                 ).not.toBeInTheDocument()
