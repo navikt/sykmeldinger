@@ -112,6 +112,76 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
                 },
             })(page)
         })
+
+        test('Hyre, should be arbeidsgiver-esque, but user choses to bekrefte anyway', async ({ page }) => {
+            await gotoScenario('normal')(page)
+            await fillOutFisker('Blad A', 'Hyre')(page)
+
+            await page
+                .getByRole('button', {
+                    name: 'Dersom du ønsker å bekrefte sykmeldingen for nav, kan du gjøre dette her',
+                })
+                .click()
+            await getRadioInGroup(page)(
+                { name: /Vil du bekrefte sykmeldingen til NAV alikevel?/i },
+                { name: 'Ja' },
+            ).click()
+
+            await frilanserEgenmeldingsperioder('Nei')(page)
+
+            // No forsikring question when user choses to bekreft anyway on Hyre/Begge
+            await bekreftSykmelding(page)
+
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: 'Nei',
+                    forsikring: 'Ja',
+                },
+                fisker: {
+                    blad: 'A',
+                    lottEllerHyre: 'Hyre',
+                },
+            })(page)
+        })
+
+        test('Hyre, with zero arbeidsgivere, should automatically offer fallback', async ({ page }) => {
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 0,
+            })(page)
+            await fillOutFisker('Blad A', 'Hyre')(page)
+            await getRadioInGroup(page)(
+                { name: /Vil du bekrefte sykmeldingen til NAV alikevel?/i },
+                { name: 'Ja' },
+            ).click()
+
+            await frilanserEgenmeldingsperioder('Nei')(page)
+
+            // No forsikring question when user choses to bekreft anyway on Hyre/Begge
+            await bekreftSykmelding(page)
+
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: 'Nei',
+                    forsikring: 'Ja',
+                },
+                fisker: {
+                    blad: 'A',
+                    lottEllerHyre: 'Hyre',
+                },
+            })(page)
+        })
     })
 
     test.describe('Blad B', () => {
@@ -198,6 +268,76 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
                 fisker: {
                     blad: 'B',
                     lottEllerHyre: 'Begge',
+                },
+            })(page)
+        })
+
+        test('Hyre, should be arbeidsgiver-esque, but user choses to bekrefte anyway', async ({ page }) => {
+            await gotoScenario('normal')(page)
+            await fillOutFisker('Blad B', 'Hyre')(page)
+
+            await page
+                .getByRole('button', {
+                    name: 'Dersom du ønsker å bekrefte sykmeldingen for nav, kan du gjøre dette her',
+                })
+                .click()
+            await getRadioInGroup(page)(
+                { name: /Vil du bekrefte sykmeldingen til NAV alikevel?/i },
+                { name: 'Ja' },
+            ).click()
+
+            await frilanserEgenmeldingsperioder('Nei')(page)
+
+            // No forsikring question when user choses to bekreft anyway on Hyre/Begge
+            await bekreftSykmelding(page)
+
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: 'Nei',
+                    forsikring: 'Ja',
+                },
+                fisker: {
+                    blad: 'B',
+                    lottEllerHyre: 'Hyre',
+                },
+            })(page)
+        })
+
+        test('Hyre, with zero arbeidsgivere, should automatically offer fallback', async ({ page }) => {
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 0,
+            })(page)
+            await fillOutFisker('Blad B', 'Hyre')(page)
+            await getRadioInGroup(page)(
+                { name: /Vil du bekrefte sykmeldingen til NAV alikevel?/i },
+                { name: 'Ja' },
+            ).click()
+
+            await frilanserEgenmeldingsperioder('Nei')(page)
+
+            // No forsikring question when user choses to bekreft anyway on Hyre/Begge
+            await bekreftSykmelding(page)
+
+            await expectKvittering({
+                sendtTil: 'NAV',
+                egenmeldingsdager: ExpectMeta.NotInDom,
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Fisker',
+                selvstendig: {
+                    egenmeldingsperioder: 'Nei',
+                    forsikring: 'Ja',
+                },
+                fisker: {
+                    blad: 'B',
+                    lottEllerHyre: 'Hyre',
                 },
             })(page)
         })

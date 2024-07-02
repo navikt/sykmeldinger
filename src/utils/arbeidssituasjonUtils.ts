@@ -1,9 +1,15 @@
-import { ArbeidssituasjonType, FiskerInput } from 'queries'
+import { ArbeidssituasjonType } from 'queries'
+
+import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
 
 export const isArbeidstaker = (
     arbeidssituasjon?: ArbeidssituasjonType | null,
-    fisker?: FiskerInput | null,
+    fisker?: FormValues['fisker'] | null,
 ): boolean => {
+    if (fisker?.overstyrArbeidsgiver != null) {
+        return false
+    }
+
     switch (arbeidssituasjon) {
         case ArbeidssituasjonType.ARBEIDSTAKER:
             return true

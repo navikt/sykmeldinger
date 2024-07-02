@@ -97,8 +97,12 @@ class MockDb {
                     throw new Error('Valgt fisker uten å fylle ut fiskerfeltene')
                 }
             } else {
-                // HYRE eller BEGGE
-                if (apiValues.arbeidsgiverOrgnummer == null) {
+                if (
+                    // Har valgt å bekrefte isteden for å velge arbeidsgiver, enten fordi det ikke fantes noen, eller fordi de ikke fant rett
+                    apiValues.harBruktEgenmelding == null &&
+                    // HYRE eller BEGGE som ikke har overstyrt, skal ha orgNummer
+                    apiValues.arbeidsgiverOrgnummer == null
+                ) {
                     throw new Error('Valgt fisker uten å fylle ut arbeidsgiverOrgnummer')
                 }
             }
@@ -131,7 +135,9 @@ class MockDb {
         if (
             values.arbeidssituasjon === ArbeidssituasjonType.ARBEIDSTAKER ||
             (values.arbeidssituasjon === ArbeidssituasjonType.FISKER &&
-                (values.fisker?.lottOgHyre === LottOgHyre.HYRE || values.fisker?.lottOgHyre === LottOgHyre.BEGGE))
+                (values.fisker?.lottOgHyre === LottOgHyre.HYRE || values.fisker?.lottOgHyre === LottOgHyre.BEGGE) &&
+                // Har valgt å bekrefte isteden for å velge arbeidsgiver, enten fordi det ikke fantes noen, eller fordi de ikke fant rett
+                values.harBruktEgenmelding == null)
         ) {
             const selectedArbeidsgiver = this.arbeidsgivere().find(
                 (it) => it.orgnummer === values.arbeidsgiverOrgnummer,

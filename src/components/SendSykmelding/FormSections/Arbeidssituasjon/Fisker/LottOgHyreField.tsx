@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { BodyShort, Radio, RadioGroup, ReadMore, Link as AkselLink } from '@navikt/ds-react'
-import { useController } from 'react-hook-form'
+import { useController, useFormContext } from 'react-hook-form'
 
 import { ArbeidssituasjonType } from 'queries'
 
@@ -10,6 +10,7 @@ import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { FormValues } from '../../../SendSykmeldingForm'
 
 function LottOgHyreField(): ReactElement {
+    const { setValue } = useFormContext<FormValues>()
     const { field, fieldState } = useController<FormValues>({
         name: 'fisker.lottOgHyre',
         rules: { required: 'Du må svare på lott eller hyre spørsmål' },
@@ -26,10 +27,11 @@ function LottOgHyreField(): ReactElement {
                         eventName: 'skjema spørsmål besvart',
                         data: {
                             skjemanavn: 'arbeidsgiver',
-                            spørsmål: sporsmal.fisker.velgBlad,
+                            spørsmål: sporsmal.fisker.lottEllerHyre,
                             svar: value,
                         },
                     })
+                    setValue('fisker.overstyrArbeidsgiver', null)
                     field.onChange(value)
                 }}
                 error={fieldState.error?.message}

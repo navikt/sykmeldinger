@@ -47,6 +47,7 @@ export interface FormValues extends EgenmeldingsdagerSubForm {
     fisker: {
         blad: Blad | null
         lottOgHyre: LottOgHyre | null
+        overstyrArbeidsgiver: YesOrNo | null
     }
     extra: {
         annetSituasjon: string | null

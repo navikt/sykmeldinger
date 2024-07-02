@@ -56,8 +56,21 @@ function mapSykmeldingFisker(values: FormValues): SendSykmeldingValues {
         },
     } satisfies SendSykmeldingValues
 
+    if (values.fisker.overstyrArbeidsgiver === YesOrNo.NO) {
+        throw new Error(
+            'Dersom du ikke vil bekrefte sykmeldingen til NAV, må du be arbeidsgiver oppdatere arbeidsforholdet ditt.',
+        )
+    }
+
+    // User has either no arbeidsgivere, or chose explicitly to override the arbeidsgiver and wants to bekreft as
+    // in practice a selvstendig næringsdrivende
+    const isFallback = values.fisker.overstyrArbeidsgiver === YesOrNo.YES
+
     // In essence an arbeidstaker when LottOgHyre is HYRE or BEGGE
-    if (values.fisker.lottOgHyre === LottOgHyre.HYRE || values.fisker.lottOgHyre === LottOgHyre.BEGGE) {
+    if (
+        (!isFallback && values.fisker.lottOgHyre === LottOgHyre.HYRE) ||
+        values.fisker.lottOgHyre === LottOgHyre.BEGGE
+    ) {
         const hasEgenmeldingsdager = getHasEgenmeldingsdager(values.egenmeldingsdager)
 
         return {
@@ -79,11 +92,17 @@ function mapSykmeldingFisker(values: FormValues): SendSykmeldingValues {
                 tom: periode.tom ? toDateString(periode.tom) : null,
             })) ?? undefined
 
+        const harForsikring = isFallback
+            ? YesOrNo.YES
+            : values.fisker.blad === Blad.A
+              ? values.harForsikring ?? undefined
+              : undefined
+
         return {
             ...baseFields,
             harBruktEgenmelding: values.harBruktEgenmelding ?? undefined,
             egenmeldingsperioder: values.harBruktEgenmelding === YesOrNo.YES ? egenmeldingsperioder : undefined,
-            harForsikring: values.fisker.blad === Blad.A ? values.harForsikring ?? undefined : undefined,
+            harForsikring,
         }
     }
 }

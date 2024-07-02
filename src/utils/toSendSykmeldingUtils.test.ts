@@ -47,6 +47,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -81,6 +82,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -119,6 +121,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -163,6 +166,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -199,6 +203,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -253,6 +258,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.HYRE,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -291,6 +297,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: Blad.A,
                     lottOgHyre: LottOgHyre.LOTT,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -333,6 +340,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: Blad.B,
                     lottOgHyre: LottOgHyre.LOTT,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -376,6 +384,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -414,6 +423,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -449,6 +459,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -481,6 +492,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -516,6 +528,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: {
@@ -550,6 +563,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -580,6 +594,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: {
@@ -612,6 +627,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: {
@@ -647,6 +663,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: {
@@ -681,6 +698,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
@@ -712,6 +730,7 @@ describe('toSendSykmeldingUtils', () => {
                 fisker: {
                     blad: null,
                     lottOgHyre: null,
+                    overstyrArbeidsgiver: null,
                 },
                 extra: null,
                 arbeidsledig: null,
