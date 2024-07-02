@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
-import { UseControllerProps } from 'react-hook-form/dist/types/controller'
+import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { FieldPath, FieldPathValue, FieldValues } from 'react-hook-form/dist/types'
 
 import { YesOrNo } from 'queries'
@@ -14,7 +14,7 @@ interface Props<
     legend: string
     subtext?: string | ReactNode
     onChange?: (value: YesOrNo) => void
-    rules?: UseControllerProps['rules']
+    rules?: Omit<RegisterOptions<TFieldValues, TName>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
 }
 
 function YesNoField<
