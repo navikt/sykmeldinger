@@ -4,6 +4,7 @@ import { BodyShort, GuidePanel, Link, Heading } from '@navikt/ds-react'
 import { Merknad, Merknadtype, Periode, Periodetype, SykmeldingStatusFragment } from 'queries'
 
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
+import { browserEnv } from '../../utils/env'
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatusFragment
@@ -83,7 +84,7 @@ function StatusInfo({
                     NAV om å beholde sykepengene dine mens du er på reise. Du må sende søknaden på forhånd, og jo før du
                     søker, jo bedre. Les mer om reise utenfor EØS og send søknad på{' '}
                     <Link
-                        href="https://www.nav.no/sykepenger#sok-opphold-utland"
+                        href={`${browserEnv.NEXT_PUBLIC_SYKEPENGESOKNAD_URL}/sykepengesoknad-utland`}
                         target="_bland"
                         onClick={() =>
                             logAmplitudeEvent({
@@ -95,7 +96,7 @@ function StatusInfo({
                             })
                         }
                     >
-                        nav.no/sykepenger#sok-opphold-utland
+                        nav.no/syk/sykepengesoknad/sykepengesoknad-utland
                     </Link>
                 </BodyShort>
             </div>
