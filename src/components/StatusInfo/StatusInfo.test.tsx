@@ -22,7 +22,7 @@ const sjekkEos = (): void => {
     expect(
         screen
             .getByRole('link', {
-                name: 'nav.no/syk/sykepengesoknad/sykepengesoknad-utland',
+                name: /Les mer om reise utenfor EU/,
             })
             ?.attributes?.getNamedItem('href')?.value,
     ).toEqual(oppholdUtlandUrl)
