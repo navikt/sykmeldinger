@@ -79,27 +79,26 @@ function StatusInfo({
                 <Heading spacing size="small" level="3">
                     Skal du reise utenfor EU/EØS når du er sykmeldt?
                 </Heading>
-                <BodyShort>
+                <BodyShort spacing>
                     Hvis du skal reise utenfor EU/EØS når du er sykmeldt, kan du miste retten til sykepenger. Du kan
                     søke NAV om å beholde sykepengene dine mens du er på reise. Du bør sende søknaden på forhånd, og jo
-                    tidligere du søker, jo bedre. Les mer om reise utenfor EU/EØS og send søknad på{' '}
-                    <Link
-                        href={`${browserEnv.NEXT_PUBLIC_SYKEPENGESOKNAD_URL}/sykepengesoknad-utland`}
-                        target="_bland"
-                        onClick={() =>
-                            logAmplitudeEvent({
-                                eventName: 'navigere',
-                                data: {
-                                    destinasjon: 'opphold i utland info',
-                                    lenketekst: 'Sykepenger sok opphold utland',
-                                },
-                            })
-                        }
-                    >
-                        nav.no/syk/sykepengesoknad/sykepengesoknad-utland
-                    </Link>
-                    .
+                    tidligere du søker, jo bedre.
                 </BodyShort>
+                <Link
+                    href={`${browserEnv.NEXT_PUBLIC_SYKEPENGESOKNAD_URL}/sykepengesoknad-utland`}
+                    target="_bland"
+                    onClick={() =>
+                        logAmplitudeEvent({
+                            eventName: 'navigere',
+                            data: {
+                                destinasjon: 'opphold i utland info',
+                                lenketekst: 'Sykepenger sok opphold utland',
+                            },
+                        })
+                    }
+                >
+                    Les mer om reise utenfor EU/EØS og send søknad her.
+                </Link>
             </div>
         </div>
     )
