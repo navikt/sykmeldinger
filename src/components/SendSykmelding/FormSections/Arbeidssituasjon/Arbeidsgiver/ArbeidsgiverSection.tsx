@@ -13,12 +13,11 @@ import EgenmeldingerField from '../../../../FormComponents/Egenmelding/Egenmeldi
 import SendesTilArbeidsgiverInfo from '../SendesTilArbeidsgiver/SendesTilArbeidsgiverInfo'
 import { useShouldShowSendesTilArbeidsgiverInfo, useShouldShowSeveralArbeidsgivereInfo } from '../formProgressUtils'
 
-import ArbeidsgivereMissingInfo from './ArbeidsgivereMissingInfo'
 import ArbeidsgiverRiktigNarmesteLederField from './ArbeidsgiverRiktigNarmesteLederField'
 import ArbeidsgiverField from './ArbeidsgiverField'
 import FlereArbeidsgivereSection from './FlereArbeidsgivereSection'
 
-interface Props {
+type Props = {
     sykmelding: SykmeldingFragment
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
 }
@@ -31,7 +30,7 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
     ])
 
     const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(sykmelding, valgtArbeidsgiverOrgnummer)
-    const { hasNoArbeidsgiver, hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
+    const { hasAktiv, shouldShowEgenmeldingsdager } = useArbeidsgiverSubSections(arbeidsgivere)
     const { shouldAskForSeveralSykmeldinger } = useShouldShowSeveralArbeidsgivereInfo(arbeidsgivere, sykmelding)
     const shouldShowSendesTilArbeidsgiverInfo = useShouldShowSendesTilArbeidsgiverInfo()
     const valgtArbeidsgiver = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
@@ -47,7 +46,6 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
             {valgtArbeidsgiverOrgnummer && (
                 <FlereArbeidsgivereSection sykmelding={sykmelding} arbeidsgivere={arbeidsgivere} />
             )}
-            {hasNoArbeidsgiver && <ArbeidsgivereMissingInfo />}
             {hasAktiv && hasCompletedSeveralArbeidsgivere && (
                 <ArbeidsgiverRiktigNarmesteLederField narmesteLeder={hasAktiv.narmesteleder} />
             )}
@@ -81,7 +79,6 @@ function ArbeidsgiverSection({ sykmelding, arbeidsgivere }: Props): ReactElement
 }
 
 function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']): {
-    hasNoArbeidsgiver: boolean
     hasAktiv: { narmesteleder: NaermesteLederFragment } | null
     shouldShowEgenmeldingsdager: { arbeidsgiverNavn: string } | null
 } {
@@ -90,7 +87,6 @@ function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['ar
     const valgtRiktigNarmesteLeder: YesOrNo | null = watch('riktigNarmesteLeder')
 
     const valgtArbeidsgiver: Arbeidsgiver | undefined = findValgtArbeidsgiver(arbeidsgivere, valgtArbeidsgiverOrgnummer)
-    const hasNoArbeidsgiver: boolean = arbeidsgivere.length === 0
     const hasAktivArbeidsgiverWithNarmesteleder =
         valgtArbeidsgiver?.aktivtArbeidsforhold && valgtArbeidsgiver.naermesteLeder != null
 
@@ -99,7 +95,6 @@ function useArbeidsgiverSubSections(arbeidsgivere: BrukerinformasjonFragment['ar
         (valgtArbeidsgiver != null && !hasAktivArbeidsgiverWithNarmesteleder)
 
     return {
-        hasNoArbeidsgiver,
         hasAktiv: hasAktivArbeidsgiverWithNarmesteleder
             ? {
                   narmesteleder: valgtArbeidsgiver.naermesteLeder,
