@@ -15,11 +15,11 @@ import Spinner from '../../../Spinner/Spinner'
 
 import { ArbeidssituasjonInfo } from './ArbeidssituasjonInfo'
 import ArbeidssituasjonField from './ArbeidssituasjonField'
-import ArbeidsgiverSection from './Arbeidsgiver/ArbeidsgiverSection'
 import FrilanserSection from './Frilanser/FrilanserSection'
 import { useArbeidssituasjonSubSections } from './formProgressUtils'
 import FiskerSection from './Fisker/FiskerSection'
 import ArbeidsledigArbeidsgiverField from './Arbeidsledig/ArbeidsledigArbeidsgiverField'
+import AnsattArbeidstakerSection from './Arbeidsgiver/AnsattArbeidstakerSection'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -46,7 +46,7 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             {shouldShowArbeidsgiverOrgnummer && (
-                <ArbeidsgiverSection sykmelding={sykmelding} arbeidsgivere={brukerinformasjon.arbeidsgivere} />
+                <AnsattArbeidstakerSection sykmelding={sykmelding} arbeidsgivere={brukerinformasjon.arbeidsgivere} />
             )}
             {shouldShowFisker && <FiskerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />}
             {isFrilanserOrNaeringsdrivendeOrJordbruker(arbeidssituasjon) && (

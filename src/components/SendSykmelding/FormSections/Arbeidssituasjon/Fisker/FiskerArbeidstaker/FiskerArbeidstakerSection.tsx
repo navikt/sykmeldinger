@@ -4,6 +4,7 @@ import { BrukerinformasjonFragment, SykmeldingFragment } from 'queries'
 
 import { SectionWrapper } from '../../../../../FormComponents/FormStructure'
 import ArbeidsgiverSection from '../../Arbeidsgiver/ArbeidsgiverSection'
+import ArbeidsgivereFiskerMissingInfo from '../../Arbeidsgiver/ArbeidsgivereFiskerMissingInfo'
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -14,6 +15,7 @@ function FiskerArbeidstakerSection({ sykmelding, brukerinformasjon }: Props): Re
     return (
         <SectionWrapper>
             <ArbeidsgiverSection sykmelding={sykmelding} arbeidsgivere={brukerinformasjon.arbeidsgivere} />
+            {brukerinformasjon.arbeidsgivere.length === 0 && <ArbeidsgivereFiskerMissingInfo />}
         </SectionWrapper>
     )
 }

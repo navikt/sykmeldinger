@@ -763,10 +763,17 @@ export type ResolversTypes = ResolversObject<{
     SvarRestriksjon: SvarRestriksjon
     SvarTypeUnion: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SvarTypeUnion']>
     Svartype: Svartype
-    Sykmelding: ResolverTypeWrapper<Sykmelding>
+    Sykmelding: ResolverTypeWrapper<
+        Omit<Sykmelding, 'sykmeldingStatus'> & { sykmeldingStatus: ResolversTypes['SykmeldingStatus'] }
+    >
     SykmeldingCategory: SykmeldingCategory
     SykmeldingChangeStatus: SykmeldingChangeStatus
-    SykmeldingStatus: ResolverTypeWrapper<SykmeldingStatus>
+    SykmeldingStatus: ResolverTypeWrapper<
+        Omit<SykmeldingStatus, 'arbeidsgiver' | 'sporsmalOgSvarListe'> & {
+            arbeidsgiver: Maybe<ResolversTypes['ArbeidsgiverStatus']>
+            sporsmalOgSvarListe: Array<ResolversTypes['Sporsmal']>
+        }
+    >
     TidligereArbeidsgiver: ResolverTypeWrapper<TidligereArbeidsgiver>
     UriktigeOpplysningerBrukerSvar: ResolverTypeWrapper<UriktigeOpplysningerBrukerSvar>
     UriktigeOpplysningerType: UriktigeOpplysningerType
@@ -836,8 +843,11 @@ export type ResolversParentTypes = ResolversObject<{
     Sporsmal: Omit<Sporsmal, 'svar'> & { svar: ResolversParentTypes['SvarTypeUnion'] }
     String: Scalars['String']['output']
     SvarTypeUnion: ResolversUnionTypes<ResolversParentTypes>['SvarTypeUnion']
-    Sykmelding: Sykmelding
-    SykmeldingStatus: SykmeldingStatus
+    Sykmelding: Omit<Sykmelding, 'sykmeldingStatus'> & { sykmeldingStatus: ResolversParentTypes['SykmeldingStatus'] }
+    SykmeldingStatus: Omit<SykmeldingStatus, 'arbeidsgiver' | 'sporsmalOgSvarListe'> & {
+        arbeidsgiver: Maybe<ResolversParentTypes['ArbeidsgiverStatus']>
+        sporsmalOgSvarListe: Array<ResolversParentTypes['Sporsmal']>
+    }
     TidligereArbeidsgiver: TidligereArbeidsgiver
     UriktigeOpplysningerBrukerSvar: UriktigeOpplysningerBrukerSvar
     UtdypendeOpplysning: UtdypendeOpplysning

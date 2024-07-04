@@ -171,7 +171,11 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
             await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
 
-            await expect(page.getByText(/Vi klarer ikke å finne noen arbeidsforhold registrert på deg/)).toBeVisible()
+            await expect(
+                page.getByText(
+                    /Vi klarer ikke å finne noen arbeidsforhold registrert på deg. Be arbeidsgiveren din om å registrere deg i A-meldingen. Da blir det oppdatert her slik at du kan få sendt den til arbeidsgiveren/,
+                ),
+            ).toBeVisible()
             await expect(page).toHaveNoViolations()
         })
     })

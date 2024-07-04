@@ -1,4 +1,4 @@
-import { test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 import {
     bekreftNarmesteleder,
@@ -201,5 +201,24 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
                 },
             })(page)
         })
+    })
+
+    test('Hyre or Lott & Hyre without arbeidsgivere should get a warning/tips about what to do', async ({ page }) => {
+        await gotoScenario('normal', {
+            antallArbeidsgivere: 0,
+        })(page)
+        await fillOutFisker('Blad B', 'Både lott og hyre')(page)
+
+        const expectedHint =
+            'Hvis det stemmer at arbeidsforholdet ditt ikke skal registreres, kan du sende inn sykmeldingen til NAV som fisker ved å velge lott i stedet for hyre.'
+
+        await expect(page.getByText(expectedHint)).toBeVisible()
+
+        await getRadioInGroup(page)(
+            { name: /Mottar du lott eller er du på hyre?/i },
+            { name: 'Hyre', exact: true },
+        ).click()
+
+        await expect(page.getByText(expectedHint)).toBeVisible()
     })
 })
