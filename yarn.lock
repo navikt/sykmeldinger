@@ -7103,13 +7103,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globalthis-polyfill@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "globalthis-polyfill@npm:1.0.0"
-  checksum: 10/91350f43495fe4dcb2e9895e2a1de1d682ade5ec13fe29d46104c85084094201fa987f2a79c5e16a664c44a20da72f37176bb093f82422807627a78e1cde8dc6
-  languageName: node
-  linkType: hard
-
 "globalthis@npm:^1.0.3":
   version: 1.0.4
   resolution: "globalthis@npm:1.0.4"
@@ -11673,7 +11666,6 @@ __metadata:
     dotenv: "npm:^16.4.5"
     eslint: "npm:^8.57.0"
     eslint-config-next: "npm:14.2.4"
-    globalthis-polyfill: "npm:^1.0.0"
     graphql: "npm:^16.9.0"
     graphql-scalars: "npm:^1.23.0"
     http-proxy: "npm:^1.18.1"

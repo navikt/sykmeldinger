@@ -1,6 +1,3 @@
-// Polyfill this because it's needed for Safari 12 (mostly because of Apollo client?)
-import 'globalthis-polyfill'
-
 import '../style/global.css'
 
 import { AppProps } from 'next/app'
