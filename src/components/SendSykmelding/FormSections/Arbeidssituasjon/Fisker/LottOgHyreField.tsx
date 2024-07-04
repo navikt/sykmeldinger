@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { BodyShort, Radio, RadioGroup, ReadMore, Link as AkselLink } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
 
-import { ArbeidssituasjonType } from 'queries'
+import { LottOgHyre } from 'queries'
 
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
@@ -21,7 +21,7 @@ function LottOgHyreField(): ReactElement {
                 {...field}
                 id={field.name}
                 legend={sporsmal.fisker.lottEllerHyre}
-                onChange={(value: ArbeidssituasjonType) => {
+                onChange={(value: LottOgHyre) => {
                     logAmplitudeEvent({
                         eventName: 'skjema spørsmål besvart',
                         data: {
