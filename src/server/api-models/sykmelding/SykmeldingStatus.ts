@@ -99,10 +99,7 @@ const BrukerSvarSchema = z.object({
         .object({
             arbeidsledigFraOrgnummer: SporsmalSvarSchema(z.string()).nullable(),
         })
-        .nullable()
-        // TODO: Remove optional and transform once backend is in production and everything is in sync
-        .optional()
-        .transform((it) => it ?? null),
+        .nullable(),
 })
 
 export type SykmeldingStatus = z.infer<typeof SykmeldingStatusSchema>
