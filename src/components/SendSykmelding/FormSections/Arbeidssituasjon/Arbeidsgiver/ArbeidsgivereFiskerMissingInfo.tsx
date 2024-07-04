@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { Alert, BodyLong } from '@navikt/ds-react'
 
-function ArbeidsgivereMissingInfo(): ReactElement {
+function ArbeidsgivereFiskerMissingInfo(): ReactElement {
     return (
         <Alert className="mt-4" variant="warning">
             <BodyLong spacing>
