@@ -41,7 +41,14 @@ function FiskerSection({ brukerinformasjon, sykmelding }: Props): ReactElement {
             {blad != null && <LottOgHyreField />}
             {lottOgHyre === 'LOTT' && <FiskerSelvstendigSection sykmelding={sykmelding} askForsikring={blad === 'A'} />}
             {(lottOgHyre === 'HYRE' || lottOgHyre === 'BEGGE') && (
-                <FiskerArbeidstakerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />
+                <FiskerArbeidstakerSection
+                    sykmelding={sykmelding}
+                    brukerinformasjon={brukerinformasjon}
+                    metadata={{
+                        blad,
+                        lottOgHyre,
+                    }}
+                />
             )}
         </SectionWrapper>
     )

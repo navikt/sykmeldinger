@@ -1,7 +1,26 @@
 import { ReactElement } from 'react'
 import { Alert, BodyLong } from '@navikt/ds-react'
 
-function ArbeidsgivereFiskerMissingInfo(): ReactElement {
+import { Blad, LottOgHyre } from 'queries'
+
+import { useLogAmplitudeEvent } from '../../../../../amplitude/amplitude'
+
+type Props = {
+    metadata: {
+        blad: Blad | null
+        lottOgHyre: LottOgHyre | null
+    }
+}
+
+function ArbeidsgivereFiskerMissingInfo({ metadata }: Props): ReactElement {
+    useLogAmplitudeEvent(
+        {
+            eventName: 'komponent vist',
+            data: { komponent: 'Fiskere Missing Arbeidsgiver' },
+        },
+        { blad: metadata.blad ?? 'mangler', lottOgHyre: metadata.lottOgHyre ?? 'mangler' },
+    )
+
     return (
         <Alert className="mt-4" variant="warning">
             <BodyLong spacing>
