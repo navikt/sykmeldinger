@@ -112,7 +112,8 @@
         "vitest-axe": "^0.1.0"
     },
     "resolutions": {
-        "eslint-plugin-react-hooks": "5.0.0-canary-7118f5dd7-20230705"
+        "eslint-plugin-react-hooks": "5.0.0-canary-7118f5dd7-20230705",
+        "ws": "8.18.0"
     },
     "prettier": "@navikt/eslint-config-teamsykmelding/prettier",
     "eslintConfig": {
