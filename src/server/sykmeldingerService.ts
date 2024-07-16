@@ -37,6 +37,16 @@ export async function getSykmelding(sykmeldingId: string, context: RequestContex
     )
 }
 
+export async function getBrukerinformasjonById(sykmeldingId: string, context: RequestContext): Promise<Brukerinformasjon> {
+    return fetchApi(
+        { type: 'GET' },
+        `v2/brukerinformasjon/${sykmeldingId}`,
+        (it) => BrukerinformasjonSchema.parse(it),
+        context,
+        'GET: arbeidsgivere',
+    )
+}
+
 export async function getBrukerinformasjon(context: RequestContext): Promise<Brukerinformasjon> {
     return fetchApi(
         { type: 'GET' },
@@ -99,7 +109,7 @@ export async function sendSykmelding(
 
     const [sykmelding, brukerinformasjon, erUtenforVentetid] = await Promise.all([
         getSykmelding(sykmeldingId, context),
-        getBrukerinformasjon(context),
+        getBrukerinformasjonById(sykmeldingId, context),
         getErUtenforVentetid(sykmeldingId, context),
     ])
 

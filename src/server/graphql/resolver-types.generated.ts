@@ -435,6 +435,10 @@ export type Query = {
     tidligereArbeidsgivere: Maybe<Array<TidligereArbeidsgiver>>
 }
 
+export type QueryBrukerinformasjonArgs = {
+    id: Scalars['String']['input']
+}
+
 export type QuerySykmeldingArgs = {
     id: Scalars['String']['input']
 }
@@ -1350,7 +1354,12 @@ export type QueryResolvers<
     ContextType = RequestContext,
     ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = ResolversObject<{
-    brukerinformasjon?: Resolver<ResolversTypes['Brukerinformasjon'], ParentType, ContextType>
+    brukerinformasjon?: Resolver<
+        ResolversTypes['Brukerinformasjon'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryBrukerinformasjonArgs, 'id'>
+    >
     sykmelding?: Resolver<
         ResolversTypes['Sykmelding'],
         ParentType,

@@ -27,13 +27,17 @@ import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/Opply
 import ActionSection from './FormSections/ActionSection'
 import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/ArbeidssituasjonSection'
 import ErrorSection from './FormSections/ErrorSection'
+import useBrukerinformasjonById from "../../hooks/useBrukerinformasjonById";
 
 const FormDevTools = dynamic(() => import('../FormComponents/DevTools/FormDevTools'), {
     ssr: false,
 })
-const AutoFillerDevTools = dynamic(() => import('../FormComponents/DevTools/AutoFillerDevTools'), {
-    ssr: false,
-})
+interface AutoFillerDevToolsProps {
+    sykmeldingId: string;
+}
+const AutoFillerDevTools: React.FC<AutoFillerDevToolsProps> = ({ sykmeldingId }) => {
+    return <div>AutoFiller Dev Tools for sykmelding ID: {sykmeldingId}</div>;
+};
 
 export interface FormValues extends EgenmeldingsdagerSubForm {
     erOpplysningeneRiktige: YesOrNo | null
@@ -92,7 +96,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
             erSykmeldtFraFlereArbeidsforhold: null,
         },
     })
-    const brukerinformasjonData = useQuery(BrukerinformasjonDocument)
+    const brukerinformasjonData = useBrukerinformasjonById(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
         (values) => {
@@ -135,7 +139,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
     return (
         <FormProvider {...form}>
             {(browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev' ||
-                browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') && <AutoFillerDevTools />}
+                browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') && <AutoFillerDevTools sykmeldingId={sykmeldingId} />}
             <form
                 onSubmit={form.handleSubmit(sendSykmelding, (errors) => {
                     logAmplitudeEvent(

@@ -2,7 +2,7 @@ type Query {
     # Used for old view (SykmeldingerListAll.tsx), if the new view works nicely, this will be deprecated
     sykmeldinger: [Sykmelding!]!
     sykmelding(id: String!): Sykmelding!
-    brukerinformasjon: Brukerinformasjon!
+    brukerinformasjon(id: String!): Brukerinformasjon!
     sykmeldingUtenforVentetid(id: String!): UtenforVentetid!
     tidligereArbeidsgivere(id: String!): [TidligereArbeidsgiver!]
 }
