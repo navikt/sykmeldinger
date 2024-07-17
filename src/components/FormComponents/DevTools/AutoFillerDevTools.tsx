@@ -6,9 +6,13 @@ import { Chat } from '@navikt/ds-react'
 
 import { FormValues } from '../../SendSykmelding/SendSykmeldingForm'
 import { raise } from '../../../utils/ts-utils'
-import useBrukerinformasjonById from "../../../hooks/useBrukerinformasjonById";
+import useBrukerinformasjonById from '../../../hooks/useBrukerinformasjonById'
 
-function AutoFillerDevTools(sykmeldingId: string): ReactElement | null {
+interface Props {
+    sykmeldingId: string
+}
+
+function AutoFillerDevTools({ sykmeldingId }: Props): ReactElement | null {
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [shouldShow, setShouldShow] = useState(false)
     const { setValue } = useFormContext<FormValues>()
