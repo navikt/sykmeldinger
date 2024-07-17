@@ -24,8 +24,8 @@ query SykmeldingErUtenforVentetid($sykmeldingId: String!) {
     }
 }
 
-query Brukerinformasjon {
-    brukerinformasjon {
+query Brukerinformasjon($sykmeldingId: String!) {
+    brukerinformasjon(id: $sykmeldingId) {
         ...Brukerinformasjon
     }
 }

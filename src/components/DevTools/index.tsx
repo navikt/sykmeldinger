@@ -1,7 +1,7 @@
 import { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
-import { useApolloClient, useMutation, useQuery } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import * as R from 'remeda'
 
@@ -10,6 +10,7 @@ import { BrukerinformasjonDocument, Dev_ChangeUserScenarioDocument, Dev_SetAntal
 import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
 import { cn } from '../../utils/tw-utils'
 import { simpleScenarios, otherScenarios } from '../../server/graphql/mock-db/scenarios'
+import useBrukerinformasjonById from "../../hooks/useBrukerinformasjonById";
 
 function Index(): ReactElement {
     const [showHint, setShowHint] = useState(false)
@@ -168,7 +169,7 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
 }
 
 function ScenarioOptions(): ReactElement {
-    const brukerinformasjonQuery = useQuery(BrukerinformasjonDocument)
+    const brukerinformasjonQuery = useBrukerinformasjonById("1")
     const [antallArbeidsgivereMutation, antallArbeidsgivereMutationResult] = useMutation(
         Dev_SetAntallArbeidsgivereDocument,
         { refetchQueries: [BrukerinformasjonDocument] },

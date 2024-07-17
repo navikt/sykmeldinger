@@ -431,6 +431,10 @@ export type Query = {
     readonly tidligereArbeidsgivere?: Maybe<ReadonlyArray<TidligereArbeidsgiver>>
 }
 
+export type QueryBrukerinformasjonArgs = {
+    id: Scalars['String']['input']
+}
+
 export type QuerySykmeldingArgs = {
     id: Scalars['String']['input']
 }
@@ -916,7 +920,9 @@ export type SykmeldingErUtenforVentetidQuery = {
     }
 }
 
-export type BrukerinformasjonQueryVariables = Exact<{ [key: string]: never }>
+export type BrukerinformasjonQueryVariables = Exact<{
+    sykmeldingId: Scalars['String']['input']
+}>
 
 export type BrukerinformasjonQuery = {
     readonly __typename: 'Query'
@@ -4721,12 +4727,26 @@ export const BrukerinformasjonDocument = {
             kind: 'OperationDefinition',
             operation: 'query',
             name: { kind: 'Name', value: 'Brukerinformasjon' },
+            variableDefinitions: [
+                {
+                    kind: 'VariableDefinition',
+                    variable: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
+                    type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+                },
+            ],
             selectionSet: {
                 kind: 'SelectionSet',
                 selections: [
                     {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'brukerinformasjon' },
+                        arguments: [
+                            {
+                                kind: 'Argument',
+                                name: { kind: 'Name', value: 'id' },
+                                value: { kind: 'Variable', name: { kind: 'Name', value: 'sykmeldingId' } },
+                            },
+                        ],
                         selectionSet: {
                             kind: 'SelectionSet',
                             selections: [

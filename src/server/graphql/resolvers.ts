@@ -16,7 +16,7 @@ export interface RequestContext {
 const Query: QueryResolvers = {
     sykmeldinger: async (_, args, context) => sykmeldingerService.getSykmeldinger(context),
     sykmelding: async (_, { id }, context) => sykmeldingerService.getSykmelding(id, context),
-    brukerinformasjon: async (_, args, context) => sykmeldingerService.getBrukerinformasjon(context),
+    brukerinformasjon: async (_, { id }, context) => sykmeldingerService.getBrukerinformasjonById(id, context),
     sykmeldingUtenforVentetid: async (_, { id }, context) => flexService.getErUtenforVentetid(id, context),
     tidligereArbeidsgivere: async (_, { id }, context) => sykmeldingerService.getTidligereArbeidsgivere(id, context),
 }

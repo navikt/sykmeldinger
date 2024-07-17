@@ -3,18 +3,20 @@ import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { PaperclipIcon } from '@navikt/aksel-icons'
 import { Chat } from '@navikt/ds-react'
-import { useQuery } from '@apollo/client'
-
-import { BrukerinformasjonDocument } from 'queries'
 
 import { FormValues } from '../../SendSykmelding/SendSykmeldingForm'
 import { raise } from '../../../utils/ts-utils'
+import useBrukerinformasjonById from '../../../hooks/useBrukerinformasjonById'
 
-function AutoFillerDevTools(): ReactElement | null {
+interface Props {
+    sykmeldingId: string
+}
+
+function AutoFillerDevTools({ sykmeldingId }: Props): ReactElement | null {
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [shouldShow, setShouldShow] = useState(false)
     const { setValue } = useFormContext<FormValues>()
-    const extraFormDataQuery = useQuery(BrukerinformasjonDocument)
+    const extraFormDataQuery = useBrukerinformasjonById(sykmeldingId)
 
     const handleAutoFill = useCallback((): void => {
         const values = {

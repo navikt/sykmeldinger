@@ -3,17 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
 import * as R from 'remeda'
-import { useQuery } from '@apollo/client'
 
-import {
-    YesOrNo,
-    UriktigeOpplysningerType,
-    ArbeidssituasjonType,
-    SykmeldingFragment,
-    Blad,
-    LottOgHyre,
-    BrukerinformasjonDocument,
-} from 'queries'
+import { YesOrNo, UriktigeOpplysningerType, ArbeidssituasjonType, SykmeldingFragment, Blad, LottOgHyre } from 'queries'
 
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import { useSendSykmelding } from '../../hooks/useMutations'
@@ -22,6 +13,8 @@ import Spinner from '../Spinner/Spinner'
 import { EgenmeldingsdagerSubForm } from '../FormComponents/Egenmelding/EgenmeldingerField'
 import useWarnUnsavedPopup from '../../hooks/useWarnUnsaved'
 import { browserEnv } from '../../utils/env'
+import useBrukerinformasjonById from '../../hooks/useBrukerinformasjonById'
+import AutoFillerDevTools from '../FormComponents/DevTools/AutoFillerDevTools'
 
 import OpplysningerRiktigeSection from './FormSections/OpplysningerRiktige/OpplysningerRiktigeSection'
 import ActionSection from './FormSections/ActionSection'
@@ -29,9 +22,6 @@ import ArbeidssituasjonSection from './FormSections/Arbeidssituasjon/Arbeidssitu
 import ErrorSection from './FormSections/ErrorSection'
 
 const FormDevTools = dynamic(() => import('../FormComponents/DevTools/FormDevTools'), {
-    ssr: false,
-})
-const AutoFillerDevTools = dynamic(() => import('../FormComponents/DevTools/AutoFillerDevTools'), {
     ssr: false,
 })
 
@@ -92,7 +82,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
             erSykmeldtFraFlereArbeidsforhold: null,
         },
     })
-    const brukerinformasjonData = useQuery(BrukerinformasjonDocument)
+    const brukerinformasjonData = useBrukerinformasjonById(sykmeldingId)
     const [sendSykmeldingResult, sendSykmelding] = useSendSykmelding(
         sykmeldingId,
         (values) => {
@@ -135,7 +125,9 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
     return (
         <FormProvider {...form}>
             {(browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev' ||
-                browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') && <AutoFillerDevTools />}
+                browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'local') && (
+                <AutoFillerDevTools sykmeldingId={sykmeldingId} />
+            )}
             <form
                 onSubmit={form.handleSubmit(sendSykmelding, (errors) => {
                     logAmplitudeEvent(
