@@ -3,7 +3,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
 import * as R from 'remeda'
-import { useQuery } from '@apollo/client'
 
 import {
     YesOrNo,
@@ -12,7 +11,6 @@ import {
     SykmeldingFragment,
     Blad,
     LottOgHyre,
-    BrukerinformasjonDocument,
 } from 'queries'
 
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'

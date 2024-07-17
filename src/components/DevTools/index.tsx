@@ -1,7 +1,7 @@
 import { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
-import { useApolloClient, useMutation, useQuery } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import * as R from 'remeda'
 

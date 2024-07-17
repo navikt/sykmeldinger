@@ -4,7 +4,6 @@ import { ExpansionCard } from '@navikt/ds-react'
 import { useQuery } from '@apollo/client'
 
 import {
-    BrukerinformasjonDocument,
     BrukerSvarFragment,
     JaEllerNei,
     SykmeldingErUtenforVentetidDocument,
