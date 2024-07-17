@@ -29,6 +29,16 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     request: { query: SykmeldingerDocument },
                     result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
                 }),
+                createMock({
+                        request: { query: BrukerinformasjonDocument, variables: {sykmeldingId: 'sykmelding-id'}},
+                        result: {
+                            data: brukerinformasjonData({
+                                arbeidsgivere: [{__typename: 'Arbeidsgiver', aktivtArbeidsforhold: true, navn: 'Arbeidsgiver AS', orgnummer: '123456789' }],
+                            }),
+                            extensions: { dontLog: true },
+                        },
+                    }
+                ),
                 ...createExtraFormDataMock(),
             ],
         })
