@@ -25,7 +25,6 @@ dirtyGlobal.ResizeObserver = vi.fn().mockImplementation(() => ({
 }))
 dirtyGlobal.scrollTo = vi.fn().mockImplementation(() => 0)
 
-// @ts-expect-error Difficult to type :))
 HTMLCanvasElement.prototype.getContext = vi.fn()
 
 mockRouter.useParser(

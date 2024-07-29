@@ -2,7 +2,12 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import mockRouter from 'next-router-mock'
 import { GraphQLError } from 'graphql'
 
-import { BrukerinformasjonDocument, SykmeldingByIdDocument, SykmeldingerDocument } from 'queries'
+import {
+    BrukerinformasjonDocument,
+    SykmeldingByIdDocument,
+    SykmeldingerDocument,
+    TidligereArbeidsgivereByIdDocument,
+} from 'queries'
 
 import { render, screen } from '../../utils/test/testUtils'
 import { dateSub } from '../../utils/dateUtils'
@@ -30,15 +35,22 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
                 }),
                 createMock({
-                        request: { query: BrukerinformasjonDocument, variables: {sykmeldingId: 'sykmelding-id'}},
-                        result: {
-                            data: brukerinformasjonData({
-                                arbeidsgivere: [{__typename: 'Arbeidsgiver', aktivtArbeidsforhold: true, navn: 'Arbeidsgiver AS', orgnummer: '123456789' }],
-                            }),
-                            extensions: { dontLog: true },
-                        },
-                    }
-                ),
+                    request: { query: BrukerinformasjonDocument, variables: { sykmeldingId: 'sykmelding-id' } },
+                    result: {
+                        data: brukerinformasjonData({
+                            arbeidsgivere: [
+                                {
+                                    __typename: 'Arbeidsgiver',
+                                    aktivtArbeidsforhold: true,
+                                    navn: 'Arbeidsgiver AS',
+                                    orgnummer: '123456789',
+                                    naermesteLeder: null,
+                                },
+                            ],
+                        }),
+                        extensions: { dontLog: true },
+                    },
+                }),
                 ...createExtraFormDataMock(),
             ],
         })
@@ -73,7 +85,16 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     result: { data: { __typename: 'Query', sykmeldinger: [thisSykmelding, previousSykmelding] } },
                 }),
             ],
-            initialState: [createInitialQuery(BrukerinformasjonDocument, brukerinformasjonData())],
+            initialState: [
+                createInitialQuery(BrukerinformasjonDocument, brukerinformasjonData(), {
+                    sykmeldingId: 'this-sykmelding',
+                }),
+                createInitialQuery(
+                    TidligereArbeidsgivereByIdDocument,
+                    { __typename: 'Query', tidligereArbeidsgivere: [] },
+                    { sykmeldingId: 'this-sykmelding' },
+                ),
+            ],
         })
 
         expect(
@@ -122,15 +143,7 @@ describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
                     result: { data: { __typename: 'Query', sykmeldinger: [sykmelding] } },
                 }),
                 createMock({
-                    request: { query: BrukerinformasjonDocument },
-                    result: {
-                        data: null,
-                        errors: [new GraphQLError('Some backend error')],
-                        extensions: { dontLog: true },
-                    },
-                }),
-                createMock({
-                    request: { query: BrukerinformasjonDocument },
+                    request: { query: BrukerinformasjonDocument, variables: { sykmeldingId: 'sykmelding-id' } },
                     result: {
                         data: null,
                         errors: [new GraphQLError('Some backend error')],

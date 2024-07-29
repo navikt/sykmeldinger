@@ -6,6 +6,7 @@ import {
     BrukerinformasjonQuery,
     SykmeldingErUtenforVentetidDocument,
     SykmeldingErUtenforVentetidQuery,
+    TidligereArbeidsgivereByIdDocument,
     UtenforVentetid,
 } from 'queries'
 
@@ -56,6 +57,15 @@ export function createExtraFormDataMock({
             request: { query: SykmeldingErUtenforVentetidDocument, variables: { sykmeldingId } },
             result: {
                 data: erUtenforVentetidData(utenforVentetid),
+            },
+        }),
+        createMock({
+            request: { query: TidligereArbeidsgivereByIdDocument, variables: { sykmeldingId } },
+            result: {
+                data: {
+                    __typename: 'Query',
+                    tidligereArbeidsgivere: [],
+                },
             },
         }),
     ]
