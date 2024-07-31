@@ -14,9 +14,11 @@ spec:
     enabled: true
     sidecar:
       enabled: true
-      resources:
-        requests:
-          cpu: 150m
+      autoLogin: true
+      autoLoginIgnorePaths:
+        - /syk/sykmeldinger/api/**
+  tokenx:
+    enabled: true
   prometheus:
     enabled: true
     path: /syk/sykmeldinger/api/internal/prometheus
@@ -28,8 +30,6 @@ spec:
       destinations:
         - id: loki
         - id: elastic
-  tokenx:
-    enabled: true
   replicas:
     min: 2
     max: 4
@@ -54,9 +54,6 @@ spec:
         - application: flex-syketilfelle
           namespace: flex
         - application: nav-dekoratoren
-          namespace: personbruker
-        # TODO: Can be removed when decorator-next goes live
-        - application: decorator-next
           namespace: personbruker
         - application: flexjar-backend
           namespace: flex
