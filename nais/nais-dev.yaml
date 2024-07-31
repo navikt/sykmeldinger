@@ -14,6 +14,9 @@ spec:
     enabled: true
     sidecar:
       enabled: true
+      autoLogin: true
+      autoLoginIgnorePaths:
+        - /syk/sykmeldinger/api/**
   tokenx:
     enabled: true
   prometheus:
@@ -38,6 +41,13 @@ spec:
     requests:
       cpu: 50m
       memory: 512Mi
+  liveness:
+    path: /syk/sykmeldinger/api/internal/is_alive
+  readiness:
+    path: /syk/sykmeldinger/api/internal/is_ready
+  preStopHook:
+    http:
+      path: /syk/sykmeldinger/api/internal/pre_stop
   accessPolicy:
     outbound:
       rules:
@@ -50,13 +60,6 @@ spec:
           namespace: flex
       external:
         - host: teamsykmelding-unleash-api.nav.cloud.nais.io
-  liveness:
-    path: /syk/sykmeldinger/api/internal/is_alive
-  readiness:
-    path: /syk/sykmeldinger/api/internal/is_ready
-  preStopHook:
-    http:
-      path: /syk/sykmeldinger/api/internal/pre_stop
   env:
     - name: SYKMELDINGER_BACKEND
       value: 'http://sykmeldinger-backend'
