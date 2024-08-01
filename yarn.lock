@@ -5247,10 +5247,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-hash@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "crypto-hash@npm:3.0.0"
-  checksum: 10/e5fdbb86eb072127f1b738c5489fbadf36b18b35c330afc52fa78685f7698c302306ccecf83923b32743a57c9fab8362bf5e032dc469998191613a2d1d81f82b
+"crypto-hash@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "crypto-hash@npm:3.1.0"
+  checksum: 10/c71518a20470b78a584f0cb568ba87241802627812da0e3c20236070a90dbb1272b8c9db0476d45996c2f4c793ccfccdeb399e31a3cd3310eb4b6e2363a91306
   languageName: node
   linkType: hard
 
@@ -11563,7 +11563,7 @@ __metadata:
     autoprefixer: "npm:^10.4.19"
     classnames: "npm:^2.5.1"
     concurrently: "npm:^8.2.2"
-    crypto-hash: "npm:^3.0.0"
+    crypto-hash: "npm:^3.1.0"
     date-fns: "npm:3.6.0"
     dotenv: "npm:^16.4.5"
     eslint: "npm:^8.57.0"
