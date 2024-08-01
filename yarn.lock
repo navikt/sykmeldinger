@@ -3800,9 +3800,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-v8@npm:2.0.4":
-  version: 2.0.4
-  resolution: "@vitest/coverage-v8@npm:2.0.4"
+"@vitest/coverage-v8@npm:2.0.5":
+  version: 2.0.5
+  resolution: "@vitest/coverage-v8@npm:2.0.5"
   dependencies:
     "@ampproject/remapping": "npm:^2.3.0"
     "@bcoe/v8-coverage": "npm:^0.2.3"
@@ -3817,8 +3817,8 @@ __metadata:
     test-exclude: "npm:^7.0.1"
     tinyrainbow: "npm:^1.2.0"
   peerDependencies:
-    vitest: 2.0.4
-  checksum: 10/de23ca9c8e7cd704d889475af9a8282a1d29e4ca05909edc28df3f55b65a10cba344ab350ab255d0ad1b8a3dc6d98ebb12d5c2614bc8d92b03b645f15912ae61
+    vitest: 2.0.5
+  checksum: 10/bb774d1a52b85adf94dcf62dc9684c59bd6aba6f8d43ce4d4afa06e3ca85651ec217f74842c0c4a81ea0158f029e484055207869e5d741cfbc3119257399fb83
   languageName: node
   linkType: hard
 
@@ -11559,7 +11559,7 @@ __metadata:
     "@types/uuid": "npm:^10.0.0"
     "@unleash/nextjs": "npm:^1.4.4"
     "@vitejs/plugin-react": "npm:^4.3.1"
-    "@vitest/coverage-v8": "npm:2.0.4"
+    "@vitest/coverage-v8": "npm:2.0.5"
     autoprefixer: "npm:^10.4.19"
     classnames: "npm:^2.5.1"
     concurrently: "npm:^8.2.2"
