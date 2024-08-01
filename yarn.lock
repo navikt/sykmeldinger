@@ -48,9 +48,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.11.1":
-  version: 3.11.1
-  resolution: "@apollo/client@npm:3.11.1"
+"@apollo/client@npm:^3.11.2":
+  version: 3.11.2
+  resolution: "@apollo/client@npm:3.11.2"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -81,7 +81,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/cf319dc41d8c14e309b1f06eb3016b8a0ea0dd2e8603bfb38404de7434ae1956039b6450dba5c2f5beaac7abcf4c2667d8b7659e52c58406b6fd31db808f17fe
+  checksum: 10/9601fb3f47ec7cfaccc50bd25315e6607fec4216a4c3fa2a042b8d0d6395d87715880fb80766b904997564f6d77b97c09b60ad6b64526c0f1b50e2f07d80ce11
   languageName: node
   linkType: hard
 
@@ -314,13 +314,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@as-integrations/next@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@as-integrations/next@npm:3.0.0"
+"@as-integrations/next@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@as-integrations/next@npm:3.1.0"
   peerDependencies:
     "@apollo/server": ^4.0.0
     next: ^12.0.0 || ^13.0.0 || ^14.0.0
-  checksum: 10/463023499dd4d0170bc03d899aa471b17728edf71b259445035fb0ef62a064a546331b8737952deccfbe3bd01b2f4db802391dfe8228960aec467620ea4e6252
+  checksum: 10/d2991d83b00e3e55521ff6880f06c879061941f07ba159cfd997fc8bb03ed5ba1ebb638c22ed733da9a24a69e4fceb6dcab06f2ce910f7c89b15535fd536bf52
   languageName: node
   linkType: hard
 
@@ -11518,9 +11518,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sykmeldinger@workspace:."
   dependencies:
-    "@apollo/client": "npm:^3.11.1"
+    "@apollo/client": "npm:^3.11.2"
     "@apollo/server": "npm:^4.10.5"
-    "@as-integrations/next": "npm:^3.0.0"
+    "@as-integrations/next": "npm:^3.1.0"
     "@axe-core/playwright": "npm:^4.9.1"
     "@grafana/faro-web-sdk": "npm:1.8.2"
     "@graphql-codegen/add": "npm:5.0.3"
