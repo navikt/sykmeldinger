@@ -2,7 +2,7 @@ import { CSSProperties, ReactElement, useCallback, useEffect, useRef, useState }
 import { Button, Tooltip, Popover, Heading, Alert, Select, LinkPanel, Modal, Link } from '@navikt/ds-react'
 import { SandboxIcon } from '@navikt/aksel-icons'
 import { useApolloClient, useMutation } from '@apollo/client'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
 import * as R from 'remeda'
 
 import { BrukerinformasjonDocument, Dev_ChangeUserScenarioDocument, Dev_SetAntallArbeidsgivereDocument } from 'queries'
@@ -10,7 +10,7 @@ import { BrukerinformasjonDocument, Dev_ChangeUserScenarioDocument, Dev_SetAntal
 import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
 import { cn } from '../../utils/tw-utils'
 import { simpleScenarios, otherScenarios } from '../../server/graphql/mock-db/scenarios'
-import useBrukerinformasjonById from "../../hooks/useBrukerinformasjonById";
+import useBrukerinformasjonById from '../../hooks/useBrukerinformasjonById'
 
 function Index(): ReactElement {
     const [showHint, setShowHint] = useState(false)
@@ -90,13 +90,14 @@ function DevToolsContent({ closeModal }: { closeModal: () => void }): ReactEleme
 
 function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElement {
     const router = useRouter()
+    const pathname = usePathname()
     const client = useApolloClient()
     const [changeUserScenario, { loading, error }] = useMutation(Dev_ChangeUserScenarioDocument)
 
     const handleChangeUserScenario = (scenario: Scenarios) => async () => {
         await changeUserScenario({ variables: { scenario } })
-        if (router.pathname !== '/') {
-            await router.push('/')
+        if (pathname !== '/') {
+            router.push('/')
         }
         await client.cache.reset()
 
@@ -169,7 +170,7 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
 }
 
 function ScenarioOptions(): ReactElement {
-    const brukerinformasjonQuery = useBrukerinformasjonById("1")
+    const brukerinformasjonQuery = useBrukerinformasjonById('1')
     const [antallArbeidsgivereMutation, antallArbeidsgivereMutationResult] = useMutation(
         Dev_SetAntallArbeidsgivereDocument,
         { refetchQueries: [BrukerinformasjonDocument] },

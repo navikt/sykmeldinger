@@ -14,7 +14,7 @@ import { dateSub } from '../../utils/dateUtils'
 import { createInitialQuery, createMock, createSykmelding } from '../../utils/test/dataUtils'
 import { brukerinformasjonData, createExtraFormDataMock } from '../../utils/test/mockUtils'
 
-import SykmeldingPage from './index.page'
+import SykmeldingPage from './page'
 
 describe('SykmeldingPage: /syk/sykmeldinger/{sykmeldingId}', () => {
     beforeEach(() => {

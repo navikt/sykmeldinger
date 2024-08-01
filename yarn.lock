@@ -48,9 +48,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.11.1":
-  version: 3.11.1
-  resolution: "@apollo/client@npm:3.11.1"
+"@apollo/client@npm:^3.11.2":
+  version: 3.11.2
+  resolution: "@apollo/client@npm:3.11.2"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -81,7 +81,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10/cf319dc41d8c14e309b1f06eb3016b8a0ea0dd2e8603bfb38404de7434ae1956039b6450dba5c2f5beaac7abcf4c2667d8b7659e52c58406b6fd31db808f17fe
+  checksum: 10/9601fb3f47ec7cfaccc50bd25315e6607fec4216a4c3fa2a042b8d0d6395d87715880fb80766b904997564f6d77b97c09b60ad6b64526c0f1b50e2f07d80ce11
   languageName: node
   linkType: hard
 
@@ -5247,13 +5247,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-hash@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "crypto-hash@npm:3.0.0"
-  checksum: 10/e5fdbb86eb072127f1b738c5489fbadf36b18b35c330afc52fa78685f7698c302306ccecf83923b32743a57c9fab8362bf5e032dc469998191613a2d1d81f82b
-  languageName: node
-  linkType: hard
-
 "crypto-js@npm:^4.2.0":
   version: 4.2.0
   resolution: "crypto-js@npm:4.2.0"
@@ -5666,7 +5659,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domutils@npm:^3.0.1":
+"domutils@npm:^3.0.1, domutils@npm:^3.1.0":
   version: 3.1.0
   resolution: "domutils@npm:3.1.0"
   dependencies:
@@ -5785,7 +5778,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"entities@npm:^4.2.0, entities@npm:^4.4.0":
+"entities@npm:^4.2.0, entities@npm:^4.4.0, entities@npm:^4.5.0":
   version: 4.5.0
   resolution: "entities@npm:4.5.0"
   checksum: 10/ede2a35c9bce1aeccd055a1b445d41c75a14a2bb1cd22e242f20cf04d236cdcd7f9c859eb83f76885327bfae0c25bf03303665ee1ce3d47c5927b98b0e3e3d48
@@ -7309,6 +7302,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-dom-parser@npm:5.0.9":
+  version: 5.0.9
+  resolution: "html-dom-parser@npm:5.0.9"
+  dependencies:
+    domhandler: "npm:5.0.3"
+    htmlparser2: "npm:9.1.0"
+  checksum: 10/8db5fb8081a27407fd8124027ff11185b39b3d2ebea17b6404ae2c8286a6546106788c1582c25afcb1d2545c41f65e73e1d6f8c9e4df3cc1ff14cd5a4d25eac2
+  languageName: node
+  linkType: hard
+
 "html-encoding-sniffer@npm:^4.0.0":
   version: 4.0.0
   resolution: "html-encoding-sniffer@npm:4.0.0"
@@ -7339,6 +7342,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-react-parser@npm:^5.1.12":
+  version: 5.1.12
+  resolution: "html-react-parser@npm:5.1.12"
+  dependencies:
+    domhandler: "npm:5.0.3"
+    html-dom-parser: "npm:5.0.9"
+    react-property: "npm:2.0.2"
+    style-to-js: "npm:1.1.12"
+  peerDependencies:
+    "@types/react": 0.14 || 15 || 16 || 17 || 18
+    react: 0.14 || 15 || 16 || 17 || 18
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10/d13e590ac3dd3933e4b27bcd8f1423a00ea911e523ea7365f2bbabbedbdf5219cf2998cca9c537d543485fdde7358bb5c9d85bc84aa6dad57b8b7d920cd89364
+  languageName: node
+  linkType: hard
+
 "htmlparser2@npm:8.0.2":
   version: 8.0.2
   resolution: "htmlparser2@npm:8.0.2"
@@ -7348,6 +7369,18 @@ __metadata:
     domutils: "npm:^3.0.1"
     entities: "npm:^4.4.0"
   checksum: 10/ea5512956eee06f5835add68b4291d313c745e8407efa63848f4b8a90a2dee45f498a698bca8614e436f1ee0cfdd609938b71d67c693794545982b76e53e6f11
+  languageName: node
+  linkType: hard
+
+"htmlparser2@npm:9.1.0":
+  version: 9.1.0
+  resolution: "htmlparser2@npm:9.1.0"
+  dependencies:
+    domelementtype: "npm:^2.3.0"
+    domhandler: "npm:^5.0.3"
+    domutils: "npm:^3.1.0"
+    entities: "npm:^4.5.0"
+  checksum: 10/6352fa2a5495781fa9a02c9049908334cd068ff36d753870d30cd13b841e99c19646717567a2f9e9c44075bbe43d364e102f9d013a731ce962226d63746b794f
   languageName: node
   linkType: hard
 
@@ -7516,6 +7549,13 @@ __metadata:
   version: 0.1.1
   resolution: "inline-style-parser@npm:0.1.1"
   checksum: 10/e661f4fb6824a41076c4d23358e8b581fd3410fbfb9baea4cb542a85448b487691c3b9bbb58ad73a95613041ca616f059595f19cadd0c22476a1fffa79842b48
+  languageName: node
+  linkType: hard
+
+"inline-style-parser@npm:0.2.3":
+  version: 0.2.3
+  resolution: "inline-style-parser@npm:0.2.3"
+  checksum: 10/10b1808e9c8430db22a7b3cdb301f07fe55d539a5f700bc1d06d02a9e8ed8260900831eb4f9a5ee8ae57cfbd133713a3387eae6b3ba3c6f8d0305ec208da4889
   languageName: node
   linkType: hard
 
@@ -10285,6 +10325,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-property@npm:2.0.2":
+  version: 2.0.2
+  resolution: "react-property@npm:2.0.2"
+  checksum: 10/3a4bc1951b2b7992cb8a2d3f12016dd0920d1c06eb58b456204a6ae1210401d62baece098d3200ed8a0513dde247a5d96ffdb24f354e32ce5a9b26fbd8552668
+  languageName: node
+  linkType: hard
+
 "react-refresh@npm:^0.14.2":
   version: 0.14.2
   resolution: "react-refresh@npm:0.14.2"
@@ -11405,6 +11452,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"style-to-js@npm:1.1.12":
+  version: 1.1.12
+  resolution: "style-to-js@npm:1.1.12"
+  dependencies:
+    style-to-object: "npm:1.0.6"
+  checksum: 10/313380327983e27db1f033b73aa7805dcbe2a5fb7bcb633ce701e9f7d15f3bf9a85df5f87b5ca328efbf472c0cd35f0e697e8e0cefbe4e8a559060948fdb8dc9
+  languageName: node
+  linkType: hard
+
 "style-to-js@npm:1.1.3":
   version: 1.1.3
   resolution: "style-to-js@npm:1.1.3"
@@ -11420,6 +11476,15 @@ __metadata:
   dependencies:
     inline-style-parser: "npm:0.1.1"
   checksum: 10/aa597acebfa44b8468d486385fc63007d49cb1da2b2ffe5d54021bccf2d47e2f5d18ff499dcb8f028087fc1a4ac86556bebf768ac91137d43ecbb47b8470410a
+  languageName: node
+  linkType: hard
+
+"style-to-object@npm:1.0.6":
+  version: 1.0.6
+  resolution: "style-to-object@npm:1.0.6"
+  dependencies:
+    inline-style-parser: "npm:0.2.3"
+  checksum: 10/f8a969098423ca793ca01334c6df4c4e7973dd5711acf8070f603c79e7d84fb3243954717c73f685775b605bc606eadf42ae4d554261b7fb08eec7708488d583
   languageName: node
   linkType: hard
 
@@ -11518,7 +11583,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sykmeldinger@workspace:."
   dependencies:
-    "@apollo/client": "npm:^3.11.1"
+    "@apollo/client": "npm:^3.11.2"
     "@apollo/server": "npm:^4.10.5"
     "@as-integrations/next": "npm:^3.0.0"
     "@axe-core/playwright": "npm:^4.9.1"
@@ -11563,13 +11628,13 @@ __metadata:
     autoprefixer: "npm:^10.4.19"
     classnames: "npm:^2.5.1"
     concurrently: "npm:^8.2.2"
-    crypto-hash: "npm:^3.0.0"
     date-fns: "npm:3.6.0"
     dotenv: "npm:^16.4.5"
     eslint: "npm:^8.57.0"
     eslint-config-next: "npm:14.2.5"
     graphql: "npm:^16.9.0"
     graphql-scalars: "npm:^1.23.0"
+    html-react-parser: "npm:^5.1.12"
     http-proxy: "npm:^1.18.1"
     husky: "npm:^9.1.3"
     jsdom: "npm:^24.1.1"

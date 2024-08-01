@@ -73,7 +73,7 @@ typings/
 .next
 
 # page used for debugging stuff locally
-src/pages/debug.page.tsx
+src/app/debug.page.tsx
 /test-results/
 /playwright-report/
 /playwright/.cache/

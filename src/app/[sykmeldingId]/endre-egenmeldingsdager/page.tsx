@@ -1,18 +1,20 @@
+'use client'
+
 import { ReactElement } from 'react'
 import { Alert, BodyShort, GuidePanel, Heading } from '@navikt/ds-react'
 
-import Perioder from '../../components/Sykmelding/SykmeldingerSykmeldt/Felles/Perioder'
-import PageWrapper from '../../components/PageWrapper/PageWrapper'
-import useSykmeldingById from '../../hooks/useSykmeldingById'
-import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
-import Spinner from '../../components/Spinner/Spinner'
-import SykmeldingenGjelder from '../../components/Sykmelding/SykmeldingerSykmeldt/Felles/SykmeldingenGjelder'
-import { isSendtSykmelding, isV3 } from '../../utils/sykmeldingUtils'
-import { getSykmeldingperioderSorted } from '../../utils/periodeUtils'
-import { findEgenmeldingsdager } from '../../utils/egenmeldingsdagerUtils'
-import { withAuthenticatedPage } from '../../auth/withAuthentication'
-import EndreEgenmelding from '../../components/EndreEgenmelding/EndreEgenmelding'
-import { createEndreEgenmeldingsdagerBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import Perioder from '../../../components/Sykmelding/SykmeldingerSykmeldt/Felles/Perioder'
+import PageWrapper from '../../../components/PageWrapper/PageWrapper'
+import useSykmeldingById from '../../../hooks/useSykmeldingById'
+import useGetSykmeldingIdParam from '../../../hooks/useGetSykmeldingIdParam'
+import Spinner from '../../../components/Spinner/Spinner'
+import SykmeldingenGjelder from '../../../components/Sykmelding/SykmeldingerSykmeldt/Felles/SykmeldingenGjelder'
+import { isSendtSykmelding, isV3 } from '../../../utils/sykmeldingUtils'
+import { getSykmeldingperioderSorted } from '../../../utils/periodeUtils'
+import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
+import EndreEgenmelding from '../../../components/EndreEgenmelding/EndreEgenmelding'
+import { useUpdateBreadcrumbs } from '../../../breadcrumbs/useBreadcrumbs'
+import { createEndreEgenmeldingsdagerBreadcrumbs } from '../../../breadcrumbs/crumbs'
 
 function EndreEgenmeldingsdagerPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -62,7 +64,5 @@ function EndreEgenmeldingsdagerPage(): ReactElement {
         </PageWrapper>
     )
 }
-
-export const getServerSideProps = withAuthenticatedPage()
 
 export default EndreEgenmeldingsdagerPage

@@ -1,5 +1,5 @@
 import { MutationResult, useMutation } from '@apollo/client'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { logger } from '@navikt/next-logger'
 import { useRef } from 'react'
 

@@ -1,8 +1,10 @@
+'use client'
+
 import { logger } from '@navikt/next-logger'
 import { BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
 import { ReactElement, useEffect } from 'react'
 
-import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
+import { useUpdateBreadcrumbs } from '../breadcrumbs/useBreadcrumbs'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 
 const NotFoundPage = (): ReactElement => {

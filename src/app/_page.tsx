@@ -1,21 +1,18 @@
-import React, { ReactElement } from 'react'
-import Head from 'next/head'
+'use client'
 
-import { withAuthenticatedPage } from '../auth/withAuthentication'
+import React, { ReactElement } from 'react'
+
 import Header from '../components/Header/Header'
 import SykmeldingerListAll from '../components/SykmeldingerList/SykmeldingerListAll'
 import TilHovedsiden from '../components/TilHovedsiden/TilHovedsiden'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
-import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
+import { useUpdateBreadcrumbs } from '../breadcrumbs/useBreadcrumbs'
 
 function SykmeldingerPage(): ReactElement {
     useUpdateBreadcrumbs(() => [])
 
     return (
         <>
-            <Head>
-                <title>Sykmeldinger - www.nav.no</title>
-            </Head>
             <Header title="Sykmeldinger" />
             <PageWrapper>
                 <SykmeldingerListAll />
@@ -26,7 +23,5 @@ function SykmeldingerPage(): ReactElement {
         </>
     )
 }
-
-export const getServerSideProps = withAuthenticatedPage()
 
 export default SykmeldingerPage

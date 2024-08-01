@@ -15,16 +15,16 @@ import {
     SykmeldingFragment,
 } from 'queries'
 
-import { render, screen, Screen, waitFor } from '../../utils/test/testUtils'
+import { render, screen, Screen, waitFor } from '../../../utils/test/testUtils'
 import {
     createEgenmeldingsdagerSporsmal,
     createMock,
     createSykmelding,
     createSykmeldingPeriode,
     createSykmeldingStatus,
-} from '../../utils/test/dataUtils'
+} from '../../../utils/test/dataUtils'
 
-import EndreEgenmeldingsdagerPage from './endre-egenmeldingsdager.page'
+import EndreEgenmeldingsdagerPage from './page'
 
 const arbeidsgiver: ArbeidsgiverStatus = {
     __typename: 'ArbeidsgiverStatus',

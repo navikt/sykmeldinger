@@ -13,7 +13,7 @@ import {
 } from '../utils/test/dataUtils'
 import { dateSub } from '../utils/dateUtils'
 
-import SykmeldingerPage from './index.page'
+import SykmeldingerPage from './_page'
 
 vi.mock('@navikt/nav-dekoratoren-moduler', async (importOriginal) => {
     const actual: { default: typeof dekoratoren } = await importOriginal()

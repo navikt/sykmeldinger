@@ -1,6 +1,7 @@
+'use client'
+
 import { Fragment, PropsWithChildren, ReactElement, useCallback, useEffect, useState } from 'react'
 import { Alert, BodyLong, BodyShort, GuidePanel, Heading, Link, Skeleton } from '@navikt/ds-react'
-import Head from 'next/head'
 import { logger } from '@navikt/next-logger'
 import { range } from 'remeda'
 
@@ -19,14 +20,14 @@ import InvalidBekreftetSykmelding from '../../components/SykmeldingViews/INVALID
 import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
 import Header from '../../components/Header/Header'
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden'
-import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
 import { browserEnv } from '../../utils/env'
-import { createSykmeldingBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
+import { useUpdateBreadcrumbs } from '../../breadcrumbs/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
 import { isUtenlandsk } from '../../utils/utenlanskUtils'
 import { getUserRequestId } from '../../utils/userRequestId'
+import { createSykmeldingBreadcrumbs } from '../../breadcrumbs/crumbs'
 
 function SykmeldingPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
@@ -206,6 +207,7 @@ function SykmeldingerWrapper({
 
     return (
         <div className="print:h-full print:overflow-hidden">
+            <title>Sykmelding - www.nav.no</title>
             <div className="hidden print:m-24 print:mb-0 print:block" hidden>
                 <Heading level="1" size="large" spacing>
                     Det er ikke mulig å printe på denne måten.
@@ -213,9 +215,6 @@ function SykmeldingerWrapper({
                 <BodyLong>Vennligst bruk printknappen øverst til høyre for sykmeldingen for å printe.</BodyLong>
             </div>
             <div className="print:hidden">
-                <Head>
-                    <title>Sykmelding - www.nav.no</title>
-                </Head>
                 {sykmelding == null ? (
                     <Header skeleton />
                 ) : (
@@ -268,7 +267,5 @@ function SykmeldingSkeleton(): ReactElement {
         </section>
     )
 }
-
-export const getServerSideProps = withAuthenticatedPage()
 
 export default SykmeldingPage

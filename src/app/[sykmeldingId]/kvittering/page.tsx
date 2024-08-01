@@ -1,30 +1,31 @@
-import Head from 'next/head'
+'use client'
+
 import { Fragment, PropsWithChildren, ReactElement, useEffect } from 'react'
 import { Alert, BodyShort, GuidePanel, Heading, Link as DsLink, Skeleton } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { range } from 'remeda'
 
 import { RegelStatus, StatusEvent, SvarUnion_ArbeidssituasjonSvar_Fragment, SykmeldingFragment } from 'queries'
 
-import useSykmeldingById from '../../hooks/useSykmeldingById'
-import StatusBanner from '../../components/StatusBanner/StatusBanner'
-import StatusInfo from '../../components/StatusInfo/StatusInfo'
-import useGetSykmeldingIdParam from '../../hooks/useGetSykmeldingIdParam'
-import Header from '../../components/Header/Header'
-import { withAuthenticatedPage } from '../../auth/withAuthentication'
-import PageWrapper from '../../components/PageWrapper/PageWrapper'
-import { getReadableSykmeldingLength, getSentSykmeldingTitle } from '../../utils/sykmeldingUtils'
-import HintToNextOlderSykmelding from '../../components/ForceOrder/HintToNextOlderSykmelding'
-import SykmeldingArbeidsgiverExpansionCard from '../../components/Sykmelding/SykmeldingerArbeidsgiver/SykmeldingArbeidsgiverExpansionCard'
-import SykmeldingSykmeldtSection from '../../components/Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
-import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
-import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
-import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
-import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
-import Feedback from '../../components/Feedback/Feedback'
-import { useFlag } from '../../toggles/context'
+import useSykmeldingById from '../../../hooks/useSykmeldingById'
+import StatusBanner from '../../../components/StatusBanner/StatusBanner'
+import StatusInfo from '../../../components/StatusInfo/StatusInfo'
+import useGetSykmeldingIdParam from '../../../hooks/useGetSykmeldingIdParam'
+import Header from '../../../components/Header/Header'
+import PageWrapper from '../../../components/PageWrapper/PageWrapper'
+import { getReadableSykmeldingLength, getSentSykmeldingTitle } from '../../../utils/sykmeldingUtils'
+import HintToNextOlderSykmelding from '../../../components/ForceOrder/HintToNextOlderSykmelding'
+import SykmeldingArbeidsgiverExpansionCard from '../../../components/Sykmelding/SykmeldingerArbeidsgiver/SykmeldingArbeidsgiverExpansionCard'
+import SykmeldingSykmeldtSection from '../../../components/Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
+import { useUpdateBreadcrumbs } from '../../../breadcrumbs/useBreadcrumbs'
+import UxSignalsWidget from '../../../components/UxSignals/UxSignalsWidget'
+import { useFindPrevSykmeldingTom } from '../../../hooks/useFindPrevSykmeldingTom'
+import { hasHitPreviousSykmeldingTom } from '../../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
+import Feedback from '../../../components/Feedback/Feedback'
+import { useFlag } from '../../../toggles/context'
+import { createKvitteringBreadcrumbs } from '../../../breadcrumbs/crumbs'
 
 import EHelseforsikring from './e-helseforsikring'
 
@@ -32,7 +33,7 @@ function SykmeldingkvitteringPage(): ReactElement {
     const feedbackToggle = useFlag('SYKMELDINGER_FLEXJAR_KVITTERING')
     const sykmeldingId = useGetSykmeldingIdParam()
     const { data, error, loading } = useSykmeldingById(sykmeldingId)
-    const router = useRouter()
+    const searchParams = useSearchParams()
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -104,7 +105,7 @@ function SykmeldingkvitteringPage(): ReactElement {
                 <StatusBanner
                     sykmeldingStatus={data.sykmelding.sykmeldingStatus}
                     behandlingsutfall={data.sykmelding.behandlingsutfall}
-                    isEgenmeldingsKvittering={router.query.egenmelding === 'true'}
+                    isEgenmeldingsKvittering={searchParams?.get('egenmelding') === 'true'}
                 />
             </div>
 
@@ -208,9 +209,7 @@ function KvitteringWrapper({
 
     return (
         <>
-            <Head>
-                <title>Kvittering - www.nav.no</title>
-            </Head>
+            <title>Kvittering - www.nav.no</title>
             {sykmelding == null ? (
                 <Header skeleton />
             ) : (
@@ -266,7 +265,5 @@ function KvitteringSkeletonBottom(): ReactElement {
         </>
     )
 }
-
-export const getServerSideProps = withAuthenticatedPage()
 
 export default SykmeldingkvitteringPage

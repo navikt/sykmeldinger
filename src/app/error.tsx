@@ -1,11 +1,21 @@
-import { BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
-import { ReactElement } from 'react'
+'use client'
 
-import { useUpdateBreadcrumbs } from '../hooks/useBreadcrumbs'
+import { BodyShort, GuidePanel, Heading, Link } from '@navikt/ds-react'
+import { ReactElement, useEffect } from 'react'
+import { logger } from '@navikt/next-logger'
+
+import { useUpdateBreadcrumbs } from '../breadcrumbs/useBreadcrumbs'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 
-const NotFoundPage = (): ReactElement => {
+type Props = { error: Error & { digest?: string } }
+
+const ErrorPage = ({ error }: Props): ReactElement => {
     useUpdateBreadcrumbs(() => [{ title: 'Ukjent feil' }])
+
+    useEffect(() => {
+        logger.error('Error boundary hit (error.ts)')
+        logger.error(error)
+    }, [error])
 
     return (
         <PageWrapper>
@@ -25,4 +35,4 @@ const NotFoundPage = (): ReactElement => {
     )
 }
 
-export default NotFoundPage
+export default ErrorPage

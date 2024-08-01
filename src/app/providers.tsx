@@ -1,17 +1,16 @@
-import '../style/global.css'
+'use client'
 
-import { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
-import { ReactElement, useState } from 'react'
+import { PropsWithChildren, ReactElement, useState } from 'react'
 import { configureLogger } from '@navikt/next-logger'
 import dynamic from 'next/dynamic'
+import { IToggle } from '@unleash/nextjs'
 
 import { createApolloClient } from '../fetching/apollo'
 import { LabsWarning } from '../components/LabsWarning/LabsWarning'
-import { useHandleDecoratorClicks } from '../hooks/useBreadcrumbs'
+import { useHandleDecoratorClicks } from '../breadcrumbs/useBreadcrumbs'
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
 import { getFaro, initInstrumentation, pinoLevelToFaroLevel } from '../faro/faro'
-import { ServerSidePropsResult } from '../auth/withAuthentication'
 import { FlagProvider } from '../toggles/context'
 import { isE2E, isLocalOrDemo } from '../utils/env'
 
@@ -26,7 +25,7 @@ configureLogger({
         }),
 })
 
-function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): ReactElement {
+function Providers({ children, toggles }: PropsWithChildren<{ toggles: IToggle[] }>): ReactElement {
     useHandleDecoratorClicks()
 
     const [apolloClient] = useState(() => {
@@ -35,12 +34,12 @@ function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): React
 
     return (
         <ErrorBoundary>
-            <FlagProvider toggles={pageProps.toggles}>
+            <FlagProvider toggles={toggles}>
                 <ApolloProvider client={apolloClient}>
                     {isLocalOrDemo && !isE2E && <DevTools />}
                     <LabsWarning />
                     <main id="maincontent" role="main" tabIndex={-1}>
-                        <Component {...pageProps} />
+                        {children}
                     </main>
                 </ApolloProvider>
             </FlagProvider>
@@ -48,4 +47,4 @@ function MyApp({ Component, pageProps }: AppProps<ServerSidePropsResult>): React
     )
 }
 
-export default MyApp
+export default Providers

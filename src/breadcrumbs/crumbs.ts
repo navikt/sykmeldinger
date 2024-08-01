@@ -1,19 +1,16 @@
 import { ParsedUrlQuery } from 'querystring'
 
-import { DependencyList, useCallback, useEffect, useRef } from 'react'
-import { onBreadcrumbClick, setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler'
-import { useRouter } from 'next/router'
 import { logger } from '@navikt/next-logger'
+import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler'
 
 import { SykmeldingFragment } from 'queries'
 
-import { getSykmeldingTitle } from '../utils/sykmeldingUtils'
 import { browserEnv } from '../utils/env'
+import { getSykmeldingTitle } from '../utils/sykmeldingUtils'
 
-type Breadcrumb = { title: string; url: string }
-type LastCrumb = { title: string }
+export type Breadcrumb = { title: string; url: string }
+export type LastCrumb = { title: string }
 type CompleteCrumb = Parameters<typeof setBreadcrumbs>[0][0]
-
 const baseCrumb: CompleteCrumb[] = [
     {
         title: 'Min side',
@@ -35,7 +32,7 @@ const baseCrumb: CompleteCrumb[] = [
 /**
  * The last crumb does not need to provide a URL, since it's only used to display the text for the "active" crumb.
  */
-function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): CompleteCrumb[] {
+export function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): CompleteCrumb[] {
     const prefixedCrumbs: CompleteCrumb[] = breadcrumbs.map(
         (it): CompleteCrumb => ({
             ...it,
@@ -45,64 +42,6 @@ function createCompleteCrumbs(breadcrumbs: [...Breadcrumb[], LastCrumb] | []): C
     )
 
     return [...baseCrumb, ...prefixedCrumbs]
-}
-
-export function useUpdateBreadcrumbs(makeCrumbs: () => [...Breadcrumb[], LastCrumb] | [], deps?: DependencyList): void {
-    const makeCrumbsRef = useRef(makeCrumbs)
-    useEffect(() => {
-        makeCrumbsRef.current = makeCrumbs
-    }, [makeCrumbs])
-
-    useEffect(() => {
-        ;(async () => {
-            try {
-                const prefixedCrumbs = createCompleteCrumbs(makeCrumbsRef.current())
-                await setBreadcrumbs(prefixedCrumbs)
-            } catch (e) {
-                logger.error(`klarte ikke å oppdatere breadcrumbs på ${location.pathname}`)
-                logger.error(e)
-            }
-        })()
-        // Custom hook that passes deps array to useEffect, linting will be done where useUpdateBreadcrumbs is used
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, deps)
-}
-
-/**
- * Hook into the decorator's breadcrumbs, and use Next's router
- * instead to avoid full page loads on breadcrumb clicks
- */
-export function useHandleDecoratorClicks(): void {
-    const router = useRouter()
-    const callback = useCallback(
-        (breadcrumb: Breadcrumb) => {
-            // router.push automatically pre-pends the base route of the application
-            router.push(breadcrumb.url.replace(browserEnv.NEXT_PUBLIC_BASE_PATH || '', '') || '/')
-        },
-        [router],
-    )
-
-    useEffect(() => {
-        onBreadcrumbClick(callback)
-    })
-}
-
-export function createKvitteringBreadcrumbs(
-    sykmeldingId: string,
-    sykmelding: SykmeldingFragment | undefined,
-): [Breadcrumb, LastCrumb] {
-    return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Kvittering' }]
-}
-
-export function createSykmeldingBreadcrumbs(sykmelding: SykmeldingFragment | undefined): [LastCrumb] {
-    return [{ title: getSykmeldingTitle(sykmelding) }]
-}
-
-export function createEndreEgenmeldingsdagerBreadcrumbs(
-    sykmeldingId: string,
-    sykmelding: SykmeldingFragment | undefined,
-): [Breadcrumb, LastCrumb] {
-    return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Endre egenmeldingsdager' }]
 }
 
 /**
@@ -148,4 +87,22 @@ export function createInitialServerSideBreadcrumbs(
             logger.error(`Unknown initial path (${pathname}), defaulting to just base breadcrumb`)
             return createCompleteCrumbs([])
     }
+}
+
+export function createKvitteringBreadcrumbs(
+    sykmeldingId: string,
+    sykmelding: SykmeldingFragment | undefined,
+): [Breadcrumb, LastCrumb] {
+    return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Kvittering' }]
+}
+
+export function createSykmeldingBreadcrumbs(sykmelding: SykmeldingFragment | undefined): [LastCrumb] {
+    return [{ title: getSykmeldingTitle(sykmelding) }]
+}
+
+export function createEndreEgenmeldingsdagerBreadcrumbs(
+    sykmeldingId: string,
+    sykmelding: SykmeldingFragment | undefined,
+): [Breadcrumb, LastCrumb] {
+    return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Endre egenmeldingsdager' }]
 }

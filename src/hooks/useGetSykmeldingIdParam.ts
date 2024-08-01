@@ -1,13 +1,17 @@
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 
 function useGetSykmeldingIdParam(): string {
-    const router = useRouter()
+    const params = useParams()
 
-    if (typeof router.query.sykmeldingId !== 'string') {
-        throw new Error(`Illegal param: ${router.query.sykmeldingId}`)
+    if (params == null) {
+        throw new Error(`Missing all params`)
     }
 
-    return router.query.sykmeldingId
+    if (typeof params.sykmeldingId !== 'string') {
+        throw new Error(`Illegal param: ${params.sykmeldingId}`)
+    }
+
+    return params.sykmeldingId
 }
 
 export default useGetSykmeldingIdParam

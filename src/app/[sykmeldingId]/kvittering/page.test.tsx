@@ -11,11 +11,11 @@ import {
     SykmeldingFragment,
 } from 'queries'
 
-import { createInitialQuery, createMock, createSykmelding, createSykmeldingPeriode } from '../../utils/test/dataUtils'
-import { render, screen } from '../../utils/test/testUtils'
-import { brukerinformasjonData } from '../../utils/test/mockUtils'
+import { createInitialQuery, createMock, createSykmelding, createSykmeldingPeriode } from '../../../utils/test/dataUtils'
+import { render, screen } from '../../../utils/test/testUtils'
+import { brukerinformasjonData } from '../../../utils/test/mockUtils'
 
-import KvitteringPage from './kvittering.page'
+import KvitteringPage from './page'
 
 describe('kvittering page', () => {
     mockRouter.setCurrentUrl(`/current-sykmelding-id/kvittering`)

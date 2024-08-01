@@ -3,7 +3,8 @@ import * as dekoratoren from '@navikt/nav-dekoratoren-moduler'
 
 import { renderHook } from '../utils/test/testUtils'
 
-import { createInitialServerSideBreadcrumbs, SsrPathVariants, useUpdateBreadcrumbs } from './useBreadcrumbs'
+import { useUpdateBreadcrumbs } from './useBreadcrumbs'
+import {createInitialServerSideBreadcrumbs, SsrPathVariants} from "./crumbs";
 
 vi.mock('@navikt/nav-dekoratoren-moduler', async (importOriginal) => {
     const actual: { default: typeof dekoratoren } = await importOriginal()
