@@ -107,7 +107,7 @@ class MockDb {
         const sporsmalOgSvarListe: Sporsmal[] = R.filter(
             [
                 {
-                    tekst: 'Hva er din arbeidssituasjon?',
+                    tekst: 'Hvilken arbeidssituasjon gjelder sykmeldingen for?',
                     shortName: ShortName.ARBEIDSSITUASJON,
                     svar: {
                         svarType: Svartype.ARBEIDSSITUASJON as Svartype.ARBEIDSSITUASJON,

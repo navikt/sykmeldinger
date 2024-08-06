@@ -53,7 +53,7 @@ test.describe('Uriktige opplysninger', () => {
         await navigateToFirstSykmelding('nye', '100%')(page)
         await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Nei' }).click()
 
-        await expect(page.getByText('Din arbeidssituasjon')).not.toBeVisible()
+        await expect(page.getByText('Hvilken arbeidssituasjon gjelder sykmeldingen for?')).not.toBeVisible()
         await expect(page.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeVisible()
 
         await expect(page).toHaveNoViolations()
@@ -81,14 +81,14 @@ function opplysningNotCorrect(
 
 async function expectNotUsable(page: Page): Promise<void> {
     await expect(page.getByRole('heading', { name: 'Du kan ikke bruke denne sykmeldingen' })).toBeVisible()
-    await expect(page.getByText('Din arbeidssituasjon')).not.toBeVisible()
+    await expect(page.getByText('Hvilken arbeidssituasjon gjelder sykmeldingen for?')).not.toBeVisible()
     await expect(page.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).not.toBeVisible()
 }
 
 function expectUseable(explanationText: string) {
     return async (page: Page): Promise<void> => {
         await expect(page.getByText(explanationText)).toBeVisible()
-        await expect(page.getByText('Din arbeidssituasjon')).toBeVisible()
+        await expect(page.getByText('Hvilken arbeidssituasjon gjelder sykmeldingen for?')).toBeVisible()
         await expect(page.getByRole('button', { name: /^(Send|Bekreft) sykmelding/ })).toBeVisible()
     }
 }
