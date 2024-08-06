@@ -42,7 +42,7 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
     if (!useShouldArbeidssituasjonShow()) return null
 
     return (
-        <SectionWrapper title="Din arbeidssituasjon">
+        <SectionWrapper title="Hvilken arbeidssituasjon gjelder sykmeldingen for?">
             <ArbeidssituasjonInfo />
             <ArbeidssituasjonField harAvventendePeriode={harAvventendePeriode} />
             {shouldShowArbeidsgiverOrgnummer && (
