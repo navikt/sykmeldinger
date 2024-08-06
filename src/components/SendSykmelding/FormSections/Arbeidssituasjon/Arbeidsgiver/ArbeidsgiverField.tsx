@@ -13,11 +13,24 @@ interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
 }
 
-function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement {
+export const missingAgError = 'For å sende inn sykmeldingen må du fylle ut hvilken arbeidsforhold du er sykmeldt fra.'
+
+function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement | null {
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidsgiverOrgnummer',
-        rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
+        rules: {
+            validate: (value) => {
+                if (!value && arbeidsgivere.length === 0) {
+                    return missingAgError
+                } else if (!value) {
+                    return 'Du må svare på hvilket arbeid du er sykmeldt fra.'
+                }
+                return
+            },
+        },
     })
+
+    if (arbeidsgivere.length === 0) return null
 
     return (
         <QuestionWrapper>

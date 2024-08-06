@@ -173,7 +173,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await expect(
                 page.getByText(
-                    /Vi klarer ikke å finne noen arbeidsforhold registrert på deg. Be arbeidsgiveren din om å registrere deg i A-meldingen. Da blir det oppdatert her slik at du kan få sendt den til arbeidsgiveren/,
+                    /Før du går videre, må du be arbeidsgiveren din om å registrere deg i A-meldingen. Når det er gjort blir det oppdatert her, og du kan sende inn sykmeldingen./,
                 ),
             ).toBeVisible()
             await expect(page).toHaveNoViolations()
