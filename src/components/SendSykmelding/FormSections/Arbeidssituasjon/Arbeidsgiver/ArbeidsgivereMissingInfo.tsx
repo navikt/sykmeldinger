@@ -1,11 +1,14 @@
 import { ReactElement } from 'react'
-import { Alert } from '@navikt/ds-react'
+import { Alert, Heading } from '@navikt/ds-react'
 
 function ArbeidsgivereMissingInfo(): ReactElement {
     return (
         <Alert className="mt-4" variant="warning">
-            Vi klarer ikke å finne noen arbeidsforhold registrert på deg. Be arbeidsgiveren din om å registrere deg i
-            A-meldingen. Da blir det oppdatert her slik at du kan få sendt den til arbeidsgiveren.
+            <Heading spacing size="small" level="2">
+                Vi finner ingen arbeidsforhold registrert på deg
+            </Heading>
+            Før du går videre, må du be arbeidsgiveren din om å registrere deg i A-meldingen. Når det er gjort blir det
+            oppdatert her, og du kan sende inn sykmeldingen.
         </Alert>
     )
 }
