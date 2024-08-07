@@ -45,7 +45,7 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): ReactEl
                 }}
             />
             {riktigNarmesteLeder != null && (
-                <Alert className="my-8" variant="info" role="alert" aria-live="polite">
+                <Alert className="my-8" variant="info" aria-live="polite">
                     {riktigNarmesteLeder === YesOrNo.YES
                         ? `Vi sender sykmeldingen til ${narmesteLeder.navn}, som finner den ved å logge inn på nav.no`
                         : 'Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.'}

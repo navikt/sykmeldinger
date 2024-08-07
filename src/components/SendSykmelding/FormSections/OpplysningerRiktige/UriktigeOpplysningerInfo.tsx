@@ -9,7 +9,7 @@ interface UriktigeOpplysningerInfoProps {
 
 function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysningerInfoProps): ReactElement | null {
     return (
-        <Alert variant="info" role="alert" aria-live="polite" className="my-8">
+        <Alert variant="info" aria-live="polite" className="my-8">
             <Heading spacing size="small" level="3">
                 Du kan fortsatt bruke sykmeldingen
             </Heading>
