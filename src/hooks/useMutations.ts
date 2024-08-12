@@ -63,7 +63,7 @@ export function useSendSykmelding(
     const router = useRouter()
     const [submit, result] = useMutation(SendSykmeldingDocument, {
         onCompleted: async () => {
-            await router.push(`/${sykmeldingId}/kvittering`)
+            await router.push(`/${sykmeldingId}/kvittering`, undefined, { scroll: true })
         },
         onError: () => {
             onError()
@@ -90,8 +90,7 @@ export function useEndreEgenmeldingsdager(
     const router = useRouter()
     const [endreEgenmeldingsdager, result] = useMutation(EndreEgenmeldingsdagerDocument, {
         onCompleted: () => {
-            window.scrollTo(0, 0)
-            router.push(`/${sykmeldingId}/kvittering?egenmelding=true`)
+            router.push(`/${sykmeldingId}/kvittering?egenmelding=true`, undefined, { scroll: true })
         },
         onError,
     })

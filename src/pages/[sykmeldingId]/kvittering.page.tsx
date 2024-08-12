@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Fragment, PropsWithChildren, ReactElement, useEffect } from 'react'
+import { Fragment, PropsWithChildren, ReactElement } from 'react'
 import { Alert, BodyShort, GuidePanel, Heading, Link as DsLink, Skeleton } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 import { useRouter } from 'next/router'
@@ -33,10 +33,6 @@ function SykmeldingkvitteringPage(): ReactElement {
     const sykmeldingId = useGetSykmeldingIdParam()
     const { data, error, loading } = useSykmeldingById(sykmeldingId)
     const router = useRouter()
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
 
     if (loading) {
         return (
