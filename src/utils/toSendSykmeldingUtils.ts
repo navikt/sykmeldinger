@@ -83,7 +83,7 @@ function mapSykmeldingFisker(values: FormValues): SendSykmeldingValues {
             ...baseFields,
             harBruktEgenmelding: values.harBruktEgenmelding ?? undefined,
             egenmeldingsperioder: values.harBruktEgenmelding === YesOrNo.YES ? egenmeldingsperioder : undefined,
-            harForsikring: values.fisker.blad === Blad.A ? values.harForsikring ?? undefined : undefined,
+            harForsikring: values.fisker.blad === Blad.A ? (values.harForsikring ?? undefined) : undefined,
         }
     }
 }

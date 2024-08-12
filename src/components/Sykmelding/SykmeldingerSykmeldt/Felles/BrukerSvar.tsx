@@ -17,9 +17,9 @@ import { toReadableDate, toReadableDatePeriod } from '../../../../utils/dateUtil
 import { FormValues } from '../../../SendSykmelding/SendSykmeldingForm'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 import { isArbeidsledig, isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
+import useBrukerInformasjonById from '../../../../hooks/useBrukerinformasjonById'
 
 import { mapFormValuesToBrukerSvar, mapFrilanserFormValuesToBrukerSvar, SporsmaltekstMetadata } from './BrukerSvarUtils'
-import useBrukerInformasjonById from "../../../../hooks/useBrukerinformasjonById";
 
 export type { SporsmaltekstMetadata }
 
@@ -82,7 +82,7 @@ function SentSykmeldingBrukerSvar({
             <ArbeidssituasjonAnswer response={brukerSvar.arbeidssituasjon} />
             <FiskerBladAnswer response={brukerSvar.fisker?.blad} />
             <FiskerLottOgHyreAnswer response={brukerSvar.fisker?.lottOgHyre} />
-            {brukerSvar.arbeidsgiverOrgnummer && sykmeldingId &&(
+            {brukerSvar.arbeidsgiverOrgnummer && sykmeldingId && (
                 // This component does some data-fetching, avoid rendering it to avoid unnecessary requests
                 <ArbeidsgiverOrgnummerAnswer response={brukerSvar.arbeidsgiverOrgnummer} sykmeldingId={sykmeldingId} />
             )}
@@ -118,7 +118,10 @@ function CurrentFormValuesBrukerSvar({
             <FiskerLottOgHyreAnswer response={mappedValues.fisker?.lottOgHyre} />
             {mappedValues.arbeidsgiverOrgnummer && (
                 // This component does some data-fetching, avoid rendering it to avoid unnecessary requests
-                <ArbeidsgiverOrgnummerAnswer response={mappedValues.arbeidsgiverOrgnummer} sykmeldingId={brukerSvar.sporsmaltekstMetadata.sykmeldingId} />
+                <ArbeidsgiverOrgnummerAnswer
+                    response={mappedValues.arbeidsgiverOrgnummer}
+                    sykmeldingId={brukerSvar.sporsmaltekstMetadata.sykmeldingId}
+                />
             )}
             <YesNoAnswer response={mappedValues.riktigNarmesteLeder} />
             <YesNoAnswer response={mappedValues.harBruktEgenmeldingsdager} />

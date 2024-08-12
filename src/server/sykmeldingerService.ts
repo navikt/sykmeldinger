@@ -37,7 +37,10 @@ export async function getSykmelding(sykmeldingId: string, context: RequestContex
     )
 }
 
-export async function getBrukerinformasjonById(sykmeldingId: string, context: RequestContext): Promise<Brukerinformasjon> {
+export async function getBrukerinformasjonById(
+    sykmeldingId: string,
+    context: RequestContext,
+): Promise<Brukerinformasjon> {
     return fetchApi(
         { type: 'GET' },
         `v2/brukerinformasjon/${sykmeldingId}`,

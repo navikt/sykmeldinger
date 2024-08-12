@@ -10,7 +10,7 @@ import { BrukerinformasjonDocument, Dev_ChangeUserScenarioDocument, Dev_SetAntal
 import type { Scenarios } from '../../server/graphql/mock-db/scenarios'
 import { cn } from '../../utils/tw-utils'
 import { simpleScenarios, otherScenarios } from '../../server/graphql/mock-db/scenarios'
-import useBrukerinformasjonById from "../../hooks/useBrukerinformasjonById";
+import useBrukerinformasjonById from '../../hooks/useBrukerinformasjonById'
 
 function Index(): ReactElement {
     const [showHint, setShowHint] = useState(false)
@@ -169,7 +169,7 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
 }
 
 function ScenarioOptions(): ReactElement {
-    const brukerinformasjonQuery = useBrukerinformasjonById("1")
+    const brukerinformasjonQuery = useBrukerinformasjonById('1')
     const [antallArbeidsgivereMutation, antallArbeidsgivereMutationResult] = useMutation(
         Dev_SetAntallArbeidsgivereDocument,
         { refetchQueries: [BrukerinformasjonDocument] },
