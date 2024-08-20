@@ -40,7 +40,8 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
     const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
 
     // Don't show arbeidssituasjon section given certain criteria
-
+    if (!useShouldArbeidssituasjonShow()) return null
+    console.log(sykmelding)
     return (
         <SectionWrapper title="Hvilken arbeidssituasjon gjelder sykmeldingen for?">
             <ArbeidssituasjonInfo />
