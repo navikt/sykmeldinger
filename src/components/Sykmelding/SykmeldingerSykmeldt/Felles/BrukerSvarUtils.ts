@@ -8,8 +8,8 @@ import { mapToSendSykmeldingValues } from '../../../../utils/toSendSykmeldingUti
 
 export type SporsmaltekstMetadata = {
     sykmeldingId: string
-    arbeidsgiverNavn: string
-    narmestelederNavn: string
+    arbeidsgiverNavn: string | null
+    narmestelederNavn: string | null
     sykmeldingStartDato: string
 }
 

@@ -27,6 +27,7 @@ interface Props {
 }
 
 function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): ReactElement | null {
+
     const endreArbeidssituasjonToggle = useFlag('SYKMELDINGER_ENDRE_ARBEIDSSITUASJON')
     const { watch } = useFormContext<FormValues>()
     const arbeidssituasjon = watch('arbeidssituasjon')
@@ -39,7 +40,6 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
     const harAvventendePeriode = sykmelding.sykmeldingsperioder.some((it) => it.type === Periodetype.AVVENTENDE)
 
     // Don't show arbeidssituasjon section given certain criteria
-    if (!useShouldArbeidssituasjonShow()) return null
 
     return (
         <SectionWrapper title="Hvilken arbeidssituasjon gjelder sykmeldingen for?">
@@ -51,6 +51,12 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
             {shouldShowFisker && <FiskerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />}
             {isFrilanserOrNaeringsdrivendeOrJordbruker(arbeidssituasjon) && (
                 <FrilanserSection
+                    metadata={{
+                        sykmeldingId: sykmelding.id,
+                        arbeidsgiverNavn: null,
+                        narmestelederNavn: null,
+                        sykmeldingStartDato: getSykmeldingStartDate(sykmelding.sykmeldingsperioder),
+                    }}
                     sykmeldingId={sykmelding.id}
                     sykmeldingStartDato={getSykmeldingStartDate(sykmelding.sykmeldingsperioder)}
                 />
