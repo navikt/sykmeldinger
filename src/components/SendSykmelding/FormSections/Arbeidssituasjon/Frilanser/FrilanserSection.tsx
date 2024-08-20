@@ -12,18 +12,15 @@ import Spinner from '../../../../Spinner/Spinner'
 import HarBruktEgenmeldingsPerioderField from './HarBruktEgenmeldingsPerioderField'
 import FrilanserEgenmeldingPerioderField from './FrilanserEgenmeldingPerioderField'
 import HarForsikringField from './HarForsikringField'
-import {
-    BrukerSvarExpansionCard,
-    SporsmaltekstMetadata
-} from "../../../../Sykmelding/SykmeldingerSykmeldt/Felles/BrukerSvar";
+import FrilanserOppsummeringSection from "./FrilanserOppsummeringSection";
+import {getSykmeldingStartDate} from "../../../../../utils/sykmeldingUtils";
 
 interface Props {
     sykmeldingId: string
     sykmeldingStartDato: string
-    metadata: SporsmaltekstMetadata
 }
 
-function FrilanserSection({ sykmeldingId, sykmeldingStartDato, metadata }: Props): ReactElement | null {
+function FrilanserSection({ sykmeldingId, sykmeldingStartDato }: Props): ReactElement | null {
     const { watch } = useFormContext<FormValues>()
     const harBruktEgenmelding = watch('harBruktEgenmelding')
     const { data, loading, error } = useQuery(SykmeldingErUtenforVentetidDocument, {
@@ -60,13 +57,15 @@ function FrilanserSection({ sykmeldingId, sykmeldingStartDato, metadata }: Props
                 <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato} />
             )}
             <HarForsikringField />
-            <BrukerSvarExpansionCard
-                title="Oppsummering av dine svar"
-                brukerSvar={{
-                    values: formValues,
-                    sporsmaltekstMetadata: metadata,
+            <FrilanserOppsummeringSection
+                metadata={{
+                    sykmeldingId: sykmeldingId,
+                    arbeidsgiverNavn: null,
+                    narmestelederNavn: null,
+                    sykmeldingStartDato: sykmeldingStartDato,
                 }}
                 sykmeldingId={sykmeldingId}
+                sykmeldingStartDato={sykmeldingStartDato}
             />
         </SectionWrapper>
     )

@@ -20,6 +20,7 @@ import { useArbeidssituasjonSubSections } from './formProgressUtils'
 import FiskerSection from './Fisker/FiskerSection'
 import ArbeidsledigArbeidsgiverField from './Arbeidsledig/ArbeidsledigArbeidsgiverField'
 import AnsattArbeidstakerSection from './Arbeidsgiver/AnsattArbeidstakerSection'
+import FrilanserOppsummeringSection from "./Frilanser/FrilanserOppsummeringSection";
 
 interface Props {
     sykmelding: SykmeldingFragment
@@ -41,7 +42,6 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
 
     // Don't show arbeidssituasjon section given certain criteria
     if (!useShouldArbeidssituasjonShow()) return null
-    console.log(sykmelding)
     return (
         <SectionWrapper title="Hvilken arbeidssituasjon gjelder sykmeldingen for?">
             <ArbeidssituasjonInfo />
@@ -52,12 +52,6 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
             {shouldShowFisker && <FiskerSection sykmelding={sykmelding} brukerinformasjon={brukerinformasjon} />}
             {isFrilanserOrNaeringsdrivendeOrJordbruker(arbeidssituasjon) && (
                 <FrilanserSection
-                    metadata={{
-                        sykmeldingId: sykmelding.id,
-                        arbeidsgiverNavn: null,
-                        narmestelederNavn: null,
-                        sykmeldingStartDato: getSykmeldingStartDate(sykmelding.sykmeldingsperioder),
-                    }}
                     sykmeldingId={sykmelding.id}
                     sykmeldingStartDato={getSykmeldingStartDate(sykmelding.sykmeldingsperioder)}
                 />
