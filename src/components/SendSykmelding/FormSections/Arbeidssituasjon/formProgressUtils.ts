@@ -6,7 +6,7 @@ import { ArbeidssituasjonType, BrukerinformasjonFragment, SykmeldingFragment } f
 import {
     isArbeidstaker,
     isFisker,
-    isFrilanserOrNaeringsdrivendeOrJordbruker
+    isFrilanserOrNaeringsdrivendeOrJordbruker,
 } from '../../../../utils/arbeidssituasjonUtils'
 import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdagerUtils'
 import { FormValues } from '../../SendSykmeldingForm'
@@ -62,7 +62,6 @@ export function useShouldShowSendesTilArbeidsgiverInfo(): boolean {
 
     return arbeidstaker && hasSelectedArbeidstaker && egenmeldingsdagerCompletedOrSkipped
 }
-
 
 export function useShouldShowSummaryForFrilanser(): boolean {
     const { watch } = useFormContext<FormValues>()
