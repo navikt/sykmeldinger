@@ -13,9 +13,7 @@ import HarBruktEgenmeldingsPerioderField from './HarBruktEgenmeldingsPerioderFie
 import FrilanserEgenmeldingPerioderField from './FrilanserEgenmeldingPerioderField'
 import HarForsikringField from './HarForsikringField'
 import FrilanserOppsummeringSection from "./FrilanserOppsummeringSection";
-import {getSykmeldingStartDate} from "../../../../../utils/sykmeldingUtils";
 import {useShouldShowSummaryForFrilanser} from "../formProgressUtils";
-import {mapFrilanserFormValuesToBrukerSvar} from "../../../../Sykmelding/SykmeldingerSykmeldt/Felles/BrukerSvarUtils";
 
 interface Props {
     sykmeldingId: string
@@ -52,7 +50,6 @@ function FrilanserSection({sykmeldingId, sykmeldingStartDato}: Props): ReactElem
 
     const oppfolgingsdato = data?.sykmeldingUtenforVentetid.oppfolgingsdato || sykmeldingStartDato
     const formValues = watch()
-    const mappedValues = mapFrilanserFormValuesToBrukerSvar(formValues, oppfolgingsdato)
 
     return (
         <SectionWrapper title="Fravær før sykmeldingen">
@@ -61,7 +58,7 @@ function FrilanserSection({sykmeldingId, sykmeldingStartDato}: Props): ReactElem
                 <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato}/>
             )}
             <HarForsikringField/>
-            {useShouldShowSummaryForFrilanser() && mappedValues.harForsikring !== null && mappedValues.harBruktEgenmelding !== null && (
+            {useShouldShowSummaryForFrilanser() && formValues.harForsikring !== null && (formValues.harBruktEgenmelding === YesOrNo.YES && formValues.egenmeldingsperioder?.every(periode => periode.fom !== null && periode.tom !== null) || formValues.harBruktEgenmelding === YesOrNo.NO) && (
                 <FrilanserOppsummeringSection
                     metadata={{
                         sykmeldingId: sykmeldingId,
@@ -70,7 +67,6 @@ function FrilanserSection({sykmeldingId, sykmeldingStartDato}: Props): ReactElem
                         sykmeldingStartDato: sykmeldingStartDato,
                     }}
                     sykmeldingId={sykmeldingId}
-                    sykmeldingStartDato={sykmeldingStartDato}
                 />)}
         </SectionWrapper>
     )
