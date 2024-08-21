@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react'
-import { useFormContext } from 'react-hook-form'
-import { useQuery } from '@apollo/client'
-import { Alert } from '@navikt/ds-react'
+import React, {ReactElement} from 'react'
+import {useFormContext} from 'react-hook-form'
+import {useQuery} from '@apollo/client'
+import {Alert} from '@navikt/ds-react'
 
-import { SykmeldingErUtenforVentetidDocument, YesOrNo } from 'queries'
+import {SykmeldingErUtenforVentetidDocument, YesOrNo} from 'queries'
 
-import { FormValues } from '../../../SendSykmeldingForm'
-import { SectionWrapper } from '../../../../FormComponents/FormStructure'
+import {FormValues} from '../../../SendSykmeldingForm'
+import {SectionWrapper} from '../../../../FormComponents/FormStructure'
 import Spinner from '../../../../Spinner/Spinner'
 
 import HarBruktEgenmeldingsPerioderField from './HarBruktEgenmeldingsPerioderField'
@@ -14,23 +14,25 @@ import FrilanserEgenmeldingPerioderField from './FrilanserEgenmeldingPerioderFie
 import HarForsikringField from './HarForsikringField'
 import FrilanserOppsummeringSection from "./FrilanserOppsummeringSection";
 import {getSykmeldingStartDate} from "../../../../../utils/sykmeldingUtils";
+import {useShouldShowSummaryForFrilanser} from "../formProgressUtils";
+import {mapFrilanserFormValuesToBrukerSvar} from "../../../../Sykmelding/SykmeldingerSykmeldt/Felles/BrukerSvarUtils";
 
 interface Props {
     sykmeldingId: string
     sykmeldingStartDato: string
 }
 
-function FrilanserSection({ sykmeldingId, sykmeldingStartDato }: Props): ReactElement | null {
-    const { watch } = useFormContext<FormValues>()
+function FrilanserSection({sykmeldingId, sykmeldingStartDato}: Props): ReactElement | null {
+    const {watch} = useFormContext<FormValues>()
     const harBruktEgenmelding = watch('harBruktEgenmelding')
-    const { data, loading, error } = useQuery(SykmeldingErUtenforVentetidDocument, {
-        variables: { sykmeldingId },
+    const {data, loading, error} = useQuery(SykmeldingErUtenforVentetidDocument, {
+        variables: {sykmeldingId},
     })
-    const formValues = watch()
+
     if (loading) {
         return (
             <div className="mt-8 mb-24">
-                <Spinner headline="Henter ekstra informasjon" />
+                <Spinner headline="Henter ekstra informasjon"/>
             </div>
         )
     }
@@ -49,24 +51,27 @@ function FrilanserSection({ sykmeldingId, sykmeldingStartDato }: Props): ReactEl
     }
 
     const oppfolgingsdato = data?.sykmeldingUtenforVentetid.oppfolgingsdato || sykmeldingStartDato
+    const formValues = watch()
+    const mappedValues = mapFrilanserFormValuesToBrukerSvar(formValues, oppfolgingsdato)
 
     return (
         <SectionWrapper title="Fravær før sykmeldingen">
-            <HarBruktEgenmeldingsPerioderField oppfolgingsdato={oppfolgingsdato} />
+            <HarBruktEgenmeldingsPerioderField oppfolgingsdato={oppfolgingsdato}/>
             {harBruktEgenmelding === YesOrNo.YES && (
-                <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato} />
+                <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato}/>
             )}
-            <HarForsikringField />
-            <FrilanserOppsummeringSection
-                metadata={{
-                    sykmeldingId: sykmeldingId,
-                    arbeidsgiverNavn: null,
-                    narmestelederNavn: null,
-                    sykmeldingStartDato: sykmeldingStartDato,
-                }}
-                sykmeldingId={sykmeldingId}
-                sykmeldingStartDato={sykmeldingStartDato}
-            />
+            <HarForsikringField/>
+            {useShouldShowSummaryForFrilanser() && mappedValues.harForsikring !== null && mappedValues.harBruktEgenmelding !== null && (
+                <FrilanserOppsummeringSection
+                    metadata={{
+                        sykmeldingId: sykmeldingId,
+                        arbeidsgiverNavn: null,
+                        narmestelederNavn: null,
+                        sykmeldingStartDato: sykmeldingStartDato,
+                    }}
+                    sykmeldingId={sykmeldingId}
+                    sykmeldingStartDato={sykmeldingStartDato}
+                />)}
         </SectionWrapper>
     )
 }
