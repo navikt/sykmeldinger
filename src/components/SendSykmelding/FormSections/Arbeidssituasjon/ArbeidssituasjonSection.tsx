@@ -27,7 +27,6 @@ interface Props {
 }
 
 function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): ReactElement | null {
-
     const endreArbeidssituasjonToggle = useFlag('SYKMELDINGER_ENDRE_ARBEIDSSITUASJON')
     const { watch } = useFormContext<FormValues>()
     const arbeidssituasjon = watch('arbeidssituasjon')
