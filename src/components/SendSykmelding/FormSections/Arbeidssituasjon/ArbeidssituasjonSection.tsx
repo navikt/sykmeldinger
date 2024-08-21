@@ -20,7 +20,6 @@ import { useArbeidssituasjonSubSections } from './formProgressUtils'
 import FiskerSection from './Fisker/FiskerSection'
 import ArbeidsledigArbeidsgiverField from './Arbeidsledig/ArbeidsledigArbeidsgiverField'
 import AnsattArbeidstakerSection from './Arbeidsgiver/AnsattArbeidstakerSection'
-import FrilanserOppsummeringSection from "./Frilanser/FrilanserOppsummeringSection";
 
 interface Props {
     sykmelding: SykmeldingFragment
