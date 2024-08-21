@@ -27,6 +27,7 @@ function FrilanserSection({sykmeldingId, sykmeldingStartDato}: Props): ReactElem
         variables: {sykmeldingId},
     })
 
+    const shouldShowSummaryForFrilanser = useShouldShowSummaryForFrilanser()
     if (loading) {
         return (
             <div className="mt-8 mb-24">
@@ -58,7 +59,7 @@ function FrilanserSection({sykmeldingId, sykmeldingStartDato}: Props): ReactElem
                 <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato}/>
             )}
             <HarForsikringField/>
-            {useShouldShowSummaryForFrilanser() && formValues.harForsikring !== null && (formValues.harBruktEgenmelding === YesOrNo.YES && formValues.egenmeldingsperioder?.every(periode => periode.fom !== null && periode.tom !== null) || formValues.harBruktEgenmelding === YesOrNo.NO) && (
+            {shouldShowSummaryForFrilanser && formValues.harForsikring !== null && (formValues.harBruktEgenmelding === YesOrNo.YES && formValues.egenmeldingsperioder?.every(periode => periode.fom !== null && periode.tom !== null) || formValues.harBruktEgenmelding === YesOrNo.NO) && (
                 <FrilanserOppsummeringSection
                     metadata={{
                         sykmeldingId: sykmeldingId,
