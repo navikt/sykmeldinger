@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
+
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../../../FormComponents/FormStructure'
-
 import {
     BrukerSvarExpansionCard,
-    SporsmaltekstMetadata
-} from "../../../../Sykmelding/SykmeldingerSykmeldt/Felles/BrukerSvar";
+    SporsmaltekstMetadata,
+} from '../../../../Sykmelding/SykmeldingerSykmeldt/Felles/BrukerSvar'
 
 interface Props {
     sykmeldingId: string
@@ -20,17 +20,14 @@ function FrilanserOppsummeringSection({ sykmeldingId, metadata }: Props): ReactE
 
     return (
         <SectionWrapper>
-            { (
-                <BrukerSvarExpansionCard
-                    title="Oppsummering av dine svar"
-                    brukerSvar={{
-                        values: formValues,
-                        sporsmaltekstMetadata: metadata,
-                    }}
-                    sykmeldingId={sykmeldingId}
-                />
-            )}
-
+            <BrukerSvarExpansionCard
+                title="Oppsummering av dine svar"
+                brukerSvar={{
+                    values: formValues,
+                    sporsmaltekstMetadata: metadata,
+                }}
+                sykmeldingId={sykmeldingId}
+            />
         </SectionWrapper>
     )
 }
