@@ -40,7 +40,6 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
 
     // Don't show arbeidssituasjon section given certain criteria
     if (!useShouldArbeidssituasjonShow()) return null
-
     return (
         <SectionWrapper title="Hvilken arbeidssituasjon gjelder sykmeldingen for?">
             <ArbeidssituasjonInfo />

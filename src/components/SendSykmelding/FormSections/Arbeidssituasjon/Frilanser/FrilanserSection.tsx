@@ -5,6 +5,7 @@ import { Alert } from '@navikt/ds-react'
 
 import { SykmeldingErUtenforVentetidDocument, YesOrNo } from 'queries'
 
+import { useShouldShowSummaryForFrilanser } from '../formProgressUtils'
 import { FormValues } from '../../../SendSykmeldingForm'
 import { SectionWrapper } from '../../../../FormComponents/FormStructure'
 import Spinner from '../../../../Spinner/Spinner'
@@ -12,6 +13,7 @@ import Spinner from '../../../../Spinner/Spinner'
 import HarBruktEgenmeldingsPerioderField from './HarBruktEgenmeldingsPerioderField'
 import FrilanserEgenmeldingPerioderField from './FrilanserEgenmeldingPerioderField'
 import HarForsikringField from './HarForsikringField'
+import FrilanserOppsummeringSection from './FrilanserOppsummeringSection'
 
 interface Props {
     sykmeldingId: string
@@ -25,6 +27,7 @@ function FrilanserSection({ sykmeldingId, sykmeldingStartDato }: Props): ReactEl
         variables: { sykmeldingId },
     })
 
+    const shouldShowSummaryForFrilanser = useShouldShowSummaryForFrilanser()
     if (loading) {
         return (
             <div className="mt-8 mb-24">
@@ -47,6 +50,7 @@ function FrilanserSection({ sykmeldingId, sykmeldingStartDato }: Props): ReactEl
     }
 
     const oppfolgingsdato = data?.sykmeldingUtenforVentetid.oppfolgingsdato || sykmeldingStartDato
+    const formValues = watch()
 
     return (
         <SectionWrapper title="Fravær før sykmeldingen">
@@ -55,6 +59,23 @@ function FrilanserSection({ sykmeldingId, sykmeldingStartDato }: Props): ReactEl
                 <FrilanserEgenmeldingPerioderField oppfolgingsdato={oppfolgingsdato} />
             )}
             <HarForsikringField />
+            {shouldShowSummaryForFrilanser &&
+                formValues.harForsikring !== null &&
+                ((formValues.harBruktEgenmelding === YesOrNo.YES &&
+                    formValues.egenmeldingsperioder?.every(
+                        (periode) => periode.fom !== null && periode.tom !== null,
+                    )) ||
+                    formValues.harBruktEgenmelding === YesOrNo.NO) && (
+                    <FrilanserOppsummeringSection
+                        metadata={{
+                            sykmeldingId: sykmeldingId,
+                            arbeidsgiverNavn: null,
+                            narmestelederNavn: null,
+                            sykmeldingStartDato: sykmeldingStartDato,
+                        }}
+                        sykmeldingId={sykmeldingId}
+                    />
+                )}
         </SectionWrapper>
     )
 }

@@ -8,8 +8,8 @@ import { mapToSendSykmeldingValues } from '../../../../utils/toSendSykmeldingUti
 
 export type SporsmaltekstMetadata = {
     sykmeldingId: string
-    arbeidsgiverNavn: string
-    narmestelederNavn: string
+    arbeidsgiverNavn: string | null
+    narmestelederNavn: string | null
     sykmeldingStartDato: string
 }
 
@@ -52,14 +52,14 @@ export function mapFormValuesToBrukerSvar(
         riktigNarmesteLeder: sendSykmeldingValues.riktigNarmesteLeder
             ? {
                   __typename: 'RiktigNarmesteLederBrukerSvar',
-                  sporsmaltekst: sporsmal.riktigNarmesteLeder(metadata.narmestelederNavn),
+                  sporsmaltekst: sporsmal.riktigNarmesteLeder(metadata.narmestelederNavn ?? ``),
                   svar: yesOrNoToJaEllerNei(sendSykmeldingValues.riktigNarmesteLeder),
               }
             : null,
         harBruktEgenmeldingsdager: sendSykmeldingValues.harEgenmeldingsdager
             ? {
                   __typename: 'HarBruktEgenmeldingsdagerBrukerSvar',
-                  sporsmaltekst: sporsmal.harBruktEgenmeldingsdager(metadata.arbeidsgiverNavn),
+                  sporsmaltekst: sporsmal.harBruktEgenmeldingsdager(metadata.arbeidsgiverNavn ?? ``),
                   svar: yesOrNoToJaEllerNei(sendSykmeldingValues.harEgenmeldingsdager),
               }
             : null,

@@ -3,7 +3,11 @@ import { isSameDay } from 'date-fns'
 
 import { ArbeidssituasjonType, BrukerinformasjonFragment, SykmeldingFragment } from 'queries'
 
-import { isArbeidstaker, isFisker } from '../../../../utils/arbeidssituasjonUtils'
+import {
+    isArbeidstaker,
+    isFisker,
+    isFrilanserOrNaeringsdrivendeOrJordbruker,
+} from '../../../../utils/arbeidssituasjonUtils'
 import { hasCompletedEgenmeldingsdager } from '../../../../utils/egenmeldingsdagerUtils'
 import { FormValues } from '../../SendSykmeldingForm'
 import { EgenmeldingsdagerFormValue } from '../../../FormComponents/Egenmelding/EgenmeldingerField'
@@ -57,6 +61,24 @@ export function useShouldShowSendesTilArbeidsgiverInfo(): boolean {
     )
 
     return arbeidstaker && hasSelectedArbeidstaker && egenmeldingsdagerCompletedOrSkipped
+}
+
+export function useShouldShowSummaryForFrilanser(): boolean {
+    const { watch } = useFormContext<FormValues>()
+    const [arbeidssituasjon, egenmeldingsdager, egenmeldingsdagerHitPrevious] = watch([
+        'arbeidssituasjon',
+        'egenmeldingsdager',
+        'egenmeldingsdagerHitPrevious',
+    ])
+
+    const frilanserOrNaeringsdrivendeOrJordbruker: boolean = isFrilanserOrNaeringsdrivendeOrJordbruker(arbeidssituasjon)
+    const egenmeldingsdagerCompletedOrSkipped: boolean = isEgenmeldingsdagerCompleteOrSkipped(
+        arbeidssituasjon,
+        egenmeldingsdager,
+        egenmeldingsdagerHitPrevious,
+    )
+
+    return frilanserOrNaeringsdrivendeOrJordbruker && egenmeldingsdagerCompletedOrSkipped
 }
 
 function isEgenmeldingsdagerCompleteOrSkipped(
