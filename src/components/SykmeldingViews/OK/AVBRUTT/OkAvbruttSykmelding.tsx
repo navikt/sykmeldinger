@@ -5,7 +5,6 @@ import { PencilWritingIcon } from '@navikt/aksel-icons'
 import { SykmeldingFragment } from 'queries'
 
 import { toReadableDate } from '../../../../utils/dateUtils'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import HintToNextOlderSykmelding from '../../../ForceOrder/HintToNextOlderSykmelding'
 import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
@@ -14,11 +13,7 @@ interface OkAvbruttSykmeldingProps {
     reopen: () => void
 }
 
-const skjemanavn = 'gjenåpne avbrutt sykmelding'
-
 function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): ReactElement {
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
-
     return (
         <div className="sykmelding-container">
             <div className="mb-4">
@@ -36,7 +31,6 @@ function OkAvbruttSykmelding({ sykmelding, reopen }: OkAvbruttSykmeldingProps): 
                             size="small"
                             variant="secondary"
                             onClick={() => {
-                                logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } })
                                 reopen()
                             }}
                             icon={<PencilWritingIcon aria-hidden />}

@@ -149,10 +149,6 @@ function EgenmeldingerField({
                                 laterPeriodsRemoved(index, editSentEgenmelding, getValues('egenmeldingsdager')),
                             )
                             setValue(`egenmeldingsdager.${index}.hasClickedVidere`, null)
-                            logAmplitudeEvent({
-                                eventName: 'skjema steg fullført',
-                                data: { skjemanavn: amplitudeSkjemanavn, steg: 'Endre periode' },
-                            })
                         }}
                     />
                 )}

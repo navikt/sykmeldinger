@@ -2,7 +2,6 @@ import { ReactElement, useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Alert } from '@navikt/ds-react'
 import dynamic from 'next/dynamic'
-import * as R from 'remeda'
 
 import { YesOrNo, UriktigeOpplysningerType, ArbeidssituasjonType, SykmeldingFragment, Blad, LottOgHyre } from 'queries'
 
@@ -129,14 +128,7 @@ function SendSykmeldingForm({ sykmelding, onSykmeldingAvbrutt }: Props): ReactEl
                 <AutoFillerDevTools sykmeldingId={sykmeldingId} />
             )}
             <form
-                onSubmit={form.handleSubmit(sendSykmelding, (errors) => {
-                    logAmplitudeEvent(
-                        {
-                            eventName: 'skjema validering feilet',
-                            data: { skjemanavn },
-                        },
-                        { ...R.mapValues(errors, () => true) },
-                    )
+                onSubmit={form.handleSubmit(sendSykmelding, () => {
                     requestAnimationFrame(() => {
                         errorSectionRef.current?.focus()
                     })

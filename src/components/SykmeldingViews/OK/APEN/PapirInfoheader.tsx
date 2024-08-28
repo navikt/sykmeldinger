@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { Alert, BodyLong, Button, Label, Radio, RadioGroup } from '@navikt/ds-react'
 
 import { SykmeldingChangeStatus } from 'queries'
@@ -19,13 +19,6 @@ function PapirInfoheader(): ReactElement {
         () => logAmplitudeEvent({ eventName: 'skjema innsending feilet', data: { skjemanavn } }),
     )
     const [harGittVidere, setHarGittVidere] = useState<'Ja' | 'Nei' | null>(null)
-
-    useEffect(() => {
-        if (harGittVidere) {
-            logAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
-        }
-    }, [harGittVidere])
-
     return (
         <section aria-labelledby="har-gitt-papirsykmelding-videre-group">
             <RadioGroup
@@ -34,13 +27,6 @@ function PapirInfoheader(): ReactElement {
                 legend="Har du allerede gitt papirsykmeldingen videre?"
                 value={harGittVidere}
                 onChange={(value: 'Ja' | 'Nei') => {
-                    if (harGittVidere) {
-                        logAmplitudeEvent(
-                            { eventName: 'skjema startet', data: { skjemanavn } },
-                            { 'har gitt videre': value },
-                        )
-                    }
-
                     setHarGittVidere(value)
                 }}
             >

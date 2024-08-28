@@ -14,31 +14,13 @@ function HintToNextOlderSykmelding(): ReactElement | null {
 
     useEffect(() => {
         if (dontShowYet) return
-
-        if (isDone) {
-            logAmplitudeEvent({
-                eventName: 'guidepanel vist',
-                data: { komponent: 'ingen flere sykmeldinger å sende inn' },
-            })
-        } else {
-            logAmplitudeEvent({ eventName: 'guidepanel vist', data: { komponent: 'hint til neste eldre sykmelding' } })
-        }
     }, [dontShowYet, isDone])
 
     if (dontShowYet) return null
     if (isDone) {
         return (
             <div className="mt-8">
-                <Button
-                    as="a"
-                    href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}
-                    onClick={() =>
-                        logAmplitudeEvent({
-                            eventName: 'navigere',
-                            data: { destinasjon: 'ditt sykefravær', lenketekst: 'Tilbake til Ditt sykefravær' },
-                        })
-                    }
-                >
+                <Button as="a" href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}>
                     Tilbake til Ditt sykefravær
                 </Button>
             </div>

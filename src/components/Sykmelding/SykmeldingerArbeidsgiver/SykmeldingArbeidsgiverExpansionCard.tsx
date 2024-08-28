@@ -5,7 +5,6 @@ import { FileSearchIcon } from '@navikt/aksel-icons'
 import { SykmeldingFragment } from 'queries'
 
 import { isUtenlandsk } from '../../../utils/utenlanskUtils'
-import { logAmplitudeEvent } from '../../../amplitude/amplitude'
 
 import SykmeldingArbeidsgiver from './SykmeldingArbeidsgiver'
 import SykmeldingArbeidsgiverUtenlandsk from './SykmeldingArbeidsgiverUtenlandsk'
@@ -23,12 +22,6 @@ function SykmeldingArbeidsgiverExpansionCard({ sykmelding, chosenEgenmeldingsdag
             aria-labelledby={headerId}
             className="mb-8"
             style={{ '--ac-expansioncard-bg': 'var(--a-orange-50)' } as CSSProperties}
-            onToggle={(open) => {
-                logAmplitudeEvent({
-                    eventName: `accordion ${open ? 'åpnet' : 'lukket'}`,
-                    data: { tekst: 'Se hva som sendes til jobben din' },
-                })
-            }}
         >
             <ExpansionCard.Header>
                 <div className="flex items-center gap-4">

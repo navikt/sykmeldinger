@@ -9,7 +9,7 @@ import AvvistVeileder from '../../../AvvistVeileder/AvvistVeileder'
 import useGetSykmeldingIdParam from '../../../../hooks/useGetSykmeldingIdParam'
 import { getBehandlerName } from '../../../../utils/behandlerUtils'
 import { useChangeSykmeldingStatus } from '../../../../hooks/useMutations'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
+import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
 type InvalidApenSykmeldingProps = {
@@ -23,8 +23,6 @@ interface FormData {
 const skjemanavn = 'invalid åpen sykmelding'
 
 function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): ReactElement {
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
-
     const { bekreftInvalid, mutationLoading, mutationError } = useBekreftInvalid()
     const { control, handleSubmit } = useForm<FormData>()
     const { field, fieldState } = useController({
@@ -51,12 +49,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): Reac
                 <SykmeldingSykmeldtSection sykmelding={sykmelding} />
             </div>
 
-            <form
-                className="flex flex-col items-center"
-                onSubmit={handleSubmit(bekreftInvalid, () => {
-                    logAmplitudeEvent({ eventName: 'skjema validering feilet', data: { skjemanavn } })
-                })}
-            >
+            <form className="flex flex-col items-center" onSubmit={handleSubmit(bekreftInvalid)}>
                 <div className="mb-8">
                     <ConfirmationPanel
                         {...field}
@@ -64,16 +57,7 @@ function InvalidApenSykmelding({ sykmelding }: InvalidApenSykmeldingProps): Reac
                         label="Jeg bekrefter at jeg har lest at sykmeldingen er avvist"
                         error={fieldState.error?.message}
                         onChange={() => {
-                            const newValue = !field.value
-                            logAmplitudeEvent({
-                                eventName: 'skjema spørsmål besvart',
-                                data: {
-                                    skjemanavn,
-                                    [`spørsmål`]: 'bekreftet lest',
-                                    svar: newValue ? 'Ja' : 'Nei',
-                                },
-                            })
-                            field.onChange(newValue)
+                            field.onChange(!field.value)
                         }}
                     />
                 </div>

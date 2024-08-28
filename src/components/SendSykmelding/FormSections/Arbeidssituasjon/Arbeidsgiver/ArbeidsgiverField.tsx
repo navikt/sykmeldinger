@@ -7,7 +7,6 @@ import { ArbeidssituasjonType, BrukerinformasjonFragment } from 'queries'
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { sporsmal } from '../../../../../utils/sporsmal'
 import { FormValues } from '../../../SendSykmeldingForm'
-import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
 interface Props {
     arbeidsgivere: BrukerinformasjonFragment['arbeidsgivere']
@@ -39,14 +38,6 @@ function ArbeidsgiverField({ arbeidsgivere }: Props): ReactElement | null {
                 id={field.name}
                 legend={sporsmal.arbeidsgiverOrgnummer}
                 onChange={(value: ArbeidssituasjonType) => {
-                    logAmplitudeEvent({
-                        eventName: 'skjema spørsmål besvart',
-                        data: {
-                            skjemanavn: 'arbeidsgiver',
-                            spørsmål: sporsmal.arbeidsgiverOrgnummer,
-                            svar: '[redacted]',
-                        },
-                    })
                     field.onChange(value)
                 }}
                 error={fieldState.error?.message}

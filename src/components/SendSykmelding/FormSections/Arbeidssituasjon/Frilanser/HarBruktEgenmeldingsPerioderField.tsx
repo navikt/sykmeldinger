@@ -3,7 +3,6 @@ import { BodyShort, ReadMore } from '@navikt/ds-react'
 
 import { sporsmal } from '../../../../../utils/sporsmal'
 import YesNoField from '../../../../FormComponents/YesNoField/YesNoField'
-import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { FormValues } from '../../../SendSykmeldingForm'
 
@@ -20,16 +19,6 @@ function HarBruktEgenmeldingsPerioderField({ oppfolgingsdato }: Props): ReactEle
                 subtext={<HarBruktEgenmeldingReadMore />}
                 rules={{
                     required: 'Du må svare på om du har brukt egenmelding eller annen sykmelding før du ble syk.',
-                }}
-                onChange={(value) => {
-                    logAmplitudeEvent({
-                        eventName: 'skjema spørsmål besvart',
-                        data: {
-                            skjemanavn: 'åpen sykmelding',
-                            spørsmål: sporsmal.harBruktEgenmelding(oppfolgingsdato, () => '<dato>'),
-                            svar: value,
-                        },
-                    })
                 }}
             />
         </QuestionWrapper>

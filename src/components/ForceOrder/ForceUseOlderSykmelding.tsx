@@ -23,15 +23,7 @@ function ForceUseOlderSykmelding({ olderSykmeldingId, olderSykmeldingCount }: Pr
             </Heading>
             Du har {pluralize('sykmelding', olderSykmeldingCount)} du må velge om du skal bruke, før du kan bruke denne.
             <div className="mb-6 mt-4">
-                <ReadMore
-                    header="Hvorfor må jeg gjøre dette?"
-                    onClick={() =>
-                        logAmplitudeEvent({
-                            eventName: 'accordion åpnet',
-                            data: { tekst: 'Hvorfor må jeg gjøre dette?' },
-                        })
-                    }
-                >
+                <ReadMore header="Hvorfor må jeg gjøre dette?">
                     <div>
                         <BodyLong spacing>
                             Andre sykmeldingsperioder kan påvirke beløpet du skal få utbetalt for denne perioden.

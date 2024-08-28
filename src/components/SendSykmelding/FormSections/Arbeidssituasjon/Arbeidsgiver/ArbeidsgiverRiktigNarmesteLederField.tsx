@@ -6,7 +6,6 @@ import { NaermesteLederFragment, YesOrNo } from 'queries'
 
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { sporsmal } from '../../../../../utils/sporsmal'
-import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import YesNoField from '../../../../FormComponents/YesNoField/YesNoField'
 import { FormValues } from '../../../SendSykmeldingForm'
 
@@ -32,16 +31,6 @@ function ArbeidsgiverRiktigNarmesteLederField({ narmesteLeder }: Props): ReactEl
                 }
                 rules={{
                     required: 'Du må svare på om dette er nærmeste lederen som skal følge deg opp.',
-                }}
-                onChange={(value) => {
-                    logAmplitudeEvent({
-                        eventName: 'skjema spørsmål besvart',
-                        data: {
-                            skjemanavn: 'åpen sykmelding',
-                            spørsmål: 'Er det rett nærmeste leder som skal følge deg opp?',
-                            svar: value,
-                        },
-                    })
                 }}
             />
             {riktigNarmesteLeder != null && (
