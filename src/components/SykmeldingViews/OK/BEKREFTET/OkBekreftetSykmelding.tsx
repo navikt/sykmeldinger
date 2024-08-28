@@ -5,7 +5,6 @@ import { PencilWritingIcon } from '@navikt/aksel-icons'
 import { SykmeldingFragment } from 'queries'
 
 import StatusBanner from '../../../StatusBanner/StatusBanner'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../../../amplitude/amplitude'
 import SykmeldingSykmeldtSection from '../../../Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 
 interface OkBekreftetSykmeldingProps {
@@ -13,11 +12,7 @@ interface OkBekreftetSykmeldingProps {
     reopen: () => void
 }
 
-const skjemanavn = 'ok gjenåpne bekreftet sykmelding'
-
 function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProps): ReactElement {
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn } })
-
     return (
         <div className="sykmelding-container">
             <div className="mb-4">
@@ -35,7 +30,6 @@ function OkBekreftetSykmelding({ sykmelding, reopen }: OkBekreftetSykmeldingProp
                             size="small"
                             variant="secondary"
                             onClick={() => {
-                                logAmplitudeEvent({ eventName: 'skjema fullført', data: { skjemanavn } })
                                 reopen()
                             }}
                             icon={<PencilWritingIcon aria-hidden />}

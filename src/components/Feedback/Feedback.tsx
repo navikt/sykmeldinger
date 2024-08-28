@@ -6,7 +6,6 @@ import { useMutation } from '@apollo/client'
 import { FeedbackDocument } from 'queries'
 
 import { cn } from '../../utils/tw-utils'
-import { logAmplitudeEvent, useLogAmplitudeEvent } from '../../amplitude/amplitude'
 
 import { feedbackReducer, initialState } from './FeedbackReducer'
 
@@ -28,8 +27,6 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
     )
     const [mutate, result] = useMutation(FeedbackDocument)
 
-    useLogAmplitudeEvent({ eventName: 'skjema åpnet', data: { skjemanavn: 'flexjar-kvittering' } }, metadata)
-
     const handleSend = async (): Promise<void> => {
         if (
             (activeResponseType === 'FORBEDRING' || activeResponseType === 'NEI') &&
@@ -50,14 +47,6 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
         await mutate({ variables: { feedback: payload } })
 
         dispatch({ type: 'complete' })
-
-        logAmplitudeEvent(
-            {
-                eventName: 'skjema fullført',
-                data: { skjemanavn: 'flexjar-kvittering' },
-            },
-            metadata,
-        )
     }
 
     return (

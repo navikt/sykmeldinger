@@ -5,7 +5,6 @@ import { useController } from 'react-hook-form'
 import { ArbeidssituasjonType } from 'queries'
 
 import { sporsmal } from '../../../../../utils/sporsmal'
-import { logAmplitudeEvent } from '../../../../../amplitude/amplitude'
 import { QuestionWrapper } from '../../../../FormComponents/FormStructure'
 import { FormValues } from '../../../SendSykmeldingForm'
 
@@ -22,14 +21,6 @@ function BladField(): ReactElement {
                 id={field.name}
                 legend={sporsmal.fisker.velgBlad}
                 onChange={(value: ArbeidssituasjonType) => {
-                    logAmplitudeEvent({
-                        eventName: 'skjema spørsmål besvart',
-                        data: {
-                            skjemanavn: 'arbeidsgiver',
-                            spørsmål: sporsmal.fisker.velgBlad,
-                            svar: value,
-                        },
-                    })
                     field.onChange(value)
                 }}
                 error={fieldState.error?.message}
