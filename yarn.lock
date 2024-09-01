@@ -1416,24 +1416,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/faro-core@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@grafana/faro-core@npm:1.9.0"
+"@grafana/faro-core@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "@grafana/faro-core@npm:1.9.1"
   dependencies:
     "@opentelemetry/api": "npm:^1.9.0"
     "@opentelemetry/otlp-transformer": "npm:^0.52.0"
-  checksum: 10/87437e1053af2c76bb9010d9dd7a4951d6b6f339326a4871ca9f513d0b3193ff4358845b24f4f20090f180f9168bc42a6f2949d9e764f4c672f1e202556b6de6
+  checksum: 10/b9519680b37f86082b7e73aa0d437d2d930ff94f97baab7386a1b81f619a8ac22fbc5be1a24891f3a09c434ded6eff8a369a662c2a909c4d4dadcf471283d5c1
   languageName: node
   linkType: hard
 
-"@grafana/faro-web-sdk@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@grafana/faro-web-sdk@npm:1.9.0"
+"@grafana/faro-web-sdk@npm:1.9.1":
+  version: 1.9.1
+  resolution: "@grafana/faro-web-sdk@npm:1.9.1"
   dependencies:
-    "@grafana/faro-core": "npm:^1.9.0"
+    "@grafana/faro-core": "npm:^1.9.1"
     ua-parser-js: "npm:^1.0.32"
     web-vitals: "npm:^4.0.1"
-  checksum: 10/1b5f0b84c7d96bc5099328b35423de8ad3ccd7d51d14e49e7df050c69d57ee6e80b35dd441e6d5eca2de9babc4845eb425ffcc39b6ca05587e9ce453350c61b1
+  checksum: 10/436fa2da908b9aa20ce9700f3589e25f1c65eef1c855094d506afd6168278971bf347ca2f18b3f18dc0990a4551726670b9e481dd52124ae44b0d1909e879ea4
   languageName: node
   linkType: hard
 
@@ -11517,7 +11517,7 @@ __metadata:
     "@apollo/server": "npm:^4.11.0"
     "@as-integrations/next": "npm:^3.1.0"
     "@axe-core/playwright": "npm:^4.9.1"
-    "@grafana/faro-web-sdk": "npm:1.9.0"
+    "@grafana/faro-web-sdk": "npm:1.9.1"
     "@graphql-codegen/add": "npm:5.0.3"
     "@graphql-codegen/cli": "npm:5.0.2"
     "@graphql-codegen/fragment-matcher": "npm:5.0.2"
