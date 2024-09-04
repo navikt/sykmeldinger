@@ -42,19 +42,7 @@ const errorLoggingLink = onError(({ graphQLErrors, networkError }) => {
 
 const testToggles: IToggle[] = [
     {
-        name: 'SYKMELDINGER_LIST_VIEW_DATA_FETCHING',
-        variant: { name: 'default', enabled: false },
-        impressionData: false,
-        enabled: false,
-    },
-    {
         name: 'SYKMELDINGER_FLEXJAR_KVITTERING',
-        variant: { name: 'default', enabled: false },
-        impressionData: false,
-        enabled: false,
-    },
-    {
-        name: 'SYKMELDINGER_ENDRE_ARBEIDSSITUASJON',
         variant: { name: 'default', enabled: false },
         impressionData: false,
         enabled: false,

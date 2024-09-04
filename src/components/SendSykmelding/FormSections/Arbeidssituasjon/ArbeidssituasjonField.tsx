@@ -8,7 +8,6 @@ import { FormValues } from '../../SendSykmeldingForm'
 import { QuestionWrapper } from '../../../FormComponents/FormStructure'
 import { arbeidsSituasjonEnumToText, sporsmal } from '../../../../utils/sporsmal'
 import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
-import { useFlag } from '../../../../toggles/context'
 
 import AnnetExtraSelect from './AnnetExtraSelect'
 
@@ -17,7 +16,6 @@ interface Props {
 }
 
 function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
-    const bonusSporsmalToggle = useFlag('SYKMELDINGER_ANNET_BONUSSPORSMAL')
     const { field, fieldState } = useController<FormValues>({
         name: 'arbeidssituasjon',
         rules: { required: 'Du må svare på hvilket arbeid du er sykmeldt fra.' },
@@ -64,7 +62,7 @@ function ArbeidssituasjonField({ harAvventendePeriode }: Props): ReactElement {
                     {arbeidsSituasjonEnumToText(ArbeidssituasjonType.ANNET)}
                 </Radio>
             </RadioGroup>
-            {field.value === ArbeidssituasjonType.ANNET && bonusSporsmalToggle.enabled && <AnnetExtraSelect />}
+            {field.value === ArbeidssituasjonType.ANNET && <AnnetExtraSelect />}
         </QuestionWrapper>
     )
 }
