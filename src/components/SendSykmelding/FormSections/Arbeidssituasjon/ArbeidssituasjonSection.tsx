@@ -10,7 +10,6 @@ import { getSykmeldingStartDate } from '../../../../utils/sykmeldingUtils'
 import { SectionWrapper } from '../../../FormComponents/FormStructure'
 import { isArbeidsledig, isFrilanserOrNaeringsdrivendeOrJordbruker } from '../../../../utils/arbeidssituasjonUtils'
 import { FormValues } from '../../SendSykmeldingForm'
-import { useFlag } from '../../../../toggles/context'
 import Spinner from '../../../Spinner/Spinner'
 
 import { ArbeidssituasjonInfo } from './ArbeidssituasjonInfo'
@@ -27,7 +26,6 @@ interface Props {
 }
 
 function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): ReactElement | null {
-    const endreArbeidssituasjonToggle = useFlag('SYKMELDINGER_ENDRE_ARBEIDSSITUASJON')
     const { watch } = useFormContext<FormValues>()
     const arbeidssituasjon = watch('arbeidssituasjon')
 
@@ -54,8 +52,7 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
                     sykmeldingStartDato={getSykmeldingStartDate(sykmelding.sykmeldingsperioder)}
                 />
             )}
-            {endreArbeidssituasjonToggle.enabled &&
-                isArbeidsledig(arbeidssituasjon) &&
+            {isArbeidsledig(arbeidssituasjon) &&
                 (loading ? (
                     <Spinner headline="Laster arbeidsgivere" />
                 ) : error ? (
