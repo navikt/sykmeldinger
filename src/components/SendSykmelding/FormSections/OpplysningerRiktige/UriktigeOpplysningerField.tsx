@@ -7,6 +7,9 @@ import { UriktigeOpplysningerType } from 'queries'
 import { FormValues } from '../../SendSykmeldingForm'
 import { QuestionWrapper } from '../../../FormComponents/FormStructure'
 import { sporsmal, uriktigeOpplysningerEnumToText } from '../../../../utils/sporsmal'
+import { getTrengerNySykmelding } from '../shared/sykmeldingUtils'
+
+import UriktigeOpplysningerInfo from './UriktigeOpplysningerInfo'
 
 function UriktigeOpplysningerField(): ReactElement {
     const { field, fieldState } = useController<FormValues, 'uriktigeOpplysninger'>({
@@ -16,6 +19,9 @@ function UriktigeOpplysningerField(): ReactElement {
                 value == null || value.length <= 0 ? 'Du må svare på hvilke opplysninger som ikke stemmer.' : undefined,
         },
     })
+
+    const uriktigeOpplysninger = field.value
+    const trengerNySykmelding = getTrengerNySykmelding(uriktigeOpplysninger)
 
     return (
         <QuestionWrapper>
@@ -46,6 +52,9 @@ function UriktigeOpplysningerField(): ReactElement {
                     {uriktigeOpplysningerEnumToText(UriktigeOpplysningerType.ANDRE_OPPLYSNINGER)}
                 </Checkbox>
             </CheckboxGroup>
+            {!trengerNySykmelding && (uriktigeOpplysninger ?? []).length > 0 && (
+                <UriktigeOpplysningerInfo uriktigeOpplysninger={uriktigeOpplysninger ?? []} />
+            )}
         </QuestionWrapper>
     )
 }

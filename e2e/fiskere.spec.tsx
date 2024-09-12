@@ -203,22 +203,55 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
         })
     })
 
-    test('Hyre or Lott & Hyre without arbeidsgivere should get a warning/tips about what to do', async ({ page }) => {
-        await gotoScenario('normal', {
-            antallArbeidsgivere: 0,
-        })(page)
-        await fillOutFisker('Blad B', 'Både lott og hyre')(page)
+    test.describe('without arbeidsgiver', () => {
+        test('Hyre or Lott & Hyre without arbeidsgivere should get a warning/tips about what to do', async ({
+            page,
+        }) => {
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 0,
+            })(page)
+            await fillOutFisker('Blad B', 'Både lott og hyre')(page)
 
-        const expectedHint =
-            'Hvis det stemmer at arbeidsforholdet ditt ikke skal registreres, kan du sende inn sykmeldingen til NAV som fisker ved å velge lott i stedet for hyre.'
+            const expectedHint =
+                'Hvis det stemmer at arbeidsforholdet ditt ikke skal registreres, kan du sende inn sykmeldingen til NAV som fisker ved å velge lott i stedet for hyre.'
 
-        await expect(page.getByText(expectedHint)).toBeVisible()
+            await expect(page.getByText(expectedHint)).toBeVisible()
 
-        await getRadioInGroup(page)(
-            { name: /Mottar du lott eller er du på hyre?/i },
-            { name: 'Hyre', exact: true },
-        ).click()
+            await getRadioInGroup(page)(
+                { name: /Mottar du lott eller er du på hyre?/i },
+                { name: 'Hyre', exact: true },
+            ).click()
 
-        await expect(page.getByText(expectedHint)).toBeVisible()
+            await expect(page.getByText(expectedHint)).toBeVisible()
+        })
+
+        test('Hyre or Lott & Hyre should get a error if user tries to send sykmelding  without arbeidsgivere', async ({
+            page,
+        }) => {
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 0,
+            })(page)
+            await fillOutFisker('Blad B', 'Både lott og hyre')(page)
+
+            const expectedHint =
+                'Hvis det stemmer at arbeidsforholdet ditt ikke skal registreres, kan du sende inn sykmeldingen til NAV som fisker ved å velge lott i stedet for hyre.'
+
+            await expect(page.getByText(expectedHint)).toBeVisible()
+
+            await getRadioInGroup(page)(
+                { name: /Mottar du lott eller er du på hyre?/i },
+                { name: 'Hyre', exact: true },
+            ).click()
+
+            await expect(page.getByText(expectedHint)).toBeVisible()
+
+            await page.getByRole('button', { name: /Send sykmelding/ }).click()
+            await expect(
+                page.getByText(
+                    /For å sende inn sykmeldingen må du fylle ut hvilken arbeidsforhold du er sykmeldt fra./,
+                ),
+            ).toBeVisible()
+            await expect(page).toHaveNoViolations()
+        })
     })
 })

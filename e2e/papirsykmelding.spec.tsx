@@ -1,7 +1,14 @@
 import { test, expect } from '@playwright/test'
 
-import { getRadioInGroup } from './test-utils'
-import { gotoRoot, gotoScenario, navigateToFirstSykmelding } from './user-actions'
+import { getRadioInGroup, userInteractionsGroup } from './test-utils'
+import {
+    bekreftSykmelding,
+    gotoRoot,
+    gotoScenario,
+    navigateToFirstSykmelding,
+    opplysingeneStemmer,
+    velgArbeidssituasjon,
+} from './user-actions'
 
 test.describe('Papir sykmelding', () => {
     test('should show information if papirsykmelding is already passed on', async ({ page }) => {
@@ -46,6 +53,18 @@ test.describe('Papir sykmelding', () => {
         await region.getByRole('button', { name: 'Avbryt sykmeldingen' }).click()
 
         await expect(page.getByText('Sykmeldingen ble avbrutt av deg')).toBeVisible()
+    })
+
+    test('should be able to submit form', async ({ page }) => {
+        await userInteractionsGroup(
+            gotoScenario('papirsykmelding'),
+            navigateToFirstSykmelding('nye', 'papirsykmelding'),
+            opplysingeneStemmer,
+            velgArbeidssituasjon('annet'),
+            bekreftSykmelding,
+        )(page)
+
+        await expect(page.getByRole('heading', { name: 'Papirsykmeldingen er sendt' })).toBeVisible()
     })
 
     test.describe('Utenlandsk sykmelding', () => {

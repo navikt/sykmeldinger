@@ -15,23 +15,65 @@ function UriktigeOpplysningerInfo({ uriktigeOpplysninger }: UriktigeOpplysninger
             </Heading>
             <ul>
                 {uriktigeOpplysninger.map((value) => (
-                    <li key={value}>{uriktigeOpplysningerEnumToText(value)}</li>
+                    <li key={value} className="mt-4">
+                        {uriktigeOpplysningerEnumToText(value)}
+                    </li>
                 ))}
             </ul>
         </Alert>
     )
 }
 
-function uriktigeOpplysningerEnumToText(value: UriktigeOpplysningerType): string {
+function uriktigeOpplysningerEnumToText(value: UriktigeOpplysningerType): ReactElement {
     switch (value) {
         case UriktigeOpplysningerType.ANDRE_OPPLYSNINGER:
-            return 'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at den inneholder feil.'
+            return (
+                <>
+                    <Heading size="xsmall" level="4">
+                        Andre opplysninger
+                    </Heading>
+                    <>
+                        Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at den
+                        inneholder feil.
+                    </>
+                </>
+            )
         case UriktigeOpplysningerType.ARBEIDSGIVER:
-            return 'I neste trinn velger du riktig arbeidsgiver. Obs: Feilen vil være synlig for arbeidsgiveren du sender sykmeldingen til.'
+            return (
+                <>
+                    <Heading size="xsmall" level="4">
+                        Arbeidsgiver
+                    </Heading>
+                    <>
+                        I neste trinn velger du riktig arbeidsgiver. Obs: Feilen vil være synlig for arbeidsgiveren du
+                        sender sykmeldingen til.
+                    </>
+                </>
+            )
         case UriktigeOpplysningerType.DIAGNOSE:
-            return 'Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at diagnosen er feil.'
+            return (
+                <>
+                    <Heading size="xsmall" level="4">
+                        Diagnose
+                    </Heading>
+                    <>
+                        Hvis sykmeldingen senere skal forlenges, må du gi beskjed til den som sykmelder deg om at
+                        diagnosen er feil.
+                    </>
+                </>
+            )
         case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_HOY:
-            return 'Senere, når du skal fylle ut søknaden om sykepenger, skriver du bare inn hvor mye du faktisk jobbet.'
+            return (
+                <>
+                    <Heading size="xsmall" level="4">
+                        Sykmeldingsgraden er for høy
+                    </Heading>
+                    <>
+                        Senere, når du skal fylle ut søknaden om sykepenger, skriver du bare inn hvor mye du faktisk
+                        jobbet.
+                    </>
+                </>
+            )
         case UriktigeOpplysningerType.PERIODE:
         case UriktigeOpplysningerType.SYKMELDINGSGRAD_FOR_LAV:
             throw new Error(

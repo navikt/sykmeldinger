@@ -25,7 +25,7 @@ function ErrorSection(_: unknown, ref: ForwardedRef<HTMLDivElement>): ReactEleme
                     size="medium"
                     ref={ref}
                 >
-                    <BodyShort>{errors.arbeidsgiverOrgnummer.message}</BodyShort>
+                    <BodyShort as="li">{errors.arbeidsgiverOrgnummer.message}</BodyShort>
                 </ErrorSummary>
             ) : (
                 <ErrorSummary
