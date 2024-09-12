@@ -43,11 +43,22 @@ export async function gotoRoot(page: Page): Promise<void> {
 }
 
 export function navigateToFirstSykmelding(
-    type: 'nye' | 'tidligere',
+    type: 'nye' | 'tidligere' | 'under-behandling',
     variant: '100%' | 'egenmelding' | 'papirsykmelding' | 'utenlandsk',
 ) {
     return async (page: Page): Promise<void> => {
-        const sectionRegex = type === 'nye' ? /Nye sykmeldinger/i : /Tidligere sykmeldinger/i
+        let sectionRegex: RegExp
+        switch (type) {
+            case 'nye':
+                sectionRegex = /Nye sykmeldinger/i
+                break
+            case 'tidligere':
+                sectionRegex = /Tidligere sykmeldinger/i
+                break
+            case 'under-behandling':
+                sectionRegex = /Under behandling/i
+                break
+        }
 
         // Text in aria-label
         let linkRegexp: RegExp
@@ -198,5 +209,23 @@ export function fillOutFisker(
             { name: /Mottar du lott eller er du på hyre?/i },
             { name: lott, exact: true },
         ).click()
+    }
+}
+
+export function velgAnnetSituasjon(
+    situasjon:
+        | 'Pensjonist'
+        | 'Student'
+        | 'Vikar'
+        | 'Lærling'
+        | 'Dagpenger'
+        | 'Flere arbeidsforhold'
+        | 'Arbeidsavklaringspenger (AAP)'
+        | 'Uføretrygd',
+) {
+    return async (page: Page): Promise<void> => {
+        await page
+            .getByRole('combobox', { name: 'Hvilken situasjon er du i som gjorde at du valgte annet?' })
+            .selectOption(situasjon)
     }
 }

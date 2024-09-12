@@ -6,7 +6,9 @@ import {
     filloutArbeidstaker,
     gotoScenario,
     navigateToFirstSykmelding,
+    opplysingeneStemmer,
     sendSykmelding,
+    velgArbeidssituasjon,
 } from './user-actions'
 import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
@@ -162,18 +164,82 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
             })(page)
         })
 
+        test('should show info about several arbeidsforhold and be able to submit form when only one sykmelding for a period but several active arbeidsgiver', async ({
+            page,
+        }) => {
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 2,
+            })(page)
+
+            await filloutArbeidstaker(/Andeby Brannstation/)(page)
+            await getRadioInGroup(page)(
+                { name: /Er du syk fra flere arbeidsforhold i denne perioden?/ },
+                { name: 'Ja' },
+            ).click()
+
+            await expect(
+                page.getByText(
+                    /Dersom du er syk fra flere arbeidsforhold, må du be legen din om å skrive en sykmelding for hvert arbeidsforhold./,
+                ),
+            ).toBeVisible()
+
+            await bekreftNarmesteleder('Brannkonstabel Sam')(page)
+            await getRadioInGroup(page)(
+                { name: /Brukte du egenmelding hos Andeby Brannstation i perioden/ },
+                { name: 'Nei' },
+            ).click()
+
+            await sendSykmelding(page)
+
+            await expectKvittering({
+                sendtTil: 'Andeby Brannstation',
+                egenmeldingsdager: 'legg til',
+            })(page)
+
+            await expectDineSvar({
+                arbeidssituasjon: 'Ansatt',
+                arbeidsgiver: 'Andeby Brannstation',
+                narmesteleder: {
+                    navn: 'Brannkonstabel Sam',
+                    svar: 'Ja',
+                },
+                egenmeldingsdager: {
+                    arbeidsgiver: 'Andeby Brannstation',
+                    svar: 'Nei',
+                },
+            })(page)
+        })
+    })
+
+    test.describe('without arbeidsgiver', () => {
         test('should show warning if user does not have any arbeidsforhold', async ({ page }) => {
             await gotoScenario('normal', {
                 antallArbeidsgivere: 0,
             })(page)
             await navigateToFirstSykmelding('nye', '100%')(page)
-
-            await getRadioInGroup(page)({ name: 'Stemmer opplysningene?' }, { name: 'Ja' }).click()
-            await getRadioInGroup(page)({ name: /Jeg er sykmeldt som/i }, { name: 'ansatt' }).click()
+            await opplysingeneStemmer(page)
+            await velgArbeidssituasjon('ansatt')(page)
 
             await expect(
                 page.getByText(
                     /Før du går videre, må du be arbeidsgiveren din om å registrere deg i A-meldingen. Når det er gjort blir det oppdatert her, og du kan sende inn sykmeldingen./,
+                ),
+            ).toBeVisible()
+            await expect(page).toHaveNoViolations()
+        })
+
+        test('should show error if user tries to send sykmelding without arbeidsgiver', async ({ page }) => {
+            await gotoScenario('normal', {
+                antallArbeidsgivere: 0,
+            })(page)
+            await navigateToFirstSykmelding('nye', '100%')(page)
+            await opplysingeneStemmer(page)
+            await velgArbeidssituasjon('ansatt')(page)
+            await page.getByRole('button', { name: /Send sykmelding/ }).click()
+
+            await expect(
+                page.getByText(
+                    /For å sende inn sykmeldingen må du fylle ut hvilken arbeidsforhold du er sykmeldt fra./,
                 ),
             ).toBeVisible()
             await expect(page).toHaveNoViolations()

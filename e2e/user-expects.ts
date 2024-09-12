@@ -14,6 +14,9 @@ export function expectKvittering(opts: {
 }) {
     return async (page: Page): Promise<void> => {
         await page.waitForURL('**/kvittering')
+        await expect(
+            page.getByRole('heading', { name: 'Skal du reise utenfor EU/EØS når du er sykmeldt?' }),
+        ).toBeVisible()
         await expect(page.getByRole('button', { name: /Tilbake til Ditt sykefravær/ })).toBeVisible()
 
         if (opts.sendtTil === 'NAV') {

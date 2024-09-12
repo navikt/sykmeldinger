@@ -134,6 +134,16 @@ const delvisGodkjentTilbakedatering: ScenarioCreator = () => ({
     ],
 })
 
+const tilbakedateringKreverMerInfo: ScenarioCreator = () => ({
+    sykmeldinger: [
+        new SykmeldingBuilder({ offset: -7 })
+            .enkelPeriode()
+            .status(StatusEvent.APEN)
+            .merknader([{ type: Merknadtype.TILBAKEDATERING_KREVER_FLERE_OPPLYSNINGER, beskrivelse: null }])
+            .build(),
+    ],
+})
+
 const utgatt: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).enkelPeriode().status(StatusEvent.UTGATT).build()],
 })
@@ -170,6 +180,7 @@ const under20Prosent: ScenarioCreator = () => ({
                 { offset: 0, days: 14 },
             )
             .status(StatusEvent.APEN)
+            .papir()
             .build(),
     ],
 })
@@ -358,7 +369,7 @@ export const otherScenarios = {
         scenario: avvistData,
     },
     under20Prosent: {
-        description: 'Sykmelding med grad under 20%',
+        description: 'Papirsykmelding med grad under 20%',
         scenario: under20Prosent,
     },
     ugyldigTilbakedatering: {
@@ -368,6 +379,10 @@ export const otherScenarios = {
     delvisGodkjentTilbakedatering: {
         description: 'Delvis godkjent tilbakedatering og er til manuell behandling',
         scenario: delvisGodkjentTilbakedatering,
+    },
+    tilbakedateringKreverMerInfo: {
+        description: 'Tilbakedatering som krever flere opplysninger',
+        scenario: tilbakedateringKreverMerInfo,
     },
     utgatt: {
         description: 'Utgått sykmelding',

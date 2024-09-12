@@ -1,17 +1,37 @@
 import { test, expect } from '@playwright/test'
 
-import { sporsmal } from '../src/utils/sporsmal'
-
-import { gotoScenario, navigateToFirstSykmelding } from './user-actions'
+import {
+    bekreftSykmelding,
+    gotoScenario,
+    navigateToFirstSykmelding,
+    opplysingeneStemmer,
+    velgArbeidssituasjon,
+} from './user-actions'
+import { userInteractionsGroup } from './test-utils'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Ugyldig tilbakedatert sykmelding', () => {
-    test('should show information about tilbakedatering without a11y issues', async ({ page }) => {
-        await gotoScenario('ugyldigTilbakedatering')(page)
-        await navigateToFirstSykmelding('nye', '100%')(page)
-
-        await expect(page.getByText(sporsmal.erOpplysningeneRiktige)).toBeVisible()
+    test('should show information about tilbakedatering and be able to submit form, without a11y issues', async ({
+        page,
+    }) => {
+        await userInteractionsGroup(
+            gotoScenario('ugyldigTilbakedatering'),
+            navigateToFirstSykmelding('nye', '100%'),
+            opplysingeneStemmer,
+        )(page)
         await expect(page.getByRole('heading', { name: 'Tilbakedateringen kan ikke godkjennes' })).toBeVisible()
 
-        await expect(page).toHaveNoViolations()
+        await velgArbeidssituasjon('annet')(page)
+        await bekreftSykmelding(page)
+
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+
+        await expectDineSvar({
+            stemmer: 'Ja',
+            arbeidssituasjon: 'Annet',
+        })(page)
     })
 })

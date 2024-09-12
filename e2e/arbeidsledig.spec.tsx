@@ -4,6 +4,7 @@ import { nb } from 'date-fns/locale'
 
 import {
     bekreftNarmesteleder,
+    bekreftSykmelding,
     filloutArbeidstaker,
     gotoScenario,
     navigateToFirstSykmelding,
@@ -12,16 +13,17 @@ import {
     velgArbeidstakerArbeidsledig,
 } from './user-actions'
 import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
+import { userInteractionsGroup } from './test-utils'
 
 test.describe('Arbeidssituasjon - Arbeidsledig', () => {
-    test('should be able to submit form with work situation arbeidsledig', async ({ page }) => {
-        await gotoScenario('normal')(page)
-        await navigateToFirstSykmelding('nye', '100%')(page)
-        await opplysingeneStemmer(page)
-        await velgArbeidssituasjon('arbeidsledig')(page)
-        await velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/)(page)
-
-        await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
+    test('should be able to submit form with work situation arbeidsledig, without arbeidsgiver', async ({ page }) => {
+        await userInteractionsGroup(
+            gotoScenario('normal', { antallArbeidsgivere: 0 }),
+            navigateToFirstSykmelding('nye', '100%'),
+            opplysingeneStemmer,
+            velgArbeidssituasjon('arbeidsledig'),
+            bekreftSykmelding,
+        )(page)
 
         await expectKvittering({
             sendtTil: 'NAV',
@@ -31,15 +33,18 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
         await expectDineSvar({
             stemmer: 'Ja',
             arbeidssituasjon: 'Arbeidsledig',
+            arbeidsledig: ExpectMeta.NotInDom,
         })(page)
     })
 
     test('should not send egenmeldingsdager and stuff when first filled out as arbeidsgiver, then changes back to arbeidsledig', async ({
         page,
     }) => {
-        await gotoScenario('normal')(page)
-        await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
-        await bekreftNarmesteleder('Station Officer Steele', 'Nei')(page)
+        await userInteractionsGroup(
+            gotoScenario('normal'),
+            filloutArbeidstaker(/Pontypandy Fire Service/),
+            bekreftNarmesteleder('Station Officer Steele', 'Nei'),
+        )(page)
 
         await expect(
             page.getByText('Siden du sier det er feil, ber vi arbeidsgiveren din om å gi oss riktig navn.'),
@@ -76,7 +81,6 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
         await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
 
-        await expect(page.getByRole('heading', { name: /Egenmeldingsdager/ })).not.toBeVisible()
         await expectKvittering({
             sendtTil: 'NAV',
             egenmeldingsdager: ExpectMeta.NotInDom,
@@ -84,17 +88,21 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
         await expectDineSvar({
             stemmer: 'Ja',
             arbeidssituasjon: 'Arbeidsledig',
+            arbeidsledig: {
+                arbeidsledigFraOrgnummer: '110110110',
+            },
         })(page)
     })
 
-    test('should be able to submit form with work situation arbeidsledig with arbeidsgiver', async ({ page }) => {
-        await gotoScenario('kantIKant', { antallArbeidsgivere: 2 })(page)
-        await navigateToFirstSykmelding('nye', '100%')(page)
-        await opplysingeneStemmer(page)
-        await velgArbeidssituasjon('arbeidsledig')(page)
-        await velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/)(page)
-
-        await page.getByRole('button', { name: /Bekreft sykmelding/ }).click()
+    test('should be able to submit form with work situation arbeidsledig, with arbeidsgiver', async ({ page }) => {
+        await userInteractionsGroup(
+            gotoScenario('kantIKant', { antallArbeidsgivere: 2 }),
+            navigateToFirstSykmelding('nye', '100%'),
+            opplysingeneStemmer,
+            velgArbeidssituasjon('arbeidsledig'),
+            velgArbeidstakerArbeidsledig(/Pontypandy Fire Service/),
+            bekreftSykmelding,
+        )(page)
 
         await expectKvittering({
             sendtTil: 'NAV',
@@ -107,6 +115,30 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
             arbeidsledig: {
                 arbeidsledigFraOrgnummer: '110110110',
             },
+        })(page)
+    })
+
+    test('should be able to submit form with work situation arbeidsledig, when arbeidsgiver is "Ikke relevant"', async ({
+        page,
+    }) => {
+        await userInteractionsGroup(
+            gotoScenario('kantIKant', { antallArbeidsgivere: 2 }),
+            navigateToFirstSykmelding('nye', '100%'),
+            opplysingeneStemmer,
+            velgArbeidssituasjon('arbeidsledig'),
+            velgArbeidstakerArbeidsledig(/Ikke relevant/),
+            bekreftSykmelding,
+        )(page)
+
+        await expectKvittering({
+            sendtTil: 'NAV',
+            egenmeldingsdager: ExpectMeta.NotInDom,
+        })(page)
+
+        await expectDineSvar({
+            stemmer: 'Ja',
+            arbeidssituasjon: 'Arbeidsledig',
+            arbeidsledig: ExpectMeta.NotInDom,
         })(page)
     })
 })

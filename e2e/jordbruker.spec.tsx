@@ -61,6 +61,10 @@ test.describe('Jordbruker', () => {
 
         await expectDineSvar({
             arbeidssituasjon: 'Jordbruker',
+            selvstendig: {
+                egenmeldingsperioder: ExpectMeta.NotInDom,
+                forsikring: ExpectMeta.NotInDom,
+            },
         })(page)
     })
 })

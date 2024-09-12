@@ -9,7 +9,8 @@ export function getRadioInGroup(page: Page | Locator) {
 }
 
 export function getCheckboxInGroup(page: Page) {
-    return (group: ByRoleOptions, radio: ByRoleOptions) => page.getByRole('group', group).getByRole('checkbox', radio)
+    return (group: ByRoleOptions, checkbox: ByRoleOptions) =>
+        page.getByRole('group', group).getByRole('checkbox', checkbox)
 }
 
 type CurriedAction = (page: Page) => Promise<void>
