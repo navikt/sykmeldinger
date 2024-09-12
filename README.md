@@ -8,14 +8,14 @@ Lever under:
 -   dev-gcp: https://www.ekstern.dev.nav.no/syk/sykmeldinger
 -   dev-gcp (demo): https://sykmeldinger.ekstern.dev.nav.no/syk/sykmeldinger/
 
-
 Tekniske valg:
 
 -   NextJS
 -   apollo-server for GraphQL API.
 -   apollo-client for håndtering av fetching og server state.
 -   zod for validering av "ukjent" data fra diverse API.
--   react-testing-library for enhetstesting av enkeltkomponenter.
+-   vitest for enhetstesting av enkeltkomponenter.
+-   playwright for ende-til-ende testing i browser.
 
 Data-flyt:
 
@@ -72,10 +72,16 @@ yarn lint
 yarn tsc
 ```
 
--   kjør tester:
+-   kjør enhetstester:
 
 ```bash
 yarn test
+```
+
+-   kjør ende-til-ende tester:
+
+```bash
+yarn build:e2e && FAST=true yarn e2e:dev
 ```
 
 -   bygg appen:
