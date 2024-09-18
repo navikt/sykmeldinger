@@ -48,7 +48,7 @@
         "date-fns": "3.6.0",
         "graphql": "^16.9.0",
         "graphql-scalars": "^1.23.0",
-        "next": "14.2.8",
+        "next": "14.2.10",
         "next-logger": "^5.0.0",
         "nextleton": "^0.6.1",
         "node-cache": "^5.1.2",
