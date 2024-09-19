@@ -12,7 +12,12 @@ const config: CodegenConfig = {
             plugins: ['fragment-matcher'],
         },
         './src/fetching/graphql.generated.ts': {
-            plugins: ['typescript', 'typescript-operations', 'typed-document-node'],
+            plugins: [
+                'typescript',
+                'typescript-operations',
+                'typed-document-node',
+                { add: { placement: 'prepend', content: '/* eslint-disable */' } },
+            ],
             config: {
                 immutableTypes: true,
                 exportFragmentSpreadSubTypes: true,
