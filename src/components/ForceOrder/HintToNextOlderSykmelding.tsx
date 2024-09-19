@@ -10,7 +10,7 @@ import { logAmplitudeEvent } from '../../amplitude/amplitude'
 function HintToNextOlderSykmelding(): ReactElement | null {
     const { unsentSykmeldinger, error, isLoading } = useUnsentSykmeldinger()
     const dontShowYet = isLoading || error || unsentSykmeldinger == null
-    const isDone = unsentSykmeldinger?.length === 0 ?? false
+    const isDone = unsentSykmeldinger?.length === 0
 
     useEffect(() => {
         if (dontShowYet) return

@@ -1,4 +1,5 @@
-import { expect, Locator, Page } from '@playwright/test'
+import { expect } from '@playwright/test'
+import { Locator, Page } from 'playwright-core'
 import AxeBuilder from '@axe-core/playwright'
 
 expect.extend({
