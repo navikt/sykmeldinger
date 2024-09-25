@@ -62,7 +62,9 @@ const overSytti: ScenarioCreator = () => ({
         new SykmeldingBuilder({ offset: 7 })
             .enkelPeriode()
             .pasient({
+                fnr: '88888823456',
                 fornavn: 'Fransisca',
+                mellomnavn: null,
                 etternavn: 'Frost',
                 overSyttiAar: true,
             })
