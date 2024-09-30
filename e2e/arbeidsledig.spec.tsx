@@ -96,7 +96,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
     test('should be able to submit form with work situation arbeidsledig, with arbeidsgiver', async ({ page }) => {
         await userInteractionsGroup(
-            gotoScenario('kantIKant', { antallArbeidsgivere: 2 }),
+            gotoScenario('normal', { antallArbeidsgivere: 2 }),
             navigateToFirstSykmelding('nye', '100%'),
             opplysingeneStemmer,
             velgArbeidssituasjon('arbeidsledig'),
@@ -122,7 +122,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
         page,
     }) => {
         await userInteractionsGroup(
-            gotoScenario('kantIKant', { antallArbeidsgivere: 2 }),
+            gotoScenario('normal', { antallArbeidsgivere: 2 }),
             navigateToFirstSykmelding('nye', '100%'),
             opplysingeneStemmer,
             velgArbeidssituasjon('arbeidsledig'),

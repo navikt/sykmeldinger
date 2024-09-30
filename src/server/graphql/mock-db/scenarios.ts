@@ -275,14 +275,6 @@ const flerePerioder: ScenarioCreator = () => ({
     ],
 })
 
-const kantIKant: ScenarioCreator = () => ({
-    sykmeldinger: [
-        new SykmeldingBuilder({ offset: 7 }).status(StatusEvent.APEN).enkelPeriode({ offset: 0, days: 7 }).build(),
-        new SykmeldingBuilder({ offset: -1 }).send().enkelPeriode({ offset: 0, days: 7 }).build(),
-        new SykmeldingBuilder({ offset: -9 }).send().enkelPeriode({ offset: 0, days: 7 }).build(),
-    ],
-})
-
 export type Scenarios = keyof typeof simpleScenarios | keyof typeof otherScenarios | keyof typeof e2eScenarios
 export const simpleScenarios = {
     normal: {
@@ -312,10 +304,6 @@ export const simpleScenarios = {
     papirsykmelding: {
         description: 'En ny og en gammel papirsykmelding',
         scenario: papirSykmelding,
-    },
-    kantIKant: {
-        description: 'Tre kant i kant',
-        scenario: kantIKant,
     },
     emptyState: {
         description: 'Ingen sykmeldinger',

@@ -36,7 +36,7 @@ test.describe('Arbeidssituasjon - Permittert', () => {
 
     test('should be able to submit form with work situation permittert, with arbeidsgiver', async ({ page }) => {
         await userInteractionsGroup(
-            gotoScenario('kantIKant', { antallArbeidsgivere: 2 }),
+            gotoScenario('normal', { antallArbeidsgivere: 2 }),
             navigateToFirstSykmelding('nye', '100%'),
             opplysingeneStemmer,
             velgArbeidssituasjon('permittert'),
