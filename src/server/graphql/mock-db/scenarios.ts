@@ -81,16 +81,18 @@ const avbruttEgenmelding: ScenarioCreator = () => ({
     sykmeldinger: [new SykmeldingBuilder({ offset: 7 }).egenmeldt().enkelPeriode().status(StatusEvent.AVBRUTT).build()],
 })
 
-const avvist: ScenarioCreator = () => ({
+const avvistTilbakedateringer: ScenarioCreator = () => ({
     sykmeldinger: [
         new SykmeldingBuilder({ offset: -7 })
             .enkelPeriode()
             .status(StatusEvent.APEN)
             .behandlingsutfall(RegelStatus.INVALID, [
                 {
-                    messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
-                    messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
-                    ruleName: 'tilbakedatering',
+                    messageForSender:
+                        'Sykmeldingen kan ikke rettes, det må skrives en ny. Pasienten har fått beskjed om å vente på ny sykmelding fra deg. Grunnet følgende: Første sykmelding er tilbakedatert uten at begrunnelse (felt 11.2) er tilstrekkelig utfylt',
+                    messageForUser:
+                        'Sykmeldingen er tilbakedatert uten tilstrekkelig begrunnelse fra den som sykmeldte deg.',
+                    ruleName: 'INNTIL_8_DAGER',
                     ruleStatus: RegelStatus.INVALID,
                 },
             ])
@@ -100,9 +102,11 @@ const avvist: ScenarioCreator = () => ({
             .bekreft()
             .behandlingsutfall(RegelStatus.INVALID, [
                 {
-                    messageForSender: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
-                    messageForUser: 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
-                    ruleName: 'tilbakedatering',
+                    messageForSender:
+                        'Sykmeldingen kan ikke rettes, det må skrives en ny. Pasienten har fått beskjed om å vente på ny sykmelding fra deg. Grunnet følgende: Sykmelding er tilbakedatert uten begrunnelse (felt 11.2) er tilstrekkelig utfylt',
+                    messageForUser:
+                        'Sykmeldingen er tilbakedatert uten tilstrekkelig begrunnelse fra den som sykmeldte deg.',
+                    ruleName: 'INNTIL_1_MAANDE',
                     ruleStatus: RegelStatus.INVALID,
                 },
             ])
@@ -346,8 +350,8 @@ export const otherScenarios = {
         scenario: harUnderBehandling,
     },
     avvist: {
-        description: 'Avvist grunnet tilbakedatering (med bekreftet)',
-        scenario: avvist,
+        description: 'Avviste sykmeldinger grunnet tilbakedatering (med bekreftet)',
+        scenario: avvistTilbakedateringer,
     },
     avvistData: {
         description: 'Avvist grunnet ugyldig data',
