@@ -36,7 +36,7 @@ export function Lenkepanel({ sykmelding, notifying }: LenkepanelProps): ReactEle
                 border
             >
                 <div className="flex gap-3 max-[560px]:flex-col">
-                    <div className="mr-8 hidden sm:block">
+                    <div className="mr-8 hidden md:block">
                         <LenkepanelIcon
                             behandlingsutfall={behandlingsutfallStatus}
                             isPaper={Boolean(papirsykmelding)}

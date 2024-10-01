@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Buldings2Icon } from '@navikt/aksel-icons'
+import { Buildings2Icon } from '@navikt/aksel-icons'
 
 import { AktivitetIkkeMuligPeriode } from 'queries'
 
@@ -14,7 +14,7 @@ interface AktivitetIkkeMuligViewProps {
 
 const AktivitetIkkeMulig = ({ aktivitetIkkeMulig, parentId }: AktivitetIkkeMuligViewProps): ReactElement | null => {
     return (
-        <SykmeldingGroup parentId={parentId} heading="Aktivitet på arbeidsplassen" Icon={Buldings2Icon}>
+        <SykmeldingGroup parentId={parentId} heading="Aktivitet på arbeidsplassen" Icon={Buildings2Icon}>
             {aktivitetIkkeMulig.arbeidsrelatertArsak ? (
                 <>
                     <SykmeldingListInfo
