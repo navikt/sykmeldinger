@@ -246,7 +246,7 @@ export function createUnderBehandlingMerknad(): Pick<Sykmelding, 'merknader'> {
 }
 
 export function createAvvistBehandlingsutfall(
-    reason = 'Sykmeldingen er tilbakedatert mer enn det som er tillat',
+    reason = 'Sykmeldingen er tilbakedatert uten tilstrekkelig begrunnelse fra den som sykmeldte deg.',
 ): Pick<Sykmelding, 'behandlingsutfall'> {
     return {
         behandlingsutfall: {
@@ -257,7 +257,7 @@ export function createAvvistBehandlingsutfall(
                     __typename: 'RegelInfo',
                     messageForSender: reason,
                     messageForUser: reason,
-                    ruleName: 'tilbakedatering',
+                    ruleName: 'INNTIL_8_DAGER',
                     ruleStatus: RegelStatus.INVALID,
                 },
             ],

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { BodyLong, BodyShort, Label } from '@navikt/ds-react'
+import { BodyLong, Label } from '@navikt/ds-react'
 
 import { Behandlingsutfall } from 'queries'
 
@@ -18,10 +18,10 @@ function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): Rea
                 {behandlerNavn} om hva som er feil, og at du må få en ny sykmelding.
             </BodyLong>
             <Label id={avvistGrunnId}>Grunnen til at sykmeldingen er avvist:</Label>
-            <ul className="mb-4" aria-labelledby={avvistGrunnId}>
+            <ul className="mb-4 list-disc pl-6" aria-labelledby={avvistGrunnId}>
                 {ruleHits.map((ruleHit, index) => (
-                    <li key={index}>
-                        <BodyShort>{ruleHit.messageForUser}</BodyShort>
+                    <li key={index} className="mb-2">
+                        {ruleHit.messageForUser}
                     </li>
                 ))}
             </ul>
