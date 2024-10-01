@@ -131,9 +131,9 @@ const InformationBanner = ({
     const mottattSykmeldingId = 'mottatt-sykmelding'
 
     return (
-        <div className="sm:px-8">
+        <div className="md:px-8">
             <Chat
-                className="p-0 sm:pr-8"
+                className="p-0 md:pr-8"
                 avatar={<VeilederMaleSvg />}
                 position="left"
                 aria-labelledby={mottattSykmeldingId}
