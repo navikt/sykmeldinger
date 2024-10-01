@@ -75,7 +75,7 @@
         "@navikt/ds-tailwind": "6.17.0",
         "@navikt/eslint-config-teamsykmelding": "^6.6.0",
         "@parcel/watcher": "^2.4.1",
-        "@playwright/test": "1.47.1",
+        "@playwright/test": "1.47.2",
         "@testing-library/dom": "^10.4.0",
         "@testing-library/jest-dom": "^6.5.0",
         "@testing-library/react": "^16.0.1",
