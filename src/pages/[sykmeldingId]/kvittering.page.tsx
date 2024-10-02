@@ -25,6 +25,7 @@ import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
 import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 import Feedback from '../../components/Feedback/Feedback'
 import { useFlag } from '../../toggles/context'
+import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden'
 
 function SykmeldingkvitteringPage(): ReactElement {
     const feedbackToggle = useFlag('SYKMELDINGER_FLEXJAR_KVITTERING')
@@ -208,7 +209,12 @@ function KvitteringWrapper({
             ) : (
                 <Header title={getSentSykmeldingTitle(sykmelding)} subTitle={getReadableSykmeldingLength(sykmelding)} />
             )}
-            <PageWrapper>{children}</PageWrapper>
+            <PageWrapper>
+                {children}
+                <div className="mt-16">
+                    <TilHovedsiden />
+                </div>
+            </PageWrapper>
         </>
     )
 }

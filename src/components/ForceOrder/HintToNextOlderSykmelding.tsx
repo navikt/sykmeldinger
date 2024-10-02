@@ -4,7 +4,6 @@ import { ReactElement, useEffect } from 'react'
 
 import { toEarliestSykmelding, useUnsentSykmeldinger } from '../../hooks/useFindOlderSykmeldingId'
 import { pluralize } from '../../utils/stringUtils'
-import { browserEnv } from '../../utils/env'
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
 
 function HintToNextOlderSykmelding(): ReactElement | null {
@@ -16,16 +15,7 @@ function HintToNextOlderSykmelding(): ReactElement | null {
         if (dontShowYet) return
     }, [dontShowYet, isDone])
 
-    if (dontShowYet) return null
-    if (isDone) {
-        return (
-            <div className="mt-8">
-                <Button as="a" href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}>
-                    Tilbake til Ditt sykefravær
-                </Button>
-            </div>
-        )
-    }
+    if (dontShowYet || isDone) return null
 
     const earliest = unsentSykmeldinger.reduce(toEarliestSykmelding)
     const earliestId = earliest.id
