@@ -17,7 +17,7 @@ export function expectKvittering(opts: {
         await expect(
             page.getByRole('heading', { name: 'Skal du reise utenfor EU/EØS når du er sykmeldt?' }),
         ).toBeVisible()
-        await expect(page.getByRole('button', { name: /Tilbake til Ditt sykefravær/ })).toBeVisible()
+        await expect(page.getByRole('link', { name: /Til hovedsiden Ditt sykefravær/ })).toBeVisible()
 
         if (opts.sendtTil === 'NAV') {
             await expect(page.getByText(/Sykmeldingen ble sendt til NAV./)).toBeVisible()
