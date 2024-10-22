@@ -20,20 +20,6 @@ import KvitteringPage from './kvittering.page'
 describe('kvittering page', () => {
     mockRouter.setCurrentUrl(`/current-sykmelding-id/kvittering`)
 
-    const newestSykmelding = createSykmelding(
-        {
-            id: 'current-sykmelding-id',
-            sykmeldingsperioder: [
-                createSykmeldingPeriode({
-                    fom: '2023-02-16',
-                    tom: '2023-02-28',
-                    type: Periodetype.AKTIVITET_IKKE_MULIG,
-                }),
-            ],
-        },
-        StatusEvent.SENDT,
-    )
-
     function setup(sykmeldinger: SykmeldingFragment[]): void {
         const currentSykmelding = sykmeldinger[sykmeldinger.length - 1]
 
@@ -61,57 +47,7 @@ describe('kvittering page', () => {
         })
     }
 
-    async function waitForQueriesLoaded(): Promise<void> {
-        expect(await screen.findByText(/Sykmeldingen ble sendt til Default Arbeidsgiverssen AS/)).toBeInTheDocument()
-        expect(await screen.findByRole('heading', { name: 'Sykmeldingen gjelder' })).toBeInTheDocument()
-    }
-
-    it('should not show "Legg til egenmeldingsdager"-button when sykmelding is right against previous sykmelding', async () => {
-        const previousSendtSykmelding = createSykmelding(
-            {
-                id: 'previous-sykmelding-id',
-                sykmeldingsperioder: [
-                    createSykmeldingPeriode({
-                        fom: '2023-02-01',
-                        tom: '2023-02-15',
-                        type: Periodetype.AKTIVITET_IKKE_MULIG,
-                    }),
-                ],
-            },
-            StatusEvent.SENDT,
-        )
-
-        setup([previousSendtSykmelding, newestSykmelding])
-
-        await waitForQueriesLoaded()
-
-        // Should not have the link
-        expect(screen.queryByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()
-    })
-
-    it('should show "Legg til egenmeldingsdager"-button when there is "space" behind the sykmelding', async () => {
-        const previousSendtSykmelding = createSykmelding(
-            {
-                id: 'previous-sykmelding-id',
-                sykmeldingsperioder: [
-                    createSykmeldingPeriode({
-                        fom: '2023-02-01',
-                        tom: '2023-02-14',
-                        type: Periodetype.AKTIVITET_IKKE_MULIG,
-                    }),
-                ],
-            },
-            StatusEvent.SENDT,
-        )
-
-        setup([previousSendtSykmelding, newestSykmelding])
-
-        await waitForQueriesLoaded()
-
-        expect(await screen.findByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeInTheDocument()
-    })
-
-    it('should NOT show "Legg til egenmeldingsdager"-button when status is bekreftet', async () => {
+    it('should NOT show egenmeldingsdager info when status is bekreftet', async () => {
         const previousSendtSykmelding = createSykmelding(
             {
                 id: 'previous-sykmelding-id',
@@ -145,7 +81,11 @@ describe('kvittering page', () => {
         expect(await screen.findByText(/Sykmeldingen ble sendt til NAV./)).toBeInTheDocument()
         expect(await screen.findByRole('heading', { name: 'Sykmeldingen gjelder' })).toBeInTheDocument()
 
-        expect(screen.queryByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeInTheDocument()
+        expect(
+            screen.queryByRole('alert', {
+                name: /Hvis du ønsker å endre egenmeldingsdager etter at du har sendt sykmeldingen, må du ta kontakt med arbeidsgiver./,
+            }),
+        ).not.toBeInTheDocument()
     })
 })
 

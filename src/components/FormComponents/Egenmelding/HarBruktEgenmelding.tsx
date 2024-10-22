@@ -96,6 +96,7 @@ function EgenmeldingReadMore({ index }: { index: number }): ReactElement {
                 </BodyLong>
                 <BodyLong spacing>
                     Hvis du er usikker på hvilke dager du har brukt egenmelding, kan du ta kontakt med din arbeidsgiver.
+                    Dette gjelder også hvis du ønsker å endre egenmeldingsdager etter at du har sendt sykmeldingen.
                 </BodyLong>
             </ReadMore>
         )

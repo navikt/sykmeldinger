@@ -6,16 +6,13 @@ import { useRef } from 'react'
 import {
     ChangeSykmeldingStatusDocument,
     ChangeSykmeldingStatusMutation,
-    EndreEgenmeldingsdagerDocument,
-    EndreEgenmeldingsdagerMutation,
     SendSykmeldingDocument,
     SendSykmeldingMutation,
     SykmeldingChangeStatus,
 } from 'queries'
 
 import { FormValues } from '../components/SendSykmelding/SendSykmeldingForm'
-import { EgenmeldingsdagerSubForm } from '../components/FormComponents/Egenmelding/EgenmeldingerField'
-import { getEgenmeldingsdagerDateList, mapToSendSykmeldingValues } from '../utils/toSendSykmeldingUtils'
+import { mapToSendSykmeldingValues } from '../utils/toSendSykmeldingUtils'
 
 export function useChangeSykmeldingStatus(
     sykmeldingId: string,
@@ -76,40 +73,6 @@ export function useSendSykmelding(
             logger.info(`Client: Submitting sykmelding ${sykmeldingId}`)
 
             await submit({ variables: { sykmeldingId, values: mapToSendSykmeldingValues(values) } })
-
-            onCompleted(values)
-        },
-    ]
-}
-
-export function useEndreEgenmeldingsdager(
-    sykmeldingId: string,
-    onCompleted: (values: EgenmeldingsdagerSubForm) => void,
-    onError: () => void,
-): [MutationResult<EndreEgenmeldingsdagerMutation>, (values: EgenmeldingsdagerSubForm) => void] {
-    const router = useRouter()
-    const [endreEgenmeldingsdager, result] = useMutation(EndreEgenmeldingsdagerDocument, {
-        onCompleted: () => {
-            router.push(`/${sykmeldingId}/kvittering?egenmelding=true`, undefined, { scroll: true })
-        },
-        onError,
-    })
-
-    return [
-        result,
-        async (values) => {
-            logger.info(`Client: Submitting 'endre egenmeldingsdager' for ${sykmeldingId}`)
-
-            if (values.egenmeldingsdager == null || values.egenmeldingsdager.length === 0) {
-                throw new Error(
-                    'Trying to endre egenmeldingsdager, but no egenmeldingsdager was provided. Bug in the form?',
-                )
-            }
-
-            const egenmeldingsdager = getEgenmeldingsdagerDateList(values.egenmeldingsdager)
-            await endreEgenmeldingsdager({
-                variables: { sykmeldingId, egenmeldingsdager: [...egenmeldingsdager].sort() },
-            })
 
             onCompleted(values)
         },

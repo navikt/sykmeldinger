@@ -98,13 +98,6 @@ export function createSykmeldingBreadcrumbs(sykmelding: SykmeldingFragment | und
     return [{ title: getSykmeldingTitle(sykmelding) }]
 }
 
-export function createEndreEgenmeldingsdagerBreadcrumbs(
-    sykmeldingId: string,
-    sykmelding: SykmeldingFragment | undefined,
-): [Breadcrumb, LastCrumb] {
-    return [{ title: getSykmeldingTitle(sykmelding), url: `/${sykmeldingId}` }, { title: 'Endre egenmeldingsdager' }]
-}
-
 /**
  * These are all the paths in the application that have unique breadcrumbs.
  */
@@ -114,7 +107,6 @@ export enum SsrPathVariants {
     Error = '/500',
     Sykmelding = '/[sykmeldingId]',
     Kvittering = '/[sykmeldingId]/kvittering',
-    EndreEgenmeldingsdager = '/[sykmeldingId]/endre-egenmeldingsdager',
 }
 
 /**
@@ -140,10 +132,6 @@ export function createInitialServerSideBreadcrumbs(
             return createCompleteCrumbs(createSykmeldingBreadcrumbs(undefined))
         case SsrPathVariants.Kvittering:
             return createCompleteCrumbs(createKvitteringBreadcrumbs(query.sykmeldingId as string, undefined))
-        case SsrPathVariants.EndreEgenmeldingsdager:
-            return createCompleteCrumbs(
-                createEndreEgenmeldingsdagerBreadcrumbs(query.sykmeldingId as string, undefined),
-            )
         default:
             logger.error(`Unknown initial path (${pathname}), defaulting to just base breadcrumb`)
             return createCompleteCrumbs([])

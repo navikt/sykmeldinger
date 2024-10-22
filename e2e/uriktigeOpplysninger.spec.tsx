@@ -11,7 +11,7 @@ import {
     velgArbeidstaker,
 } from './user-actions'
 import { getCheckboxInGroup, getRadioInGroup } from './test-utils'
-import { expectDineSvar, expectKvittering } from './user-expects'
+import { expectDineSvar, expectKvittering, ExpectMeta } from './user-expects'
 
 test.describe('Uriktige opplysninger', () => {
     test('should show error message when periode is wrong', async ({ page }) => {
@@ -99,7 +99,7 @@ test.describe('Uriktige opplysninger', () => {
 
         await expectKvittering({
             sendtTil: 'Pontypandy Fire Service',
-            egenmeldingsdager: 'legg til',
+            egenmeldingsdagerInfo: ExpectMeta.InDom,
         })(page)
 
         await expectDineSvar({

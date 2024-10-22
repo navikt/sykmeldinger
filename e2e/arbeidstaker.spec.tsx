@@ -28,7 +28,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -66,7 +66,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -112,7 +112,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await expectKvittering({
                 sendtTil: 'Mt.frank Storbyuniversitet Studiestedettilnoenveldigviktige Pekepinnstredet',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -150,7 +150,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await expectKvittering({
                 sendtTil: 'Nottinghamshire Missing Narmesteleder',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -193,7 +193,7 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
 
             await expectKvittering({
                 sendtTil: 'Andeby Brannstation',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -242,32 +242,6 @@ test.describe('Arbeidssituasjon - Arbeidstaker', () => {
                     /For å sende inn sykmeldingen må du fylle ut hvilken arbeidsforhold du er sykmeldt fra./,
                 ),
             ).toBeVisible()
-            await expect(page).toHaveNoViolations()
-        })
-    })
-
-    test.describe('given previous sykmeldinger', () => {
-        test('should collide with 100% sykmelding and NOT show "Legg til egenmeldingsdager"', async ({ page }) => {
-            await gotoScenario('buttAgainstGradert')(page)
-
-            await navigateToFirstSykmelding('tidligere', '100%')(page)
-
-            await expect(page.getByText(/Sykmeldingen ble sendt til/)).toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).not.toBeVisible()
-
-            await expect(page).toHaveNoViolations()
-        })
-
-        test('should not collide with AVVENTENDE sykmeldinger and still show "Legg til egenmeldingsdager"', async ({
-            page,
-        }) => {
-            await gotoScenario('buttAgainstAvventendeSent')(page)
-
-            await navigateToFirstSykmelding('tidligere', '100%')(page)
-
-            await expect(page.getByText(/Sykmeldingen ble sendt til/)).toBeVisible()
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
-
             await expect(page).toHaveNoViolations()
         })
     })

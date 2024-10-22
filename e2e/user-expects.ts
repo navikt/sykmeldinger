@@ -6,11 +6,12 @@ import { raise } from '../src/utils/ts-utils'
 
 export enum ExpectMeta {
     NotInDom = 'NOT_IN_DOM',
+    InDom = 'IN_DOM',
 }
 
 export function expectKvittering(opts: {
     sendtTil: 'NAV' | string
-    egenmeldingsdager: ExpectMeta.NotInDom | 'legg til' | 'endre'
+    egenmeldingsdagerInfo: ExpectMeta.NotInDom | ExpectMeta.InDom
 }) {
     return async (page: Page): Promise<void> => {
         await page.waitForURL('**/kvittering')
@@ -25,12 +26,13 @@ export function expectKvittering(opts: {
             await expect(page.getByText(`Sykmeldingen ble sendt til ${opts.sendtTil}.`)).toBeVisible()
         }
 
-        if (opts.egenmeldingsdager === ExpectMeta.NotInDom) {
-            await expect(page.getByRole('button', { name: /^(Endre|Legg til) egenmeldingsdager/ })).not.toBeVisible()
-        } else if (opts.egenmeldingsdager === 'legg til') {
-            await expect(page.getByRole('button', { name: /Legg til egenmeldingsdager/ })).toBeVisible()
+        const egenmeldingsdagerInfoText =
+            'Hvis du ønsker å endre egenmeldingsdager etter at du har sendt sykmeldingen, må du ta kontakt med arbeidsgiver.'
+
+        if (opts.egenmeldingsdagerInfo === ExpectMeta.NotInDom) {
+            await expect(page.getByText(egenmeldingsdagerInfoText)).not.toBeVisible()
         } else {
-            await expect(page.getByRole('button', { name: /Endre egenmeldingsdager/ })).toBeVisible()
+            await expect(page.getByText(egenmeldingsdagerInfoText)).toBeVisible()
         }
     }
 }

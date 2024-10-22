@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import { Alert } from '@navikt/ds-react'
 
 import { isV3 } from '../../../utils/sykmeldingUtils'
 import { UtenlandskSykmelding } from '../../../utils/utenlanskUtils'
@@ -8,16 +9,15 @@ import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
 import Perioder from './Felles/Perioder'
 import SykmeldingenGjelder from './Felles/SykmeldingenGjelder'
 import Egenmeldingsdager from './Felles/Egenmeldingsdager'
-import RedigerEgenmeldingsdagerLink from './Felles/RedigerEgenmeldingsdagerLink'
 import AnnenInfoUtenlandsk from './Utenlandsk/AnnenInfoUtenlandsk'
 import { BrukerSvarExpansionCard } from './Felles/BrukerSvar'
 
 interface Props {
     sykmelding: UtenlandskSykmelding
-    editableEgenmelding: boolean
+    shouldShowEgenmeldingsdagerInfo: boolean
 }
 
-function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props): ReactElement {
+function SykmeldingSykmeldtUtenlandsk({ sykmelding, shouldShowEgenmeldingsdagerInfo }: Props): ReactElement {
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 
     return (
@@ -33,14 +33,13 @@ function SykmeldingSykmeldtUtenlandsk({ sykmelding, editableEgenmelding }: Props
                         sykmeldingId={sykmelding.id}
                         egenmeldingsdager={egenmeldingsdager}
                         sykmelding={sykmelding}
-                        editableEgenmelding={editableEgenmelding}
                     />
                 )}
-                {editableEgenmelding && (
-                    <RedigerEgenmeldingsdagerLink
-                        sykmeldingId={sykmelding.id}
-                        hasEgenmeldingsdager={egenmeldingsdager != null}
-                    />
+                {shouldShowEgenmeldingsdagerInfo && (
+                    <Alert variant="info">
+                        Hvis du ønsker å endre egenmeldingsdager etter at du har sendt sykmeldingen, må du ta kontakt
+                        med arbeidsgiver.
+                    </Alert>
                 )}
             </Perioder>
 

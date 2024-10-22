@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import { Alert } from '@navikt/ds-react'
 
 import { Periode, SykmeldingFragment, UtdypendeOpplysning } from 'queries'
 
@@ -9,7 +10,6 @@ import { findEgenmeldingsdager } from '../../../utils/egenmeldingsdagerUtils'
 import Perioder from './Felles/Perioder'
 import SykmeldingenGjelder from './Felles/SykmeldingenGjelder'
 import Egenmeldingsdager from './Felles/Egenmeldingsdager'
-import RedigerEgenmeldingsdagerLink from './Felles/RedigerEgenmeldingsdagerLink'
 import FlereOpplysningerSykmeldt from './Nasjonal/FlereOpplysningerSykmeldt'
 import MeldingTilNav from './Nasjonal/MeldingTilNav'
 import UtdypendeOpplysninger from './Nasjonal/UtdypendeOpplysninger'
@@ -24,12 +24,12 @@ import { BrukerSvarExpansionCard } from './Felles/BrukerSvar'
 
 interface Props {
     sykmelding: SykmeldingFragment
-    editableEgenmelding: boolean
+    shouldShowEgenmeldingsdagerInfo: boolean
 }
 
 const sectionId = 'sykmelding-sykmeldt'
 
-function SykmeldingSykmeldt({ sykmelding, editableEgenmelding }: Props): ReactElement {
+function SykmeldingSykmeldt({ sykmelding, shouldShowEgenmeldingsdagerInfo }: Props): ReactElement {
     const isV3Sykmelding = isV3(sykmelding)
     const egenmeldingsdager = findEgenmeldingsdager(sykmelding.sykmeldingStatus.sporsmalOgSvarListe)
 
@@ -46,14 +46,13 @@ function SykmeldingSykmeldt({ sykmelding, editableEgenmelding }: Props): ReactEl
                         sykmeldingId={sykmelding.id}
                         egenmeldingsdager={egenmeldingsdager}
                         sykmelding={sykmelding}
-                        editableEgenmelding={editableEgenmelding}
                     />
                 )}
-                {editableEgenmelding && (
-                    <RedigerEgenmeldingsdagerLink
-                        sykmeldingId={sykmelding.id}
-                        hasEgenmeldingsdager={egenmeldingsdager != null && egenmeldingsdager.dager.length > 0}
-                    />
+                {shouldShowEgenmeldingsdagerInfo && (
+                    <Alert variant="info">
+                        Hvis du ønsker å endre egenmeldingsdager etter at du har sendt sykmeldingen, må du ta kontakt
+                        med arbeidsgiver.
+                    </Alert>
                 )}
             </Perioder>
 

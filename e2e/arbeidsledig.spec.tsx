@@ -27,7 +27,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
         await expectKvittering({
             sendtTil: 'NAV',
-            egenmeldingsdager: ExpectMeta.NotInDom,
+            egenmeldingsdagerInfo: ExpectMeta.NotInDom,
         })(page)
 
         await expectDineSvar({
@@ -83,7 +83,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
         await expectKvittering({
             sendtTil: 'NAV',
-            egenmeldingsdager: ExpectMeta.NotInDom,
+            egenmeldingsdagerInfo: ExpectMeta.NotInDom,
         })(page)
         await expectDineSvar({
             stemmer: 'Ja',
@@ -106,7 +106,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
         await expectKvittering({
             sendtTil: 'NAV',
-            egenmeldingsdager: ExpectMeta.NotInDom,
+            egenmeldingsdagerInfo: ExpectMeta.NotInDom,
         })(page)
 
         await expectDineSvar({
@@ -132,7 +132,7 @@ test.describe('Arbeidssituasjon - Arbeidsledig', () => {
 
         await expectKvittering({
             sendtTil: 'NAV',
-            egenmeldingsdager: ExpectMeta.NotInDom,
+            egenmeldingsdagerInfo: ExpectMeta.NotInDom,
         })(page)
 
         await expectDineSvar({
