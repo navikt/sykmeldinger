@@ -13,8 +13,6 @@ import {
     StatusEvent,
 } from '../resolver-types.generated'
 import { BrukerSvar, Sporsmal, Svartype } from '../../api-models/sykmelding/SykmeldingStatus'
-import { sporsmal } from '../../../utils/sporsmal'
-import { toDateString } from '../../../utils/dateUtils'
 import { Arbeidsgiver } from '../../api-models/Arbeidsgiver'
 import { mapSendSykmeldingValuesToV3Api } from '../../sendSykmeldingMapping'
 import { TidligereArbeidsgivere } from '../../api-models/TidligereArbeidsgiver'
@@ -150,33 +148,6 @@ class MockDb {
 
         sykmelding.sykmeldingStatus.sporsmalOgSvarListe = sporsmalOgSvarListe
         sykmelding.sykmeldingStatus.brukerSvar = apiValues as unknown as BrukerSvar
-
-        return sykmelding
-    }
-
-    updateEgenmeldingsdager(id: string, egenmeldingsdager: string[]): Sykmelding {
-        const sykmelding = this.sykmelding(id)
-        const index = sykmelding.sykmeldingStatus.sporsmalOgSvarListe.findIndex(
-            (it) => it.shortName === ShortName.EGENMELDINGSDAGER,
-        )
-
-        const egenmeldingssporsmal: Sporsmal = {
-            tekst:
-                index >= 0 ? sykmelding.sykmeldingStatus.sporsmalOgSvarListe[index].tekst : sporsmal.egenmeldingsdager,
-            shortName: ShortName.EGENMELDINGSDAGER,
-            svar: {
-                svarType: Svartype.DAGER,
-                svar: egenmeldingsdager,
-            },
-        }
-
-        if (index >= 0) {
-            sykmelding.sykmeldingStatus.sporsmalOgSvarListe[index] = egenmeldingssporsmal
-        } else if (egenmeldingssporsmal.svar.svar.length > 0) {
-            sykmelding.sykmeldingStatus.sporsmalOgSvarListe.push(egenmeldingssporsmal)
-        }
-
-        sykmelding.sykmeldingStatus.timestamp = toDateString(new Date())
 
         return sykmelding
     }

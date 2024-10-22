@@ -32,7 +32,7 @@ test.describe('Frilanser', () => {
 
             await expectKvittering({
                 sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                egenmeldingsdagerInfo: ExpectMeta.NotInDom,
             })(page)
 
             await expectDineSvar({
@@ -61,7 +61,7 @@ test.describe('Frilanser', () => {
 
             await expectKvittering({
                 sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                egenmeldingsdagerInfo: ExpectMeta.NotInDom,
             })(page)
 
             await expectDineSvar({
@@ -87,7 +87,7 @@ test.describe('Frilanser', () => {
 
             await expectKvittering({
                 sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                egenmeldingsdagerInfo: ExpectMeta.NotInDom,
             })(page)
 
             await expectDineSvar({
@@ -219,7 +219,7 @@ test.describe('Frilanser', () => {
 
             await expectKvittering({
                 sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                egenmeldingsdagerInfo: ExpectMeta.NotInDom,
             })(page)
 
             await expectDineSvar({

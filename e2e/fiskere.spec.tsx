@@ -35,7 +35,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await expectKvittering({
                 sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                egenmeldingsdagerInfo: ExpectMeta.NotInDom,
             })(page)
 
             await expectDineSvar({
@@ -65,7 +65,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -96,7 +96,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -124,7 +124,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await expectKvittering({
                 sendtTil: 'NAV',
-                egenmeldingsdager: ExpectMeta.NotInDom,
+                egenmeldingsdagerInfo: ExpectMeta.NotInDom,
             })(page)
 
             await expectDineSvar({
@@ -154,7 +154,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -185,7 +185,7 @@ test.describe('Arbeidssituasjon - Fiskere', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'legg til',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({

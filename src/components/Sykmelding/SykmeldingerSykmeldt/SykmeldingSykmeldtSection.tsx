@@ -13,10 +13,10 @@ import SykmeldingSykmeldt from './SykmeldingSykmeldt'
 
 interface Props {
     sykmelding: SykmeldingFragment
-    editableEgenmelding?: boolean
+    shouldShowEgenmeldingsdagerInfo?: boolean
 }
 
-function SykmeldingSykmeldtSection({ sykmelding, editableEgenmelding = false }: Props): ReactElement {
+function SykmeldingSykmeldtSection({ sykmelding, shouldShowEgenmeldingsdagerInfo = false }: Props): ReactElement {
     const articleHeadingId = `sykmelding-${sykmelding.id}-header`
 
     return (
@@ -43,9 +43,15 @@ function SykmeldingSykmeldtSection({ sykmelding, editableEgenmelding = false }: 
                 </div>
             </header>
             {isUtenlandsk(sykmelding) ? (
-                <SykmeldingSykmeldtUtenlandsk sykmelding={sykmelding} editableEgenmelding={editableEgenmelding} />
+                <SykmeldingSykmeldtUtenlandsk
+                    sykmelding={sykmelding}
+                    shouldShowEgenmeldingsdagerInfo={shouldShowEgenmeldingsdagerInfo}
+                />
             ) : (
-                <SykmeldingSykmeldt sykmelding={sykmelding} editableEgenmelding={editableEgenmelding} />
+                <SykmeldingSykmeldt
+                    sykmelding={sykmelding}
+                    shouldShowEgenmeldingsdagerInfo={shouldShowEgenmeldingsdagerInfo}
+                />
             )}
         </article>
     )

@@ -100,7 +100,7 @@ test.describe('Egenmeldingsdager', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'endre',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -133,7 +133,7 @@ test.describe('Egenmeldingsdager', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'endre',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -172,7 +172,7 @@ test.describe('Egenmeldingsdager', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'endre',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({
@@ -184,65 +184,6 @@ test.describe('Egenmeldingsdager', () => {
                 egenmeldingsdager: {
                     arbeidsgiver: 'Pontypandy Fire Service',
                     antallDager: 2,
-                },
-            })(page)
-        })
-
-        test(`should NOT be asked about egenmeldingsdager when sykmelding is right against
-        previous sykmelding tom AND should inform about what will be sent to arbeidsgiver`, async ({ page }) => {
-            await gotoScenario('unsentButtAgainstNormal')(page)
-            await gotoScenario('normal')(page)
-            await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
-            await bekreftNarmesteleder('Station Officer Steele')(page)
-
-            await expect(page.getByRole('region', { name: 'Se hva som sendes til jobben din' })).toBeVisible()
-
-            await page.getByRole('button', { name: /Send sykmelding/ }).click()
-
-            await expectKvittering({
-                sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: ExpectMeta.NotInDom,
-            })(page)
-
-            await expectDineSvar({
-                arbeidssituasjon: 'Ansatt',
-                narmesteleder: {
-                    navn: 'Station Officer Steele',
-                    svar: 'Ja',
-                },
-                egenmeldingsdager: ExpectMeta.NotInDom,
-            })(page)
-        })
-
-        test(`should be asked about egenmeldingsdager when sykmelding is right against AVVENTENDE sykmelding`, async ({
-            page,
-        }) => {
-            await gotoScenario('buttAgainstAvventende')(page)
-            await filloutArbeidstaker(/Pontypandy Fire Service/)(page)
-            await bekreftNarmesteleder('Station Officer Steele')(page)
-            await selectEgenmeldingsdager({
-                daysToSelect: ['Nei'],
-                initialDate: sub(new Date(), { days: 22 }),
-            })(page)
-
-            await expect(page).toHaveNoViolations()
-
-            await page.getByRole('button', { name: /Send sykmelding/ }).click()
-
-            await expectKvittering({
-                sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'legg til',
-            })(page)
-
-            await expectDineSvar({
-                arbeidssituasjon: 'Ansatt',
-                narmesteleder: {
-                    navn: 'Station Officer Steele',
-                    svar: 'Ja',
-                },
-                egenmeldingsdager: {
-                    arbeidsgiver: 'Pontypandy Fire Service',
-                    svar: 'Nei',
                 },
             })(page)
         })
@@ -266,7 +207,7 @@ test.describe('Egenmeldingsdager', () => {
 
                 await expectKvittering({
                     sendtTil: 'Pontypandy Fire Service',
-                    egenmeldingsdager: 'endre',
+                    egenmeldingsdagerInfo: ExpectMeta.InDom,
                 })(page)
 
                 await expectDineSvar({
@@ -359,7 +300,7 @@ test.describe('Egenmeldingsdager', () => {
 
             await expectKvittering({
                 sendtTil: 'Pontypandy Fire Service',
-                egenmeldingsdager: 'endre',
+                egenmeldingsdagerInfo: ExpectMeta.InDom,
             })(page)
 
             await expectDineSvar({

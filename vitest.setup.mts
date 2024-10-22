@@ -27,14 +27,7 @@ dirtyGlobal.scrollTo = vi.fn().mockImplementation(() => 0)
 
 HTMLCanvasElement.prototype.getContext = vi.fn()
 
-mockRouter.useParser(
-    createDynamicRouteParser([
-        '/',
-        '/[sykmeldingId]',
-        '/[sykmeldingId]/kvittering',
-        '/[sykmeldingId]/endre-egenmeldingsdager',
-    ]),
-)
+mockRouter.useParser(createDynamicRouteParser(['/', '/[sykmeldingId]', '/[sykmeldingId]/kvittering']))
 
 vi.mock('@navikt/nav-dekoratoren-moduler', () => ({
     setBreadcrumbs: vi.fn(),

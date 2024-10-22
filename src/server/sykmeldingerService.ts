@@ -4,7 +4,6 @@ import { requestOboToken } from '@navikt/oasis'
 import { GraphQLError } from 'graphql'
 
 import { getServerEnv } from '../utils/env'
-import { sporsmal } from '../utils/sporsmal'
 
 import { Sykmelding, SykmeldingSchema } from './api-models/sykmelding/Sykmelding'
 import { Brukerinformasjon, BrukerinformasjonSchema } from './api-models/Brukerinformasjon'
@@ -135,34 +134,6 @@ export async function sendSykmelding(
 
         childLogger.error(e)
         throw new Error(`Failed to submit sykmelding for ${sykmeldingId}, requestId: ${context.requestId}`)
-    }
-}
-
-export async function updateEgenmeldingsdager(
-    sykmeldingId: string,
-    egenmeldingsdager: string[],
-    context: RequestContext,
-): Promise<Sykmelding> {
-    const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Updating egenmeldingsdager for sykmelding with ID ${sykmeldingId}`)
-
-    try {
-        await fetchApi(
-            { type: 'POST', body: JSON.stringify({ dager: egenmeldingsdager, tekst: sporsmal.egenmeldingsdager }) },
-            `v3/sykmeldinger/${sykmeldingId}/endre-egenmeldingsdager`,
-            () => null,
-            context,
-            'POST: endre-egenmeldingsdager',
-        )
-        return getSykmelding(sykmeldingId, context)
-    } catch (e) {
-        if (e instanceof GraphQLError && e.extensions.code === 'UNAUTHENTICATED') {
-            throw e
-        }
-
-        childLogger.error(e)
-        throw new Error(`Failed to update egenmeldingsdager for ${sykmeldingId}`)
     }
 }
 

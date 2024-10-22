@@ -21,8 +21,6 @@ import SykmeldingArbeidsgiverExpansionCard from '../../components/Sykmelding/Syk
 import SykmeldingSykmeldtSection from '../../components/Sykmelding/SykmeldingerSykmeldt/SykmeldingSykmeldtSection'
 import { createKvitteringBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import UxSignalsWidget from '../../components/UxSignals/UxSignalsWidget'
-import { useFindPrevSykmeldingTom } from '../../hooks/useFindPrevSykmeldingTom'
-import { hasHitPreviousSykmeldingTom } from '../../components/FormComponents/Egenmelding/egenmeldingsdagerFieldUtils'
 import Feedback from '../../components/Feedback/Feedback'
 import { useFlag } from '../../toggles/context'
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden'
@@ -116,7 +114,10 @@ function SykmeldingkvitteringPage(): ReactElement {
             </div>
 
             <div className="mb-8">
-                <KvitteringSykmeldingSykmeldtContainer sykmelding={data.sykmelding} />
+                <SykmeldingSykmeldtSection
+                    sykmelding={data.sykmelding}
+                    shouldShowEgenmeldingsdagerInfo={data.sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT}
+                />
             </div>
 
             {data.sykmelding.sykmeldingStatus.statusEvent === 'SENDT' && (
@@ -142,53 +143,6 @@ function SykmeldingkvitteringPage(): ReactElement {
                 </div>
             )}
         </KvitteringWrapper>
-    )
-}
-
-function KvitteringSykmeldingSykmeldtContainer({ sykmelding }: { sykmelding: SykmeldingFragment }): ReactElement {
-    const { previousSykmeldingTom, error, isLoading } = useFindPrevSykmeldingTom(
-        sykmelding,
-        sykmelding.sykmeldingStatus.arbeidsgiver?.orgnummer,
-    )
-
-    const hasHitPrevious = hasHitPreviousSykmeldingTom(sykmelding, previousSykmeldingTom)
-
-    if (isLoading) {
-        return (
-            <section aria-labelledby="sykmeldinger-loading-skeleton">
-                <Heading id="sykmeldinger-loading-skeleton" size="medium" level="3" hidden>
-                    Laster sykmeldinger
-                </Heading>
-                <KvitteringSkeletonBottom />
-            </section>
-        )
-    }
-
-    if (error) {
-        return (
-            <Alert variant="error">
-                <Heading spacing size="small" level="3">
-                    Det skjedde en feil ved lasting av sykmeldingene dine.
-                </Heading>
-                <BodyShort spacing>
-                    Du kan prøve å <Link href="">oppfriske</Link> siden for å se om det løser problemet.
-                </BodyShort>
-                <BodyShort spacing>
-                    Dersom problemet vedvarer, kan du fortelle oss om feilen på{' '}
-                    <DsLink href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
-                        skjemaet for feil og mangler
-                    </DsLink>
-                    .
-                </BodyShort>
-            </Alert>
-        )
-    }
-
-    return (
-        <SykmeldingSykmeldtSection
-            sykmelding={sykmelding}
-            editableEgenmelding={!hasHitPrevious && sykmelding.sykmeldingStatus.statusEvent === StatusEvent.SENDT}
-        />
     )
 }
 

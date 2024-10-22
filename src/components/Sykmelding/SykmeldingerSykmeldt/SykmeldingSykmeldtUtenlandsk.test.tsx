@@ -18,7 +18,7 @@ describe('SykmeldingSykmeldtUtenlandsk', () => {
                         land: 'Finnland',
                     },
                 }}
-                editableEgenmelding={false}
+                shouldShowEgenmeldingsdagerInfo={false}
             />,
             {
                 initialState: [

@@ -18,8 +18,6 @@ const Mutation: MutationResolvers = {
         mockDb().get(sessionId).changeSykmeldingStatus(sykmeldingId, status),
     sendSykmelding: async (_, { sykmeldingId, values }, { sessionId }) =>
         mockDb().get(sessionId).sendSykmelding(sykmeldingId, values),
-    updateEgenmeldingsdager: async (_, { sykmeldingId, egenmeldingsdager }, { sessionId }) =>
-        mockDb().get(sessionId).updateEgenmeldingsdager(sykmeldingId, egenmeldingsdager),
     feedback: async () => {
         await new Promise((resolve) => setTimeout(resolve, 1600))
         return true

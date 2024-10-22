@@ -9,7 +9,6 @@ interface EgenmeldingsdagerProps {
     sykmeldingId: string
     egenmeldingsdager: SvarUnion_DagerSvar_Fragment
     sykmelding: SykmeldingFragment
-    editableEgenmelding: boolean
 }
 
 function Egenmeldingsdager({ egenmeldingsdager }: EgenmeldingsdagerProps): ReactElement | null {

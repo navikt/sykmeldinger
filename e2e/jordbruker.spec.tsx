@@ -30,7 +30,7 @@ test.describe('Jordbruker', () => {
 
         await expectKvittering({
             sendtTil: 'NAV',
-            egenmeldingsdager: ExpectMeta.NotInDom,
+            egenmeldingsdagerInfo: ExpectMeta.NotInDom,
         })(page)
 
         await expectDineSvar({
@@ -56,7 +56,7 @@ test.describe('Jordbruker', () => {
 
         await expectKvittering({
             sendtTil: 'NAV',
-            egenmeldingsdager: ExpectMeta.NotInDom,
+            egenmeldingsdagerInfo: ExpectMeta.NotInDom,
         })(page)
 
         await expectDineSvar({
