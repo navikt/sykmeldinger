@@ -1,4 +1,4 @@
 {
-    "*.{md,html,css,json,graphql,graphqls}": "prettier --write",
+    "*.{md,html,css,json,graphql,graphqls,yml,yaml}": "prettier --write",
     "*.{ts,tsx}": "eslint --fix --max-warnings=0"
 }
