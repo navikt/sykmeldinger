@@ -1,5 +1,5 @@
 interface State {
-    activeResponseType: 'JA' | 'NEI' | 'FORBEDRING' | null
+    activeResponseType: 'JA' | 'NEI' | null
     textValue: string | null
     errorMessage: string | null
     isComplete: boolean
