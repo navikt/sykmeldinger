@@ -1,7 +1,13 @@
 import { ReactElement } from 'react'
 import { Alert, Heading } from '@navikt/ds-react'
 
+import { useLogAmplitudeEvent } from '../../../../../amplitude/amplitude'
+
 function ArbeidsgivereMissingInfo(): ReactElement {
+    useLogAmplitudeEvent({
+        eventName: 'komponent vist',
+        data: { komponent: 'Ansatt Missing Arbeidsgiver' },
+    })
     return (
         <Alert className="mt-4" variant="warning">
             <Heading spacing size="small" level="2">
