@@ -1,5 +1,6 @@
 .uxSignalsContainer {
     margin-top: var(--a-spacing-12);
+    max-width: 620px;
 }
 
 .uxSignalsContainer > :global(.uxsignals-container) {

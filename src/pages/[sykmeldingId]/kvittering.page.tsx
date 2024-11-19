@@ -6,7 +6,13 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { range } from 'remeda'
 
-import { RegelStatus, StatusEvent, SvarUnion_ArbeidssituasjonSvar_Fragment, SykmeldingFragment } from 'queries'
+import {
+    ArbeidssituasjonType,
+    RegelStatus,
+    StatusEvent,
+    SvarUnion_ArbeidssituasjonSvar_Fragment,
+    SykmeldingFragment,
+} from 'queries'
 
 import useSykmeldingById from '../../hooks/useSykmeldingById'
 import StatusBanner from '../../components/StatusBanner/StatusBanner'
@@ -109,9 +115,12 @@ function SykmeldingkvitteringPage(): ReactElement {
                 />
             </div>
 
-            <div className="mb-8">
-                <UxSignalsWidget />
-            </div>
+            {data?.sykmelding.sykmeldingStatus.brukerSvar?.arbeidssituasjon.svar ===
+                ArbeidssituasjonType.NAERINGSDRIVENDE && (
+                <div className="mb-8">
+                    <UxSignalsWidget />
+                </div>
+            )}
 
             <div className="mb-8">
                 <SykmeldingSykmeldtSection
