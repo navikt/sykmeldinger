@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Alert, Heading } from '@navikt/ds-react'
+import { Alert, BodyShort, Heading } from '@navikt/ds-react'
 
 import { useLogAmplitudeEvent } from '../../../../../amplitude/amplitude'
 
@@ -11,10 +11,16 @@ function ArbeidsgivereMissingInfo(): ReactElement {
     return (
         <Alert className="mt-4" variant="warning">
             <Heading spacing size="small" level="2">
-                Vi finner ingen arbeidsforhold registrert på deg
+                Viser vi ingen arbeidsforhold her?
             </Heading>
-            Før du går videre, må du be arbeidsgiveren din om å registrere deg i A-meldingen. Når det er gjort blir det
-            oppdatert her, og du kan sende inn sykmeldingen.
+            <BodyShort className="mb-4">
+                Er du ansatt hos en arbeidsgiver, må du be arbeidsgiveren din om å registrere deg i A-meldingen, slik at
+                du kan sende inn sykmeldingen.
+            </BodyShort>
+            <BodyShort>
+                Jobber du frilans for en oppdragsgiver, vil ikke arbeidsforholdet vises her. Da må du velge frilanser i
+                stedet for ansatt.
+            </BodyShort>
         </Alert>
     )
 }
