@@ -39,7 +39,6 @@ function StatusBanner({
                         : `Sykmeldingen ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}.`}
                     {' Du finner den på Ditt sykefravær. Du får en melding fra oss hvis vi trenger noe mer fra deg.'}
                 </BodyShort>
-                <BodyShort className="font-bold mb-4">God bedring!</BodyShort>
                 <Detail>{'Sendt: ' + toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
         )
@@ -52,7 +51,6 @@ function StatusBanner({
                     {egenmeldt ? 'Egenmeldingen ble sendt til NAV.' : 'Sykmeldingen ble sendt til NAV.'}
                     {' Du finner den på Ditt sykefravær. Du får en melding fra oss hvis vi trenger noe mer fra deg.'}
                 </BodyShort>
-                <BodyShort className="font-bold mb-4">God bedring!</BodyShort>
                 <Detail>{'Sendt: ' + toReadableDate(sykmeldingStatus.timestamp)}</Detail>
             </Alert>
         )
