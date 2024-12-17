@@ -11,7 +11,7 @@ permissions:
 jobs:
   next-app:
     name: Build and deploy next app
-    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@leos-dotfolder
+    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app.yaml@main
     secrets: inherit
     with:
       app: sykmeldinger
