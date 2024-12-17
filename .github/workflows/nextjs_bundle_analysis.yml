@@ -29,7 +29,7 @@ jobs:
 
       - name: Copy appropriate env file to root
         run: |
-          cp nais/envs/.env.prod .env.production
+          cp .nais/envs/.env.prod .env.production
 
       - name: Build next.js app
         run: yarn build

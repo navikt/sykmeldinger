@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   branch-delete:
-    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app-demo-delete.yaml@main
+    uses: navikt/teamsykmelding-github-actions-workflows/.github/workflows/next-app-demo-delete.yaml@leos-dotfolder
     secrets: inherit
     with:
       app: sykmeldinger
