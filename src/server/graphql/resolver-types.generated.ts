@@ -774,7 +774,7 @@ export type ResolversTypes = ResolversObject<{
     SykmeldingChangeStatus: SykmeldingChangeStatus
     SykmeldingStatus: ResolverTypeWrapper<
         Omit<SykmeldingStatus, 'arbeidsgiver' | 'sporsmalOgSvarListe'> & {
-            arbeidsgiver: Maybe<ResolversTypes['ArbeidsgiverStatus']>
+            arbeidsgiver?: Maybe<ResolversTypes['ArbeidsgiverStatus']>
             sporsmalOgSvarListe: Array<ResolversTypes['Sporsmal']>
         }
     >
@@ -849,7 +849,7 @@ export type ResolversParentTypes = ResolversObject<{
     SvarTypeUnion: ResolversUnionTypes<ResolversParentTypes>['SvarTypeUnion']
     Sykmelding: Omit<Sykmelding, 'sykmeldingStatus'> & { sykmeldingStatus: ResolversParentTypes['SykmeldingStatus'] }
     SykmeldingStatus: Omit<SykmeldingStatus, 'arbeidsgiver' | 'sporsmalOgSvarListe'> & {
-        arbeidsgiver: Maybe<ResolversParentTypes['ArbeidsgiverStatus']>
+        arbeidsgiver?: Maybe<ResolversParentTypes['ArbeidsgiverStatus']>
         sporsmalOgSvarListe: Array<ResolversParentTypes['Sporsmal']>
     }
     TidligereArbeidsgiver: TidligereArbeidsgiver
