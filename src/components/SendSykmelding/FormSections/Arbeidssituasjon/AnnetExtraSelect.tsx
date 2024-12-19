@@ -39,6 +39,7 @@ function AnnetExtraSelect(): ReactElement {
                         })
                     }}
                     label="Hvilken situasjon er du i som gjorde at du valgte annet?"
+                    autoComplete="off"
                 >
                     <option value="" disabled selected>
                         Velg situasjon
