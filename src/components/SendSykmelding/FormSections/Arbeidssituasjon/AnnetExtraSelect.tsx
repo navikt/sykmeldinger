@@ -143,7 +143,7 @@ function TryToHelpWarnings({ value }: { value: string | null }): ReactElement | 
 
 function FeedbackToUser({ children }: PropsWithChildren): ReactElement {
     return (
-        <Alert variant="warning" className="mt-4 max-w-md">
+        <Alert variant="warning" className="mt-4 max-w-md" role="status">
             <Heading level="3" size="small" spacing>
                 Har du valgt rett situasjon?
             </Heading>

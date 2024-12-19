@@ -27,7 +27,7 @@ function FlereArbeidsgivereSection({ sykmelding, arbeidsgivere }: Props): ReactE
     if (isLoading) return <Spinner headline="Laster informasjon..." />
     if (error) {
         return (
-            <Alert className="mt-4" variant="error">
+            <Alert className="mt-4" variant="error" role="alert">
                 <Heading spacing size="small" level="3">
                     Det skjedde en feil ved lasting av informasjon.
                 </Heading>

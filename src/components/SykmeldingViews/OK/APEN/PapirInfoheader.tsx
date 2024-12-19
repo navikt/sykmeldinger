@@ -59,7 +59,7 @@ function PapirInfoheader(): ReactElement {
 
                     {error && (
                         <div className="mt-8">
-                            <Alert variant="error">
+                            <Alert variant="error" role="alert">
                                 En feil oppstod som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
                             </Alert>
                         </div>

@@ -98,7 +98,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                                         minRows={3}
                                         description="Unngå å skrive inn navn, fødselsnummer eller andre personlige opplysninger."
                                     />
-                                    <Alert variant="warning">
+                                    <Alert variant="warning" role="status">
                                         Tilbakemeldingen din er anonym og vil ikke knyttes til søknaden din. Den brukes
                                         kun for å gjøre nettsidene bedre.
                                     </Alert>
@@ -133,7 +133,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                         </div>
                     )}
                     {result.error && (
-                        <Alert variant="error">
+                        <Alert variant="error" role="alert">
                             Vi klarte dessverre ikke å ta i mot tilbakemeldingen din. Prøv gjerne igjen om litt!
                         </Alert>
                     )}
