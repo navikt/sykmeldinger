@@ -10,7 +10,7 @@ export function LabsWarning(): ReactElement | null {
 
     return (
         <div className="mx-auto max-w-2xl">
-            <Alert className="m-4 mt-0" variant="warning">
+            <Alert className="m-4 mt-0" variant="warning" role="status">
                 Dette er en demoside og inneholder ikke dine personlige data.
             </Alert>
         </div>

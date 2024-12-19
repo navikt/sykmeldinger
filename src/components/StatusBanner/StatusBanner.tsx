@@ -32,7 +32,7 @@ function StatusBanner({
 
     if (sykmeldingStatus.statusEvent === 'SENDT') {
         return (
-            <Alert variant="success">
+            <Alert variant="success" role="status">
                 <BodyShort className="font-bold mb-6">
                     {isEgenmeldingsKvittering
                         ? `Egenmeldingsdagene ble sendt til ${sykmeldingStatus.arbeidsgiver?.orgNavn}.`
@@ -46,7 +46,7 @@ function StatusBanner({
 
     if (sykmeldingStatus.statusEvent === 'BEKREFTET') {
         return (
-            <Alert variant="success">
+            <Alert variant="success" role="status">
                 <BodyShort className="font-bold mb-6">
                     {egenmeldt ? 'Egenmeldingen ble sendt til NAV.' : 'Sykmeldingen ble sendt til NAV.'}
                     {' Du finner den på Ditt sykefravær. Du får en melding fra oss hvis vi trenger noe mer fra deg.'}

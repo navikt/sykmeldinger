@@ -56,7 +56,7 @@ function ArbeidssituasjonSection({ sykmelding, brukerinformasjon }: Props): Reac
                 (loading ? (
                     <Spinner headline="Laster arbeidsgivere" />
                 ) : error ? (
-                    <Alert className="mt-6" variant="error">
+                    <Alert className="mt-6" variant="error" role="alert">
                         <Heading spacing size="small" level="3">
                             Det skjedde en feil ved lasting av arbeidsgivere.
                         </Heading>

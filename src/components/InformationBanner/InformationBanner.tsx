@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { BodyLong, GuidePanel, Heading, Label, Chat } from '@navikt/ds-react'
+import { BodyLong, GuidePanel, Heading, Chat } from '@navikt/ds-react'
 
 import { Merknad, Merknadtype } from 'queries'
 
@@ -118,7 +118,9 @@ const InformationBanner = ({
         return (
             <section aria-labelledby={guidePanelLabelId} data-testid="papir-banner">
                 <GuidePanel poster>
-                    <Label id={guidePanelLabelId}>Før du bruker sykmeldingen</Label>
+                    <Heading id={guidePanelLabelId} level="2" size="xsmall">
+                        Før du bruker sykmeldingen
+                    </Heading>
                     <BodyLong>
                         Du har allerede fått sykmeldingen på papir av den som sykmeldte deg. Nå har vi skannet den slik
                         at du kan gjøre resten digitalt.
@@ -139,7 +141,9 @@ const InformationBanner = ({
                 aria-labelledby={mottattSykmeldingId}
             >
                 <Chat.Bubble>
-                    <Label id={mottattSykmeldingId}>Vi har mottatt sykmeldingen din</Label>
+                    <Heading id={mottattSykmeldingId} level="2" size="xsmall">
+                        Vi har mottatt sykmeldingen din
+                    </Heading>
                     <BodyLong>
                         Under ser du opplysningene vi har fått fra behandleren din. Stemmer dette med det dere ble enige
                         om?

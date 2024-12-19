@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { BodyLong, Label } from '@navikt/ds-react'
+import { BodyLong, Heading } from '@navikt/ds-react'
 
 import { Behandlingsutfall } from 'queries'
 
@@ -17,7 +17,9 @@ function ForklaringAndre({ behandlerNavn, ruleHits }: ForklaringAndreProps): Rea
                 Du trenger en ny sykmelding fordi det er gjort en feil i utfyllingen. Vi har gitt beskjed til{' '}
                 {behandlerNavn} om hva som er feil, og at du må få en ny sykmelding.
             </BodyLong>
-            <Label id={avvistGrunnId}>Grunnen til at sykmeldingen er avvist:</Label>
+            <Heading id={avvistGrunnId} level="3" size="xsmall">
+                Grunnen til at sykmeldingen er avvist:
+            </Heading>
             <ul className="mb-4 list-disc pl-6" aria-labelledby={avvistGrunnId}>
                 {ruleHits.map((ruleHit, index) => (
                     <li key={index} className="mb-2">

@@ -105,7 +105,7 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
 
     return (
         <div className={cn({ 'cursor-not-allowed opacity-70': loading })}>
-            <Alert variant="warning" size="small" className="mt-2" inline>
+            <Alert variant="warning" size="small" className="mt-2" inline role="status">
                 Endring av scenario vil slette eventuelle innsendinger og endringer du har gjort.
             </Alert>
             <Heading size="small" level="4" className="mt-2">
@@ -160,7 +160,7 @@ function ScenarioPicker({ closeModal }: { closeModal: () => void }): ReactElemen
                 på Slack!
             </Alert>
             {error && (
-                <Alert variant="error" className="mt-4">
+                <Alert variant="error" className="mt-4" role="alert">
                     Kunne ikke endre scenario
                 </Alert>
             )}
