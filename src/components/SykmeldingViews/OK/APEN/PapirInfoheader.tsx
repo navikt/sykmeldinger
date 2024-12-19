@@ -35,49 +35,41 @@ function PapirInfoheader(): ReactElement {
 
             {harGittVidere === 'Ja' && (
                 <div className="mt-8">
-                    <div className="mb-4">
-                        <Alert variant="info">
-                            <div className="mb-4">
-                                <BodyLong>
-                                    Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i
-                                    stedet. Det er en fordel for begge: Da får dere alt her, både sykepengesøknaden og
-                                    andre meldinger som handler om sykefraværet. Papirsykmeldingen kan du legge bort.
-                                    Det du gjør her, erstatter papiret.
-                                </BodyLong>
-                            </div>
-                            <BodyLong className="font-bold">
-                                Hvis du får ja fra arbeidsgiveren din kan du fortsette utfyllingen på denne siden. Hvis
-                                du i stedet skal fortsette med papiret må du avbryte denne sykmeldingen.
-                            </BodyLong>
-                        </Alert>
-                    </div>
+                    <Alert className="mb-4" variant="info">
+                        <BodyLong className="mb-4">
+                            Hør med arbeidsgiveren din om det er greit at du sender sykmeldingen herfra i stedet. Det er
+                            en fordel for begge: Da får dere alt her, både sykepengesøknaden og andre meldinger som
+                            handler om sykefraværet. Papirsykmeldingen kan du legge bort. Det du gjør her, erstatter
+                            papiret.
+                        </BodyLong>
+                        <BodyLong className="font-bold">
+                            Hvis du får ja fra arbeidsgiveren din kan du fortsette utfyllingen på denne siden. Hvis du i
+                            stedet skal fortsette med papiret må du avbryte denne sykmeldingen.
+                        </BodyLong>
+                    </Alert>
 
                     <Button loading={loading} onClick={() => avbryt()}>
                         Avbryt sykmeldingen
                     </Button>
 
                     {error && (
-                        <div className="mt-8">
-                            <Alert variant="error" role="alert">
-                                En feil oppstod som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
-                            </Alert>
-                        </div>
+                        <Alert className="mt-8" variant="error" role="alert">
+                            En feil oppstod som gjorde at sykmeldingen ikke kunne avbrytes. Prøv igjen senere.
+                        </Alert>
                     )}
                 </div>
             )}
 
             {harGittVidere === 'Nei' && (
-                <div className="mt-8">
-                    <Alert variant="info">
-                        <Heading level="2" size="xsmall">
-                            Da kan du sende sykmeldingen herfra
-                        </Heading>
-                        <BodyLong>
-                            Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
-                            om? Du velger selv om du vil bruke sykmeldingen.
-                        </BodyLong>
-                    </Alert>
-                </div>
+                <Alert className="mt-8" variant="info">
+                    <Heading level="2" size="xsmall">
+                        Da kan du sende sykmeldingen herfra
+                    </Heading>
+                    <BodyLong>
+                        Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige om?
+                        Du velger selv om du vil bruke sykmeldingen.
+                    </BodyLong>
+                </Alert>
             )}
         </section>
     )
