@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react'
-import { Alert, BodyLong, Button, Label, Radio, RadioGroup } from '@navikt/ds-react'
+import { Alert, BodyLong, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react'
 
 import { SykmeldingChangeStatus } from 'queries'
 
@@ -10,7 +10,6 @@ import { logAmplitudeEvent } from '../../../../amplitude/amplitude'
 const skjemanavn = 'avbryt åpen papirsykmelding'
 
 function PapirInfoheader(): ReactElement {
-    const harIkkeGittVidereId = 'har-ikke-gitt-videre'
     const sykmeldingId = useGetSykmeldingIdParam()
     const [{ loading, error }, avbryt] = useChangeSykmeldingStatus(
         sykmeldingId,
@@ -70,8 +69,10 @@ function PapirInfoheader(): ReactElement {
             {harGittVidere === 'Nei' && (
                 <div className="mt-8">
                     <Alert variant="info">
-                        <Label id={harIkkeGittVidereId}>Da kan du sende sykmeldingen herfra</Label>
-                        <BodyLong aria-labelledby={harIkkeGittVidereId}>
+                        <Heading level="2" size="xsmall">
+                            Da kan du sende sykmeldingen herfra
+                        </Heading>
+                        <BodyLong>
                             Under sjekker du opplysningene fra den som sykmeldte deg. Stemmer det med det dere ble enige
                             om? Du velger selv om du vil bruke sykmeldingen.
                         </BodyLong>
