@@ -9,7 +9,7 @@ function ArbeidsgivereMissingInfo(): ReactElement {
         data: { komponent: 'Ansatt Missing Arbeidsgiver' },
     })
     return (
-        <Alert className="mt-4" variant="warning">
+        <Alert className="mt-4" variant="warning" role="status">
             <Heading spacing size="small" level="2">
                 Viser vi ingen arbeidsforhold her?
             </Heading>
