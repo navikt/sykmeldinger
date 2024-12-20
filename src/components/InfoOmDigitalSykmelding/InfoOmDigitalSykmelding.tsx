@@ -53,7 +53,7 @@ export function SerIkkeSykmelding(): ReactElement {
             <Accordion.Header>Ser du ikke sykmeldingen din her?</Accordion.Header>
             <Accordion.Content>
                 <LinkPanel
-                    href="https://person.nav.no/mine-saker/tema/SYM"
+                    href="https://nav.no/dokumentarkiv/tema/SYM"
                     target="_blank"
                     border
                     className="mb-8 mt-4 rounded-large"
