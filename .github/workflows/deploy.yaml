@@ -50,7 +50,7 @@ jobs:
     name: Playwright tests shard ${{ matrix.shard }}
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.49.1
+      image: mcr.microsoft.com/playwright:v1.50.1
     services:
       app:
         image: ${{ needs.prebuild-app-for-playwright.outputs.image }}
@@ -65,9 +65,10 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Run Playwright
         run: yarn e2e --shard ${{ matrix.shard }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.runs-on }}
           path: playwright-report/
+          overwrite: true
           retention-days: 30
