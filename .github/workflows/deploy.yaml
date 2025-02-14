@@ -45,12 +45,11 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
     outputs:
       image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
   run-playwright:
     needs: [prebuild-app-for-playwright]
-    name: Playwright tests shard ${{ matrix.shard }}
+    name: Playwright shard ${{ matrix.shardIndex }}
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.50.1
     services:
       app:
         image: ${{ needs.prebuild-app-for-playwright.outputs.image }}
@@ -58,17 +57,79 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1/4, 2/4, 3/4, 4/4]
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     steps:
       - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@main
         with:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Install Playwright browsers
+        run: yarn playwright install --with-deps
       - name: Run Playwright
-        run: yarn e2e --shard ${{ matrix.shard }}
-      - uses: actions/upload-artifact@v4
-        if: always()
+        run: yarn e2e --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - name: Upload blob report to GitHub Actions Artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ matrix.runs-on }}
-          path: playwright-report/
-          overwrite: true
-          retention-days: 30
+          name: blob-report-${{ matrix.shardIndex }}
+          path: blob-report
+          retention-days: 1
+
+  merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [run-playwright]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+
+      - name: Merge into HTML Report
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report--attempt-${{ github.run_attempt }}
+          path: playwright-report
+          retention-days: 14
+
+      - name: Upload HTML report to CDN
+        uses: nais/deploy/actions/cdn-upload/v2@master
+        with:
+          team: teamsykmelding
+          source: playwright-report
+          destination: /${{ github.repository }}/${{ github.run_number }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+
+      - name: Merge to json report
+        run: npx playwright merge-reports --reporter json  ./all-blob-reports > playwright-report/report.json
+
+      - name: Make fancy GHA Summary
+        run: |
+          total_tests=$(jq '.stats.expected + .stats.unexpected' playwright-report/report.json)
+          passed_tests=$(jq '.stats.expected' playwright-report/report.json)
+          failed_tests=$(jq '.stats.unexpected' playwright-report/report.json)
+          failed_test_info=$(jq -r '.suites[].specs[] | select(.ok == false) | "\(.title) (\(.file), \(.tests[].projectName))"' playwright-report/report.json)
+          echo "## Playwright Test Report Summary" >> $GITHUB_STEP_SUMMARY
+          echo "Total tests: $total_tests ✅" >> $GITHUB_STEP_SUMMARY
+          echo "Passed tests: $passed_tests ✅" >> $GITHUB_STEP_SUMMARY
+          if [ "$failed_tests" -gt 0 ]; then
+            echo "Failed tests: $failed_tests ❌" >> $GITHUB_STEP_SUMMARY
+            echo "### Failed Tests:" >> $GITHUB_STEP_SUMMARY
+            while IFS= read -r test; do
+              echo "- $test ❌" >> $GITHUB_STEP_SUMMARY
+            done <<< "$failed_test_info"
+          else
+            echo "Failed tests: $failed_tests 🔹" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "Se hele rapporten [her](https://cdn.nav.no/tsm/${{ github.repository }}/${{ github.run_number }}/playwright-report/index.html)." >> $GITHUB_STEP_SUMMARY
