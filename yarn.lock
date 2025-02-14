@@ -2821,13 +2821,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/next-logger@npm:^1.35.0":
-  version: 1.35.0
-  resolution: "@navikt/next-logger@npm:1.35.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F1.35.0%2Fd8db3f9b5719486d8b7a61e29f4c18dd1f2a5033"
+"@navikt/next-logger@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@navikt/next-logger@npm:2.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fnext-logger%2F2.0.0%2F2635e5dce4180196bfeb61ad6fd51f63b7dc1670"
+  dependencies:
+    pino-roll: "npm:3"
   peerDependencies:
     next: 14 || 15
     pino: 8 || 9
-  checksum: 10/c376f9af08c06eb60984e203eb60a57ecfd0308a81b56a3bafe513fb6943a121e0442907b4a10a2186fc3427818db0d050979d58f3dfdc7c18e8069144c14c74
+  dependenciesMeta:
+    pino-roll:
+      optional: true
+  checksum: 10/16b65772df466dd4d0f6396faa78e9eceb8c303439b8551514af69a902f6ce7508673cb89493a48ab03ad32f23c5ee07c9ffa340e37b296f0d42949d70ef104f
   languageName: node
   linkType: hard
 
@@ -6093,6 +6098,13 @@ __metadata:
   version: 3.6.0
   resolution: "date-fns@npm:3.6.0"
   checksum: 10/cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "date-fns@npm:4.1.0"
+  checksum: 10/d5f6e9de5bbc52310f786099e18609289ed5e30af60a71e0646784c8185ddd1d0eebcf7c96b7faaaefc4a8366f3a3a4244d099b6d0866ee2bec80d1361e64342
   languageName: node
   linkType: hard
 
@@ -10970,6 +10982,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pino-roll@npm:3":
+  version: 3.0.0
+  resolution: "pino-roll@npm:3.0.0"
+  dependencies:
+    date-fns: "npm:^4.1.0"
+    sonic-boom: "npm:^4.0.1"
+  checksum: 10/d71ec2e55c1b5bd81d1379635b4715825f2ed3b53f6e9e6ad056152301c12994f6f147d45a17c99983fad6f0897333eb1481fd1ee763e9fe47e27316b71c4f1f
+  languageName: node
+  linkType: hard
+
 "pino-std-serializers@npm:^7.0.0":
   version: 7.0.0
   resolution: "pino-std-serializers@npm:7.0.0"
@@ -12907,7 +12929,7 @@ __metadata:
     "@navikt/ds-tailwind": "npm:7.12.2"
     "@navikt/eslint-config-teamsykmelding": "npm:^7.1.0"
     "@navikt/nav-dekoratoren-moduler": "npm:^3.2.2"
-    "@navikt/next-logger": "npm:^1.35.0"
+    "@navikt/next-logger": "npm:^2.0.0"
     "@navikt/oasis": "npm:^3.6.0"
     "@next/bundle-analyzer": "npm:15.1.7"
     "@parcel/watcher": "npm:^2.5.1"

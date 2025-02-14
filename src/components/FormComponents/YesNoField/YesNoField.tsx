@@ -1,8 +1,7 @@
 import { ReactElement, ReactNode } from 'react'
 import { Radio, RadioGroup } from '@navikt/ds-react'
 import { useController } from 'react-hook-form'
-import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-import { FieldPath, FieldPathValue, FieldValues } from 'react-hook-form/dist/types'
+import { FieldPath, FieldPathValue, FieldValues, RegisterOptions } from 'react-hook-form'
 
 import { YesOrNo } from 'queries'
 

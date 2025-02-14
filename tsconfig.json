@@ -10,7 +10,7 @@
         "noEmit": true,
         "esModuleInterop": true,
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
@@ -19,12 +19,12 @@
         "experimentalDecorators": true,
         "plugins": [
             {
-                "name": "next",
-            },
+                "name": "next"
+            }
         ],
         "paths": {
-            "queries": ["./src/fetching/graphql.generated.ts"],
-        },
+            "queries": ["./src/fetching/graphql.generated.ts"]
+        }
     },
     "include": [
         "next-env.d.ts",
@@ -32,7 +32,7 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "./vitest.setup.mts",
+        "./vitest.setup.mts"
     ],
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules"]
 }
