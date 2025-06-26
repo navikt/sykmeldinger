@@ -45,7 +45,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
     if (graphQLErrors) {
         // This is temporary debugging. Backend has a bunch of weird 404's that shouldn't happen.
         if (graphQLErrors.some((it) => it.message.includes('404 Not Found'))) {
-            logger.error('Backend responded with 404, retrying once...')
+            logger.warn('Backend responded with 404, retrying once...')
             return forward(operation)
         }
 
