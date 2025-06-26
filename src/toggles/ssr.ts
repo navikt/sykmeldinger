@@ -30,7 +30,7 @@ export async function getFlagsServerSide(
             environment: getUnleashEnvironment(),
         })
     } catch (e) {
-        logger.error(new Error('Failed to get flags from Unleash. Falling back to default flags.', { cause: e }))
+        logger.warn(new Error('Failed to get flags from Unleash. Falling back to default flags.', { cause: e }))
         return {
             toggles: EXPECTED_TOGGLES.map(
                 (it): IToggle => ({
