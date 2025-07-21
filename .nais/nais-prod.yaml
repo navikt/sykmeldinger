@@ -32,14 +32,16 @@ spec:
         - id: elastic
   replicas:
     min: 2
-    max: 4
-    cpuThresholdPercentage: 50
+    max: 6
+    scalingStrategy:
+      cpu:
+        thresholdPercentage: 90
   resources:
     limits:
-      memory: 768Mi
+      memory: 1024Mi
     requests:
       cpu: 100m
-      memory: 250Mi
+      memory: 400Mi
   liveness:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
