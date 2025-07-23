@@ -39,7 +39,7 @@ const nextConfig = {
         return [
             {
                 source: '/:sykmeldingId/pdf',
-                destination: '/api/generate-pdf/:sykmeldingId',
+                destination: '/api/generate-pdf?sykmeldingId=:sykmeldingId',
             },
         ]
     },

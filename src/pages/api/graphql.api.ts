@@ -11,6 +11,7 @@ import { getServerEnv, isLocalOrDemo } from '../../utils/env'
 const server = new ApolloServer<RequestContext>({
     schema,
     logger,
+
     introspection: process.env.NODE_ENV === 'development' || getServerEnv().NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'dev',
 })
 

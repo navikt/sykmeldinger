@@ -2904,12 +2904,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:15.2.3":
-  version: 15.2.3
-  resolution: "@next/eslint-plugin-next@npm:15.2.3"
+"@next/eslint-plugin-next@npm:15.4.3":
+  version: 15.4.3
+  resolution: "@next/eslint-plugin-next@npm:15.4.3"
   dependencies:
     fast-glob: "npm:3.3.1"
-  checksum: 10/721dfd103f614556bbd7c75475210f639349f9565ec92303ab115650c34262f3eb08d4f89f576dd870b44a02f11f329cb54015f277bc82e9b0042cb89f819618
+  checksum: 10/1df7e99f7a939ed3778ddf5234e9b46732bf92c7c71a92ce297a9de779b5809761789133ec85ae88d3890a1c29cd54c43317571a6123bc6787c9249531860107
   languageName: node
   linkType: hard
 
@@ -6839,11 +6839,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:^15.2.3":
-  version: 15.2.3
-  resolution: "eslint-config-next@npm:15.2.3"
+"eslint-config-next@npm:^15.4.3":
+  version: 15.4.3
+  resolution: "eslint-config-next@npm:15.4.3"
   dependencies:
-    "@next/eslint-plugin-next": "npm:15.2.3"
+    "@next/eslint-plugin-next": "npm:15.4.3"
     "@rushstack/eslint-patch": "npm:^1.10.3"
     "@typescript-eslint/eslint-plugin": "npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
     "@typescript-eslint/parser": "npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
@@ -6859,7 +6859,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/4fbf96bda87b64bbb5ac58ff1c9e04b6596151d4ffa2f8df8febc8d4c4f767df654ec12291b7aeafaff5dec16489beccebc6a2a9f5c7175b8bf8e202879f1855
+  checksum: 10/c3784035d9260b133bdd2114c24c623b99bbefbd6014c06731e74cc67f0f56fe74cfbd3af93021e2dfac3e17c67b6f2a69d040e87687e6aef1e07d189943270b
   languageName: node
   linkType: hard
 
@@ -9937,13 +9937,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-router-mock@npm:^0.9.13":
-  version: 0.9.13
-  resolution: "next-router-mock@npm:0.9.13"
+"next-router-mock@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "next-router-mock@npm:1.0.2"
   peerDependencies:
     next: ">=10.0.0"
     react: ">=17.0.0"
-  checksum: 10/582858b4521b987ff7299d97b81b526ba5debdb93b7ada83a595927ca1138082e902ff8dbb7c6cb9db79d65b1a7aa4d86fbbbf24ea73a033d317d964ca3ea95b
+  checksum: 10/a4f3a66efb51d7a43487ee2814a1e3d7d2135afd5913a587c71921e18e0519c54a240b9873a757b3e8eacb1805435f2dfac04b644ca0407cdef80f823cb4baee
   languageName: node
   linkType: hard
 
@@ -12726,7 +12726,7 @@ __metadata:
     date-fns: "npm:3.6.0"
     dotenv: "npm:^16.4.7"
     eslint: "npm:^8.57.1"
-    eslint-config-next: "npm:^15.2.3"
+    eslint-config-next: "npm:^15.4.3"
     graphql: "npm:^16.11.0"
     graphql-scalars: "npm:^1.24.1"
     html-react-parser: "npm:^5.2.2"
@@ -12736,7 +12736,7 @@ __metadata:
     lint-staged: "npm:^15.4.3"
     next: "npm:^15.4.1"
     next-logger: "npm:^5.0.1"
-    next-router-mock: "npm:^0.9.13"
+    next-router-mock: "npm:^1.0.2"
     nextleton: "npm:^0.6.1"
     node-cache: "npm:^5.1.2"
     open: "npm:^10.1.0"

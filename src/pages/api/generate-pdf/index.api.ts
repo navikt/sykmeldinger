@@ -12,8 +12,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void>
         res.status(401).json({ message: 'Access denied' })
         return
     }
-
     const childLogger = createChildLogger(context.requestId)
+
+    childLogger.info(`getting PDF for sykmeldingId: ${req.query.sykmeldingId}, ${req.url}`)
 
     const sykmeldingId = req.query.sykmeldingId
     if (typeof sykmeldingId !== 'string') {
