@@ -10,10 +10,7 @@ import metrics from './metrics'
 
 export async function getErUtenforVentetid(sykmeldingId: string, context: RequestContext): Promise<ErUtenforVentetid> {
     const serverEnv = getServerEnv()
-
     const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Fetching flex er utenfor ventetid for sykmeldingId ${sykmeldingId}`)
 
     const tokenX = await requestOboToken(context.accessToken, serverEnv.FLEX_SYKETILFELLE_BACKEND_SCOPE)
     if (!tokenX.ok) {
@@ -67,11 +64,6 @@ export async function getErUtenforVentetid(sykmeldingId: string, context: Reques
 
 export async function feedback(feedback: object, context: RequestContext): Promise<boolean> {
     const serverEnv = getServerEnv()
-
-    const childLogger = createChildLogger(context.requestId)
-
-    childLogger.info(`Submitting feedback to flexjar-backend`)
-
     const tokenX = await requestOboToken(context.accessToken, serverEnv.FLEXJAR_BACKEND_SCOPE)
     if (!tokenX.ok) {
         throw new Error(
@@ -98,10 +90,7 @@ export async function feedback(feedback: object, context: RequestContext): Promi
         })
     }
 
-    if (response.ok) {
-        childLogger.info('Submitted feedback OK')
-        return true
-    }
+    if (response.ok) return true
 
     throw new Error(
         `Unable to submit feedback to flexjar-backend, requestId: ${context.requestId}, status: ${response.status} ${response.statusText}`,

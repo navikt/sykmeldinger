@@ -153,8 +153,6 @@ async function fetchApi<ResponseObject>(
     context: RequestContext,
     what: string,
 ): Promise<ResponseObject> {
-    const childLogger = createChildLogger(context.requestId)
-
     const tokenX = await requestOboToken(context.accessToken, serverEnv.SYKMELDINGER_BACKEND_SCOPE)
     if (!tokenX.ok) {
         throw new Error(
@@ -173,38 +171,15 @@ async function fetchApi<ResponseObject>(
             'x-request-id': context.requestId,
         },
     })
-    const timerSeconds = stopApiResponsetimer()
-    const ms = +(timerSeconds * 1000).toFixed(0)
-    const bucket = +(Math.ceil(ms / 25) * 25).toFixed(0)
+    stopApiResponsetimer()
 
     if (response.ok) {
-        try {
-            if (response.headers.get('Content-Type') === 'application/json') {
-                const json: unknown = await response.json()
-
-                childLogger
-                    .child({
-                        x_what: what,
-                        x_timingBucket: bucket,
-                        x_items: Array.isArray(json) ? json.length : 1,
-                    })
-                    .info(`Fetching ${what} from backend took ${(timerSeconds * 1000).toFixed(0)} ms`)
-
-                return parse(json)
-            }
-
-            childLogger
-                .child({
-                    x_what: what,
-                    x_timingBucket: bucket,
-                })
-                .info(`Fetching ${what} from backend took ${(timerSeconds * 1000).toFixed(0)} ms`)
-
-            return parse()
-        } catch (e) {
-            childLogger.error(`Failed to parse JSON from ${path}, error: ${e}, requestId: ${context.requestId}`)
-            throw e
+        if (response.headers.get('Content-Type') === 'application/json') {
+            const json: unknown = await response.json()
+            return parse(json)
         }
+
+        return parse()
     }
 
     if (response.status === 401) {
