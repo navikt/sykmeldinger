@@ -63,7 +63,17 @@ jobs:
       - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@main
         with:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Infer playwright version
+        run: |
+          echo "PLAYWRIGHT_VERSION=$(yarn why playwright --json | jq -r '.value' | awk -F: '{print $2}')" >> $GITHUB_ENV
+      - name: Cache playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          key: playwright-${{ env.PLAYWRIGHT_VERSION }}
+          path: ~/.cache/ms-playwright
       - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: yarn playwright install --with-deps
       - name: Run Playwright
         run: yarn e2e --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
