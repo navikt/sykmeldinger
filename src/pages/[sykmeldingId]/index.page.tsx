@@ -196,7 +196,7 @@ function SykmeldingerWrapper({
             if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
                 e.preventDefault()
                 e.stopImmediatePropagation()
-                window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`, '_ blank')
+                window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/api/generate-pdf/${sykmelding.id}`, '_ blank')
             }
         }
         addEventListener('keydown', listener)

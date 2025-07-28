@@ -35,14 +35,6 @@ const nextConfig = {
         dirs: ['src'],
         ignoreDuringBuilds: true,
     },
-    async rewrites() {
-        return [
-            {
-                source: '/:sykmeldingId/pdf',
-                destination: '/api/generate-pdf/:sykmeldingId',
-            },
-        ]
-    },
     async headers() {
         if (isE2E) return []
 

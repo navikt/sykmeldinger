@@ -33,7 +33,7 @@ function SykmeldingSykmeldtSection({ sykmelding, shouldShowEgenmeldingsdagerInfo
                         <Button
                             className="absolute right-0 top-0 hidden md:block"
                             as="a"
-                            href={`${browserEnv.NEXT_PUBLIC_BASE_PATH}/${sykmelding.id}/pdf`}
+                            href={`${browserEnv.NEXT_PUBLIC_BASE_PATH}/api/generate-pdf/${sykmelding.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             variant="tertiary"
