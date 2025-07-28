@@ -1,5 +1,5 @@
 import { MockedResponse } from '@apollo/client/testing'
-import { Cache, TypedDocumentNode } from '@apollo/client'
+import { Cache, TypedDocumentNode, Unmasked } from '@apollo/client'
 import { FetchResult } from '@apollo/client/link/core'
 import { ResultFunction } from '@apollo/client/testing/core/mocking/mockLink'
 
@@ -272,7 +272,7 @@ export function createInitialQuery<Query, Variables>(
 ): Cache.WriteQueryOptions<Query, Variables> {
     return {
         query: typedDocumentNode,
-        data,
+        data: data as Unmasked<Query>,
         variables,
     }
 }
@@ -283,8 +283,8 @@ export function createMock<Query, Variables extends Record<string, unknown>>(moc
     error?: Error
     delay?: number
     newData?: ResultFunction<FetchResult<Query>, Record<string, unknown>>
-}): MockedResponse<Query> {
-    return mockedResponse
+}): MockedResponse<Unmasked<Query>> {
+    return mockedResponse as MockedResponse<Unmasked<Query>>
 }
 
 export function createEgenmeldingsdagerSporsmal(dates: string[]): SykmeldingStatusFragment['sporsmalOgSvarListe'][0] {

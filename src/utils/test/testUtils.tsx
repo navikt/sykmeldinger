@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { PropsWithChildren, ReactElement } from 'react'
 import {
     render,
@@ -22,7 +24,7 @@ import { createInMemoryCache } from '../../fetching/apollo'
 import * as customQueries from './customQueries'
 
 type ProviderProps = {
-    readonly initialState?: Cache.WriteQueryOptions<unknown, unknown>[]
+    readonly initialState?: Cache.WriteQueryOptions<any, any>[]
     readonly mocks?: MockedResponse[]
 }
 
