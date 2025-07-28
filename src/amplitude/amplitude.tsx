@@ -2,7 +2,7 @@ import { logAmplitudeEvent as dekoratorenLogAmplitudeEvent } from '@navikt/nav-d
 import { useLayoutEffect, useRef } from 'react'
 import { logger } from '@navikt/next-logger'
 
-import { browserEnv } from '../utils/env'
+import { bundledEnv } from '../utils/env'
 
 import { AmplitudeTaxonomyEvents } from './taxonomyEvents'
 
@@ -26,7 +26,7 @@ export async function logAmplitudeEvent(
     event: AmplitudeTaxonomyEvents,
     extraData?: Record<string, unknown>,
 ): Promise<void> {
-    if (browserEnv.NEXT_PUBLIC_AMPLITUDE_ENABLED !== 'true') {
+    if (bundledEnv.NEXT_PUBLIC_AMPLITUDE_ENABLED !== 'true') {
         logDebugEvent(event, extraData)
         return
     }

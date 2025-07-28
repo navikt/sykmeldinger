@@ -3,7 +3,7 @@ import { logger } from '@navikt/next-logger'
 import { validateToken, getToken, parseIdportenToken } from '@navikt/oasis'
 import { IToggle } from '@unleash/nextjs'
 
-import { browserEnv, isLocalOrDemo } from '../utils/env'
+import { bundledEnv, isLocalOrDemo } from '../utils/env'
 import { RequestContext } from '../server/graphql/resolvers'
 import { getFlagsServerSide } from '../toggles/ssr'
 import { getSessionId } from '../utils/userSessionId'
@@ -102,12 +102,12 @@ export function withAuthenticatedApi(handler: ApiHandler): ApiHandler {
  * we need a clean URL to redirect the user back to the same page we are on.
  */
 function getRedirectPath(context: GetServerSidePropsContext): string {
-    const basePath = browserEnv.NEXT_PUBLIC_BASE_PATH ?? ''
+    const basePath = bundledEnv.NEXT_PUBLIC_BASE_PATH ?? ''
     const cleanUrl = context.resolvedUrl.replace(basePath, '')
 
     return cleanUrl.startsWith('/null')
-        ? `${browserEnv.NEXT_PUBLIC_BASE_PATH}/`
-        : `${browserEnv.NEXT_PUBLIC_BASE_PATH}${cleanUrl}`
+        ? `${bundledEnv.NEXT_PUBLIC_BASE_PATH}/`
+        : `${bundledEnv.NEXT_PUBLIC_BASE_PATH}${cleanUrl}`
 }
 
 /**
@@ -143,6 +143,7 @@ export function createDemoRequestContext(req: GetServerSidePropsContext['req'] |
     }
 
     return {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         ...require('./fakeLocalAuthTokenSet.json'),
         requestId: 'not set',
         sessionId: getSessionId(req),

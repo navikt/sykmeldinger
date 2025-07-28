@@ -21,7 +21,7 @@ import Header from '../../components/Header/Header'
 import TilHovedsiden from '../../components/TilHovedsiden/TilHovedsiden'
 import { withAuthenticatedPage } from '../../auth/withAuthentication'
 import PageWrapper from '../../components/PageWrapper/PageWrapper'
-import { browserEnv } from '../../utils/env'
+import { bundledEnv } from '../../utils/env'
 import { createSykmeldingBreadcrumbs, useUpdateBreadcrumbs } from '../../hooks/useBreadcrumbs'
 import useFocusRefetch from '../../hooks/useFocusRefetch'
 import { useLogAmplitudeEvent } from '../../amplitude/amplitude'
@@ -196,7 +196,7 @@ function SykmeldingerWrapper({
             if ((e.ctrlKey || e.metaKey) && e.key === 'p' && sykmelding?.id) {
                 e.preventDefault()
                 e.stopImmediatePropagation()
-                window.open(`${browserEnv.NEXT_PUBLIC_BASE_PATH}/api/generate-pdf/${sykmelding.id}`, '_ blank')
+                window.open(`${bundledEnv.NEXT_PUBLIC_BASE_PATH}/api/generate-pdf/${sykmelding.id}`, '_ blank')
             }
         }
         addEventListener('keydown', listener)

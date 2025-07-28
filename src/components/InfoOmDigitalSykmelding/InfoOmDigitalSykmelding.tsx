@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { Accordion, BodyLong, BodyShort, Heading, Link, LinkPanel } from '@navikt/ds-react'
 
-import { browserEnv } from '../../utils/env'
+import { bundledEnv } from '../../utils/env'
 
 export const InfoOmDigitalSykmelding = (): ReactElement => (
     <Accordion.Item>
@@ -10,7 +10,7 @@ export const InfoOmDigitalSykmelding = (): ReactElement => (
             <section>
                 <BodyLong spacing>
                     NAV får alle sykmeldinger som blir skrevet i Norge. Den som er sykmeldt, finner den på{' '}
-                    <Link href={browserEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}>Ditt sykefravær</Link>, der du er logget
+                    <Link href={bundledEnv.NEXT_PUBLIC_SYKEFRAVAER_ROOT || '#'}>Ditt sykefravær</Link>, der du er logget
                     inn nå.
                 </BodyLong>
                 <BodyLong spacing>
@@ -56,7 +56,7 @@ export function SerIkkeSykmelding(): ReactElement {
                     href="https://nav.no/dokumentarkiv/tema/SYM"
                     target="_blank"
                     border
-                    className="mb-8 mt-4 rounded-large"
+                    className="mb-8 mt-4 rounded-lg"
                 >
                     <LinkPanel.Title className="text-heading-xsmall">Sjekk dokumentlisten</LinkPanel.Title>
                 </LinkPanel>

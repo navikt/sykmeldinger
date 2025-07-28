@@ -90,8 +90,8 @@ function FrilanserEgenmeldingPeriodSubField({
             to: toField.value ?? undefined,
         },
         onRangeChange: (value) => {
-            value?.from && fromField.onChange(value.from)
-            value?.to && toField.onChange(value.to)
+            if (value?.from) fromField.onChange(value.from)
+            if (value?.to) toField.onChange(value.to)
         },
         onValidate: setRangeError,
     })

@@ -25,7 +25,7 @@ export function SykmeldingInfo({
 }: PropsWithChildren<SykmeldingInfoProps>): ReactElement {
     return (
         <div
-            className={cn(className, 'rounded p-4', {
+            className={cn(className, 'rounded-md p-4', {
                 'bg-blue-50': variant === 'blue',
                 'bg-gray-50': variant === 'gray',
             })}

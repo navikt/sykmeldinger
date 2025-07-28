@@ -30,7 +30,7 @@ export function SykmeldingGroup({
             <SykmeldingSectionHeading id={labelId} title={heading} Icon={Icon} />
             <div
                 className={cn('flex flex-col', {
-                    'flex-row flex-wrap [&>div]:flex-grow': wrap,
+                    'flex-row flex-wrap [&>div]:grow': wrap,
                     'gap-3': !tight,
                 })}
             >

@@ -59,7 +59,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                                 <BodyShort>Svarene dine er anonyme</BodyShort>
                             </div>
                         </div>
-                        <div className="mt-1 rounded-medium p-6">
+                        <div className="mt-1 rounded-md p-6">
                             <BodyShort className="mb-6">Gikk det greit å sende inn sykmeldingen?</BodyShort>
                             <div className="flex w-full gap-2">
                                 <FeedbackButton
@@ -120,7 +120,7 @@ function Feedback({ feedbackId, metadata }: Props): ReactElement {
                 )}
                 <div aria-live="polite">
                     {isComplete && (
-                        <div className="flex mt-2 rounded-medium bg-surface-success-subtle p-6">
+                        <div className="flex mt-2 rounded-md bg-surface-success-subtle p-6">
                             <ThumbUpIcon className="self-center" title="Tommel opp" fontSize="3rem" />
                             <div className="ml-4">
                                 <Heading level="2" size="small" as="p" className="flex items-center">

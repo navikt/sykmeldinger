@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import * as z from 'zod'
 import { parseISO, isValid } from 'date-fns'
 import { logger } from '@navikt/next-logger'
 

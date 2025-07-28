@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import * as z from 'zod'
 import { createChildLogger } from '@navikt/next-logger'
 import { requestOboToken } from '@navikt/oasis'
 import { GraphQLError } from 'graphql'
