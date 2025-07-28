@@ -2,9 +2,6 @@
 
 const isE2E = process.env.NEXT_PUBLIC_IS_E2E === 'true'
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: process.env.ANALYZE === 'true',
-})
 const { buildCspHeader } = require('@navikt/nav-dekoratoren-moduler/ssr')
 
 const appDirectives = {
@@ -55,4 +52,4 @@ const nextConfig = {
     productionBrowserSourceMaps: true,
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+module.exports = nextConfig
