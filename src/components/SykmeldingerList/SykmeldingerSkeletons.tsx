@@ -29,7 +29,7 @@ export function SykmeldingerListSkeleton(): ReactElement {
 
 export function SingleSykmeldingSkeleton({ className, noTag }: { className?: string; noTag?: boolean }): ReactElement {
     return (
-        <div className={cn(className, 'flex rounded border border-border-subtle p-6 max-[560px]:flex-col')}>
+        <div className={cn(className, 'flex rounded-md border border-border-subtle p-6 max-[560px]:flex-col')}>
             <div className="mr-8 max-[560px]:hidden">
                 <Skeleton variant="circle" width="48px" height="48px" />
             </div>

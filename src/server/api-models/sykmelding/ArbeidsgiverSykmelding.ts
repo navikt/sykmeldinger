@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import * as z from 'zod'
 
 export type ArbeidsgiverSykmelding = z.infer<typeof ArbeidsgiverSykmeldingSchema>
 export const ArbeidsgiverSykmeldingSchema = z.object({

@@ -4,7 +4,7 @@ import { BodyShort, GuidePanel, Link, Heading } from '@navikt/ds-react'
 import { Merknad, Merknadtype, Periode, Periodetype, SykmeldingStatusFragment } from 'queries'
 
 import { logAmplitudeEvent } from '../../amplitude/amplitude'
-import { browserEnv } from '../../utils/env'
+import { bundledEnv } from '../../utils/env'
 
 interface StatusInfoProps {
     sykmeldingStatus: SykmeldingStatusFragment
@@ -75,7 +75,7 @@ function StatusInfo({
 
     return (
         <div data-testid="status-info">
-            <div className="my-8 rounded-medium bg-surface-subtle p-8">
+            <div className="my-8 rounded-md bg-surface-subtle p-8">
                 <Heading spacing size="small" level="3">
                     Skal du reise utenfor EU/EØS når du er sykmeldt?
                 </Heading>
@@ -85,7 +85,7 @@ function StatusInfo({
                     tidligere du søker, jo bedre.
                 </BodyShort>
                 <Link
-                    href={`${browserEnv.NEXT_PUBLIC_SYKEPENGESOKNAD_URL}/sykepengesoknad-utland`}
+                    href={`${bundledEnv.NEXT_PUBLIC_SYKEPENGESOKNAD_URL}/sykepengesoknad-utland`}
                     target="_bland"
                     onClick={() =>
                         logAmplitudeEvent({

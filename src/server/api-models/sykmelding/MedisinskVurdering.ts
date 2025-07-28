@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import * as z from 'zod'
 
 import { AnnenFraverGrunn } from '../../graphql/resolver-types.generated'
 import { LocalDateSchema } from '../date'

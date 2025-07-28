@@ -5,7 +5,7 @@ import { PrinterSmallIcon } from '@navikt/aksel-icons'
 import { SykmeldingFragment } from 'queries'
 
 import { toReadableDate } from '../../../utils/dateUtils'
-import { browserEnv } from '../../../utils/env'
+import { bundledEnv } from '../../../utils/env'
 import { isUtenlandsk } from '../../../utils/utenlanskUtils'
 
 import SykmeldingSykmeldtUtenlandsk from './SykmeldingSykmeldtUtenlandsk'
@@ -33,7 +33,7 @@ function SykmeldingSykmeldtSection({ sykmelding, shouldShowEgenmeldingsdagerInfo
                         <Button
                             className="absolute right-0 top-0 hidden md:block"
                             as="a"
-                            href={`${browserEnv.NEXT_PUBLIC_BASE_PATH}/api/generate-pdf/${sykmelding.id}`}
+                            href={`${bundledEnv.NEXT_PUBLIC_BASE_PATH}/api/generate-pdf/${sykmelding.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             variant="tertiary"

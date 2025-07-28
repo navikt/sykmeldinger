@@ -1,6 +1,0 @@
-{
-    "rules": {
-        // These rules are disabled in these page tests only
-        "testing-library/prefer-screen-queries": "off"
-    }
-}

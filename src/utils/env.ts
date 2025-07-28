@@ -1,4 +1,4 @@
-import { z, ZodError } from 'zod'
+import * as z from 'zod'
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>
 export const publicEnvSchema = z.object({
@@ -41,7 +41,7 @@ export const serverEnvSchema = z.object({
  *
  * They MUST be provided during the build step.
  */
-export const browserEnv = publicEnvSchema.parse({
+export const bundledEnv = publicEnvSchema.parse({
     NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
     NEXT_PUBLIC_RUNTIME_ENVIRONMENT: process.env.NEXT_PUBLIC_RUNTIME_ENVIRONMENT,
     NEXT_PUBLIC_AMPLITUDE_ENABLED: process.env.NEXT_PUBLIC_AMPLITUDE_ENABLED,
@@ -74,27 +74,11 @@ const getRawServerConfig = (): Partial<unknown> =>
 /**
  * Server envs are lazy loaded and verified using Zod.
  */
-export function getServerEnv(): ServerEnv & PublicEnv {
-    try {
-        return { ...serverEnvSchema.parse(getRawServerConfig()), ...publicEnvSchema.parse(browserEnv) }
-    } catch (e) {
-        if (e instanceof ZodError) {
-            throw new Error(
-                `The following envs are missing: ${
-                    e.errors
-                        .filter((it) => it.message === 'Required')
-                        .map((it) => it.path.join('.'))
-                        .join(', ') || 'None are missing, but zod is not happy. Look at cause'
-                }`,
-                { cause: e },
-            )
-        } else {
-            throw e
-        }
-    }
+export function getServerEnv(): ServerEnv {
+    return serverEnvSchema.parse(getRawServerConfig())
 }
 
 export const isLocalOrDemo =
-    process.env.NODE_ENV !== 'production' || browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'demo'
+    process.env.NODE_ENV !== 'production' || bundledEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT === 'demo'
 
 export const isE2E = process.env.NEXT_PUBLIC_IS_E2E === 'true'

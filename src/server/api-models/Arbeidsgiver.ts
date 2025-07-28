@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import * as z from 'zod'
 
 export type NaermesteLeder = z.infer<typeof NaermesteLederSchema>
 export const NaermesteLederSchema = z.object({

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import * as z from 'zod'
 
 import { LocalDateSchema } from '../date'
 import { ArbeidsrelatertArsakType, MedisinskArsakType, Periodetype } from '../../graphql/resolver-types.generated'

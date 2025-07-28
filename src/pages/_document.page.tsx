@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document'
 import { DecoratorComponentsReact, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 
-import { browserEnv, isE2E } from '../utils/env'
+import { bundledEnv, isE2E } from '../utils/env'
 import { createInitialServerSideBreadcrumbs } from '../hooks/useBreadcrumbs'
 
 // The 'head'-field of the document initialProps contains data from <head> (meta-tags etc)
@@ -16,7 +16,7 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
         return 'prod'
     }
 
-    switch (browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT) {
+    switch (bundledEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT) {
         case 'local':
         case 'test':
         case 'dev':
@@ -25,7 +25,7 @@ function createDecoratorEnv(ctx: DocumentContext): 'dev' | 'prod' {
         case 'production':
             return 'prod'
         default:
-            throw new Error(`Unknown runtime environment: ${browserEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT}`)
+            throw new Error(`Unknown runtime environment: ${bundledEnv.NEXT_PUBLIC_RUNTIME_ENVIRONMENT}`)
     }
 }
 
@@ -40,7 +40,6 @@ class MyDocument extends Document<Props> {
         const Decorator = await fetchDecoratorReact({
             env: createDecoratorEnv(ctx),
             params: {
-                chatbot: true,
                 context: 'privatperson',
                 breadcrumbs: createInitialServerSideBreadcrumbs(ctx.pathname, ctx.query),
             },
@@ -57,6 +56,7 @@ class MyDocument extends Document<Props> {
         return (
             <Html lang={language || 'no'}>
                 <Head>
+                    <style>@layer base, dekorator-base, dekorator-utilities, theme, components, utilities;</style>
                     <Decorator.HeadAssets />
                     <link
                         rel="preload"
