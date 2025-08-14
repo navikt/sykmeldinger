@@ -112,7 +112,7 @@ function EgenmeldingReadMore({ index }: { index: number }): ReactElement {
                 Hvis det har gått mindre enn 16 dager fra du brukte egenmeldingsdager, til den første egenmeldingsdagen
                 du oppgav i forrige spørsmål, kommer de med i beregningen av{' '}
                 <Link
-                    href="https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/sykepenger/sykepenger-i-arbeidsgiverperioden#chapter-1"
+                    href="https://www.nav.no/arbeidsgiver/sykepenger-i-arbeidsgiverperioden#beregning"
                     target="_blank"
                 >
                     arbeidsgiverperioden.
