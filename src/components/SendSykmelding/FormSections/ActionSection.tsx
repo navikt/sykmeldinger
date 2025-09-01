@@ -23,7 +23,7 @@ interface Props {
 function ActionSection({ sykmeldingId, sendResult, onSykmeldingAvbrutt }: Props): ReactElement {
     const avbryteRef = useRef<HTMLButtonElement>(null)
     const [avbrytSykmelding, setAvbrytSykmelding] = useState(false)
-    const { watch } = useFormContext<FormValues>()
+    const { watch, formState } = useFormContext<FormValues>()
     const [arbeidssituasjon, fisker] = watch(['arbeidssituasjon', 'fisker'])
     const trengerNySykmelding = getTrengerNySykmelding(watch('uriktigeOpplysninger'))
 
@@ -35,7 +35,7 @@ function ActionSection({ sykmeldingId, sendResult, onSykmeldingAvbrutt }: Props)
         <QuestionWrapper>
             <div className="flex flex-col items-center justify-center gap-4">
                 <div className="flex flex-col gap-8">
-                    <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading}>
+                    <Button id="send-sykmelding-button" variant="primary" type="submit" loading={sendResult.loading} disabled={sendResult.loading || formState.isSubmitting}>
                         {isArbeidstaker(arbeidssituasjon, fisker) ? 'Send' : 'Bekreft'} sykmelding
                     </Button>
                     <Button
