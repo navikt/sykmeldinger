@@ -41,7 +41,7 @@ spec:
       memory: 1024Mi
     requests:
       cpu: 160m
-      memory: 450Mi
+      memory: 550Mi
   liveness:
     path: /syk/sykmeldinger/api/internal/is_alive
   readiness:
