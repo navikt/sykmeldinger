@@ -5680,10 +5680,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-hash@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "crypto-hash@npm:3.1.0"
-  checksum: 10/c71518a20470b78a584f0cb568ba87241802627812da0e3c20236070a90dbb1272b8c9db0476d45996c2f4c793ccfccdeb399e31a3cd3310eb4b6e2363a91306
+"crypto-hash@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "crypto-hash@npm:4.0.0"
+  checksum: 10/334155f9c84f5db79da079ca5a473b6a08005d8d458274916847bfbd41ebb3878e255b561db71b55452e53e3c9b85b71e34887ccc95fed851d7a331242e6da1e
   languageName: node
   linkType: hard
 
@@ -10651,12 +10651,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^2.26.1":
-  version: 2.26.1
-  resolution: "remeda@npm:2.26.1"
+"remeda@npm:^2.32.0":
+  version: 2.32.0
+  resolution: "remeda@npm:2.32.0"
   dependencies:
     type-fest: "npm:^4.41.0"
-  checksum: 10/6b566fecf1451ce133b66cd7cc7eb4b2c97f302dba58164718a6b87adb8f121448c3634aae0e67a0acc501d6cded292c787f1868acdaf17fe6b477e9c876e67e
+  checksum: 10/a779ff89be1607b94d0d1817fabeba814c78f5fe0792a47d7ef0e20c84f99a7a9d5aa6e6c1d14bdbdf7c94a5825b3c36eebf996d775be936cafd44a869ee654a
   languageName: node
   linkType: hard
 
@@ -11858,7 +11858,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:3.2.4"
     classnames: "npm:^2.5.1"
     concurrently: "npm:^9.2.0"
-    crypto-hash: "npm:^3.1.0"
+    crypto-hash: "npm:^4.0.0"
     csp-header: "npm:^6.1.0"
     date-fns: "npm:4.1.0"
     dotenv: "npm:^17.2.1"
@@ -11887,14 +11887,14 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     react-hook-form: "npm:7.61.1"
-    remeda: "npm:^2.26.1"
+    remeda: "npm:^2.32.0"
     tailwind-merge: "npm:^3.3.1"
     tailwindcss: "npm:^4.1.11"
     typescript: "npm:^5.8.3"
     uuid: "npm:^11.1.0"
     vitest: "npm:3.2.4"
     vitest-axe: "npm:^0.1.0"
-    zod: "npm:^4.0.10"
+    zod: "npm:^4.1.11"
   languageName: unknown
   linkType: soft
 
@@ -13216,9 +13216,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^4.0.10":
-  version: 4.0.10
-  resolution: "zod@npm:4.0.10"
-  checksum: 10/65afdd6f69d636a542ecad3c468dd8f3a99264e7afdac4fdcd334fd312ee5199e509c1795c8e9115dc9cee41b068c9bec3fc466f96846ef172e9e9c3e5158ff6
+"zod@npm:^4.1.11":
+  version: 4.1.11
+  resolution: "zod@npm:4.1.11"
+  checksum: 10/5a0f5697dbe86bf40934916d888cfe0ec6f1f767eb0b6f944ffd5573397c8a56ef7d2ebd0f889bfb44ceaf93edcddf021994633747a9a6b0dcbeb57bd0a67442
   languageName: node
   linkType: hard
