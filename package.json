@@ -74,7 +74,7 @@
         "@graphql-codegen/typescript-resolvers": "4.5.1",
         "@hookform/devtools": "^4.4.0",
         "@navikt/ds-tailwind": "7.25.1",
-        "@navikt/eslint-config-teamsykmelding": "^8.0.0",
+        "@navikt/eslint-config-teamsykmelding": "^8.1.1",
         "@parcel/watcher": "^2.5.1",
         "@playwright/test": "1.54.1",
         "@tailwindcss/postcss": "^4.1.11",
