@@ -10162,6 +10162,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.55.1":
+  version: 1.55.1
+  resolution: "playwright-core@npm:1.55.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 10/953a43039dbcca04513bd3138a9dee249a136d5377da00d49402ffcd24d33ca84dc1dc04636d1b76e9f8c9fd28a302b89cda1ae544d72b5d829c28e623bfcb0b
+  languageName: node
+  linkType: hard
+
 "playwright@npm:1.54.1":
   version: 1.54.1
   resolution: "playwright@npm:1.54.1"
@@ -11879,7 +11888,7 @@ __metadata:
     open: "npm:^10.2.0"
     pino: "npm:^9.7.0"
     pino-pretty: "npm:^13.0.0"
-    playwright-core: "npm:1.54.1"
+    playwright-core: "npm:1.55.1"
     postcss: "npm:^8.5.6"
     prettier: "npm:^3.6.2"
     prettier-plugin-tailwindcss: "npm:^0.6.14"
