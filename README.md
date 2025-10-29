@@ -1,5 +1,11 @@
 # Sykmeldinger 📝
 
+> [!WARNING]
+> 
+> **Deprecated!**
+> 
+> Denne appen er nå slått sammen med [Ditt Sykefravær](https://github.com/navikt/ditt-sykefravaer)
+
 Frontend for visning og behandling av sykmeldinger.
 
 Lever under:
