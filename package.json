@@ -25,11 +25,11 @@
         "prepare": "husky"
     },
     "dependencies": {
-        "@apollo/client": "^3.13.8",
+        "@apollo/client": "^4.0.7",
         "@apollo/server": "^5.0.0",
         "@as-integrations/next": "^4.0.0",
         "@grafana/faro-web-sdk": "1.19.0",
-        "@graphql-tools/graphql-file-loader": "^8.0.22",
+        "@graphql-tools/graphql-file-loader": "^8.1.2",
         "@graphql-tools/load": "^8.1.2",
         "@graphql-tools/schema": "^10.0.25",
         "@graphql-typed-document-node/core": "^3.2.0",
